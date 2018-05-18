@@ -1,13 +1,13 @@
 CopyTranslator 
 
 ![](https://img.shields.io/badge/language-python-blue.svg)
-![](https://img.shields.io/badge/license-GPL2.0-000000.svg)
+![](https://img.shields.io/badge/license-MPL2.0-000000.svg)
 [![PyPI version](https://badge.fury.io/py/CopyTranslator.svg)](https://badge.fury.io/py/CopyTranslator)
 ![](https://img.shields.io/badge/platform-linux|windows|osx-lightgrey.svg)
 [![Say Thanks!](https://img.shields.io/badge/Say%20Thanks-!-1EAEDB.svg)](https://saythanks.io/to/agentzheng)
 === 
 
-Copy,Translate,and Paste with Google translate API
+Copy, Translate, and Paste with Google translate API
 
 ## Get started
 ### Environment
@@ -63,7 +63,9 @@ CopyTranslator
 
 
 ## Acknowledgements
-Thanks to the developers of [wxpython](https://wxpython.org/),[googletrans](https://github.com/ssut/py-googletrans),[pyperclip](https://github.com/asweigart/pyperclip). 
+
+Thanks to the developers of [wxpython](https://wxpython.org/), [googletrans](https://github.com/ssut/py-googletrans), [pyperclip](https://github.com/asweigart/pyperclip). 
+
 ## License
 
 The code is licensed under Mozilla Public License 2.0. For more details, read the [LICENSE](./LICENSE) file.

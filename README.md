@@ -7,7 +7,7 @@ CopyTranslator
 [![Say Thanks!](https://img.shields.io/badge/Say%20Thanks-!-1EAEDB.svg)](https://saythanks.io/to/agentzheng)
 === 
 
-Copy, Translate, and Paste with Google translate API
+Copy, Translate, and Paste with Google translate API.
 
 ## Get started
 ### Environment
@@ -67,7 +67,7 @@ CopyTranslator_win
 ### Windows 10
 ![win10.png](./screenshot/screenshot.png)
 
-![1527275165973](.\screenshot\screenshot2.png)
+![screenshot2](./screenshot/screenshot2.png)
 
 ### Unbuntu
 ![screenshot-unbuntu.png](./screenshot/screenshot-unbuntu.png)

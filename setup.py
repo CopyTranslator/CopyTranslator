@@ -25,7 +25,7 @@ setup(
     description=u'Copy,Translate and paste with google translate API',
 	long_description=long_description,
     keywords='translate clipboard copy',
-    url='https://github.com/agentzheng/CopyTranslator',
+    url='https://github.com/elliottzheng/CopyTranslator',
     packages=['CopyTranslator'],
     install_requires=install_requires,
     entry_points={
@@ -34,9 +34,9 @@ setup(
         ],
     },
     project_urls={  # Optional
-            'Bug Reports': 'https://github.com/agentzheng/CopyTranslator/issues',
-            'Say Thanks!': 'https://saythanks.io/to/agentzheng',
-            'Source': 'https://github.com/agentzheng/CopyTranslator',
+            'Bug Reports': 'https://github.com/elliottzheng/CopyTranslator/issues',
+            'Say Thanks!': 'https://saythanks.io/to/elliottzheng',
+            'Source': 'https://github.com/elliottzheng/CopyTranslator',
     },
     classifiers=[
     'Development Status :: 3 - Alpha',

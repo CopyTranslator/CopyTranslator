@@ -85,15 +85,19 @@ class TextFrame(wx.Frame):
 
 
     def translate(self,event):
+        src = self.translator.detect(self.src).lang
         if self.detectCheck.GetValue():
-            src=self.translator.detect(self.src).lang
             self.fromchoice.SetSelection(self.fromchoice.FindString(LANGUAGES[src.lower()]))
         else:
-            src=LANGCODES[self.fromchoice.GetString(self.fromchoice.GetSelection())]
+            src2=LANGCODES[self.fromchoice.GetString(self.fromchoice.GetSelection())]
+            if src2!=src: ## 如果语言不对，就不翻译了，不然浪费时间
+                self.destText.SetValue('')
+                return
         dest=LANGCODES[self.tochoice.GetString(self.tochoice.GetSelection())]
+
         if self.dest!=self.src:
-            normalizedText=self.src.replace('\r', '\\r').replace('\n', '\\n').replace('-\\r\\n', '').replace("\\r\\n", " ")
-            self.dest=self.translator.translate(normalizedText, src=src, dest=dest).text
+            self.src=self.normalize(self.src) # 规范化
+            self.dest=self.translator.translate(self.src, src=src, dest=dest).text
             self.destText.SetValue(self.dest)
             self.valid=True
         else:
@@ -111,6 +115,12 @@ class TextFrame(wx.Frame):
             self.translate(event)
         else:
             self.valid=False
+
+
+    def normalize(self,src):
+        return src.replace('\r', '\\r').replace('\n', '\\n').replace('-\\r\\n', '').replace("\\r\\n", " ").replace('\\n',' ')
+
+
 
 
     def Copy(self,event):

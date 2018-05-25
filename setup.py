@@ -19,7 +19,7 @@ if platform.system()=='Windows':
 
 setup(
     name='CopyTranslator',
-    version='0.0.1',
+    version='0.0.1.1',
     author='Yinglin Zheng',
     author_email='admin@hypercube.top',
     description=u'Copy,Translate and paste with google translate API',
@@ -32,6 +32,9 @@ setup(
     install_requires=install_requires,
     entry_points={
         'gui_scripts': [
+            'CopyTranslator_win=CopyTranslator.CopyTranslator:main',
+        ],
+        'console_scripts': [
             'CopyTranslator=CopyTranslator.CopyTranslator:main',
         ],
     },

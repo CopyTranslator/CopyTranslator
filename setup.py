@@ -19,7 +19,7 @@ if platform.system()=='Windows':
 
 setup(
     name='CopyTranslator',
-    version='0.0.0.1',
+    version='0.0.1',
     author='Yinglin Zheng',
     author_email='admin@hypercube.top',
     description=u'Copy,Translate and paste with google translate API',
@@ -27,9 +27,11 @@ setup(
     keywords='translate clipboard copy',
     url='https://github.com/elliottzheng/CopyTranslator',
     packages=['CopyTranslator'],
+    package_data  = {
+        "CopyTranslator": ["logo.ico"]},
     install_requires=install_requires,
     entry_points={
-        'console_scripts': [
+        'gui_scripts': [
             'CopyTranslator=CopyTranslator.CopyTranslator:main',
         ],
     },

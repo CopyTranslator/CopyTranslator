@@ -2,7 +2,7 @@ CopyTranslator
 
 |image0| |image1| |PyPI version| |image3| |Say Thanks!| 
 
-Copy,Translate,and Paste with Google translate API
+Copy, Translate, and Paste with Google translate API
 
 Get started
 -----------
@@ -42,8 +42,11 @@ In OS X, ``wxpython`` can't be installed using pip.
 
 Please refer to the installation of ``wxpython``.
 
-It has not been tested yet. If someone had tried, please create a PR to
-help improve the documentation.
+One possible way is to install ``wxpython`` in OS X using ``homebrew``
+
+.. code:: shell
+
+    brew install wxpython
 
 Setup
 ~~~~~
@@ -63,30 +66,52 @@ Run shell command
 
     CopyTranslator
 
+**For Windows users**, you can use command below instead to free
+yourself from console.
+
+.. code:: cmd
+
+    CopyTranslator_win
+
 Screenshots
 -----------
 
 Windows 10
 ~~~~~~~~~~
 
-|win10.png| ### Unbuntu |screenshot-unbuntu.png|
+.. figure:: ./screenshot/screenshot.png
+   :alt: win10.png
 
+   win10.png
+.. figure:: .\screenshot\screenshot2.png
+   :alt: 1527275165973
+
+   1527275165973
+Unbuntu
+~~~~~~~
+
+.. figure:: ./screenshot/screenshot-unbuntu.png
+   :alt: screenshot-unbuntu.png
+
+   screenshot-unbuntu.png
 Acknowledgements
 ----------------
 
-Thanks to the developers of
-`wxpython <https://wxpython.org/>`__,\ `googletrans <https://github.com/ssut/py-googletrans>`__,\ `pyperclip <https://github.com/asweigart/pyperclip>`__.
-## License
+Thanks to the developers of `wxpython <https://wxpython.org/>`__,
+`googletrans <https://github.com/ssut/py-googletrans>`__,
+`pyperclip <https://github.com/asweigart/pyperclip>`__ and my dear
+schoolmates.
+
+License
+-------
 
 The code is licensed under Mozilla Public License 2.0. For more details,
 read the `LICENSE <./LICENSE>`__ file.
 
 .. |image0| image:: https://img.shields.io/badge/language-python-blue.svg
-.. |image1| image:: https://img.shields.io/badge/license-GPL2.0-000000.svg
+.. |image1| image:: https://img.shields.io/badge/license-MPL2.0-000000.svg
 .. |PyPI version| image:: https://badge.fury.io/py/CopyTranslator.svg
    :target: https://badge.fury.io/py/CopyTranslator
 .. |image3| image:: https://img.shields.io/badge/platform-linux|windows|osx-lightgrey.svg
 .. |Say Thanks!| image:: https://img.shields.io/badge/Say%20Thanks-!-1EAEDB.svg
    :target: https://saythanks.io/to/agentzheng
-.. |win10.png| image:: ./screenshot/screenshot.png
-.. |screenshot-unbuntu.png| image:: ./screenshot/screenshot-unbuntu.png

@@ -41,7 +41,11 @@ In OS X, `wxpython` can't be installed using pip.
 
 Please refer to the installation of `wxpython`.
 
-It has not been tested yet. If someone had tried, please create a PR to help improve the documentation.
+One possible way is to install `wxpython` in OS X using `homebrew`
+
+```shell
+brew install wxpython
+```
 
 ### Setup
 Install this Application using `pip`:
@@ -50,13 +54,21 @@ pip install CopyTranslator
 ```
 
 ## Example usage
+
 Run shell command
 ```shell
 CopyTranslator
 ```
+**For Windows users**, you can use command below instead to free yourself from console.
+```cmd
+CopyTranslator_win
+```
 ## Screenshots
 ### Windows 10
 ![win10.png](./screenshot/screenshot.png)
+
+![1527275165973](.\screenshot\screenshot2.png)
+
 ### Unbuntu
 ![screenshot-unbuntu.png](./screenshot/screenshot-unbuntu.png)
 
@@ -64,7 +76,7 @@ CopyTranslator
 
 ## Acknowledgements
 
-Thanks to the developers of [wxpython](https://wxpython.org/), [googletrans](https://github.com/ssut/py-googletrans), [pyperclip](https://github.com/asweigart/pyperclip). 
+Thanks to the developers of [wxpython](https://wxpython.org/), [googletrans](https://github.com/ssut/py-googletrans), [pyperclip](https://github.com/asweigart/pyperclip) and my dear schoolmates.
 
 ## License
 

@@ -48,10 +48,22 @@ brew install wxpython
 ```
 
 ### Setup
-Install this Application using `pip`:
+
+There are 2 ways to install `CopyTranslator` , **you can get latest features if you install from source.**
+
+### Install this Application using `pip`:
+
 ```shell
 pip install CopyTranslator
 ```
+
+### Install from source 
+
+1. `git clone https://github.com/elliottzheng/CopyTranslator.git`
+2. `cd CopyTranslator`
+3. `python setup.py install`
+
+For windows user, after clone the repository to local, you can just double click at the `install.bat` to install, and `start.bat` to start the CopyTranslator.
 
 ## Example usage
 

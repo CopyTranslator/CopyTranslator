@@ -9,8 +9,8 @@ from os import path
 here = path.abspath(path.dirname(__file__))
 
 # Get the long description from the README file
-with open(path.join(here, 'README.rst'), encoding='utf-8') as f:
-	long_description = f.read()
+with open("README.md", "r") as fh:
+    long_description = fh.read()
 
 install_requires=['pyperclip','googletrans']
 #only windows can automatically install wxpython using pip, in other OS you need to install wxpython manually.
@@ -24,6 +24,7 @@ setup(
     author_email='admin@hypercube.top',
     description=u'Copy,Translate and paste with google translate API',
 	long_description=long_description,
+    long_description_content_type="text/markdown",
     keywords='translate clipboard copy',
     url='https://github.com/elliottzheng/CopyTranslator',
     packages=['CopyTranslator'],

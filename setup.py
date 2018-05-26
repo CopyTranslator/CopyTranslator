@@ -19,7 +19,7 @@ if platform.system()=='Windows':
 
 setup(
     name='CopyTranslator',
-    version='0.0.1.1',
+    version='0.0.1.2',
     author='Yinglin Zheng',
     author_email='admin@hypercube.top',
     description=u'Copy,Translate and paste with google translate API',

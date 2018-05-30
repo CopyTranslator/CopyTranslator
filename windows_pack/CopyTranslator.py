@@ -6,8 +6,8 @@ from googletrans import LANGCODES
 from googletrans import LANGUAGES
 from pkg_resources import resource_filename,Requirement
 
-logopath=resource_filename(Requirement.parse("CopyTranslator"),'CopyTranslator/logo.ico')
-#logopath='logo.ico'
+#logopath=resource_filename(Requirement.parse("CopyTranslator"),'CopyTranslator/logo.ico')
+logopath='logo.ico'
 
 class Setting():
     def __init__(self):

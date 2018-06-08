@@ -1,6 +1,7 @@
 import wx
 import wx.adv
 import pyperclip
+import regex as re
 from googletrans import Translator
 from googletrans import LANGCODES
 from googletrans import LANGUAGES
@@ -29,10 +30,18 @@ class Setting():
         self.translator = Translator(service_urls=['translate.google.cn'])
         self.src = ''
         self.result = ''
+        self.patterns = [re.compile(r'([?!.])[\n]'),re.compile(r'([？！。])[ \n]')]   #前面一个处理英语语系的，后面一个可以处理汉语系。
+        self.pattern2 = re.compile(r'\$([?？！!.。])\$')
 
     def normalize(self, src):
-        return src.replace('\r', '\\r').replace('\n', '\\n').replace('-\\r\\n', '').replace("\\r\\n", " ").replace(
-            '\\n', ' ')
+        src=src.replace('\r\n', '\n')
+        src=src.replace('-\n', '')
+        for pattern in self.patterns:
+            src=pattern.sub(r'$\1$',src)
+        src=src.replace('\n',' ')
+        src=self.pattern2.sub(r'\1\n',src)
+        return src
+
 
     def paste(self, event):
         self.setSrc(pyperclip.paste())
@@ -73,9 +82,9 @@ class Setting():
         self.mainFrame.srcText.SetValue(self.src)
 
     def setResult(self, string):
-        self.result = string
-        self.mainFrame.destText.SetValue(string)
-        self.subFrame.destText.SetValue(string)
+        self.result = "   "+string.replace('\n','\n   ')
+        self.mainFrame.destText.SetValue(self.result)
+        self.subFrame.destText.SetValue(self.result)
 
     def getTgtLang(self):
         return LANGCODES[self.mainFrame.tochoice.GetString(self.mainFrame.tochoice.GetSelection())]
@@ -94,10 +103,7 @@ class Setting():
         if self.IsDete:
             self.mainFrame.fromchoice.SetSelection(self.mainFrame.fromchoice.FindString(LANGUAGES[src.lower()]))
         else:
-            currentSrc = self.getSrcLang()
-            if currentSrc != src:  ## 如果语言不对，就不翻译了，不然浪费时间
-                self.setResult('')
-                return
+            src = self.getSrcLang()
 
         dest = self.getTgtLang()
 

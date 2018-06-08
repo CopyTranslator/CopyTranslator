@@ -8,7 +8,8 @@ CopyTranslator
 === 
 
 Copy, Translate, and Paste with Google translate API.
-
+## Warning, the readme file is out of date.
+The code version is 0.0.3. Please contact me at [admin@hypercube.top](mailto:admin@hypercube.top) to get latest release.
 ## Get started
 ### Environment
 - Python 2.7 or Python 3 and higher
@@ -64,6 +65,9 @@ pip install CopyTranslator
 3. `python setup.py install`
 
 For windows user, after clone the repository to local, you can just double click at the `install.bat` to install, and `start.bat` to start the CopyTranslator.
+
+### Pre build version for Windows 10
+Contact me to get latest build.
 
 ## Example usage
 

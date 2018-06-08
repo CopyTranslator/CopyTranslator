@@ -66,12 +66,12 @@ class Setting():
 
     def ReverseStayTop(self,event):
         self.StayTop= not self.StayTop
-        frames=[self.subFrame,self.mainFrame]
-        for frame in frames:
-            if self.StayTop:
-                frame.SetWindowStyle(wx.STAY_ON_TOP | wx.DEFAULT_FRAME_STYLE ^ wx.RESIZE_BORDER)
-            else:
-                frame.SetWindowStyle(wx.DEFAULT_FRAME_STYLE ^ wx.RESIZE_BORDER)
+        if self.StayTop:
+            self.subFrame.SetWindowStyle(wx.STAY_ON_TOP | wx.DEFAULT_FRAME_STYLE)
+            self.mainFrame.SetWindowStyle(wx.STAY_ON_TOP | wx.DEFAULT_FRAME_STYLE^wx.RESIZE_BORDER )
+        else:
+            self.subFrame.SetWindowStyle(wx.DEFAULT_FRAME_STYLE )
+            self.mainFrame.SetWindowStyle(wx.DEFAULT_FRAME_STYLE^wx.RESIZE_BORDER )
 
 
     def setSrc(self, string):
@@ -257,7 +257,6 @@ class SubFrame(wx.Frame):
 
         self.destText = wx.TextCtrl(self, -1, "",
                                      style=wx.TE_MULTILINE)  # 创建一个文本控件
-
         # 绑定事件
         self.Bind(wx.EVT_CLOSE, self.OnClose)
         self.Bind(wx.EVT_ICONIZE,
@@ -312,18 +311,15 @@ class MainFrame(wx.Frame):
 
         #原文本
         self.srcLabel=wx.StaticText(TextPanel, -1, "Source:")
-        self.srcText = wx.TextCtrl(TextPanel, -1, "",
-                                   size=(300, 125), style=wx.TE_MULTILINE) #创建一个文本控件
+        self.srcText = wx.TextCtrl(TextPanel, -1, "",size=(300, 125),style=wx.TE_MULTILINE) #创建一个文本控件
     
         self.copyBtn = wx.Button(buttonPanel, -1, "Copy result")
         self.Bind(wx.EVT_BUTTON, self.setting.Copy, self.copyBtn)
 
         #目标文本
         self.dstLabel=wx.StaticText(TextPanel, -1, "Result:")
-        self.destText = wx.TextCtrl(TextPanel, -1, "",
-                                    size=(300, 125), style=wx.TE_MULTILINE) #创建一个文本控件
-
-
+        self.destText = wx.TextCtrl(TextPanel, -1, "",size=(300, 125),
+                                     style=wx.TE_MULTILINE) #创建一个文本控件
 
         self.fromlabel=wx.StaticText(buttonPanel,-1,'Source language')
         
@@ -338,14 +334,18 @@ class MainFrame(wx.Frame):
         panel1sizer.AddMany([self.srcLabel, self.srcText, self.dstLabel, self.destText])
 
         TextPanel.SetSizer(panel1sizer)
+
+
         panel2sizer=wx.FlexGridSizer(11,1,6,0)
         panel2sizer.AddMany([self.topCheck, self.listenCheck, self.detectCheck,self.copyCheck,self.fromlabel, self.fromchoice, tolabel, self.tochoice, self.pasteBtn, self.transBtn, self.copyBtn])
         buttonPanel.SetSizer(panel2sizer)
 
         sizer = wx.FlexGridSizer(1,2,0,0)
         sizer.AddMany([TextPanel,buttonPanel])
-        self.SetSizer(sizer)  
-        
+
+        self.SetSizer(sizer)
+        self.Fit()
+
         # 创建定时器
         self.timer = wx.Timer(self)#创建定时器
         self.Bind(wx.EVT_TIMER, self.setting.OnTimer, self.timer)#绑定一个定时器事件
@@ -374,7 +374,6 @@ class MainFrame(wx.Frame):
 def main():
     app = wx.App()
     setting=Setting()
-
     app.MainLoop()
 
 if __name__ == '__main__':  

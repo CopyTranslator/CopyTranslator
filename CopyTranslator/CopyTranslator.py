@@ -31,7 +31,7 @@ class Setting():
         self.translator = Translator(service_urls=['translate.google.cn'])
         self.src = ''
         self.result = ''
-        self.patterns = [re.compile(r'([?!.])[\n]'),re.compile(r'([？！。])[ \n]')]   #前面一个处理英语语系的，后面一个可以处理汉语系。
+        self.patterns = [re.compile(r'([?!.])[ ]?\n'),re.compile(r'([？！。])[ \n]')]   #前面一个处理英语语系的，后面一个可以处理汉语系。
         self.pattern2 = re.compile(r'\$([?？！!.。])\$')
 
 

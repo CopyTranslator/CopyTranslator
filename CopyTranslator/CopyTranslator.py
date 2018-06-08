@@ -304,7 +304,7 @@ class MainFrame(wx.Frame):
         self.Bind(wx.EVT_CHECKBOX, self.setting.ReverseStayTop, self.topCheck)
 
         # 自动检测语言按钮
-        self.detectCheck = wx.CheckBox(buttonPanel, -1, 'Auto dectet language')
+        self.detectCheck = wx.CheckBox(buttonPanel, -1, 'Auto detect language')
         self.Bind(wx.EVT_CHECKBOX, self.setting.ReverseDete, self.detectCheck)
 
         # 监听剪贴板选框

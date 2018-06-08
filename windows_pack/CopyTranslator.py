@@ -5,6 +5,7 @@ import regex as re
 from googletrans import Translator
 from googletrans import LANGCODES
 from googletrans import LANGUAGES
+import win32con
 from pkg_resources import resource_filename, Requirement
 
 # logopath=resource_filename(Requirement.parse("CopyTranslator"),'CopyTranslator/logo.ico')
@@ -32,6 +33,7 @@ class Setting():
         self.result = ''
         self.patterns = [re.compile(r'([?!.])[\n]'),re.compile(r'([？！。])[ \n]')]   #前面一个处理英语语系的，后面一个可以处理汉语系。
         self.pattern2 = re.compile(r'\$([?？！!.。])\$')
+
 
     def normalize(self, src):
         src=src.replace('\r\n', '\n')
@@ -156,6 +158,19 @@ class Setting():
         frame.Raise()
 
 
+    def BossKey(self,evt):
+        if self.IsMain:
+            frame = self.mainFrame
+        else:
+            frame = self.subFrame
+
+        frame.Iconize(not frame.IsIconized())
+
+        if not frame.IsIconized():
+            frame.Show(True)
+            frame.Raise()
+
+
 class TaskBarIcon(wx.adv.TaskBarIcon):
     ID_Top = wx.NewId()
     ID_Listen = wx.NewId()
@@ -187,6 +202,8 @@ class TaskBarIcon(wx.adv.TaskBarIcon):
 
         self.Bind(wx.EVT_MENU, self.OnAbout, id=self.ID_About)
         self.Bind(wx.EVT_MENU, self.OnCloseshow, id=self.ID_Closeshow)
+
+
 
     def OnAbout(self, event):
         wx.MessageBox('CopyTranslator v0.0.3 --Elliott Zheng\nCopy, translate and paste with Google translate API.',
@@ -245,6 +262,19 @@ class SubFrame(wx.Frame):
         self.Bind(wx.EVT_CLOSE, self.OnClose)
         self.Bind(wx.EVT_ICONIZE,
                   self.OnIconfiy)  # 窗口最小化时，调用OnIconfiy,注意Wx窗体上的最小化按钮，触发的事件是 wx.EVT_ICONIZE,而根本就没有定义什么wx.EVT_MINIMIZE,但是最大化，有个wx.EVT_MAXIMIZE。
+        self.regHotKey()
+        self.Bind(wx.EVT_HOTKEY, self.setting.BossKey, id=self.hotKeyId)
+
+    def regHotKey(self):
+        """
+        This function registers the hotkey Alt+F1 with id=100
+        """
+        self.hotKeyId = 100
+        self.RegisterHotKey(
+            self.hotKeyId,  # a unique ID for this hotkey
+            win32con.MOD_SHIFT,  # the modifier key
+            win32con.VK_F1)  # the key to watch for shift+F1
+
 
     def OnHide(self, event):
         self.Hide()

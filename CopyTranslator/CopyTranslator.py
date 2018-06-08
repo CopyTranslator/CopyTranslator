@@ -8,8 +8,8 @@ from googletrans import LANGUAGES
 import win32con
 from pkg_resources import resource_filename, Requirement
 
-# logopath=resource_filename(Requirement.parse("CopyTranslator"),'CopyTranslator/logo.ico')
-logopath = 'logo.ico'
+logopath=resource_filename(Requirement.parse("CopyTranslator"),'CopyTranslator/logo.ico')
+#logopath = 'logo.ico'
 
 
 class Setting():

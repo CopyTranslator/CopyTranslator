@@ -4,21 +4,22 @@ import pyperclip
 from googletrans import Translator
 from googletrans import LANGCODES
 from googletrans import LANGUAGES
-from pkg_resources import resource_filename,Requirement
+from pkg_resources import resource_filename, Requirement
 
-#logopath=resource_filename(Requirement.parse("CopyTranslator"),'CopyTranslator/logo.ico')
-logopath='logo.ico'
+# logopath=resource_filename(Requirement.parse("CopyTranslator"),'CopyTranslator/logo.ico')
+logopath = 'logo.ico'
+
 
 class Setting():
     def __init__(self):
         self.IsListen = False
         self.IsCopy = False
         self.IsDete = False
-        self.StayTop=False
+        self.StayTop = False
 
-        self.mainFrame=MainFrame(self)
-        self.subFrame=SubFrame(self)
-        self.taskbar =TaskBarIcon(self)
+        self.mainFrame = MainFrame(self)
+        self.subFrame = SubFrame(self)
+        self.taskbar = TaskBarIcon(self)
 
         self.IsMain = True
         self.mainFrame.Centre()
@@ -29,7 +30,6 @@ class Setting():
         self.src = ''
         self.result = ''
 
-
     def normalize(self, src):
         return src.replace('\r', '\\r').replace('\n', '\\n').replace('-\\r\\n', '').replace("\\r\\n", " ").replace(
             '\\n', ' ')
@@ -37,8 +37,7 @@ class Setting():
     def paste(self, event):
         self.setSrc(pyperclip.paste())
 
-
-    def ReverseListen(self,event):
+    def ReverseListen(self, event):
         self.IsListen = not self.IsListen
         self.mainFrame.listenCheck.SetValue(self.IsListen)
         if self.IsListen:
@@ -46,15 +45,12 @@ class Setting():
         else:
             self.mainFrame.timer.Stop()
 
-
-
-    def ReverseCopy(self,event):
-        self.IsCopy= not self.IsCopy
+    def ReverseCopy(self, event):
+        self.IsCopy = not self.IsCopy
         self.mainFrame.copyCheck.SetValue(self.IsCopy)
 
-
-    def ReverseDete(self,event):
-        self.IsDete= not self.IsDete
+    def ReverseDete(self, event):
+        self.IsDete = not self.IsDete
         self.mainFrame.detectCheck.SetValue(self.IsDete)
         if self.IsDete:
             self.mainFrame.fromchoice.Disable()
@@ -63,40 +59,32 @@ class Setting():
             self.mainFrame.fromchoice.Enable()
             self.mainFrame.fromlabel.SetLabel("Source language")
 
-
-    def ReverseStayTop(self,event):
-        self.StayTop= not self.StayTop
+    def ReverseStayTop(self, event):
+        self.StayTop = not self.StayTop
         if self.StayTop:
             self.subFrame.SetWindowStyle(wx.STAY_ON_TOP | wx.DEFAULT_FRAME_STYLE)
-            self.mainFrame.SetWindowStyle(wx.STAY_ON_TOP | wx.DEFAULT_FRAME_STYLE^wx.RESIZE_BORDER )
+            self.mainFrame.SetWindowStyle(wx.STAY_ON_TOP | wx.DEFAULT_FRAME_STYLE ^ wx.RESIZE_BORDER)
         else:
-            self.subFrame.SetWindowStyle(wx.DEFAULT_FRAME_STYLE )
-            self.mainFrame.SetWindowStyle(wx.DEFAULT_FRAME_STYLE^wx.RESIZE_BORDER )
-
+            self.subFrame.SetWindowStyle(wx.DEFAULT_FRAME_STYLE)
+            self.mainFrame.SetWindowStyle(wx.DEFAULT_FRAME_STYLE ^ wx.RESIZE_BORDER)
 
     def setSrc(self, string):
-        self.src=self.normalize(string)
+        self.src = self.normalize(string)
         self.mainFrame.srcText.SetValue(self.src)
 
-
-
     def setResult(self, string):
-        self.result=string
+        self.result = string
         self.mainFrame.destText.SetValue(string)
         self.subFrame.destText.SetValue(string)
-
 
     def getTgtLang(self):
         return LANGCODES[self.mainFrame.tochoice.GetString(self.mainFrame.tochoice.GetSelection())]
 
-
     def getSrcLang(self):
         return LANGCODES[self.mainFrame.fromchoice.GetString(self.mainFrame.fromchoice.GetSelection())]
 
-
     def getExpSrc(self):
         return self.mainFrame.srcText.GetValue()
-
 
     def getResult(self):
         return self.result
@@ -119,13 +107,12 @@ class Setting():
         else:
             self.valid = False
 
-
     def translateCtrl(self, event):
         self.setSrc(self.getExpSrc())
         self.translate(event)
 
     def translateCopy(self, event):
-        if self.result != pyperclip.paste() and self.src!= self.normalize(pyperclip.paste()):
+        if self.result != pyperclip.paste() and self.src != self.normalize(pyperclip.paste()):
             self.paste(event)
             self.translate(event)
         else:
@@ -139,23 +126,22 @@ class Setting():
         if self.valid and self.IsCopy:
             self.Copy(event)
 
-    def ChangeMode(self,event):
-        if event.Id==self.taskbar.ID_Main:
-            self.IsMain=True
-        elif event.Id==self.taskbar.ID_Focus:
+    def ChangeMode(self, event):
+        if event.Id == self.taskbar.ID_Main:
+            self.IsMain = True
+        elif event.Id == self.taskbar.ID_Focus:
             self.IsMain = False
         else:
-            self.IsMain=not self.IsMain
+            self.IsMain = not self.IsMain
 
         self.subFrame.Show(not self.IsMain)
         self.mainFrame.Show(self.IsMain)
 
-
     def OnTaskBarLeftDClick(self, event):
         if self.IsMain:
-            frame=self.mainFrame
+            frame = self.mainFrame
         else:
-            frame=self.subFrame
+            frame = self.subFrame
 
         if frame.IsIconized():
             frame.Iconize(False)
@@ -164,30 +150,26 @@ class Setting():
         frame.Raise()
 
 
-
 class TaskBarIcon(wx.adv.TaskBarIcon):
-    ID_Top= wx.NewId()
+    ID_Top = wx.NewId()
     ID_Listen = wx.NewId()
     ID_Copy = wx.NewId()
     ID_Dete = wx.NewId()
     ID_Show = wx.NewId()
     ID_Main = wx.NewId()
 
-    ID_Focus=wx.NewId()
+    ID_Focus = wx.NewId()
     ID_About = wx.NewId()
     ID_Closeshow = wx.NewId()
-    ID_Switch=wx.NewId()
+    ID_Switch = wx.NewId()
 
-
-
-
-    def __init__(self,setting):
-        self.setting=setting
+    def __init__(self, setting):
+        self.setting = setting
         wx.adv.TaskBarIcon.__init__(self)
         self.SetIcon(wx.Icon(name=logopath, type=wx.BITMAP_TYPE_ICO), 'CopyTranslator')  # wx.ico为ico图标文件
 
         self.Bind(wx.adv.EVT_TASKBAR_LEFT_DCLICK, self.setting.OnTaskBarLeftDClick)  # 定义左键双击
-        self.Bind(wx.EVT_MENU, self.setting.OnTaskBarLeftDClick, id=self.ID_Show) # 显示主界面
+        self.Bind(wx.EVT_MENU, self.setting.OnTaskBarLeftDClick, id=self.ID_Show)  # 显示主界面
 
         self.Bind(wx.EVT_MENU, self.setting.ReverseStayTop, id=self.ID_Top)
         self.Bind(wx.EVT_MENU, self.setting.ReverseListen, id=self.ID_Listen)
@@ -200,11 +182,9 @@ class TaskBarIcon(wx.adv.TaskBarIcon):
         self.Bind(wx.EVT_MENU, self.OnAbout, id=self.ID_About)
         self.Bind(wx.EVT_MENU, self.OnCloseshow, id=self.ID_Closeshow)
 
-
-
     def OnAbout(self, event):
-        wx.MessageBox('CopyTranslator v0.0.2 --Elliott Zheng\nCopy, translate and paste with Google translate API.', 'About')
-
+        wx.MessageBox('CopyTranslator v0.0.3 --Elliott Zheng\nCopy, translate and paste with Google translate API.',
+                      'About')
 
     def OnCloseshow(self, event):
         self.setting.mainFrame.Destroy()
@@ -217,7 +197,7 @@ class TaskBarIcon(wx.adv.TaskBarIcon):
         listen = menu.AppendCheckItem(self.ID_Top, 'Stay on Top', 'Always stay on Top.')
         listen.Check(self.setting.StayTop)
 
-        listen=menu.AppendCheckItem(self.ID_Listen, 'Listen clipboard', 'Listen to Clipboard and auto translate.')
+        listen = menu.AppendCheckItem(self.ID_Listen, 'Listen clipboard', 'Listen to Clipboard and auto translate.')
         listen.Check(self.setting.IsListen)
 
         copy = menu.AppendCheckItem(self.ID_Copy, 'Auto copy', 'Auto copy result to clipboard.')
@@ -228,7 +208,7 @@ class TaskBarIcon(wx.adv.TaskBarIcon):
 
         modeMenu = wx.Menu()
 
-        mainMode=modeMenu.AppendRadioItem(self.ID_Main,"Main Mode")
+        mainMode = modeMenu.AppendRadioItem(self.ID_Main, "Main Mode")
 
         subMode = modeMenu.AppendRadioItem(self.ID_Focus, "Focus Mode")
         if self.setting.IsMain:
@@ -236,9 +216,7 @@ class TaskBarIcon(wx.adv.TaskBarIcon):
         else:
             subMode.Check()
 
-        switchMode = menu.AppendSubMenu(modeMenu,'Switch frame mode.')
-
-
+        switchMode = menu.AppendSubMenu(modeMenu, 'Switch frame mode.')
 
         menu.Append(self.ID_Show, 'Main interface')
         menu.Append(self.ID_About, 'About')
@@ -256,7 +234,7 @@ class SubFrame(wx.Frame):
         self.setting = setting
 
         self.destText = wx.TextCtrl(self, -1, "",
-                                     style=wx.TE_MULTILINE)  # 创建一个文本控件
+                                    style=wx.TE_MULTILINE)  # 创建一个文本控件
         # 绑定事件
         self.Bind(wx.EVT_CLOSE, self.OnClose)
         self.Bind(wx.EVT_ICONIZE,
@@ -273,20 +251,19 @@ class SubFrame(wx.Frame):
         self.Hide()
 
 
-
 class MainFrame(wx.Frame):
-    
-    def __init__(self,setting):
+
+    def __init__(self, setting):
         langList = list(LANGCODES.keys())
-        wx.Frame.__init__(self, None, -1, 'CopyTranslator',   
-                size=(465, 345))
+        wx.Frame.__init__(self, None, -1, 'CopyTranslator',
+                          size=(465, 345))
         self.SetIcon(wx.Icon(logopath, wx.BITMAP_TYPE_ICO))
-        self.SetWindowStyle(wx.DEFAULT_FRAME_STYLE^wx.RESIZE_BORDER)
+        self.SetWindowStyle(wx.DEFAULT_FRAME_STYLE ^ wx.RESIZE_BORDER)
         self.setting = setting
         TextPanel = wx.Panel(self, -1)
         buttonPanel = wx.Panel(self, -1)
 
-        #始终置顶按钮
+        # 始终置顶按钮
         self.topCheck = wx.CheckBox(buttonPanel, -1, 'Stay on top')
         self.Bind(wx.EVT_CHECKBOX, self.setting.ReverseStayTop, self.topCheck)
 
@@ -296,11 +273,11 @@ class MainFrame(wx.Frame):
 
         # 监听剪贴板选框
         self.listenCheck = wx.CheckBox(buttonPanel, -1, 'Listen on Clipboard')
-        self.Bind(wx.EVT_CHECKBOX, self.setting.ReverseListen, self.listenCheck )
+        self.Bind(wx.EVT_CHECKBOX, self.setting.ReverseListen, self.listenCheck)
 
         # 自动复制选框
         self.copyCheck = wx.CheckBox(buttonPanel, -1, 'Auto copy')
-        self.Bind(wx.EVT_CHECKBOX,self.setting.ReverseCopy, self.copyCheck)
+        self.Bind(wx.EVT_CHECKBOX, self.setting.ReverseCopy, self.copyCheck)
 
         self.pasteBtn = wx.Button(buttonPanel, -1, "Paste")
         self.Bind(wx.EVT_BUTTON, self.setting.paste, self.pasteBtn)
@@ -309,53 +286,52 @@ class MainFrame(wx.Frame):
         self.Bind(wx.EVT_BUTTON, self.setting.translateCtrl, self.transBtn)
         self.transBtn.SetDefault()
 
-        #原文本
-        self.srcLabel=wx.StaticText(TextPanel, -1, "Source:")
-        self.srcText = wx.TextCtrl(TextPanel, -1, "",size=(300, 125),style=wx.TE_MULTILINE) #创建一个文本控件
-    
+        # 原文本
+        self.srcLabel = wx.StaticText(TextPanel, -1, "Source:")
+        self.srcText = wx.TextCtrl(TextPanel, -1, "", size=(300, 125), style=wx.TE_MULTILINE)  # 创建一个文本控件
+
         self.copyBtn = wx.Button(buttonPanel, -1, "Copy result")
         self.Bind(wx.EVT_BUTTON, self.setting.Copy, self.copyBtn)
 
-        #目标文本
-        self.dstLabel=wx.StaticText(TextPanel, -1, "Result:")
-        self.destText = wx.TextCtrl(TextPanel, -1, "",size=(300, 125),
-                                     style=wx.TE_MULTILINE) #创建一个文本控件
+        # 目标文本
+        self.dstLabel = wx.StaticText(TextPanel, -1, "Result:")
+        self.destText = wx.TextCtrl(TextPanel, -1, "", size=(300, 125),
+                                    style=wx.TE_MULTILINE)  # 创建一个文本控件
 
-        self.fromlabel=wx.StaticText(buttonPanel,-1,'Source language')
-        
-        self.fromchoice=wx.Choice(buttonPanel,-1,choices = langList)
+        self.fromlabel = wx.StaticText(buttonPanel, -1, 'Source language')
+
+        self.fromchoice = wx.Choice(buttonPanel, -1, choices=langList)
         self.fromchoice.SetSelection(self.fromchoice.FindString('english'))
 
-        tolabel=wx.StaticText(buttonPanel,-1,'Target language :')
-        self.tochoice=wx.Choice(buttonPanel,-1,choices = langList)
+        tolabel = wx.StaticText(buttonPanel, -1, 'Target language :')
+        self.tochoice = wx.Choice(buttonPanel, -1, choices=langList)
         self.tochoice.SetSelection(self.tochoice.FindString('chinese (simplified)'))
 
-        panel1sizer=wx.FlexGridSizer(4,1,6,6)  
+        panel1sizer = wx.FlexGridSizer(4, 1, 6, 6)
         panel1sizer.AddMany([self.srcLabel, self.srcText, self.dstLabel, self.destText])
 
         TextPanel.SetSizer(panel1sizer)
 
-
-        panel2sizer=wx.FlexGridSizer(11,1,6,0)
-        panel2sizer.AddMany([self.topCheck, self.listenCheck, self.detectCheck,self.copyCheck,self.fromlabel, self.fromchoice, tolabel, self.tochoice, self.pasteBtn, self.transBtn, self.copyBtn])
+        panel2sizer = wx.FlexGridSizer(11, 1, 6, 0)
+        panel2sizer.AddMany(
+            [self.topCheck, self.listenCheck, self.detectCheck, self.copyCheck, self.fromlabel, self.fromchoice,
+             tolabel, self.tochoice, self.pasteBtn, self.transBtn, self.copyBtn])
         buttonPanel.SetSizer(panel2sizer)
 
-        sizer = wx.FlexGridSizer(1,2,0,0)
-        sizer.AddMany([TextPanel,buttonPanel])
+        sizer = wx.FlexGridSizer(1, 2, 0, 0)
+        sizer.AddMany([TextPanel, buttonPanel])
 
         self.SetSizer(sizer)
         self.Fit()
 
         # 创建定时器
-        self.timer = wx.Timer(self)#创建定时器
-        self.Bind(wx.EVT_TIMER, self.setting.OnTimer, self.timer)#绑定一个定时器事件
-
+        self.timer = wx.Timer(self)  # 创建定时器
+        self.Bind(wx.EVT_TIMER, self.setting.OnTimer, self.timer)  # 绑定一个定时器事件
 
         # 绑定事件
         self.Bind(wx.EVT_CLOSE, self.OnClose)
         self.Bind(wx.EVT_ICONIZE,
                   self.OnIconfiy)  # 窗口最小化时，调用OnIconfiy,注意Wx窗体上的最小化按钮，触发的事件是 wx.EVT_ICONIZE,而根本就没有定义什么wx.EVT_MINIMIZE,但是最大化，有个wx.EVT_MAXIMIZE。
-
 
     def OnHide(self, event):
         self.Hide()
@@ -373,8 +349,9 @@ class MainFrame(wx.Frame):
 
 def main():
     app = wx.App()
-    setting=Setting()
+    setting = Setting()
     app.MainLoop()
 
-if __name__ == '__main__':  
+
+if __name__ == '__main__':
     main()

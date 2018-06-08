@@ -8,7 +8,7 @@ from googletrans import LANGUAGES
 import win32con
 from pkg_resources import resource_filename, Requirement
 
-# logopath=resource_filename(Requirement.parse("CopyTranslator"),'CopyTranslator/logo.ico')
+#logopath=resource_filename(Requirement.parse("CopyTranslator"),'CopyTranslator/logo.ico')
 logopath = 'logo.ico'
 
 
@@ -304,7 +304,7 @@ class MainFrame(wx.Frame):
         self.Bind(wx.EVT_CHECKBOX, self.setting.ReverseStayTop, self.topCheck)
 
         # 自动检测语言按钮
-        self.detectCheck = wx.CheckBox(buttonPanel, -1, 'Auto dectet language')
+        self.detectCheck = wx.CheckBox(buttonPanel, -1, 'Auto detect language')
         self.Bind(wx.EVT_CHECKBOX, self.setting.ReverseDete, self.detectCheck)
 
         # 监听剪贴板选框

@@ -1,7 +1,15 @@
 # CopyTranslator 
+
+[中文 Chinese](./README_zh.md)
+
 ## User manual for Windows users.
 
 Copy, Translate, and Paste with Google translate API.
+
+### Project Homepage
+
+https://github.com/elliottzheng/CopyTranslator
+
 ### Install
 1. Download the latest build for Windows from [QiniuCloud](http://onhdz331f.bkt.clouddn.com/CopyTranslator_0.0.3_installer.exe).
 2. Run the `shortcut.bat` in the program directory, it will create a shortcut on you desktop.

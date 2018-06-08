@@ -1,93 +1,53 @@
-CopyTranslator 
-
-![](https://img.shields.io/badge/language-python-blue.svg)
-![](https://img.shields.io/badge/license-MPL2.0-000000.svg)
-[![PyPI version](https://badge.fury.io/py/CopyTranslator.svg)](https://badge.fury.io/py/CopyTranslator)
-![](https://img.shields.io/badge/platform-linux|windows|osx-lightgrey.svg)
-[![Say Thanks!](https://img.shields.io/badge/Say%20Thanks-!-1EAEDB.svg)](https://saythanks.io/to/agentzheng)
-=== 
+# CopyTranslator 
+## User manual for Windows users.
 
 Copy, Translate, and Paste with Google translate API.
-## Warning, the readme file is out of date.
-The code version is 0.0.3. Please contact me at [admin@hypercube.top](mailto:admin@hypercube.top) to get latest release.
-## Get started
-### Environment
-- Python 2.7 or Python 3 and higher
-### Requirements
-**Only windows can automatically install `wxpython` using `pip`, in other OS you need to install `wxpython` manually.**
-#### Windows
+### Install
+1. Download the latest build for Windows from [QiniuCloud](http://onhdz331f.bkt.clouddn.com/CopyTranslator0.0.3_installer.exe).
+2. Run the `shortcut.bat` in the program directory, it will create a shortcut on you desktop.
+### Usage
+There are two frame modes you can choose from.
 
-- pip 
+- Main mode
+- Focus mode
 
-In windows, pip can help install all the install requirements.
-#### Unbuntu or other Linux release with GUI
-- pip
-- wxpython
-- xclip
+You can switch mode by the menu of taskbar icon.
 
-In linux, `wxpython` can't be installed using pip, and we need `xclip` to help `pyperclip` work.
+**Global hot key**: `Shift+F1`, you can use it to iconize the and restores the `CopyTranslator`.
 
-Here are the example to install the requirements
-```shell
-sudo apt-get install python-wxtools 
-sudo apt-get install xclip
-```
-For more information, refer to the installation of `wxpython` and `pyperclip`
+![taskbar0](./screenshot/focus_mode.png)
 
-#### OS X
-- wxpython
-- pip
+#### Main Mode
 
-In OS X, `wxpython` can't be installed using pip.
+Main mode provides an interactive frame.
 
-Please refer to the installation of `wxpython`.
+- `Stay on top`: Let the `CopyTranslator` window always above other windows.
 
-One possible way is to install `wxpython` in OS X using `homebrew`
+- `Listen on Clipboard`: Listen on Clipboard and translate it automatically.
 
-```shell
-brew install wxpython
-```
+- `Auto detect language`: Detect the source language.
 
-### Setup
+- `Auto copy`: Check it if you want it to copy the result automatically after auto translate.
 
-There are 2 ways to install `CopyTranslator` , **you can get latest features if you install from source.**
+- `Source language`: The default is English.
 
-### Install this Application using `pip`:
+- `Target language`: The default is Chinese(simplified).
 
-```shell
-pip install CopyTranslator
-```
+  ![win10.png](./screenshot/screenshot.png)
+#### Focus Mode
 
-### Install from source 
+Focus mode provides only a result frame, for you to focus on the result better. (Remember to check the `Listen to Clipboard` and `Stay on top` options.)
 
-1. `git clone https://github.com/elliottzheng/CopyTranslator.git`
-2. `cd CopyTranslator`
-3. `python setup.py install`
+You can resize it freely.
 
-For windows user, after clone the repository to local, you can just double click at the `install.bat` to install, and `start.bat` to start the CopyTranslator.
+![1528452758866](J:\python\CopyTranslator\screenshot\focusmode.png)
 
-### Pre build version for Windows 10
-Contact me to get latest build.
+### Highlights
+#### Multi segment Co-translation
 
-## Example usage
+![entoch](J:\python\CopyTranslator\screenshot\entoch.png)
 
-Run shell command
-```shell
-CopyTranslator
-```
-**For Windows users**, you can use command below instead to free yourself from console.
-```cmd
-CopyTranslator_win
-```
-## Screenshots
-### Windows 10
-![win10.png](./screenshot/screenshot.png)
-
-![screenshot2](./screenshot/screenshot2.png)
-
-### Unbuntu
-![screenshot-unbuntu.png](./screenshot/screenshot-unbuntu.png)
-
+![chtoen](.\screenshot\chtoen.png).
 
 
 ## Acknowledgements

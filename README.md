@@ -3,7 +3,7 @@
 
 Copy, Translate, and Paste with Google translate API.
 ### Install
-1. Download the latest build for Windows from [QiniuCloud](http://onhdz331f.bkt.clouddn.com/CopyTranslator0.0.3_installer.exe).
+1. Download the latest build for Windows from [QiniuCloud](http://onhdz331f.bkt.clouddn.com/CopyTranslator_0.0.3_installer.exe).
 2. Run the `shortcut.bat` in the program directory, it will create a shortcut on you desktop.
 ### Usage
 There are two frame modes you can choose from.
@@ -40,14 +40,14 @@ Focus mode provides only a result frame, for you to focus on the result better. 
 
 You can resize it freely.
 
-![1528452758866](.\screenshot\focusmode.png)
+![1528452758866](./screenshot/focusmode.png)
 
 ### Highlights
 #### Multi segment Co-translation
 
-![entoch](.\screenshot\entoch.png)
+![entoch](./screenshot/entoch.png)
 
-![chtoen](.\screenshot\chtoen.png).
+![chtoen](./screenshot/chtoen.png).
 
 
 ## Acknowledgements

@@ -21,7 +21,11 @@ https://github.com/elliottzheng/CopyTranslator
 
 **您可以通过任务栏图标菜单切换模式。**
 
-**全局热键**: `Shift+F1`，你可以用它来最小化和恢复`CopyTranslator`.
+**全局热键**: `Shift+F1`，你可以用它来最小化和恢复`CopyTranslator`。
+
+**全局热键**: `Shift+F2`，你可以用它在`主模式`和`专注模式`中切换。
+
+
 
 ![taskbar0](./screenshot/focus_mode.png)
 
@@ -48,7 +52,10 @@ https://github.com/elliottzheng/CopyTranslator
 
 你可以对它自由自由拉伸。
 
-![1528452758866](./screenshot/focusmode.png)
+- 拖动窗口顶部橙色(你的电脑的主题颜色)区域,或者是边框可以拉伸变形这个窗口；
+- 拖动顶部蓝线以上，橙色以下偏灰色区域可以整体移动窗口
+
+![1528470182001](.\screenshot\newfocus.png)
 
 ### 亮点
 #### 多段同时翻译

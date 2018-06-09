@@ -48,7 +48,7 @@ Focus mode provides only a result frame, for you to focus on the result better. 
 
 You can resize it freely.
 
-![1528452758866](./screenshot/focusmode.png)
+![1528452758866](./screenshot/newfocus.png)
 
 ### Highlights
 #### Multi segment Co-translation

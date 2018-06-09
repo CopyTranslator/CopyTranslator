@@ -8,8 +8,8 @@ from googletrans import LANGUAGES
 import win32con
 from pkg_resources import resource_filename, Requirement
 
-logopath=resource_filename(Requirement.parse("CopyTranslator"),'CopyTranslator/logo.ico')
-#logopath = 'logo.ico'
+#logopath=resource_filename(Requirement.parse("CopyTranslator"),'CopyTranslator/logo.ico')
+logopath = 'logo.ico'
 
 
 class Setting():
@@ -73,11 +73,11 @@ class Setting():
     def ReverseStayTop(self, event):
         self.StayTop = not self.StayTop
         if self.StayTop:
-            self.subFrame.SetWindowStyle(wx.STAY_ON_TOP | wx.DEFAULT_FRAME_STYLE)
-            self.mainFrame.SetWindowStyle(wx.STAY_ON_TOP | wx.DEFAULT_FRAME_STYLE ^ wx.RESIZE_BORDER)
+            self.subFrame.SetWindowStyle(wx.STAY_ON_TOP | SubFrame.subStyle)
+            self.mainFrame.SetWindowStyle(wx.STAY_ON_TOP | MainFrame.mainStyle)
         else:
-            self.subFrame.SetWindowStyle(wx.DEFAULT_FRAME_STYLE)
-            self.mainFrame.SetWindowStyle(wx.DEFAULT_FRAME_STYLE ^ wx.RESIZE_BORDER)
+            self.subFrame.SetWindowStyle(SubFrame.subStyle)
+            self.mainFrame.SetWindowStyle(MainFrame.mainStyle)
 
     def setSrc(self, string):
         self.src = self.normalize(string)
@@ -206,7 +206,7 @@ class TaskBarIcon(wx.adv.TaskBarIcon):
 
 
     def OnAbout(self, event):
-        wx.MessageBox('CopyTranslator v0.0.3 --Elliott Zheng\nCopy, translate and paste with Google translate API.',
+        wx.MessageBox('CopyTranslator v0.0.4 --Elliott Zheng\nCopy, translate and paste with Google translate API.',
                       'About')
 
     def OnCloseshow(self, event):
@@ -248,32 +248,45 @@ class TaskBarIcon(wx.adv.TaskBarIcon):
 
 
 class SubFrame(wx.Frame):
-
+    subStyle=wx.DEFAULT_FRAME_STYLE ^ wx.CAPTION
     def __init__(self, setting):
         wx.Frame.__init__(self, None, -1, 'CopyTranslator -Focus Mode',
                           size=(465, 345))
         self.SetIcon(wx.Icon(logopath, wx.BITMAP_TYPE_ICO))
-        self.SetWindowStyle(wx.DEFAULT_FRAME_STYLE)
+        self.SetWindowStyle(SubFrame.subStyle)
         self.setting = setting
+        self.panel=TestPanel(self)
+        sizer=wx.BoxSizer(wx.VERTICAL)
+        sizer.Add((-1, 15))
+        self.destText = wx.TextCtrl(self.panel, -1, "",
+                                    style=wx.TE_MULTILINE|wx.TE_READONLY)  # 创建一个文本控件
 
-        self.destText = wx.TextCtrl(self, -1, "",
-                                    style=wx.TE_MULTILINE)  # 创建一个文本控件
+        sizer.Add(self.destText,-1,wx.EXPAND)
+
+        self.panel.SetSizer(sizer)
         # 绑定事件
         self.Bind(wx.EVT_CLOSE, self.OnClose)
         self.Bind(wx.EVT_ICONIZE,
                   self.OnIconfiy)  # 窗口最小化时，调用OnIconfiy,注意Wx窗体上的最小化按钮，触发的事件是 wx.EVT_ICONIZE,而根本就没有定义什么wx.EVT_MINIMIZE,但是最大化，有个wx.EVT_MAXIMIZE。
         self.regHotKey()
         self.Bind(wx.EVT_HOTKEY, self.setting.BossKey, id=self.hotKeyId)
+        self.Bind(wx.EVT_HOTKEY, self.setting.ChangeMode, id=self.hotKeyId2)
 
     def regHotKey(self):
         """
-        This function registers the hotkey Alt+F1 with id=100
+        This function registers the hotkey Shift+F1 with id=100
         """
-        self.hotKeyId = 100
+        self.hotKeyId = wx.NewId()
         self.RegisterHotKey(
             self.hotKeyId,  # a unique ID for this hotkey
             win32con.MOD_SHIFT,  # the modifier key
             win32con.VK_F1)  # the key to watch for shift+F1
+
+        self.hotKeyId2 = wx.NewId()
+        self.RegisterHotKey(
+            self.hotKeyId2,  # a unique ID for this hotkey
+            win32con.MOD_SHIFT,  # the modifier key
+            win32con.VK_F2)  # the key to watch for shift+F1
 
 
     def OnHide(self, event):
@@ -288,13 +301,13 @@ class SubFrame(wx.Frame):
 
 
 class MainFrame(wx.Frame):
-
+    mainStyle=wx.DEFAULT_FRAME_STYLE ^ wx.RESIZE_BORDER^wx.MAXIMIZE_BOX
     def __init__(self, setting):
         langList = list(LANGCODES.keys())
         wx.Frame.__init__(self, None, -1, 'CopyTranslator',
                           size=(465, 345))
         self.SetIcon(wx.Icon(logopath, wx.BITMAP_TYPE_ICO))
-        self.SetWindowStyle(wx.DEFAULT_FRAME_STYLE ^ wx.RESIZE_BORDER)
+        self.SetWindowStyle(MainFrame.mainStyle)
         self.setting = setting
         TextPanel = wx.Panel(self, -1)
         buttonPanel = wx.Panel(self, -1)
@@ -382,6 +395,41 @@ class MainFrame(wx.Frame):
         # self.Destroy()
         self.Hide()
 
+class TestPanel(wx.Panel):
+    def __init__(self, parent):
+        wx.Panel.__init__(self, parent, -1)
+        self.leftDown = False
+        self.parentFrame = parent
+        while self.parentFrame.GetParent() is not None:
+            self.parentFrame = self.parentFrame.GetParent()
+        self.Bind(wx.EVT_LEFT_DOWN, self.OnLeftDown)
+        self.Bind(wx.EVT_LEFT_UP, self.OnLeftUp)
+        self.Bind(wx.EVT_LEFT_DCLICK, self.OnLeftDClick)
+        self.Bind(wx.EVT_MOTION, self.OnMouseMove)
+        self.Bind(wx.EVT_RIGHT_UP,self.parentFrame.setting.Copy)
+
+    def OnLeftDClick(self, evt):
+        self.parentFrame.Close()
+
+
+    def OnLeftDown(self, evt):
+        self.CaptureMouse()
+        self.leftDown = True
+        pos = self.ClientToScreen(evt.GetPosition())
+        origin = self.parentFrame.GetPosition()
+        dx = pos.x - origin.x
+        dy = pos.y - origin.y
+        self.delta = wx.Point(dx, dy)
+
+    def OnLeftUp(self, evt):
+        self.ReleaseMouse()
+        self.leftDown = False
+
+    def OnMouseMove(self, evt):
+        if evt.Dragging() and self.leftDown:
+            pos = self.ClientToScreen(evt.GetPosition())
+            fp = (pos.x - self.delta.x, pos.y - self.delta.y)
+            self.parentFrame.Move(fp)
 
 def main():
     app = wx.App()

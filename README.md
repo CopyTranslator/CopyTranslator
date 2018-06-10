@@ -11,7 +11,9 @@ Copy, Translate, and Paste with Google translate API.
 https://github.com/elliottzheng/CopyTranslator
 
 ### Install
-1. Download the latest build for Windows from [QiniuCloud](http://onhdz331f.bkt.clouddn.com/CopyTranslator_0.0.3_installer.exe).
+1. Download the latest build for Windows from 
+   - [Github Releases](https://github.com/elliottzheng/CopyTranslator/releases) 
+   - Latest builds on master:[![Download](https://api.bintray.com/packages/elliottzheng/CopyTranslator/CopyTranslator/images/download.svg) ](https://bintray.com/elliottzheng/CopyTranslator/CopyTranslator/_latestVersion)
 2. Run the `shortcut.bat` in the program directory, it will create a shortcut on you desktop.
 ### Usage
 There are two frame modes you can choose from.
@@ -22,6 +24,8 @@ There are two frame modes you can choose from.
 You can switch mode by the menu of taskbar icon.
 
 **Global hot key**: `Shift+F1`, you can use it to iconize the and restores the `CopyTranslator`.
+
+**Global hot key**: `Shift+F2`, you can use it to switch between different frame modes.
 
 ![taskbar0](./screenshot/focus_mode.png)
 
@@ -47,6 +51,9 @@ Main mode provides an interactive frame.
 Focus mode provides only a result frame, for you to focus on the result better. (Remember to check the `Listen to Clipboard` and `Stay on top` options.)
 
 You can resize it freely.
+
+- Drag the orange (or color of your theme) area at the top of the window, or the border can resize the window.
+- You can move the window by drag the gray area between blue line above and  the orange area.
 
 ![1528452758866](./screenshot/newfocus.png)
 

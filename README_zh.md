@@ -11,7 +11,9 @@
 https://github.com/elliottzheng/CopyTranslator
 
 ### 安装
-1. 从[QiniuCloud](http://onhdz331f.bkt.clouddn.com/CopyTranslator_0.0.3_installer.exe)下载最新的Windows版本。
+1. 以下列方式下载最新的Windows版本
+- [Github Releases](https://github.com/elliottzheng/CopyTranslator/releases)。
+- master分支的最新构建版本：[![Download](https://api.bintray.com/packages/elliottzheng/CopyTranslator/CopyTranslator/images/download.svg) ](https://bintray.com/elliottzheng/CopyTranslator/CopyTranslator/_latestVersion)
 2. 在程序目录中运行`shortcut.bat`，它会在桌面上创建一个快捷方式。
 ### 使用
 有两种可供选择的模式。

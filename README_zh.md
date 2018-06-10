@@ -11,9 +11,9 @@
 https://github.com/elliottzheng/CopyTranslator
 
 ### 安装
-1. 以下列方式下载最新的Windows版本
+1. 以下列方式下载最新的Windows版本：![Download](https://api.bintray.com/packages/elliottzheng/CopyTranslator/CopyTranslator/images/download.svg) 
 - [Github Releases](https://github.com/elliottzheng/CopyTranslator/releases)。
-- master分支的最新构建版本：[![Download](https://api.bintray.com/packages/elliottzheng/CopyTranslator/CopyTranslator/images/download.svg) ](https://bintray.com/elliottzheng/CopyTranslator/CopyTranslator/_latestVersion)
+- 国内用户推荐使用：[Gitee Releases](https://gitee.com/ylzheng/CopyTranslator/releases)
 2. 在程序目录中运行`shortcut.bat`，它会在桌面上创建一个快捷方式。
 ### 使用
 有两种可供选择的模式。
@@ -57,7 +57,7 @@ https://github.com/elliottzheng/CopyTranslator
 - 拖动窗口顶部橙色(你的电脑的主题颜色)区域,或者是边框可以拉伸变形这个窗口；
 - 拖动顶部蓝线以上，橙色以下偏灰色区域可以整体移动窗口
 
-![1528470182001](.\screenshot\newfocus.png)
+![1528470182001](./screenshot/newfocus.png)
 
 ### 亮点
 #### 多段同时翻译

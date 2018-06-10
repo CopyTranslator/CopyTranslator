@@ -11,9 +11,9 @@ Copy, Translate, and Paste with Google translate API.
 https://github.com/elliottzheng/CopyTranslator
 
 ### Install
-1. Download the latest build for Windows from 
-   - [Github Releases](https://github.com/elliottzheng/CopyTranslator/releases) 
-   - Latest builds on master:[![Download](https://api.bintray.com/packages/elliottzheng/CopyTranslator/CopyTranslator/images/download.svg) ](https://bintray.com/elliottzheng/CopyTranslator/CopyTranslator/_latestVersion)
+1. You can download the latest build [![Download](https://api.bintray.com/packages/elliottzheng/CopyTranslator/CopyTranslator/images/download.svg) ](https://bintray.com/elliottzheng/CopyTranslator/CopyTranslator/_latestVersion)for Windows from 
+   - [Github Releases](https://github.com/elliottzheng/CopyTranslator/releases)
+   - [Gitee Releases](https://gitee.com/ylzheng/CopyTranslator/releases):Especialy for Chinese users.
 2. Run the `shortcut.bat` in the program directory, it will create a shortcut on you desktop.
 ### Usage
 There are two frame modes you can choose from.

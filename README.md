@@ -53,7 +53,10 @@ Focus mode provides only a result frame, for you to focus on the result better. 
 You can resize it freely.
 
 - Drag the orange (or color of your theme) area at the top of the window, or the border can resize the window.
-- You can move the window by drag the gray area between blue line above and  the orange area.
+- Let‘s define the gray area between blue line above and  the orange area as `Flash area`.
+  - You can move the window by drag the `Flash area`.
+  - Double click on the `Flash area` will hide the window.
+  - Right click on the `Flash area` will copy the translated result to clipboard.
 
 ![1528452758866](./screenshot/newfocus.png)
 

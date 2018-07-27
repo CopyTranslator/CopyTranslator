@@ -15,6 +15,12 @@ https://github.com/elliottzheng/CopyTranslator
    - [Github Releases](https://github.com/elliottzheng/CopyTranslator/releases)
    - [Gitee Releases](https://gitee.com/ylzheng/CopyTranslator/releases):Especialy for Chinese users.
 2. Run the `shortcut.bat` in the program directory, it will create a shortcut on you desktop.
+## Important Update of v0.0.5
+
+**Redefining the Copy of CopyTranslator ** To reduce the trouble of multiple ctrl+c or right click replication, CopyTranslator introduces a mechanism to copy  the selected text  after long press and release. After turning on the `listen to clipboard` option, just select the text, and hover the mouse over the selected text to release the mouse over 0.4s. (in fact, 0.4s is very short), that is, **after long press and  release, it can be copied.** This can prevent us from over moving the mouse (right click to choose Copy) or tired of  pressing ctrl+c.
+
+![longpresscopy](/screenshot/longpresscopy.gif)
+
 ### Usage
 There are two frame modes you can choose from.
 
@@ -44,6 +50,8 @@ Main mode provides an interactive frame.
 - `Source language`: The default is English.
 
 - `Target language`: The default is Chinese(simplified).
+
+- `Switch mode`: Switch from main mode to focus mode.
 
   ![win10.png](./screenshot/screenshot.png)
 #### Focus Mode

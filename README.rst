@@ -1,99 +1,112 @@
 CopyTranslator
+==============
 
-|image0| |image1| |PyPI version| |image3| |Say Thanks!| 
+`中文 Chinese <./README_zh.md>`__
 
-Copy, Translate, and Paste with Google translate API
+User manual for Windows users.
+------------------------------
 
-Get started
------------
+Copy, Translate, and Paste with Google translate API.
 
-Environment
-~~~~~~~~~~~
+Project Homepage
+~~~~~~~~~~~~~~~~
 
--  Python 2.7 or Python 3 and higher ### Requirements **Only windows can
-   automatically install ``wxpython`` using ``pip``, in other OS you
-   need to install ``wxpython`` manually.** #### Windows
+https://github.com/elliottzheng/CopyTranslator
 
--  pip
-
-In windows, pip can help install all the install requirements. ####
-Unbuntu or other Linux release with GUI - pip - wxpython - xclip
-
-In linux, ``wxpython`` can't be installed using pip, and we need
-``xclip`` to help ``pyperclip`` work.
-
-Here are the example to install the requirements
-
-.. code:: shell
-
-    sudo apt-get install python-wxtools 
-    sudo apt-get install xclip
-
-For more information, refer to the installation of ``wxpython`` and
-``pyperclip``
-
-OS X
-^^^^
-
--  wxpython
--  pip
-
-In OS X, ``wxpython`` can't be installed using pip.
-
-Please refer to the installation of ``wxpython``.
-
-One possible way is to install ``wxpython`` in OS X using ``homebrew``
-
-.. code:: shell
-
-    brew install wxpython
-
-Setup
-~~~~~
-
-Install this Application using ``pip``:
-
-.. code:: shell
-
-    pip install CopyTranslator
-
-Example usage
--------------
-
-Run shell command
-
-.. code:: shell
-
-    CopyTranslator
-
-**For Windows users**, you can use command below instead to free
-yourself from console.
-
-.. code:: cmd
-
-    CopyTranslator_win
-
-Screenshots
------------
-
-Windows 10
-~~~~~~~~~~
-
-.. figure:: ./screenshot/screenshot.png
-   :alt: win10.png
-
-   win10.png
-.. figure:: .\screenshot\screenshot2.png
-   :alt: 1527275165973
-
-   1527275165973
-Unbuntu
+Install
 ~~~~~~~
 
-.. figure:: ./screenshot/screenshot-unbuntu.png
-   :alt: screenshot-unbuntu.png
+1. You can download the latest build |image0|\ for Windows from
 
-   screenshot-unbuntu.png
+   -  `Github
+      Releases <https://github.com/elliottzheng/CopyTranslator/releases>`__
+
+   -  `Gitee
+      Releases <https://gitee.com/ylzheng/CopyTranslator/releases>`__:Especialy
+      for Chinese users.
+
+2. Run the ``shortcut.bat`` in the program directory, it will create a
+   shortcut on you desktop.
+
+Usage
+~~~~~
+
+There are two frame modes you can choose from.
+
+-  Main mode
+
+-  Focus mode
+
+You can switch mode by the menu of taskbar icon.
+
+**Global hot key**: ``Shift+F1``, you can use it to iconize the and
+restores the ``CopyTranslator``.
+
+**Global hot key**: ``Shift+F2``, you can use it to switch between
+different frame modes.
+
+.. figure:: J:\python\CopyTranslator\screenshot\focus_mode.png
+   :alt: 
+
+Main Mode
+^^^^^^^^^
+
+Main mode provides an interactive frame.
+
+-  ``Stay on top``: Let the ``CopyTranslator`` window always above other
+   windows.
+
+-  ``Listen on Clipboard``: Listen on Clipboard and translate it
+   automatically.
+
+-  ``Auto detect language``: Detect the source language.
+
+-  ``Auto copy``: Check it if you want it to copy the result
+   automatically after auto translate.
+
+-  ``Source language``: The default is English.
+
+-  ``Target language``: The default is Chinese(simplified).
+
+   .. figure:: J:\python\CopyTranslator\screenshot\screenshot.png
+      :alt: 
+
+Focus Mode
+^^^^^^^^^^
+
+Focus mode provides only a result frame, for you to focus on the result
+better. (Remember to check the ``Listen to Clipboard`` and
+``Stay on top`` options.)
+
+You can resize it freely.
+
+-  Drag the orange (or color of your theme) area at the top of the
+   window, or the border can resize the window.
+
+-  Let‘s define the gray area between blue line above and the orange
+   area as ``Flash area``.
+
+   -  You can move the window by drag the ``Flash area``.
+
+   -  Double click on the ``Flash area`` will hide the window.
+
+   -  Right click on the ``Flash area`` will copy the translated result
+      to clipboard.
+
+.. figure:: J:\python\CopyTranslator\screenshot\newfocus.png
+   :alt: 
+
+Highlights
+~~~~~~~~~~
+
+Multi segment Co-translation
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. figure:: J:\python\CopyTranslator\screenshot\entoch.png
+   :alt: 
+
+|image1|.
+
 Acknowledgements
 ----------------
 
@@ -108,10 +121,6 @@ License
 The code is licensed under Mozilla Public License 2.0. For more details,
 read the `LICENSE <./LICENSE>`__ file.
 
-.. |image0| image:: https://img.shields.io/badge/language-python-blue.svg
-.. |image1| image:: https://img.shields.io/badge/license-MPL2.0-000000.svg
-.. |PyPI version| image:: https://badge.fury.io/py/CopyTranslator.svg
-   :target: https://badge.fury.io/py/CopyTranslator
-.. |image3| image:: https://img.shields.io/badge/platform-linux|windows|osx-lightgrey.svg
-.. |Say Thanks!| image:: https://img.shields.io/badge/Say%20Thanks-!-1EAEDB.svg
-   :target: https://saythanks.io/to/agentzheng
+.. |image0| image:: https://api.bintray.com/packages/elliottzheng/CopyTranslator/CopyTranslator/images/download.svg
+   :target: https://bintray.com/elliottzheng/CopyTranslator/CopyTranslator/_latestVersion
+.. |image1| image:: J:\python\CopyTranslator\screenshot\chtoen.png

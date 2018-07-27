@@ -1,19 +1,32 @@
 import wx
 import wx.adv
-import pyperclip
 import regex as re
 from googletrans import Translator
 from googletrans import LANGCODES
 from googletrans import LANGUAGES
+
+from pynput import mouse
+import time
+import pyperclip
 import win32con
-from pkg_resources import resource_filename, Requirement
+from pynput.keyboard import Key, Controller
 
 #logopath=resource_filename(Requirement.parse("CopyTranslator"),'CopyTranslator/logo.ico')
 logopath = 'logo.ico'
 
 
+ori_x=0
+ori_y=0
+
+t1=time.time()
+
 class Setting():
     def __init__(self):
+
+        # Collect events until released
+        self.mouseListener=mouse.Listener(on_click=self.onLongClick)
+        self.keyboard = Controller()
+
         self.IsListen = False
         self.IsCopy = False
         self.IsDete = False
@@ -53,6 +66,7 @@ class Setting():
         self.mainFrame.listenCheck.SetValue(self.IsListen)
         if self.IsListen:
             self.mainFrame.timer.Start(3000)  # 设定时间间隔为1000毫秒,并启动定时器
+            self.mouseListener.start()
         else:
             self.mainFrame.timer.Stop()
 
@@ -84,7 +98,7 @@ class Setting():
         self.mainFrame.srcText.SetValue(self.src)
 
     def setResult(self, string):
-        self.result = "   "+string.replace('\n','\n   ')
+        self.result = ""+string.replace('\n','\r\n')+'\r\n'
         self.mainFrame.destText.SetValue(self.result)
         self.subFrame.destText.SetValue(self.result)
 
@@ -145,6 +159,11 @@ class Setting():
         self.subFrame.Show(not self.IsMain)
         self.mainFrame.Show(self.IsMain)
 
+    def SwitchMode(self, event):
+        self.IsMain = not self.IsMain
+        self.subFrame.Show(not self.IsMain)
+        self.mainFrame.Show(self.IsMain)
+
     def OnTaskBarLeftDClick(self, event):
         if self.IsMain:
             frame = self.mainFrame
@@ -170,6 +189,20 @@ class Setting():
             frame.Show(True)
             frame.Raise()
 
+    def simulateCopy(self):
+        with self.keyboard.pressed(Key.ctrl):
+            self.keyboard.press('c')
+            self.keyboard.release('c')
+
+    def onLongClick(self,x, y, button, pressed):
+        global t1, ori_x, ori_y
+        if pressed:
+            t1 = time.time()
+            ori_x = x
+            ori_y = y
+        else:
+            if time.time() - t1 > 0.4 and abs(ori_y - y) < 3 and abs(ori_x - x) < 3:
+                self.simulateCopy()
 
 class TaskBarIcon(wx.adv.TaskBarIcon):
     ID_Top = wx.NewId()
@@ -206,7 +239,7 @@ class TaskBarIcon(wx.adv.TaskBarIcon):
 
 
     def OnAbout(self, event):
-        wx.MessageBox('CopyTranslator v0.0.4 --Elliott Zheng\nCopy, translate and paste with Google translate API.',
+        wx.MessageBox('CopyTranslator v0.0.5 --Elliott Zheng\nCopy, translate and paste with Google translate API.',
                       'About')
 
     def OnCloseshow(self, event):
@@ -303,9 +336,11 @@ class SubFrame(wx.Frame):
 class MainFrame(wx.Frame):
     mainStyle=wx.DEFAULT_FRAME_STYLE ^ wx.RESIZE_BORDER^wx.MAXIMIZE_BOX
     def __init__(self, setting):
+
         langList = list(LANGCODES.keys())
         wx.Frame.__init__(self, None, -1, 'CopyTranslator',
                           size=(465, 345))
+
         self.SetIcon(wx.Icon(logopath, wx.BITMAP_TYPE_ICO))
         self.SetWindowStyle(MainFrame.mainStyle)
         self.setting = setting
@@ -328,8 +363,9 @@ class MainFrame(wx.Frame):
         self.copyCheck = wx.CheckBox(buttonPanel, -1, 'Auto copy')
         self.Bind(wx.EVT_CHECKBOX, self.setting.ReverseCopy, self.copyCheck)
 
-        self.pasteBtn = wx.Button(buttonPanel, -1, "Paste")
-        self.Bind(wx.EVT_BUTTON, self.setting.paste, self.pasteBtn)
+        # 切换模式
+        self.switchBtn = wx.Button(buttonPanel, -1, "Switch Mode")
+        self.Bind(wx.EVT_BUTTON, self.setting.SwitchMode, self.switchBtn)
 
         self.transBtn = wx.Button(buttonPanel, -1, "Translate")
         self.Bind(wx.EVT_BUTTON, self.setting.translateCtrl, self.transBtn)
@@ -364,7 +400,7 @@ class MainFrame(wx.Frame):
         panel2sizer = wx.FlexGridSizer(11, 1, 6, 0)
         panel2sizer.AddMany(
             [self.topCheck, self.listenCheck, self.detectCheck, self.copyCheck, self.fromlabel, self.fromchoice,
-             tolabel, self.tochoice, self.pasteBtn, self.transBtn, self.copyBtn])
+             tolabel, self.tochoice, self.switchBtn, self.transBtn, self.copyBtn])
         buttonPanel.SetSizer(panel2sizer)
 
         sizer = wx.FlexGridSizer(1, 2, 0, 0)
@@ -434,6 +470,7 @@ class TestPanel(wx.Panel):
 def main():
     app = wx.App()
     setting = Setting()
+
     app.MainLoop()
 
 

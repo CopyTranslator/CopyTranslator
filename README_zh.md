@@ -10,6 +10,12 @@
 
 https://github.com/elliottzheng/CopyTranslator
 
+## v0.0.5 的重要更新 
+
+**重新定义CopyTranslator的 Copy，**为减少多次按ctrl+c或者是右键复制所带来的麻烦，CopyTranslator引入一个选中长按自动复制的机制，在打开监听剪贴板选项后，只需选中文字，并将鼠标悬停在选中文字上方**长按不动超过0.4s后释放鼠标（其实0.4s很短的啦），**也就是**长按后释放**，即可复制。这可以避免我们过度移动鼠标（右键再选择复制）或者是疯狂按ctrl+c按得很累。
+
+![longpresscopy](screenshot/longpresscopy.gif)
+
 ### 安装
 1. 以下列方式下载最新的Windows版本：![Download](https://api.bintray.com/packages/elliottzheng/CopyTranslator/CopyTranslator/images/download.svg) 
 - [Github Releases](https://github.com/elliottzheng/CopyTranslator/releases)。
@@ -46,6 +52,8 @@ https://github.com/elliottzheng/CopyTranslator
 - `Source language`：默认是English。
 
 - `Target language`：默认是简体中文.
+
+- `Switch Mode`: 在主模式和专注模式间切换
 
   ![win10.png](./screenshot/screenshot.png)
 #### 专注模式

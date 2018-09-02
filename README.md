@@ -1,5 +1,7 @@
 # CopyTranslator 
 
+![logo](./logo.png)
+
 [中文 Chinese](./README_zh.md)
 
 ## User manual for Windows users.
@@ -15,9 +17,11 @@ https://github.com/elliottzheng/CopyTranslator
    - [Github Releases](https://github.com/elliottzheng/CopyTranslator/releases)
    - [Gitee Releases](https://gitee.com/ylzheng/CopyTranslator/releases):Especialy for Chinese users.
 2. Run the `shortcut.bat` in the program directory, it will create a shortcut on you desktop.
-## Important Update of v0.0.5
 
-**Redefining the Copy of CopyTranslator ** To reduce the trouble of multiple ctrl+c or right click replication, CopyTranslator introduces a mechanism to copy  the selected text  after long press and release. After turning on the `listen to clipboard` option, just select the text, and hover the mouse over the selected text to release the mouse over 0.4s. (in fact, 0.4s is very short), that is, **after long press and  release, it can be copied.** This can prevent us from over moving the mouse (right click to choose Copy) or tired of  pressing ctrl+c.
+
+## Important Update of v0.0.5.1
+
+**Redefining the Copy of CopyTranslator**  To reduce the trouble of multiple ctrl+c or right click replication, CopyTranslator introduces a mechanism to copy  the selected text  after long press and release. After turning on the `listen to clipboard` option, just select the text, and hover the mouse over the selected text to release the mouse over 0.1s. (in fact, 0.1s is very short), that is, **after long press and  release, it can be copied.** This can prevent us from over moving the mouse (right click to choose Copy) or tired of  pressing ctrl+c.
 
 ![longpresscopy](/screenshot/longpresscopy.gif)
 
@@ -29,7 +33,7 @@ There are two frame modes you can choose from.
 
 You can switch mode by the menu of taskbar icon.
 
-**Global hot key**: `Shift+F1`, you can use it to iconize the and restores the `CopyTranslator`.
+**Global hot key**: `Shift+F1`, you can use it to iconize the and restores the `CopyTranslator`.(notice: this might clash in some laptops)
 
 **Global hot key**: `Shift+F2`, you can use it to switch between different frame modes.
 
@@ -69,7 +73,7 @@ You can resize it freely.
 ![1528452758866](./screenshot/newfocus.png)
 
 ### Highlights
-#### Multi segment Co-translation
+#### Multi segments Co-translation
 
 ![entoch](./screenshot/entoch.png)
 

@@ -1,5 +1,7 @@
 # CopyTranslator 
 
+![logo](./logo.png)
+
 [英语 English](./README.md)
 
 ## Windows用户使用手册
@@ -10,9 +12,9 @@
 
 https://github.com/elliottzheng/CopyTranslator
 
-## v0.0.5 的重要更新 
+## v0.0.5.1 的重要更新 
 
-**重新定义CopyTranslator的 Copy，**为减少多次按ctrl+c或者是右键复制所带来的麻烦，CopyTranslator引入一个选中长按自动复制的机制，在打开监听剪贴板选项后，只需选中文字，并将鼠标悬停在选中文字上方**长按不动超过0.4s后释放鼠标（其实0.4s很短的啦），**也就是**长按后释放**，即可复制。这可以避免我们过度移动鼠标（右键再选择复制）或者是疯狂按ctrl+c按得很累。
+**重新定义CopyTranslator的 Copy，**为减少多次按ctrl+c或者是右键复制所带来的麻烦，CopyTranslator引入一个选中长按自动复制的机制，在打开监听剪贴板选项后，只需选中文字，并将鼠标悬停在选中文字上方**长按不动超过0.1s后释放鼠标（其实0.1s很短的啦），**也就是**长按后释放**，即可复制。这可以避免我们过度移动鼠标（右键再选择复制）或者是疯狂按ctrl+c按得很累。
 
 ![longpresscopy](screenshot/longpresscopy.gif)
 
@@ -29,7 +31,7 @@ https://github.com/elliottzheng/CopyTranslator
 
 **您可以通过任务栏图标菜单切换模式。**
 
-**全局热键**: `Shift+F1`，你可以用它来最小化和恢复`CopyTranslator`。
+**全局热键**: `Shift+F1`，你可以用它来最小化和恢复`CopyTranslator`。(注：可能与部分笔记本电脑快捷键冲突)
 
 **全局热键**: `Shift+F2`，你可以用它在`主模式`和`专注模式`中切换。
 
@@ -60,7 +62,7 @@ https://github.com/elliottzheng/CopyTranslator
 
 专注模式只提供一个结果窗口，让您更好地关注结果。 （注意选中“Listen on Clipboard”和“Stay on top”选项。）
 
-你可以对它自由自由拉伸。
+你可以对它自由拉伸。
 
 - 拖动窗口顶部橙色(你的电脑的主题颜色)区域,或者是边框可以拉伸变形这个窗口；
 
@@ -71,9 +73,8 @@ https://github.com/elliottzheng/CopyTranslator
   - 双击`闪区`可以隐藏窗口
 
   - 右击`闪区`可以复制翻译结果
-![1528470182001](./screenshot/newfocus.png)
+    ![1528470182001](./screenshot/newfocus.png)
 
-    
 
 ### 亮点
 #### 多段同时翻译

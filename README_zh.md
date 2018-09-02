@@ -19,9 +19,10 @@ https://github.com/elliottzheng/CopyTranslator
 ![longpresscopy](screenshot/longpresscopy.gif)
 
 ### 安装
-1. 以下列方式下载最新的Windows版本：![Download](https://api.bintray.com/packages/elliottzheng/CopyTranslator/CopyTranslator/images/download.svg) 
+1. 以下列方式下载最新的Windows版本：
+- 非程序员用户推荐点击右边的图标从Bintray下载: ![Download](https://api.bintray.com/packages/elliottzheng/CopyTranslator/CopyTranslator/images/download.svg) 
 - [Github Releases](https://github.com/elliottzheng/CopyTranslator/releases)。
-- 国内用户推荐使用：[Gitee Releases](https://gitee.com/ylzheng/CopyTranslator/releases)
+- [Gitee Releases](https://gitee.com/ylzheng/CopyTranslator/releases)
 2. 在程序目录中运行`shortcut.bat`，它会在桌面上创建一个快捷方式。
 ### 使用
 有两种可供选择的模式。

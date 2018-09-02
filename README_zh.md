@@ -28,7 +28,7 @@
 
 那么复译是如何解决这些问题呢
 
-1. 当勾选`listen clipboard`后，复译会自动翻译剪贴板的内容，并显示译文在结果框中。
+1. 当勾选`listen clipboard`后，**复译会自动翻译剪贴板的内容，并显示译文在结果框中。**
 
 2. 只需同时勾选`listen clipboard`及`Auto copy`选项，每次复制翻译后，剪贴板会自动替换原文为译文，直接黏贴即可获得译文。
 
@@ -42,11 +42,11 @@
 
 ### 软件亮点
 1. 基本解决PDF复制翻译换行问题
-以下为使用复译直接复制翻译后的结果，可以看出翻译效果相比于直接复制黏贴到网页有了巨大的改善。同时，借助于强大的google翻译API，翻译质量有保证。
+**复译专门针对英文及中文pdf的换行和句尾做了优化，基本解决断句和换行的问题。** 以下为使用复译直接复制翻译后的结果，可以看出翻译效果相比于直接复制黏贴到网页有了巨大的改善。同时，借助于强大的google翻译API，翻译质量有保证，**所使用的translate.google.cn连接速度也较快，无需担心网络问题。**
 
 ![1535896416406](./assets/1535896416406.png)
 
-2. 多段同时翻译
+2. 多段同时翻译，效率更高，同时尽可能保持原有分段。
 
 ![entoch](./screenshot/entoch.png)
 
@@ -57,7 +57,7 @@
    ![longpresscopy](screenshot/longpresscopy.gif)
 
 4. 两种窗口模式可供选择，`主模式`及`专注模式`，专注模式只提供译文窗口，便于您关注结果。使用专注模式时注意勾选`Stay on top`及`Listen clipboard`,必要时应勾选`Auto Copy`。
-5. 支持各种语言互译，google翻译支持啥我们就支持啥
+5. 支持各种语言互译，google翻译支持啥我们就支持啥。
 6. 占用内存小，别看安装包挺大， 运行时常驻内存只有十几兆，安装包大是因为打包了python库的问题。
 
 ### 项目地址
@@ -127,7 +127,7 @@ https://github.com/elliottzheng/CopyTranslator
 
 ## 致谢
 
-感谢[wxpython](https://wxpython.org/), [googletrans](https://github.com/ssut/py-googletrans), [pyperclip](https://github.com/asweigart/pyperclip) 的开发者以及我亲爱的同学们。
+感谢[wxpython](https://wxpython.org/), [googletrans](https://github.com/ssut/py-googletrans), [pyperclip](https://github.com/asweigart/pyperclip) 的开发者以及我亲爱的朋友们。
 
 ## License
 

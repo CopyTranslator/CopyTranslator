@@ -201,7 +201,7 @@ class Setting():
             ori_x = x
             ori_y = y
         else:
-            if time.time() - t1 > 0.4 and abs(ori_y - y) < 3 and abs(ori_x - x) < 3:
+            if time.time() - t1 > 0.1 and abs(ori_y - y) < 3 and abs(ori_x - x) < 3:
                 self.simulateCopy()
 
 class TaskBarIcon(wx.adv.TaskBarIcon):
@@ -239,7 +239,7 @@ class TaskBarIcon(wx.adv.TaskBarIcon):
 
 
     def OnAbout(self, event):
-        wx.MessageBox('CopyTranslator v0.0.5 --Elliott Zheng\nCopy, translate and paste with Google translate API.',
+        wx.MessageBox('CopyTranslator v0.0.5.1 --Elliott Zheng\nCopy, translate and paste with Google translate API.',
                       'About')
 
     def OnCloseshow(self, event):

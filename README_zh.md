@@ -1,6 +1,6 @@
 # CopyTranslator 
 
-![logo](./logo.png)
+![logo](https://s1.ax1x.com/2018/09/13/iEicsU.png)
 
 [英语 English](./README.md)
 
@@ -8,13 +8,15 @@
 
 ### 简介
 
-**复译：外语论文阅读翻译解决方案**
+**复译：外文辅助阅读翻译解决方案**
+
+复译专门针对英文及中文pdf的换行和句尾做了优化，解决文章断句和换行带来的翻译错误问题，翻译结果更符合中文表达。
 
 由于论文通常以pdf的形式出现，而双栏的pdf（单栏的也可能出现类似现象）在复制的时候又会出现回车(换行)的现象，这使得我们的复制到各种翻译网页后翻译的效果很差，需要我们手动删除换行，才能得到正确的翻译结果。复译提出时主要是为了针对外文pdf的阅读翻译问题，但是并不局限于这个问题，我们发现他在网页翻译，以及其他形式的文本翻译中均表现出色。
 
-以下为直接复制黏贴后的效果，可以看出效果很差
+以下为直接复制黏贴后的效果，可以看出效果很差，会出现翻译紊乱的情况。
 
-![1535896287644](./assets/1535896287644.png)
+![1535896287644](https://s1.ax1x.com/2018/09/13/iEiWdJ.png)
 
 
 #### 同类产品
@@ -32,11 +34,11 @@
 
 2. 只需同时勾选`listen clipboard`及`Auto copy`选项，每次复制翻译后，剪贴板会自动替换原文为译文，直接黏贴即可获得译文。
 
-![copypasate](./screenshot/copypasate.gif)
+![copypasate](https://s1.ax1x.com/2018/09/13/iEifo9.gif)
 
 3. 翻译结果框（专注模式）大小可以自由缩放，并可根据需要选择始终保持在顶部。
 
-![resize](./screenshot/resize.gif)
+![resize](https://s1.ax1x.com/2018/09/13/iEi5J1.gif)
 
 
 
@@ -44,17 +46,17 @@
 1. 基本解决PDF复制翻译换行问题
 **复译专门针对英文及中文pdf的换行和句尾做了优化，基本解决断句和换行的问题。** 以下为使用复译直接复制翻译后的结果，可以看出翻译效果相比于直接复制黏贴到网页有了巨大的改善。同时，借助于强大的google翻译API，翻译质量有保证，**所使用的translate.google.cn连接速度也较快，无需担心网络问题。**
 
-![1535896416406](./assets/1535896416406.png)
+![1535896416406](https://s1.ax1x.com/2018/09/13/iEiIRx.png)
 
 2. 多段同时翻译，效率更高，同时尽可能保持原有分段。
 
-![entoch](./screenshot/entoch.png)
+![entoch](https://s1.ax1x.com/2018/09/13/iEi7QK.png)
 
-![chtoen](./screenshot/chtoen.png).
+![chtoen](https://s1.ax1x.com/2018/09/13/iEiHsO.png).
 
 3. **重新定义复译的 复制**  为减少多次按ctrl+c或者是右键复制所带来的麻烦，复译引入一个选中长按自动复制的机制，在打开监听剪贴板选项后，只需选中文字，并将鼠标悬停在选中文字上方**长按不动超过0.1s后释放鼠标（其实0.1s你基本没感觉自己长按了），**也就是**长按后释放**，即可复制。这可以避免我们过度移动鼠标（右键再选择复制）或者是疯狂按ctrl+c按得很累。
 
-   ![longpresscopy](screenshot/longpresscopy.gif)
+   ![longpresscopy](https://s1.ax1x.com/2018/09/13/iEibLD.gif)
 
 4. 两种窗口模式可供选择，`主模式`及`专注模式`，专注模式只提供译文窗口，便于您关注结果。使用专注模式时注意勾选`Stay on top`及`Listen clipboard`,必要时应勾选`Auto Copy`。
 5. 支持各种语言互译，google翻译支持啥我们就支持啥。
@@ -66,11 +68,15 @@ https://github.com/elliottzheng/CopyTranslator
 
 ### 安装
 1. 以下列方式下载最新的Windows版本：
-- 非程序员用户推荐点击右边的图标从Bintray下载: ![Download](https://api.bintray.com/packages/elliottzheng/CopyTranslator/CopyTranslator/images/download.svg) 
+- 非程序员用户推荐从百度云下载 [https://pan.baidu.com/s/1Lhb6uQK786RMzMjLrDw7fg](https://pan.baidu.com/s/1Lhb6uQK786RMzMjLrDw7fg)
 - [Github Releases](https://github.com/elliottzheng/CopyTranslator/releases)。
 - [Gitee Releases](https://gitee.com/ylzheng/CopyTranslator/releases)
 2. 解压压缩包到任意位置，在程序目录中运行`shortcut.bat`，它会在桌面上创建一个复译的快捷方式。
+
 ### 使用
+
+附上我朋友录制的介绍视频链接
+[https://www.bilibili.com/video/av31396414/](https://www.bilibili.com/video/av31396414/)
 
 有两种可供选择的模式。
 
@@ -85,7 +91,7 @@ https://github.com/elliottzheng/CopyTranslator
 
 
 
-![taskbar0](./screenshot/focus_mode.png)
+![taskbar0](https://gitee.com/ylzheng/CopyTranslator/raw/master/screenshot/focus_mode.png)
 
 #### 主模式
 
@@ -105,7 +111,7 @@ https://github.com/elliottzheng/CopyTranslator
 
 - `Switch Mode`: 在主模式和专注模式间切换
 
-  ![win10.png](./screenshot/screenshot.png)
+  ![win10.png](https://gitee.com/ylzheng/CopyTranslator/raw/master/screenshot/screenshot.png)
 #### 专注模式
 
 专注模式只提供一个结果窗口，让您更好地关注结果。 （注意选中`Listen on Clipboard`和`Stay on top`选项。）
@@ -121,9 +127,18 @@ https://github.com/elliottzheng/CopyTranslator
   - 双击`闪区`可以隐藏窗口
 
   - 右击`闪区`可以复制翻译结果
-    ![1528470182001](./screenshot/newfocus.png)
+    ![1528470182001](https://gitee.com/ylzheng/CopyTranslator/raw/master/screenshot/newfocus.png)
 
 
+
+## TODO
+
+- 可调节的字体大小
+- 设置的记忆功能
+- 监听定时暂停功能
+- 强制词替换
+- 连续翻译功能，即不断复制，不断添加语句到后面，而不是直接替换
+- 翻译历史
 
 ## 致谢
 
@@ -131,4 +146,7 @@ https://github.com/elliottzheng/CopyTranslator
 
 ## License
 
-代码采用Mozilla Public License 2.0协议授权。请查阅[LICENSE](./LICENSE) 文件，获取更多信息。
+代码采用Mozilla Public License 2.0协议授权。请查阅[LICENSE](https://gitee.com/ylzheng/CopyTranslator/blob/master/LICENSE) 文件，获取更多信息。
+
+## 转载声明
+**本软件为开源软件，开发者即为博主 [@elliottzheng](https://www.cnblogs.com/elliottzheng/)，软件无任何收费，转发时请附上项目地址 https://github.com/elliottzheng/CopyTranslator**，此外本人不承担软件二次分发的风险，因此请尽量通过本文提供的下载方式下载。

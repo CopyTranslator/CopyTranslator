@@ -10,9 +10,11 @@ import time
 import pyperclip
 import win32con
 from pynput.keyboard import Key, Controller
+import webbrowser
 
 #logopath=resource_filename(Requirement.parse("CopyTranslator"),'CopyTranslator/logo.ico')
 logopath = 'logo.ico'
+version='v0.0.5.2'
 
 
 ori_x=0
@@ -239,8 +241,10 @@ class TaskBarIcon(wx.adv.TaskBarIcon):
 
 
     def OnAbout(self, event):
-        wx.MessageBox('CopyTranslator v0.0.5.1 --Elliott Zheng\nCopy, translate and paste with Google translate API.',
-                      'About')
+        # wx.MessageBox('CopyTranslator v0.0.5.2 by Elliott Zheng\nProject website: https://github.com/elliottzheng/CopyTranslator',
+        #               'About')
+
+        webbrowser.open("https://gitee.com/ylzheng/CopyTranslator/blob/master/README_zh.md")
 
     def OnCloseshow(self, event):
         self.setting.mainFrame.Destroy()
@@ -338,7 +342,7 @@ class MainFrame(wx.Frame):
     def __init__(self, setting):
 
         langList = list(LANGCODES.keys())
-        wx.Frame.__init__(self, None, -1, 'CopyTranslator',
+        wx.Frame.__init__(self, None, -1, 'CopyTranslator '+version,
                           size=(465, 345))
 
         self.SetIcon(wx.Icon(logopath, wx.BITMAP_TYPE_ICO))

@@ -14,7 +14,7 @@ import webbrowser
 
 #logopath=resource_filename(Requirement.parse("CopyTranslator"),'CopyTranslator/logo.ico')
 logopath = 'logo.ico'
-version='v0.0.5.2'
+version = 'v0.0.5.3'
 
 
 ori_x=0

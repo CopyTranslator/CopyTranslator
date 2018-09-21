@@ -7,7 +7,8 @@
 ## User manual for Windows users.
 
 Copy, Translate, and Paste with Google translate API.
-
+### Warning
+**Due to the machism change of google translate, versions before v0.0.5.2 is no longer valid, I had fixed it in v0.0.5.3, Please update to the latest version.**
 ### Project Homepage
 
 https://github.com/elliottzheng/CopyTranslator

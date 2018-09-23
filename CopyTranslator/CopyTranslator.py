@@ -14,7 +14,7 @@ import webbrowser
 
 #logopath=resource_filename(Requirement.parse("CopyTranslator"),'CopyTranslator/logo.ico')
 logopath = 'logo.ico'
-version = 'v0.0.5.3'
+version = 'v0.0.6.0'
 
 
 ori_x=0
@@ -33,6 +33,7 @@ class Setting():
         self.IsCopy = False
         self.IsDete = False
         self.StayTop = False
+        self.Continus = False
 
         self.mainFrame = MainFrame(self)
         self.subFrame = SubFrame(self)
@@ -45,12 +46,12 @@ class Setting():
         self.valid = False
         self.translator = Translator(service_urls=['translate.google.cn'])
         self.src = ''
+        self.last_append = ''
         self.result = ''
         self.patterns = [re.compile(r'([?!.])[ ]?\n'),re.compile(r'([？！。])[ \n]')]   #前面一个处理英语语系的，后面一个可以处理汉语系。
         self.pattern2 = re.compile(r'\$([?？！!.。])\$')
 
-
-    def normalize(self, src):
+    def get_normalized_append(self, src):
         src=src.replace('\r\n', '\n')
         src=src.replace('-\n', '')
         for pattern in self.patterns:
@@ -59,9 +60,14 @@ class Setting():
         src=self.pattern2.sub(r'\1\n',src)
         return src
 
+    def get_normalized_src(self, append):
+        if self.Continus and self.src != '':
+            return self.src + ' ' + append
+        else:
+            return append
 
     def paste(self, event):
-        self.setSrc(pyperclip.paste())
+        self.setSrc(self.last_append)
 
     def ReverseListen(self, event):
         self.IsListen = not self.IsListen
@@ -75,6 +81,13 @@ class Setting():
     def ReverseCopy(self, event):
         self.IsCopy = not self.IsCopy
         self.mainFrame.copyCheck.SetValue(self.IsCopy)
+
+    def ReverseContinus(self, event):
+        self.setSrc('')
+        self.setResult('')
+        self.last_append = ''
+        self.Continus = not self.Continus
+        self.mainFrame.continusCheck.SetValue(self.Continus)
 
     def ReverseDete(self, event):
         self.IsDete = not self.IsDete
@@ -95,8 +108,8 @@ class Setting():
             self.subFrame.SetWindowStyle(SubFrame.subStyle)
             self.mainFrame.SetWindowStyle(MainFrame.mainStyle)
 
-    def setSrc(self, string):
-        self.src = self.normalize(string)
+    def setSrc(self, append):
+        self.src = self.get_normalized_src(append)
         self.mainFrame.srcText.SetValue(self.src)
 
     def setResult(self, string):
@@ -135,8 +148,17 @@ class Setting():
         self.setSrc(self.getExpSrc())
         self.translate(event)
 
+    def check_valid(self):
+        if self.result == pyperclip.paste():
+            return False
+        append = self.get_normalized_append(pyperclip.paste())
+        if self.last_append != append:
+            return True
+        return False
+
     def translateCopy(self, event):
-        if self.result != pyperclip.paste() and self.src != self.normalize(pyperclip.paste()):
+        if self.check_valid():
+            self.last_append = self.get_normalized_append(pyperclip.paste())
             self.paste(event)
             self.translate(event)
         else:
@@ -211,6 +233,7 @@ class TaskBarIcon(wx.adv.TaskBarIcon):
     ID_Listen = wx.NewId()
     ID_Copy = wx.NewId()
     ID_Dete = wx.NewId()
+    ID_Continus = wx.NewId()
     ID_Show = wx.NewId()
     ID_Main = wx.NewId()
 
@@ -231,6 +254,7 @@ class TaskBarIcon(wx.adv.TaskBarIcon):
         self.Bind(wx.EVT_MENU, self.setting.ReverseListen, id=self.ID_Listen)
         self.Bind(wx.EVT_MENU, self.setting.ReverseDete, id=self.ID_Dete)
         self.Bind(wx.EVT_MENU, self.setting.ReverseCopy, id=self.ID_Copy)
+        self.Bind(wx.EVT_MENU, self.setting.ReverseContinus, id=self.ID_Continus)
 
         self.Bind(wx.EVT_MENU, self.setting.ChangeMode, id=self.ID_Main)
         self.Bind(wx.EVT_MENU, self.setting.ChangeMode, id=self.ID_Focus)
@@ -266,6 +290,9 @@ class TaskBarIcon(wx.adv.TaskBarIcon):
         dete = menu.AppendCheckItem(self.ID_Dete, 'Detect language', 'Detect the input language.')
         dete.Check(self.setting.IsDete)
 
+        continus = menu.AppendCheckItem(self.ID_Continus, 'Continus Mode', 'Continus copy content to source.')
+        continus.Check(self.setting.Continus)
+
         modeMenu = wx.Menu()
 
         mainMode = modeMenu.AppendRadioItem(self.ID_Main, "Main Mode")
@@ -278,7 +305,6 @@ class TaskBarIcon(wx.adv.TaskBarIcon):
 
         switchMode = menu.AppendSubMenu(modeMenu, 'Switch frame mode.')
 
-        menu.Append(self.ID_Show, 'Main interface')
         menu.Append(self.ID_About, 'About')
         menu.Append(self.ID_Closeshow, 'Exit')
         return menu
@@ -367,6 +393,11 @@ class MainFrame(wx.Frame):
         self.copyCheck = wx.CheckBox(buttonPanel, -1, 'Auto copy')
         self.Bind(wx.EVT_CHECKBOX, self.setting.ReverseCopy, self.copyCheck)
 
+        # 连续复制模式
+        self.continusCheck = wx.CheckBox(buttonPanel, -1, 'Continus Mode')
+        self.Bind(wx.EVT_CHECKBOX, self.setting.ReverseContinus, self.continusCheck)
+
+
         # 切换模式
         self.switchBtn = wx.Button(buttonPanel, -1, "Switch Mode")
         self.Bind(wx.EVT_BUTTON, self.setting.SwitchMode, self.switchBtn)
@@ -401,9 +432,10 @@ class MainFrame(wx.Frame):
 
         TextPanel.SetSizer(panel1sizer)
 
-        panel2sizer = wx.FlexGridSizer(11, 1, 6, 0)
+        panel2sizer = wx.FlexGridSizer(12, 1, 6, 0)
         panel2sizer.AddMany(
-            [self.topCheck, self.listenCheck, self.detectCheck, self.copyCheck, self.fromlabel, self.fromchoice,
+            [self.topCheck, self.listenCheck, self.detectCheck, self.copyCheck, self.continusCheck, self.fromlabel,
+             self.fromchoice,
              tolabel, self.tochoice, self.switchBtn, self.transBtn, self.copyBtn])
         buttonPanel.SetSizer(panel2sizer)
 

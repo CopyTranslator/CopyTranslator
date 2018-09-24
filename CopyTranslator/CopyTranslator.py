@@ -98,7 +98,7 @@ class Setting():
         self.mainFrame.srcText.SetValue(self.src)
 
     def setResult(self, string):
-        self.result = "" + string.replace('\n', '\r\n').replace('（', '(').replace('）', ')') + '\r\n'
+        self.result = "" + string.replace('\n', '\r\n') + '\r\n'
         self.mainFrame.destText.SetValue(self.result)
         self.subFrame.destText.SetValue(self.result)
 
@@ -403,7 +403,7 @@ class TaskBarIcon(wx.adv.TaskBarIcon):
 
         menu.Append(self.ID_Switch, 'Main Mode' if not self.setting.is_main else 'Focus Mode')
         menu.Append(self.ID_Exchange, 'Copy Source')
-        menu.Append(self.ID_About, 'About')
+        menu.Append(self.ID_About, 'About and Update')
         menu.Append(self.ID_Closeshow, 'Exit')
         return menu
 

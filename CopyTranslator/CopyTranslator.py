@@ -44,7 +44,9 @@ class Setting():
                                'stay_top': True,
                                'continus': False,
                                'is_main': True,
-                               'pixel_size': 12
+                               'pixel_size': 15,
+                               'source': 'english',
+                               'target': 'chinese (simplified)'
                                }
         self.value = self._default_value
         self.filepath = os.path.expanduser('~/copytranslator.json')
@@ -74,6 +76,19 @@ class Setting():
         self.is_dete = self.is_dete
         self.is_copy = self.is_copy
         self.is_main = self.is_main
+
+    @property
+    def source(self):
+        return self.value['source']
+
+    @property
+    def target(self):
+        return self.value['target']
+
+    def save_config(self):
+        self.value['source'] = self.mainFrame.tochoice.GetString(self.mainFrame.fromchoice.GetSelection())
+        self.value['target'] = self.mainFrame.tochoice.GetString(self.mainFrame.tochoice.GetSelection())
+        self.save_to(self.filepath)
 
     def get_normalized_append(self, src):
         src = src.replace('\r\n', '\n')
@@ -379,6 +394,7 @@ class TaskBarIcon(wx.adv.TaskBarIcon):
         webbrowser.open("https://github.com/elliottzheng/CopyTranslator")
 
     def OnCloseshow(self, event):
+        self.setting.save_config()
         self.setting.mainFrame.Destroy()
         self.setting.subFrame.Destroy()
         self.Destroy()
@@ -403,7 +419,7 @@ class TaskBarIcon(wx.adv.TaskBarIcon):
 
         menu.Append(self.ID_Switch, 'Main Mode' if not self.setting.is_main else 'Focus Mode')
         menu.Append(self.ID_Exchange, 'Copy Source')
-        menu.Append(self.ID_About, 'About and Update')
+        menu.Append(self.ID_About, 'Help and Update')
         menu.Append(self.ID_Closeshow, 'Exit')
         return menu
 
@@ -546,11 +562,12 @@ class MainFrame(wx.Frame):
         self.fromlabel = wx.StaticText(buttonPanel, -1, 'Source language')
 
         self.fromchoice = wx.Choice(buttonPanel, -1, choices=langList)
-        self.fromchoice.SetSelection(self.fromchoice.FindString('english'))
+        print(self.setting.source)
+        self.fromchoice.SetSelection(self.fromchoice.FindString(self.setting.source))
 
         tolabel = wx.StaticText(buttonPanel, -1, 'Target language :')
         self.tochoice = wx.Choice(buttonPanel, -1, choices=langList)
-        self.tochoice.SetSelection(self.tochoice.FindString('chinese (simplified)'))
+        self.tochoice.SetSelection(self.tochoice.FindString(self.setting.target))
 
         panel1sizer = wx.FlexGridSizer(4, 1, 6, 6)
         panel1sizer.AddMany([self.srcLabel, self.srcText, self.dstLabel, self.destText])
@@ -588,6 +605,7 @@ class MainFrame(wx.Frame):
         event.Skip()
 
     def OnClose(self, event):
+        self.setting.save_config()
         self.setting.taskbar.Destroy()
         self.setting.subFrame.Destroy()
         self.Destroy()

@@ -20,7 +20,6 @@ class YoudaoSpider:
     """
     通过有道获取单词解释, 以及展示查询结果
     """
-
     params = {
         'keyfrom': 'longcwang',
         'key': '131895274',
@@ -159,4 +158,4 @@ class YoudaoSpider:
 
 if __name__ == '__main__':
     test = YoudaoSpider('what')
-    YoudaoSpider.show_result(test.get_result())
+    print(test.get_result(True))

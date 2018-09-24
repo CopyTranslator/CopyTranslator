@@ -485,7 +485,6 @@ class SubFrame(wx.Frame):
 
     def onFontPlus(self, event):
         self.font = self.font.Scaled(1.25)
-        print(self.font.GetPixelSize()[1])
         self.setting.pixel_size = self.font.GetPixelSize()[1]
         self.destText.SetFont(self.font)
 
@@ -562,7 +561,7 @@ class MainFrame(wx.Frame):
         self.fromlabel = wx.StaticText(buttonPanel, -1, 'Source language')
 
         self.fromchoice = wx.Choice(buttonPanel, -1, choices=langList)
-        print(self.setting.source)
+
         self.fromchoice.SetSelection(self.fromchoice.FindString(self.setting.source))
 
         tolabel = wx.StaticText(buttonPanel, -1, 'Target language :')

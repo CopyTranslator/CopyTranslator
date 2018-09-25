@@ -9,6 +9,36 @@
 Copy, Translate, and Paste with Google translate API.
 ### Warning
 **Due to the mechanism change of google translate, versions before v0.0.5.2 is no longer valid, I had fixed it in v0.0.5.3, Please update to the latest version.**
+
+### Update log
+
+[Click to download](#Install)
+
+#### v0.0.6.0 Comprehensively Empower the Focus Mode
+
+1. **`Youdao` smart dictionary**(based on API provided by [Translator](https://github.com/93Alliance/Translator)), sentences with words less than 3 will be view as phrase or word, you will see a more detailed explanations in `Focus Mode`. Check the `Smart Dict ` option to enable it. 
+
+   **Note: It is limited to the languages `Youdao` supported , but you don't need and cannot  manually choose language.**
+
+   ![1537871607106](assets/1537871607106.png)
+
+   ![1537871905985](assets/1537871905985.png)
+
+2. **Font resizable**, use `shift+F3` and `shift+F4`  to resize the font size of `Focus Mode`
+
+   ![1537871658665](assets/1537871658665.png)
+
+
+3. **Config memorization**, your config will be save in the disk, and auto reload on the next start.
+
+4. `Continus copy`, append the copied text to the source other than replace it, especially useful when the paragraph is separated in different page. Check the `Continus Copy ` option to enable it.
+
+5. **Copy source**, you can copy the source by the menu of  the taskbar icon.
+
+   ![1537871871793](assets/1537871871793.png)
+
+6. Less sensitive, increase the response time of long press copy to 0.3s.
+
 ### Project Homepage
 
 https://github.com/elliottzheng/CopyTranslator
@@ -84,7 +114,7 @@ You can resize it freely.
 
 ## Acknowledgements
 
-Thanks to the developers of [wxpython](https://wxpython.org/), [googletrans](https://github.com/ssut/py-googletrans), [pyperclip](https://github.com/asweigart/pyperclip) and my dear schoolmates.
+Thanks to the developers of [wxpython](https://wxpython.org/), [googletrans](https://github.com/ssut/py-googletrans), [pyperclip](https://github.com/asweigart/pyperclip) ,[Translator](https://github.com/93Alliance/Translator) and my dear schoolmates.
 
 ## License
 

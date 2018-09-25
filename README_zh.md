@@ -6,7 +6,37 @@
 
 ## Windows用户使用手册
 ### 公告
-**v0.0.5.2版本及以前版本，由于google翻译的机制改变，现在已经无法使用，该问题已在v0.0.5.3修复，请大家及时下载更新。**
+**v0.0.5.2版本及以前版本，由于google翻译的机制改变，现在已经无法使用，该问题已在v0.0.5.3之后修复，请大家及时下载更新。**
+### 更新日志
+
+#### v0.0.6.0  全面赋能专注模式
+
+[点此下载](#安装)
+
+1. **智能有道词典**（基于Translator](https://github.com/93Alliance/Translator)提供的API）
+
+   单词少于3的句子将被视为短语或单词，您将在专注模式上看到更详细的解释。勾选`Smart Dict`选项以启用它。**注：查词限于有道支持的语言，但是您无需也无法手动选择语言。**
+
+   ![1537871607106](assets/1537871607106.png)
+
+   ![1537871905985](assets/1537871905985.png)
+
+2. **字体可调整大小**，使用`shift + F3`和`shift + F4`缩小或增大专注模式的字体大小
+
+   ![1537871658665](assets/1537871658665.png)
+
+3. **设置记忆**，您的设置将自动保存在磁盘中，并在下次启动时自动重新加载。
+
+4. **连续复制**, 将复制的文本附加到原文而不是替换它，**当段落在不同页面中分隔时尤其有用。**勾选`Continus Copy`选项以启用它。
+
+
+5. **复制原文**，您可以通过任务栏图标的菜单点击`Copy Source`以在`Auto Copy`模式下暂时复制原文，而不是译文。
+
+   ![1537871871793](assets/1537871871793.png)
+
+6. **降低灵敏度**，将点按复制的响应时间增加到0.3秒。
+
+
 ### 简介
 
 **复译：外文辅助阅读翻译解决方案**
@@ -68,6 +98,9 @@
 https://github.com/elliottzheng/CopyTranslator
 
 ### 安装
+
+<span id="jump"></span>
+
 1. 以下列方式下载最新的Windows版本 [![Download](https://api.bintray.com/packages/elliottzheng/CopyTranslator/CopyTranslator/images/download.svg) ](https://bintray.com/elliottzheng/CopyTranslator/CopyTranslator/_latestVersion)  ：
 - 非程序员用户推荐从百度云下载 [https://pan.baidu.com/s/1Lhb6uQK786RMzMjLrDw7fg](https://pan.baidu.com/s/1Lhb6uQK786RMzMjLrDw7fg)
 - [Github Releases](https://github.com/elliottzheng/CopyTranslator/releases)。
@@ -133,17 +166,11 @@ https://github.com/elliottzheng/CopyTranslator
 
 
 ## TODO
-
-- 可调节的字体大小
-- 设置的记忆功能
-- 监听定时暂停功能
-- 强制词替换
-- 连续翻译功能，即不断复制，不断添加语句到后面，而不是直接替换
-- 翻译历史
+- ~~翻译历史~~ 意义不大？如果有兴趣的话可以提issue说明场景，我会考虑是否要加。
 
 ## 致谢
 
-感谢[wxpython](https://wxpython.org/), [googletrans](https://github.com/ssut/py-googletrans), [pyperclip](https://github.com/asweigart/pyperclip) 的开发者以及我亲爱的朋友们。
+感谢[wxpython](https://wxpython.org/), [googletrans](https://github.com/ssut/py-googletrans), [pyperclip](https://github.com/asweigart/pyperclip),[Translator](https://github.com/93Alliance/Translator) 的开发者以及我亲爱的朋友们。
 
 ## License
 
@@ -151,7 +178,7 @@ https://github.com/elliottzheng/CopyTranslator
 
 ## 转载声明
 本软件为开源软件，开发者即为博主 [@elliottzheng](https://www.cnblogs.com/elliottzheng/)，软件无任何收费，转发时请附上项目地址
- 
+
 [https://github.com/elliottzheng/CopyTranslator](https://github.com/elliottzheng/CopyTranslator)
 
 此外本人不承担软件二次分发的风险，因此请尽量通过本文提供的下载方式下载。

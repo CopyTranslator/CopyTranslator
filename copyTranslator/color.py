@@ -6,6 +6,7 @@
 
 
 import wx
+
 from copyTranslator.color_ctrl import ColoredCtrl
 from copyTranslator.youdao import YoudaoSpider
 

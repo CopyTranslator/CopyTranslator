@@ -4,7 +4,6 @@
 # @FileName: constant.py
 # @Software: PyCharm
 
-
 logopath = 'logo.ico'
 version = 'v0.0.6.0'
 project_name = 'CopyTranslator'

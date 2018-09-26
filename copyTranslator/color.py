@@ -13,9 +13,7 @@ from copyTranslator.youdao import YoudaoSpider
 class F(wx.Frame):
     def __init__(self):
         wx.Frame.__init__(self, None, size=(500, 500))
-        self.status_area = ColoredCtrl(self, -1,
-                                       pos=(10, 270),
-                                       size=(300, 300))
+        self.status_area = ColoredCtrl(self, -1, )
         test = YoudaoSpider()
         result = self.status_area.show_result(test.get_result("come to"))
 

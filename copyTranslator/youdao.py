@@ -4,14 +4,12 @@
 # @FileName: youdao.py
 # @Software: PyCharm
 
-# original source:https://github.com/93Alliance/Translator
-# original author: 93Alliance
+# original source: https://github.com/longcw/youdao/blob/master/youdao/spider.py
+# original author: https://github.com/longcw
 
-import sys
 import requests
-from requests.exceptions import RequestException
 from termcolor import colored
-
+from bs4 import BeautifulSoup
 
 
 class YoudaoSpider:
@@ -27,16 +25,15 @@ class YoudaoSpider:
         'q': 'query'
     }
     api_url = u'http://fanyi.youdao.com/openapi.do'
-    voice_url = u'http://dict.youdao.com/dictvoice?type=2&audio={word}'
-    # web_url = u'http://dict.youdao.com/w/eng/{0}/#keyfrom=dict2.index'
-
+    web_url = u'http://dict.youdao.com/w/eng/{0}/#keyfrom=dict2.index'
     error_code = {
-        0: u'正常',
-        20: u'要翻译的文本过长',
-        30: u'无法进行有效的翻译',
-        40: u'不支持的语言类型',
-        50: u'无效的key',
-        60: u'无词典结果，仅在获取词典结果生效'
+        0: '正常',
+        20: '要翻译的文本过长',
+        30: '无法进行有效的翻译',
+        40: '不支持的语言类型',
+        50: '无效的key',
+        60: '无词典结果，仅在获取词典结果生效',
+        70: '网络错误'
     }
 
     result = {
@@ -47,21 +44,73 @@ class YoudaoSpider:
     def __init__(self):
         pass
 
-    def get_result(self, word):
+    def get_result(self, word, use_api=False):
         """
         获取查询结果
         :param use_api:是否使用有道API, 否则解析web版有道获取结果
         :return:与有道API返回的json数据一致的dict
         """
         try:
-            self.params['q'] = word
-            r = requests.get(self.api_url, params=self.params)
-            r.raise_for_status()  # a 4XX client error or 5XX server error response
-            self.result = r.json()
-        except RequestException as e:
-            print(colored(u'网络错误: %s' % e.message, 'red'))
-            sys.exit()
+            if use_api:
+                self.params['q'] = word
+                r = requests.get(self.api_url, params=self.params)
+                r.raise_for_status()  # a 4XX client error or 5XX server error response
+                self.result = r.json()
+            else:
+                r = requests.get(self.web_url.format(word))
+                r.raise_for_status()
+                self.parse_html(word, r.text)
+        except:
+            return {
+                'errorCode': 70
+            }
         return self.result
+
+    def parse_html(self, word, html):
+        """
+        解析web版有道的网页
+        :param html:网页内容
+        :return:result
+        """
+        soup = BeautifulSoup(html, "lxml")
+        root = soup.find(id='results-contents')
+
+        # query 搜索的关键字
+        keyword = root.find(class_='keyword')
+        if not keyword:
+            self.result['query'] = word
+        else:
+            self.result['query'] = keyword.string
+
+        # 基本解释
+        basic = root.find(id='phrsListTab')
+        if basic:
+            trans = basic.find(class_='trans-container')
+            if trans:
+                self.result['basic'] = {}
+                self.result['basic']['explains'] = [tran.string for tran in trans.find_all('li')]
+                # 中文
+                if len(self.result['basic']['explains']) == 0:
+                    exp = trans.find(class_='wordGroup').stripped_strings
+                    self.result['basic']['explains'].append(' '.join(exp))
+
+                # 音标
+                phons = basic(class_='phonetic', limit=2)
+                if len(phons) == 2:
+                    self.result['basic']['uk-phonetic'], self.result['basic']['us-phonetic'] = \
+                        [p.string[1:-1] for p in phons]
+                elif len(phons) == 1:
+                    self.result['basic']['phonetic'] = phons[0].string[1:-1]
+
+        # 网络释义(短语)
+        web = root.find(id='webPhrase')
+        if web:
+            self.result['web'] = [
+                {
+                    'key': wordgroup.find(class_='search-js').string.strip(),
+                    'value': [v.strip() for v in wordgroup.find('span').next_sibling.split(';')]
+                } for wordgroup in web.find_all(class_='wordGroup', limit=4)
+            ]
 
     @staticmethod
     def show_result(result):
@@ -70,7 +119,7 @@ class YoudaoSpider:
         :param result: 与有道API返回的json 数据结构一致的dict
         """
         if 'stardict' in result:
-            print(colored(u'StarDict:', 'blue'))
+            print(colored('StarDict:', 'blue'))
             print(result['stardict'])
             return
 
@@ -80,21 +129,21 @@ class YoudaoSpider:
             print(colored('[%s]' % result['query'], 'magenta'))
             if 'basic' in result:
                 if 'us-phonetic' in result['basic']:
-                    print(colored(u'美音:', 'blue'), colored('[%s]' % result['basic']['us-phonetic'], 'green')),
+                    print(colored('美音:', 'blue'), colored('[%s]' % result['basic']['us-phonetic'], 'green')),
                 if 'uk-phonetic' in result['basic']:
-                    print(colored(u'英音:', 'blue'), colored('[%s]' % result['basic']['uk-phonetic'], 'green'))
+                    print(colored('英音:', 'blue'), colored('[%s]' % result['basic']['uk-phonetic'], 'green'))
                 if 'phonetic' in result['basic']:
-                    print(colored(u'拼音:', 'blue'), colored('[%s]' % result['basic']['phonetic'], 'green'))
+                    print(colored('拼音:', 'blue'), colored('[%s]' % result['basic']['phonetic'], 'green'))
 
-                print(colored(u'基本词典:', 'blue'))
+                print(colored('基本词典:', 'blue'))
                 print(colored('\t' + '\n\t'.join(result['basic']['explains']), 'yellow'))
 
             if 'translation' in result:
-                print(colored(u'有道翻译:', 'blue'))
+                print(colored('有道翻译:', 'blue'))
                 print(colored('\t' + '\n\t'.join(result['translation']), 'cyan'))
 
             if 'web' in result:
-                print(colored(u'网络释义:', 'blue'))
+                print(colored('网络释义:', 'blue'))
                 for item in result['web']:
                     print('\t' + colored(item['key'], 'cyan') + ': ' + '; '.join(item['value']))
 

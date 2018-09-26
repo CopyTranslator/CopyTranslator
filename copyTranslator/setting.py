@@ -24,13 +24,34 @@ from copyTranslator.subframe import SubFrame
 from copyTranslator.taskbar import TaskBarIcon
 from copyTranslator.youdao import YoudaoSpider
 from copyTranslator.update_checker import UpdateThread
+import threading
 
 
+# 只要有一个汉字就是中文
 def check_contain_chinese(check_str):
     for ch in check_str:
         if u'\u4e00' <= ch <= u'\u9fff':
             return True
     return False
+
+
+class TranslateThread(threading.Thread):
+    def __init__(self, setting, show):
+        threading.Thread.__init__(self)
+        self.setting = setting
+        self.show = show
+
+    def run(self):
+        self.setting.smart_translate(self.show)
+
+
+class DictThread(threading.Thread):
+    def __init__(self, setting):
+        threading.Thread.__init__(self)
+        self.setting = setting
+
+    def run(self):
+        self.setting.youdao_smart_dict(None)
 
 
 class Setting():
@@ -122,11 +143,14 @@ class Setting():
     def setSrc(self, append):
         self.src = self.get_normalized_src(append)
         self.mainFrame.srcText.SetValue(self.src)
+        self.subFrame.destText.Clear()
+        self.mainFrame.destText.Clear()
 
-    def setResult(self, string):
+    def setResult(self, string, show=True):
         self.result = "" + string.replace('\n', '\r\n') + '\r\n'
         self.mainFrame.destText.SetValue(self.result)
-        self.subFrame.destText.SetValue(self.result)
+        if show:
+            self.subFrame.destText.SetValue(self.result)
 
     def getTgtLang(self):
         return LANGCODES[self.mainFrame.tochoice.GetString(self.mainFrame.tochoice.GetSelection())]
@@ -156,6 +180,7 @@ class Setting():
             self.valid = False
 
     def smart_translate(self, event):
+        show = (event != False)
         src = self.translator.detect(self.src).lang.lower()
         dest = self.getTgtLang()
         should_src = src
@@ -171,7 +196,7 @@ class Setting():
             src = should_src
 
         if self.result != self.src:
-            self.setResult(self.translator.translate(self.src, src=src, dest=dest).text)
+            self.setResult(self.translator.translate(self.src, src=src, dest=dest).text, show)
             self.valid = True
         else:
             self.valid = False
@@ -185,8 +210,7 @@ class Setting():
             self.valid = False
 
     def set_word_result(self, result):
-        result_text = self.subFrame.destText.show_result(result)
-        self.result = result_text
+        self.subFrame.destText.show_result(result)
         self.mainFrame.destText.SetValue(self.result)
 
     def translateCtrl(self, event):
@@ -208,9 +232,11 @@ class Setting():
             self.paste(event)
             if not self.is_word:
                 # self.google_translate(event)
-                self.smart_translate(event)
+                # self.smart_translate(event)
+                TranslateThread(self, True).start()
             else:
-                self.youdao_smart_dict(event)
+                TranslateThread(self, False).start()
+                DictThread(self).start()
         else:
             self.valid = False
 

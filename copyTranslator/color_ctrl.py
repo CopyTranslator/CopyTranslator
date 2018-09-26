@@ -18,9 +18,8 @@ class Color:
 class ColoredCtrl(wx.TextCtrl):
     ERROR = 0
     WORD = 1
-    SENTENCE = 2
 
-    def __init__(self, parent=None, id=None, pos=None, size=None, style=0):
+    def __init__(self, parent=None, id=None, style=0):
         if style == 0:
             style = wx.TE_RICH2 | wx.TE_MULTILINE | wx.TE_READONLY
         super(ColoredCtrl, self).__init__(parent=parent, id=id, style=style)
@@ -42,49 +41,38 @@ class ColoredCtrl(wx.TextCtrl):
         self.ColoredAppend('[%s]\n' % result['query'], Color.magenta)
         if 'basic' in result:
             if 'us-phonetic' in result['basic']:
-                self.ColoredAppend('美音:', Color.blue), self.ColoredAppend('[%s]\t' % result['basic']['us-phonetic'],
-                                                                          Color.black),
+                self.ColoredAppend('American:', Color.blue), self.ColoredAppend(
+                    '[%s]\t' % result['basic']['us-phonetic'],
+                    Color.black),
             if 'uk-phonetic' in result['basic']:
-                self.ColoredAppend('英音:', Color.blue), self.ColoredAppend('[%s]\t' % result['basic']['uk-phonetic'],
-                                                                          Color.black)
-            if 'phonetic' in result['basic']:
-                self.ColoredAppend('拼音:', Color.blue), self.ColoredAppend('[%s]\n' % result['basic']['phonetic'],
-                                                                          Color.black)
+                self.ColoredAppend('English:', Color.blue), self.ColoredAppend(
+                    '[%s]\t' % result['basic']['uk-phonetic'],
+                    Color.black)
+            # if 'phonetic' in result['basic']:
+            #     self.ColoredAppend('拼音:', Color.blue), self.ColoredAppend('[%s]' % result['basic']['phonetic'],
+            #                                                               Color.black)
 
-            self.ColoredAppend('基本词典:\n', Color.blue)
+            self.ColoredAppend('\nBasic Explains:\n', Color.blue)
             self.ColoredAppend('\t' + '\n\t'.join(result['basic']['explains']) + '\n', Color.black)
 
         if 'translation' in result:
-            self.ColoredAppend('有道翻译:\n', Color.blue)
-            self.ColoredAppend('\t' + '\n\t'.join(result['translation']) + '\n', Color.black)
+            self.ColoredAppend('Google Translation:\n', Color.blue)
+            self.ColoredAppend('\t' + result['translation'], Color.black)
 
         if 'web' in result:
-            self.ColoredAppend('网络释义:\n', Color.blue)
+            self.ColoredAppend('Web:\n', Color.blue)
             for item in result['web']:
                 self.ColoredAppend('\t' + item['key'] + ': ' + '; '.join(item['value']) + '\n', Color.black)
         self.SetInsertionPoint(0)
 
-    def show_sentence(self, result):
-        self.Clear()
-        self.ColoredAppend(result['translation'][0], Color.black)
-
     def show_result(self, result):
         type = self.check_type(result)
-        if type == ColoredCtrl.ERROR:
-            return ''
-        elif type == ColoredCtrl.SENTENCE:
-            self.show_sentence(result)
-        else:
+        if type != ColoredCtrl.ERROR:
             self.show_word(result)
-        return result['translation'][0]
 
     def check_type(self, result):
         if result['errorCode'] != 0:
             self.ColoredAppend(YoudaoSpider.error_code[result['errorCode']] + '\n', Color.red)
             return ColoredCtrl.ERROR
-        if 'web' in result:
-            return ColoredCtrl.WORD
-        elif 'translation' in result:
-            return ColoredCtrl.SENTENCE
         else:
-            return ColoredCtrl.ERROR
+            return ColoredCtrl.WORD

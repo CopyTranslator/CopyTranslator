@@ -13,28 +13,34 @@
 
 [点此下载](#安装)
 
-1. **智能有道词典**（基于Translator](https://github.com/93Alliance/Translator)提供的API）
+1. **智能互译**，`CopyTranslator`会自动识别所复制的文字，根据所设置的`source`和`target`进行自动智能互译，也就是说，如果您复制的是`source`，会翻译为`target`，复制`target`则会翻译为`source`。（不用担心，`Auto Copy`不会与此机制相互影响。）
 
-   单词少于3的句子将被视为短语或单词，您将在专注模式上看到更详细的解释。勾选`Smart Dict`选项以启用它。**注：查词限于有道支持的语言，但是您无需也无法手动选择语言。**
+2. **智能词典**（基于[Translator](https://github.com/93Alliance/Translator)提供的有道API）
+
+   单词少于3的**外语句子**将被视为短语或单词，您将在专注模式上看到更详细的解释。勾选`Smart Dict`选项以启用它。**注：查词限于有道支持的语言，但是您无需也无法手动选择语言。**
 
    ![1537871607106](assets/1537871607106.png)
 
    ![1537871905985](assets/1537871905985.png)
 
-2. **字体可调整大小**，使用`shift + F3`和`shift + F4`缩小或增大专注模式的字体大小
+3. **字体可调整大小**，使用`shift + F3`和`shift + F4`缩小或增大专注模式的字体大小
 
    ![1537871658665](assets/1537871658665.png)
 
-3. **设置记忆**，您的设置将自动保存在磁盘中，并在下次启动时自动重新加载。
+4. **设置记忆**，您的设置将自动保存在磁盘中，并在下次启动时自动重新加载。
 
-4. **连续复制**, 将复制的文本附加到原文而不是替换它，**当段落在不同页面中分隔时尤其有用。**勾选`Continus Copy`选项以启用它。
+5. **连续复制**, 将复制的文本附加到原文而不是替换它，**当段落在不同页面中分隔时尤其有用。**勾选`Continus Copy`选项以启用它。
 
 
 5. **复制原文**，您可以通过任务栏图标的菜单点击`Copy Source`以在`Auto Copy`模式下暂时复制原文，而不是译文。
 
    ![1537871871793](assets/1537871871793.png)
 
-6. **降低灵敏度**，将点按复制的响应时间增加到0.3秒。
+6. **降低灵敏度**，将点按复制的响应时间变为0.3秒。
+
+7. **加入自动及检查更新的机制**，但仍需手动下载安装更新。
+
+8. **现在主模式的关闭即为退出，不再像以前一样是最小化。**
 
 
 ### 简介
@@ -98,8 +104,6 @@
 https://github.com/elliottzheng/CopyTranslator
 
 ### 安装
-
-<span id="jump"></span>
 
 1. 以下列方式下载最新的Windows版本 [![Download](https://api.bintray.com/packages/elliottzheng/CopyTranslator/CopyTranslator/images/download.svg) ](https://bintray.com/elliottzheng/CopyTranslator/CopyTranslator/_latestVersion)  ：
 - 非程序员用户推荐从百度云下载 [https://pan.baidu.com/s/1Lhb6uQK786RMzMjLrDw7fg](https://pan.baidu.com/s/1Lhb6uQK786RMzMjLrDw7fg)
@@ -167,17 +171,21 @@ https://github.com/elliottzheng/CopyTranslator
 
 ## TODO
 - ~~翻译历史~~ 意义不大？如果有兴趣的话可以提issue说明场景，我会考虑是否要加。
+- 英语语法检查，写作的时候应该还比较有用。
+- ~~PDF完全解析~~ 个人感觉工作量大而且效果不好？就算能做，效果也会很差。翻译总是需要人工校对的。格式啥的也会是个大问题。
+
+更多改进意见欢迎在Issue中提出。
 
 ## 致谢
 
-感谢[wxpython](https://wxpython.org/), [googletrans](https://github.com/ssut/py-googletrans), [pyperclip](https://github.com/asweigart/pyperclip),[Translator](https://github.com/93Alliance/Translator) 的开发者以及我亲爱的朋友们。
+感谢[wxpython](https://wxpython.org/), [googletrans](https://github.com/ssut/py-googletrans), [pyperclip](https://github.com/asweigart/pyperclip), [Translator](https://github.com/93Alliance/Translator) 的开发者以及我亲爱的朋友们。
 
 ## License
 
 代码采用Mozilla Public License 2.0协议授权。请查阅[LICENSE](https://gitee.com/ylzheng/CopyTranslator/blob/master/LICENSE) 文件，获取更多信息。
 
 ## 转载声明
-本软件为开源软件，开发者即为博主 [@elliottzheng](https://www.cnblogs.com/elliottzheng/)，软件无任何收费，转发时请附上项目地址
+本软件为开源软件，开发者即为博主 [@elliottzheng](https://www.cnblogs.com/elliottzheng/)，软件无任何收费，欢迎star，pr。转发时请附上项目地址
 
 [https://github.com/elliottzheng/CopyTranslator](https://github.com/elliottzheng/CopyTranslator)
 

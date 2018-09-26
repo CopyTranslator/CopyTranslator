@@ -1,4 +1,5 @@
 import wx
+
 from copyTranslator.setting import Setting
 
 

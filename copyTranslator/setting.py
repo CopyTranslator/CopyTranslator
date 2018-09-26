@@ -6,6 +6,7 @@
 
 import json
 import os
+import threading
 import time
 
 import pyperclip
@@ -22,9 +23,8 @@ from copyTranslator.constant import *
 from copyTranslator.mainframe import MainFrame
 from copyTranslator.subframe import SubFrame
 from copyTranslator.taskbar import TaskBarIcon
-from copyTranslator.youdao import YoudaoSpider
 from copyTranslator.update_checker import UpdateThread
-import threading
+from copyTranslator.youdao import YoudaoSpider
 
 
 # 只要有一个汉字就是中文

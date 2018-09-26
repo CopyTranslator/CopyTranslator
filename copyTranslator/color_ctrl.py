@@ -5,6 +5,7 @@
 # @Software: PyCharm
 
 import wx
+
 from copyTranslator.youdao import YoudaoSpider
 
 

@@ -18,31 +18,31 @@ if platform.system()=='Windows':
     install_requires.append('wxpython')
 
 setup(
-    name='CopyTranslator',
+    name='copyTranslator',
     version='0.0.1.2',
-    author='Yinglin Zheng',
+    author='Elliott Zheng',
     author_email='admin@hypercube.top',
     description=u'Copy,Translate and paste with google translate API',
 	long_description=long_description,
     long_description_content_type="text/markdown",
     keywords='translate clipboard copy',
-    url='https://github.com/elliottzheng/CopyTranslator',
-    packages=['CopyTranslator'],
+    url='https://github.com/elliottzheng/copyTranslator',
+    packages=['copyTranslator'],
     package_data  = {
-        "CopyTranslator": ["logo.ico"]},
+        "copyTranslator": ["logo.ico"]},
     install_requires=install_requires,
     entry_points={
         'gui_scripts': [
-            'CopyTranslator_win=CopyTranslator.CopyTranslator:main',
+            'CopyTranslator_win=copyTranslator.copyTranslator:main',
         ],
         'console_scripts': [
-            'CopyTranslator=CopyTranslator.CopyTranslator:main',
+            'copyTranslator=copyTranslator.copyTranslator:main',
         ],
     },
     project_urls={  # Optional
-            'Bug Reports': 'https://github.com/elliottzheng/CopyTranslator/issues',
+        'Bug Reports': 'https://github.com/elliottzheng/copyTranslator/issues',
             'Say Thanks!': 'https://saythanks.io/to/elliottzheng',
-            'Source': 'https://github.com/elliottzheng/CopyTranslator',
+        'Source': 'https://github.com/elliottzheng/copyTranslator',
     },
     classifiers=[
     'Development Status :: 3 - Alpha',

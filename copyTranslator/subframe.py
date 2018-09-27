@@ -4,23 +4,10 @@
 # @FileName: subframe.py
 # @Software: PyCharm
 
-import wx
+import win32con
 import wx
 import wx.adv
-import regex as re
-from googletrans import Translator
-from googletrans import LANGCODES
-from googletrans import LANGUAGES
 
-from pynput import mouse
-import time
-import pyperclip
-import win32con
-from pynput.keyboard import Key, Controller
-import webbrowser
-import os
-import json
-from copyTranslator.youdao import YoudaoSpider
 from copyTranslator.color_ctrl import ColoredCtrl
 from copyTranslator.constant import *
 from copyTranslator.mypanel import MyPanel

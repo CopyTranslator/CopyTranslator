@@ -8,8 +8,8 @@
 # original author: https://github.com/longcw
 
 import requests
-from termcolor import colored
 from bs4 import BeautifulSoup
+from termcolor import colored
 
 
 class YoudaoSpider:
@@ -72,6 +72,10 @@ class YoudaoSpider:
         :param html:网页内容
         :return:result
         """
+        self.result = {
+            "query": "",
+            "errorCode": 0,
+        }
         soup = BeautifulSoup(html, "lxml")
         root = soup.find(id='results-contents')
 

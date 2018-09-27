@@ -7,21 +7,8 @@
 
 import wx
 import wx.adv
-import regex as re
-from googletrans import Translator
 from googletrans import LANGCODES
-from googletrans import LANGUAGES
 
-from pynput import mouse
-import time
-import pyperclip
-import win32con
-from pynput.keyboard import Key, Controller
-import webbrowser
-import os
-import json
-from copyTranslator.youdao import YoudaoSpider
-from copyTranslator.color_ctrl import ColoredCtrl
 from copyTranslator.constant import *
 
 
@@ -56,7 +43,7 @@ class MainFrame(wx.Frame):
         self.Bind(wx.EVT_CHECKBOX, self.setting.ReverseCopy, self.copyCheck)
 
         # 连续复制模式
-        self.continusCheck = wx.CheckBox(buttonPanel, -1, 'Continus Copy')
+        self.continusCheck = wx.CheckBox(buttonPanel, -1, 'Incremental Copy')
         self.Bind(wx.EVT_CHECKBOX, self.setting.ReverseContinus, self.continusCheck)
 
         # 连续复制模式

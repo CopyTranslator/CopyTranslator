@@ -1,17 +1,17 @@
 # -*- coding: utf-8 -*-
 # @Time    : 2018/9/25 0025 20:18
-# @Author  : Yinglin Zheng
-# @Email   : zhengyinglin@stu.xmu.edu.cn
+# @Author  : Elliott Zheng
 # @FileName: update_checker.py
 # @Software: PyCharm
-# @Affiliation: XMU IPIC
-from copyTranslator.constant import *
-from urllib.request import *
 import json
-import wx
-import webbrowser
 import threading
 import time
+import webbrowser
+from urllib.request import *
+
+import wx
+
+from copyTranslator.constant import *
 
 
 def load_log(filepath):
@@ -37,9 +37,11 @@ class UpdateChecker:
             new_version = version_value['version']
             if new_version <= version:
                 return
+
             update_log = version_value['update_log']
             box = wx.MessageDialog(setting.mainFrame if setting.is_main else setting.subFrame,
-                                   'Newer version of CopyTranslator ' + new_version + ' is available, update now?\n\n' + update_log,
+                                   levels_log[version_value[
+                                       'level']] + new_version + ' is available, update now?\n\n' + update_log,
                                    'Update', wx.YES_NO | wx.ICON_QUESTION)
             answer = box.ShowModal()
             if answer == wx.ID_YES:
@@ -52,10 +54,15 @@ class UpdateChecker:
 
     @staticmethod
     def generate_json():
+        '''
+
+        :return:
+        '''
         value = {
             'version': version,
             'install_url': install_url,
-            'update_log': load_log(log_path)
+            'update_log': load_log(log_path),
+            'level': level
         }
         myfile = open('version.json', 'w')
         json.dump(value, myfile, indent=4)
@@ -72,8 +79,8 @@ class UpdateThread(threading.Thread):
 
 
 if __name__ == '__main__':
-    app = wx.App()
-    UpdateChecker.check()
-    app.MainLoop()
-    # UpdateChecker.generate_json()
+    # app = wx.App()
+    # UpdateChecker.check()
+    # app.MainLoop()
+    UpdateChecker.generate_json()
     # load_log(log_path)

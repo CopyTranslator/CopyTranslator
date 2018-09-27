@@ -31,7 +31,7 @@ Copy, Translate, and Paste with Google translate API.
 
 3. **Config memorization**, your config will be save in the disk, and auto reload on the next start.
 
-4. `Continus copy`, append the copied text to the source other than replace it, especially useful when the paragraph is separated in different page. Check the `Continus Copy ` option to enable it.
+4. `'Incremental Copy`, append the copied text to the source other than replace it, especially useful when the paragraph is separated in different page. Check the `'Incremental Copy ` option to enable it.
 
 5. **Copy source**, you can copy the source by the menu of  the taskbar icon.
 

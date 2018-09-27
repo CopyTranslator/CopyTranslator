@@ -12,8 +12,6 @@ Copy, Translate, and Paste with Google translate API.
 
 ### Update log
 
-[Click to download](#Install)
-
 #### v0.0.6.0 Comprehensively Empower the Focus Mode
 
 1. **`Youdao` smart dictionary**(based on API provided by [Translator](https://github.com/93Alliance/Translator)), sentences with words less than 3 will be view as phrase or word, you will see a more detailed explanations in `Focus Mode`. Check the `Smart Dict ` option to enable it. 

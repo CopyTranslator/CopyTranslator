@@ -4,11 +4,13 @@
 # @FileName: taskbar.py
 # @Software: PyCharm
 
+import webbrowser
+
+import pyperclip
 import wx
 import wx.adv
+
 from copyTranslator.constant import *
-import webbrowser
-import pyperclip
 from copyTranslator.update_checker import UpdateThread
 
 
@@ -83,7 +85,7 @@ class TaskBarIcon(wx.adv.TaskBarIcon):
         is_dict = menu.AppendCheckItem(self.ID_Dict, 'Smart Dict', 'Enable Youdao smart dictionary')
         is_dict.Check(self.setting.is_dict)
 
-        continus = menu.AppendCheckItem(self.ID_Continus, 'Continus Copy', 'Continus copy content to source.')
+        continus = menu.AppendCheckItem(self.ID_Continus, 'Incremental Copy', 'Incremental Copy content to source.')
         continus.Check(self.setting.continus)
 
         dete = menu.AppendCheckItem(self.ID_Dete, 'Detect Language', 'Detect the input language.')

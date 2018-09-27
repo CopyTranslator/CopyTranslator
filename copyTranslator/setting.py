@@ -43,6 +43,8 @@ class TranslateThread(threading.Thread):
 
     def run(self):
         self.setting.smart_translate(self.show)
+        if self.setting.is_copy:
+            self.setting.Copy(None)
 
 
 class DictThread(threading.Thread):
@@ -88,7 +90,6 @@ class Setting():
         self.mainFrame.Centre()
         # self.mainFrame.Show()
 
-        self.valid = False
         self.translator = Translator(service_urls=['translate.google.cn'])
         self.youdao_dict = YoudaoSpider()
         self.src = ''
@@ -164,21 +165,6 @@ class Setting():
     def getResult(self):
         return self.result
 
-    def google_translate(self, event):
-        src = self.translator.detect(self.src).lang
-        if self.is_dete:
-            self.mainFrame.fromchoice.SetSelection(self.mainFrame.fromchoice.FindString(LANGUAGES[src.lower()]))
-        else:
-            src = self.getSrcLang()
-
-        dest = self.getTgtLang()
-
-        if self.result != self.src:
-            self.setResult(self.translator.translate(self.src, src=src, dest=dest).text)
-            self.valid = True
-        else:
-            self.valid = False
-
     def smart_translate(self, event):
         show = (event != False)
         src = self.translator.detect(self.src).lang.lower()
@@ -197,17 +183,11 @@ class Setting():
 
         if self.result != self.src:
             self.setResult(self.translator.translate(self.src, src=src, dest=dest).text, show)
-            self.valid = True
-        else:
-            self.valid = False
 
     def youdao_smart_dict(self, event):
         if self.result != self.src:
             result = self.youdao_dict.get_result(self.src)
             self.set_word_result(result)
-            self.valid = True
-        else:
-            self.valid = False
 
     def set_word_result(self, result):
         self.subFrame.destText.show_result(result)
@@ -218,11 +198,13 @@ class Setting():
         self.google_translate(event)
 
     def check_valid(self):
-        if self.result == pyperclip.paste():
+        string = pyperclip.paste()
+        if self.result == string or self.src == string:
             return False
-        append = self.get_normalized_append(pyperclip.paste())
+        append = self.get_normalized_append(string)
         if self.last_append != append:
-            self.is_word = self.is_dict and (len(append.split()) <= 3) and not check_contain_chinese(append)
+            self.is_word = self.is_dict and (len(append.split()) <= 3) and not check_contain_chinese(
+                append) and not self.continus
             return True
         return False
 
@@ -231,22 +213,16 @@ class Setting():
             self.last_append = self.get_normalized_append(pyperclip.paste())
             self.paste(event)
             if not self.is_word:
-                # self.google_translate(event)
-                # self.smart_translate(event)
                 TranslateThread(self, True).start()
             else:
                 TranslateThread(self, False).start()
                 DictThread(self).start()
-        else:
-            self.valid = False
 
     def Copy(self, event):
         pyperclip.copy(self.result)
 
     def OnTimer(self, event):
         self.translateCopy(event)
-        if self.valid and self.is_copy:
-            self.Copy(event)
 
     def ChangeMode(self, event):
         if event.Id == self.taskbar.ID_Main:
@@ -258,6 +234,12 @@ class Setting():
 
         self.subFrame.Show(not self.is_main)
         self.mainFrame.Show(self.is_main)
+
+    def clear(self, event=None):
+        self.setSrc('')
+        self.setResult('')
+        pyperclip.copy('')
+        self.last_append = ''
 
     def SwitchMode(self, event):
         self.is_main = not self.is_main
@@ -335,7 +317,7 @@ class Setting():
         self['is_listen'] = value
         self.mainFrame.listenCheck.SetValue(value)
         if value:
-            self.mainFrame.timer.Start(3000)  # 设定时间间隔为1000毫秒,并启动定时器
+            self.mainFrame.timer.Start(2000)  # 设定时间间隔为1000毫秒,并启动定时器
             self.mouseListener.start()
         else:
             self.mainFrame.timer.Stop()
@@ -401,9 +383,7 @@ class Setting():
         self.mainFrame.continusCheck.SetValue(value)
 
     def ReverseContinus(self, event):
-        self.setSrc('')
-        self.setResult('')
-        self.last_append = ''
+        self.clear()
         self.continus = not self.continus
 
     @property

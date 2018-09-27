@@ -19,11 +19,87 @@ class Color:
 class ColoredCtrl(wx.TextCtrl):
     ERROR = 0
     WORD = 1
+    ID_Top = wx.NewId()
+    ID_Listen = wx.NewId()
+    ID_Copy = wx.NewId()
+    ID_Dict = wx.NewId()
+    ID_Dete = wx.NewId()
+    ID_Continus = wx.NewId()
+    ID_Show = wx.NewId()
+    ID_Main = wx.NewId()
+    ID_Exchange = wx.NewId()
+    ID_Focus = wx.NewId()
+    ID_About = wx.NewId()
+    ID_Closeshow = wx.NewId()
+    ID_Switch = wx.NewId()
+    ID_Copy_result = wx.NewId()
+    ID_Clear = wx.NewId()
 
     def __init__(self, parent=None, id=None, style=0):
+        self.parent = parent
+        self.setting = self.parent.parentFrame.setting
         if style == 0:
             style = wx.TE_RICH2 | wx.TE_MULTILINE | wx.TE_READONLY
         super(ColoredCtrl, self).__init__(parent=parent, id=id, style=style)
+
+        self.Bind(wx.EVT_RIGHT_DOWN, self.OnShowPopup)
+
+        self.Bind(wx.EVT_MENU, self.setting.ReverseStayTop, id=self.ID_Top)
+        self.Bind(wx.EVT_MENU, self.setting.ReverseListen, id=self.ID_Listen)
+        self.Bind(wx.EVT_MENU, self.setting.ReverseDict, id=self.ID_Dict)
+        self.Bind(wx.EVT_MENU, self.setting.ReverseDete, id=self.ID_Dete)
+        self.Bind(wx.EVT_MENU, self.setting.ReverseCopy, id=self.ID_Copy)
+        self.Bind(wx.EVT_MENU, self.setting.ReverseContinus, id=self.ID_Continus)
+
+        self.Bind(wx.EVT_MENU, self.setting.ChangeMode, id=self.ID_Switch)
+        self.Bind(wx.EVT_MENU, self.setting.taskbar.OnExchange, id=self.ID_Exchange)
+        self.Bind(wx.EVT_MENU, self.setting.Copy, id=self.ID_Copy_result)
+
+        self.Bind(wx.EVT_MENU, self.setting.taskbar.OnAbout, id=self.ID_About)
+        self.Bind(wx.EVT_MENU, self.setting.clear, id=self.ID_Clear)
+        self.Bind(wx.EVT_MENU, self.close, id=self.ID_Closeshow)
+
+    # 右键菜单
+    def OnShowPopup(self, event):
+        self.PopupMenu(self.CreateContextMenu())
+
+    def close(self, event):
+        self.setting.mainFrame.Destroy()
+        self.setting.taskbar.Destroy()
+        self.setting.subFrame.Destroy()
+
+    def CreateContextMenu(self):
+        menu = wx.Menu()
+
+        menu.Append(self.ID_Exchange, 'Copy Source')
+
+        menu.Append(self.ID_Copy_result, 'Copy Result')
+
+        menu.Append(self.ID_Clear, 'Clear')
+
+        menu.Append(self.ID_Switch, 'Main Mode' if not self.setting.is_main else 'Focus Mode')
+
+        copy = menu.AppendCheckItem(self.ID_Copy, 'Auto Copy', 'Auto copy result to clipboard.')
+        copy.Check(self.setting.is_copy)
+
+        continus = menu.AppendCheckItem(self.ID_Continus, 'Incremental Copy', 'Incremental Copy content to source.')
+        continus.Check(self.setting.continus)
+
+        is_dict = menu.AppendCheckItem(self.ID_Dict, 'Smart Dict', 'Enable Youdao smart dictionary')
+        is_dict.Check(self.setting.is_dict)
+
+        listen = menu.AppendCheckItem(self.ID_Listen, 'Listen Clipboard', 'Listen to Clipboard and auto translate.')
+        listen.Check(self.setting.is_listen)
+
+        listen = menu.AppendCheckItem(self.ID_Top, 'Stay on Top', 'Always stay on Top.')
+        listen.Check(self.setting.stay_top)
+
+        dete = menu.AppendCheckItem(self.ID_Dete, 'Detect Language', 'Detect the input language.')
+        dete.Check(self.setting.is_dete)
+
+        menu.Append(self.ID_About, 'Help and Update')
+        menu.Append(self.ID_Closeshow, 'Exit')
+        return menu
 
     def ColoredAppend(self, text, color):
         style = self.GetDefaultStyle()

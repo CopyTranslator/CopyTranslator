@@ -14,7 +14,7 @@ Copy, Translate, and Paste with Google translate API.
 
 #### v0.0.6.0 Comprehensively Empower the Focus Mode
 
-1. **`Youdao` smart dictionary**(based on API provided by [Translator](https://github.com/93Alliance/Translator)), sentences with words less than 3 will be view as phrase or word, you will see a more detailed explanations in `Focus Mode`. Check the `Smart Dict ` option to enable it. 
+1. **`Youdao` smart dictionary**(based on API provided by [Youdao](https://github.com/longcw/youdao)), sentences with words less than 3 will be view as phrase or word, you will see a more detailed explanations in `Focus Mode`. Check the `Smart Dict ` option to enable it. 
 
    **Note: It is limited to the languages `Youdao` supported , but you don't need and cannot  manually choose language.**
 
@@ -112,7 +112,7 @@ You can resize it freely.
 
 ## Acknowledgements
 
-Thanks to the developers of [wxpython](https://wxpython.org/), [googletrans](https://github.com/ssut/py-googletrans), [pyperclip](https://github.com/asweigart/pyperclip) ,[Translator](https://github.com/93Alliance/Translator) and my dear schoolmates.
+Thanks to the developers of [wxpython](https://wxpython.org/), [googletrans](https://github.com/ssut/py-googletrans), [pyperclip](https://github.com/asweigart/pyperclip) ,[Youdao](https://github.com/longcw/youdao) and my dear schoolmates.
 
 ## License
 

@@ -2,7 +2,7 @@
 
 ![logo](./logo.png)
 
-[中文 Chinese](./README_zh.md)
+[中文 Chinese](https://github.com/elliottzheng/CopyTranslator/wiki)
 
 ## User manual for Windows users.
 

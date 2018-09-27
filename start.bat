@@ -1,1 +1,0 @@
-CopyTranslator_win

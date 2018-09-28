@@ -9,7 +9,6 @@ import os
 import threading
 import time
 
-import pyperclip
 import regex as re
 import wx
 import wx.adv
@@ -19,6 +18,7 @@ from googletrans import Translator
 from pynput import mouse
 from pynput.keyboard import Key, Controller
 
+from copyTranslator import smart_clipboard
 from copyTranslator.constant import *
 from copyTranslator.mainframe import MainFrame
 from copyTranslator.mypanel import MyPanel
@@ -216,8 +216,8 @@ class Setting():
         TranslateThread(self, True).start()
 
     def check_valid(self):
-        string = pyperclip.paste()
-        if self.result == string or self.src == string:
+        string = smart_clipboard.paste()
+        if self.result == string or self.src == string or string == '':
             return False
         append = self.get_normalized_append(string)
         if self.last_append != append:
@@ -229,7 +229,7 @@ class Setting():
     def translateCopy(self, event):
         if self.check_valid():
 
-            self.last_append = self.get_normalized_append(pyperclip.paste())
+            self.last_append = self.get_normalized_append(smart_clipboard.paste())
             self.paste(event)
             if not self.is_word:
                 TranslateThread(self, True).start()
@@ -238,7 +238,7 @@ class Setting():
                 DictThread(self).start()
 
     def Copy(self, event):
-        pyperclip.copy(self.result)
+        smart_clipboard.copy(self.result)
 
     def OnTimer(self, event):
         self.translateCopy(event)
@@ -257,7 +257,7 @@ class Setting():
     def clear(self, event=None):
         self.setSrc('')
         self.setResult('')
-        pyperclip.copy('')
+        smart_clipboard.copy('')
         self.last_append = ''
 
     def SwitchMode(self, event):
@@ -340,7 +340,7 @@ class Setting():
             self.mouseListener.start()
         else:
             self.mainFrame.timer.Stop()
-            self.mouseListener.Stop()
+            self.mouseListener.stop()
         self.RefreshState()
 
     def ReverseListen(self, event):

@@ -8,6 +8,13 @@ import wx
 
 
 class MyPanel(wx.Panel):
+    NOT_LISTEN = (255, 255, 255)
+    LISTEN = (84, 255, 159)
+    LISTEN_COPY = (152, 245, 255)
+    TRANSLATEING = (238, 238, 0)
+    INCERMENT_LISTEN = (147, 112, 219)
+    INCERMENT_COPY = (199, 21, 133)
+
     def __init__(self, parent):
         wx.Panel.__init__(self, parent, -1)
         self.leftDown = False
@@ -18,7 +25,7 @@ class MyPanel(wx.Panel):
         self.Bind(wx.EVT_LEFT_UP, self.OnLeftUp)
         self.Bind(wx.EVT_LEFT_DCLICK, self.OnLeftDClick)
         self.Bind(wx.EVT_MOTION, self.OnMouseMove)
-        self.Bind(wx.EVT_RIGHT_UP, self.parentFrame.setting.Copy)
+        # self.Bind(wx.EVT_RIGHT_UP, self.parentFrame.setting.Copy)
         self.Bind(wx.EVT_RIGHT_DOWN, self.parentFrame.setting.Copy)
 
     def OnLeftDClick(self, evt):
@@ -43,3 +50,7 @@ class MyPanel(wx.Panel):
             pos = self.ClientToScreen(evt.GetPosition())
             fp = (pos.x - self.delta.x, pos.y - self.delta.y)
             self.parentFrame.Move(fp)
+
+    def SetState(self, state):
+        self.SetBackgroundColour(state)
+        self.Refresh()

@@ -21,6 +21,7 @@ from pynput.keyboard import Key, Controller
 
 from copyTranslator.constant import *
 from copyTranslator.mainframe import MainFrame
+from copyTranslator.mypanel import MyPanel
 from copyTranslator.subframe import SubFrame
 from copyTranslator.taskbar import TaskBarIcon
 from copyTranslator.update_checker import UpdateThread
@@ -42,9 +43,11 @@ class TranslateThread(threading.Thread):
         self.show = show
 
     def run(self):
+        self.setting.subFrame.panel.SetState(MyPanel.TRANSLATEING)
         self.setting.smart_translate(self.show)
         if self.setting.is_copy:
             self.setting.Copy(None)
+        self.setting.subFrame.panel.SetState(self.setting.state)
 
 
 class DictThread(threading.Thread):
@@ -89,7 +92,7 @@ class Setting():
 
         self.mainFrame.Centre()
         # self.mainFrame.Show()
-
+        self.state = MyPanel.NOT_LISTEN
         self.translator = Translator(service_urls=['translate.google.cn'])
         self.youdao_dict = YoudaoSpider()
         self.src = ''
@@ -100,6 +103,21 @@ class Setting():
         self.is_word = False
         self.initialize()
         UpdateThread(self).start()
+
+    def RefreshState(self):
+        if self.continus and self.is_listen and self.is_copy:
+            self.state = MyPanel.INCERMENT_COPY
+        elif self.continus and self.is_listen:
+            self.state = MyPanel.INCERMENT_LISTEN
+        elif self.is_listen and self.is_copy:
+            self.state = MyPanel.LISTEN_COPY
+        elif self.is_listen:
+            self.state = MyPanel.LISTEN
+        else:
+            self.state = MyPanel.NOT_LISTEN
+        self.subFrame.panel.SetState(self.state)
+
+        return self.state
 
     def initialize(self):
         self.continus = self.continus
@@ -195,7 +213,7 @@ class Setting():
 
     def translateCtrl(self, event):
         self.setSrc(self.getExpSrc())
-        self.google_translate(event)
+        TranslateThread(self, True).start()
 
     def check_valid(self):
         string = pyperclip.paste()
@@ -210,6 +228,7 @@ class Setting():
 
     def translateCopy(self, event):
         if self.check_valid():
+
             self.last_append = self.get_normalized_append(pyperclip.paste())
             self.paste(event)
             if not self.is_word:
@@ -321,6 +340,8 @@ class Setting():
             self.mouseListener.start()
         else:
             self.mainFrame.timer.Stop()
+            self.mouseListener.Stop()
+        self.RefreshState()
 
     def ReverseListen(self, event):
         self.is_listen = not self.is_listen
@@ -333,6 +354,7 @@ class Setting():
     def is_copy(self, value):
         self['is_copy'] = value
         self.mainFrame.copyCheck.SetValue(self.is_copy)
+        self.RefreshState()
 
     def ReverseCopy(self, event):
         self.is_copy = not self.is_copy
@@ -381,6 +403,7 @@ class Setting():
     def continus(self, value):
         self['continus'] = value
         self.mainFrame.continusCheck.SetValue(value)
+        self.RefreshState()
 
     def ReverseContinus(self, event):
         self.clear()

@@ -337,6 +337,7 @@ class Setting():
         self.mainFrame.listenCheck.SetValue(value)
         if value:
             self.mainFrame.timer.Start(2000)  # 设定时间间隔为1000毫秒,并启动定时器
+            self.mouseListener = mouse.Listener(on_click=self.onLongClick)
             self.mouseListener.start()
         else:
             self.mainFrame.timer.Stop()

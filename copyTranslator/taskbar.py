@@ -47,7 +47,7 @@ class TaskBarIcon(wx.adv.TaskBarIcon):
         self.Bind(wx.EVT_MENU, self.setting.ChangeMode, id=self.ID_Switch)
         self.Bind(wx.EVT_MENU, self.OnExchange, id=self.ID_Exchange)
         self.Bind(wx.EVT_MENU, self.OnAbout, id=self.ID_About)
-        self.Bind(wx.EVT_MENU, self.OnCloseshow, id=self.ID_Closeshow)
+        self.Bind(wx.EVT_MENU, self.setting.OnExit, id=self.ID_Closeshow)
 
     def OnExchange(self, event):
         pyperclip.copy(self.setting.src)
@@ -63,12 +63,6 @@ class TaskBarIcon(wx.adv.TaskBarIcon):
         if answer == wx.ID_YES:
             webbrowser.open(project_url)
         box.Destroy()
-
-    def OnCloseshow(self, event):
-        self.setting.save_config()
-        self.setting.mainFrame.Destroy()
-        self.setting.subFrame.Destroy()
-        self.Destroy()
 
     # 右键菜单
     def CreatePopupMenu(self):

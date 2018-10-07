@@ -4,7 +4,6 @@
 # @FileName: mainframe.py
 # @Software: PyCharm
 
-
 import wx
 import wx.adv
 from googletrans import LANGCODES
@@ -104,7 +103,7 @@ class MainFrame(wx.Frame):
         self.Bind(wx.EVT_TIMER, self.setting.OnTimer, self.timer)  # 绑定一个定时器事件
 
         # 绑定事件
-        self.Bind(wx.EVT_CLOSE, self.OnClose)
+        self.Bind(wx.EVT_CLOSE, self.setting.OnExit)
         self.Bind(wx.EVT_ICONIZE,
                   self.OnIconfiy)  # 窗口最小化时，调用OnIconfiy,注意Wx窗体上的最小化按钮，触发的事件是 wx.EVT_ICONIZE,而根本就没有定义什么wx.EVT_MINIMIZE,但是最大化，有个wx.EVT_MAXIMIZE。
 
@@ -116,8 +115,3 @@ class MainFrame(wx.Frame):
         self.Hide()
         event.Skip()
 
-    def OnClose(self, event):
-        self.setting.save_config()
-        self.setting.taskbar.Destroy()
-        self.setting.subFrame.Destroy()
-        self.Destroy()

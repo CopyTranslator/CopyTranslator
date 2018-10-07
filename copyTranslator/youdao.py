@@ -9,7 +9,6 @@
 
 import requests
 from bs4 import BeautifulSoup
-from termcolor import colored
 
 
 class YoudaoSpider:
@@ -33,7 +32,7 @@ class YoudaoSpider:
         40: '不支持的语言类型',
         50: '无效的key',
         60: '无词典结果，仅在获取词典结果生效',
-        70: '网络错误'
+        70: '无法连接到Youdao'
     }
 
     result = {
@@ -115,41 +114,6 @@ class YoudaoSpider:
                     'value': [v.strip() for v in wordgroup.find('span').next_sibling.split(';')]
                 } for wordgroup in web.find_all(class_='wordGroup', limit=4)
             ]
-
-    @staticmethod
-    def show_result(result):
-        """
-        展示查询结果
-        :param result: 与有道API返回的json 数据结构一致的dict
-        """
-        if 'stardict' in result:
-            print(colored('StarDict:', 'blue'))
-            print(result['stardict'])
-            return
-
-        if result['errorCode'] != 0:
-            print(colored(YoudaoSpider.error_code[result['errorCode']], 'red'))
-        else:
-            print(colored('[%s]' % result['query'], 'magenta'))
-            if 'basic' in result:
-                if 'us-phonetic' in result['basic']:
-                    print(colored('美音:', 'blue'), colored('[%s]' % result['basic']['us-phonetic'], 'green')),
-                if 'uk-phonetic' in result['basic']:
-                    print(colored('英音:', 'blue'), colored('[%s]' % result['basic']['uk-phonetic'], 'green'))
-                if 'phonetic' in result['basic']:
-                    print(colored('拼音:', 'blue'), colored('[%s]' % result['basic']['phonetic'], 'green'))
-
-                print(colored('基本词典:', 'blue'))
-                print(colored('\t' + '\n\t'.join(result['basic']['explains']), 'yellow'))
-
-            if 'translation' in result:
-                print(colored('有道翻译:', 'blue'))
-                print(colored('\t' + '\n\t'.join(result['translation']), 'cyan'))
-
-            if 'web' in result:
-                print(colored('网络释义:', 'blue'))
-                for item in result['web']:
-                    print('\t' + colored(item['key'], 'cyan') + ': ' + '; '.join(item['value']))
 
 
 if __name__ == '__main__':

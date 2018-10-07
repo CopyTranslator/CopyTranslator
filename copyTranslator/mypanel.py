@@ -26,7 +26,7 @@ class MyPanel(wx.Panel):
         self.Bind(wx.EVT_LEFT_DCLICK, self.OnLeftDClick)
         self.Bind(wx.EVT_MOTION, self.OnMouseMove)
         # self.Bind(wx.EVT_RIGHT_UP, self.parentFrame.setting.Copy)
-        self.Bind(wx.EVT_RIGHT_DOWN, self.parentFrame.setting.Copy)
+        self.Bind(wx.EVT_RIGHT_DOWN, self.parentFrame.setting.ReverseListen)
 
     def OnLeftDClick(self, evt):
         # self.parentFrame.setting.ChangeMode(evt)

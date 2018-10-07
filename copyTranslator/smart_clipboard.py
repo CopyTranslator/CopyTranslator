@@ -1,10 +1,7 @@
 # -*- coding: utf-8 -*-
 # @Time    : 2018/9/28 0028 9:14
-# @Author  : Yinglin Zheng
-# @Email   : zhengyinglin@stu.xmu.edu.cn
 # @FileName: smart_clipboard.py
 # @Software: PyCharm
-# @Affiliation: XMU IPIC
 
 import win32clipboard as clipboard
 

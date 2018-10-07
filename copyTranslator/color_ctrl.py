@@ -57,16 +57,12 @@ class ColoredCtrl(wx.TextCtrl):
 
         self.Bind(wx.EVT_MENU, self.setting.taskbar.OnAbout, id=self.ID_About)
         self.Bind(wx.EVT_MENU, self.setting.clear, id=self.ID_Clear)
-        self.Bind(wx.EVT_MENU, self.close, id=self.ID_Closeshow)
+        self.Bind(wx.EVT_MENU, self.setting.OnExit, id=self.ID_Closeshow)
 
     # 右键菜单
     def OnShowPopup(self, event):
         self.PopupMenu(self.CreateContextMenu())
 
-    def close(self, event):
-        self.setting.mainFrame.Destroy()
-        self.setting.taskbar.Destroy()
-        self.setting.subFrame.Destroy()
 
     def CreateContextMenu(self):
         menu = wx.Menu()

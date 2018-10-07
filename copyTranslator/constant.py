@@ -5,13 +5,13 @@
 # @Software: PyCharm
 
 logopath = 'logo.ico'
-version = 'v0.0.6.1'
+version = 'v0.0.6.2_preview'
 project_name = 'CopyTranslator'
 update_json_url = 'https://gitee.com/ylzheng/CopyTranslator/raw/master/copyTranslator/version.json'
 install_url = 'https://github.com/elliottzheng/CopyTranslator/wiki/Downloads-%E4%B8%8B%E8%BD%BD%E4%B8%8E%E5%AE%89%E8%A3%85'
 log_path = 'update_log.txt'
-project_url = 'https://github.com/elliottzheng/CopyTranslator/wiki'
-level = 1
+project_url = 'https://hypercube.top/copytranslator/'
+level = 2
 
 levels_log = {
     1: 'Small Enhancements',

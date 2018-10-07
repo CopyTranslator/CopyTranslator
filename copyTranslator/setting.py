@@ -9,6 +9,8 @@ import os
 import threading
 import time
 
+# from copyTranslator import smart_clipboard
+import pyperclip as smart_clipboard
 import regex as re
 import wx
 import wx.adv
@@ -18,7 +20,6 @@ from googletrans import Translator
 from pynput import mouse
 from pynput.keyboard import Key, Controller
 
-from copyTranslator import smart_clipboard
 from copyTranslator.constant import *
 from copyTranslator.mainframe import MainFrame
 from copyTranslator.mypanel import MyPanel
@@ -47,6 +48,7 @@ class TranslateThread(threading.Thread):
         self.setting.smart_translate(self.show)
         if self.setting.is_copy:
             self.setting.Copy(None)
+
         self.setting.subFrame.panel.SetState(self.setting.state)
 
 
@@ -101,7 +103,9 @@ class Setting():
         self.patterns = [re.compile(r'([?!.])[ ]?\n'), re.compile(r'([？！。])[ \n]')]  # 前面一个处理英语语系的，后面一个可以处理汉语系。
         self.pattern2 = re.compile(r'\$([?？！!.。])\$')
         self.is_word = False
+        self.stored_source = self.source
         self.initialize()
+
         UpdateThread(self).start()
 
     def RefreshState(self):
@@ -155,6 +159,12 @@ class Setting():
             return self.src + ' ' + append
         else:
             return append
+
+    def OnExit(self, event):
+        self.save_config()
+        self.mainFrame.Destroy()
+        self.subFrame.Destroy()
+        self.taskbar.Destroy()
 
     def paste(self, event):
         self.setSrc(self.last_append)
@@ -369,9 +379,11 @@ class Setting():
         self['is_dete'] = value
         self.mainFrame.detectCheck.SetValue(value)
         if value:
+            self.stored_source = self.mainFrame.tochoice.GetString(self.mainFrame.fromchoice.GetSelection())
             self.mainFrame.fromchoice.Disable()
             self.mainFrame.fromlabel.SetLabel("Detected Language")
         else:
+            self.mainFrame.fromchoice.SetSelection(self.mainFrame.fromchoice.FindString(self.stored_source))
             self.mainFrame.fromchoice.Enable()
             self.mainFrame.fromlabel.SetLabel("Source Language")
 

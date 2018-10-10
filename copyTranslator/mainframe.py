@@ -10,12 +10,12 @@ from googletrans import LANGCODES
 
 from copyTranslator.constant import *
 
+langList = list(LANGCODES.keys())
 
 class MainFrame(wx.Frame):
     mainStyle = wx.DEFAULT_FRAME_STYLE ^ wx.RESIZE_BORDER ^ wx.MAXIMIZE_BOX
 
     def __init__(self, setting):
-        langList = list(LANGCODES.keys())
         wx.Frame.__init__(self, None, -1, project_name + ' ' + version,
                           size=(465, 385))
 

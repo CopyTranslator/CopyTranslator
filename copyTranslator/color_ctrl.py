@@ -34,6 +34,7 @@ class ColoredCtrl(wx.TextCtrl):
     ID_Switch = wx.NewId()
     ID_Copy_result = wx.NewId()
     ID_Clear = wx.NewId()
+    ID_Write = wx.NewId()
 
     def __init__(self, parent=None, id=None, style=0):
         self.parent = parent
@@ -52,6 +53,7 @@ class ColoredCtrl(wx.TextCtrl):
         self.Bind(wx.EVT_MENU, self.setting.ReverseContinus, id=self.ID_Continus)
 
         self.Bind(wx.EVT_MENU, self.setting.ChangeMode, id=self.ID_Switch)
+        self.Bind(wx.EVT_MENU, self.setting.ToWriting, id=self.ID_Write)
         self.Bind(wx.EVT_MENU, self.setting.taskbar.OnExchange, id=self.ID_Exchange)
         self.Bind(wx.EVT_MENU, self.setting.Copy, id=self.ID_Copy_result)
 
@@ -74,6 +76,8 @@ class ColoredCtrl(wx.TextCtrl):
         menu.Append(self.ID_Clear, 'Clear')
 
         menu.Append(self.ID_Switch, 'Main Mode' if not self.setting.is_main else 'Focus Mode')
+
+        menu.Append(self.ID_Write, 'Writing Mode')
 
         copy = menu.AppendCheckItem(self.ID_Copy, 'Auto Copy', 'Auto copy result to clipboard.')
         copy.Check(self.setting.is_copy)

@@ -26,6 +26,7 @@ from copyTranslator.mypanel import MyPanel
 from copyTranslator.subframe import SubFrame
 from copyTranslator.taskbar import TaskBarIcon
 from copyTranslator.update_checker import UpdateThread
+from copyTranslator.writingframe import WritingFrame
 from copyTranslator.youdao import YoudaoSpider
 
 
@@ -91,6 +92,7 @@ class Setting():
         self.taskbar = TaskBarIcon(self)
         self.mainFrame = MainFrame(self)
         self.subFrame = SubFrame(self)
+        self.writingFrame = WritingFrame(self)
 
         self.mainFrame.Centre()
         # self.mainFrame.Show()
@@ -159,6 +161,13 @@ class Setting():
             return self.src + ' ' + append
         else:
             return append
+
+    def ToWriting(self, event):
+        self.subFrame.Show(False)
+        self.mainFrame.Show(False)
+
+        self.writingFrame.Show(True)
+
 
     def OnExit(self, event):
         self.save_config()

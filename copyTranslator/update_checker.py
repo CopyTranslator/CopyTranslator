@@ -3,6 +3,7 @@
 # @Author  : Elliott Zheng
 # @FileName: update_checker.py
 # @Software: PyCharm
+
 import json
 import threading
 import time
@@ -30,24 +31,28 @@ class UpdateChecker:
 
     @staticmethod
     def check(setting):
-        if time.time() - setting['last_ask'] < 172800:
+        if time.time() - setting.config['last_ask'] < 172800:
             return
         try:
-            version_value = json.loads(urlopen(update_json_url).read().decode())
+            string = urlopen(update_json_url).read().decode()
+            string = string[string.find('{'):]
+
+            version_value = json.loads(string)
             new_version = version_value['version']
+            print(new_version)
             if new_version <= version:
                 return
 
             update_log = version_value['update_log']
-            box = wx.MessageDialog(setting.mainFrame if setting.is_main else setting.subFrame,
+            box = wx.MessageDialog(setting.get_current_frame(),
                                    levels_log[version_value[
-                                       'level']] + new_version + ' is available, update now?\n\n' + update_log,
+                                       'level']] + ' ' + new_version + ' is available, update now?\n\n' + update_log,
                                    'Update', wx.YES_NO | wx.ICON_QUESTION)
             answer = box.ShowModal()
             if answer == wx.ID_YES:
                 webbrowser.open(install_url)
             else:
-                setting['last_ask'] = time.time()
+                setting.config['last_ask'] = time.time()
             box.Destroy()
         except:
             pass
@@ -65,7 +70,8 @@ class UpdateChecker:
             'level': level
         }
         myfile = open('version.json', 'w')
-        json.dump(value, myfile, indent=4)
+        string = 'version=' + json.dumps(value)
+        myfile.write(string)
         myfile.close()
 
 

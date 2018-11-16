@@ -6,11 +6,10 @@
 
 import wx
 import wx.adv
-from googletrans import LANGCODES
 
 from copyTranslator.constant import *
+from copyTranslator.googletranslator import GoogleLangList as langList
 
-langList = list(LANGCODES.keys())
 
 class MainFrame(wx.Frame):
     mainStyle = wx.DEFAULT_FRAME_STYLE ^ wx.RESIZE_BORDER ^ wx.MAXIMIZE_BOX
@@ -106,6 +105,7 @@ class MainFrame(wx.Frame):
         self.Bind(wx.EVT_CLOSE, self.setting.OnExit)
         self.Bind(wx.EVT_ICONIZE,
                   self.OnIconfiy)  # 窗口最小化时，调用OnIconfiy,注意Wx窗体上的最小化按钮，触发的事件是 wx.EVT_ICONIZE,而根本就没有定义什么wx.EVT_MINIMIZE,但是最大化，有个wx.EVT_MAXIMIZE。
+        self.Show(False)
 
     def OnHide(self, event):
         self.Hide()
@@ -114,4 +114,3 @@ class MainFrame(wx.Frame):
     def OnIconfiy(self, event):
         self.Hide()
         event.Skip()
-

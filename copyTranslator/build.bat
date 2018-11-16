@@ -1,4 +1,4 @@
 pyi-makespec -i logo.ico -w CopyTranslator.py
-pyinstaller CopyTranslator.spec
+pyinstaller --clean CopyTranslator.spec
 cp ./logo.ico ./dist/CopyTranslator/logo.ico
 cp ./shortcut.bat ./dist/CopyTranslator/shortcut.bat

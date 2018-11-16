@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # @Time    : 2018/9/25 0025 17:52
 # @Author  : Elliott Zheng
-# @FileName: subframe.py
+# @FileName: focusframe.py
 # @Software: PyCharm
 
 import win32con
@@ -22,12 +22,13 @@ class SubFrame(wx.Frame):
         self.SetIcon(wx.Icon(logopath, wx.BITMAP_TYPE_ICO))
         self.SetWindowStyle(SubFrame.subStyle)
         self.setting = setting
+        self.config = setting.config
         self.panel = MyPanel(self)
         sizer = wx.BoxSizer(wx.VERTICAL)
         sizer.Add((-1, 15))
         self.destText = ColoredCtrl(self.panel, -1)  # 创建一个文本控件
         self.font = self.destText.GetFont()
-        self.font.SetPixelSize((0, self.setting.pixel_size))
+        self.font.SetPixelSize((0, self.setting.font_size))
         self.destText.SetFont(self.font)
 
         sizer.Add(self.destText, -1, wx.EXPAND)
@@ -42,6 +43,7 @@ class SubFrame(wx.Frame):
         self.Bind(wx.EVT_HOTKEY, self.setting.ChangeMode, id=self.hotKeyId2)
         self.Bind(wx.EVT_HOTKEY, self.onFontPlus, id=self.hotKeyId3)
         self.Bind(wx.EVT_HOTKEY, self.onFontMinus, id=self.hotKeyId4)
+        self.Show(False)
 
     def regHotKey(self):
         """
@@ -73,12 +75,12 @@ class SubFrame(wx.Frame):
 
     def onFontPlus(self, event):
         self.font = self.font.Scaled(1.25)
-        self.setting.pixel_size = self.font.GetPixelSize()[1]
+        self.config.font_size = self.font.GetPixelSize()[1]
         self.destText.SetFont(self.font)
 
     def onFontMinus(self, event):
         self.font = self.font.Scaled(0.8)
-        self.setting.pixel_size = self.font.GetPixelSize()[1]
+        self.config.font_size = self.font.GetPixelSize()[1]
         self.destText.SetFont(self.font)
 
     def OnHide(self, event):

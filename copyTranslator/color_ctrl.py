@@ -47,7 +47,7 @@ class ColoredCtrl(wx.TextCtrl):
 
         self.Bind(wx.EVT_RIGHT_DOWN, self.OnShowPopup)
 
-        self.Bind(wx.EVT_TEXT_ENTER, self.enter)
+        # self.Bind(wx.EVT_TEXT_ENTER, self.enter)
 
         self.Bind(wx.EVT_MENU, self.setting.ReverseStayTop, id=self.ID_Top)
         self.Bind(wx.EVT_MENU, self.setting.ReverseListen, id=self.ID_Listen)
@@ -71,11 +71,10 @@ class ColoredCtrl(wx.TextCtrl):
         keyInput = evt.GetKeyCode()
         if keyInput == 1:  # 1 stands for 'ctrl+a'
             self.SelectAll()
+        elif keyInput == 10:  # 10 stands for 'ctrl+enter'
+            smart_clipboard.copy(self.GetValue())
         evt.Skip()
 
-    def enter(self, event=None):
-        if self.IsModified():
-            smart_clipboard.copy(self.GetValue())
 
     # 右键菜单
     def OnShowPopup(self, event):

@@ -12,9 +12,8 @@ import wx
 from pynput import mouse
 
 from constant import version
-from copyTranslator.myenum import FrameMode
 from copyTranslator.youdao import YoudaoSpider
-from focusframe import SubFrame
+from focusframe import FocusFrame
 from googletranslator import GoogleTranslator
 from mainframe import MainFrame
 from myenum import *
@@ -203,10 +202,10 @@ class Config:
         self['stay_top'] = value
         self.mainFrame.topCheck.SetValue(value)
         if value:
-            self.subFrame.SetWindowStyle(wx.STAY_ON_TOP | SubFrame.subStyle)
+            self.subFrame.SetWindowStyle(wx.STAY_ON_TOP | FocusFrame.subStyle)
             self.mainFrame.SetWindowStyle(wx.STAY_ON_TOP | MainFrame.mainStyle)
         else:
-            self.subFrame.SetWindowStyle(SubFrame.subStyle)
+            self.subFrame.SetWindowStyle(FocusFrame.subStyle)
             self.mainFrame.SetWindowStyle(MainFrame.mainStyle)
 
     @property

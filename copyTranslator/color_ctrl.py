@@ -69,10 +69,15 @@ class ColoredCtrl(wx.TextCtrl):
 
     def OnSelectAll(self, evt):
         keyInput = evt.GetKeyCode()
+        print(keyInput)
         if keyInput == 1:  # 1 stands for 'ctrl+a'
             self.SelectAll()
         elif keyInput == 10:  # 10 stands for 'ctrl+enter'
             smart_clipboard.copy(self.GetValue())
+        elif keyInput == 19:  # 19 stands for 'ctrl+s'
+            pass
+        elif keyInput == 23:  # 19 stands for 'ctrl+w'
+            pass
         evt.Skip()
 
 

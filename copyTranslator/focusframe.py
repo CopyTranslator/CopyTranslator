@@ -13,14 +13,14 @@ from copyTranslator.constant import *
 from copyTranslator.mypanel import MyPanel
 
 
-class SubFrame(wx.Frame):
+class FocusFrame(wx.Frame):
     subStyle = wx.DEFAULT_FRAME_STYLE ^ wx.CAPTION
 
     def __init__(self, setting):
         wx.Frame.__init__(self, None, -1, 'CopyTranslator -Focus Mode',
                           size=(465, 300))
         self.SetIcon(wx.Icon(logopath, wx.BITMAP_TYPE_ICO))
-        self.SetWindowStyle(SubFrame.subStyle)
+        self.SetWindowStyle(FocusFrame.subStyle)
         self.setting = setting
         self.config = setting.config
         self.panel = MyPanel(self)

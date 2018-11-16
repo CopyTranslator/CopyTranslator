@@ -13,10 +13,11 @@ from googletrans import LANGUAGES
 from pynput.keyboard import Key, Controller
 
 from config import Config
-from copyTranslator.focusframe import SubFrame
+from copyTranslator.focusframe import FocusFrame
 from copyTranslator.mainframe import MainFrame
 from copyTranslator.mypanel import MyPanel
 from copyTranslator.taskbar import TaskBarIcon
+from copyTranslator.translation import Translation
 from copyTranslator.update_checker import UpdateThread
 from copyTranslator.writingframe import WritingFrame
 # from copyTranslator import smart_clipboard
@@ -45,6 +46,7 @@ class DictThread(threading.Thread):
 
     def run(self):
         self.setting.youdao_smart_dict(None)
+        self.setting.subFrame.panel.SetState(self.setting.config.state)
 
 
 # 只要有一个汉字就是中文
@@ -68,11 +70,10 @@ class Setting():
         self.result = ''
 
         self.is_word = False
-
         self.config = Config(self)
         self.taskbar = TaskBarIcon(self)
         self.mainFrame = MainFrame(self)
-        self.subFrame = SubFrame(self)
+        self.subFrame = FocusFrame(self)
         self.writingFrame = WritingFrame(self)
         self.stored_source = self.source
         self.config.initialize()
@@ -83,6 +84,16 @@ class Setting():
         self.pattern2 = re.compile(r'\$([?？！!.。])\$')
 
         UpdateThread(self).start()
+
+    def resume_translation(self, translation):
+        self.src = translation
+        if translation.type == Translation.PURE_TEXT:
+            self.result = translation.result
+            self.subFrame.destText.SetValue(self.result)
+            self.mainFrame.destText.SetValue(self.result)
+        else:
+            self.result = translation.result['translation']
+            self.set_word_result(translation.result)
 
     def get_src_target(self):
         src = self.mainFrame.tochoice.GetString(self.mainFrame.fromchoice.GetSelection())
@@ -238,10 +249,13 @@ class Setting():
         frame.Raise()
 
     def BossKey(self, evt):
-        if self.is_main:
+        value = self.config.frame_mode
+        if value == FrameMode.main:
             frame = self.mainFrame
-        else:
+        elif value == FrameMode.focus:
             frame = self.subFrame
+        else:
+            frame = self.writingFrame
 
         frame.Iconize(not frame.IsIconized())
 

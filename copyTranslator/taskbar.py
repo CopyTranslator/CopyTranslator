@@ -27,7 +27,9 @@ class TaskBarIcon(wx.adv.TaskBarIcon):
     ID_Focus = wx.NewId()
     ID_About = wx.NewId()
     ID_Closeshow = wx.NewId()
-    ID_Switch = wx.NewId()
+    ID_Mode1 = wx.NewId()
+    ID_Mode2 = wx.NewId()
+    ID_Result = wx.NewId()
 
     def __init__(self, setting):
         self.setting = setting
@@ -44,7 +46,9 @@ class TaskBarIcon(wx.adv.TaskBarIcon):
         self.Bind(wx.EVT_MENU, self.setting.ReverseCopy, id=self.ID_Copy)
         self.Bind(wx.EVT_MENU, self.setting.ReverseContinus, id=self.ID_Continus)
 
-        self.Bind(wx.EVT_MENU, self.setting.ChangeMode, id=self.ID_Switch)
+        self.Bind(wx.EVT_MENU, self.setting.ChangeMode, id=self.ID_Mode1)
+        self.Bind(wx.EVT_MENU, self.setting.Copy, id=self.ID_Result)
+        self.Bind(wx.EVT_MENU, self.setting.ChangeMode, id=self.ID_Mode2)
         self.Bind(wx.EVT_MENU, self.OnExchange, id=self.ID_Exchange)
         self.Bind(wx.EVT_MENU, self.OnAbout, id=self.ID_About)
         self.Bind(wx.EVT_MENU, self.setting.OnExit, id=self.ID_Closeshow)
@@ -53,10 +57,8 @@ class TaskBarIcon(wx.adv.TaskBarIcon):
         pyperclip.copy(self.setting.src)
 
     def OnAbout(self, event):
-        # wx.MessageBox('copyTranslator v0.0.5.2 by Elliott Zheng\nProject website: https://github.com/elliottzheng/CopyTranslator',
-        #               'About')
         UpdateThread(self.setting).start()
-        box = wx.MessageDialog(self.setting.mainFrame if self.setting.is_main else self.setting.subFrame,
+        box = wx.MessageDialog(self.setting.get_current_frame(),
                                'If you found it useful, please give me a star on GitHub or introduce to your friend.\n\n如果您感觉本软件对您有所帮助，请在项目Github上给个star或是介绍给您的朋友，谢谢。',
                                project_name + ' ' + version + ' by Elliott Zheng', wx.YES_NO | wx.ICON_QUESTION)
         answer = box.ShowModal()
@@ -85,8 +87,11 @@ class TaskBarIcon(wx.adv.TaskBarIcon):
         dete = menu.AppendCheckItem(self.ID_Dete, 'Detect Language', 'Detect the input language.')
         dete.Check(self.setting.is_dete)
 
-        menu.Append(self.ID_Switch, 'Main Mode' if not self.setting.is_main else 'Focus Mode')
+        menu.Append(self.ID_Mode1, self.setting.config.Mode1)
+        menu.Append(self.ID_Mode2, self.setting.config.Mode2)
+
         menu.Append(self.ID_Exchange, 'Copy Source')
+        menu.Append(self.ID_Result, 'Copy Result')
         menu.Append(self.ID_About, 'Help and Update')
         menu.Append(self.ID_Closeshow, 'Exit')
         return menu

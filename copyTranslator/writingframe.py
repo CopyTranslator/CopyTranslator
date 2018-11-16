@@ -1,10 +1,8 @@
 # -*- coding: utf-8 -*-
 # @Time    : 2018/10/10 0010 17:54
-# @Author  : Yinglin Zheng
-# @Email   : zhengyinglin@stu.xmu.edu.cn
+# @Author  : Elliott
 # @FileName: writingframe.py
 # @Software: PyCharm
-# @Affiliation: XMU IPIC
 
 
 import win32con
@@ -13,7 +11,7 @@ import wx.adv
 
 from copyTranslator.color_ctrl import ColoredCtrl
 from copyTranslator.constant import *
-from copyTranslator.mainframe import langList
+from copyTranslator.googletranslator import GoogleLangList as langList
 from copyTranslator.mypanel import MyPanel
 
 
@@ -52,7 +50,7 @@ class WritingFrame(wx.Frame):
         self.transBtn.SetDefault()
 
         self.font = self.destText.GetFont()
-        self.font.SetPixelSize((0, self.setting.pixel_size))
+        self.font.SetPixelSize((0, self.setting.font_size))
         self.destText.SetFont(self.font)
 
         self.btnSizer.Add(self.fromlabel, -1, wx.EXPAND)
@@ -62,9 +60,10 @@ class WritingFrame(wx.Frame):
         self.btnSizer.Add(self.transBtn, -1, wx.EXPAND)
 
         self.btnPanel.SetSizer(self.btnSizer)
+        self.btnPanel.SetSize(50, -1)
 
         self.sizer.Add(self.srcTest, -1, wx.EXPAND)
-        self.sizer.Add(self.btnPanel, -1, wx.EXPAND)
+        self.sizer.Add(self.btnPanel, 0, wx.SHAPED)
         self.sizer.Add(self.destText, -1, wx.EXPAND)
         self.small_panel.SetSizer(self.sizer)
 
@@ -116,12 +115,12 @@ class WritingFrame(wx.Frame):
 
     def onFontPlus(self, event):
         self.font = self.font.Scaled(1.25)
-        self.setting.pixel_size = self.font.GetPixelSize()[1]
+        self.setting.font_size = self.font.GetPixelSize()[1]
         self.destText.SetFont(self.font)
 
     def onFontMinus(self, event):
         self.font = self.font.Scaled(0.8)
-        self.setting.pixel_size = self.font.GetPixelSize()[1]
+        self.setting.font_size = self.font.GetPixelSize()[1]
         self.destText.SetFont(self.font)
 
     def OnHide(self, event):

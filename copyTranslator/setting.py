@@ -4,38 +4,23 @@
 # @FileName: setting.py
 # @Software: PyCharm
 
-import json
-import os
 import threading
 import time
 
-# from copyTranslator import smart_clipboard
 import pyperclip as smart_clipboard
 import regex as re
-import wx
-import wx.adv
-from googletrans import LANGCODES
 from googletrans import LANGUAGES
-from googletrans import Translator
-from pynput import mouse
 from pynput.keyboard import Key, Controller
 
-from copyTranslator.constant import *
+from config import Config
+from copyTranslator.focusframe import SubFrame
 from copyTranslator.mainframe import MainFrame
 from copyTranslator.mypanel import MyPanel
-from copyTranslator.subframe import SubFrame
 from copyTranslator.taskbar import TaskBarIcon
 from copyTranslator.update_checker import UpdateThread
 from copyTranslator.writingframe import WritingFrame
-from copyTranslator.youdao import YoudaoSpider
-
-
-# 只要有一个汉字就是中文
-def check_contain_chinese(check_str):
-    for ch in check_str:
-        if u'\u4e00' <= ch <= u'\u9fff':
-            return True
-    return False
+# from copyTranslator import smart_clipboard
+from myenum import *
 
 
 class TranslateThread(threading.Thread):
@@ -50,7 +35,7 @@ class TranslateThread(threading.Thread):
         if self.setting.is_copy:
             self.setting.Copy(None)
 
-        self.setting.subFrame.panel.SetState(self.setting.state)
+        self.setting.subFrame.panel.SetState(self.setting.config.state)
 
 
 class DictThread(threading.Thread):
@@ -62,90 +47,47 @@ class DictThread(threading.Thread):
         self.setting.youdao_smart_dict(None)
 
 
+# 只要有一个汉字就是中文
+def check_contain_chinese(check_str):
+    for ch in check_str:
+        if u'\u4e00' <= ch <= u'\u9fff':
+            return True
+    return False
+
+
 class Setting():
     def __init__(self):
         # Collect events until released
-        self.mouseListener = mouse.Listener(on_click=self.onLongClick)
         self.keyboard = Controller()
         self.ori_x = 0
         self.ori_y = 0
         self.t1 = time.time()
 
-        self._default_value = {'author': 'Elliott Zheng',
-                               'version': version,
-                               'is_listen': False,
-                               'is_copy': False,
-                               'is_dete': False,
-                               'stay_top': True,
-                               'continus': False,
-                               'smart_dict': True,
-                               'is_main': True,
-                               'pixel_size': 15,
-                               'source': 'english',
-                               'target': 'chinese (simplified)',
-                               'last_ask': 0
-                               }
-        self.value = self._default_value
-        self.filepath = os.path.expanduser('~/copytranslator.json')
-        self.load()
+        self.src = ''
+        self.last_append = ''
+        self.result = ''
 
+        self.is_word = False
+
+        self.config = Config(self)
         self.taskbar = TaskBarIcon(self)
         self.mainFrame = MainFrame(self)
         self.subFrame = SubFrame(self)
         self.writingFrame = WritingFrame(self)
+        self.stored_source = self.source
+        self.config.initialize()
 
         self.mainFrame.Centre()
         # self.mainFrame.Show()
-        self.state = MyPanel.NOT_LISTEN
-        self.translator = Translator(service_urls=['translate.google.cn'])
-        self.youdao_dict = YoudaoSpider()
-        self.src = ''
-        self.last_append = ''
-        self.result = ''
         self.patterns = [re.compile(r'([?!.])[ ]?\n'), re.compile(r'([？！。])[ \n]')]  # 前面一个处理英语语系的，后面一个可以处理汉语系。
         self.pattern2 = re.compile(r'\$([?？！!.。])\$')
-        self.is_word = False
-        self.stored_source = self.source
-        self.initialize()
 
         UpdateThread(self).start()
 
-    def RefreshState(self):
-        if self.continus and self.is_listen and self.is_copy:
-            self.state = MyPanel.INCERMENT_COPY
-        elif self.continus and self.is_listen:
-            self.state = MyPanel.INCERMENT_LISTEN
-        elif self.is_listen and self.is_copy:
-            self.state = MyPanel.LISTEN_COPY
-        elif self.is_listen:
-            self.state = MyPanel.LISTEN
-        else:
-            self.state = MyPanel.NOT_LISTEN
-        self.subFrame.panel.SetState(self.state)
-
-        return self.state
-
-    def initialize(self):
-        self.continus = self.continus
-        self.stay_top = self.stay_top
-        self.is_listen = self.is_listen
-        self.is_dete = self.is_dete
-        self.is_copy = self.is_copy
-        self.is_main = self.is_main
-        self.is_dict = self.is_dict
-
-    @property
-    def source(self):
-        return self.value['source']
-
-    @property
-    def target(self):
-        return self.value['target']
-
-    def save_config(self):
-        self.value['source'] = self.mainFrame.tochoice.GetString(self.mainFrame.fromchoice.GetSelection())
-        self.value['target'] = self.mainFrame.tochoice.GetString(self.mainFrame.tochoice.GetSelection())
-        self.save_to(self.filepath)
+    def get_src_target(self):
+        src = self.mainFrame.tochoice.GetString(self.mainFrame.fromchoice.GetSelection())
+        target = self.mainFrame.tochoice.GetString(self.mainFrame.tochoice.GetSelection())
+        return src, target
 
     def get_normalized_append(self, src):
         src = src.replace('\r\n', '\n')
@@ -165,14 +107,20 @@ class Setting():
     def ToWriting(self, event):
         self.subFrame.Show(False)
         self.mainFrame.Show(False)
-
         self.writingFrame.Show(True)
 
+    def save_config(self):
+        # print(self.subFrame.GetSize())
+        self.config['focus_x'], self.config['focus_y'] = self.subFrame.GetPosition()
+        self.config['focus_width'], self.config['focus_height'] = self.subFrame.GetSize()
+        self.config.source, self.config.target = self.get_src_target()
+        self.config.save()
 
     def OnExit(self, event):
         self.save_config()
         self.mainFrame.Destroy()
         self.subFrame.Destroy()
+        self.writingFrame.Destroy()
         self.taskbar.Destroy()
 
     def paste(self, event):
@@ -190,12 +138,6 @@ class Setting():
         if show:
             self.subFrame.destText.SetValue(self.result)
 
-    def getTgtLang(self):
-        return LANGCODES[self.mainFrame.tochoice.GetString(self.mainFrame.tochoice.GetSelection())]
-
-    def getSrcLang(self):
-        return LANGCODES[self.mainFrame.fromchoice.GetString(self.mainFrame.fromchoice.GetSelection())]
-
     def getExpSrc(self):
         return self.mainFrame.srcText.GetValue()
 
@@ -204,26 +146,23 @@ class Setting():
 
     def smart_translate(self, event):
         show = (event != False)
-        src = self.translator.detect(self.src).lang.lower()
-        dest = self.getTgtLang()
-        should_src = src
+        src_lang = self.config.detect(self.src)
+        should_src, dest_lang = self.get_src_target()
 
         if self.is_dete:
-            self.mainFrame.fromchoice.SetSelection(self.mainFrame.fromchoice.FindString(LANGUAGES[src]))
-        else:
-            should_src = self.getSrcLang()
+            self.mainFrame.fromchoice.SetSelection(self.mainFrame.fromchoice.FindString(LANGUAGES[src_lang]))
 
-        if src == dest:
-            src, dest = dest, should_src
+        if src_lang == dest_lang:
+            src_lang, dest_lang = dest_lang, should_src
         else:
-            src = should_src
+            src_lang = should_src
 
         if self.result != self.src:
-            self.setResult(self.translator.translate(self.src, src=src, dest=dest).text, show)
+            self.setResult(self.config.translate(self.src, src=src_lang, dest=dest_lang), show)
 
     def youdao_smart_dict(self, event):
         if self.result != self.src:
-            result = self.youdao_dict.get_result(self.src)
+            result = self.config.youdao_dict.get_result(self.src)
             self.set_word_result(result)
 
     def set_word_result(self, result):
@@ -240,14 +179,13 @@ class Setting():
             return False
         append = self.get_normalized_append(string)
         if self.last_append != append:
-            self.is_word = self.is_dict and (len(append.split()) <= 3) and not check_contain_chinese(
-                append) and not self.continus
+            self.is_word = self.config.is_dict and (len(append.split()) <= 3) and not check_contain_chinese(
+                append) and not self.config.continus
             return True
         return False
 
     def translateCopy(self, event):
         if self.check_valid():
-
             self.last_append = self.get_normalized_append(smart_clipboard.paste())
             self.paste(event)
             if not self.is_word:
@@ -264,14 +202,13 @@ class Setting():
 
     def ChangeMode(self, event):
         if event.Id == self.taskbar.ID_Main:
-            self.is_main = True
+            self.config.frame_mode = FrameMode.main
         elif event.Id == self.taskbar.ID_Focus:
-            self.is_main = False
-        else:
-            self.is_main = not self.is_main
-
-        self.subFrame.Show(not self.is_main)
-        self.mainFrame.Show(self.is_main)
+            self.config.frame_mode = FrameMode.focus
+        elif event.Id == self.subFrame.destText.ID_Mode1 or event.Id == self.taskbar.ID_Mode1:
+            self.config.frame_mode = self.config.Mode1
+        elif event.Id == self.subFrame.destText.ID_Mode2 or event.Id == self.taskbar.ID_Mode2:
+            self.config.frame_mode = self.config.Mode2
 
     def clear(self, event=None):
         self.setSrc('')
@@ -280,14 +217,19 @@ class Setting():
         self.last_append = ''
 
     def SwitchMode(self, event):
-        self.is_main = not self.is_main
+        self.config.frame_mode = self.config.Mode1
+
+    def get_current_frame(self):
+        if self.config.frame_mode == FrameMode.main:
+            frame = self.mainFrame
+        elif self.config.frame_mode == FrameMode.focus:
+            frame = self.subFrame
+        else:
+            frame = self.writingFrame
+        return frame
 
     def OnTaskBarLeftDClick(self, event):
-        if self.is_main:
-            frame = self.mainFrame
-        else:
-            frame = self.subFrame
-
+        frame = self.get_current_frame()
         if frame.IsIconized():
             frame.Iconize(False)
         if not frame.IsShown():
@@ -320,143 +262,61 @@ class Setting():
             if time.time() - self.t1 > 0.3 and abs(self.ori_y - y) < 3 and abs(self.ori_x - x) < 3:
                 self.simulateCopy()
 
-    def load(self):
-        if not os.path.exists(self.filepath):
-            self.save_to(self.filepath)
-            return self
-        myfile = open(self.filepath, 'r')
-        value = json.load(myfile)
-        myfile.close()
-        if value['version'] < self['version']:
-            os.remove(self.filepath)
-            self.save_to(self.filepath)
-            return self
-        self.value = value
-
-        return self
-
-    def save_to(self, filepath):
-        myfile = open(filepath, 'w')
-        json.dump(self.value, myfile, indent=4)
-        myfile.close()
-
-    def __getitem__(self, item):
-        return self.value[item]
-
-    def __setitem__(self, key, value):
-        self.value[key] = value
-
-    @property
-    def is_listen(self):
-        return self['is_listen']
-
-    @is_listen.setter
-    def is_listen(self, value):
-        self['is_listen'] = value
-        self.mainFrame.listenCheck.SetValue(value)
-        if value:
-            self.mainFrame.timer.Start(2000)  # 设定时间间隔为1000毫秒,并启动定时器
-            self.mouseListener = mouse.Listener(on_click=self.onLongClick)
-            self.mouseListener.start()
-        else:
-            self.mainFrame.timer.Stop()
-            self.mouseListener.stop()
-        self.RefreshState()
-
-    def ReverseListen(self, event):
-        self.is_listen = not self.is_listen
-
-    @property
-    def is_copy(self):
-        return self['is_copy']
-
-    @is_copy.setter
-    def is_copy(self, value):
-        self['is_copy'] = value
-        self.mainFrame.copyCheck.SetValue(self.is_copy)
-        self.RefreshState()
+    def ReverseDete(self, event):
+        self.config.is_dete = not self.config.is_dete
 
     def ReverseCopy(self, event):
-        self.is_copy = not self.is_copy
-
-    @property
-    def is_dete(self):
-        return self['is_dete']
-
-    @is_dete.setter
-    def is_dete(self, value):
-        self['is_dete'] = value
-        self.mainFrame.detectCheck.SetValue(value)
-        if value:
-            self.stored_source = self.mainFrame.tochoice.GetString(self.mainFrame.fromchoice.GetSelection())
-            self.mainFrame.fromchoice.Disable()
-            self.mainFrame.fromlabel.SetLabel("Detected Language")
-        else:
-            self.mainFrame.fromchoice.SetSelection(self.mainFrame.fromchoice.FindString(self.stored_source))
-            self.mainFrame.fromchoice.Enable()
-            self.mainFrame.fromlabel.SetLabel("Source Language")
-
-    def ReverseDete(self, event):
-        self.is_dete = not self.is_dete
-
-    @property
-    def stay_top(self):
-        return self['stay_top']
-
-    @stay_top.setter
-    def stay_top(self, value):
-        self['stay_top'] = value
-        self.mainFrame.topCheck.SetValue(value)
-        if value:
-            self.subFrame.SetWindowStyle(wx.STAY_ON_TOP | SubFrame.subStyle)
-            self.mainFrame.SetWindowStyle(wx.STAY_ON_TOP | MainFrame.mainStyle)
-        else:
-            self.subFrame.SetWindowStyle(SubFrame.subStyle)
-            self.mainFrame.SetWindowStyle(MainFrame.mainStyle)
-
-    def ReverseStayTop(self, event):
-        self.stay_top = not self.stay_top
-
-    @property
-    def continus(self):
-        return self['continus']
-
-    @continus.setter
-    def continus(self, value):
-        self['continus'] = value
-        self.mainFrame.continusCheck.SetValue(value)
-        self.RefreshState()
+        self.config.is_copy = not self.config.is_copy
 
     def ReverseContinus(self, event):
         self.clear()
-        self.continus = not self.continus
+        self.config.continus = not self.config.continus
+
+    def ReverseDict(self, event):
+        self.config.is_dict = not self.config.is_dict
+
+    def ReverseStayTop(self, event):
+        self.config.stay_top = not self.config.stay_top
+
+    def ReverseListen(self, event):
+        self.config.is_listen = not self.config.is_listen
 
     @property
-    def is_main(self):
-        return self['is_main']
-
-    @is_main.setter
-    def is_main(self, value):
-        self['is_main'] = value
-        self.subFrame.Show(not value)
-        self.mainFrame.Show(value)
+    def source(self):
+        return self.config.source
 
     @property
-    def pixel_size(self):
-        return self['pixel_size']
+    def target(self):
+        return self.config.target
 
-    @pixel_size.setter
-    def pixel_size(self, value):
-        self['pixel_size'] = value
+    @property
+    def is_listen(self):
+        return self.config.is_listen
+
+    @property
+    def is_copy(self):
+        return self.config.is_copy
+
+    @property
+    def is_dete(self):
+        return self.config.is_dete
+
+    @property
+    def stay_top(self):
+        return self.config.stay_top
+
+    @property
+    def continus(self):
+        return self.config.continus
 
     @property
     def is_dict(self):
-        return self['smart_dict']
+        return self.config.is_dict
 
-    @is_dict.setter
-    def is_dict(self, value):
-        self['smart_dict'] = value
-        self.mainFrame.dictCheck.SetValue(value)
+    @property
+    def font_size(self):
+        return self.config.font_size
 
-    def ReverseDict(self, event):
-        self.is_dict = not self.is_dict
+    @property
+    def frame_mode(self):
+        return self.config.frame_mode

@@ -4,6 +4,7 @@
 # @FileName: color_ctrl.py
 # @Software: PyCharm
 
+import pyperclip as smart_clipboard
 import wx
 
 from copyTranslator.youdao import YoudaoSpider
@@ -31,7 +32,8 @@ class ColoredCtrl(wx.TextCtrl):
     ID_Focus = wx.NewId()
     ID_About = wx.NewId()
     ID_Closeshow = wx.NewId()
-    ID_Switch = wx.NewId()
+    ID_Mode1 = wx.NewId()
+    ID_Mode2 = wx.NewId()
     ID_Copy_result = wx.NewId()
     ID_Clear = wx.NewId()
     ID_Write = wx.NewId()
@@ -40,10 +42,12 @@ class ColoredCtrl(wx.TextCtrl):
         self.parent = parent
         self.setting = self.parent.parentFrame.setting
         if style == 0:
-            style = wx.TE_RICH2 | wx.TE_MULTILINE | wx.TE_READONLY
+            style = wx.TE_RICH2 | wx.TE_MULTILINE | wx.TE_PROCESS_ENTER
         super(ColoredCtrl, self).__init__(parent=parent, id=id, style=style)
 
         self.Bind(wx.EVT_RIGHT_DOWN, self.OnShowPopup)
+
+        self.Bind(wx.EVT_TEXT_ENTER, self.enter)
 
         self.Bind(wx.EVT_MENU, self.setting.ReverseStayTop, id=self.ID_Top)
         self.Bind(wx.EVT_MENU, self.setting.ReverseListen, id=self.ID_Listen)
@@ -52,8 +56,8 @@ class ColoredCtrl(wx.TextCtrl):
         self.Bind(wx.EVT_MENU, self.setting.ReverseCopy, id=self.ID_Copy)
         self.Bind(wx.EVT_MENU, self.setting.ReverseContinus, id=self.ID_Continus)
 
-        self.Bind(wx.EVT_MENU, self.setting.ChangeMode, id=self.ID_Switch)
-        self.Bind(wx.EVT_MENU, self.setting.ToWriting, id=self.ID_Write)
+        self.Bind(wx.EVT_MENU, self.setting.ChangeMode, id=self.ID_Mode1)
+        self.Bind(wx.EVT_MENU, self.setting.ChangeMode, id=self.ID_Mode2)
         self.Bind(wx.EVT_MENU, self.setting.taskbar.OnExchange, id=self.ID_Exchange)
         self.Bind(wx.EVT_MENU, self.setting.Copy, id=self.ID_Copy_result)
 
@@ -61,10 +65,21 @@ class ColoredCtrl(wx.TextCtrl):
         self.Bind(wx.EVT_MENU, self.setting.clear, id=self.ID_Clear)
         self.Bind(wx.EVT_MENU, self.setting.OnExit, id=self.ID_Closeshow)
 
+        self.Bind(wx.EVT_CHAR, self.OnSelectAll)
+
+    def OnSelectAll(self, evt):
+        keyInput = evt.GetKeyCode()
+        if keyInput == 1:  # 1 stands for 'ctrl+a'
+            self.SelectAll()
+        evt.Skip()
+
+    def enter(self, event=None):
+        if self.IsModified():
+            smart_clipboard.copy(self.GetValue())
+
     # 右键菜单
     def OnShowPopup(self, event):
         self.PopupMenu(self.CreateContextMenu())
-
 
     def CreateContextMenu(self):
         menu = wx.Menu()
@@ -75,9 +90,9 @@ class ColoredCtrl(wx.TextCtrl):
 
         menu.Append(self.ID_Clear, 'Clear')
 
-        menu.Append(self.ID_Switch, 'Main Mode' if not self.setting.is_main else 'Focus Mode')
+        menu.Append(self.ID_Mode1, self.setting.config.Mode1)
 
-        menu.Append(self.ID_Write, 'Writing Mode')
+        menu.Append(self.ID_Mode2, self.setting.config.Mode2)
 
         copy = menu.AppendCheckItem(self.ID_Copy, 'Auto Copy', 'Auto copy result to clipboard.')
         copy.Check(self.setting.is_copy)

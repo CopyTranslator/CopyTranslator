@@ -144,6 +144,7 @@ class Setting():
     def getResult(self):
         return self.result
 
+    # 智能互译
     def smart_translate(self, event):
         show = (event != False)
         src_lang = self.config.detect(self.src)

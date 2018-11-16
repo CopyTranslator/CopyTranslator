@@ -111,6 +111,7 @@ GoogleLanguages = {'Afrikaans': 'af',
                    'Zulu': 'zu'}
 
 GoogleLangList = list(GoogleLanguages.keys())
+GoogleCodes = {v: k for k, v in GoogleLanguages.items()}
 
 
 class GoogleTranslator(MyTranslator.Translator):
@@ -125,7 +126,7 @@ class GoogleTranslator(MyTranslator.Translator):
         return GoogleLanguages[lang]
 
     def translate(self, string, src, dest):
-        return self.translator.translate(string, src=src, dest=dest).text
+        return self.translator.translate(string, src=self.lang2code(src), dest=self.lang2code(dest)).text
 
     def detect(self, string):
-        return self.translator.detect(string).lang.lower()
+        return GoogleCodes[self.translator.detect(string).lang.lower()]

@@ -41,7 +41,8 @@ class Config:
                                'focus_width': 300,
                                'source': 'English',
                                'target': 'Chinese (Simplified)',
-                               'last_ask': 0
+                               'last_ask': 0,
+                               'language': 'Chinese (Simplified)'
                                }
         self.value = self._default_value
         self.state = MyPanel.NOT_LISTEN
@@ -55,10 +56,8 @@ class Config:
         self.mainFrame = self.setting.mainFrame
         self.subFrame = self.setting.subFrame
         self.writingFrame = self.setting.writingFrame
-
-        self.load()
+        self.lang = self.setting.language
         self.activate()
-
         self.subFrame.SetSize(self['focus_x'], self['focus_y'], self['focus_width'], self['focus_height'])
 
     def activate(self):
@@ -187,11 +186,11 @@ class Config:
         if value:
             self.stored_source = self.mainFrame.tochoice.GetString(self.mainFrame.fromchoice.GetSelection())
             self.mainFrame.fromchoice.Disable()
-            self.mainFrame.fromlabel.SetLabel("Detected Language")
+            self.mainFrame.fromlabel.SetLabel(self.lang("Detected Language"))
         else:
             self.mainFrame.fromchoice.SetSelection(self.mainFrame.fromchoice.FindString(self.setting.stored_source))
             self.mainFrame.fromchoice.Enable()
-            self.mainFrame.fromlabel.SetLabel("Source Language")
+            self.mainFrame.fromlabel.SetLabel(self.lang("Source Language"))
 
     @property
     def stay_top(self):

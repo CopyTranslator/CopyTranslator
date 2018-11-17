@@ -17,7 +17,7 @@ class Translation:
         self.type = type
 
 
-# 这个写的什么，不一定正确
+# 这个写的什么，不一定对哈
 class TranslationManager:
     def __init__(self):
         self.translations = []

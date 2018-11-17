@@ -24,28 +24,29 @@ class WritingFrame(wx.Frame):
         self.SetIcon(wx.Icon(logopath, wx.BITMAP_TYPE_ICO))
         self.SetWindowStyle(WritingFrame.subStyle)
         self.setting = setting
+        self.lang = self.setting.language
         self.panel = MyPanel(self)
         self.small_panel = MyPanel(self.panel)
         self.mainSizer = wx.BoxSizer(wx.VERTICAL)
         self.mainSizer.Add((-1, 15))
         self.sizer = wx.BoxSizer(wx.HORIZONTAL)
         self.sizer.Add((-1, 15))
-        self.srcTest = wx.TextCtrl(self.small_panel, -1)  # 这个一开始是没有添加的
-        self.destText = ColoredCtrl(self.small_panel, -1)  # 创建一个文本控件
+        self.srcTest = ColoredCtrl(self.small_panel, -1, setting=self.setting)  # 这个一开始是没有添加的
+        self.destText = ColoredCtrl(self.small_panel, -1, setting=self.setting)  # 创建一个文本控件
         self.btnPanel = MyPanel(self.small_panel)
         self.btnSizer = wx.BoxSizer(wx.VERTICAL)
 
-        self.fromlabel = wx.StaticText(self.btnPanel, -1, 'Source language')
+        self.fromlabel = wx.StaticText(self.btnPanel, -1, self.lang('Source Language'))
 
         self.fromchoice = wx.Choice(self.btnPanel, -1, choices=langList)
 
         self.fromchoice.SetSelection(self.fromchoice.FindString(self.setting.source))
 
-        tolabel = wx.StaticText(self.btnPanel, -1, 'Target language :')
+        tolabel = wx.StaticText(self.btnPanel, -1, self.lang('Target Language'))
         self.tochoice = wx.Choice(self.btnPanel, -1, choices=langList)
         self.tochoice.SetSelection(self.tochoice.FindString(self.setting.target))
 
-        self.transBtn = wx.Button(self.btnPanel, -1, "Translate")
+        self.transBtn = wx.Button(self.btnPanel, -1, self.lang("Translate"))
         # self.Bind(wx.EVT_BUTTON, self.showSourcePanel, self.transBtn)
         self.transBtn.SetDefault()
 

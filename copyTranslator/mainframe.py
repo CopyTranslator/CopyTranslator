@@ -21,60 +21,62 @@ class MainFrame(wx.Frame):
         self.SetIcon(wx.Icon(logopath, wx.BITMAP_TYPE_ICO))
         self.SetWindowStyle(MainFrame.mainStyle)
         self.setting = setting
+        self.lang = self.setting.language
         TextPanel = wx.Panel(self, -1)
         buttonPanel = wx.Panel(self, -1)
 
         # 始终置顶按钮
-        self.topCheck = wx.CheckBox(buttonPanel, -1, 'Stay on top')
+        self.topCheck = wx.CheckBox(buttonPanel, -1, self.lang('Stay on Top'))
         self.Bind(wx.EVT_CHECKBOX, self.setting.ReverseStayTop, self.topCheck)
 
         # 自动检测语言按钮
-        self.detectCheck = wx.CheckBox(buttonPanel, -1, 'Auto detect language')
+        self.detectCheck = wx.CheckBox(buttonPanel, -1, self.lang('Detect Language'))
         self.Bind(wx.EVT_CHECKBOX, self.setting.ReverseDete, self.detectCheck)
 
         # 监听剪贴板选框
-        self.listenCheck = wx.CheckBox(buttonPanel, -1, 'Listen on Clipboard')
+        self.listenCheck = wx.CheckBox(buttonPanel, -1, self.lang('Listen on Clipboard'))
         self.Bind(wx.EVT_CHECKBOX, self.setting.ReverseListen, self.listenCheck)
 
         # 自动复制选框
-        self.copyCheck = wx.CheckBox(buttonPanel, -1, 'Auto copy')
+        self.copyCheck = wx.CheckBox(buttonPanel, -1, self.lang('Auto Copy'))
         self.Bind(wx.EVT_CHECKBOX, self.setting.ReverseCopy, self.copyCheck)
 
         # 连续复制模式
-        self.continusCheck = wx.CheckBox(buttonPanel, -1, 'Incremental Copy')
+        self.continusCheck = wx.CheckBox(buttonPanel, -1, self.lang('Incremental Copy'))
         self.Bind(wx.EVT_CHECKBOX, self.setting.ReverseContinus, self.continusCheck)
 
         # 连续复制模式
-        self.dictCheck = wx.CheckBox(buttonPanel, -1, 'Smart dict')
+        self.dictCheck = wx.CheckBox(buttonPanel, -1, self.lang('Smart Dict'))
         self.Bind(wx.EVT_CHECKBOX, self.setting.ReverseDict, self.dictCheck)
 
         # 切换模式
-        self.switchBtn = wx.Button(buttonPanel, -1, "Switch Mode")
+        self.switchBtn = wx.Button(buttonPanel, -1, self.lang("Switch Mode"))
         self.Bind(wx.EVT_BUTTON, self.setting.SwitchMode, self.switchBtn)
 
-        self.transBtn = wx.Button(buttonPanel, -1, "Translate")
+        self.transBtn = wx.Button(buttonPanel, -1, self.lang("Translate"))
         self.Bind(wx.EVT_BUTTON, self.setting.translateCtrl, self.transBtn)
         self.transBtn.SetDefault()
 
         # 原文本
-        self.srcLabel = wx.StaticText(TextPanel, -1, "Source:")
+        self.srcLabel = wx.StaticText(TextPanel, -1, self.lang("Source"))
         self.srcText = wx.TextCtrl(TextPanel, -1, "", size=(300, 150), style=wx.TE_MULTILINE)  # 创建一个文本控件
 
-        self.copyBtn = wx.Button(buttonPanel, -1, "Copy result")
+        self.copyBtn = wx.Button(buttonPanel, -1, self.lang("Copy Result"))
         self.Bind(wx.EVT_BUTTON, self.setting.Copy, self.copyBtn)
 
         # 目标文本
-        self.dstLabel = wx.StaticText(TextPanel, -1, "Result:")
+        self.dstLabel = wx.StaticText(TextPanel, -1, self.lang("Result"))
         self.destText = wx.TextCtrl(TextPanel, -1, "", size=(300, 150),
                                     style=wx.TE_MULTILINE)  # 创建一个文本控件
 
-        self.fromlabel = wx.StaticText(buttonPanel, -1, 'Source language')
+        self.fromlabel = wx.StaticText(buttonPanel, -1, self.lang('Source Language'))
+
 
         self.fromchoice = wx.Choice(buttonPanel, -1, choices=langList)
 
         self.fromchoice.SetSelection(self.fromchoice.FindString(self.setting.source))
 
-        tolabel = wx.StaticText(buttonPanel, -1, 'Target language :')
+        tolabel = wx.StaticText(buttonPanel, -1, self.lang('Target Language'))
         self.tochoice = wx.Choice(buttonPanel, -1, choices=langList)
         self.tochoice.SetSelection(self.tochoice.FindString(self.setting.target))
 

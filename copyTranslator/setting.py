@@ -9,7 +9,6 @@ import time
 
 import pyperclip as smart_clipboard
 import regex as re
-from googletrans import LANGUAGES
 from pynput.keyboard import Key, Controller
 
 from config import Config
@@ -20,7 +19,7 @@ from copyTranslator.taskbar import TaskBarIcon
 from copyTranslator.translation import Translation
 from copyTranslator.update_checker import UpdateThread
 from copyTranslator.writingframe import WritingFrame
-# from copyTranslator import smart_clipboard
+from language import LanguageManager
 from myenum import *
 
 
@@ -71,6 +70,8 @@ class Setting():
 
         self.is_word = False
         self.config = Config(self)
+        self.config.load()
+        self.language = LanguageManager(self.config['language'])
         self.taskbar = TaskBarIcon(self)
         self.mainFrame = MainFrame(self)
         self.subFrame = FocusFrame(self)
@@ -162,7 +163,7 @@ class Setting():
         should_src, dest_lang = self.get_src_target()
 
         if self.is_dete:
-            self.mainFrame.fromchoice.SetSelection(self.mainFrame.fromchoice.FindString(LANGUAGES[src_lang]))
+            self.mainFrame.fromchoice.SetSelection(self.mainFrame.fromchoice.FindString(src_lang))
 
         if src_lang == dest_lang:
             src_lang, dest_lang = dest_lang, should_src

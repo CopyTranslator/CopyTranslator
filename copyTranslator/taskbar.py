@@ -33,6 +33,7 @@ class TaskBarIcon(wx.adv.TaskBarIcon):
 
     def __init__(self, setting):
         self.setting = setting
+        self.lang = self.setting.language
         wx.adv.TaskBarIcon.__init__(self)
         self.SetIcon(wx.Icon(name=logopath, type=wx.BITMAP_TYPE_ICO), project_name)  # wx.ico为ico图标文件
 
@@ -69,29 +70,31 @@ class TaskBarIcon(wx.adv.TaskBarIcon):
     # 右键菜单
     def CreatePopupMenu(self):
         menu = wx.Menu()
-        listen = menu.AppendCheckItem(self.ID_Top, 'Stay on Top', 'Always stay on Top.')
+        listen = menu.AppendCheckItem(self.ID_Top, self.lang('Stay on Top'), 'Always stay on Top.')
         listen.Check(self.setting.stay_top)
 
-        listen = menu.AppendCheckItem(self.ID_Listen, 'Listen Clipboard', 'Listen to Clipboard and auto translate.')
+        listen = menu.AppendCheckItem(self.ID_Listen, self.lang('Listen on Clipboard'),
+                                      'Listen to Clipboard and auto translate.')
         listen.Check(self.setting.is_listen)
 
-        copy = menu.AppendCheckItem(self.ID_Copy, 'Auto Copy', 'Auto copy result to clipboard.')
+        copy = menu.AppendCheckItem(self.ID_Copy, self.lang('Auto Copy'), 'Auto copy result to clipboard.')
         copy.Check(self.setting.is_copy)
 
-        is_dict = menu.AppendCheckItem(self.ID_Dict, 'Smart Dict', 'Enable Youdao smart dictionary')
+        is_dict = menu.AppendCheckItem(self.ID_Dict, self.lang('Smart Dict'), 'Enable Youdao smart dictionary')
         is_dict.Check(self.setting.is_dict)
 
-        continus = menu.AppendCheckItem(self.ID_Continus, 'Incremental Copy', 'Incremental Copy content to source.')
+        continus = menu.AppendCheckItem(self.ID_Continus, self.lang('Incremental Copy'),
+                                        'Incremental Copy content to source.')
         continus.Check(self.setting.continus)
 
-        dete = menu.AppendCheckItem(self.ID_Dete, 'Detect Language', 'Detect the input language.')
+        dete = menu.AppendCheckItem(self.ID_Dete, self.lang('Detect Language'), 'Detect the input language.')
         dete.Check(self.setting.is_dete)
 
-        menu.Append(self.ID_Mode1, self.setting.config.Mode1)
-        menu.Append(self.ID_Mode2, self.setting.config.Mode2)
+        menu.Append(self.ID_Mode1, self.lang(self.setting.config.Mode1))
+        menu.Append(self.ID_Mode2, self.lang(self.setting.config.Mode2))
 
-        menu.Append(self.ID_Exchange, 'Copy Source')
-        menu.Append(self.ID_Result, 'Copy Result')
-        menu.Append(self.ID_About, 'Help and Update')
-        menu.Append(self.ID_Closeshow, 'Exit')
+        menu.Append(self.ID_Exchange, self.lang('Copy Source'))
+        menu.Append(self.ID_Result, self.lang('Copy Result'))
+        menu.Append(self.ID_About, self.lang('Help and Update'))
+        menu.Append(self.ID_Closeshow, self.lang('Exit'))
         return menu

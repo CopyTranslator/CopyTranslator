@@ -38,9 +38,13 @@ class ColoredCtrl(wx.TextCtrl):
     ID_Clear = wx.NewId()
     ID_Write = wx.NewId()
 
-    def __init__(self, parent=None, id=None, style=0):
+    def __init__(self, parent=None, id=None, style=0, setting=None):
         self.parent = parent
-        self.setting = self.parent.parentFrame.setting
+        if setting is None:
+            self.setting = self.parent.parentFrame.setting
+        else:
+            self.setting = setting
+        self.lang = self.setting.language
         if style == 0:
             style = wx.TE_RICH2 | wx.TE_MULTILINE | wx.TE_PROCESS_ENTER
         super(ColoredCtrl, self).__init__(parent=parent, id=id, style=style)
@@ -80,7 +84,6 @@ class ColoredCtrl(wx.TextCtrl):
             pass
         evt.Skip()
 
-
     # 右键菜单
     def OnShowPopup(self, event):
         self.PopupMenu(self.CreateContextMenu())
@@ -88,36 +91,38 @@ class ColoredCtrl(wx.TextCtrl):
     def CreateContextMenu(self):
         menu = wx.Menu()
 
-        menu.Append(self.ID_Exchange, 'Copy Source')
+        menu.Append(self.ID_Exchange, self.lang('Copy Source'))
 
-        menu.Append(self.ID_Copy_result, 'Copy Result')
+        menu.Append(self.ID_Copy_result, self.lang('Copy Result'))
 
-        menu.Append(self.ID_Clear, 'Clear')
+        menu.Append(self.ID_Clear, self.lang('Clear'))
 
-        menu.Append(self.ID_Mode1, self.setting.config.Mode1)
+        menu.Append(self.ID_Mode1, self.lang(self.setting.config.Mode1))
 
-        menu.Append(self.ID_Mode2, self.setting.config.Mode2)
+        menu.Append(self.ID_Mode2, self.lang(self.setting.config.Mode2))
 
-        copy = menu.AppendCheckItem(self.ID_Copy, 'Auto Copy', 'Auto copy result to clipboard.')
+        copy = menu.AppendCheckItem(self.ID_Copy, self.lang('Auto Copy'), 'Auto copy result to clipboard.')
         copy.Check(self.setting.is_copy)
 
-        continus = menu.AppendCheckItem(self.ID_Continus, 'Incremental Copy', 'Incremental Copy content to source.')
+        continus = menu.AppendCheckItem(self.ID_Continus, self.lang('Incremental Copy'),
+                                        'Incremental Copy content to source.')
         continus.Check(self.setting.continus)
 
-        is_dict = menu.AppendCheckItem(self.ID_Dict, 'Smart Dict', 'Enable Youdao smart dictionary')
+        is_dict = menu.AppendCheckItem(self.ID_Dict, self.lang('Smart Dict'), 'Enable Youdao smart dictionary')
         is_dict.Check(self.setting.is_dict)
 
-        listen = menu.AppendCheckItem(self.ID_Listen, 'Listen Clipboard', 'Listen to Clipboard and auto translate.')
+        listen = menu.AppendCheckItem(self.ID_Listen, self.lang('Listen on Clipboard'),
+                                      'Listen to Clipboard and auto translate.')
         listen.Check(self.setting.is_listen)
 
-        listen = menu.AppendCheckItem(self.ID_Top, 'Stay on Top', 'Always stay on Top.')
+        listen = menu.AppendCheckItem(self.ID_Top, self.lang('Stay on Top'), 'Always stay on Top.')
         listen.Check(self.setting.stay_top)
 
-        dete = menu.AppendCheckItem(self.ID_Dete, 'Detect Language', 'Detect the input language.')
+        dete = menu.AppendCheckItem(self.ID_Dete, self.lang('Detect Language'), 'Detect the input language.')
         dete.Check(self.setting.is_dete)
 
-        menu.Append(self.ID_About, 'Help and Update')
-        menu.Append(self.ID_Closeshow, 'Exit')
+        menu.Append(self.ID_About, self.lang('Help and Update'))
+        menu.Append(self.ID_Closeshow, self.lang('Exit'))
         return menu
 
     def ColoredAppend(self, text, color):

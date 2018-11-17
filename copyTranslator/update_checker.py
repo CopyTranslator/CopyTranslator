@@ -39,7 +39,6 @@ class UpdateChecker:
 
             version_value = json.loads(string)
             new_version = version_value['version']
-            print(new_version)
             if new_version <= version:
                 return
 

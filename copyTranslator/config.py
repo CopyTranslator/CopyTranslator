@@ -56,7 +56,7 @@ class Config:
         self.mainFrame = self.setting.mainFrame
         self.subFrame = self.setting.subFrame
         self.writingFrame = self.setting.writingFrame
-        self.lang = self.setting.language
+        self.lang = self.setting.lang
         self.activate()
         self.subFrame.SetSize(self['focus_x'], self['focus_y'], self['focus_width'], self['focus_height'])
 

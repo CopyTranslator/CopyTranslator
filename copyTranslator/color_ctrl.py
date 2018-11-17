@@ -44,7 +44,7 @@ class ColoredCtrl(wx.TextCtrl):
             self.setting = self.parent.parentFrame.setting
         else:
             self.setting = setting
-        self.lang = self.setting.language
+        self.lang = self.setting.lang
         if style == 0:
             style = wx.TE_RICH2 | wx.TE_MULTILINE | wx.TE_PROCESS_ENTER
         super(ColoredCtrl, self).__init__(parent=parent, id=id, style=style)

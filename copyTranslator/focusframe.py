@@ -23,7 +23,7 @@ class FocusFrame(wx.Frame):
         self.SetWindowStyle(FocusFrame.subStyle)
         self.setting = setting
         self.config = setting.config
-        self.lang = self.setting.language
+        self.lang = self.setting.lang
         self.panel = MyPanel(self)
         sizer = wx.BoxSizer(wx.VERTICAL)
         sizer.Add((-1, 15))

@@ -24,7 +24,7 @@ class WritingFrame(wx.Frame):
         self.SetIcon(wx.Icon(logopath, wx.BITMAP_TYPE_ICO))
         self.SetWindowStyle(WritingFrame.subStyle)
         self.setting = setting
-        self.lang = self.setting.language
+        self.lang = self.setting.lang
         self.panel = MyPanel(self)
         self.small_panel = MyPanel(self.panel)
         self.mainSizer = wx.BoxSizer(wx.VERTICAL)

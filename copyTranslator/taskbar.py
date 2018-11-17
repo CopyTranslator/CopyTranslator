@@ -30,10 +30,12 @@ class TaskBarIcon(wx.adv.TaskBarIcon):
     ID_Mode1 = wx.NewId()
     ID_Mode2 = wx.NewId()
     ID_Result = wx.NewId()
+    ID_CHINESE = wx.NewId()
+    ID_ENGLISH = wx.NewId()
 
     def __init__(self, setting):
         self.setting = setting
-        self.lang = self.setting.language
+        self.lang = self.setting.lang
         wx.adv.TaskBarIcon.__init__(self)
         self.SetIcon(wx.Icon(name=logopath, type=wx.BITMAP_TYPE_ICO), project_name)  # wx.ico为ico图标文件
 
@@ -53,6 +55,15 @@ class TaskBarIcon(wx.adv.TaskBarIcon):
         self.Bind(wx.EVT_MENU, self.OnExchange, id=self.ID_Exchange)
         self.Bind(wx.EVT_MENU, self.OnAbout, id=self.ID_About)
         self.Bind(wx.EVT_MENU, self.setting.OnExit, id=self.ID_Closeshow)
+        self.Bind(wx.EVT_MENU, self.OnLanguage, id=self.ID_ENGLISH)
+        self.Bind(wx.EVT_MENU, self.OnLanguage, id=self.ID_CHINESE)
+
+    def OnLanguage(self, event):
+        if event.Id == self.ID_ENGLISH:
+            self.setting.language = 'English'
+        else:
+            self.setting.language = 'Chinese (Simplified)'
+        print('switch')
 
     def OnExchange(self, event):
         pyperclip.copy(self.setting.src)
@@ -92,6 +103,18 @@ class TaskBarIcon(wx.adv.TaskBarIcon):
 
         menu.Append(self.ID_Mode1, self.lang(self.setting.config.Mode1))
         menu.Append(self.ID_Mode2, self.lang(self.setting.config.Mode2))
+
+        modeMenu = wx.Menu()
+
+        english = modeMenu.AppendRadioItem(self.ID_ENGLISH, "English")
+
+        chinese = modeMenu.AppendRadioItem(self.ID_CHINESE, "简体中文")
+        if self.lang.language == 'Chinese (Simplified)':
+            chinese.Check()
+        else:
+            english.Check()
+
+        switchMode = menu.AppendSubMenu(modeMenu, self.lang('Switch Language'))
 
         menu.Append(self.ID_Exchange, self.lang('Copy Source'))
         menu.Append(self.ID_Result, self.lang('Copy Result'))

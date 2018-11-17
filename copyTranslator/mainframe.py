@@ -21,7 +21,7 @@ class MainFrame(wx.Frame):
         self.SetIcon(wx.Icon(logopath, wx.BITMAP_TYPE_ICO))
         self.SetWindowStyle(MainFrame.mainStyle)
         self.setting = setting
-        self.lang = self.setting.language
+        self.lang = self.setting.lang
         TextPanel = wx.Panel(self, -1)
         buttonPanel = wx.Panel(self, -1)
 

@@ -29,7 +29,8 @@ Chinese = {
     'Main Mode': '设置模式',
     'Focus Mode': '专注模式',
     'Writing Mode': '写作模式',
-    'Detected Language': '检测到语言'
+    'Detected Language': '检测到语言',
+    'Switch Language': '切换软件语言'
 }
 
 English = {k: k for k, v in Chinese.items()}
@@ -47,6 +48,7 @@ class LanguageManager:
     def switch_language(self, language):
         if language == None:
             return
+        self.language = language
         path = GoogleLanguages[language] + '.json'
         myfile = open(path, 'r')
         self.value = json.load(myfile)
@@ -62,6 +64,6 @@ class LanguageManager:
 
 
 if __name__ == '__main__':
-    lang = LanguageManager('English')
-    # lang.save('en.json')
+    lang = LanguageManager()
+    lang.save('zh-cn.json')
     print(lang.value)

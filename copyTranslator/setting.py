@@ -71,7 +71,7 @@ class Setting():
         self.is_word = False
         self.config = Config(self)
         self.config.load()
-        self.language = LanguageManager(self.config['language'])
+        self.lang = LanguageManager(self.config['language'])
         self.taskbar = TaskBarIcon(self)
         self.mainFrame = MainFrame(self)
         self.subFrame = FocusFrame(self)
@@ -336,3 +336,13 @@ class Setting():
     @property
     def frame_mode(self):
         return self.config.frame_mode
+
+    @property
+    def language(self):
+        return self.lang.language
+
+    @language.setter
+    def language(self, value):
+        self.config['language'] = value
+        self.lang.switch_language(value)
+        print(value)

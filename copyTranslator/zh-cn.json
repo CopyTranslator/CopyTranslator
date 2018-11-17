@@ -1,0 +1,23 @@
+{
+  "Stay on Top": "\u59cb\u7ec8\u7f6e\u9876",
+  "Detect Language": "\u68c0\u6d4b\u8bed\u8a00",
+  "Listen on Clipboard": "\u76d1\u542c\u526a\u8d34\u677f",
+  "Auto Copy": "\u81ea\u52a8\u590d\u5236",
+  "Incremental Copy": "\u589e\u91cf\u590d\u5236",
+  "Smart Dict": "\u667a\u80fd\u8bcd\u5178",
+  "Switch Mode": "\u5207\u6362\u6a21\u5f0f",
+  "Translate": "\u7ffb\u8bd1",
+  "Source": "\u539f\u6587",
+  "Copy Source": "\u590d\u5236\u539f\u6587",
+  "Copy Result": "\u590d\u5236\u7ed3\u679c",
+  "Result": "\u8bd1\u6587",
+  "Source Language": "\u6e90\u8bed\u8a00",
+  "Target Language": "\u76ee\u6807\u8bed\u8a00",
+  "Clear": "\u6e05\u7a7a",
+  "Help and Update": "\u5e2e\u52a9\u4e0e\u66f4\u65b0",
+  "Exit": "\u9000\u51fa",
+  "Main Mode": "\u8bbe\u7f6e\u6a21\u5f0f",
+  "Focus Mode": "\u4e13\u6ce8\u6a21\u5f0f",
+  "Writing Mode": "\u5199\u4f5c\u6a21\u5f0f",
+  "Detected Language": "\u68c0\u6d4b\u5230\u8bed\u8a00"
+}

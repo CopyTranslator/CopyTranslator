@@ -4,6 +4,8 @@
 # @FileName: color_ctrl.py
 # @Software: PyCharm
 
+import webbrowser
+
 import pyperclip as smart_clipboard
 import wx
 
@@ -71,6 +73,12 @@ class ColoredCtrl(wx.TextCtrl):
 
         self.Bind(wx.EVT_CHAR, self.OnSelectAll)
 
+        # self.Bind(wx.EVT_LEAVE_WINDOW, self.setting.AutoHide)
+        # self.Bind(wx.EVT_ENTER_WINDOW, self.setting.AutoHide)
+
+
+
+
     def OnSelectAll(self, evt):
         keyInput = evt.GetKeyCode()
         print(keyInput)
@@ -82,6 +90,10 @@ class ColoredCtrl(wx.TextCtrl):
             pass
         elif keyInput == 23:  # 19 stands for 'ctrl+w'
             pass
+        elif keyInput == 2:  # ctrl+b
+            webbrowser.open("https://www.baidu.com/s?ie=utf-8&wd=" + self.GetValue())
+        elif keyInput == 7:  # ctrl+g
+            webbrowser.open("https://www.google.com/search?q=" + self.GetValue())
         evt.Skip()
 
     # 右键菜单

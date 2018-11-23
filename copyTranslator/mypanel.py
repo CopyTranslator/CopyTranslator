@@ -15,10 +15,11 @@ class MyPanel(wx.Panel):
     INCERMENT_LISTEN = (147, 112, 219)
     INCERMENT_COPY = (199, 21, 133)
 
-    def __init__(self, parent):
+    def __init__(self, parent, setting=None):
         wx.Panel.__init__(self, parent, -1)
         self.leftDown = False
         self.parentFrame = parent
+        self.setting = setting
         while self.parentFrame.GetParent() is not None:
             self.parentFrame = self.parentFrame.GetParent()
         self.Bind(wx.EVT_LEFT_DOWN, self.OnLeftDown)
@@ -30,7 +31,7 @@ class MyPanel(wx.Panel):
 
     def OnLeftDClick(self, evt):
         # self.parentFrame.setting.ChangeMode(evt)
-        self.parentFrame.Close()
+        self.setting.AutoHide()
 
     def OnLeftDown(self, evt):
         self.CaptureMouse()
@@ -42,6 +43,8 @@ class MyPanel(wx.Panel):
         self.delta = wx.Point(dx, dy)
 
     def OnLeftUp(self, evt):
+        if not self.leftDown:
+            return
         self.ReleaseMouse()
         self.leftDown = False
 

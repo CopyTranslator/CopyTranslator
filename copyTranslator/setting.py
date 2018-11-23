@@ -241,6 +241,31 @@ class Setting():
             frame = self.writingFrame
         return frame
 
+    def AutoHide(self, event=None):
+        if event is not None:
+            activate = event.GetActive()
+        else:
+            activate = False
+        frame = self.get_current_frame()
+
+        if activate:
+            # x1, y1 = frame.restored_height
+            x1, y_now = frame.GetPosition()
+            while (y_now <= 0):
+                frame.SetPosition((x1, y_now))
+                y_now += 3
+        else:
+            if not self.config.autohide:
+                return
+            x, y_now = frame.GetPosition()
+            if y_now > 0:  # 不贴边不自动收起
+                return
+            _, height = frame.GetSize()
+            target = -height + 10
+            while (y_now >= target):
+                frame.SetPosition((x, y_now))
+                y_now -= 2
+
     def OnTaskBarLeftDClick(self, event):
         frame = self.get_current_frame()
         if frame.IsIconized():
@@ -346,3 +371,6 @@ class Setting():
         self.config['language'] = value
         self.lang.switch_language(value)
         print(value)
+
+    def switch_hide(self, event):
+        self.config.autohide = not self.config.autohide

@@ -24,7 +24,8 @@ class FocusFrame(wx.Frame):
         self.setting = setting
         self.config = setting.config
         self.lang = self.setting.lang
-        self.panel = MyPanel(self)
+        self.panel = MyPanel(self, self.setting)
+
         sizer = wx.BoxSizer(wx.VERTICAL)
         sizer.Add((-1, 15))
         self.destText = ColoredCtrl(self.panel, -1)  # 创建一个文本控件
@@ -35,6 +36,7 @@ class FocusFrame(wx.Frame):
         sizer.Add(self.destText, -1, wx.EXPAND)
 
         self.panel.SetSizer(sizer)
+
         # 绑定事件
         self.Bind(wx.EVT_CLOSE, self.OnClose)
         self.Bind(wx.EVT_ICONIZE,
@@ -44,7 +46,18 @@ class FocusFrame(wx.Frame):
         self.Bind(wx.EVT_HOTKEY, self.setting.ChangeMode, id=self.hotKeyId2)
         self.Bind(wx.EVT_HOTKEY, self.onFontPlus, id=self.hotKeyId3)
         self.Bind(wx.EVT_HOTKEY, self.onFontMinus, id=self.hotKeyId4)
+
         self.Show(False)
+
+        self.Bind(wx.EVT_ACTIVATE, self.setting.AutoHide)
+
+        # _,self.restored_height=self.GetSize()
+
+    def pt(self, event):
+        print(event.GetId)
+        print('??')
+        event.Skip()
+
 
     def regHotKey(self):
         """

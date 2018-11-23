@@ -25,15 +25,15 @@ class WritingFrame(wx.Frame):
         self.SetWindowStyle(WritingFrame.subStyle)
         self.setting = setting
         self.lang = self.setting.lang
-        self.panel = MyPanel(self)
-        self.small_panel = MyPanel(self.panel)
+        self.panel = MyPanel(self, self.setting)
+        self.small_panel = MyPanel(self.panel, self.setting)
         self.mainSizer = wx.BoxSizer(wx.VERTICAL)
         self.mainSizer.Add((-1, 15))
         self.sizer = wx.BoxSizer(wx.HORIZONTAL)
         self.sizer.Add((-1, 15))
         self.srcTest = ColoredCtrl(self.small_panel, -1, setting=self.setting)  # 这个一开始是没有添加的
         self.destText = ColoredCtrl(self.small_panel, -1, setting=self.setting)  # 创建一个文本控件
-        self.btnPanel = MyPanel(self.small_panel)
+        self.btnPanel = MyPanel(self.small_panel, self.setting)
         self.btnSizer = wx.BoxSizer(wx.VERTICAL)
 
         self.fromlabel = wx.StaticText(self.btnPanel, -1, self.lang('Source Language'))
@@ -80,6 +80,8 @@ class WritingFrame(wx.Frame):
         self.Bind(wx.EVT_HOTKEY, self.setting.ChangeMode, id=self.hotKeyId2)
         self.Bind(wx.EVT_HOTKEY, self.onFontPlus, id=self.hotKeyId3)
         self.Bind(wx.EVT_HOTKEY, self.onFontMinus, id=self.hotKeyId4)
+        self.Bind(wx.EVT_ACTIVATE, self.setting.AutoHide)
+        self.restored_rect = self.GetPosition()
 
     # def showSourcePanel(self,event):
     #     self.sizer.Hide(self.srcTest)

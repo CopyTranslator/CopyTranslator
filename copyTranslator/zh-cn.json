@@ -20,5 +20,7 @@
   "Focus Mode": "\u4e13\u6ce8\u6a21\u5f0f",
   "Writing Mode": "\u5199\u4f5c\u6a21\u5f0f",
   "Detected Language": "\u68c0\u6d4b\u5230\u8bed\u8a00",
-  "Switch Language": "\u5207\u6362\u8f6f\u4ef6\u8bed\u8a00"
+  "Switch Language": "\u5207\u6362\u8f6f\u4ef6\u8bed\u8a00",
+  "Auto Hide": "\u8d34\u8fb9\u9690\u85cf",
+  "Auto Formation": "\u81ea\u52a8\u683c\u5f0f\u5316"
 }

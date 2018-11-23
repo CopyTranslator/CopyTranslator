@@ -32,6 +32,8 @@ class TaskBarIcon(wx.adv.TaskBarIcon):
     ID_Result = wx.NewId()
     ID_CHINESE = wx.NewId()
     ID_ENGLISH = wx.NewId()
+    ID_Hide = wx.NewId()
+    ID_Format = wx.NewId()
 
     def __init__(self, setting):
         self.setting = setting
@@ -57,6 +59,8 @@ class TaskBarIcon(wx.adv.TaskBarIcon):
         self.Bind(wx.EVT_MENU, self.setting.OnExit, id=self.ID_Closeshow)
         self.Bind(wx.EVT_MENU, self.OnLanguage, id=self.ID_ENGLISH)
         self.Bind(wx.EVT_MENU, self.OnLanguage, id=self.ID_CHINESE)
+        self.Bind(wx.EVT_MENU, self.setting.switch_hide, id=self.ID_Hide)
+
 
     def OnLanguage(self, event):
         if event.Id == self.ID_ENGLISH:
@@ -100,6 +104,12 @@ class TaskBarIcon(wx.adv.TaskBarIcon):
 
         dete = menu.AppendCheckItem(self.ID_Dete, self.lang('Detect Language'), 'Detect the input language.')
         dete.Check(self.setting.is_dete)
+
+        hide = menu.AppendCheckItem(self.ID_Hide, self.lang('Auto Hide'), 'Auto Hide')
+        hide.Check(self.setting.config.autohide)
+
+        # hide = menu.AppendCheckItem(self.ID_Format, self.lang('Auto Formation'), 'Auto Hide')
+        # hide.Check(self.setting.config.autohide)
 
         menu.Append(self.ID_Mode1, self.lang(self.setting.config.Mode1))
         menu.Append(self.ID_Mode2, self.lang(self.setting.config.Mode2))

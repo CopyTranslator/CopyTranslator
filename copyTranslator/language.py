@@ -30,7 +30,9 @@ Chinese = {
     'Focus Mode': '专注模式',
     'Writing Mode': '写作模式',
     'Detected Language': '检测到语言',
-    'Switch Language': '切换软件语言'
+    'Switch Language': '切换软件语言',
+    'Auto Hide': '贴边隐藏',
+    'Auto Formation': '自动格式化'
 }
 
 English = {k: k for k, v in Chinese.items()}
@@ -63,7 +65,16 @@ class LanguageManager:
         myfile.close()
 
 
+# if __name__ == '__main__':
+#     lang = LanguageManager()
+#     lang.value=Chinese
+#     lang.save('zh-cn.json')
+#     print(lang.value)
+
 if __name__ == '__main__':
     lang = LanguageManager()
+    lang.value = English
+    lang.save('en.json')
+    lang.value = Chinese
     lang.save('zh-cn.json')
-    print(lang.value)
+    # print(lang.value)

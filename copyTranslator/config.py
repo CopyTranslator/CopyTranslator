@@ -18,6 +18,7 @@ from googletranslator import GoogleTranslator
 from mainframe import MainFrame
 from myenum import *
 from mypanel import MyPanel
+from writingframe import WritingFrame
 
 
 class Config:
@@ -42,7 +43,8 @@ class Config:
                                'source': 'English',
                                'target': 'Chinese (Simplified)',
                                'last_ask': 0,
-                               'language': 'Chinese (Simplified)'
+                               'language': 'Chinese (Simplified)',
+                               'autohide': True
                                }
         self.value = self._default_value
         self.state = MyPanel.NOT_LISTEN
@@ -203,9 +205,11 @@ class Config:
         if value:
             self.subFrame.SetWindowStyle(wx.STAY_ON_TOP | FocusFrame.subStyle)
             self.mainFrame.SetWindowStyle(wx.STAY_ON_TOP | MainFrame.mainStyle)
+            self.writingFrame.SetWindowStyle(wx.STAY_ON_TOP | WritingFrame.subStyle)
         else:
             self.subFrame.SetWindowStyle(FocusFrame.subStyle)
             self.mainFrame.SetWindowStyle(MainFrame.mainStyle)
+            self.writingFrame.SetWindowStyle(WritingFrame.subStyle)
 
     @property
     def continus(self):
@@ -268,3 +272,11 @@ class Config:
             self.writingFrame.Show(True)
             self.Mode1 = FrameMode.main
             self.Mode2 = FrameMode.focus
+
+    @property
+    def autohide(self):
+        return self.value['autohide']
+
+    @autohide.setter
+    def autohide(self, value):
+        self.value['autohide'] = value

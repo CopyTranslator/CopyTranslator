@@ -248,14 +248,13 @@ class Setting():
             activate = False
         frame = self.get_current_frame()
 
-        if activate:
-            # x1, y1 = frame.restored_height
+        if activate:  # 展开
             x1, y_now = frame.GetPosition()
             while (y_now <= 0):
                 frame.SetPosition((x1, y_now))
                 y_now += 3
-        else:
-            if not self.config.autohide:
+        else:  # 收起
+            if not self.config.autohide and event is not None:
                 return
             x, y_now = frame.GetPosition()
             if y_now > 0:  # 不贴边不自动收起

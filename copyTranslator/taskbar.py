@@ -61,7 +61,6 @@ class TaskBarIcon(wx.adv.TaskBarIcon):
         self.Bind(wx.EVT_MENU, self.OnLanguage, id=self.ID_CHINESE)
         self.Bind(wx.EVT_MENU, self.setting.switch_hide, id=self.ID_Hide)
 
-
     def OnLanguage(self, event):
         if event.Id == self.ID_ENGLISH:
             self.setting.language = 'English'
@@ -75,7 +74,7 @@ class TaskBarIcon(wx.adv.TaskBarIcon):
     def OnAbout(self, event):
         UpdateThread(self.setting).start()
         box = wx.MessageDialog(self.setting.get_current_frame(),
-                               'If you found it useful, please give me a star on GitHub or introduce to your friend.\n\n如果您感觉本软件对您有所帮助，请在项目Github上给个star或是介绍给您的朋友，谢谢。',
+                               'If you found it useful, please give me a star on GitHub or introduce to your friend.\n\n如果您感觉本软件对您有所帮助，请在项目Github上给个star或是介绍给您的朋友，谢谢。\n\n 本软件免费开源，如果您是以付费的方式获得本软件，那么你应该是被骗了。[○･｀Д´･ ○]',
                                project_name + ' ' + version + ' by Elliott Zheng', wx.YES_NO | wx.ICON_QUESTION)
         answer = box.ShowModal()
         if answer == wx.ID_YES:

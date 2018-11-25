@@ -26,7 +26,7 @@ Chinese = {
     'Clear': '清空',
     'Help and Update': '帮助与更新',
     'Exit': '退出',
-    'Main Mode': '设置模式',
+    'Main Mode': '对照模式',
     'Focus Mode': '专注模式',
     'Writing Mode': '写作模式',
     'Detected Language': '检测到语言',

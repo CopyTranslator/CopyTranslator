@@ -12,7 +12,7 @@ from copyTranslator.googletranslator import GoogleLangList as langList
 
 
 class MainFrame(wx.Frame):
-    mainStyle = wx.DEFAULT_FRAME_STYLE ^ wx.RESIZE_BORDER ^ wx.MAXIMIZE_BOX
+    mainStyle = wx.DEFAULT_FRAME_STYLE
 
     def __init__(self, setting):
         wx.Frame.__init__(self, None, -1, project_name + ' ' + version,
@@ -59,18 +59,17 @@ class MainFrame(wx.Frame):
 
         # 原文本
         self.srcLabel = wx.StaticText(TextPanel, -1, self.lang("Source"))
-        self.srcText = wx.TextCtrl(TextPanel, -1, "", size=(300, 150), style=wx.TE_MULTILINE)  # 创建一个文本控件
+        self.srcText = wx.TextCtrl(TextPanel, -1, "", size=(500, 200), style=wx.TE_MULTILINE)  # 创建一个文本控件
 
         self.copyBtn = wx.Button(buttonPanel, -1, self.lang("Copy Result"))
         self.Bind(wx.EVT_BUTTON, self.setting.Copy, self.copyBtn)
 
         # 目标文本
         self.dstLabel = wx.StaticText(TextPanel, -1, self.lang("Result"))
-        self.destText = wx.TextCtrl(TextPanel, -1, "", size=(300, 150),
+        self.destText = wx.TextCtrl(TextPanel, -1, "", size=(500, 200),
                                     style=wx.TE_MULTILINE)  # 创建一个文本控件
 
         self.fromlabel = wx.StaticText(buttonPanel, -1, self.lang('Source Language'))
-
 
         self.fromchoice = wx.Choice(buttonPanel, -1, choices=langList)
 
@@ -81,7 +80,14 @@ class MainFrame(wx.Frame):
         self.tochoice.SetSelection(self.tochoice.FindString(self.setting.target))
 
         panel1sizer = wx.FlexGridSizer(4, 1, 6, 0)
-        panel1sizer.AddMany([self.srcLabel, self.srcText, self.dstLabel, self.destText])
+        panel1sizer.Add(self.srcLabel, -1)
+        panel1sizer.Add(self.srcText, -1, wx.EXPAND)
+        panel1sizer.Add(self.dstLabel, -1)
+        panel1sizer.Add(self.destText, -1, wx.EXPAND)
+
+        panel1sizer.AddGrowableCol(0, 0)
+        panel1sizer.AddGrowableRow(1, 0)
+        panel1sizer.AddGrowableRow(3, 0)
 
         TextPanel.SetSizer(panel1sizer)
 
@@ -91,10 +97,27 @@ class MainFrame(wx.Frame):
              self.fromlabel,
              self.fromchoice,
              tolabel, self.tochoice, self.switchBtn, self.transBtn, self.copyBtn])
+        panel2sizer.AddGrowableRow(0, 0)
+        panel2sizer.AddGrowableRow(1, 0)
+        panel2sizer.AddGrowableRow(2, 0)
+        panel2sizer.AddGrowableRow(3, 0)
+        panel2sizer.AddGrowableRow(4, 0)
+        panel2sizer.AddGrowableRow(5, 0)
+        # panel2sizer.AddGrowableRow(6, 0)
+        panel2sizer.AddGrowableRow(7, 0)
+        # panel2sizer.AddGrowableRow(8, 0)
+        panel2sizer.AddGrowableRow(9, 0)
+        panel2sizer.AddGrowableRow(10, 0)
+        panel2sizer.AddGrowableRow(11, 0)
+        panel2sizer.AddGrowableRow(12, 0)
+
         buttonPanel.SetSizer(panel2sizer)
 
         sizer = wx.FlexGridSizer(1, 2, 0, 0)
-        sizer.AddMany([TextPanel, buttonPanel])
+        sizer.Add(TextPanel, -1, wx.EXPAND)
+        sizer.Add(buttonPanel, -1, wx.EXPAND)
+        sizer.AddGrowableCol(0, 0)
+        sizer.AddGrowableRow(0, 0)
 
         self.SetSizer(sizer)
         self.Fit()

@@ -133,6 +133,7 @@ class Setting():
         self.mainFrame.Destroy()
         self.subFrame.Destroy()
         self.writingFrame.Destroy()
+        self.subFrame.Destroy()
         self.taskbar.Destroy()
 
     def paste(self, event):
@@ -145,7 +146,7 @@ class Setting():
         self.mainFrame.destText.Clear()
 
     def setResult(self, string, show=True):
-        self.result = "" + string.replace('\n', '\r\n') + '\r\n'
+        self.result = "" + string.replace('\n', '\r\n')
         self.mainFrame.destText.SetValue(self.result)
         if show:
             self.subFrame.destText.SetValue(self.result)
@@ -186,8 +187,13 @@ class Setting():
         self.setSrc(self.getExpSrc())
         TranslateThread(self, True).start()
 
-    def check_valid(self):
-        string = smart_clipboard.paste()
+    def outsideTranslate(self, data):
+        if self.is_listen:  # 监听监听板的时候就复制
+            smart_clipboard.copy(data)
+        else:  # 不监听不复制
+            self.translateCopy(data)
+
+    def check_valid(self, string):
         if self.result == string or self.src == string or string == '':
             return False
         append = self.get_normalized_append(string)
@@ -198,8 +204,9 @@ class Setting():
         return False
 
     def translateCopy(self, event):
-        if self.check_valid():
-            self.last_append = self.get_normalized_append(smart_clipboard.paste())
+        string = smart_clipboard.paste() if type(event) != str else event
+        if self.check_valid(string):
+            self.last_append = self.get_normalized_append(string)
             self.paste(event)
             if not self.is_word:
                 TranslateThread(self, True).start()
@@ -254,10 +261,9 @@ class Setting():
                 frame.SetPosition((x1, y_now))
                 y_now += 3
         else:  # 收起
-            if not self.config.autohide and event is not None:
-                return
             x, y_now = frame.GetPosition()
-            if y_now > 0:  # 不贴边不自动收起
+            # 不贴边不自动收起
+            if (y_now > 0 or not self.config.autohide) and event is not None:
                 return
             _, height = frame.GetSize()
             target = -height + 10

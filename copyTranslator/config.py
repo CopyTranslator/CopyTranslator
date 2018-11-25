@@ -158,6 +158,7 @@ class Config:
     def is_listen(self, value):
         self['is_listen'] = value
         self.mainFrame.listenCheck.SetValue(value)
+        self.subFrame.listenCheck.SetValue(value)
         if value:
             self.mainFrame.timer.Start(2000)  # 设定时间间隔为1000毫秒,并启动定时器
             self.mouseListener = mouse.Listener(on_click=self.setting.onLongClick)
@@ -175,6 +176,7 @@ class Config:
     def is_copy(self, value):
         self['is_copy'] = value
         self.mainFrame.copyCheck.SetValue(value)
+        self.subFrame.copyCheck.SetValue(value)
         self.RefreshState()
 
     @property
@@ -185,14 +187,21 @@ class Config:
     def is_dete(self, value):
         self['is_dete'] = value
         self.mainFrame.detectCheck.SetValue(value)
+        self.subFrame.detectCheck.SetValue(value)
         if value:
             self.stored_source = self.mainFrame.tochoice.GetString(self.mainFrame.fromchoice.GetSelection())
             self.mainFrame.fromchoice.Disable()
             self.mainFrame.fromlabel.SetLabel(self.lang("Detected Language"))
+            self.subFrame.fromchoice.Disable()
+            self.subFrame.fromlabel.SetLabel(self.lang("Detected Language"))
         else:
             self.mainFrame.fromchoice.SetSelection(self.mainFrame.fromchoice.FindString(self.setting.stored_source))
             self.mainFrame.fromchoice.Enable()
             self.mainFrame.fromlabel.SetLabel(self.lang("Source Language"))
+
+            self.subFrame.fromchoice.SetSelection(self.subFrame.fromchoice.FindString(self.setting.stored_source))
+            self.subFrame.fromchoice.Enable()
+            self.subFrame.fromlabel.SetLabel(self.lang("Source Language"))
 
     @property
     def stay_top(self):
@@ -202,6 +211,7 @@ class Config:
     def stay_top(self, value):
         self['stay_top'] = value
         self.mainFrame.topCheck.SetValue(value)
+        self.subFrame.topCheck.SetValue(value)
         if value:
             self.subFrame.SetWindowStyle(wx.STAY_ON_TOP | FocusFrame.subStyle)
             self.mainFrame.SetWindowStyle(wx.STAY_ON_TOP | MainFrame.mainStyle)
@@ -219,6 +229,7 @@ class Config:
     def continus(self, value):
         self['continus'] = value
         self.mainFrame.continusCheck.SetValue(value)
+        self.subFrame.continusCheck.SetValue(value)
         self.RefreshState()
 
     @property
@@ -237,6 +248,7 @@ class Config:
     def is_dict(self, value):
         self['smart_dict'] = value
         self.mainFrame.dictCheck.SetValue(value)
+        self.subFrame.dictCheck.SetValue(value)
 
     @property
     def translator_type(self):

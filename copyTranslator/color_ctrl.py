@@ -6,7 +6,6 @@
 
 import webbrowser
 
-import pyperclip as smart_clipboard
 import wx
 
 from copyTranslator.youdao import YoudaoSpider
@@ -73,11 +72,6 @@ class ColoredCtrl(wx.TextCtrl):
 
         self.Bind(wx.EVT_CHAR, self.OnSelectAll)
 
-        # self.Bind(wx.EVT_LEAVE_WINDOW, self.setting.AutoHide)
-        # self.Bind(wx.EVT_ENTER_WINDOW, self.setting.AutoHide)
-
-
-
 
     def OnSelectAll(self, evt):
         keyInput = evt.GetKeyCode()
@@ -85,7 +79,7 @@ class ColoredCtrl(wx.TextCtrl):
         if keyInput == 1:  # 1 stands for 'ctrl+a'
             self.SelectAll()
         elif keyInput == 10:  # 10 stands for 'ctrl+enter'
-            smart_clipboard.copy(self.GetValue())
+            self.setting.outsideTranslate(self.GetValue())
         elif keyInput == 19:  # 19 stands for 'ctrl+s'
             pass
         elif keyInput == 23:  # 19 stands for 'ctrl+w'

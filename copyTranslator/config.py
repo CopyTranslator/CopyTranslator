@@ -44,7 +44,8 @@ class Config:
                                'target': 'Chinese (Simplified)',
                                'last_ask': 0,
                                'language': 'Chinese (Simplified)',
-                               'autohide': True
+                               'autohide': True,
+                               'autoshow': False
                                }
         self.value = self._default_value
         self.state = MyPanel.NOT_LISTEN
@@ -292,3 +293,11 @@ class Config:
     @autohide.setter
     def autohide(self, value):
         self.value['autohide'] = value
+
+    @property
+    def autoshow(self):
+        return self.value['autoshow']
+
+    @autoshow.setter
+    def autoshow(self, value):
+        self.value['autoshow'] = value

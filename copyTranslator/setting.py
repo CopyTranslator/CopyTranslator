@@ -86,6 +86,15 @@ class Setting():
 
         UpdateThread(self).start()
 
+    def SeeSource(self, event):
+        if self.src == self.subFrame.destText.GetValue():
+            self.subFrame.destText.SetValue(self.src)
+        else:
+            self.subFrame.destText.SetValue(self.result)
+
+    def ShowPanel(self, event):
+        self.subFrame.ShowPanel(None)
+
     def resume_translation(self, translation):
         self.src = translation
         if translation.type == Translation.PURE_TEXT:
@@ -122,7 +131,6 @@ class Setting():
         self.writingFrame.Show(True)
 
     def save_config(self):
-        # print(self.subFrame.GetSize())
         self.config['focus_x'], self.config['focus_y'] = self.subFrame.GetPosition()
         self.config['focus_width'], self.config['focus_height'] = self.subFrame.GetSize()
         self.config.source, self.config.target = self.get_src_target()
@@ -213,6 +221,10 @@ class Setting():
             else:
                 TranslateThread(self, False).start()
                 DictThread(self).start()
+            if self.config.autoshow:
+                x, y = self.subFrame.GetPosition()
+                if y < 0:
+                    self.AutoHide(True)
 
     def Copy(self, event):
         smart_clipboard.copy(self.result)
@@ -229,6 +241,8 @@ class Setting():
             self.config.frame_mode = self.config.Mode1
         elif event.Id == self.subFrame.destText.ID_Mode2 or event.Id == self.taskbar.ID_Mode2:
             self.config.frame_mode = self.config.Mode2
+        else:
+            self.config.frame_mode = self.config.Mode1
 
     def clear(self, event=None):
         self.setSrc('')
@@ -248,28 +262,30 @@ class Setting():
             frame = self.writingFrame
         return frame
 
-    def AutoHide(self, event=None):
-        if event is not None:
-            activate = event.GetActive()
+    def AutoHide(self, event=False):
+        if event is True or event is False:
+            activate = event
         else:
-            activate = False
+            activate = event.GetActive()
         frame = self.get_current_frame()
-
-        if activate:  # 展开
-            x1, y_now = frame.GetPosition()
-            while (y_now <= 0):
-                frame.SetPosition((x1, y_now))
-                y_now += 3
-        else:  # 收起
-            x, y_now = frame.GetPosition()
-            # 不贴边不自动收起
-            if (y_now > 0 or not self.config.autohide) and event is not None:
-                return
-            _, height = frame.GetSize()
-            target = -height + 10
-            while (y_now >= target):
-                frame.SetPosition((x, y_now))
-                y_now -= 2
+        try:
+            if activate:  # 展开
+                x1, y_now = frame.GetPosition()
+                while (y_now <= 0):
+                    frame.SetPosition((x1, y_now))
+                    y_now += 3
+            else:  # 收起
+                x, y_now = frame.GetPosition()
+                # 不贴边不自动收起
+                if (y_now > 0 or not self.config.autohide) and event is not None:
+                    return
+                _, height = frame.GetSize()
+                target = -height + 10
+                while (y_now >= target):
+                    frame.SetPosition((x, y_now))
+                    y_now -= 2
+        except:
+            pass
 
     def OnTaskBarLeftDClick(self, event):
         frame = self.get_current_frame()
@@ -306,6 +322,7 @@ class Setting():
             self.ori_y = y
         else:
             if time.time() - self.t1 > 0.3 and abs(self.ori_y - y) < 3 and abs(self.ori_x - x) < 3:
+                print('activate')
                 self.simulateCopy()
 
     def ReverseDete(self, event):
@@ -379,3 +396,6 @@ class Setting():
 
     def switch_hide(self, event):
         self.config.autohide = not self.config.autohide
+
+    def switch_show(self, event):
+        self.config.autoshow = not self.config.autoshow

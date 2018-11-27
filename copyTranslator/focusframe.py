@@ -47,6 +47,7 @@ class FocusFrame(wx.Frame):
         self.destText.SetFont(self.font)
 
         sizer.Add(self.destText, -1, wx.EXPAND)
+        # sizer.Add((-1, 10))
 
         self.panel.SetSizer(sizer)
 
@@ -126,12 +127,17 @@ class FocusFrame(wx.Frame):
         self.Bind(wx.EVT_HOTKEY, self.onFontMinus, id=self.hotKeyId4)
 
         self.Show(False)
+        self.buttonPanel.Show(False)
 
         self.Bind(wx.EVT_ACTIVATE, self.setting.AutoHide)
 
     def OnLeftDClick(self, evt):
         self.buttonPanel.Hide()
         self.SetSize(self.panel.GetSize())
+
+    def ShowPanel(self, event):
+        # self.buttonPanel.Show()
+        pass
 
 
     def regHotKey(self):
@@ -148,7 +154,7 @@ class FocusFrame(wx.Frame):
         self.RegisterHotKey(
             self.hotKeyId2,  # a unique ID for this hotkey
             win32con.MOD_SHIFT,  # the modifier key
-            win32con.VK_F2)  # the key to watch for shift+F1
+            win32con.VK_F2)  # the key to watch for shift+F2
 
         self.hotKeyId3 = wx.NewId()
         self.RegisterHotKey(

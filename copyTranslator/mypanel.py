@@ -31,7 +31,10 @@ class MyPanel(wx.Panel):
 
     def OnLeftDClick(self, evt):
         # self.parentFrame.setting.ChangeMode(evt)
-        self.setting.AutoHide()
+        if self.setting.config.autohide:
+            self.setting.AutoHide(False)
+        else:
+            self.setting.get_current_frame().OnIconfiy(evt)
 
     def OnLeftDown(self, evt):
         self.CaptureMouse()

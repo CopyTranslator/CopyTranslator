@@ -38,6 +38,10 @@ class ColoredCtrl(wx.TextCtrl):
     ID_Copy_result = wx.NewId()
     ID_Clear = wx.NewId()
     ID_Write = wx.NewId()
+    ID_Setting = wx.NewId()
+    ID_Source = wx.NewId()
+    ID_Hide = wx.NewId()
+    ID_AutoShow = wx.NewId()
 
     def __init__(self, parent=None, id=None, style=0, setting=None):
         self.parent = parent
@@ -51,8 +55,6 @@ class ColoredCtrl(wx.TextCtrl):
         super(ColoredCtrl, self).__init__(parent=parent, id=id, style=style)
 
         self.Bind(wx.EVT_RIGHT_DOWN, self.OnShowPopup)
-
-        # self.Bind(wx.EVT_TEXT_ENTER, self.enter)
 
         self.Bind(wx.EVT_MENU, self.setting.ReverseStayTop, id=self.ID_Top)
         self.Bind(wx.EVT_MENU, self.setting.ReverseListen, id=self.ID_Listen)
@@ -69,6 +71,10 @@ class ColoredCtrl(wx.TextCtrl):
         self.Bind(wx.EVT_MENU, self.setting.taskbar.OnAbout, id=self.ID_About)
         self.Bind(wx.EVT_MENU, self.setting.clear, id=self.ID_Clear)
         self.Bind(wx.EVT_MENU, self.setting.OnExit, id=self.ID_Closeshow)
+        self.Bind(wx.EVT_MENU, self.setting.ShowPanel, id=self.ID_Setting)
+        self.Bind(wx.EVT_MENU, self.setting.SeeSource, id=self.ID_Source)
+        self.Bind(wx.EVT_MENU, self.setting.switch_hide, id=self.ID_Hide)
+        self.Bind(wx.EVT_MENU, self.setting.switch_show, id=self.ID_AutoShow)
 
         self.Bind(wx.EVT_CHAR, self.OnSelectAll)
 
@@ -88,6 +94,10 @@ class ColoredCtrl(wx.TextCtrl):
             webbrowser.open("https://www.baidu.com/s?ie=utf-8&wd=" + self.GetValue())
         elif keyInput == 7:  # ctrl+g
             webbrowser.open("https://www.google.com/search?q=" + self.GetValue())
+        elif keyInput == 20:  # ctrl+g
+            self.setting.SeeSource(None)
+
+
         evt.Skip()
 
     # 右键菜单
@@ -105,7 +115,9 @@ class ColoredCtrl(wx.TextCtrl):
 
         menu.Append(self.ID_Mode1, self.lang(self.setting.config.Mode1))
 
-        menu.Append(self.ID_Mode2, self.lang(self.setting.config.Mode2))
+        # menu.Append(self.ID_Mode2, self.lang(self.setting.config.Mode2))
+
+
 
         copy = menu.AppendCheckItem(self.ID_Copy, self.lang('Auto Copy'), 'Auto copy result to clipboard.')
         copy.Check(self.setting.is_copy)
@@ -126,6 +138,15 @@ class ColoredCtrl(wx.TextCtrl):
 
         dete = menu.AppendCheckItem(self.ID_Dete, self.lang('Detect Language'), 'Detect the input language.')
         dete.Check(self.setting.is_dete)
+        # if self.setting.get_current_frame()==self.setting.subFrame:
+        # menu.AppendCheckItem(self.ID_Setting, self.lang('Setting Panel'), 'Setting Panel')
+        # menu.AppendCheckItem(self.ID_Source, self.lang('See Source'), 'See Source')
+
+        hide = menu.AppendCheckItem(self.ID_Hide, self.lang('Auto Hide'), 'Auto Hide')
+        hide.Check(self.setting.config.autohide)
+
+        autoShow = menu.AppendCheckItem(self.ID_AutoShow, self.lang('Auto Show'), 'Auto Show')
+        autoShow.Check(self.setting.config.autoshow)
 
         menu.Append(self.ID_About, self.lang('Help and Update'))
         menu.Append(self.ID_Closeshow, self.lang('Exit'))

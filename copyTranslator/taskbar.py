@@ -66,7 +66,6 @@ class TaskBarIcon(wx.adv.TaskBarIcon):
             self.setting.language = 'English'
         else:
             self.setting.language = 'Chinese (Simplified)'
-        print('switch')
 
     def OnExchange(self, event):
         pyperclip.copy(self.setting.src)
@@ -111,7 +110,7 @@ class TaskBarIcon(wx.adv.TaskBarIcon):
         # hide.Check(self.setting.config.autohide)
 
         menu.Append(self.ID_Mode1, self.lang(self.setting.config.Mode1))
-        menu.Append(self.ID_Mode2, self.lang(self.setting.config.Mode2))
+        # menu.Append(self.ID_Mode2, self.lang(self.setting.config.Mode2))
 
         modeMenu = wx.Menu()
 

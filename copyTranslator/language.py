@@ -32,7 +32,10 @@ Chinese = {
     'Detected Language': '检测到语言',
     'Switch Language': '切换软件语言',
     'Auto Hide': '贴边隐藏',
-    'Auto Formation': '自动格式化'
+    'Auto Formation': '自动格式化',
+    'Setting Panel': '设置面板',
+    'See Source': '查看原文',
+    'Auto Show': '自动显示'
 }
 
 English = {k: k for k, v in Chinese.items()}

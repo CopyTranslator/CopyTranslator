@@ -8,7 +8,7 @@ set Program=%~dp0CopyTranslator.exe
 
 ::设置快捷方式名称（必选）
 
-set LnkName=Copy Translator
+set LnkName=CopyTranslator
 
  
 
@@ -20,7 +20,7 @@ set WorkDir=%~dp0
 
 ::设置快捷方式显示的说明（可选）
 
-set Desc=Copy, translate and paste with Google translate API.
+set Desc=Foreign language assisted reading and translation solution
 
  
 

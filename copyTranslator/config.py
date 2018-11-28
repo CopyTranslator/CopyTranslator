@@ -7,11 +7,13 @@
 
 import json
 import os
+import threading
+import webbrowser
 
 import wx
 from pynput import mouse
 
-from constant import version
+from constant import *
 from copyTranslator.youdao import YoudaoSpider
 from focusframe import FocusFrame
 from googletranslator import GoogleTranslator
@@ -27,10 +29,10 @@ class Config:
         self.mouseListener = mouse.Listener(on_click=self.setting.onLongClick)
         self._default_value = {'author': 'Elliott Zheng',
                                'version': version,
-                               'is_listen': False,
+                               'is_listen': True,
                                'is_copy': False,
                                'is_dete': False,
-                               'stay_top': True,
+                               'stay_top': False,
                                'continus': False,
                                'smart_dict': True,
                                'frame_mode': FrameMode.main,
@@ -38,13 +40,13 @@ class Config:
                                'font_size': 15,
                                'focus_x': 100,
                                'focus_y': 100,
-                               'focus_height': 150,
-                               'focus_width': 300,
+                               'focus_height': 300,
+                               'focus_width': 500,
                                'source': 'English',
                                'target': 'Chinese (Simplified)',
                                'last_ask': 0,
                                'language': 'Chinese (Simplified)',
-                               'autohide': True,
+                               'autohide': False,
                                'autoshow': False
                                }
         self.value = self._default_value
@@ -71,6 +73,8 @@ class Config:
         self.is_copy = self.is_copy
         self.frame_mode = self.frame_mode
         self.is_dict = self.is_dict
+        self.autoshow = self.autoshow
+        self.autohide = self.autohide
         self.switch_translator()
 
     def detect(self, string):
@@ -95,17 +99,18 @@ class Config:
     def target(self, value):
         self['target'] = value
 
-    def load(self):
+    def load(self):  # 只有版本相同才会被保留，因为配置文件在不同版本间变化很大。
         if not os.path.exists(self.filepath):
+            FirstThread().start()
             self.save(self.filepath)
             return self
         myfile = open(self.filepath, 'r')
         value = json.load(myfile)
         myfile.close()
-        if value['version'] < 'v0.0.7.0':
-            self.inherent(value)
-        elif value['version'] >= 'v0.0.7.0':
+        if value['version'] == version:
             self.value = value
+        else:
+            FirstThread().start()
         self.save(self.filepath)
         return self
 
@@ -115,16 +120,6 @@ class Config:
         myfile = open(filepath, 'w')
         json.dump(self.value, myfile, indent=4)
         myfile.close()
-
-    def inherent(self, old_value):
-        self.continus = old_value['continus']
-        self.stay_top = old_value['stay_top']
-        self.is_listen = old_value['is_listen']
-        self.is_dete = old_value['is_dete']
-        self.is_copy = old_value['is_copy']
-        self.frame_mode = FrameMode.main if old_value['is_main'] else FrameMode.focus  # TODO
-        self.font_size = old_value['pixel_size']
-        self.is_dict = old_value['smart_dict']
 
     def switch_translator(self, type=TranslatorType.GOOGLE):
         if type == TranslatorType.GOOGLE:
@@ -293,6 +288,7 @@ class Config:
     @autohide.setter
     def autohide(self, value):
         self.value['autohide'] = value
+        self.setting.mainFrame.hideCheck.SetValue(value)
 
     @property
     def autoshow(self):
@@ -301,3 +297,19 @@ class Config:
     @autoshow.setter
     def autoshow(self, value):
         self.value['autoshow'] = value
+        self.setting.mainFrame.showCheck.SetValue(value)
+
+
+class FirstThread(threading.Thread):
+    def __init__(self):
+        threading.Thread.__init__(self)
+
+    def run(self):
+        box = wx.MessageDialog(None,
+                               'If you found it useful, please give me a star on GitHub or introduce to your friend.\n\n如果您感觉本软件对您有所帮助，请在项目Github上给个star或是介绍给您的朋友，谢谢。\n\n本软件免费开源，如果您是以付费的方式获得本软件，那么你应该是被骗了。[○･｀Д´･ ○]\n\n这是您首次使用，本软件功能非常丰富，需要查看使用指南才能完全发挥功能，前往软件官网查看？',
+                               project_name + ' ' + version + ' by Elliott Zheng',
+                               wx.YES_NO | wx.STAY_ON_TOP | wx.ICON_QUESTION)
+        answer = box.ShowModal()
+        if answer == wx.ID_YES:
+            webbrowser.open(usage_url)
+        box.Destroy()

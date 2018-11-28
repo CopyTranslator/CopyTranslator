@@ -20,6 +20,7 @@ class MainFrame(wx.Frame):
 
         self.SetIcon(wx.Icon(logopath, wx.BITMAP_TYPE_ICO))
         self.SetWindowStyle(MainFrame.mainStyle)
+        # self.SetMinSize((465, 385))
         self.setting = setting
         self.lang = self.setting.lang
         TextPanel = wx.Panel(self, -1)
@@ -44,6 +45,14 @@ class MainFrame(wx.Frame):
         # 连续复制模式
         self.continusCheck = wx.CheckBox(buttonPanel, -1, self.lang('Incremental Copy'))
         self.Bind(wx.EVT_CHECKBOX, self.setting.ReverseContinus, self.continusCheck)
+
+        # 贴边隐藏
+        self.hideCheck = wx.CheckBox(buttonPanel, -1, self.lang('Auto Hide'))
+        self.Bind(wx.EVT_CHECKBOX, self.setting.switch_hide, self.hideCheck)
+
+        # 自动显示
+        self.showCheck = wx.CheckBox(buttonPanel, -1, self.lang('Auto Show'))
+        self.Bind(wx.EVT_CHECKBOX, self.setting.switch_show, self.showCheck)
 
         # 连续复制模式
         self.dictCheck = wx.CheckBox(buttonPanel, -1, self.lang('Smart Dict'))
@@ -91,9 +100,10 @@ class MainFrame(wx.Frame):
 
         TextPanel.SetSizer(panel1sizer)
 
-        panel2sizer = wx.FlexGridSizer(13, 1, 6, 0)
+        panel2sizer = wx.FlexGridSizer(15, 1, 6, 0)
         panel2sizer.AddMany(
             [self.topCheck, self.listenCheck, self.copyCheck, self.dictCheck, self.continusCheck, self.detectCheck,
+             self.hideCheck, self.showCheck,
              self.fromlabel,
              self.fromchoice,
              tolabel, self.tochoice, self.switchBtn, self.transBtn, self.copyBtn])
@@ -103,13 +113,15 @@ class MainFrame(wx.Frame):
         panel2sizer.AddGrowableRow(3, 0)
         panel2sizer.AddGrowableRow(4, 0)
         panel2sizer.AddGrowableRow(5, 0)
-        # panel2sizer.AddGrowableRow(6, 0)
+        panel2sizer.AddGrowableRow(6, 0)
         panel2sizer.AddGrowableRow(7, 0)
-        # panel2sizer.AddGrowableRow(8, 0)
+        #panel2sizer.AddGrowableRow(8, 0)
         panel2sizer.AddGrowableRow(9, 0)
-        panel2sizer.AddGrowableRow(10, 0)
+        #panel2sizer.AddGrowableRow(10, 0)
         panel2sizer.AddGrowableRow(11, 0)
         panel2sizer.AddGrowableRow(12, 0)
+        panel2sizer.AddGrowableRow(13, 0)
+        panel2sizer.AddGrowableRow(14, 0)
 
         buttonPanel.SetSizer(panel2sizer)
 

@@ -16,7 +16,7 @@ from copyTranslator.constant import *
 
 
 def load_log(filepath):
-    myfile = open(filepath, 'r')
+    myfile = open(filepath, 'r', encoding='UTF-8')
     lines = myfile.readlines()
     log = ''
     for line in lines:
@@ -41,7 +41,6 @@ class UpdateChecker:
             new_version = version_value['version']
             if new_version <= version:
                 return
-
             update_log = version_value['update_log']
             box = wx.MessageDialog(setting.get_current_frame(),
                                    levels_log[version_value[

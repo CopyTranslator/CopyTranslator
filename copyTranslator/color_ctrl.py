@@ -51,7 +51,7 @@ class ColoredCtrl(wx.TextCtrl):
             self.setting = setting
         self.lang = self.setting.lang
         if style == 0:
-            style = wx.TE_RICH2 | wx.TE_MULTILINE | wx.TE_PROCESS_ENTER
+            style = wx.TE_RICH2 | wx.TE_MULTILINE | wx.TE_PROCESS_ENTER | wx.TE_NOHIDESEL
         super(ColoredCtrl, self).__init__(parent=parent, id=id, style=style)
 
         self.Bind(wx.EVT_RIGHT_DOWN, self.OnShowPopup)
@@ -117,8 +117,6 @@ class ColoredCtrl(wx.TextCtrl):
 
         # menu.Append(self.ID_Mode2, self.lang(self.setting.config.Mode2))
 
-
-
         copy = menu.AppendCheckItem(self.ID_Copy, self.lang('Auto Copy'), 'Auto copy result to clipboard.')
         copy.Check(self.setting.is_copy)
 
@@ -181,7 +179,8 @@ class ColoredCtrl(wx.TextCtrl):
             #                                                               Color.black)
 
             self.ColoredAppend('\nBasic Explains:\n', Color.blue)
-            self.ColoredAppend('\t' + '\n\t'.join(result['basic']['explains']) + '\n', Color.black)
+            filtered = filter(lambda x: x is not None, result['basic']['explains'])
+            self.ColoredAppend('\t' + '\n\t'.join(filtered) + '\n', Color.black)
 
         if 'translation' in result:
             self.ColoredAppend('Google Translation:\n', Color.blue)

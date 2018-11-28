@@ -34,6 +34,7 @@ class TaskBarIcon(wx.adv.TaskBarIcon):
     ID_ENGLISH = wx.NewId()
     ID_Hide = wx.NewId()
     ID_Format = wx.NewId()
+    ID_AutoShow = wx.NewId()
 
     def __init__(self, setting):
         self.setting = setting
@@ -60,6 +61,7 @@ class TaskBarIcon(wx.adv.TaskBarIcon):
         self.Bind(wx.EVT_MENU, self.OnLanguage, id=self.ID_ENGLISH)
         self.Bind(wx.EVT_MENU, self.OnLanguage, id=self.ID_CHINESE)
         self.Bind(wx.EVT_MENU, self.setting.switch_hide, id=self.ID_Hide)
+        self.Bind(wx.EVT_MENU, self.setting.switch_show, id=self.ID_AutoShow)
 
     def OnLanguage(self, event):
         if event.Id == self.ID_ENGLISH:
@@ -73,12 +75,13 @@ class TaskBarIcon(wx.adv.TaskBarIcon):
     def OnAbout(self, event):
         UpdateThread(self.setting).start()
         box = wx.MessageDialog(self.setting.get_current_frame(),
-                               'If you found it useful, please give me a star on GitHub or introduce to your friend.\n\n如果您感觉本软件对您有所帮助，请在项目Github上给个star或是介绍给您的朋友，谢谢。\n\n 本软件免费开源，如果您是以付费的方式获得本软件，那么你应该是被骗了。[○･｀Д´･ ○]',
+                               'If you found it useful, please give me a star on GitHub or introduce to your friend.\n\n如果您感觉本软件对您有所帮助，请在项目Github上给个star或是介绍给您的朋友，谢谢。\n\n本软件免费开源，如果您是以付费的方式获得本软件，那么你应该是被骗了。[○･｀Д´･ ○]\n\n前往软件官网？',
                                project_name + ' ' + version + ' by Elliott Zheng', wx.YES_NO | wx.ICON_QUESTION)
         answer = box.ShowModal()
         if answer == wx.ID_YES:
             webbrowser.open(project_url)
         box.Destroy()
+
 
     # 右键菜单
     def CreatePopupMenu(self):
@@ -105,6 +108,9 @@ class TaskBarIcon(wx.adv.TaskBarIcon):
 
         hide = menu.AppendCheckItem(self.ID_Hide, self.lang('Auto Hide'), 'Auto Hide')
         hide.Check(self.setting.config.autohide)
+
+        autoShow = menu.AppendCheckItem(self.ID_AutoShow, self.lang('Auto Show'), 'Auto Show')
+        autoShow.Check(self.setting.config.autoshow)
 
         # hide = menu.AppendCheckItem(self.ID_Format, self.lang('Auto Formation'), 'Auto Hide')
         # hide.Check(self.setting.config.autohide)

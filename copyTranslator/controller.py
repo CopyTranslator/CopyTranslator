@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # @Time    : 2018/9/25 0025 17:49
 # @Author  : Elliott Zheng
-# @FileName: setting.py
+# @FileName: contraller.py
 # @Software: PyCharm
 
 import threading
@@ -9,7 +9,8 @@ import time
 
 import pyperclip as smart_clipboard
 import regex as re
-from pynput.keyboard import Key, Controller
+from pynput.keyboard import Controller as KeyboardController
+from pynput.keyboard import Key
 
 from config import Config
 from copyTranslator.focusframe import FocusFrame
@@ -56,10 +57,10 @@ def check_contain_chinese(check_str):
     return False
 
 
-class Setting():
+class Controller():
     def __init__(self):
         # Collect events until released
-        self.keyboard = Controller()
+        self.keyboard = KeyboardController()
         self.ori_x = 0
         self.ori_y = 0
         self.t1 = time.time()
@@ -132,6 +133,8 @@ class Setting():
 
     def save_config(self):
         self.config['focus_x'], self.config['focus_y'] = self.subFrame.GetPosition()
+        if self.config['focus_y'] < 0:
+            self.config['focus_y'] = 0
         self.config['focus_width'], self.config['focus_height'] = self.subFrame.GetSize()
         self.config.source, self.config.target = self.get_src_target()
         self.config.save()
@@ -277,13 +280,15 @@ class Setting():
             else:  # 收起
                 x, y_now = frame.GetPosition()
                 # 不贴边不自动收起
-                if (y_now > 0 or not self.config.autohide) and event is not None:
+                if (y_now > 0 or not self.config.autohide) and event is not False:
                     return
                 _, height = frame.GetSize()
                 target = -height + 10
                 while (y_now >= target):
                     frame.SetPosition((x, y_now))
                     y_now -= 2
+                if event == False:
+                    self.mainFrame.SetFocus()
         except:
             pass
 
@@ -296,14 +301,14 @@ class Setting():
         frame.Raise()
 
     def BossKey(self, evt):
-        value = self.config.frame_mode
-        if value == FrameMode.main:
-            frame = self.mainFrame
-        elif value == FrameMode.focus:
-            frame = self.subFrame
-        else:
-            frame = self.writingFrame
-
+        # value = self.config.frame_mode
+        # if value == FrameMode.main:
+        #     frame = self.mainFrame
+        # elif value == FrameMode.focus:
+        #     frame = self.subFrame
+        # else:
+        #     frame = self.writingFrame
+        frame = self.get_current_frame()
         frame.Iconize(not frame.IsIconized())
 
         if not frame.IsIconized():
@@ -399,3 +404,4 @@ class Setting():
 
     def switch_show(self, event):
         self.config.autoshow = not self.config.autoshow
+

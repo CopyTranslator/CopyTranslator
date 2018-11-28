@@ -1,6 +1,6 @@
 import wx
 
-from copyTranslator.setting import Setting
+from copyTranslator.controller import Controller
 
 
 # import subprocess
@@ -8,7 +8,7 @@ from copyTranslator.setting import Setting
 def main():
     # subprocess.Popen('shortcut.bat',stdin = subprocess.PIPE, stdout = subprocess.PIPE)
     app = wx.App()
-    setting = Setting()
+    controller = Controller()
 
     app.MainLoop()
 

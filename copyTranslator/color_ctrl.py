@@ -69,7 +69,7 @@ class ColoredCtrl(wx.TextCtrl):
         self.Bind(wx.EVT_MENU, self.setting.Copy, id=self.ID_Copy_result)
 
         self.Bind(wx.EVT_MENU, self.setting.taskbar.OnAbout, id=self.ID_About)
-        self.Bind(wx.EVT_MENU, self.setting.clear, id=self.ID_Clear)
+        self.Bind(wx.EVT_MENU, self.setting.all_clear, id=self.ID_Clear)
         self.Bind(wx.EVT_MENU, self.setting.OnExit, id=self.ID_Closeshow)
         self.Bind(wx.EVT_MENU, self.setting.ShowPanel, id=self.ID_Setting)
         self.Bind(wx.EVT_MENU, self.setting.SeeSource, id=self.ID_Source)

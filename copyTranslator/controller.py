@@ -247,11 +247,13 @@ class Controller():
         else:
             self.config.frame_mode = self.config.Mode1
 
-    def clear(self, event=None):
-        self.setSrc('')
-        self.setResult('')
+    def all_clear(self, event=None):
         smart_clipboard.copy('')
         self.last_append = ''
+        self.src = ''
+        self.setSrc('')
+        self.setResult('')
+
 
     def SwitchMode(self, event):
         self.config.frame_mode = self.config.Mode1
@@ -337,7 +339,7 @@ class Controller():
         self.config.is_copy = not self.config.is_copy
 
     def ReverseContinus(self, event):
-        self.clear()
+        self.all_clear()
         self.config.continus = not self.config.continus
 
     def ReverseDict(self, event):

@@ -3,7 +3,7 @@
 **The original icon has been abolished.o(╥﹏╥)o Now we are collecting new icons from users. People with ideas are welcome to contribute in this [Issue](https://github.com/elliottzheng/CopyTranslator/issues/12)**
 # CopyTranslator 
 
-[中文 Chinese](https://github.com/elliottzheng/CopyTranslator/wiki)
+[中文 Chinese](README_zh.md)
 
 ## User manual for Windows users.
 

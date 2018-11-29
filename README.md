@@ -1,5 +1,3 @@
-![logo](./logo.png)
-
 # CopyTranslator 
 
 [中文 Chinese](https://github.com/elliottzheng/CopyTranslator/wiki)

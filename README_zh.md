@@ -73,6 +73,9 @@ Google翻译支持啥我们就支持啥。
 
 运行时常驻内存只有十几兆
 
+## 使用指南以及下载和安装方式
+
+请查看本项目[WIKI](https://github.com/elliottzheng/CopyTranslator/wiki)
 
 ## 致谢
 

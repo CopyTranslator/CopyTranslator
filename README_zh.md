@@ -1,7 +1,9 @@
-# CopyTranslator 
 ![图标暂无](https://s1.ax1x.com/2018/11/29/FZxqM9.png)
 
 **原图标废止o(╥﹏╥)o，现向广大用户征集新图标，欢迎对设计有兴趣的同学在[Issue](https://github.com/elliottzheng/CopyTranslator/issues/12)投稿。**
+
+# CopyTranslator 
+[英语/English](README.md)
 
 **外文辅助阅读翻译解决方案**
 

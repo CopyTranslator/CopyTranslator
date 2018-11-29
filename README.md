@@ -1,6 +1,9 @@
 ![图标暂无](https://s1.ax1x.com/2018/11/29/FZxqM9.png)
 
-**The original icon has been abolished.o(╥﹏╥)o Now we are collecting new icons from users. People with ideas are welcome to contribute in this [Issue](https://github.com/elliottzheng/CopyTranslator/issues/12)**
+**The original icon has been abolished.o(╥﹏╥)o Now we are collecting new icons from users. People with ideas are welcome to contribute in this [Issue](https://github.com/elliottzheng/CopyTranslator/issues/12)**.Here are our needs.
+1. Original
+2. Can reflect the core usage of the CopyTranslator, which is copy and translate.
+3. Can be well displayed in the desktop environment.
 # CopyTranslator 
 
 [中文 Chinese](README_zh.md)

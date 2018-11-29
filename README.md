@@ -6,7 +6,7 @@
 
 ## User manual for Windows users.
 
-Foreign Paper Reading and Translation Asistant. (Latest: v0.0.7-Kylin-RC0)
+Foreign Paper Reading and Translation Asistant. (Latest: v0.0.7-Kylin-RC1)
 
 ### Warning
 **Due to the mechanism change of google translate, versions before v0.0.5.2 is no longer valid, I had fixed it in v0.0.5.3, Please update to the latest version.**

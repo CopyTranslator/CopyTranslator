@@ -27,11 +27,11 @@ Researchers always have to read a lot of literature, and understanding the conte
 
 Just open the `CopyTranslator` and copy the PDF text to clipboard,  `CopyTranslator` will watch the clipboard changes, then it will process the clipboard contents (such as removing extra line breaks, etc.) and display the translation results. The translation effect is greatly improved compared to the direct copy and paste to the web version of the translation, and the time required for translation is greatly reduced. With the powerful Google translation API, the translation quality is guaranteed. There are also a wealth of options you can set, such as automatically copy translation results to the clipboard, [Incremental Copy](#Incremental Copy), [Smart Translation](#Smart Translation), etc., it effectively improve people's reading and translation efficiency of foreign literature.
 
-**After several iterations, `CopyTranslator` has became more and more powerful as well as user-friendly. ** It is recommended to read the full usage guide [wiki](https://github.com/elliottzheng/CopyTranslator/wiki) to make best use of it.
+**After several iterations, `CopyTranslator` has became more and more powerful as well as user-friendly. It is recommended to read the full usage guide [wiki](https://github.com/elliottzheng/CopyTranslator/wiki) to make best use of it**.
 
 ### Core usage
 
-**Open a webpage/PDF, select the text to be translated, copy the text to the clipboard, `CopyTranslator` will listens to the clipboard change, and  process the clipboard content (such as removing extra line breaks, etc.), translate it, and display **.  Just copy the text,`CopyTranslator` will immediately give the translation result, effectively improving your work efficiency.
+**Open a webpage/PDF, select the text to be translated, copy the text to the clipboard, `CopyTranslator` will listens to the clipboard change, and  process the clipboard content (such as removing extra line breaks, etc.), translate it, and display**.  Just copy the text,`CopyTranslator` will immediately give the translation result, effectively improving your work efficiency.**
 
 ![](https://s1.ax1x.com/2018/11/30/FmrNFS.gif)
 
@@ -43,7 +43,7 @@ Just open the `CopyTranslator` and copy the PDF text to clipboard,  `CopyTransla
 
 ### Solve the problem of PDF copy translation
 
-**`CopyTranslator` is specifically optimized for English and Chinese pdf line breaks and sentence endings, basically solving the problem caused by extra sentence breaks and line breaks. ** The following figure shows the translation results using `CopyTranslator`. It's obvious that the translation effect is greatly improved compared to directly copy and paste to the online translator. At the same time, with the powerful google translation API, the translation quality is guaranteed, and the translation.google.cn used is also faster to connect, no need to worry about network problems.
+`CopyTranslator` is specifically optimized for English and Chinese pdf line breaks and sentence endings, basically solving the problem caused by extra sentence breaks and line breaks. The following figure shows the translation results using `CopyTranslator`. It's obvious that the translation effect is greatly improved compared to directly copy and paste to the online translator. At the same time, with the powerful google translation API, the translation quality is guaranteed, and the translation.google.cn used is also faster to connect, no need to worry about network problems.
 
 ![](https://s1.ax1x.com/2018/09/13/iEiIRx.png)
 
@@ -53,7 +53,7 @@ Just open the `CopyTranslator` and copy the PDF text to clipboard,  `CopyTransla
 
 More efficient, while keeping the original segment as much as possible.
 
-![entoch](J:/python/CopyTranslator/screenshot/entoch.png)
+![entoch](./screenshot/entoch.png)
 
 ### Tap to Copy
 
@@ -65,9 +65,9 @@ After turning on the `listen Clipboard` option, just select the text, and hover 
 
 Unparalleled powerful focus mode, while it's just a simple text box, it can meet the needs of 90% of daily translation!
 
-- **The translation is displayed in the `Focus mode` and `Contrast Mode` at the same time. **
--  **The result of [Smart Dictionary](#Smart Dictionary) is only displayed in `Focus Mode`, colorful text helps you quickly distinguish between items ** 
-- **Drag text to focus mode box, you can get translation results directly **.
+- **The translation is displayed in the `Focus mode` and `Contrast Mode` at the same time**. 
+- **The result of [Smart Dictionary](#Smart Dictionary) is only displayed in `Focus Mode`, colorful text helps you quickly distinguish between items**.
+- **Drag text to focus mode box, you can get translation results directly**.
 - **When the cursor is in the focus mode result box, `Ctrl+Enter` to translate the contents of the box, `Ctrl+B` to use Baidu to search the contents of the box, and `Ctrl+G` to use Google to search the contents of the box**.
 - **The right-click menu of `Focus mode` can be used to set up almost all options as well as all the function**.
 
@@ -77,7 +77,7 @@ Unparalleled powerful focus mode, while it's just a simple text box, it can meet
 
 ### Smart Dictionary
 
-sentences with words less than 3 will be view as phrase or word, you will see a more detailed explanations in `Focus Mode`. Check the `Smart Dict ` option to enable it. **Note: It is limited to the languages `Youdao` supported , but you don't need and cannot  manually choose language.(based on API provided by [Youdao](https://github.com/longcw/youdao)), **
+Sentences with words less than 3 will be view as phrase or word, you will see a more detailed explanations in `Focus Mode`. Check the `Smart Dict ` option to enable it. **Note: It is limited to the languages `Youdao` supported , but you don't need and cannot  manually choose language**.Based on API provided by [Youdao](https://github.com/longcw/youdao)
 
 ![1537871607106](assets/1537871607106.png)
 
@@ -105,7 +105,7 @@ Please refer to the [User Manual](https://github.com/elliottzheng/CopyTranslator
 
 Please refer to the project [WIKI](https://github.com/elliottzheng/CopyTranslator/wiki) .
 
-**After several iterations, `CopyTranslator` has became more and more powerful as well as user-friendly. ** It is recommended to read the full project [wiki](https://github.com/elliottzheng/CopyTranslator/wiki) to make best use of it.
+**After several iterations, `CopyTranslator` has became more and more powerful as well as user-friendly. It is recommended to read the full project [wiki](https://github.com/elliottzheng/CopyTranslator/wiki) to make best use of it**.
 
 ## Reprint statement
 

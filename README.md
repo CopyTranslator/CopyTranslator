@@ -19,7 +19,7 @@
 
 **This software is free and open source. If you find someone selling this software , please report it in the Issue.**
 
-## Brief
+## Introduction
 
 ### Foreword
 

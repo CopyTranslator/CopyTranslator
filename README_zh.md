@@ -76,17 +76,24 @@
 - `对照模式`符合用户以前的的使用习惯，原文与译文对照显示。
 - `专注模式`只提供译文窗口，便于您关注译文。使用专注模式时注意勾选`始终置顶`及`监听剪贴板`,必要时应勾选`自动复制`。
 
-### 支持语言丰富
+### 其他特性
+- 支持语言丰富，Google翻译支持啥我们就支持啥。
+- 更多自动化的自定义选项可供选择，如`自动复制`，`设置记忆`，`贴边隐藏`,`自动显示`
+- 支持全局热键及方便的快捷键操作
+- 国际化，界面语言可选择English/简体中文
+- 占用内存小，运行时常驻内存只有十几兆。
+- `CopyTranslator`还将继续加入更多新特性，敬请期待。
 
-Google翻译支持啥我们就支持啥。
+请查阅[使用指南](https://github.com/elliottzheng/CopyTranslator/wiki/Usage-%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97)了解更多
 
-### 占用内存小
 
-运行时常驻内存只有十几兆。
+
 
 ## 使用指南以及下载和安装方式
 
-**请查看本项目[WIKI](https://github.com/elliottzheng/CopyTranslator/wiki)**
+**请查看本项目[WIKI](https://github.com/elliottzheng/CopyTranslator/wiki)**。
+
+**`CopyTranslator`经过多次迭代，功能越来越丰富，越来越人性化，请一定阅读完整[使用指南](https://github.com/elliottzheng/CopyTranslator/wiki/Usage-%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97)，才能最大限度发挥其功能**。
 
 
 ## 转载声明

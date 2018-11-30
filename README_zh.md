@@ -1,6 +1,6 @@
 ![图标暂无](https://s1.ax1x.com/2018/11/29/FZxqM9.png)
 
-**原图标废止o(╥﹏╥)o，现向广大用户征集新图标，欢迎对设计有兴趣的同学在[Issue](https://github.com/elliottzheng/CopyTranslator/issues/12)投稿。**
+**原图标废止o(╥﹏╥)o，现向广大用户征集新图标，如果找不到图标下一版本应该会用透明图标。。。。现在也是没办法。图标要求见[Issue](https://github.com/elliottzheng/CopyTranslator/issues/12)，欢迎大家回复Issue投稿。或者发送邮件到[copytranslator@hypercube.top](mailto:copytranslator@hypercube.top)投稿，感激不尽。**
 
 # CopyTranslator 
 [英语/English](README.md)
@@ -24,7 +24,7 @@
 `CopyTranslator`经过多次迭代，功能越来越丰富，越来越人性化，**建议阅读完整使用指南[wiki](https://github.com/elliottzheng/CopyTranslator/wiki)，最大限度发挥其功能。**
 
 ### 核心用法
-**打开网页/PDF，选中要翻译的段落文字，按Ctrl+C/右键复制文本，CopyTranslator监听到剪贴板变化，会将剪贴板内容进行处理（如去除多余换行等），翻译，并显示**。只要这边鼠标一复制，不用粘贴，`CopyTranslator`立刻给出翻译结果，有效提高大家的工作效率。
+**打开网页/PDF，选中要翻译的段落文字，按Ctrl+C/右键复制文本，CopyTranslator监听到剪贴板变化，会将剪贴板内容进行处理（如去除多余换行等），翻译，并显示**。只要这边鼠标一复制，不用粘贴，`CopyTranslator`立刻给出翻译结果，有效提高工作效率。
 
   ![](https://s1.ax1x.com/2018/11/30/FmrNFS.gif)
 
@@ -108,9 +108,11 @@
 
 ## 致谢
 
-感谢[wxpython](https://wxpython.org/), [googletrans](https://github.com/ssut/py-googletrans), [pyperclip](https://github.com/asweigart/pyperclip), [Youdao](https://github.com/longcw/youdao) 的开发者,[码云](https://gitee.com/)，以及我亲爱的朋友们。
+感谢[wxpython](https://wxpython.org/), [googletrans](https://github.com/ssut/py-googletrans), [pyperclip](https://github.com/asweigart/pyperclip), [Youdao](https://github.com/longcw/youdao) 的开发者，[码云](https://gitee.com/)，以及我亲爱的朋友们。
 
+## 开源协议
 
+代码采用Mozilla Public License 2.0协议授权。请查阅[LICENSE](./LICENSE) 文件，获取更多信息。
 
 
 

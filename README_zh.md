@@ -5,7 +5,7 @@
 # CopyTranslator 
 [英语/English](README.md)
 
-**外文辅助阅读翻译解决方案**
+**复制即翻译的外文辅助阅读翻译解决方案**
 
 **请尽快更新到[![Download](https://api.bintray.com/packages/elliottzheng/CopyTranslator/CopyTranslator/images/download.svg) ](https://bintray.com/elliottzheng/CopyTranslator/CopyTranslator/_latestVersion)
 ，这是你没有体验过的全新版本，也是当前唯一可用版本（之前版本都凉了），只需3分钟，你就会跟我一样，爱上这个软件。**

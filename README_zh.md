@@ -1,6 +1,6 @@
 ![图标暂无](https://s1.ax1x.com/2018/11/29/FZxqM9.png)
 
-**原图标废止o(╥﹏╥)o，现向广大用户征集新图标，如果找不到图标下一版本应该会用透明图标。。。。现在也是没办法。图标要求见[Issue](https://github.com/elliottzheng/CopyTranslator/issues/12)，欢迎大家回复Issue投稿。或者发送邮件到[copytranslator@hypercube.top](mailto:copytranslator@hypercube.top)投稿，感激不尽。**
+**原图标已废止。感谢设计师[Mārtiņš Zemlickis](http://mzemlickis.lv/)的出色设计，新的图标将在几天后发布。**
 
 # CopyTranslator 
 [英语/English](README.md)

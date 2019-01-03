@@ -1,6 +1,6 @@
 ![图标暂无](https://s1.ax1x.com/2018/11/29/FZxqM9.png)
 
-**The original icon has been abolished. Thanks to designer [Mārtiņš Zemlickis](http://mzemlickis.lv/)'s brilliant design,  a new icon will be released in a few days.
+**The original icon has been abolished. Thanks to designer [Mārtiņš Zemlickis](http://mzemlickis.lv/)'s brilliant design,  a new icon will be released in a few days.**
 
 # CopyTranslator 
 

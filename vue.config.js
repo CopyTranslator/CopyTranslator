@@ -11,6 +11,11 @@ module.exports = {
               arch: ["ia32"]
             }
           ]
+        },
+        nsis: {
+          installerIcon: "icon.ico",
+          oneClick: false,
+          perMachine: false
         }
       }
     }

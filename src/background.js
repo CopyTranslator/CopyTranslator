@@ -12,12 +12,10 @@ let pyProc = null;
 
 const createPyProc = () => {
   let script = path.join(__dirname, "pydist", "api", "api.exe");
-  console.log(script);
   pyProc = require("child_process").execFile(script);
   if (pyProc != null) {
     console.log("child process success");
   }
-  console.log(pyProc);
 };
 
 const exitPyProc = () => {
@@ -33,7 +31,13 @@ let win;
 protocol.registerStandardSchemes(["app"], { secure: true });
 function createWindow() {
   // Create the browser window.
-  win = new BrowserWindow({ width: 800, height: 600 });
+  win = new BrowserWindow({
+    width: 800,
+    height: 600,
+    transparent: true,
+    frame: false,
+    toolbar: false
+  });
 
   if (process.env.WEBPACK_DEV_SERVER_URL) {
     // Load the url of the dev server if in development mode

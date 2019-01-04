@@ -1,5 +1,6 @@
 <template>
   <div class="hello">
+    <div class="draggable"></div>
     <h1>{{ msg }}</h1>
     <p>
       For a guide and recipes on how to configure / customize this project,<br>
@@ -42,12 +43,11 @@ export default {
     };
   },
   mounted: function() {
-    console.log("star");
     // Connect to Web Socket
     this.ws = new WebSocket("ws://localhost:9001/");
     // Set event handlers.
     this.ws.onopen = function() {
-      console.log("hello");
+      console.log("connected");
     };
     this.ws.onmessage = function(e) {
       // e.data contains received string.
@@ -78,5 +78,10 @@ li {
 }
 a {
   color: #42b983;
+}
+.draggable {
+  height: 15px;
+  -webkit-app-region: drag;
+  background: red;
 }
 </style>

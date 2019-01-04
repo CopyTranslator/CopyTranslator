@@ -1,12 +1,13 @@
 {
-  "name": "copytranslator-phoenix",
-  "version": "0.1.0",
+  "name": "Copytranslator",
+  "version": "0.0.8",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "build-python": "rd /s/q public\\\\pydist && pyinstaller ./src/py/api.py --clean --distpath ./public/pydist",
+    "python:build": "pyinstaller ./src/py/api.py --clean --distpath ./public/pydist && xcopy /y/e .\\public\\pydist .\\dist_electron\\pydist" ,
+    "python:clean": "rd /s/q public\\\\pydist && rd /s/q dist_electron\\\\pydist",
     "electron:build": "vue-cli-service electron:build",
     "electron:serve": "vue-cli-service electron:serve",
     "postinstall": "electron-builder install-app-deps"

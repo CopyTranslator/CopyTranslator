@@ -2,7 +2,10 @@ module.exports = {
   pluginOptions: {
     electronBuilder: {
       builderOptions: {
-        asar: false
+        asar: false,
+        win: {
+          icon: "icon.ico"
+        }
       }
     }
   }

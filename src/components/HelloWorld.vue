@@ -34,32 +34,31 @@
 export default {
   name: "HelloWorld",
   props: {
-    msg: String,
+    msg: String
   },
-  data:function(){
+  data: function() {
     return {
-      ws:null,
-    }
+      ws: null
+    };
   },
-  mounted:function(){
-    console.log('star')
-      // Connect to Web Socket
-      this.ws = new WebSocket("ws://localhost:9001/");
-      // Set event handlers.
-      this.ws.onopen = function() {
-        console.log('hello')
-      };
-      this.ws.onmessage = function(e) {
-        // e.data contains received string.
-        console.log("onmessage: " + e.data);
-      };
-      this.ws.onclose = function() {
-        console.log("onclose");
-      };
-      this.ws.onerror = function(e) {
-        output("onerror");
-        console.log(e)
-      };
+  mounted: function() {
+    console.log("star");
+    // Connect to Web Socket
+    this.ws = new WebSocket("ws://localhost:9001/");
+    // Set event handlers.
+    this.ws.onopen = function() {
+      console.log("hello");
+    };
+    this.ws.onmessage = function(e) {
+      // e.data contains received string.
+      console.log("onmessage: " + e.data);
+    };
+    this.ws.onclose = function() {
+      console.log("onclose");
+    };
+    this.ws.onerror = function(e) {
+      console.log(e);
+    };
   }
 };
 </script>

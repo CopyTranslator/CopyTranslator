@@ -1,0 +1,2 @@
+pyinstaller
+websocket_server

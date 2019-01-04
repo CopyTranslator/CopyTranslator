@@ -11,10 +11,7 @@ const path = require("path");
 let pyProc = null;
 
 const createPyProc = () => {
-  let app = require("electron").app;
-  let dirName = app.getAppPath();
-  console.log(dirName);
-  let script = path.join(dirName, "pydist", "api", "api.exe");
+  let script = path.join(__dirname, "pydist", "api", "api.exe");
   console.log(script);
   pyProc = require("child_process").execFile(script);
   if (pyProc != null) {

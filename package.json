@@ -6,12 +6,13 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
+    "build-python": "rd /s/q dist_electron\\\\pydist && pyinstaller ./src/py/api.py --clean --distpath ./public/pydist",
     "electron:build": "vue-cli-service electron:build",
     "electron:serve": "vue-cli-service electron:serve",
     "postinstall": "electron-builder install-app-deps"
   },
   "dependencies": {
-    "electron": "^4.0.0",
+    "python-shell": "^1.0.7",
     "vue": "^2.5.21",
     "vue-router": "^3.0.1",
     "vuex": "^3.0.1"

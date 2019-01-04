@@ -1,6 +1,7 @@
 {
   "name": "Copytranslator",
   "version": "0.0.8",
+  "author": "Elliott Zheng",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",

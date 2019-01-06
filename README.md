@@ -1,11 +1,11 @@
-# copytranslator-phoenix
+# Copytranslator-Phoenix
 
 ## Project setup
 ```
 npm install
 pip install -r requirements.txt
-
 ```
+
 ## Compiles python script
 ```
 npm run python:build

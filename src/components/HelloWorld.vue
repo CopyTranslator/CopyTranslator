@@ -42,7 +42,7 @@ export default {
       ws: null
     };
   },
-  mounted: function() {
+  mounted: async function() {
     // Connect to Web Socket
     this.ws = new WebSocket("ws://localhost:9001/");
     // Set event handlers.
@@ -59,6 +59,11 @@ export default {
     this.ws.onerror = function(e) {
       console.log(e);
     };
+    let documents = await this.$db
+      .cfind({})
+      .projection({ num: 1, _id: 0 })
+      .exec();
+    console.log(documents);
   }
 };
 </script>

@@ -7,13 +7,14 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "python:build": "pyinstaller ./src/py/api.py --clean --distpath ./public/pydist && xcopy /y/e .\\public\\pydist .\\dist_electron\\pydist" ,
+    "python:build": "pyinstaller ./src/py/api.py --clean --distpath ./public/pydist && xcopy /y/e .\\public\\pydist .\\pydist",
     "python:clean": "rd /s/q public\\\\pydist && rd /s/q dist_electron\\\\pydist",
     "electron:build": "vue-cli-service electron:build",
     "electron:serve": "vue-cli-service electron:serve",
     "postinstall": "electron-builder install-app-deps"
   },
   "dependencies": {
+    "nedb-promise": "^2.0.1",
     "python-shell": "^1.0.7",
     "vue": "^2.5.21",
     "vue-router": "^3.0.1",

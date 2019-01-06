@@ -1,13 +1,14 @@
 .DS_Store
 node_modules
 public/pydist/*
+pydist/*
 src/py/__pycache__
 
 # local env files
 .env.local
 .env.*.local
 
-
+copytranslator-db.json
 # Log files
 npm-debug.log*
 yarn-debug.log*

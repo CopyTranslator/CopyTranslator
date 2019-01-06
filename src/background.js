@@ -8,14 +8,41 @@ import {
 const isDevelopment = process.env.NODE_ENV !== "production";
 const path = require("path");
 
+let currentWorkingDir = process.cwd();
 let pyProc = null;
+let DB = null;
+import datastore from "nedb-promise";
+
+async function doDatabaseStuff() {
+  DB = datastore({
+    // these options are passed through to nedb.Datastore
+    filename: path.join(process.cwd(), "copytranslator-db.json"),
+    autoload: true // so that we don't have to call loadDatabase()
+  });
+  await DB.insert([
+    {
+      num: 1,
+      time: new Date(),
+      alpha: "什么东西啊"
+    },
+    {
+      num: 2,
+      time: new Date(),
+      alpha: "b"
+    }
+  ]);
+  global.db = DB;
+}
 
 const createPyProc = () => {
-  let script = path.join(__dirname, "pydist", "api", "api.exe");
+  let script = path.join(currentWorkingDir, "pydist", "api", "api.exe");
   pyProc = require("child_process").execFile(script);
   if (pyProc != null) {
     console.log("child process success");
   }
+  console.log("当前工作路径：" + process.cwd());
+  console.log("当前JS所在路径：" + __dirname);
+  doDatabaseStuff();
 };
 
 const exitPyProc = () => {

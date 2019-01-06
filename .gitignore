@@ -1,5 +1,6 @@
 .DS_Store
 node_modules
+# python build
 public/pydist/*
 pydist/*
 src/py/__pycache__

@@ -12,6 +12,7 @@ let currentWorkingDir = process.cwd();
 let pyProc = null;
 let DB = null;
 import datastore from "nedb-promise";
+const ioHook = require("iohook");
 
 async function doDatabaseStuff() {
   DB = datastore({
@@ -43,6 +44,13 @@ const createPyProc = () => {
   console.log("当前工作路径：" + process.cwd());
   console.log("当前JS所在路径：" + __dirname);
   doDatabaseStuff();
+
+  ioHook.on("mousedown", event => {
+    console.log(event); // { type: 'mousemove', x: 700, y: 400 }
+  });
+
+  // Register and start hook
+  ioHook.start(false);
 };
 
 const exitPyProc = () => {

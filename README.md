@@ -7,6 +7,14 @@
 
 [中文 Chinese](README_zh.md)
 
+[![](https://img.shields.io/github/stars/elliottzheng/copytranslator.svg)](https://github.com/elliottzheng/CopyTranslator/stargazers)
+[![](https://img.shields.io/github/release/elliottzheng/copytranslator.svg)](https://github.com/elliottzheng/CopyTranslator/releases)
+[![](https://img.shields.io/gitter/room/elliottzheng/copytranslator.svg)](https://gitter.im/CopyTranslator/Lobby?utm_source=share-link&utm_medium=link&utm_campaign=share-link)
+[![](https://img.shields.io/github/downloads/elliottzheng/copytranslator/total.svg)](https://github.com/elliottzheng/CopyTranslator/wiki/Downloads-%E4%B8%8B%E8%BD%BD%E4%B8%8E%E5%AE%89%E8%A3%85)
+[![](https://img.shields.io/badge/Project%20Phoenix%20-ongoing-orange.svg)](https://github.com/elliottzheng/CopyTranslator-Phoenix)
+[![](https://img.shields.io/github/license/elliottzheng/copytranslator.svg)](./LICENSE)
+
+
 **Foreign language assisted reading and translation solution**
 
 **Please update to ![Download](https://api.bintray.com/packages/elliottzheng/CopyTranslator/CopyTranslator/images/download.svg)as soon as possible. This is a new version that you have never experienced before. It is also the only available version (all the previous version is invalid now). Trust me, you will fall in love with it within minutes.**

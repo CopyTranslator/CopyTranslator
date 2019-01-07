@@ -1,7 +1,7 @@
 ![logo](https://user-images.githubusercontent.com/22427645/50773452-d738dd80-12cb-11e9-9b7c-45e5d7f74c8a.png)
 
 
-**Thanks to designer [Mārtiņš Zemlickis](http://mzemlickis.lv/)'s brilliant design,  a new icon will be released in a few days.**
+**Thank [Mārtiņš Zemlickis](http://mzemlickis.lv/) for designing the new logo of CopyTranslator.**
 
 # CopyTranslator 
 

@@ -1,6 +1,5 @@
 ![logo](https://user-images.githubusercontent.com/22427645/50773452-d738dd80-12cb-11e9-9b7c-45e5d7f74c8a.png)
 
-# CopyTranslator 
 [英语/English](README.md)
 
 **复制即翻译的外文辅助阅读翻译解决方案**

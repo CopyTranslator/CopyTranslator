@@ -1,7 +1,5 @@
 ![logo](https://user-images.githubusercontent.com/22427645/50773452-d738dd80-12cb-11e9-9b7c-45e5d7f74c8a.png)
 
-**感谢设计师[Mārtiņš Zemlickis](http://mzemlickis.lv/)为CopyTranslator设计的Logo**
-
 # CopyTranslator 
 [英语/English](README.md)
 
@@ -108,7 +106,7 @@
 
 ## 致谢
 
-感谢[wxpython](https://wxpython.org/), [googletrans](https://github.com/ssut/py-googletrans), [pyperclip](https://github.com/asweigart/pyperclip), [Youdao](https://github.com/longcw/youdao) 的开发者，[码云](https://gitee.com/)，以及我亲爱的朋友们。
+感谢[wxpython](https://wxpython.org/), [googletrans](https://github.com/ssut/py-googletrans), [pyperclip](https://github.com/asweigart/pyperclip), [Youdao](https://github.com/longcw/youdao) 的开发者，设计师[Mārtiņš Zemlickis](http://mzemlickis.lv/)，[码云](https://gitee.com/)，以及我亲爱的朋友们。
 
 ## 开源协议
 

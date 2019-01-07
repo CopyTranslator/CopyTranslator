@@ -1,6 +1,7 @@
-![图标暂无](https://s1.ax1x.com/2018/11/29/FZxqM9.png)
+![logo](https://user-images.githubusercontent.com/22427645/50773452-d738dd80-12cb-11e9-9b7c-45e5d7f74c8a.png)
 
-**The original icon has been abolished. Thanks to designer [Mārtiņš Zemlickis](http://mzemlickis.lv/)'s brilliant design,  a new icon will be released in a few days.**
+
+**Thanks to designer [Mārtiņš Zemlickis](http://mzemlickis.lv/)'s brilliant design,  a new icon will be released in a few days.**
 
 # CopyTranslator 
 

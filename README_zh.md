@@ -1,6 +1,6 @@
-![图标暂无](https://s1.ax1x.com/2018/11/29/FZxqM9.png)
+![logo](https://user-images.githubusercontent.com/22427645/50773452-d738dd80-12cb-11e9-9b7c-45e5d7f74c8a.png)
 
-**原图标已废止。感谢设计师[Mārtiņš Zemlickis](http://mzemlickis.lv/)的出色设计，新的图标将在几天后发布。**
+**感谢设计师[Mārtiņš Zemlickis](http://mzemlickis.lv/)为CopyTranslator设计的Logo**
 
 # CopyTranslator 
 [英语/English](README.md)

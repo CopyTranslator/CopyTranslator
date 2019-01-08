@@ -133,3 +133,12 @@ Thanks to the developers of [wxpython](https://wxpython.org/), [googletrans](htt
 ## License
 
 The code is licensed under Mozilla Public License 2.0. For more details, read the [LICENSE](./LICENSE) file.
+
+### Code Visualization:
+
+Here is a cool visualization of the code evolution
+
+ [![Watch the video](https://img.youtube.com/vi/JsfBg8MGaBI/0.jpg)](https://www.youtube.com/watch?v=JsfBg8MGaBI)
+
+ [https://www.youtube.com/watch?v=JsfBg8MGaBI](https://www.youtube.com/watch?v=JsfBg8MGaBI)
+

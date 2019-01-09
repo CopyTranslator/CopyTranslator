@@ -132,7 +132,7 @@ Thanks to the developers of [wxpython](https://wxpython.org/), [googletrans](htt
 
 ## License
 
-The code is licensed under Mozilla Public License 2.0. For more details, read the [LICENSE](./LICENSE) file.
+The code is licensed under GNU GENERAL PUBLIC LICENSE 2.0. For more details, read the [LICENSE](./LICENSE) file.
 
 ### Code Visualization:
 

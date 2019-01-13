@@ -1,6 +1,6 @@
 "use strict";
 
-import { app, protocol, BrowserWindow } from "electron";
+import { app, protocol, BrowserWindow, clipboard } from "electron";
 import {
   createProtocol,
   installVueDevtools
@@ -9,10 +9,35 @@ const isDevelopment = process.env.NODE_ENV !== "production";
 const path = require("path");
 
 let currentWorkingDir = process.cwd();
-let pyProc = null;
+
 let DB = null;
+let win;
 import datastore from "nedb-promise";
 const ioHook = require("iohook");
+const translate = require("translate-google");
+
+function mountLibraries() {
+  clipboard.writeText("Example String", "selection");
+  console.log(clipboard.readText("selection"));
+  const tranObj = {
+    a: 1,
+    b: "1",
+    c: "How are you?\nI'm nice.",
+    d: [true, "true", "hi", { a: "hello", b: ["world"] }]
+  };
+
+  translate(tranObj, { to: "zh-cn" })
+    .then(res => {
+      console.log(res);
+    })
+    .catch(err => {
+      console.error(err);
+    });
+
+  global.translate = translate;
+  global.clipboard = clipboard;
+  global.ioHook = ioHook;
+}
 
 async function doDatabaseStuff() {
   DB = datastore({
@@ -20,47 +45,38 @@ async function doDatabaseStuff() {
     filename: path.join(process.cwd(), "copytranslator-db.json"),
     autoload: true // so that we don't have to call loadDatabase()
   });
-  await DB.insert([
-    {
-      num: 1,
-      time: new Date(),
-      alpha: "什么东西啊"
-    },
-    {
-      num: 2,
-      time: new Date(),
-      alpha: "b"
-    }
-  ]);
+  // await DB.insert([
+  //   {
+  //     num: 1,
+  //     time: new Date(),
+  //     alpha: "什么东西啊"
+  //   },
+  //   {
+  //     num: 2,
+  //     time: new Date(),
+  //     alpha: "b"
+  //   }
+  // ]);
   global.db = DB;
 }
 
-const createPyProc = () => {
-  let script = path.join(currentWorkingDir, "pydist", "api", "api.exe");
-  pyProc = require("child_process").execFile(script);
-  if (pyProc != null) {
-    console.log("child process success");
-  }
-  console.log("当前工作路径：" + process.cwd());
-  console.log("当前JS所在路径：" + __dirname);
-  doDatabaseStuff();
-
+const bindMouseEvent = () => {
   ioHook.on("mousedown", event => {
-    console.log(event); // { type: 'mousemove', x: 700, y: 400 }
+    win.webContents.send("news", event);
   });
-
+  //注册的指令。send到主进程main.js中。
   // Register and start hook
   ioHook.start(false);
 };
 
-const exitPyProc = () => {
-  pyProc.kill();
-  pyProc = null;
+const createPyProc = () => {
+  doDatabaseStuff();
+  bindMouseEvent();
+  mountLibraries();
 };
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
-let win;
 
 // Standard scheme must be registered before the app is ready
 protocol.registerStandardSchemes(["app"], { secure: true });
@@ -69,10 +85,11 @@ function createWindow() {
   win = new BrowserWindow({
     width: 800,
     height: 600,
-    transparent: true,
+    // transparent: true,
     frame: false,
     toolbar: false
   });
+  win.setAlwaysOnTop(true);
 
   if (process.env.WEBPACK_DEV_SERVER_URL) {
     // Load the url of the dev server if in development mode
@@ -96,7 +113,6 @@ app.on("window-all-closed", () => {
   if (process.platform !== "darwin") {
     app.quit();
   }
-  app.on("will-quit", exitPyProc);
 });
 
 app.on("activate", () => {

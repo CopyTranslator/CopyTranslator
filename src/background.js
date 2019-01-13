@@ -17,23 +17,6 @@ const ioHook = require("iohook");
 const translate = require("translate-google");
 
 function mountLibraries() {
-  clipboard.writeText("Example String", "selection");
-  console.log(clipboard.readText("selection"));
-  const tranObj = {
-    a: 1,
-    b: "1",
-    c: "How are you?\nI'm nice.",
-    d: [true, "true", "hi", { a: "hello", b: ["world"] }]
-  };
-
-  translate(tranObj, { to: "zh-cn" })
-    .then(res => {
-      console.log(res);
-    })
-    .catch(err => {
-      console.error(err);
-    });
-
   global.translate = translate;
   global.clipboard = clipboard;
   global.ioHook = ioHook;

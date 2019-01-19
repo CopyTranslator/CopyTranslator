@@ -14,7 +14,7 @@
 **请尽快更新到[![Download](https://api.bintray.com/packages/elliottzheng/CopyTranslator/CopyTranslator/images/download.svg) ](https://bintray.com/elliottzheng/CopyTranslator/CopyTranslator/_latestVersion)
 ，这是你没有体验过的全新版本，也是当前唯一可用版本（之前版本都凉了），只需3分钟，你就会跟我一样，爱上这个软件。**
 
-**如果您觉得软件对您有所帮助，不用follow，不用fork，点一下右上角的star并推荐给周围的朋友就是对我最大的支持。**
+**如果您觉得软件对您有所帮助，不用follow，不用fork，点一下右上角的star并推荐给周围的朋友就是对我极大的支持。**
 
 (在线翻译资源来自互联网，版权属于相关网站，软件仅供交流使用)
 
@@ -126,6 +126,18 @@
 - [NODE_GOOGLE_TRANSLATE](https://github.com/shikar/NODE_GOOGLE_TRANSLATE): 核心翻译引擎
 - [iohook](https://github.com/wilix-team/iohook): 捕获全局鼠标和键盘事件
 - [robotjs](http://robotjs.io/): 模拟键盘输入
+
+## 支持CopyTranslator
+
+### 分享
+
+点下star，并分享给您的朋友，社交网络就是对CopyTranslator的极大支持。
+
+### 赞助
+
+CopyTranslator是采用 GPL v2 许可的开源项目，使用完全免费。但是它的维护也是需要较大的精力的，你可以通过捐赠的形式来帮助发展该项目。
+
+- [爱发电](https://afdian.net/@elliottzheng/plan)
 
 ## 开源协议
 

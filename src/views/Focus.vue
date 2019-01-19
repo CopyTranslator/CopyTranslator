@@ -1,18 +1,20 @@
 <template>
   <div>
-  <div class="draggable"></div>
+    <StatusBar></StatusBar>
     <v-textarea style="height: 100%;" full-width
-            name="input-7-1"
+                name="input-7-1"
                 rows="30"
-            v-model="text"
+                v-model="text"
     ></v-textarea>
   </div>
 </template>
 
 <script>
 import { ipcRenderer } from "electron";
+import StatusBar from "../components/StatusBar";
 export default {
   name: "FocusMode",
+  components: { StatusBar },
   props: {
     msg: String
   },
@@ -67,9 +69,4 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.draggable {
-  height: 15px;
-  -webkit-app-region: drag;
-  background: red;
-}
 </style>

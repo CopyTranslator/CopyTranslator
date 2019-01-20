@@ -5,21 +5,41 @@ import {
   createProtocol,
   installVueDevtools
 } from "vue-cli-plugin-electron-builder/lib";
+const ipc = require("electron").ipcMain;
 const isDevelopment = process.env.NODE_ENV !== "production";
 const path = require("path");
+import CONSTANT from "./tools/constant";
 
 let currentWorkingDir = process.cwd();
+let isFollow = false;
+
+let x = 0;
+let y = 0;
 
 let DB = null;
-let win;
+let focusWin;
 import datastore from "nedb-promise";
 const ioHook = require("iohook");
 const translate = require("translate-google");
 
+//挂载库
 function mountLibraries() {
   global.translate = translate;
   global.clipboard = clipboard;
   global.ioHook = ioHook;
+  global.CONSTANT = CONSTANT;
+}
+//绑定事件
+function bindEvents() {
+  //拖动窗口事件,主要是针对
+  ipc.on(CONSTANT.ONDRAGWINDOW, function(event, arg) {
+    isFollow = arg.status;
+    x = arg.x;
+    y = arg.y;
+  });
+  ipc.on(CONSTANT.ONMINIFYWINDOW, function(event, arg) {
+    focusWin.minimize();
+  });
 }
 
 async function doDatabaseStuff() {
@@ -28,34 +48,45 @@ async function doDatabaseStuff() {
     filename: path.join(process.cwd(), "copytranslator-db.json"),
     autoload: true // so that we don't have to call loadDatabase()
   });
-  // await DB.insert([
-  //   {
-  //     num: 1,
-  //     time: new Date(),
-  //     alpha: "什么东西啊"
-  //   },
-  //   {
-  //     num: 2,
-  //     time: new Date(),
-  //     alpha: "b"
-  //   }
-  // ]);
   global.db = DB;
 }
 
-const bindMouseEvent = () => {
+const sendMouseEvent = () => {
   ioHook.on("mousedown", event => {
-    win.webContents.send("news", event);
+    focusWin.webContents.send("news", event);
   });
+  ioHook.on("mouseup", event => {
+    isFollow = false;
+  });
+  ioHook.on("mousedrag", event => {
+    if (isFollow && event.button === 0) {
+      let x_now = event.x;
+      let y_now = event.y;
+      let dx = x_now - x;
+      let dy = y_now - y;
+      x = x_now;
+      y = y_now;
+      let bounds = focusWin.getBounds();
+      bounds.x += dx;
+      bounds.y += dy;
+      focusWin.setBounds(bounds);
+    }
+  });
+  ioHook.on("mousedrag", event => {
+    console.log("这是另一个函数");
+  });
+
   //注册的指令。send到主进程main.js中。
   // Register and start hook
   ioHook.start(false);
 };
 
+//create main process
 const createPyProc = () => {
   doDatabaseStuff();
-  bindMouseEvent();
+  sendMouseEvent();
   mountLibraries();
+  bindEvents();
 };
 
 // Keep a global reference of the window object, if you don't, the window will
@@ -65,27 +96,27 @@ const createPyProc = () => {
 protocol.registerStandardSchemes(["app"], { secure: true });
 function createWindow() {
   // Create the browser window.
-  win = new BrowserWindow({
+  focusWin = new BrowserWindow({
     width: 800,
     height: 600,
     // transparent: true,
     frame: false,
     toolbar: false
   });
-  win.setAlwaysOnTop(true);
+  focusWin.setAlwaysOnTop(true);
 
   if (process.env.WEBPACK_DEV_SERVER_URL) {
     // Load the url of the dev server if in development mode
-    win.loadURL(process.env.WEBPACK_DEV_SERVER_URL);
-    if (!process.env.IS_TEST) win.webContents.openDevTools();
+    focusWin.loadURL(process.env.WEBPACK_DEV_SERVER_URL);
+    if (!process.env.IS_TEST) focusWin.webContents.openDevTools();
   } else {
     createProtocol("app");
     // Load the index.html when not in development
-    win.loadURL("app://./index.html");
+    focusWin.loadURL("app://./index.html");
   }
 
-  win.on("closed", () => {
-    win = null;
+  focusWin.on("closed", () => {
+    focusWin = null;
   });
 }
 
@@ -101,7 +132,7 @@ app.on("window-all-closed", () => {
 app.on("activate", () => {
   // On macOS it's common to re-create a window in the app when the
   // dock icon is clicked and there are no other windows open.
-  if (win === null) {
+  if (focusWin === null) {
     createWindow();
   }
 });

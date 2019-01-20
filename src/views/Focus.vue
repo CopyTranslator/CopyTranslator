@@ -10,7 +10,6 @@
 </template>
 
 <script>
-import { ipcRenderer } from "electron";
 import StatusBar from "../components/StatusBar";
 export default {
   name: "FocusMode",
@@ -26,21 +25,18 @@ export default {
     };
   },
   methods: {
-    checkBoard() {
+    checkClipboard() {
       if (
         this.$clipboard.readText() === this.src ||
         this.$clipboard.readText() === this.result
       ) {
-        console.log("返回");
         return;
       } else {
-        console.log("翻译");
         this.doTranslate();
       }
     },
     doTranslate() {
       this.src = this.$clipboard.readText();
-      console.log(this.src);
       this.$translate(
         {
           source: this.src
@@ -60,9 +56,9 @@ export default {
   },
   mounted: async function() {
     this.interval = setInterval(() => {
-      this.checkBoard();
+      this.checkClipboard();
     }, 1000);
-    ipcRenderer.on("news", () => {});
+    this.$ipcRenderer.on("news", () => {});
   }
 };
 </script>

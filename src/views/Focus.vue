@@ -1,10 +1,11 @@
 <template>
   <div>
     <StatusBar></StatusBar>
+    <v-btn block to="/contrast">切换模式</v-btn>
     <v-textarea style="height: 100%;" full-width
-                name="input-7-1"
-                rows="30"
+                auto-grow
                 v-model="text"
+                outline
     ></v-textarea>
   </div>
 </template>

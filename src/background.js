@@ -72,9 +72,6 @@ const sendMouseEvent = () => {
       focusWin.setBounds(bounds);
     }
   });
-  ioHook.on("mousedrag", event => {
-    console.log("这是另一个函数");
-  });
 
   //注册的指令。send到主进程main.js中。
   // Register and start hook

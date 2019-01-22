@@ -14,11 +14,9 @@ export default {
   },
   methods: {
     minify(event) {
-      console.log(event);
       this.$ipcRenderer.send(this.$CONSTANT.ONMINIFYWINDOW, null);
     },
     mouseDown(event) {
-      console.log(event.button);
       if (event.button === 0) {
         this.$ipcRenderer.send(this.$CONSTANT.ONDRAGWINDOW, {
           status: true,

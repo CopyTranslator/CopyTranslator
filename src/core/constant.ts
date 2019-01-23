@@ -1,10 +1,12 @@
-export default {
-  version: "v0.0.8",
-  TranslatorType: {
-    GOOGLE: 1
-  },
-  FrameMode: {
-    CONTRAST: 1,
-    FOCUS: 2
-  }
-};
+const version: string = "v0.0.8";
+
+enum TranslatorType {
+  Google
+}
+
+enum FrameMode {
+  Contrast,
+  Focus
+}
+
+export { version, TranslatorType, FrameMode };

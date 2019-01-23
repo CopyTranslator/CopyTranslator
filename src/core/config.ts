@@ -1,17 +1,20 @@
-
+import { TranslatorType, FrameMode, version } from "./constant";
 class Config {
-  _default_value:object={
+  _default_value: object = {
     author: "Elliott Zheng",
-    version: "hello",
-    is_listen: true,
-    is_copy: false,
-    is_dete: false,
-    stay_top: false,
-    continus: false,
-    smart_dict: true,
-    frame_mode: "",
-    translator_type: "",
-    font_size: 15,
+    version: version,
+    isListen: true,
+    isCopy: false,
+    isDete: false,
+    isContinus: false,
+    stayTop: false,
+    smartDict: true,
+    autoHide: false,
+    autoShow: false,
+    autoTop: false,
+    frameMode: FrameMode.Focus,
+    translatorType: TranslatorType.Google,
+    fontSize: 15,
     bounds: {
       //location of focus mode
       focus: {
@@ -29,14 +32,9 @@ class Config {
     },
     source: "English", // source language
     target: "Chinese (Simplified)", //traget language
-    language: "Chinese (Simplified)", //language of ui
-    autohide: false,
-    autoshow: false,
-    autoTop: false
+    language: "Chinese (Simplified)" //language of ui
   };
-  constructor() {
-    
-  }
+  constructor() {}
 }
 
-let config = new Config();
+export { Config };

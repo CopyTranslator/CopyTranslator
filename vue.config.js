@@ -1,8 +1,8 @@
 module.exports = {
   pluginOptions: {
     electronBuilder: {
+      mainProcessTypeChecking: false,
       builderOptions: {
-        asar: false,
         win: {
           icon: "icon.ico",
           target: [

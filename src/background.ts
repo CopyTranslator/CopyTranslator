@@ -1,5 +1,4 @@
 "use strict";
-
 import { app, protocol, BrowserWindow, clipboard } from "electron";
 import {
   createProtocol,
@@ -17,13 +16,13 @@ let x = 0;
 let y = 0;
 
 let DB = null;
-let focusWin;
-import datastore from "nedb-promise";
+let focusWin:any;
+import datastore from "nedb-promise-ts";
 const ioHook = require("iohook");
 const translate = require("translate-google");
 
 //挂载库
-function mountLibraries() {
+function mountLibraries() {  
   global.translate = translate;
   global.clipboard = clipboard;
   global.ioHook = ioHook;
@@ -32,18 +31,18 @@ function mountLibraries() {
 //绑定事件
 function bindEvents() {
   //拖动窗口事件,主要是针对
-  ipc.on(CONSTANT.ONDRAGWINDOW, function(event, arg) {
+  ipc.on(CONSTANT.ONDRAGWINDOW, function(event:any, arg:any) {
     isFollow = arg.status;
     x = arg.x;
     y = arg.y;
   });
-  ipc.on(CONSTANT.ONMINIFYWINDOW, function(event, arg) {
+  ipc.on(CONSTANT.ONMINIFYWINDOW, function(event:any, arg:any) {
     focusWin.minimize();
   });
 }
 
 async function doDatabaseStuff() {
-  DB = datastore({
+  DB = new datastore({
     // these options are passed through to nedb.Datastore
     filename: path.join(process.cwd(), "copytranslator-db.json"),
     autoload: true // so that we don't have to call loadDatabase()
@@ -52,13 +51,13 @@ async function doDatabaseStuff() {
 }
 
 const sendMouseEvent = () => {
-  ioHook.on("mousedown", event => {
+  ioHook.on("mousedown", (event:MouseEvent) => {
     focusWin.webContents.send("news", event);
   });
-  ioHook.on("mouseup", event => {
+  ioHook.on("mouseup", (event:MouseEvent) => {
     isFollow = false;
   });
-  ioHook.on("mousedrag", event => {
+  ioHook.on("mousedrag",(event:MouseEvent) => {
     if (isFollow && event.button === 0) {
       let x_now = event.x;
       let y_now = event.y;
@@ -98,7 +97,6 @@ function createWindow() {
     height: 600,
     // transparent: true,
     frame: false,
-    toolbar: false
   });
   focusWin.setAlwaysOnTop(true);
 

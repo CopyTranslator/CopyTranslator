@@ -1,11 +1,13 @@
+var fs = require("fs");
+
+type CheckFuction = (value: string | number | boolean) => boolean;
+type Rules = { [key: string]: Rule }; //类型别名
+
 interface Rule {
   default: string | number | boolean;
-  type: string; //类型，包括 number，string ,
   msg: string;
-  check: (value: string | number | boolean) => boolean; // 检查是否有效的函数
+  check: CheckFuction; // 检查是否有效的函数
 }
-
-type Rules = { [key: string]: Rule }; //类型别名
 
 class ConfigParser {
   rules: Rules = {};
@@ -22,6 +24,8 @@ class ConfigParser {
     this.rules[key] = rule;
     this.values[key] = rule.default;
   }
-  loadValues(fileName: string) {}
+  loadValues(fileName: string) {
+    var values = fs.readFileSync(fileName);
+  }
   saveValues(fileName: string) {}
 }

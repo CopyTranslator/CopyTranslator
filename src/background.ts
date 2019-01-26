@@ -21,6 +21,11 @@ import datastore from "nedb-promise-ts";
 const ioHook = require("iohook");
 const translator = require("translate-google");
 
+import { YoudaoSpider } from "./core/youdao";
+
+let ciba = new YoudaoSpider();
+console.log(ciba.query("test"));
+
 //挂载库
 function mountLibraries() {
   (<any>global).translator = translator;

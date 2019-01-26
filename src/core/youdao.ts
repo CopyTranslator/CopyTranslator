@@ -52,22 +52,31 @@ class YoudaoSpider {
 
       if (trans) {
         result["basic"] = {};
-        result["basic"]["explains"] = trans.find("li").map((i: number, el) => {
+        result["basic"]["explains"] = trans
+          .find("li")
+          .map((i: number, el) => {
             return $(el).text();
           })
           .get();
 
         // 中文
         if (result["basic"]["explains"].length == 0) {
-          result["basic"]["explains"] = trans.find(".wordGroup").map(function(i, el) {
+          result["basic"]["explains"] = trans
+            .find(".wordGroup")
+            .map(function(i, el) {
               return $(el).text();
-            }).get().join(" ");
+            })
+            .get()
+            .join(" ");
         }
-        console.log(result["basic"]["explains"])
+        console.log(result["basic"]["explains"]);
         // 音标
-        let phons = basic.find(".phonetic").map((i:number,el)=>{
-          return $(el).text();
-        }).get();
+        let phons = basic
+          .find(".phonetic")
+          .map((i: number, el) => {
+            return $(el).text();
+          })
+          .get();
         console.log(phons);
         if (phons.length == 2) {
           result["basic"]["uk-phonetic"] = phons[0];
@@ -78,19 +87,32 @@ class YoudaoSpider {
       }
     }
     // 网络释义(短语)
-    let web = root.find('#webPhrase')
-    if(web){
-          result['web'] = 
-            web.find('.wordGroup').map((i:number,wordGroup)=>{
-              return {
-                'key': $(wordGroup).find('.search-js').map((i,el)=>{return $(el).text()}),
-                'value': $(wordGroup).find('span').map((i,el)=>{
-                  return $(el).next().text()
-                })
-              }   
-            }).get();
-            console.log(result['web']);
-          }
+    let web = root.find("#webPhrase");
+    if (web) {
+      console.log(web.text());
+      result["web"] = web
+        .find(".wordGroup")
+        .map((i: number, wordGroup) => {
+          return $(wordGroup)
+            .text()
+            .replace(/ +/g, " ")
+            .replace(/[\r\n\t]/g, "");
+          // {
+          //   key: $(wordGroup)
+          //     .find(".search-js")
+          //     .first()
+          //     .text(),
+          //   value: $(wordGroup)
+          //     .find("span")
+          //     .first()
+          //     .next()
+          //     .text()
+          // };
+          //
+        })
+        .get();
+      console.log(result["web"]);
+    }
     return result;
   }
 }

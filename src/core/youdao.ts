@@ -17,7 +17,7 @@ class YoudaoSpider {
     // Make a request for a user with a given ID
     try {
       let res = await axios.get(
-        `http://dict.youdao.com/w/eng/${expression}///keyfrom=dict2.index`
+        `http://dict.youdao.com/w/eng/${expression}/#keyfrom=dict2.index`
       );
       YoudaoSpider.parseHtml(expression, res.data);
     } catch (e) {
@@ -39,54 +39,58 @@ class YoudaoSpider {
     let root = $("#results-contents");
 
     // query 搜索的关键字
-    let keyword = root.find(".keyword:first");
+    let keyword = root.find(".keyword").first();
     if (keyword == null) {
       result["query"] = word;
     } else {
       result["query"] = keyword.text();
     }
     // 基本解释
-    let basic = root.find("#phrsListTab:first");
+    let basic = root.find("#phrsListTab").first();
     if (basic) {
       let trans = basic.find(".trans-container");
 
       if (trans) {
         result["basic"] = {};
         result["basic"]["explains"] = trans.find("li").map((i: number, el) => {
-          return $(el).text();
-        });
+            return $(el).text();
+          })
+          .get();
 
         // 中文
         if (result["basic"]["explains"].length == 0) {
-          result["basic"]["explains"] = trans
-            .find(".wordGroup")
-            .map(function(i, el) {
-              // this === el
+          result["basic"]["explains"] = trans.find(".wordGroup").map(function(i, el) {
               return $(el).text();
-            })
-            .get()
-            .join(" ");
+            }).get().join(" ");
         }
-
+        console.log(result["basic"]["explains"])
         // 音标
-        let phons = basic.find(".phonetic").get();
+        let phons = basic.find(".phonetic").map((i:number,el)=>{
+          return $(el).text();
+        }).get();
+        console.log(phons);
         if (phons.length == 2) {
-          result["basic"]["uk-phonetic"] = phons[0].text();
-          result["basic"]["us-phonetic"] = phons[1].text();
+          result["basic"]["uk-phonetic"] = phons[0];
+          result["basic"]["us-phonetic"] = phons[1];
         } else if (phons.length == 1) {
-          result["basic"]["phonetic"] = phons[0].text();
+          result["basic"]["phonetic"] = phons[0];
         }
       }
     }
-    //     // 网络释义(短语)
-    //     web = root.find(id='webPhrase')
-    //     if web:
-    //         result['web'] = [
-    //             {
-    //                 'key': wordgroup.find(class_='search-js').string.strip(),
-    //                 'value': [v.strip() for v in wordgroup.find('span').next_sibling.split(';')]
-    //             } for wordgroup in web.find_all(class_='wordGroup', limit=4)
-    // ]
+    // 网络释义(短语)
+    let web = root.find('#webPhrase')
+    if(web){
+          result['web'] = 
+            web.find('.wordGroup').map((i:number,wordGroup)=>{
+              return {
+                'key': $(wordGroup).find('.search-js').map((i,el)=>{return $(el).text()}),
+                'value': $(wordGroup).find('span').map((i,el)=>{
+                  return $(el).next().text()
+                })
+              }   
+            }).get();
+            console.log(result['web']);
+          }
     return result;
   }
 }

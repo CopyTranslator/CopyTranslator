@@ -1,27 +1,19 @@
 import axios from "axios";
-import { TouchBarButton } from "electron";
 import cheerio from "cheerio";
+import { YoudaoStatus } from "./enums";
 
 class YoudaoSpider {
-  readonly error_code = {
-    0: "正常",
-    20: "要翻译的文本过长",
-    30: "无法进行有效的翻译",
-    40: "不支持的语言类型",
-    50: "无效的key",
-    60: "无词典结果，仅在获取词典结果生效",
-    70: "无法连接到Youdao"
-  };
-
   async query(expression: string) {
-    // Make a request for a user with a given ID
     try {
       let res = await axios.get(
         `http://dict.youdao.com/w/eng/${expression}/#keyfrom=dict2.index`
       );
-      YoudaoSpider.parseHtml(expression, res.data);
+      return YoudaoSpider.parseHtml(expression, res.data);
     } catch (e) {
       console.log(e);
+      return {
+        status: YoudaoStatus.Fail
+      };
     }
   }
   static parseHtml(word: string, html: string): Object {
@@ -32,7 +24,7 @@ class YoudaoSpider {
     */
     let result: { [key: string]: any } = {
       query: "",
-      errorCode: 0
+      errorCode: YoudaoStatus.Success
     };
     const $ = cheerio.load(html);
 
@@ -69,7 +61,6 @@ class YoudaoSpider {
             .get()
             .join(" ");
         }
-        console.log(result["basic"]["explains"]);
         // 音标
         let phons = basic
           .find(".phonetic")
@@ -77,7 +68,6 @@ class YoudaoSpider {
             return $(el).text();
           })
           .get();
-        console.log(phons);
         if (phons.length == 2) {
           result["basic"]["uk-phonetic"] = phons[0];
           result["basic"]["us-phonetic"] = phons[1];
@@ -89,29 +79,24 @@ class YoudaoSpider {
     // 网络释义(短语)
     let web = root.find("#webPhrase");
     if (web) {
-      console.log(web.text());
       result["web"] = web
         .find(".wordGroup")
         .map((i: number, wordGroup) => {
-          return $(wordGroup)
-            .text()
-            .replace(/ +/g, " ")
-            .replace(/[\r\n\t]/g, "");
-          // {
-          //   key: $(wordGroup)
-          //     .find(".search-js")
-          //     .first()
-          //     .text(),
-          //   value: $(wordGroup)
-          //     .find("span")
-          //     .first()
-          //     .next()
-          //     .text()
-          // };
-          //
+          let text = $(wordGroup)
+            .find(".search-js")
+            .first()
+            .text();
+          return {
+            key: text,
+            value: $(wordGroup)
+              .text()
+              .replace(text, "")
+              .replace(/ {2,}/g, "")
+              .replace(/[\r\n\t]/g, "")
+              .replace(/\|{2,}/g, "")
+          };
         })
         .get();
-      console.log(result["web"]);
     }
     return result;
   }

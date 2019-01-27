@@ -1,4 +1,6 @@
-import { TranslatorType, FrameMode, version } from "./constant";
+import { version } from "./constant";
+import { TranslatorType, FrameMode } from "./enums";
+
 class Config {
   _default_value: object = {
     author: "Elliott Zheng",

@@ -21,10 +21,14 @@ import datastore from "nedb-promise-ts";
 const ioHook = require("iohook");
 const translator = require("translate-google");
 
-import { YoudaoSpider } from "./core/youdao";
+import { configParser } from "./tools/rules";
 
-let ciba = new YoudaoSpider();
-console.log(ciba.query("test"));
+// let ciba = new YoudaoSpider();
+// ciba.query("test").then(res => {
+//   console.log(res);
+// });
+console.log(configParser.rules);
+console.log(configParser.values);
 
 //挂载库
 function mountLibraries() {

@@ -4,6 +4,7 @@ enum RuleName {
   isCopy,
   isListen,
   isDete,
+  isContinus,
   stayTop,
   smartDict,
   autoHide,
@@ -19,9 +20,14 @@ enum RuleName {
   locale
 }
 
-const nocheck = (value: any) => {
-  return true;
-};
+interface ModeConfig {
+  x: number;
+  y: number;
+  height: number;
+  width: number;
+  fontSize: number;
+}
+
 type CheckFuction = (value: any) => boolean;
 type Rules = { [key: string]: Rule }; //类型别名
 
@@ -52,4 +58,4 @@ class ConfigParser {
   saveValues(fileName: string) {}
 }
 
-export { Rule, ConfigParser, CheckFuction, RuleName, nocheck };
+export { Rule, ConfigParser, CheckFuction, RuleName, ModeConfig };

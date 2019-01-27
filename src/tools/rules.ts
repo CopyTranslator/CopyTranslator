@@ -3,7 +3,7 @@ import {
   Rule,
   CheckFuction,
   RuleName,
-  nocheck
+  ModeConfig
 } from "./ConfigParser";
 
 class BoolRule implements Rule {
@@ -27,6 +27,19 @@ class NumberRule implements Rule {
     }
   }
 }
+
+class ModeRule implements Rule {
+  predefined: ModeConfig;
+  msg: string;
+  check?: CheckFuction;
+  constructor(predefined: ModeConfig, msg: string, check?: CheckFuction) {
+    this.predefined = predefined;
+    this.msg = msg;
+    if (check) {
+      this.check = check;
+    }
+  }
+}
 //start to add rules
 
 let configParser = new ConfigParser();
@@ -37,12 +50,27 @@ configParser.addRule(
 );
 configParser.addRule(
   RuleName.isCopy,
-  new BoolRule(true, "auto copy result to clipboard")
+  new BoolRule(false, "auto copy result to clipboard")
 );
 
 configParser.addRule(
   RuleName.autoHide,
-  new BoolRule(true, "auto show when translate")
+  new BoolRule(false, "auto show when translate")
+);
+
+configParser.addRule(
+  RuleName.isContinus,
+  new BoolRule(false, "incremental copy")
+);
+
+configParser.addRule(
+  RuleName.stayTop,
+  new BoolRule(false, "always stay on top")
+);
+
+configParser.addRule(
+  RuleName.smartDict,
+  new BoolRule(true, "always stay on top")
 );
 
 configParser.addRule(

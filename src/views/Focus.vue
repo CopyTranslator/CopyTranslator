@@ -38,12 +38,14 @@ export default {
     },
     doTranslate() {
       this.src = this.$clipboard.readText();
-      this.$translate([this.src], {
-        from: "en",
-        to: "zh-cn"
-      })
+      this.$translator
+        .translate({
+          text: this.src,
+          from: "en",
+          to: "zh-cn"
+        })
         .then(res => {
-          this.text = res[0];
+          this.text = res.result;
           this.result = this.text;
         })
         .catch(err => {

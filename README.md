@@ -8,7 +8,6 @@
 [![](https://img.shields.io/github/release/elliottzheng/copytranslator.svg)](https://github.com/elliottzheng/CopyTranslator/releases)
 [![](https://img.shields.io/gitter/room/elliottzheng/copytranslator.svg)](https://gitter.im/CopyTranslator/Lobby?utm_source=share-link&utm_medium=link&utm_campaign=share-link)
 [![](https://img.shields.io/github/downloads/elliottzheng/copytranslator/total.svg)](https://github.com/elliottzheng/CopyTranslator/wiki/Downloads-%E4%B8%8B%E8%BD%BD%E4%B8%8E%E5%AE%89%E8%A3%85)
-[![](https://img.shields.io/badge/Project%20Phoenix%20-ongoing-orange.svg)](https://github.com/elliottzheng/CopyTranslator-Phoenix)
 [![](https://img.shields.io/github/license/elliottzheng/copytranslator.svg)](./LICENSE)
 
 
@@ -56,13 +55,13 @@ Just open the `CopyTranslator` and copy the PDF text to clipboard,  `CopyTransla
 
 More efficient, while keeping the original segment as much as possible.
 
-![entoch](./screenshot/entoch.png)
+![entoch](./assets/entoch.png)
 
 ### Tap to Copy
 
 After turning on the `listen Clipboard` option, just select the text, and hover the mouse over the selected text to release the mouse over 0.3s. That is, **after long press and  release, it can be copied.** This can prevent us from over moving the mouse (right click to choose Copy) or tired of  pressing `Ctrl+C`.
 
-![longpresscopy](/screenshot/longpresscopy.gif)
+![longpresscopy](./assets/longpresscopy.gif)
 
 ### Powerful Focus Mode
 
@@ -124,7 +123,7 @@ This software is free open source software, the developer is [Elliott Zheng](htt
 
 ## Acknowledgements
 
-`CopyTranslator`'s rebirth depends on the contributions of the following people
+`CopyTranslator`'s rebirth depends on the contributions of the following people or organizations.
 
 ### UI and UX Design
 
@@ -132,10 +131,10 @@ Designer: [Mārtiņš Zemlickis](http://mzemlickis.lv/)
 
 ### Libraries
 
-- [Electron](https://electronjs.org)
-- [Vue](http://vuejs.org)
+- [Electron](https://electronjs.org):Build cross platform desktop apps with JavaScript, HTML, and CSS
+- [Vue](http://vuejs.org): The Progressive JavaScript Framework.
 - [Vuetify](https://vuetifyjs.com): to build user interface.
-- [NODE_GOOGLE_TRANSLATE](https://github.com/shikar/NODE_GOOGLE_TRANSLATE): core translate engine.
+- [translation.js](https://github.com/Selection-Translator/translation.js): core translate engine.
 - [iohook](https://github.com/wilix-team/iohook): For handling mouse and keyboard event 
 - [robotjs](http://robotjs.io/): For simulating keyboard input.
 

@@ -1,5 +1,7 @@
 enum TranslatorType {
-  Google
+  Google,
+  Youdao,
+  Baidu
 }
 
 enum FrameMode {

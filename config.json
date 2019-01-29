@@ -1,0 +1,24 @@
+{
+    "isListen": true,
+    "isCopy": false,
+    "autoHide": false,
+    "isContinus": false,
+    "stayTop": false,
+    "smartDict": true,
+    "focus": {
+        "x": 100,
+        "y": 200,
+        "height": 200,
+        "width": 300,
+        "fontSize": 15
+    },
+    "contrast": {
+        "x": 300,
+        "y": 500,
+        "height": 600,
+        "width": 800,
+        "fontSize": 15
+    },
+    "translatorType": 0,
+    "frameMode": 0
+}

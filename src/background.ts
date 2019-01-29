@@ -8,6 +8,16 @@ const ipc = require("electron").ipcMain;
 const isDevelopment = process.env.NODE_ENV !== "production";
 const path = require("path");
 import CONSTANT from "./tools/constant";
+const ioHook = require("iohook");
+import { logger } from "./tools/logger";
+import { RuleName } from "./tools/rule";
+import { TranslatorType } from "./core/enums";
+import datastore from "nedb-promise-ts";
+
+//挂载库
+(<any>global).ioHook = ioHook;
+(<any>global).CONSTANT = CONSTANT;
+(<any>global).logger = logger;
 
 let currentWorkingDir = process.cwd();
 let isFollow = false;
@@ -17,35 +27,29 @@ let y = 0;
 
 let DB = null;
 let focusWin: any;
-import datastore from "nedb-promise-ts";
-const ioHook = require("iohook");
-const translator = require("translate-google");
-
-import { configParser } from "./tools/rules";
 
 // let ciba = new YoudaoSpider();
 // ciba.query("test").then(res => {
 //   console.log(res);
 // });
-console.log(configParser.rules);
-console.log(configParser.values);
 
-//挂载库
-function mountLibraries() {
-  (<any>global).translator = translator;
-  (<any>global).clipboard = clipboard;
-  (<any>global).ioHook = ioHook;
-  (<any>global).CONSTANT = CONSTANT;
-}
+config.set(RuleName.translatorType, TranslatorType.Google);
+
+config.saveValues("config.json");
+
+//config.loadValues("config.json");
+
+logger.debug(config.values);
+
 //绑定事件
 function bindEvents() {
   //拖动窗口事件,主要是针对
-  ipc.on(CONSTANT.ONDRAGWINDOW, function(event: any, arg: any) {
+  ipc.on(CONSTANT.ONDRAGWINDOW, (event: any, arg: any) => {
     isFollow = arg.status;
     x = arg.x;
     y = arg.y;
   });
-  ipc.on(CONSTANT.ONMINIFYWINDOW, function(event: any, arg: any) {
+  ipc.on(CONSTANT.ONMINIFYWINDOW, (event: any, arg: any) => {
     focusWin.minimize();
   });
 }
@@ -90,7 +94,6 @@ const sendMouseEvent = () => {
 const createPyProc = () => {
   doDatabaseStuff();
   sendMouseEvent();
-  mountLibraries();
   bindEvents();
 };
 

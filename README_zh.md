@@ -6,7 +6,6 @@
 [![](https://img.shields.io/github/release/elliottzheng/copytranslator.svg)](https://github.com/elliottzheng/CopyTranslator/releases)
 [![](https://img.shields.io/gitter/room/elliottzheng/copytranslator.svg)](https://gitter.im/CopyTranslator/Lobby?utm_source=share-link&utm_medium=link&utm_campaign=share-link)
 [![](https://img.shields.io/github/downloads/elliottzheng/copytranslator/total.svg)](https://github.com/elliottzheng/CopyTranslator/wiki/Downloads-%E4%B8%8B%E8%BD%BD%E4%B8%8E%E5%AE%89%E8%A3%85)
-[![](https://img.shields.io/badge/Project%20Phoenix%20-ongoing-orange.svg)](https://github.com/elliottzheng/CopyTranslator-Phoenix)
 [![](https://img.shields.io/github/license/elliottzheng/copytranslator.svg)](./LICENSE)
 
 **复制即翻译的外文辅助阅读翻译解决方案**
@@ -135,7 +134,7 @@
 
 ### 赞助
 
-CopyTranslator是采用 GPL v2 许可的开源项目，使用完全免费。但是它的维护也是需要较大的精力的，你可以通过捐赠的形式来帮助发展该项目。
+CopyTranslator是采用 GPL v2 协议许可的开源项目，使用完全免费。但是它的维护也是需要较大的精力的，您可以通过捐赠的形式来帮助该项目发展。
 
 - [爱发电](https://afdian.net/@elliottzheng/plan)
 

@@ -1,5 +1,5 @@
 import { Rule, RuleName } from "./rule";
-
+var _ = require("lodash");
 var fs = require("fs");
 
 type Rules = { [key: string]: Rule }; //类型别名
@@ -8,6 +8,7 @@ class ConfigParser {
   rules: Rules = {};
   values: { [key: string]: any } = {};
   constructor() {}
+  ruleValues: Array<string> = [];
   addRule(key: RuleName, rule: Rule) {
     let keyValue = ConfigParser.getEnumValue(key);
     if (rule.check && !rule.check(rule.predefined)) {
@@ -16,8 +17,14 @@ class ConfigParser {
     this.rules[keyValue] = rule;
     this.values[keyValue] = rule.predefined;
   }
+
   static getEnumValue(key: RuleName): string {
     return RuleName[key];
+  }
+  updateKeys() {
+    this.ruleValues = Object.values(RuleName).filter(
+      k => (typeof k as any) === "number"
+    );
   }
 
   get(key: RuleName) {
@@ -33,18 +40,33 @@ class ConfigParser {
       this.values[keyValue] = value;
     }
   }
-  private setByKeyValue(keyValue: string, value: any) {
+  private setByKeyValue(keyValue: string, value: any): boolean {
+    if (!_.includes(this.ruleValues, keyValue)) {
+      return false;
+    }
     let check = this.rules[keyValue].check;
     if (check && !check(value)) {
-      throw `${keyValue} check fail`;
+      return false;
     } else {
       this.values[keyValue] = value;
+      return true;
     }
   }
-  loadValues(fileName: string) {
-    var values = JSON.parse(fs.readFileSync(fileName));
-    for (let key in values) {
-      this.setByKeyValue(key, values[key]);
+  loadValues(fileName: string): boolean {
+    this.updateKeys();
+    const exist = fs.existsSync(fileName);
+    if (exist) {
+      var values = JSON.parse(fs.readFileSync(fileName));
+      for (let keyValue in values) {
+        if (!this.setByKeyValue(keyValue, values[keyValue])) {
+          this.saveValues(fileName);
+          return false;
+        }
+      }
+      return true;
+    } else {
+      this.saveValues(fileName);
+      return false;
     }
   }
   saveValues(fileName: string) {

@@ -9,12 +9,10 @@ import { ipcRenderer } from "electron";
 var remote = require("electron").remote;
 
 Vue.use(Vuetify);
-Vue.prototype.$clipboard = remote.getGlobal("clipboard");
-Vue.prototype.$translator = remote.getGlobal("translator");
-Vue.prototype.$ioHook = remote.getGlobal("ioHook");
-Vue.prototype.$db = remote.getGlobal("db");
-Vue.prototype.$CONSTANT = remote.getGlobal("CONSTANT");
+
 Vue.prototype.$ipcRenderer = ipcRenderer;
+Vue.prototype.$log = remote.getGlobal("logger");
+
 Vue.config.productionTip = false;
 
 new Vue({

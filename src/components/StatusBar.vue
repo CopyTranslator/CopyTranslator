@@ -3,22 +3,19 @@
 </template>
 
 <script>
+import { MessageType } from "../tools/enums";
 export default {
   name: "StatusBar",
   data: function() {
-    return {
-      isFollow: false,
-      x: 0,
-      y: 0
-    };
+    return {};
   },
   methods: {
     minify(event) {
-      this.$ipcRenderer.send(this.$CONSTANT.ONMINIFYWINDOW, null);
+      this.$ipcRenderer.send(MessageType.MinifyWindow.toString(), null);
     },
     mouseDown(event) {
       if (event.button === 0) {
-        this.$ipcRenderer.send(this.$CONSTANT.ONDRAGWINDOW, {
+        this.$ipcRenderer.send(MessageType.DragWindow.toString(), {
           status: true,
           x: event.screenX,
           y: event.screenY
@@ -33,7 +30,5 @@ export default {
 .draggable {
   height: 15px;
   background: red;
-  /*-webkit-user-select: none;*/
-  /*-webkit-app-region: drag;*/
 }
 </style>

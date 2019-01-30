@@ -1,4 +1,4 @@
-var _ = require("lodash/core");
+var _ = require("lodash");
 
 // prettier-ignore
 const GoogleLanguages: { [key: string]: string; } = {

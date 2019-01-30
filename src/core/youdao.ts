@@ -1,6 +1,6 @@
 import axios from "axios";
 import cheerio from "cheerio";
-import { YoudaoStatus } from "./enums";
+import { YoudaoStatus } from "../tools/enums";
 
 class YoudaoSpider {
   async query(expression: string) {

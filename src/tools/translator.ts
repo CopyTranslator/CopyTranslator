@@ -1,6 +1,7 @@
-import { TranslatorType } from "@/core/enums";
+import { TranslatorType } from "./enums";
 import { GoogleLangList, GoogleCodes, GoogleLanguages } from "./languages";
 import { youdao, baidu, google } from "translation.js";
+var _ = require("lodash");
 
 abstract class Translator {
   constructor() {}
@@ -10,14 +11,8 @@ abstract class Translator {
     text: string,
     src: string,
     dest: string
-  ): Promise<string[] | undefined>;
+  ): Promise<string | undefined>;
   abstract detect(text: string): Promise<string | undefined>; //return lang
-  onDetectError() {
-    (<any>global).logger.error("检测语言失败");
-  }
-  onTransError() {
-    (<any>global).logger.error("翻译失败");
-  }
 }
 
 class GoogleTranslator extends Translator {
@@ -31,16 +26,16 @@ class GoogleTranslator extends Translator {
     text: string,
     src: string,
     dest: string
-  ): Promise<string[] | undefined> {
+  ): Promise<string | undefined> {
     try {
       let result = await google.translate({
         text: text,
         from: this.lang2code(src),
         to: this.lang2code(dest)
       });
-      return result.result;
+      return _.join(result.result, " ");
     } catch (e) {
-      this.onTransError();
+      (<any>global).logger.debug(e);
       return undefined;
     }
   }
@@ -49,7 +44,7 @@ class GoogleTranslator extends Translator {
       let lang = await google.detect(text);
       return lang;
     } catch (e) {
-      this.onDetectError();
+      (<any>global).logger.debug(e);
       return undefined;
     }
   }

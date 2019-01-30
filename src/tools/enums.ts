@@ -14,4 +14,9 @@ enum YoudaoStatus {
   Fail
 }
 
-export { TranslatorType, FrameMode, YoudaoStatus };
+enum MessageType {
+  DragWindow,
+  MinifyWindow
+}
+
+export { TranslatorType, FrameMode, YoudaoStatus, MessageType };

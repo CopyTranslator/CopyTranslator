@@ -1,11 +1,11 @@
 <template>
     <div v-if="sharedResult">
       <StatusBar></StatusBar>
-      <v-textarea style="height: 100%;" full-width
+      <!-- <v-textarea style="height: 100%;" full-width
                 auto-grow
                 v-model="sharedResult.src"
                 outline
-    ></v-textarea>
+    ></v-textarea> -->
     <div>
       <v-btn >翻译</v-btn>
       <v-btn to="/focus">切换模式</v-btn>
@@ -15,11 +15,11 @@
           outline
         ></v-select>
     </div>
-    <v-textarea style="height: 100%;" full-width
+    <!-- <v-textarea style="height: 100%;" full-width
                 auto-grow
                 v-model="sharedResult.result"
                 outline
-    ></v-textarea>
+    ></v-textarea> -->
     </div>
 </template>
 

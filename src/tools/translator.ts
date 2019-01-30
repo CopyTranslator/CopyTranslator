@@ -35,7 +35,7 @@ class GoogleTranslator extends Translator {
       });
       return _.join(result.result, " ");
     } catch (e) {
-      (<any>global).logger.debug(e);
+      (<any>global).log.debug(e);
       return undefined;
     }
   }
@@ -44,7 +44,7 @@ class GoogleTranslator extends Translator {
       let lang = await google.detect(text);
       return lang;
     } catch (e) {
-      (<any>global).logger.debug(e);
+      (<any>global).log.debug(e);
       return undefined;
     }
   }

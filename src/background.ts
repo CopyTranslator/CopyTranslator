@@ -1,12 +1,12 @@
 "use strict";
 import { app, protocol } from "electron";
 import { installVueDevtools } from "vue-cli-plugin-electron-builder/lib";
-import { logger } from "./tools/logger";
+import { log } from "./tools/logger";
 import { Controller } from "./core/controller";
 const isDevelopment = process.env.NODE_ENV !== "production";
 
 //挂载库
-(<any>global).logger = logger;
+(<any>global).log = log;
 
 let controller = new Controller();
 

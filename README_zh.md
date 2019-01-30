@@ -122,7 +122,7 @@
 - [Electron](https://electronjs.org)：使用 JavaScript, HTML 和 CSS 构建跨平台的桌面应用
 - [Vue](http://vuejs.org)：渐进式 JavaScript 框架
 - [Vuetify](https://vuetifyjs.com): Material Design 组件库
-- [NODE_GOOGLE_TRANSLATE](https://github.com/shikar/NODE_GOOGLE_TRANSLATE): 核心翻译引擎
+- [translation.js](https://github.com/Selection-Translator/translation.js): 核心翻译引擎
 - [iohook](https://github.com/wilix-team/iohook): 捕获全局鼠标和键盘事件
 - [robotjs](http://robotjs.io/): 模拟键盘输入
 

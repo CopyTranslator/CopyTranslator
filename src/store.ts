@@ -4,7 +4,18 @@ import Vuex from "vuex";
 Vue.use(Vuex);
 
 export default new Vuex.Store({
-  state: {},
-  mutations: {},
+  state: {
+    sharedResult: {
+      src: "",
+      result: "",
+      source: "",
+      target: ""
+    }
+  },
+  mutations: {
+    setShared(state, sharedResult) {
+      state.sharedResult = sharedResult;
+    }
+  },
   actions: {}
 });

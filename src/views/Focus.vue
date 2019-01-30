@@ -2,9 +2,9 @@
   <div>
     <StatusBar></StatusBar>
     <v-btn block to="/contrast">切换模式</v-btn>
-    <v-textarea style="height: 100%;" full-width
+    <v-textarea v-if="sharedResult" style="height: 100%;" full-width
                 auto-grow
-                v-model="text"
+                v-model="sharedResult.result"
                 outline
     ></v-textarea>
   </div>
@@ -12,6 +12,7 @@
 
 <script>
 import StatusBar from "../components/StatusBar";
+
 export default {
   name: "FocusMode",
   components: { StatusBar },
@@ -19,18 +20,14 @@ export default {
     msg: String
   },
   data: function() {
-    return {
-      text: null
-    };
+    return {};
   },
-  methods: {
-    show(src, result) {
-      this.src = src;
+  computed: {
+    sharedResult() {
+      return this.$store.state.sharedResult;
     }
   },
-  mounted: async function() {
-    this.$ipcRenderer.on("news", () => {});
-  }
+  methods: {}
 };
 </script>
 

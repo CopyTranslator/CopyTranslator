@@ -1,9 +1,9 @@
 <template>
-    <div>
+    <div v-if="sharedResult">
       <StatusBar></StatusBar>
       <v-textarea style="height: 100%;" full-width
                 auto-grow
-                v-model="showSource"
+                v-model="sharedResult.src"
                 outline
     ></v-textarea>
     <div>
@@ -17,7 +17,7 @@
     </div>
     <v-textarea style="height: 100%;" full-width
                 auto-grow
-                v-model="showResult"
+                v-model="sharedResult.result"
                 outline
     ></v-textarea>
     </div>
@@ -30,15 +30,15 @@ export default {
   components: {
     StatusBar
   },
+  computed: {
+    sharedResult() {
+      return this.$store.state.sharedResult;
+    }
+  },
   data: () => {
     return {
-      showResult: "",
-      showSource: "",
       languages: ["1", "2"]
     };
-  },
-  mounted: () => {
-    console.log(this);
   }
 };
 </script>

@@ -2,10 +2,7 @@ import { Translator, GoogleTranslator } from "../tools/translator";
 import { RuleName } from "../tools/rule";
 import { initConfig, ConfigParser } from "../tools/configuration";
 import { BrowserWindow } from "electron";
-import {
-  createProtocol,
-  installVueDevtools
-} from "vue-cli-plugin-electron-builder/lib";
+import { createProtocol } from "vue-cli-plugin-electron-builder/lib";
 
 const os = require("os");
 const path = require("path");
@@ -22,6 +19,8 @@ class Controller {
   focusWin: BrowserWindow | null = null;
   translator: Translator = new GoogleTranslator();
   config: ConfigParser;
+  source: string = "English";
+  target: string = "Chinese(Simplified)";
   dragConfig = {
     isFollow: false,
     x: 0,
@@ -43,9 +42,9 @@ class Controller {
         this.focusWin.minimize();
       }
     });
-    ioHook.on("mousedown", (event: MouseEvent) => {
-      if (this.focusWin) this.focusWin.webContents.send("news", event);
-    });
+    // ioHook.on("mousedown", (event: MouseEvent) => {
+    //   if (this.focusWin) this.focusWin.webContents.send("news", event);
+    // });
     ioHook.on("mouseup", (event: MouseEvent) => {
       this.dragConfig.isFollow = false;
     });
@@ -101,16 +100,24 @@ class Controller {
     }
   }
   onError(msg: string) {
-    (<any>global).logger.error(msg);
+    (<any>global).log.error(msg);
   }
-  sendMsg(type: string, msg: any) {}
+  sendMsg(type: string, msg: any) {
+    if (this.focusWin) this.focusWin.webContents.send(type, msg);
+  }
   doTranslate(text: string) {
+    this.src = text;
     this.translator
-      .translate(text, "English", "Chinese(Simplified)")
+      .translate(text, this.source, this.target)
       .then(res => {
         if (res) {
           this.result = res;
-          console.log(res);
+          this.sendMsg(MessageType.TrnaslateResult.toString(), {
+            src: this.src,
+            result: this.result,
+            source: this.source,
+            target: this.target
+          });
         } else {
           this.onError("translate error");
         }

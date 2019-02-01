@@ -9,6 +9,7 @@ const isDevelopment = process.env.NODE_ENV !== "production";
 (<any>global).log = log;
 
 let controller = new Controller();
+(<any>global).controller = controller;
 
 // Standard scheme must be registered before the app is ready
 protocol.registerStandardSchemes(["app"], { secure: true });

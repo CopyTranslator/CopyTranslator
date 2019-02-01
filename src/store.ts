@@ -1,5 +1,6 @@
 import Vue from "vue";
 import Vuex from "vuex";
+import { GoogleLangList } from "./tools/languages";
 
 Vue.use(Vuex);
 
@@ -10,7 +11,8 @@ export default new Vuex.Store({
       result: "",
       source: "",
       target: ""
-    }
+    },
+    languages: GoogleLangList
   },
   mutations: {
     setShared(state, sharedResult) {

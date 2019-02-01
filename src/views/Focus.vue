@@ -1,12 +1,8 @@
 <template>
   <div>
     <StatusBar></StatusBar>
-    <v-btn block to="/contrast">切换模式</v-btn>
-    <v-textarea v-if="sharedResult" style="height: 100%;" full-width
-                auto-grow
-                v-model="sharedResult.result"
-                outline
-    ></v-textarea>
+    <mu-button block to="/contrast">切换模式</mu-button>
+    <mu-text-field v-if="sharedResult" v-model="sharedResult.result"  multi-line :rows="4" full-width></mu-text-field>
   </div>
 </template>
 

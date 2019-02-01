@@ -1,28 +1,11 @@
 <template>
-    <div class="draggable" v-on:dblclick="minify" v-on:mousedown="mouseDown" ></div>
+    <div class="draggable" v-on:dblclick="minify" v-on:mousedown="bindDrag" ></div>
 </template>
 
 <script>
-import { MessageType } from "../tools/enums";
+import WindowController from "./WindowController";
 export default {
-  name: "StatusBar",
-  data: function() {
-    return {};
-  },
-  methods: {
-    minify(event) {
-      this.$ipcRenderer.send(MessageType.MinifyWindow.toString(), null);
-    },
-    mouseDown(event) {
-      if (event.button === 0) {
-        this.$ipcRenderer.send(MessageType.DragWindow.toString(), {
-          status: true,
-          x: event.screenX,
-          y: event.screenY
-        });
-      }
-    }
-  }
+  mixins: [WindowController]
 };
 </script>
 

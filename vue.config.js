@@ -3,6 +3,13 @@ module.exports = {
     electronBuilder: {
       mainProcessTypeChecking: false,
       builderOptions: {
+        asar: true,
+        extraResources: [
+          {
+            from: `dist_locales`,
+            to: `locales`
+          }
+        ],
         win: {
           icon: "icon.ico",
           target: [

@@ -1,9 +1,6 @@
 .DS_Store
 node_modules
-# python build
-public/pydist/*
-pydist/*
-src/py/__pycache__
+
 
 # local env files
 .env.local
@@ -17,7 +14,6 @@ yarn-error.log*
 
 # Editor directories and files
 .idea
-.vscode
 *.suo
 *.ntvs*
 *.njsproj
@@ -28,3 +24,5 @@ yarn-error.log*
 #Electron-builder output
 dist_electron
 build
+
+# tsc build output, because I'm using ts, so js is the build result

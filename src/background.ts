@@ -5,8 +5,17 @@ import { log } from "./tools/logger";
 import { Controller } from "./core/controller";
 const isDevelopment = process.env.NODE_ENV !== "production";
 
-//挂载库
-(<any>global).log = log;
+// import path from "path";
+// import fs from "fs";
+
+// console.log(process.resourcesPath);
+// (<any>global).log = log;
+// console.log(path.join(process.resourcesPath, "languages", "en.json"));
+// let fileContents = fs.readFileSync(
+//   path.join(process.resourcesPath, "languages", "en.json"),
+//   "utf8"
+// );
+// console.log(fileContents);
 
 let controller = new Controller();
 (<any>global).controller = controller;

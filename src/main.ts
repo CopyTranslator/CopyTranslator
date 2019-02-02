@@ -6,17 +6,16 @@ import MuseUI from "muse-ui";
 import { ipcRenderer } from "electron";
 import { MessageType } from "./tools/enums";
 import "muse-ui/dist/muse-ui.css";
-
 import i18next from "i18next";
 import VueI18Next from "@panter/vue-i18next";
-
+import * as VueMenu from "@hscmap/vue-menu";
 const locales = {
   en: {
     hello: "Hello!",
     loadbundle: "Load bundle language: {{lang}}"
   }
 };
-
+Vue.use(VueMenu);
 Vue.use(VueI18Next);
 
 i18next.init({

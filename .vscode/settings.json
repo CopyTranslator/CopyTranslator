@@ -1,0 +1,24 @@
+{
+    "workbench.colorTheme": "Material Theme Ocean",
+    "workbench.iconTheme": "eq-material-theme-icons-ocean",
+    "explorer.confirmDelete": false,
+    "git.autofetch": true,
+    "terminal.integrated.rendererType": "dom",
+    "window.zoomLevel": 1,
+    "eslint.alwaysShowStatus": true,
+    "eslint.autoFixOnSave": true,
+    "eslint.validate": [
+        "javascript",
+        "html",
+        {
+            "language": "vue",
+            "autoFix": true
+        },
+        {
+            "language": "typescript",
+            "autoFix": true
+        }
+    ],
+    "typescript.updateImportsOnFileMove.enabled": "always",
+    "prettier.eslintIntegration": true,
+}

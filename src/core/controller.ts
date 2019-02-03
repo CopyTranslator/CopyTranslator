@@ -3,11 +3,9 @@ import { initConfig, ConfigParser } from "../tools/configuration";
 import { MessageType } from "../tools/enums";
 import { WindowWrapper } from "../tools/windows";
 import { windowController } from "../tools/windowController";
+import { envConfig } from "../tools/envConfig";
 
-const os = require("os");
-const path = require("path");
 const clipboard = require("electron-clipboard-extended");
-const defaultConfigPath = path.join(os.homedir(), "copytranslator.json");
 
 class Controller {
   src: string = "";
@@ -20,7 +18,7 @@ class Controller {
   target: string = "Chinese(Simplified)";
   constructor() {
     this.config = initConfig();
-    this.config.loadValues(defaultConfigPath);
+    this.config.loadValues(envConfig.sharedConfig.configPath);
     this.setWatch(true);
   }
   createWindow() {

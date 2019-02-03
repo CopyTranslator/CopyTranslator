@@ -11,13 +11,11 @@
     "electron:serve": "vue-cli-service electron:serve",
     "postinstall": "electron-builder install-app-deps",
     "rebuild": "electron-rebuild",
-    "locale":"tsc ./src/preprocess/generateLocales.ts && node ./src/preprocess/generateLocales.js && del src\\preprocess\\generateLocales.js"
+    "locale": "tsc ./src/preprocess/generateLocales.ts && node ./src/preprocess/generateLocales.js && del src\\preprocess\\generateLocales.js"
   },
   "dependencies": {
     "@hscmap/vue-menu": "^2.8.3",
-    "@panter/vue-i18next": "^0.15.0",
     "electron-clipboard-extended": "^1.1.1",
-    "i18next": "^14.0.1",
     "iohook": "^0.3.1",
     "lodash": "^4.17.11",
     "log4js": "^4.0.1",

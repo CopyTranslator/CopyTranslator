@@ -1,5 +1,6 @@
 var fs = require("fs");
 var path = require("path");
+
 interface Locale {
   localeName: string;
   stayTop: string;
@@ -27,7 +28,7 @@ interface Locale {
   viewSource: string;
 }
 
-const zh_cn = {
+const zh_cn: Locale = {
   localeName: "简体中文",
   stayTop: "总是置顶",
   listenClipboard: "监听剪贴板",
@@ -54,7 +55,7 @@ const zh_cn = {
   viewSource: "查看原文"
 };
 
-const en = {
+const en: Locale = {
   localeName: "English",
   stayTop: "Stay on top",
   listenClipboard: "Listen Clipboard",

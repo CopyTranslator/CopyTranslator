@@ -5,32 +5,16 @@ import store from "./store";
 import MuseUI from "muse-ui";
 import { ipcRenderer } from "electron";
 import { MessageType } from "./tools/enums";
+import { l10n } from "./tools/l10n";
 import "muse-ui/dist/muse-ui.css";
-import i18next from "i18next";
-import VueI18Next from "@panter/vue-i18next";
+
 import * as VueMenu from "@hscmap/vue-menu";
-const locales = {
-  en: {
-    hello: "Hello!",
-    loadbundle: "Load bundle language: {{lang}}"
-  }
-};
+
 Vue.use(VueMenu);
-Vue.use(VueI18Next);
-
-i18next.init({
-  lng: "en",
-  resources: {
-    en: { translation: locales.en }
-  }
-});
-
-const i18n = new VueI18Next(i18next);
-
 var remote = require("electron").remote;
 
 Vue.use(MuseUI);
-
+Vue.prototype.$t = l10n.getT("zh-cn");
 Vue.prototype.$ipcRenderer = ipcRenderer;
 Vue.prototype.$log = remote.getGlobal("log");
 Vue.prototype.$controller = remote.getGlobal("controller");
@@ -40,7 +24,6 @@ Vue.config.productionTip = false;
 new Vue({
   router,
   store,
-  i18n: i18n,
   render: h => h(App),
   created: function() {
     ipcRenderer.on(

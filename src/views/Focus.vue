@@ -2,7 +2,7 @@
   <div>
     <StatusBar></StatusBar>
 
-    <mu-button block to="/contrast">切换模式</mu-button>
+    <mu-button block to="/contrast">{{$t("switchMode")}}</mu-button>
     <mu-row>
       <hsc-menu-style-white style="width:100%" >
       <hsc-menu-context-menu style="width:100%" >

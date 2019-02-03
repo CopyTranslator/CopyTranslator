@@ -4,7 +4,8 @@ import { MessageType } from "../tools/enums";
 import { WindowWrapper } from "../tools/windows";
 import { windowController } from "../tools/windowController";
 import { envConfig } from "../tools/envConfig";
-
+import { l10n, L10N } from "../tools/l10n";
+import { RuleName } from "../tools/rule";
 const clipboard = require("electron-clipboard-extended");
 
 class Controller {
@@ -16,6 +17,7 @@ class Controller {
   config: ConfigParser;
   source: string = "English";
   target: string = "Chinese(Simplified)";
+  locales: L10N = l10n;
   constructor() {
     this.config = initConfig();
     this.config.loadValues(envConfig.sharedConfig.configPath);
@@ -33,6 +35,9 @@ class Controller {
     } else {
       this.doTranslate(text);
     }
+  }
+  getT() {
+    return this.locales.getT(this.config.get(RuleName.locale));
   }
   onError(msg: string) {
     (<any>global).log.error(msg);

@@ -5,7 +5,7 @@
     <mu-row justify-content="center" align-items="center">
       <mu-col span="4"><mu-button full-width color="primary">{{$t("translate")}}</mu-button></mu-col>
       <mu-col span="4"><mu-button full-width @click="changeMode('Focus')">{{$t("switchMode")}}</mu-button></mu-col>
-      <mu-col span="4"><mu-button full-width >{{$t("settings")}}</mu-button></mu-col>
+      <mu-col span="4"><mu-button full-width @click="changeMode('Settings')">{{$t("settings")}}</mu-button></mu-col>
       </mu-row>
       <mu-row justify-content="center" align-items="center" @click="getLang">
       <mu-col span="6">
@@ -38,7 +38,7 @@ export default {
   methods: {
     getLang() {
       if (!this.loaded) {
-        this.languages = this.$store.state.languages;
+        this.languages = this.$controller.translator.getLanguages();
         this.loaded = true;
       }
     }

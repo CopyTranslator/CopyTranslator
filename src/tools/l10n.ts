@@ -1,20 +1,23 @@
 var fs = require("fs");
 var path = require("path");
 import { envConfig } from "./envConfig";
+import { en, Locale } from "./locales";
 type Resource = { [key: string]: string };
 type Resources = { [key: string]: Resource };
 
 class L10N {
-  lng: string;
   resources: Resources;
-  constructor(initValue: { lng: string; resources: Resources }) {
-    this.lng = initValue.lng;
+  constructor(initValue: { resources: Resources }) {
     this.resources = initValue.resources;
   }
-  getT(lng: string = "en") {
-    var locale: Resource = this.resources[lng];
+  getT(key: string = "en") {
+    var locale = this.resources[key];
+    if (!locale) (<Locale>locale) = en;
     function T(key: string) {
-      return locale[key];
+      if (locale[key]) return locale[key];
+      else {
+        return (<any>en)[key];
+      }
     }
     return T;
   }
@@ -22,9 +25,13 @@ class L10N {
     let resources: Resources = {};
     localeDirs.forEach((localeDir: string) => {
       fs.readdirSync(localeDir).forEach((fileName: string) => {
-        const filePath = path.join(localeDir, fileName);
-        let resource = JSON.parse(fs.readFileSync(filePath));
-        resources[fileName.replace(".json", "")] = resource;
+        try {
+          const filePath = path.join(localeDir, fileName);
+          let resource = JSON.parse(fs.readFileSync(filePath));
+          resources[fileName.replace(".json", "")] = resource;
+        } catch (e) {
+          (<any>global).log.debug("load error locales");
+        }
       });
     });
     return resources;
@@ -35,5 +42,5 @@ let locales = L10N.loadLocales([
   envConfig.diffConfig.systemLocaleDir,
   envConfig.sharedConfig.userLocaleDir
 ]);
-var l10n = new L10N({ lng: "en", resources: locales });
-export { l10n };
+var l10n = new L10N({ resources: locales });
+export { l10n, L10N };

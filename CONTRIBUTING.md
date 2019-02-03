@@ -4,7 +4,7 @@
     - tools:
 
 
-## Conpoments
+## Components
 ### BrowserWindow Control System
 In main process
 ```ts
@@ -26,4 +26,10 @@ export default {
 </script>
 ```
 
+### Locale settings system
 
+Using my own l10n module, for memory saving purpose. If you want to add a new locale, follow the instructions below.
+
+> view `json` files under `dist_locales` to see the format of the locale file, fork the repo and add a new `{{locale}}.json` file under the directory, and create a pull request.
+
+As I can't maintain all the locales myself, so the latest locales(except `en` and `zh-cn`) may not be released with the new version of `CopyTranslator`.  You can download the latest `{{locale}}.json` file from `dist_locales`, and place it under `{{userDir}}/copytranslator/locales`，`CopyTranslator` will detect them on startup, then you can choose from.

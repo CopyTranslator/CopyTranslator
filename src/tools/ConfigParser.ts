@@ -54,17 +54,16 @@ class ConfigParser {
   }
   loadValues(fileName: string): boolean {
     this.updateKeys();
-    const exist = fs.existsSync(fileName);
-    if (exist) {
+    try {
       var values = JSON.parse(fs.readFileSync(fileName));
-      for (let keyValue in values) {
-        if (!this.setByKeyValue(keyValue, values[keyValue])) {
-          this.saveValues(fileName);
-          return false;
+      for (let ruleValue in this.ruleValues) {
+        if (values[ruleValue]) {
+          this.setByKeyValue(ruleValue, values[ruleValue]);
         }
       }
+      this.saveValues(fileName);
       return true;
-    } else {
+    } catch {
       this.saveValues(fileName);
       return false;
     }

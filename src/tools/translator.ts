@@ -5,7 +5,7 @@ var _ = require("lodash");
 
 abstract class Translator {
   constructor() {}
-  abstract getLangList(): [string];
+  abstract getLanguages(): [string];
   abstract lang2code(lang: string): string;
   abstract translate(
     text: string,
@@ -16,7 +16,7 @@ abstract class Translator {
 }
 
 class GoogleTranslator extends Translator {
-  getLangList() {
+  getLanguages() {
     return GoogleLangList;
   }
   lang2code(lang: string) {

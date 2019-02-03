@@ -7,7 +7,7 @@
             <mu-text-field v-if="sharedResult" v-model="sharedResult.result"  multi-line :rows="4" full-width></mu-text-field>
             <template slot="contextmenu">
                 <hsc-menu-item :label="$t('copySource')"/>
-                <hsc-menu-item :label="$t('copyResult')"/> 
+                <hsc-menu-item :label="$t('copySource')"/>
                 <hsc-menu-item :label="$t('contrastMode')" @click="changeMode('Contrast')" />
             </template>
 </hsc-menu-context-menu>

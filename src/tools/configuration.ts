@@ -62,6 +62,11 @@ function initConfig(
     }
   });
 
+  config.addRule(RuleName.locale, {
+    predefined: "en",
+    msg: "locale setting"
+  });
+
   config.addRule(RuleName.frameMode, {
     predefined: FrameMode.Contrast,
     msg: "current frame mode",

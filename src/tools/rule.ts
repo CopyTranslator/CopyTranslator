@@ -7,7 +7,6 @@ enum RuleName {
   smartDict,
   autoHide,
   autoShow,
-  autoTop,
   frameMode,
   translatorType,
   // mode config

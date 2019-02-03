@@ -6,22 +6,42 @@ function initConfig(
   config: ConfigParser | undefined = undefined
 ): ConfigParser {
   if (!config) config = new ConfigParser();
-  config.addRule(RuleName.isListen, new BoolRule(true, "Listen to Clipboard"));
+
   config.addRule(
     RuleName.isCopy,
     new BoolRule(false, "auto copy result to clipboard")
   );
 
+  config.addRule(RuleName.isListen, new BoolRule(true, "Listen to Clipboard"));
+  config.addRule(RuleName.isDete, new BoolRule(true, "detect language"));
+  config.addRule(RuleName.isContinus, new BoolRule(false, "incremental copy"));
+  config.addRule(RuleName.stayTop, new BoolRule(false, "always stay on top"));
+  config.addRule(RuleName.smartDict, new BoolRule(true, "smart dict"));
+
   config.addRule(
     RuleName.autoHide,
     new BoolRule(false, "auto show when translate")
   );
+  config.addRule(
+    RuleName.autoShow,
+    new BoolRule(false, "auto show when translate")
+  );
 
-  config.addRule(RuleName.isContinus, new BoolRule(false, "incremental copy"));
+  config.addRule(RuleName.frameMode, {
+    predefined: FrameMode.Contrast,
+    msg: "current frame mode",
+    check: (value: FrameMode) => {
+      return !!FrameMode[value];
+    }
+  });
 
-  config.addRule(RuleName.stayTop, new BoolRule(false, "always stay on top"));
-
-  config.addRule(RuleName.smartDict, new BoolRule(true, "smart dict"));
+  config.addRule(RuleName.translatorType, {
+    predefined: TranslatorType.Google,
+    msg: "parameters of contrast mode",
+    check: (value: TranslatorType) => {
+      return !!TranslatorType[value];
+    }
+  });
 
   config.addRule(
     RuleName.focus,
@@ -54,12 +74,14 @@ function initConfig(
     )
   );
 
-  config.addRule(RuleName.translatorType, {
-    predefined: TranslatorType.Google,
-    msg: "parameters of contrast mode",
-    check: (value: TranslatorType) => {
-      return !!TranslatorType[value];
-    }
+  config.addRule(RuleName.source, {
+    predefined: "English",
+    msg: "source language"
+  });
+
+  config.addRule(RuleName.target, {
+    predefined: "Chinese(Simplified)",
+    msg: "target language"
   });
 
   config.addRule(RuleName.locale, {
@@ -67,13 +89,6 @@ function initConfig(
     msg: "locale setting"
   });
 
-  config.addRule(RuleName.frameMode, {
-    predefined: FrameMode.Contrast,
-    msg: "current frame mode",
-    check: (value: FrameMode) => {
-      return !!FrameMode[value];
-    }
-  });
   return config;
 }
 

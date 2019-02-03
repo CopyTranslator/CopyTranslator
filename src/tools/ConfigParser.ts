@@ -23,8 +23,12 @@ class ConfigParser {
   }
   updateKeys() {
     this.ruleValues = Object.values(RuleName).filter(
-      k => (typeof k as any) === "number"
+      k => (typeof k as any) !== "number"
     );
+  }
+
+  getValues() {
+    return Object.assign({}, this.values);
   }
 
   get(key: RuleName) {

@@ -8,7 +8,7 @@ class ConfigParser {
   rules: Rules = {};
   values: { [key: string]: any } = {};
   constructor() {}
-  ruleValues: Array<string> = [];
+  keyValues: Array<string> = [];
   addRule(key: RuleName, rule: Rule) {
     let keyValue = ConfigParser.getEnumValue(key);
     if (rule.check && !rule.check(rule.predefined)) {
@@ -21,8 +21,8 @@ class ConfigParser {
   static getEnumValue(key: RuleName): string {
     return RuleName[key];
   }
-  updateKeys() {
-    this.ruleValues = Object.values(RuleName).filter(
+  updateKeyValues() {
+    this.keyValues = Object.values(RuleName).filter(
       k => (typeof k as any) !== "number"
     );
   }
@@ -44,8 +44,8 @@ class ConfigParser {
       this.values[keyValue] = value;
     }
   }
-  private setByKeyValue(keyValue: string, value: any): boolean {
-    if (!_.includes(this.ruleValues, keyValue)) {
+  setByKeyValue(keyValue: string, value: any): boolean {
+    if (!_.includes(this.keyValues, keyValue)) {
       return false;
     }
     let check = this.rules[keyValue].check;
@@ -56,18 +56,21 @@ class ConfigParser {
       return true;
     }
   }
+
   loadValues(fileName: string): boolean {
-    this.updateKeys();
+    this.updateKeyValues();
     try {
       var values = JSON.parse(fs.readFileSync(fileName));
-      for (let ruleValue in this.ruleValues) {
-        if (values[ruleValue]) {
-          this.setByKeyValue(ruleValue, values[ruleValue]);
+      for (let key in this.keyValues) {
+        let keyValue = this.keyValues[key];
+        if (values[keyValue]) {
+          this.setByKeyValue(keyValue, values[keyValue]);
         }
       }
       this.saveValues(fileName);
       return true;
-    } catch {
+    } catch (e) {
+      (<any>global).log.debug(e);
       this.saveValues(fileName);
       return false;
     }

@@ -3,6 +3,7 @@
     "stayTop": "总是置顶",
     "listenClipboard": "监听剪贴板",
     "autoCopy": "自动复制",
+    "incrementalCopy": "增量复制",
     "smartDict": "智能词典",
     "translate": "翻译",
     "copySource": "复制原文",
@@ -22,5 +23,6 @@
     "autoFormat": "自动格式化",
     "autoShow": "自动显示",
     "settings": "设置",
-    "viewSource": "查看原文"
+    "viewSource": "查看原文",
+    "localeSetting": "区域设置"
 }

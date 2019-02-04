@@ -73,5 +73,9 @@ class Controller {
       clipboard.stopWatching();
     }
   }
+  setByKeyValue(keyValue: string, value: any) {
+    this.config.setByKeyValue(keyValue, value);
+    this.config.saveValues(envConfig.sharedConfig.configPath);
+  }
 }
 export { Controller };

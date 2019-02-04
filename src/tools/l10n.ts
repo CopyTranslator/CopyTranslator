@@ -21,6 +21,13 @@ class L10N {
     }
     return T;
   }
+  getLocales() {
+    let locales = [];
+    for (let key in this.resources) {
+      locales.push({ short: key, localeName: this.resources[key].localeName });
+    }
+    return locales;
+  }
   static loadLocales(localeDirs: Array<string>) {
     let resources: Resources = {};
     localeDirs.forEach((localeDir: string) => {

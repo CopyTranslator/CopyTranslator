@@ -22,7 +22,8 @@ import BaseView from "./BaseView";
 export default {
   name: "FocusMode",
   mixins: [BaseView],
-  components: { StatusBar }
+  components: { StatusBar },
+  mounted: function() {}
 };
 </script>
 

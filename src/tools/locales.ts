@@ -3,6 +3,7 @@ interface Locale {
   stayTop: string;
   listenClipboard: string;
   autoCopy: string;
+  incrementalCopy: string;
   smartDict: string;
   translate: string;
   copySource: string;
@@ -23,6 +24,7 @@ interface Locale {
   autoShow: string;
   settings: string;
   viewSource: string;
+  localeSetting: string;
 }
 
 const zh_cn: Locale = {
@@ -30,6 +32,7 @@ const zh_cn: Locale = {
   stayTop: "总是置顶",
   listenClipboard: "监听剪贴板",
   autoCopy: "自动复制",
+  incrementalCopy: "增量复制",
   smartDict: "智能词典",
   translate: "翻译",
   copySource: "复制原文",
@@ -49,7 +52,8 @@ const zh_cn: Locale = {
   autoFormat: "自动格式化",
   autoShow: "自动显示",
   settings: "设置",
-  viewSource: "查看原文"
+  viewSource: "查看原文",
+  localeSetting: "区域设置"
 };
 
 const en: Locale = {
@@ -57,6 +61,7 @@ const en: Locale = {
   stayTop: "Stay on top",
   listenClipboard: "Listen Clipboard",
   autoCopy: "Auto Copy",
+  incrementalCopy: "Incremental Copy",
   smartDict: "Smart Dict",
   translate: "Translate",
   copySource: "Copy Source",
@@ -76,7 +81,8 @@ const en: Locale = {
   autoFormat: "Auto Format",
   autoShow: "Auto Show",
   settings: "Settings",
-  viewSource: "View Source"
+  viewSource: "View Source",
+  localeSetting: "Locale"
 };
 
 export { en, zh_cn, Locale };

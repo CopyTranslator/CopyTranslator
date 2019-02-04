@@ -3,6 +3,7 @@
     "stayTop": "Stay on top",
     "listenClipboard": "Listen Clipboard",
     "autoCopy": "Auto Copy",
+    "incrementalCopy": "Incremental Copy",
     "smartDict": "Smart Dict",
     "translate": "Translate",
     "copySource": "Copy Source",
@@ -22,5 +23,6 @@
     "autoFormat": "Auto Format",
     "autoShow": "Auto Show",
     "settings": "Settings",
-    "viewSource": "View Source"
+    "viewSource": "View Source",
+    "localeSetting": "Locale"
 }

@@ -21,6 +21,9 @@ Vue.prototype.$log = remote.getGlobal("log");
 Vue.prototype.$controller = controller;
 
 Vue.config.productionTip = false;
+let myNotification = new Notification("标题", {
+  body: "通知正文内容"
+});
 
 new Vue({
   router,
@@ -28,7 +31,7 @@ new Vue({
   render: h => h(App),
   created: function() {
     ipcRenderer.on(
-      MessageType.TrnaslateResult.toString(),
+      MessageType.TranslateResult.toString(),
       (event: any, arg: any) => {
         store.commit("setShared", arg);
       }

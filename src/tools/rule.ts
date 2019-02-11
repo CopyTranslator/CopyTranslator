@@ -1,3 +1,4 @@
+var _ = require("lodash");
 enum RuleName {
   isCopy,
   isListen,
@@ -17,6 +18,17 @@ enum RuleName {
   target,
   locale
 }
+
+let ruleKeys: Array<string> = Object.values(RuleName).filter(
+  k => (typeof k as any) !== "number"
+);
+
+let reverseRuleName: any = {};
+Object.values(RuleName)
+  .filter(k => (typeof k as any) == "number")
+  .forEach(e => {
+    reverseRuleName[ruleKeys[e]] = e;
+  });
 
 interface ModeConfig {
   x: number;
@@ -68,4 +80,13 @@ class ModeRule implements Rule {
   }
 }
 
-export { Rule, NumberRule, ModeRule, BoolRule, CheckFuction, RuleName };
+export {
+  Rule,
+  NumberRule,
+  ModeRule,
+  BoolRule,
+  CheckFuction,
+  RuleName,
+  reverseRuleName,
+  ruleKeys
+};

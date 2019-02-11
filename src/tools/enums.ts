@@ -17,7 +17,7 @@ enum YoudaoStatus {
 enum MessageType {
   DragWindow,
   MinifyWindow,
-  TrnaslateResult
+  TranslateResult
 }
 
 export { TranslatorType, FrameMode, YoudaoStatus, MessageType };

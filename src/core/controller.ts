@@ -7,7 +7,63 @@ import { envConfig } from "../tools/envConfig";
 import { l10n, L10N } from "../tools/l10n";
 import { RuleName, reverseRuleName } from "../tools/rule";
 import { StringProcessor } from "./stringProcessor";
+import { Menu, ipcMain, MenuItem, BrowserWindow } from "electron";
 const clipboard = require("electron-clipboard-extended");
+const t = l10n.getT();
+enum MenuItemType {
+  normal = "normal",
+  separator = "separator",
+  submenu = "submenu",
+  checkbox = "checkbox",
+  radio = "radio"
+}
+
+function onMenuClick(id: string) {
+  (<any>global).log.debug(id);
+}
+
+interface MenuOption {
+  label: string;
+  type: MenuItemType;
+  checked: boolean;
+  id: string;
+  click?: (
+    menuItem: MenuItem,
+    browserWindow: BrowserWindow,
+    event: Event
+  ) => void;
+}
+
+function NewMenuItem(option: MenuOption) {
+  var key = option.id;
+  if (!option.click) {
+    option.click = function(
+      menuItem: MenuItem,
+      browserWindow: BrowserWindow,
+      event: Event
+    ) {
+      onMenuClick(key);
+    };
+  }
+  return new MenuItem(option);
+}
+
+class BaseMenu {
+  menu = new Menu();
+  constructor() {
+    this.menu.append(
+      NewMenuItem({
+        label: t("autoCopy"),
+        type: MenuItemType.checkbox,
+        checked: false,
+        id: "testid"
+      })
+    );
+  }
+  popup() {
+    this.menu.popup({});
+  }
+}
 
 class Controller {
   src: string = "";
@@ -18,11 +74,13 @@ class Controller {
   translator: Translator = new GoogleTranslator();
   config: ConfigParser;
   locales: L10N = l10n;
+  menu = new BaseMenu();
   constructor() {
     this.config = initConfig();
     this.config.loadValues(envConfig.sharedConfig.configPath);
     this.setWatch(true);
   }
+
   createWindow() {
     this.focusWin.createWindow();
     windowController.bind();

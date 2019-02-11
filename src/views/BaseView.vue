@@ -4,6 +4,8 @@
 </template>
 
 <script>
+import { MessageType } from "../tools/enums";
+import { ipcRenderer } from "electron";
 export default {
   name: "BaseView",
   computed: {
@@ -19,7 +21,7 @@ export default {
     };
   },
   watch: {
-    // 如果 `question` 发生改变，这个函数就会运行
+    // 如果 source,target 发生改变，这个函数就会运行
     source: function(newSource, oldSource) {
       this.$controller.source = newSource;
     },
@@ -31,6 +33,11 @@ export default {
     changeMode(routerName) {
       this.$router.push({ name: routerName });
     }
+  },
+  mounted: function() {
+    ipcRenderer.on(MessageType.OpenMenu.toString(), (event, arg) => {
+      changeMode("Contrast");
+    });
   }
 };
 </script>

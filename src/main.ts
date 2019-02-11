@@ -6,10 +6,8 @@ import MuseUI from "muse-ui";
 import { ipcRenderer } from "electron";
 import { MessageType } from "./tools/enums";
 import { l10n } from "./tools/l10n";
-import * as VueMenu from "@hscmap/vue-menu";
 import "muse-ui/dist/muse-ui.css";
 
-Vue.use(VueMenu);
 Vue.use(MuseUI);
 
 var remote = require("electron").remote;

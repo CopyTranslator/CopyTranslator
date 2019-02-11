@@ -1,18 +1,10 @@
 <template>
   <div>
     <StatusBar></StatusBar>
-    <mu-row>
-      <hsc-menu-style-white style="width:100%" >
-      <hsc-menu-context-menu style="width:100%" >
-            <mu-text-field v-if="sharedResult" v-model="sharedResult.result"  multi-line :rows="4" full-width></mu-text-field>
-            <template slot="contextmenu">
-                <hsc-menu-item :label="$t('copySource')"/>
-                <hsc-menu-item :label="$t('copyResult')"/> 
-                <hsc-menu-item :label="$t('contrastMode')" @click="changeMode('Contrast')" />
-            </template>
-</hsc-menu-context-menu>
-      </hsc-menu-style-white>
+    <mu-row v-on:contextmenu="openMenu">
+        <mu-text-field v-if="sharedResult" v-model="sharedResult.result"  multi-line :rows="4" full-width></mu-text-field>
     </mu-row>
+
   </div>
 </template>
 
@@ -23,7 +15,11 @@ export default {
   name: "FocusMode",
   mixins: [BaseView],
   components: { StatusBar },
-  mounted: function() {}
+  methods: {
+    openMenu() {
+      this.$controller.menu.popup({});
+    }
+  }
 };
 </script>
 

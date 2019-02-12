@@ -15,11 +15,16 @@ enum YoudaoStatus {
 }
 
 enum MessageType {
-  DragWindow,
-  MinifyWindow,
+  WindowOpt,
   TranslateResult,
   OpenMenu,
   Router
 }
 
-export { TranslatorType, FrameMode, YoudaoStatus, MessageType };
+enum WinOpt {
+  Minify,
+  Drag,
+  Resize
+}
+
+export { TranslatorType, FrameMode, YoudaoStatus, MessageType, WinOpt };

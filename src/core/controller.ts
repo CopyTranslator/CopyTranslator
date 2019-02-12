@@ -7,10 +7,17 @@ import { envConfig } from "../tools/envConfig";
 import { l10n, L10N } from "../tools/l10n";
 import { RuleName, reverseRuleName, ruleKeys } from "../tools/rule";
 import { StringProcessor } from "./stringProcessor";
-import { BrowserWindow } from "electron";
+import { BrowserWindow, app } from "electron";
 import { BaseMenu, getItems } from "../tools/menu";
 const clipboard = require("electron-clipboard-extended");
 const t = l10n.getT();
+
+function routeTo(routerName: string) {
+  var window = BrowserWindow.getFocusedWindow();
+  if (window) {
+    window.webContents.send(MessageType.Router.toString(), routerName);
+  }
+}
 
 function onMenuClick(id: string) {
   if (ruleKeys.includes(id)) {
@@ -22,10 +29,13 @@ function onMenuClick(id: string) {
   } else {
     switch (id) {
       case "switchMode":
-        var window = BrowserWindow.getFocusedWindow();
-        if (window) {
-          window.webContents.send(MessageType.Router.toString(), "Contrast");
-        }
+        routeTo("Contrast");
+        break;
+      case "exit":
+        app.exit();
+        break;
+      case "settings":
+        routeTo("Settings");
         break;
     }
   }
@@ -41,13 +51,19 @@ class Controller {
   config: ConfigParser;
   locales: L10N = l10n;
   menu = new BaseMenu();
+
   constructor() {
     this.config = initConfig();
     this.config.loadValues(envConfig.sharedConfig.configPath);
-    this.setWatch(true);
     this.menu.initMenu(getItems(this.config), onMenuClick, t);
+    this.initWithConfig();
   }
 
+  initWithConfig() {
+    for (let keyValue in this.config.values) {
+      this.setByKeyValue(keyValue, this.config.values[keyValue], false);
+    }
+  }
   createWindow() {
     this.focusWin.createWindow();
     windowController.bind();
@@ -64,6 +80,7 @@ class Controller {
   onError(msg: string) {
     (<any>global).log.error(msg);
   }
+
   doTranslate(text: string) {
     this.src = text;
     let source = this.source();
@@ -104,20 +121,23 @@ class Controller {
       clipboard.stopWatching();
     }
   }
-  setByKeyValue(ruleKey: string, value: any) {
+  setByKeyValue(ruleKey: string, value: any, save = true) {
     let ruleValue = reverseRuleName[ruleKey];
     switch (ruleValue) {
       case RuleName.isListen:
-        (<any>global).log.debug(ruleKey, "1");
+        this.setWatch(value);
         break;
-      case RuleName.isDete:
-        (<any>global).log.debug(ruleKey, "2");
+      case RuleName.stayTop:
+        this.focusWin.stayTop = value;
+        if (this.focusWin.window) {
+          this.focusWin.window.setAlwaysOnTop(value);
+        }
         break;
-      default:
-        (<any>global).log.debug(ruleKey, "3");
     }
-    (<any>global).log.debug(this.config.setByKeyValue(ruleKey, value));
-    this.config.saveValues(envConfig.sharedConfig.configPath);
+    if (save) {
+      this.config.setByKeyValue(ruleKey, value);
+      this.config.saveValues(envConfig.sharedConfig.configPath);
+    }
   }
 }
 export { Controller };

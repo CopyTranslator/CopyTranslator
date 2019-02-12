@@ -1,7 +1,7 @@
 import { BrowserWindow } from "electron";
 const ioHook = require("iohook");
 const ipc = require("electron").ipcMain;
-import { MessageType } from "./enums";
+import { MessageType, WinOpt } from "./enums";
 
 class WindowController {
   x: number = 0;
@@ -9,15 +9,27 @@ class WindowController {
   isFollow: boolean = false;
   currentWindow: BrowserWindow | undefined = undefined;
   bind() {
-    ipc.on(MessageType.DragWindow.toString(), (event: any, arg: any) => {
-      this.currentWindow = BrowserWindow.fromWebContents(event.sender);
-      this.isFollow = arg.status;
-      this.x = arg.x;
-      this.y = arg.y;
+    ipc.on(MessageType.WindowOpt.toString(), (event: any, args: any) => {
+      var arg = args.args;
+      switch (args.type) {
+        case WinOpt.Drag:
+          this.currentWindow = BrowserWindow.fromWebContents(event.sender);
+          this.isFollow = arg.status;
+          this.x = arg.x;
+          this.y = arg.y;
+          break;
+        case WinOpt.Minify:
+          BrowserWindow.fromWebContents(event.sender).minimize();
+          break;
+        case WinOpt.Resize:
+          var currentWindow = BrowserWindow.fromWebContents(event.sender);
+          var bounds = currentWindow.getBounds();
+          if (arg.w) bounds.width = arg.w;
+          if (arg.h) bounds.height = arg.h;
+          currentWindow.setBounds(bounds);
+      }
     });
-    ipc.on(MessageType.MinifyWindow.toString(), (event: any, arg: any) => {
-      BrowserWindow.fromWebContents(event.sender).minimize();
-    });
+
     ioHook.on("mouseup", (event: MouseEvent) => {
       this.isFollow = false;
       this.currentWindow = undefined;

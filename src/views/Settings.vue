@@ -1,8 +1,7 @@
 <template>
-    <div>
+    <div v-on:contextmenu="openMenu">
       <StatusBar></StatusBar>
      <mu-container v-if="config"> 
-  
      <mu-row style="text-align:left">
       <mu-col span="3" align-self="start" >
         <mu-switch v-model="config.isCopy" :label="$t('autoCopy')" @click="setValue('isCopy')"></mu-switch>
@@ -30,8 +29,10 @@
 
 <script>
 import StatusBar from "../components/StatusBar";
+import WindowController from "../components/WindowController";
 export default {
   name: "Settings",
+  mixins: [WindowController],
   data: function() {
     return {
       config: undefined,
@@ -51,6 +52,7 @@ export default {
   mounted: function() {
     this.syncConfig();
     this.getLocales();
+    this.resize(null, this.$el.clientHeight);
   },
   methods: {
     syncConfig() {
@@ -58,13 +60,11 @@ export default {
       this.locale = this.config.locale;
     },
     setValue(keyValue) {
-      console.log(keyValue);
       this.$controller.setByKeyValue(keyValue, this.config[keyValue]);
       this.syncConfig();
     },
     getLocales() {
       this.locales = this.$controller.locales.getLocales();
-      console.log(this.locales);
     }
   }
 };

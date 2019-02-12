@@ -101,6 +101,18 @@ function getItems(config: ConfigParser) {
     id: "switchMode"
   });
 
+  items.push({
+    label: "settings",
+    type: MenuItemType.normal,
+    id: "settings"
+  });
+
+  items.push({
+    label: "exit",
+    type: MenuItemType.normal,
+    id: "exit"
+  });
+
   return items;
 }
 

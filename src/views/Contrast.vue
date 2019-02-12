@@ -26,9 +26,10 @@
 <script>
 import StatusBar from "../components/StatusBar";
 import BaseView from "./BaseView";
+import WindowController from "../components/WindowController";
 export default {
   name: "Contrast",
-  mixins: [BaseView],
+  mixins: [BaseView, WindowController],
   data: function() {
     return { loaded: false };
   },
@@ -42,6 +43,9 @@ export default {
         this.loaded = true;
       }
     }
+  },
+  mounted: function() {
+    this.resize(null, this.$el.clientHeight);
   }
 };
 </script>

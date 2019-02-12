@@ -1,9 +1,7 @@
 <template>
   <div>
     <StatusBar></StatusBar>
-    <mu-row v-on:contextmenu="openMenu" ref="field" >
-        <mu-text-field class="focusField" v-if="sharedResult" @input="onChange" v-model="sharedResult.result"  multi-line :rows-max="10"  full-width></mu-text-field>
-    </mu-row>
+        <mu-text-field v-on:contextmenu="openMenu" class="focusField" v-if="sharedResult"  v-model="result"  multi-line :rows-max="50"  full-width></mu-text-field>    
   </div>
 </template>
 
@@ -15,14 +13,27 @@ export default {
   name: "FocusMode",
   mixins: [BaseView, WindowController],
   components: { StatusBar },
+  data: function() {
+    return {
+      result: ""
+    };
+  },
   methods: {
-    openMenu() {
-      this.$controller.menu.popup();
-    },
-    onChange(value) {
-      console.log("yes");
-      console.log(this.$refs.field.clientHeight);
+    onChange(value = null) {
+      this.resize(null, this.$el.clientHeight);
     }
+  },
+  watch: {
+    sharedResult: function(newSharedResult, oldSharedResult) {
+      this.result = newSharedResult.result;
+      console.log("changed");
+    },
+    result: function(newSource, oldSource) {
+      this.onChange();
+    }
+  },
+  mounted: function() {
+    this.onChange();
   }
 };
 </script>

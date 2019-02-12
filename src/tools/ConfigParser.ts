@@ -59,7 +59,6 @@ class ConfigParser {
       this.saveValues(fileName);
       return true;
     } catch (e) {
-      (<any>global).log.debug(e);
       this.saveValues(fileName);
       return false;
     }

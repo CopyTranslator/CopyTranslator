@@ -3,22 +3,38 @@
 </template>
 
 <script>
-import { MessageType } from "../tools/enums";
-import { ipcRenderer } from "electron";
+import { MessageType, WinOpt } from "../tools/enums";
+import { ipcRenderer as ipc } from "electron";
 export default {
   name: "WindowController",
   methods: {
+    windowOpt(type, args = null) {
+      ipc.send(MessageType.WindowOpt.toString(), {
+        type: type,
+        args: args
+      });
+    },
     minify(event) {
-      ipcRenderer.send(MessageType.MinifyWindow.toString(), null);
+      this.windowOpt(WinOpt.Minify);
+      console.log("???");
     },
     bindDrag(event) {
       if (event.button === 0) {
-        ipcRenderer.send(MessageType.DragWindow.toString(), {
+        this.windowOpt(WinOpt.Drag, {
           status: true,
           x: event.screenX,
           y: event.screenY
         });
       }
+    },
+    openMenu() {
+      this.$controller.menu.popup();
+    },
+    resize(w = null, h = null) {
+      this.windowOpt(WinOpt.Resize, {
+        h: h,
+        w: w
+      });
     }
   }
 };

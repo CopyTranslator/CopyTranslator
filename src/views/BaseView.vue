@@ -16,17 +16,17 @@ export default {
   data: function() {
     return {
       languages: [],
-      source: this.$controller.source,
-      target: this.$controller.target
+      source: this.$controller.source(),
+      target: this.$controller.target()
     };
   },
   watch: {
     // 如果 source,target 发生改变，这个函数就会运行
     source: function(newSource, oldSource) {
-      this.$controller.source = newSource;
+      this.$controller.setByKeyValue("source", newSource);
     },
     target: function(newTarget, oldTarget) {
-      this.$controller.target = newTarget;
+      this.$controller.setByKeyValue("target", newTarget);
     }
   },
   methods: {

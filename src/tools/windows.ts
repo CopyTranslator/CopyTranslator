@@ -3,6 +3,7 @@ import { createProtocol } from "vue-cli-plugin-electron-builder/lib";
 
 class WindowWrapper {
   window: BrowserWindow | undefined = undefined;
+  stayTop: boolean = false;
   constructor() {}
   sendMsg(type: string, msg: any) {
     if (this.window) this.window.webContents.send(type, msg);
@@ -24,7 +25,11 @@ class WindowWrapper {
       // Load the index.html when not in development
       this.window.loadURL("app://./index.html");
     }
-
+    try {
+      this.window.setAlwaysOnTop(this.stayTop);
+    } catch (e) {
+      (<any>global).log.debug("set Stay top fail");
+    }
     this.window.on("closed", () => {
       this.window = undefined;
     });

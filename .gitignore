@@ -26,3 +26,4 @@ dist_electron
 build
 
 # tsc build output, because I'm using ts, so js is the build result
+src/tools/locales.js

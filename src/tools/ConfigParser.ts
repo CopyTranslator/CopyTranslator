@@ -1,35 +1,33 @@
-import { Rule, RuleName, ruleKeys, reverseRuleName } from "./rule";
+import { Rule, RuleName, ruleKeys } from "./rule";
 var fs = require("fs");
 
 type Rules = { [key: string]: Rule }; //类型别名
+function getEnumValue(key: RuleName): string {
+  return RuleName[key];
+}
 
 class ConfigParser {
   rules: Rules = {};
   values: { [key: string]: any } = {};
   constructor() {}
   addRule(key: RuleName, rule: Rule) {
-    let keyValue = ConfigParser.getEnumValue(key);
+    let keyValue = getEnumValue(key);
     if (rule.check && !rule.check(rule.predefined)) {
       throw "Rule " + key + " is invald!";
     }
     this.rules[keyValue] = rule;
     this.values[keyValue] = rule.predefined;
   }
-
-  static getEnumValue(key: RuleName): string {
-    return RuleName[key];
-  }
-
   getValues() {
     return Object.assign({}, this.values);
   }
 
   get(key: RuleName) {
-    return this.values[ConfigParser.getEnumValue(key)];
+    return this.values[getEnumValue(key)];
   }
 
   set(key: RuleName, value: any) {
-    let keyValue = ConfigParser.getEnumValue(key);
+    let keyValue = getEnumValue(key);
     let check = this.rules[keyValue].check;
     if (check && !check(value)) {
       throw `${key} check fail`;
@@ -37,8 +35,8 @@ class ConfigParser {
       this.values[keyValue] = value;
     }
   }
-  setByKeyValue(keyValue: string, value: any): boolean {
-    if (!reverseRuleName[keyValue]) {
+  setByKeyValue(keyValue: string, value: any): boolean | undefined {
+    if (!ruleKeys.includes(keyValue)) {
       return false;
     }
     let check = this.rules[keyValue].check;
@@ -71,4 +69,4 @@ class ConfigParser {
   }
 }
 
-export { ConfigParser };
+export { ConfigParser, getEnumValue };

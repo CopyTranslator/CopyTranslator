@@ -35,8 +35,8 @@ export default {
     }
   },
   mounted: function() {
-    ipcRenderer.on(MessageType.OpenMenu.toString(), (event, arg) => {
-      changeMode("Contrast");
+    ipcRenderer.on(MessageType.Router.toString(), (event, arg) => {
+      this.changeMode(arg);
     });
   }
 };

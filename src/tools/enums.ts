@@ -18,7 +18,8 @@ enum MessageType {
   DragWindow,
   MinifyWindow,
   TranslateResult,
-  OpenMenu
+  OpenMenu,
+  Router
 }
 
 export { TranslatorType, FrameMode, YoudaoStatus, MessageType };

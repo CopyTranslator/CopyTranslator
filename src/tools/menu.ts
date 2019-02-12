@@ -37,7 +37,7 @@ function NewMenuItem(option: MenuOption, func: Function) {
       browserWindow: BrowserWindow,
       event: Event
     ) {
-      func(key);
+      func(menuItem, browserWindow, event, key);
     };
   }
   return new MenuItem(option);

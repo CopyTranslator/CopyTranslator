@@ -7,7 +7,7 @@ import { envConfig } from "../tools/envConfig";
 import { l10n, L10N } from "../tools/l10n";
 import { RuleName, reverseRuleName, ruleKeys } from "../tools/rule";
 import { StringProcessor } from "./stringProcessor";
-import { BrowserWindow, app } from "electron";
+import { BrowserWindow, app, MenuItem } from "electron";
 import { BaseMenu, getItems } from "../tools/menu";
 const clipboard = require("electron-clipboard-extended");
 const t = l10n.getT();
@@ -19,13 +19,15 @@ function routeTo(routerName: string) {
   }
 }
 
-function onMenuClick(id: string) {
+function onMenuClick(
+  menuItem: MenuItem,
+  browserWindow: BrowserWindow,
+  event: Event,
+  id: string
+) {
   if (ruleKeys.includes(id)) {
     let controller = (<any>global).controller;
-    controller.setByKeyValue(
-      id,
-      controller.menu.menu.getMenuItemById(id).checked
-    );
+    controller.setByKeyValue(id, menuItem.checked);
   } else {
     switch (id) {
       case "switchMode":

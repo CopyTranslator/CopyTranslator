@@ -1,5 +1,5 @@
 <template>
-    <div v-on:contextmenu="openMenu">
+    <div v-on:contextmenu="openMenu('Settings')">
       <StatusBar></StatusBar>
      <mu-container v-if="config"> 
      <mu-row style="text-align:left">

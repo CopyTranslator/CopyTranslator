@@ -1,7 +1,7 @@
 <template>
   <div>
     <StatusBar></StatusBar>
-        <mu-text-field v-on:contextmenu="openMenu" class="focusField" v-if="sharedResult"  v-model="result"  multi-line :rows-max="50"  full-width></mu-text-field>    
+        <mu-text-field v-on:contextmenu="openMenu('Focus')" class="focusField" v-if="sharedResult"  v-model="result"  multi-line :rows-max="50"  full-width></mu-text-field>    
   </div>
 </template>
 
@@ -26,7 +26,6 @@ export default {
   watch: {
     sharedResult: function(newSharedResult, oldSharedResult) {
       this.result = newSharedResult.result;
-      console.log("changed");
     },
     result: function(newSource, oldSource) {
       this.onChange();

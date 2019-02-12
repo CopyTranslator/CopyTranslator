@@ -1,7 +1,13 @@
 import { Menu, MenuItem, BrowserWindow } from "electron";
 import { RuleName } from "./rule";
-import { ConfigParser, getEnumValue as r } from "./ConfigParser";
+import { ConfigParser, getEnumValue as r } from "./configParser";
 //r can be used to transform a enum to string
+
+enum RouteName {
+  Focus = "Focus",
+  Contrast = "Contrast",
+  Settings = "Settings"
+}
 
 enum MenuItemType {
   normal = "normal",
@@ -38,19 +44,27 @@ function NewMenuItem(option: MenuOption, func: Function) {
 }
 
 class BaseMenu {
-  menu = new Menu();
-  initMenu(items: Array<MenuOption>, func: Function, t: Function) {
+  func: Function;
+  t: Function;
+  constructor(func: Function, t: Function) {
+    this.func = func;
+    this.t = t;
+  }
+  initMenu(menu: Menu, items: Array<MenuOption>) {
     items.forEach(item => {
-      item.label = t(item.label);
-      this.menu.append(NewMenuItem(item, func));
+      item.label = this.t(item.label);
+      menu.append(NewMenuItem(item, this.func));
     });
   }
-  popup() {
-    this.menu.popup({});
+  popup(id: RouteName) {
+    let menu = new Menu();
+    let config = (<any>global).controller.config;
+    this.initMenu(menu, getItems(config, id));
+    menu.popup({});
   }
 }
 
-function getItems(config: ConfigParser) {
+function getItems(config: ConfigParser, type: RouteName) {
   let items: Array<MenuOption> = [];
   items.push({
     label: "copySource",
@@ -116,4 +130,4 @@ function getItems(config: ConfigParser) {
   return items;
 }
 
-export { BaseMenu, MenuItemType, getItems };
+export { BaseMenu, MenuItemType, getItems, RouteName };

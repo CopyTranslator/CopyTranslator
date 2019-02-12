@@ -27,8 +27,8 @@ export default {
         });
       }
     },
-    openMenu() {
-      this.$controller.menu.popup();
+    openMenu(id = null) {
+      this.$controller.menu.popup(id);
     },
     resize(w = null, h = null) {
       this.windowOpt(WinOpt.Resize, {

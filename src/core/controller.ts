@@ -50,20 +50,14 @@ class Controller {
   translator: Translator = new GoogleTranslator();
   config: ConfigParser;
   locales: L10N = l10n;
-  menu = new BaseMenu();
+  menu = new BaseMenu(onMenuClick, t);
 
   constructor() {
     this.config = initConfig();
     this.config.loadValues(envConfig.sharedConfig.configPath);
-    this.menu.initMenu(getItems(this.config), onMenuClick, t);
-    this.initWithConfig();
+    this.restoreFromConfig();
   }
 
-  initWithConfig() {
-    for (let keyValue in this.config.values) {
-      this.setByKeyValue(keyValue, this.config.values[keyValue], false);
-    }
-  }
   createWindow() {
     this.focusWin.createWindow();
     windowController.bind();
@@ -119,6 +113,11 @@ class Controller {
       clipboard.startWatching();
     } else {
       clipboard.stopWatching();
+    }
+  }
+  restoreFromConfig() {
+    for (let keyValue in this.config.values) {
+      this.setByKeyValue(keyValue, this.config.values[keyValue], false);
     }
   }
   setByKeyValue(ruleKey: string, value: any, save = true) {

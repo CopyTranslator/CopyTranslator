@@ -16,7 +16,6 @@ export default {
     },
     minify(event) {
       this.windowOpt(WinOpt.Minify);
-      console.log("???");
     },
     bindDrag(event) {
       if (event.button === 0) {

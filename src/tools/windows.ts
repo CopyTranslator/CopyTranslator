@@ -1,5 +1,6 @@
 import { BrowserWindow } from "electron";
 import { createProtocol } from "vue-cli-plugin-electron-builder/lib";
+import { MessageType } from "./enums";
 
 class WindowWrapper {
   window: BrowserWindow | undefined = undefined;
@@ -7,6 +8,12 @@ class WindowWrapper {
   constructor() {}
   sendMsg(type: string, msg: any) {
     if (this.window) this.window.webContents.send(type, msg);
+  }
+  routeTo(routerName: string) {
+    if (this.window) {
+      this.window.focus();
+      this.window.webContents.send(MessageType.Router.toString(), routerName);
+    }
   }
   createWindow() {
     // Create the browser window.

@@ -8,19 +8,9 @@ import { l10n, L10N } from "../tools/l10n";
 import { RuleName, reverseRuleName, ruleKeys } from "../tools/rule";
 import { StringProcessor } from "./stringProcessor";
 import { BrowserWindow, app, MenuItem } from "electron";
-import { BaseMenu, getItems } from "../tools/menu";
+import { BaseMenu } from "../tools/menu";
 import { TrayManager } from "../tools/tray";
 const clipboard = require("electron-clipboard-extended");
-
-function routeTo(routerName: string) {
-  var window = BrowserWindow.getFocusedWindow();
-  if (!window) {
-    window = (<any>global).controller.focusWin.window;
-  }
-  if (window) {
-    window.webContents.send(MessageType.Router.toString(), routerName);
-  }
-}
 
 function onMenuClick(
   menuItem: MenuItem,
@@ -28,21 +18,31 @@ function onMenuClick(
   event: Event,
   id: string
 ) {
+  var controller = (<any>global).controller;
   if (ruleKeys.includes(id)) {
-    (<any>global).controller.setByKeyValue(id, menuItem.checked);
+    controller.setByKeyValue(id, menuItem.checked);
   } else {
     switch (id) {
       case "contrastMode":
-        routeTo("Contrast");
+        controller.focusWin.routeTo("Contrast");
         break;
       case "focusMode":
-        routeTo("Focus");
+        controller.focusWin.routeTo("Focus");
         break;
       case "exit":
         app.exit();
         break;
+      case "clear":
+        controller.clear();
+        break;
+      case "copySource":
+        clipboard.writeText(controller.src);
+        break;
+      case "copyResult":
+        clipboard.writeText(controller.result);
+        break;
       case "settings":
-        routeTo("Settings");
+        controller.focusWin.routeTo("Settings");
         break;
     }
   }
@@ -69,6 +69,13 @@ class Controller {
     this.tray.init();
   }
 
+  clear() {
+    this.src = "";
+    this.result = "";
+    this.lastAppend = "";
+    this.sync();
+  }
+
   checkClipboard() {
     let text = this.stringProccessor.normalizeAppend(clipboard.readText());
     if (text != this.result && text != this.src) {
@@ -79,10 +86,18 @@ class Controller {
   getT() {
     return this.locales.getT(this.config.get(RuleName.locale));
   }
+
   onError(msg: string) {
     (<any>global).log.error(msg);
   }
-
+  sync() {
+    this.focusWin.sendMsg(MessageType.TranslateResult.toString(), {
+      src: this.src,
+      result: this.result,
+      source: this.source(),
+      target: this.target()
+    });
+  }
   doTranslate(text: string) {
     this.src = text;
     let source = this.source();
@@ -92,12 +107,7 @@ class Controller {
       .then(res => {
         if (res) {
           this.result = res;
-          this.focusWin.sendMsg(MessageType.TranslateResult.toString(), {
-            src: this.src,
-            result: this.result,
-            source: source,
-            target: target
-          });
+          this.sync();
         } else {
           this.onError("translate error");
         }
@@ -131,12 +141,13 @@ class Controller {
   setByKeyValue(ruleKey: string, value: any, save = true) {
     let ruleValue = reverseRuleName[ruleKey];
     switch (ruleValue) {
-      case RuleName.isListen:
+      case RuleName.listenClipboard:
         this.setWatch(value);
         break;
       case RuleName.stayTop:
         this.focusWin.stayTop = value;
         if (this.focusWin.window) {
+          this.focusWin.window.focus();
           this.focusWin.window.setAlwaysOnTop(value);
         }
         break;

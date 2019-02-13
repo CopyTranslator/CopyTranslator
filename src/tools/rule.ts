@@ -1,12 +1,13 @@
 var _ = require("lodash");
 enum RuleName {
-  isCopy,
-  isListen,
-  isDete,
-  isContinus,
+  autoCopy,
+  listenClipboard,
+  detectLanguage,
+  incrementalCopy,
   stayTop,
   smartDict,
   autoHide,
+  autoPaste,
   autoShow,
   frameMode,
   translatorType,

@@ -4,16 +4,16 @@
      <mu-container v-if="config" ref="config"> 
      <mu-row style="text-align:left">
       <mu-col span="3" align-self="start" >
-        <mu-switch v-model="config.isCopy" :label="$t('autoCopy')" @click="setValue('isCopy')"></mu-switch>
-        <mu-switch v-model="config.isContinus" :label="$t('incrementalCopy')" @click="setValue('isContinus')"></mu-switch>
+        <mu-switch v-model="config.autoCopy" :label="$t('autoCopy')" @click="setValue('autoCopy')"></mu-switch>
+        <mu-switch v-model="config.incrementalCopy" :label="$t('incrementalCopy')" @click="setValue('incrementalCopy')"></mu-switch>
         </mu-col>
       <mu-col span="3">
-        <mu-switch v-model="config.isListen" :label="$t('listenClipboard')" @click="setValue('isListen')"></mu-switch>
+        <mu-switch v-model="config.listenClipboard" :label="$t('listenClipboard')" @click="setValue('listenClipboard')"></mu-switch>
         <mu-switch v-model="config.stayTop" :label="$t('stayTop')" @click="setValue('stayTop')"></mu-switch>
         </mu-col>
       <mu-col span="3">
         <mu-switch v-model="config.autoShow" :label="$t('autoShow')" @click="setValue('autoShow')"></mu-switch>
-        <mu-switch v-model="config.isDete" :label="$t('detectLanguage')" @click="setValue('isDete')"></mu-switch>
+        <mu-switch v-model="config.detectLanguage" :label="$t('detectLanguage')" @click="setValue('detectLanguage')"></mu-switch>
       </mu-col>
     <mu-col span="3">
       <mu-switch v-model="config.autoHide" :label="$t('autoHide')" @click="setValue('autoHide')"></mu-switch>

@@ -8,23 +8,38 @@ function initConfig(
   if (!config) config = new ConfigParser();
 
   config.addRule(
-    RuleName.isCopy,
+    RuleName.autoCopy,
     new BoolRule(false, "auto copy result to clipboard")
   );
 
-  config.addRule(RuleName.isListen, new BoolRule(true, "Listen to Clipboard"));
-  config.addRule(RuleName.isDete, new BoolRule(true, "detect language"));
-  config.addRule(RuleName.isContinus, new BoolRule(false, "incremental copy"));
+  config.addRule(
+    RuleName.listenClipboard,
+    new BoolRule(true, "Listen to Clipboard")
+  );
+  config.addRule(
+    RuleName.detectLanguage,
+    new BoolRule(true, "detect language")
+  );
+  config.addRule(
+    RuleName.incrementalCopy,
+    new BoolRule(false, "incremental copy")
+  );
   config.addRule(RuleName.stayTop, new BoolRule(false, "always stay on top"));
   config.addRule(RuleName.smartDict, new BoolRule(true, "smart dict"));
 
   config.addRule(
-    RuleName.autoHide,
-    new BoolRule(false, "auto show when translate")
+    RuleName.autoPaste,
+    new BoolRule(false, "auto paste after translate")
   );
+
+  config.addRule(
+    RuleName.autoHide,
+    new BoolRule(false, "auto hide when close to edge")
+  );
+
   config.addRule(
     RuleName.autoShow,
-    new BoolRule(false, "auto show when translate")
+    new BoolRule(false, "auto show after translate")
   );
 
   config.addRule(RuleName.frameMode, {

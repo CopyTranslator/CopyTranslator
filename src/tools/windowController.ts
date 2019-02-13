@@ -8,6 +8,7 @@ class WindowController {
   y: number = 0;
   isFollow: boolean = false;
   currentWindow: BrowserWindow | undefined = undefined;
+
   bind() {
     ipc.on(MessageType.WindowOpt.toString(), (event: any, args: any) => {
       var arg = args.args;

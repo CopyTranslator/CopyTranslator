@@ -2,12 +2,12 @@ import { Tray, Menu } from "electron";
 import { envConfig } from "./envConfig";
 
 class TrayManager {
-  appIcon: Tray | undefined;
+  tray: Tray | undefined;
   constructor() {}
   init() {
-    this.appIcon = new Tray(envConfig.diffConfig.iconPath);
-    this.appIcon.setToolTip("CopyTranslator");
-    this.appIcon.on("right-click", event => {
+    this.tray = new Tray(envConfig.diffConfig.iconPath);
+    this.tray.setToolTip("CopyTranslator");
+    this.tray.on("right-click", event => {
       (<any>global).controller.menu.popup("Tray");
     });
   }

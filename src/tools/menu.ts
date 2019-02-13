@@ -63,78 +63,45 @@ class BaseMenu {
     menu.popup({});
   }
 }
+function normalItem(label: string) {
+  return {
+    label: label,
+    type: MenuItemType.normal,
+    id: label
+  };
+}
 
 function getItems(config: ConfigParser, type: RouteName) {
   let items: Array<MenuOption> = [];
-  items.push({
-    label: "copySource",
-    type: MenuItemType.normal,
-    id: "copySource"
-  });
-  items.push({
-    label: "copyResult",
-    type: MenuItemType.normal,
-    id: "copyResult"
-  });
-  items.push({
-    label: "clear",
-    type: MenuItemType.normal,
-    id: "clear"
-  });
-  items.push({
-    label: "autoCopy",
-    type: MenuItemType.checkbox,
-    checked: config.values.isCopy,
-    id: r(RuleName.isCopy)
-  });
-
-  items.push({
-    label: "autoHide",
-    type: MenuItemType.checkbox,
-    checked: config.values.autoHide,
-    id: r(RuleName.autoHide)
-  });
-
-  items.push({
-    label: "autoShow",
-    type: MenuItemType.checkbox,
-    checked: config.values.autoShow,
-    id: r(RuleName.autoShow)
-  });
-
-  items.push({
-    label: "stayTop",
-    type: MenuItemType.checkbox,
-    checked: config.values.stayTop,
-    id: r(RuleName.stayTop)
-  });
+  function checkItem(key: RuleName) {
+    const label = r(key);
+    return {
+      label: label,
+      type: MenuItemType.checkbox,
+      checked: config.values[label],
+      id: label
+    };
+  }
+  items.push(normalItem("copySource"));
+  items.push(normalItem("copyResult"));
+  items.push(normalItem("clear"));
+  items.push(checkItem(RuleName.autoCopy));
+  items.push(checkItem(RuleName.autoPaste));
+  items.push(checkItem(RuleName.detectLanguage));
+  items.push(checkItem(RuleName.incrementalCopy));
+  items.push(checkItem(RuleName.autoHide));
+  items.push(checkItem(RuleName.autoShow));
+  items.push(checkItem(RuleName.stayTop));
   if (type != RouteName.Focus) {
-    items.push({
-      label: "focusMode",
-      type: MenuItemType.normal,
-      id: "focusMode"
-    });
+    items.push(normalItem("focusMode"));
   }
   if (type != RouteName.Contrast) {
-    items.push({
-      label: "contrastMode",
-      type: MenuItemType.normal,
-      id: "contrastMode"
-    });
+    items.push(normalItem("contrastMode"));
   }
   if (type != RouteName.Settings) {
-    items.push({
-      label: "settings",
-      type: MenuItemType.normal,
-      id: "settings"
-    });
+    items.push(normalItem("settings"));
   }
-  items.push({
-    label: "exit",
-    type: MenuItemType.normal,
-    id: "exit"
-  });
-
+  items.push(normalItem("exit"));
   return items;
 }
 

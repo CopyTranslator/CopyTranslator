@@ -3,6 +3,7 @@
     "stayTop": "Stay on top",
     "listenClipboard": "Listen Clipboard",
     "autoCopy": "Auto Copy",
+    "autoPaste": "Auto Paste",
     "incrementalCopy": "Incremental Copy",
     "smartDict": "Smart Dict",
     "translate": "Translate",

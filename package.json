@@ -15,6 +15,7 @@
   },
   "dependencies": {
     "@hscmap/vue-menu": "^2.8.3",
+    "disable-scroll": "^0.4.1",
     "electron-clipboard-extended": "^1.1.1",
     "iohook": "^0.3.1",
     "lodash": "^4.17.11",
@@ -22,6 +23,7 @@
     "muse-ui": "^3.0.1",
     "translation.js": "^0.7.5",
     "vue": "^2.5.21",
+    "vue-resize-directive": "^1.1.4",
     "vue-router": "^3.0.1",
     "vuex": "^3.0.1"
   },

@@ -25,8 +25,8 @@
           <mu-option v-for="locale in locales"  :key="locale.short" :label="locale.localeName" :value="locale.short"></mu-option>
       </mu-select>
       </mu-row>
-      <mu-button full-width  color="primary" @click="backStored" >{{$t("return")}}</mu-button>
-</mu-container>
+      <mu-button full-width color="primary" @click="backStored" >{{$t("return")}}</mu-button>
+  </mu-container>
     </div>
 </template>
 

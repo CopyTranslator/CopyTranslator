@@ -1,7 +1,7 @@
 <template>
     <div v-on:contextmenu="openMenu('Settings')">
       <StatusBar></StatusBar>
-     <mu-container v-if="config"> 
+     <mu-container v-if="config" ref="config"> 
      <mu-row style="text-align:left">
       <mu-col span="3" align-self="start" >
         <mu-switch v-model="config.isCopy" :label="$t('autoCopy')" @click="setValue('isCopy')"></mu-switch>
@@ -23,6 +23,7 @@
         <mu-select :label="$t('localeSetting')" full-width v-model="locale" >
           <mu-option v-for="locale in locales"  :key="locale.short" :label="locale.localeName" :value="locale.short"></mu-option>
       </mu-select>
+      <mu-button full-width  color="primary" @click="$router.go(-1)" >{{$t("return")}}</mu-button>
 </mu-container>
     </div>
 </template>
@@ -49,10 +50,13 @@ export default {
       this.syncConfig();
     }
   },
+
   mounted: function() {
     this.syncConfig();
     this.getLocales();
-    this.resize(null, this.$el.clientHeight);
+    this.$nextTick(() => {
+      this.resize(null, this.$el.clientHeight + 10);
+    });
   },
   methods: {
     syncConfig() {

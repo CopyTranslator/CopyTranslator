@@ -18,6 +18,7 @@ interface SharedConfig {
 
 interface DiffConfig {
   systemLocaleDir: string;
+  iconPath: string;
 }
 
 interface EnvConfig {
@@ -32,11 +33,13 @@ const sharedConfig: SharedConfig = {
 };
 
 const ProductionConfig: DiffConfig = {
-  systemLocaleDir: path.join(process.resourcesPath, "locales")
+  systemLocaleDir: path.join(process.resourcesPath, "locales"),
+  iconPath: path.join(process.resourcesPath, "icon.ico")
 };
 
 const DevConfig: DiffConfig = {
-  systemLocaleDir: path.join(process.cwd(), "dist_locales")
+  systemLocaleDir: path.join(process.cwd(), "dist_locales"),
+  iconPath: path.join(process.cwd(), "icon.ico")
 };
 
 const envConfig: EnvConfig = {

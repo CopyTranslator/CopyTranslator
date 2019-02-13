@@ -8,6 +8,10 @@ module.exports = {
           {
             from: `dist_locales`,
             to: `locales`
+          },
+          {
+            from: `icon.ico`,
+            to: `icon.ico`
           }
         ],
         win: {

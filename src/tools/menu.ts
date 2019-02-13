@@ -6,7 +6,8 @@ import { ConfigParser, getEnumValue as r } from "./configParser";
 enum RouteName {
   Focus = "Focus",
   Contrast = "Contrast",
-  Settings = "Settings"
+  Settings = "Settings",
+  Tray = "Tray"
 }
 
 enum MenuItemType {
@@ -45,14 +46,13 @@ function NewMenuItem(option: MenuOption, func: Function) {
 
 class BaseMenu {
   func: Function;
-  t: Function;
-  constructor(func: Function, t: Function) {
+  constructor(func: Function) {
     this.func = func;
-    this.t = t;
   }
   initMenu(menu: Menu, items: Array<MenuOption>) {
+    const t = (<any>global).controller.getT();
     items.forEach(item => {
-      item.label = this.t(item.label);
+      item.label = t(item.label);
       menu.append(NewMenuItem(item, this.func));
     });
   }
@@ -108,19 +108,27 @@ function getItems(config: ConfigParser, type: RouteName) {
     checked: config.values.stayTop,
     id: r(RuleName.stayTop)
   });
-
-  items.push({
-    label: "switchMode",
-    type: MenuItemType.normal,
-    id: "switchMode"
-  });
-
-  items.push({
-    label: "settings",
-    type: MenuItemType.normal,
-    id: "settings"
-  });
-
+  if (type != RouteName.Focus) {
+    items.push({
+      label: "focusMode",
+      type: MenuItemType.normal,
+      id: "focusMode"
+    });
+  }
+  if (type != RouteName.Contrast) {
+    items.push({
+      label: "contrastMode",
+      type: MenuItemType.normal,
+      id: "contrastMode"
+    });
+  }
+  if (type != RouteName.Settings) {
+    items.push({
+      label: "settings",
+      type: MenuItemType.normal,
+      id: "settings"
+    });
+  }
   items.push({
     label: "exit",
     type: MenuItemType.normal,

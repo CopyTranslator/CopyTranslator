@@ -9,11 +9,14 @@ import { RuleName, reverseRuleName, ruleKeys } from "../tools/rule";
 import { StringProcessor } from "./stringProcessor";
 import { BrowserWindow, app, MenuItem } from "electron";
 import { BaseMenu, getItems } from "../tools/menu";
+import { TrayManager } from "../tools/tray";
 const clipboard = require("electron-clipboard-extended");
-const t = l10n.getT();
 
 function routeTo(routerName: string) {
   var window = BrowserWindow.getFocusedWindow();
+  if (!window) {
+    window = (<any>global).controller.focusWin.window;
+  }
   if (window) {
     window.webContents.send(MessageType.Router.toString(), routerName);
   }
@@ -26,12 +29,14 @@ function onMenuClick(
   id: string
 ) {
   if (ruleKeys.includes(id)) {
-    let controller = (<any>global).controller;
-    controller.setByKeyValue(id, menuItem.checked);
+    (<any>global).controller.setByKeyValue(id, menuItem.checked);
   } else {
     switch (id) {
-      case "switchMode":
+      case "contrastMode":
         routeTo("Contrast");
+        break;
+      case "focusMode":
+        routeTo("Focus");
         break;
       case "exit":
         app.exit();
@@ -50,26 +55,27 @@ class Controller {
   stringProccessor: StringProcessor = new StringProcessor();
   focusWin: WindowWrapper = new WindowWrapper();
   translator: Translator = new GoogleTranslator();
-  config: ConfigParser;
+  config: ConfigParser = initConfig();
   locales: L10N = l10n;
-  menu = new BaseMenu(onMenuClick, t);
-
+  menu = new BaseMenu(onMenuClick);
+  tray: TrayManager = new TrayManager();
   constructor() {
-    this.config = initConfig();
     this.config.loadValues(envConfig.sharedConfig.configPath);
     this.restoreFromConfig();
   }
-
   createWindow() {
     this.focusWin.createWindow();
     windowController.bind();
+    this.tray.init();
   }
+
   checkClipboard() {
     let text = this.stringProccessor.normalizeAppend(clipboard.readText());
     if (text != this.result && text != this.src) {
       this.doTranslate(text);
     }
   }
+
   getT() {
     return this.locales.getT(this.config.get(RuleName.locale));
   }

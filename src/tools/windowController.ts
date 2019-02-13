@@ -1,6 +1,5 @@
-import { BrowserWindow } from "electron";
+import { BrowserWindow, ipcMain as ipc } from "electron";
 const ioHook = require("iohook");
-const ipc = require("electron").ipcMain;
 import { MessageType, WinOpt } from "./enums";
 
 class WindowController {
@@ -8,7 +7,7 @@ class WindowController {
   y: number = 0;
   isFollow: boolean = false;
   currentWindow: BrowserWindow | undefined = undefined;
-
+  ctrlKey = false;
   bind() {
     ipc.on(MessageType.WindowOpt.toString(), (event: any, args: any) => {
       var arg = args.args;
@@ -32,7 +31,21 @@ class WindowController {
           currentWindow.setBounds(bounds);
       }
     });
-
+    ioHook.on("keydown", (event: any) => {
+      this.ctrlKey = event.ctrlKey;
+    });
+    ioHook.on("keyup", (event: any) => {
+      this.ctrlKey = !event.ctrlKey;
+    });
+    ioHook.on("mousewheel", (event: any) => {
+      if (!this.ctrlKey) return;
+      var window = BrowserWindow.getFocusedWindow();
+      if (window)
+        window.webContents.send(MessageType.WindowOpt.toString(), {
+          type: WinOpt.Zoom,
+          rotation: event.rotation
+        });
+    });
     ioHook.on("mouseup", (event: MouseEvent) => {
       this.isFollow = false;
       this.currentWindow = undefined;

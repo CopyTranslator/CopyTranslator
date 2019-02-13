@@ -1,7 +1,7 @@
 <template>
-    <div>
+    <div v-on:contextmenu="openMenu('Focus')">
       <StatusBar></StatusBar>
-      <mu-text-field v-if="sharedResult" v-model="sharedResult.src"  multi-line :rows="8" full-width></mu-text-field>
+      <mu-text-field :style="fontSize" v-if="sharedResult" v-model="sharedResult.src"  multi-line :rows="8" full-width></mu-text-field>
     <mu-row justify-content="center" align-items="center">
       <mu-col span="4"><mu-button full-width color="primary">{{$t("translate")}}</mu-button></mu-col>
       <mu-col span="4"><mu-button full-width @click="changeMode('Focus')">{{$t("switchMode")}}</mu-button></mu-col>
@@ -19,7 +19,7 @@
       </mu-select>
       </mu-col>
       </mu-row>
-    <mu-text-field v-if="sharedResult" v-model="sharedResult.result"  multi-line :rows="8" full-width></mu-text-field>
+    <mu-text-field :style="fontSize" v-if="sharedResult" v-model="sharedResult.result"  multi-line :rows="8" full-width></mu-text-field>
     </div>
 </template>
 
@@ -27,12 +27,17 @@
 import StatusBar from "../components/StatusBar";
 import BaseView from "./BaseView";
 import WindowController from "../components/WindowController";
+import Adjustable from "./Adjustable";
 export default {
   name: "Contrast",
-  mixins: [BaseView, WindowController],
+  mixins: [BaseView, WindowController, Adjustable],
   data: function() {
-    return { loaded: false };
+    return {
+      loaded: false,
+      size: this.$controller.config.values.contrast.fontSize
+    };
   },
+  computed: {},
   components: {
     StatusBar
   },

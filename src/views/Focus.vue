@@ -1,7 +1,7 @@
 <template>
-  <div>
+  <div v-resize="hello">
     <StatusBar></StatusBar>
-        <mu-text-field v-on:contextmenu="openMenu('Focus')" class="focusField" v-if="sharedResult"  v-model="result"  multi-line :rows-max="50"  full-width></mu-text-field>    
+    <mu-text-field :style="fontSize"  v-on:contextmenu="openMenu('Focus')" class="focusField" v-if="sharedResult"  v-model="result"  multi-line :rows-max="50"  full-width></mu-text-field>    
   </div>
 </template>
 
@@ -9,16 +9,25 @@
 import StatusBar from "../components/StatusBar";
 import BaseView from "./BaseView";
 import WindowController from "../components/WindowController";
+import resize from "vue-resize-directive";
+import Adjustable from "./Adjustable";
 export default {
   name: "FocusMode",
-  mixins: [BaseView, WindowController],
+  mixins: [BaseView, WindowController, Adjustable],
   components: { StatusBar },
+  directives: {
+    resize
+  },
   data: function() {
     return {
-      result: ""
+      result: "",
+      size: this.$controller.config.values.focus.fontSize
     };
   },
   methods: {
+    hello() {
+      console.log("???");
+    },
     onChange(value = null) {
       this.resize(null, this.$el.clientHeight);
     }

@@ -24,7 +24,8 @@ enum MessageType {
 enum WinOpt {
   Minify,
   Drag,
-  Resize
+  Resize,
+  Zoom
 }
 
 export { TranslatorType, FrameMode, YoudaoStatus, MessageType, WinOpt };

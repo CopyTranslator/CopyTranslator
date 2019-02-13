@@ -14,6 +14,9 @@ export default {
         args: args
       });
     },
+    changeMode(routerName) {
+      this.$router.push({ name: routerName });
+    },
     minify(event) {
       this.windowOpt(WinOpt.Minify);
     },
@@ -29,12 +32,19 @@ export default {
     openMenu(id = null) {
       this.$controller.menu.popup(id);
     },
-    resize(w = null, h = null) {
+    resize(w = null, h = null, x = null, y = null) {
       this.windowOpt(WinOpt.Resize, {
         h: h,
-        w: w
+        w: w,
+        x: x,
+        y: y
       });
     }
+  },
+  mounted: function() {
+    ipc.on(MessageType.Router.toString(), (event, arg) => {
+      this.changeMode(arg);
+    });
   }
 };
 </script>

@@ -20,10 +20,12 @@
       <mu-switch v-model="config.smartDict" :label="$t('smartDict')" @click="setValue('smartDict')"></mu-switch>
     </mu-col>  
     </mu-row >
+    <mu-row @click="loaded=true">
         <mu-select :label="$t('localeSetting')" full-width v-model="locale" >
           <mu-option v-for="locale in locales"  :key="locale.short" :label="locale.localeName" :value="locale.short"></mu-option>
       </mu-select>
-      <mu-button full-width  color="primary" @click="$router.go(-1)" >{{$t("return")}}</mu-button>
+      </mu-row>
+      <mu-button full-width  color="primary" @click="backStored" >{{$t("return")}}</mu-button>
 </mu-container>
     </div>
 </template>
@@ -38,7 +40,9 @@ export default {
     return {
       config: undefined,
       locale: undefined,
-      locales: []
+      locales: [],
+      loaded: false,
+      prevRoute: undefined
     };
   },
   components: {
@@ -47,15 +51,22 @@ export default {
   watch: {
     locale: function(newLocale, oldLocale) {
       this.$controller.setByKeyValue("locale", newLocale);
+      if (this.loaded) {
+        this.$controller.focusWin.load("Settings");
+      }
       this.syncConfig();
     }
   },
-
   mounted: function() {
     this.syncConfig();
     this.getLocales();
     this.$nextTick(() => {
       this.resize(null, this.$el.clientHeight + 10);
+    });
+  },
+  beforeRouteEnter(to, from, next) {
+    next(vm => {
+      if (from.name) vm.$controller.focusWin.stored = from.name;
     });
   },
   methods: {
@@ -69,6 +80,9 @@ export default {
     },
     getLocales() {
       this.locales = this.$controller.locales.getLocales();
+    },
+    backStored() {
+      this.$router.push({ name: this.$controller.focusWin.stored });
     }
   }
 };

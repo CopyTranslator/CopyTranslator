@@ -12,9 +12,10 @@ class WindowController {
   bind() {
     ipc.on(MessageType.WindowOpt.toString(), (event: any, args: any) => {
       var arg = args.args;
+      var currentWindow = BrowserWindow.fromWebContents(event.sender);
       switch (args.type) {
         case WinOpt.Drag:
-          this.currentWindow = BrowserWindow.fromWebContents(event.sender);
+          this.currentWindow = currentWindow;
           this.isFollow = arg.status;
           this.x = arg.x;
           this.y = arg.y;
@@ -23,10 +24,11 @@ class WindowController {
           BrowserWindow.fromWebContents(event.sender).minimize();
           break;
         case WinOpt.Resize:
-          var currentWindow = BrowserWindow.fromWebContents(event.sender);
           var bounds = currentWindow.getBounds();
           if (arg.w) bounds.width = arg.w;
           if (arg.h) bounds.height = arg.h;
+          if (arg.x) bounds.x = arg.x;
+          if (arg.y) bounds.y = arg.y;
           currentWindow.setBounds(bounds);
       }
     });

@@ -30,7 +30,7 @@ function onMenuClick(
         controller.focusWin.routeTo("Focus");
         break;
       case "exit":
-        app.exit();
+        controller.onExit();
         break;
       case "clear":
         controller.clear();
@@ -64,9 +64,17 @@ class Controller {
     this.restoreFromConfig();
   }
   createWindow() {
-    this.focusWin.createWindow();
+    this.focusWin.createWindow(this.config.values.focus);
     windowController.bind();
     this.tray.init();
+  }
+  onExit() {
+    let focus = Object.assign(
+      this.config.values.focus,
+      this.focusWin.getBound()
+    );
+    this.setByKeyValue("focus", focus);
+    app.quit();
   }
 
   clear() {

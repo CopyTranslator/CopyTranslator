@@ -4,8 +4,6 @@
 </template>
 
 <script>
-import { MessageType } from "../tools/enums";
-import { ipcRenderer } from "electron";
 export default {
   name: "BaseView",
   computed: {
@@ -28,16 +26,6 @@ export default {
     target: function(newTarget, oldTarget) {
       this.$controller.setByKeyValue("target", newTarget);
     }
-  },
-  methods: {
-    changeMode(routerName) {
-      this.$router.push({ name: routerName });
-    }
-  },
-  mounted: function() {
-    ipcRenderer.on(MessageType.Router.toString(), (event, arg) => {
-      this.changeMode(arg);
-    });
   }
 };
 </script>

@@ -89,5 +89,6 @@ export {
   CheckFuction,
   RuleName,
   reverseRuleName,
-  ruleKeys
+  ruleKeys,
+  ModeConfig
 };

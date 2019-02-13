@@ -24,5 +24,6 @@
     "autoShow": "Auto Show",
     "settings": "Settings",
     "viewSource": "View Source",
-    "localeSetting": "Locale"
+    "localeSetting": "Locale",
+    "return": "Return"
 }

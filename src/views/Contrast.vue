@@ -7,7 +7,7 @@
       <mu-col span="4"><mu-button full-width @click="changeMode('Focus')">{{$t("switchMode")}}</mu-button></mu-col>
       <mu-col span="4"><mu-button full-width @click="changeMode('Settings')">{{$t("settings")}}</mu-button></mu-col>
       </mu-row>
-      <mu-row justify-content="center" align-items="center" @click="getLang">
+      <mu-row justify-content="center" align-items="center">
       <mu-col span="6">
         <mu-select :label="$t('sourceLanguage')" full-width v-model="source" >
           <mu-option v-for="lang in languages"  :key="lang" :label="lang" :value="lang"></mu-option>
@@ -36,16 +36,11 @@ export default {
   components: {
     StatusBar
   },
-  methods: {
-    getLang() {
-      if (!this.loaded) {
-        this.languages = this.$controller.translator.getLanguages();
-        this.loaded = true;
-      }
-    }
-  },
   mounted: function() {
     this.resize(null, this.$el.clientHeight);
+    this.$nextTick(() => {
+      this.languages = this.$controller.translator.getLanguages();
+    });
   }
 };
 </script>

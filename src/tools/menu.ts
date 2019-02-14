@@ -92,6 +92,7 @@ function getItems(config: ConfigParser, type: RouteName) {
   items.push(checkItem(RuleName.autoHide));
   items.push(checkItem(RuleName.autoShow));
   items.push(checkItem(RuleName.stayTop));
+  items.push(checkItem(RuleName.listenClipboard));
   if (type != RouteName.Focus) {
     items.push(normalItem("focusMode"));
   }

@@ -1,5 +1,6 @@
 import { Translator, GoogleTranslator } from "../tools/translator";
-import { initConfig, ConfigParser } from "../tools/configuration";
+import { initConfig } from "../tools/configuration";
+import { ConfigParser, getEnumValue } from "../tools/configParser";
 import { MessageType } from "../tools/enums";
 import { WindowWrapper } from "../tools/windows";
 import { windowController } from "../tools/windowController";
@@ -59,6 +60,7 @@ class Controller {
   locales: L10N = l10n;
   menu = new BaseMenu(onMenuClick);
   tray: TrayManager = new TrayManager();
+  isWord: boolean = false;
   constructor() {
     this.config.loadValues(envConfig.sharedConfig.configPath);
     this.restoreFromConfig();
@@ -77,6 +79,16 @@ class Controller {
     app.quit();
   }
 
+  setSrc(append: string) {
+    if (this.get(RuleName.incrementalCopy) && this.src != "")
+      this.src = this.src + " " + append;
+    else this.src = append;
+  }
+
+  get(ruleName: RuleName) {
+    return this.config.values[getEnumValue(ruleName)];
+  }
+
   clear() {
     this.src = "";
     this.result = "";
@@ -86,7 +98,7 @@ class Controller {
 
   checkClipboard() {
     let text = this.stringProccessor.normalizeAppend(clipboard.readText());
-    if (text != this.result && text != this.src) {
+    if (this.check_valid(text)) {
       this.doTranslate(text);
     }
   }
@@ -98,6 +110,7 @@ class Controller {
   onError(msg: string) {
     (<any>global).log.error(msg);
   }
+
   sync() {
     this.focusWin.sendMsg(MessageType.TranslateResult.toString(), {
       src: this.src,
@@ -106,8 +119,35 @@ class Controller {
       target: this.target()
     });
   }
+
+  check_valid(text: string) {
+    if (
+      this.result == text ||
+      this.src == text ||
+      this.lastAppend == text ||
+      text == ""
+    ) {
+      return false;
+    } else {
+      this.isWord =
+        this.get(RuleName.smartDict) &&
+        text.split(" ").length <= 3 &&
+        !StringProcessor.isChinese(text) &&
+        !this.get(RuleName.incrementalCopy);
+      return true;
+    }
+  }
+
+  postProcess() {
+    if (this.get(RuleName.autoCopy)) {
+      clipboard.writeText(this.result);
+    }
+    this.sync();
+  }
+
   doTranslate(text: string) {
-    this.src = text;
+    this.lastAppend = text;
+    this.setSrc(text);
     let source = this.source();
     let target = this.target();
     this.translator
@@ -115,7 +155,7 @@ class Controller {
       .then(res => {
         if (res) {
           this.result = res;
-          this.sync();
+          this.postProcess();
         } else {
           this.onError("translate error");
         }
@@ -124,6 +164,7 @@ class Controller {
         console.error(err);
       });
   }
+
   source() {
     return this.config.values.source;
   }
@@ -141,6 +182,7 @@ class Controller {
       clipboard.stopWatching();
     }
   }
+
   restoreFromConfig() {
     for (let keyValue in this.config.values) {
       this.setByKeyValue(keyValue, this.config.values[keyValue], false);
@@ -158,6 +200,9 @@ class Controller {
           this.focusWin.window.focus();
           this.focusWin.window.setAlwaysOnTop(value);
         }
+        break;
+      case RuleName.incrementalCopy:
+        this.clear();
         break;
     }
     if (save) {

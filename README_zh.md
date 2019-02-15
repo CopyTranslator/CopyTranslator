@@ -2,12 +2,12 @@
 
 [英语/English](README.md)
 
-[![](https://img.shields.io/github/stars/elliottzheng/copytranslator.svg)](https://github.com/elliottzheng/CopyTranslator/stargazers)
-[![](https://img.shields.io/github/release/elliottzheng/copytranslator.svg)](https://github.com/elliottzheng/CopyTranslator/releases)
-[![](https://img.shields.io/gitter/room/elliottzheng/copytranslator.svg)](https://gitter.im/CopyTranslator/Lobby?utm_source=share-link&utm_medium=link&utm_campaign=share-link)
-[![](https://img.shields.io/github/downloads/elliottzheng/copytranslator/total.svg)](https://github.com/elliottzheng/CopyTranslator/wiki/Downloads-%E4%B8%8B%E8%BD%BD%E4%B8%8E%E5%AE%89%E8%A3%85)
-[![](https://img.shields.io/badge/Project%20Phoenix%20-ongoing-orange.svg)](https://github.com/elliottzheng/CopyTranslator/tree/phoenix)
-[![](https://img.shields.io/github/license/elliottzheng/copytranslator.svg)](./LICENSE)
+[![](https://img.shields.io/github/stars/copytranslator/copytranslator.svg)](https://github.com/copytranslator/copytranslator/stargazers)
+[![](https://img.shields.io/github/release/copytranslator/copytranslator.svg)](https://github.com/copytranslator/copytranslator/releases)
+[![](https://img.shields.io/gitter/room/copytranslator/copytranslator.svg)](https://gitter.im/CopyTranslator/Lobby?utm_source=share-link&utm_medium=link&utm_campaign=share-link)
+[![](https://img.shields.io/github/downloads/copytranslator/copytranslator/total.svg)](https://github.com/copytranslator/copytranslator/wiki/Downloads-%E4%B8%8B%E8%BD%BD%E4%B8%8E%E5%AE%89%E8%A3%85)
+[![](https://img.shields.io/badge/Project%20Phoenix%20-ongoing-orange.svg)](https://github.com/copytranslator/copytranslator/tree/phoenix)
+[![](https://img.shields.io/github/license/copytranslator/copytranslator.svg)](./LICENSE)
 
 **复制即翻译的外文辅助阅读翻译解决方案**
 

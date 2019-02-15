@@ -105,7 +105,7 @@
 
 ## 相关链接
 - [软件官网](https://hypercube.top/copytranslator/)
-- [Github项目主页](https://github.com/elliottzheng/CopyTranslator)
+- [Github项目主页](https://github.com/copytranslator/CopyTranslator)
 - [码云项目主页](https://gitee.com/ylzheng/CopyTranslator)
 - [相关博客](https://www.cnblogs.com/elliottzheng/p/9060159.html)
 - [官方邮箱](mailto:copytranslator@hypercube.top)

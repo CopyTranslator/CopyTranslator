@@ -17,7 +17,7 @@
 
 **Foreign language assisted reading and translation solution**
 
-**Please update to ![Download](https://api.bintray.com/packages/elliottzheng/copytranslator/CopyTranslator/images/download.svg)as soon as possible. This is a new version that you have never experienced before. It is also the only available version (all the previous version is invalid now). Trust me, you will fall in love with it within minutes.**
+**Please update to latest version as soon as possible. This is a new version that you have never experienced before. It is also the only available version (all the previous version is invalid now). Trust me, you will fall in love with it within minutes.**
 
 **If you found it helpful to you, no need to follow or fork, just give me a star and recommend it to your friends around you.**
 

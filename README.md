@@ -14,7 +14,7 @@
 
 **Foreign language assisted reading and translation solution**
 
-**Please update to ![Download](https://api.bintray.com/packages/elliottzheng/CopyTranslator/CopyTranslator/images/download.svg)as soon as possible. This is a new version that you have never experienced before. It is also the only available version (all the previous version is invalid now). Trust me, you will fall in love with it within minutes.**
+**Please update to latest version as soon as possible. This is a new version that you have never experienced before. It is also the only available version (all the previous version is invalid now). Trust me, you will fall in love with it within minutes.**
 
 **If you found it helpful to you, no need to follow or fork, just give me a star and recommend it to your friends around you.**
 
@@ -30,7 +30,7 @@ Researchers always have to read a lot of literature, and understanding the conte
 
 Just open the `CopyTranslator` and copy the PDF text to clipboard,  `CopyTranslator` will watch the clipboard changes, then it will process the clipboard contents (such as removing extra line breaks, etc.) and display the translation results. The translation effect is greatly improved compared to the direct copy and paste to the web version of the translation, and the time required for translation is greatly reduced. With the powerful Google translation API, the translation quality is guaranteed. There are also a wealth of options you can set, such as automatically copy translation results to the clipboard, [Incremental Copy](#Incremental Copy), [Smart Translation](#Smart Translation), etc., it effectively improve people's reading and translation efficiency of foreign literature.
 
-**After several iterations, `CopyTranslator` has became more and more powerful as well as user-friendly. It is recommended to read the full usage guide [wiki](https://github.com/elliottzheng/CopyTranslator/wiki) to make best use of it**.
+**After several iterations, `CopyTranslator` has became more and more powerful as well as user-friendly. It is recommended to read the full usage guide [wiki](https://github.com/copytranslator/copytranslator/wiki) to make best use of it**.
 
 ### Core usage
 
@@ -102,13 +102,13 @@ Append the copied text to the source other than replace it, especially useful wh
 - It occupies less memory and has only a few ten megabytes of  resident memory.
 - There will be more new features in`CopyTranslator` , so stay tuned.
 
-Please refer to the [User Manual](https://github.com/elliottzheng/CopyTranslator/wiki/Usage-%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97) to know more about `CopyTranslator`
+Please refer to the [User Manual](https://github.com/copytranslator/copytranslator/wiki/Usage-%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97) to know more about `CopyTranslator`
 
 ## User Manual and download and installation methods
 
-Please refer to the project [WIKI](https://github.com/elliottzheng/CopyTranslator/wiki) .
+Please refer to the project [WIKI](https://github.com/copytranslator/copytranslator/wiki) .
 
-**After several iterations, `CopyTranslator` has became more and more powerful as well as user-friendly. It is recommended to read the full project [wiki](https://github.com/elliottzheng/CopyTranslator/wiki) to make best use of it**.
+**After several iterations, `CopyTranslator` has became more and more powerful as well as user-friendly. It is recommended to read the full project [wiki](https://github.com/copytranslator/copytranslator/wiki) to make best use of it**.
 
 ## Reprint statement
 
@@ -117,7 +117,7 @@ This software is free open source software, the developer is [Elliott Zheng](htt
 ## Related Links
 
 - [Software official website](https://hypercube.top/copytranslator/) 
-- [Project homepage on Github ](https://github.com/elliottzheng/CopyTranslator) 
+- [Project homepage on Github ](https://github.com/copytranslator/CopyTranslator) 
 - [Project homepage on Gitee](https://gitee.com/ylzheng/CopyTranslator) 
 - [Offical Blogs](https://www.cnblogs.com/elliottzheng/p/9060159.html) 
 - [Official Email](mailto:copytranslator@hypercube.top)

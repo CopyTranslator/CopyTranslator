@@ -26,7 +26,23 @@ enum WinOpt {
   Drag,
   Resize,
   Zoom,
-  OpenExternal
+  OpenExternal,
+  ChangeColor
 }
 
-export { TranslatorType, FrameMode, YoudaoStatus, MessageType, WinOpt };
+enum ColorStatus {
+  Listen = "green",
+  Translating = "yellow",
+  AutoCopy = "blue",
+  Incremental = "purple",
+  None = "none"
+}
+
+export {
+  TranslatorType,
+  FrameMode,
+  YoudaoStatus,
+  ColorStatus,
+  MessageType,
+  WinOpt
+};

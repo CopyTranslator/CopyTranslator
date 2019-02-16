@@ -1,6 +1,6 @@
 import { BrowserWindow, Rectangle } from "electron";
 import { createProtocol } from "vue-cli-plugin-electron-builder/lib";
-import { MessageType, WinOpt } from "./enums";
+import { MessageType, WinOpt, ColorStatus } from "./enums";
 import { ModeConfig } from "./rule";
 import { RouteName } from "./menu";
 import { url } from "inspector";
@@ -20,6 +20,11 @@ class WindowWrapper {
       args: args
     });
   }
+
+  switchColor(color: ColorStatus) {
+    this.winOpt(WinOpt.ChangeColor, color);
+  }
+
   routeTo(routerName: string) {
     if (this.window) {
       this.window.focus();

@@ -4,7 +4,7 @@
 
 <script>
 import { MessageType, WinOpt } from "../tools/enums";
-import { ipcRenderer as ipc, webFrame, shell } from "electron";
+import { ipcRenderer as ipc, webFrame } from "electron";
 export default {
   name: "WindowController",
   methods: {
@@ -44,13 +44,6 @@ export default {
   mounted: function() {
     ipc.on(MessageType.Router.toString(), (event, arg) => {
       this.changeMode(arg);
-    });
-    ipc.on(MessageType.WindowOpt.toString(), (event, arg) => {
-      switch (arg.type) {
-        case WinOpt.OpenExternal:
-          shell.openExternal(arg.args);
-          break;
-      }
     });
   }
 };

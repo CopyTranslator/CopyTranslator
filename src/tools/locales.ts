@@ -14,6 +14,7 @@ interface Locale {
   sourceLanguage: string;
   targetLanguage: string;
   detectLanguage: string;
+  languageDetected: string;
   clear: string;
   helpAndUpdate: string;
   exit: string;
@@ -45,6 +46,7 @@ const zh_cn: Locale = {
   sourceLanguage: "源语言",
   targetLanguage: "目标语言",
   detectLanguage: "检测语言",
+  languageDetected: "检测到语言",
   clear: "清空",
   helpAndUpdate: "帮助与更新",
   exit: "退出",
@@ -76,6 +78,7 @@ const en: Locale = {
   sourceLanguage: "Source Language",
   targetLanguage: "Target Language",
   detectLanguage: "Detected Language",
+  languageDetected: "Language detected",
   clear: "Clear",
   helpAndUpdate: "Help And Update",
   exit: "Exit",

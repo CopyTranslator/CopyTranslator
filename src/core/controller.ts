@@ -1,7 +1,7 @@
 import { Translator, GoogleTranslator } from "../tools/translator";
 import { initConfig } from "../tools/configuration";
 import { ConfigParser, getEnumValue } from "../tools/configParser";
-import { MessageType } from "../tools/enums";
+import { MessageType, WinOpt } from "../tools/enums";
 import { WindowWrapper } from "../tools/windows";
 import { windowController } from "../tools/windowController";
 import { envConfig } from "../tools/envConfig";
@@ -11,6 +11,9 @@ import { StringProcessor } from "./stringProcessor";
 import { BrowserWindow, app, MenuItem } from "electron";
 import { BaseMenu } from "../tools/menu";
 import { TrayManager } from "../tools/tray";
+import { constants } from "./constant";
+const { shell } = require("electron");
+shell.openExternal(constants.homepage);
 const clipboard = require("electron-clipboard-extended");
 
 function onMenuClick(
@@ -44,6 +47,9 @@ function onMenuClick(
         break;
       case "settings":
         controller.focusWin.routeTo("Settings");
+        break;
+      case "helpAndUpdate":
+        shell.openExternal(constants.homepage);
         break;
     }
   }

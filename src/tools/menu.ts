@@ -102,6 +102,7 @@ function getItems(config: ConfigParser, type: RouteName) {
   if (type != RouteName.Settings) {
     items.push(normalItem("settings"));
   }
+  items.push(normalItem("helpAndUpdate"));
   items.push(normalItem("exit"));
   return items;
 }

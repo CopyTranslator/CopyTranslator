@@ -14,6 +14,7 @@
     "sourceLanguage": "源语言",
     "targetLanguage": "目标语言",
     "detectLanguage": "检测语言",
+    "languageDetected": "检测到语言",
     "clear": "清空",
     "helpAndUpdate": "帮助与更新",
     "exit": "退出",

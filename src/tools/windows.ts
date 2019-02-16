@@ -1,6 +1,6 @@
 import { BrowserWindow, Rectangle } from "electron";
 import { createProtocol } from "vue-cli-plugin-electron-builder/lib";
-import { MessageType } from "./enums";
+import { MessageType, WinOpt } from "./enums";
 import { ModeConfig } from "./rule";
 import { RouteName } from "./menu";
 import { url } from "inspector";
@@ -12,6 +12,13 @@ class WindowWrapper {
   constructor() {}
   sendMsg(type: string, msg: any) {
     if (this.window) this.window.webContents.send(type, msg);
+  }
+
+  winOpt(type: WinOpt, args: any) {
+    this.sendMsg(MessageType.WindowOpt.toString(), {
+      type: type,
+      args: args
+    });
   }
   routeTo(routerName: string) {
     if (this.window) {

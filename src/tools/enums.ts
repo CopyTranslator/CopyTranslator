@@ -25,7 +25,8 @@ enum WinOpt {
   Minify,
   Drag,
   Resize,
-  Zoom
+  Zoom,
+  OpenExternal
 }
 
 export { TranslatorType, FrameMode, YoudaoStatus, MessageType, WinOpt };

@@ -14,6 +14,7 @@
     "sourceLanguage": "Source Language",
     "targetLanguage": "Target Language",
     "detectLanguage": "Detected Language",
+    "languageDetected": "Language detected",
     "clear": "Clear",
     "helpAndUpdate": "Help And Update",
     "exit": "Exit",

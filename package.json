@@ -21,6 +21,7 @@
     "lodash": "^4.17.11",
     "log4js": "^4.0.1",
     "muse-ui": "^3.0.1",
+    "opn": "^5.4.0",
     "translation.js": "^0.7.5",
     "vue": "^2.5.21",
     "vue-resize-directive": "^1.1.4",

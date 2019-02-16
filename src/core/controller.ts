@@ -1,19 +1,18 @@
 import { Translator, GoogleTranslator } from "../tools/translator";
 import { initConfig } from "../tools/configuration";
 import { ConfigParser, getEnumValue } from "../tools/configParser";
-import { MessageType, WinOpt } from "../tools/enums";
+import { MessageType, WinOpt, ColorStatus } from "../tools/enums";
 import { WindowWrapper } from "../tools/windows";
 import { windowController } from "../tools/windowController";
 import { envConfig } from "../tools/envConfig";
 import { l10n, L10N } from "../tools/l10n";
 import { RuleName, reverseRuleName, ruleKeys } from "../tools/rule";
 import { StringProcessor } from "./stringProcessor";
-import { BrowserWindow, app, MenuItem } from "electron";
+import { BrowserWindow, app, MenuItem, shell } from "electron";
 import { BaseMenu } from "../tools/menu";
 import { TrayManager } from "../tools/tray";
 import { constants } from "./constant";
-const { shell } = require("electron");
-shell.openExternal(constants.homepage);
+
 const clipboard = require("electron-clipboard-extended");
 
 function onMenuClick(
@@ -75,6 +74,7 @@ class Controller {
     this.focusWin.createWindow(this.config.values.focus);
     windowController.bind();
     this.tray.init();
+    this.setCurrentColor();
   }
   onExit() {
     let focus = Object.assign(
@@ -148,7 +148,21 @@ class Controller {
     if (this.get(RuleName.autoCopy)) {
       clipboard.writeText(this.result);
     }
+    this.setCurrentColor();
     this.sync();
+  }
+
+  setCurrentColor() {
+    if (!this.get(RuleName.listenClipboard)) {
+      this.focusWin.switchColor(ColorStatus.None);
+      return;
+    } else {
+      if (this.get(RuleName.autoCopy)) {
+        this.focusWin.switchColor(ColorStatus.AutoCopy);
+      } else if (this.get(RuleName.incrementalCopy)) {
+        this.focusWin.switchColor(ColorStatus.Incremental);
+      } else this.focusWin.switchColor(ColorStatus.Listen);
+    }
   }
 
   doTranslate(text: string) {
@@ -156,6 +170,7 @@ class Controller {
     this.setSrc(text);
     let source = this.source();
     let target = this.target();
+    this.focusWin.switchColor(ColorStatus.Translating);
     this.translator
       .translate(this.src, source, target)
       .then(res => {
@@ -211,6 +226,7 @@ class Controller {
         this.clear();
         break;
     }
+    this.setCurrentColor();
     if (save) {
       this.config.setByKeyValue(ruleKey, value);
       this.config.saveValues(envConfig.sharedConfig.configPath);

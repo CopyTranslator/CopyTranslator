@@ -1,7 +1,12 @@
 <template>
-  <div v-resize="hello">
+  <div v-resize="onChange" >
     <StatusBar></StatusBar>
-    <mu-text-field :style="fontSize"  v-on:contextmenu="openMenu('Focus')" class="focusField" v-if="sharedResult"  v-model="result"  multi-line :rows-max="50"  full-width></mu-text-field>    
+    <div v-on:contextmenu="openMenu('Focus')">
+    <v-textarea 
+          name="input-7-1"
+          full-width :style="fontSize" flat rows=1  v-if="sharedResult"  v-model="result"  auto-grow 
+        ></v-textarea>
+      </div>
   </div>
 </template>
 
@@ -9,15 +14,11 @@
 import StatusBar from "../components/StatusBar";
 import BaseView from "./BaseView";
 import WindowController from "../components/WindowController";
-import resize from "vue-resize-directive";
 import Adjustable from "./Adjustable";
 export default {
   name: "FocusMode",
   mixins: [BaseView, WindowController, Adjustable],
   components: { StatusBar },
-  directives: {
-    resize
-  },
   data: function() {
     return {
       result: "",
@@ -25,9 +26,6 @@ export default {
     };
   },
   methods: {
-    hello() {
-      console.log("???");
-    },
     onChange(value = null) {
       this.resize(null, this.$el.clientHeight);
     }
@@ -48,7 +46,4 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.focusField {
-  max-height: none;
-}
 </style>

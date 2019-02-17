@@ -5,7 +5,6 @@ import store from "./store";
 import MuseUI from "muse-ui";
 import { ipcRenderer } from "electron";
 import { MessageType } from "./tools/enums";
-import "muse-ui/dist/muse-ui.css";
 import disableScroll from "disable-scroll";
 import "vuetify/dist/vuetify.min.css"; // Ensure you are using css-loader
 import Vuetify from "vuetify";

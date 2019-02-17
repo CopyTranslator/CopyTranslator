@@ -104,15 +104,7 @@ class Controller {
   }
 
   checkClipboard() {
-    let text = clipboard.readText();
-    if (
-      this.result == text ||
-      this.src == text ||
-      this.lastAppend == text ||
-      text == ""
-    )
-      return;
-    text = this.stringProccessor.normalizeAppend(clipboard.readText());
+    let text = this.stringProccessor.normalizeAppend(clipboard.readText());
     if (this.check_valid(text)) {
       this.doTranslate(text);
     }
@@ -141,8 +133,6 @@ class Controller {
   }
 
   check_valid(text: string) {
-    console.log("?", text);
-    console.log(this.src);
     if (
       this.result == text ||
       this.src == text ||

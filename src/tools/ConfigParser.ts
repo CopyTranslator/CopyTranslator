@@ -18,6 +18,7 @@ class ConfigParser {
     this.rules[keyValue] = rule;
     this.values[keyValue] = rule.predefined;
   }
+
   getValues() {
     return Object.assign({}, this.values);
   }

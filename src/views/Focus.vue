@@ -3,8 +3,7 @@
     <StatusBar></StatusBar>
     <div v-on:contextmenu="openMenu('Focus')">
     <v-textarea 
-          name="input-7-1"
-          full-width :style="fontSize" flat rows=1  v-if="sharedResult"  v-model="result"  auto-grow 
+          full-width  rows=1 :row-height="h" v-if="sharedResult"  v-model="result"  auto-grow 
         ></v-textarea>
       </div>
   </div>
@@ -22,12 +21,18 @@ export default {
   data: function() {
     return {
       result: "",
-      size: this.$controller.config.values.focus.fontSize
+      size: this.$controller.config.values.focus.fontSize,
+      h: 50
     };
   },
   methods: {
     onChange(value = null) {
       this.resize(null, this.$el.clientHeight);
+    }
+  },
+  computed: {
+    height() {
+      return this.size * 2;
     }
   },
   watch: {

@@ -1,6 +1,6 @@
 class StringProcessor {
   readonly patterns: Array<RegExp> = [/([?!.])[ ]?\n/g, /([？！。])[ \n]/g];
-  readonly pattern2 = /@@([?？！!.。])@@/g;
+  readonly pattern2 = /#([?？！!.。])#/g;
   constructor() {}
 
   static isChinese(src: string) {

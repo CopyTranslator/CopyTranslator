@@ -5,11 +5,7 @@ import store from "./store";
 import MuseUI from "muse-ui";
 import { ipcRenderer } from "electron";
 import { MessageType } from "./tools/enums";
-import disableScroll from "disable-scroll";
-import "vuetify/dist/vuetify.min.css"; // Ensure you are using css-loader
-import Vuetify from "vuetify";
-
-Vue.use(Vuetify);
+import "muse-ui/dist/muse-ui.css";
 Vue.use(MuseUI);
 
 var remote = require("electron").remote;

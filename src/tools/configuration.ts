@@ -1,6 +1,7 @@
 import { ConfigParser } from "./configParser";
 import { BoolRule, ModeRule, NumberRule, RuleName } from "./rule";
 import { TranslatorType, FrameMode } from "./enums";
+import { autoUpdater } from "electron";
 
 function initConfig(
   config: ConfigParser | undefined = undefined
@@ -35,6 +36,11 @@ function initConfig(
   config.addRule(
     RuleName.autoHide,
     new BoolRule(false, "auto hide when close to edge")
+  );
+
+  config.addRule(
+    RuleName.autoPurify,
+    new BoolRule(false, "auto replace the contene in clipboard")
   );
 
   config.addRule(

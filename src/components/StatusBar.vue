@@ -31,6 +31,7 @@ export default {
           break;
       }
     });
+    this.$controller.setCurrentColor();
   }
 };
 </script>

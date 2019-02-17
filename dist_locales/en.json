@@ -4,6 +4,7 @@
     "listenClipboard": "Listen Clipboard",
     "autoCopy": "Auto Copy",
     "autoPaste": "Auto Paste",
+    "autoPurify": "Auto Purify",
     "incrementalCopy": "Incremental Copy",
     "smartDict": "Smart Dict",
     "translate": "Translate",

@@ -4,6 +4,7 @@ interface Locale {
   listenClipboard: string;
   autoCopy: string;
   autoPaste: string;
+  autoPurify: string;
   incrementalCopy: string;
   smartDict: string;
   translate: string;
@@ -36,6 +37,7 @@ const zh_cn: Locale = {
   listenClipboard: "监听剪贴板",
   autoCopy: "自动复制",
   autoPaste: "自动粘贴",
+  autoPurify: "自动净化",
   incrementalCopy: "增量复制",
   smartDict: "智能词典",
   translate: "翻译",
@@ -68,6 +70,7 @@ const en: Locale = {
   listenClipboard: "Listen Clipboard",
   autoCopy: "Auto Copy",
   autoPaste: "Auto Paste",
+  autoPurify: "Auto Purify",
   incrementalCopy: "Incremental Copy",
   smartDict: "Smart Dict",
   translate: "Translate",

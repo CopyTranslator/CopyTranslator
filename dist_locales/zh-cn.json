@@ -4,6 +4,7 @@
     "listenClipboard": "监听剪贴板",
     "autoCopy": "自动复制",
     "autoPaste": "自动粘贴",
+    "autoPurify": "自动净化",
     "incrementalCopy": "增量复制",
     "smartDict": "智能词典",
     "translate": "翻译",

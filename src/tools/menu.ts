@@ -87,6 +87,7 @@ function getItems(config: ConfigParser, type: RouteName) {
   items.push(normalItem("clear"));
   items.push(checkItem(RuleName.autoCopy));
   items.push(checkItem(RuleName.autoPaste));
+  items.push(checkItem(RuleName.autoPurify));
   items.push(checkItem(RuleName.detectLanguage));
   items.push(checkItem(RuleName.incrementalCopy));
   items.push(checkItem(RuleName.autoHide));

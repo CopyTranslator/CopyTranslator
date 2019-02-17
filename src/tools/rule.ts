@@ -8,6 +8,7 @@ enum RuleName {
   smartDict,
   autoHide,
   autoPaste,
+  autoPurify,
   autoShow,
   frameMode,
   translatorType,

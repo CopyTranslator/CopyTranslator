@@ -31,6 +31,7 @@ class WindowWrapper {
       this.window.webContents.send(MessageType.Router.toString(), routerName);
     }
   }
+
   load(routerName: RouteName = RouteName.Focus) {
     if (!this.window) return;
     if (process.env.WEBPACK_DEV_SERVER_URL) {
@@ -46,6 +47,7 @@ class WindowWrapper {
     }
     this.window.setAlwaysOnTop(this.stayTop);
   }
+
   createWindow(param: ModeConfig) {
     // Create the browser window.
     this.window = new BrowserWindow({

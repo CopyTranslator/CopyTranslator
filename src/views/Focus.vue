@@ -2,18 +2,22 @@
   <div v-resize="onChange" >
     <StatusBar></StatusBar>
     <div v-on:contextmenu="openMenu('Focus')">
-    <v-textarea 
-          full-width  rows=1 :row-height="h" v-if="sharedResult"  v-model="result"  auto-grow 
-        ></v-textarea>
+      
+    <textarea  id="area"
+       :style="fontSize"
+          v-model="result" v-if="sharedResult"  
+        ></textarea> 
       </div>
   </div>
 </template>
 
 <script>
+import disableScroll from "disable-scroll";
 import StatusBar from "../components/StatusBar";
 import BaseView from "./BaseView";
 import WindowController from "../components/WindowController";
 import Adjustable from "./Adjustable";
+
 export default {
   name: "FocusMode",
   mixins: [BaseView, WindowController, Adjustable],
@@ -26,25 +30,22 @@ export default {
     };
   },
   methods: {
-    onChange(value = null) {
-      this.resize(null, this.$el.clientHeight);
-    }
+    onChange(value = null) {}
   },
   computed: {
     height() {
-      return this.size * 2;
+      return this.size.toString();
     }
   },
   watch: {
     sharedResult: function(newSharedResult, oldSharedResult) {
       this.result = newSharedResult.result;
     },
-    result: function(newSource, oldSource) {
-      this.onChange();
-    }
+    result: function(newSource, oldSource) {}
   },
   mounted: function() {
     this.onChange();
+    disableScroll.on();
   }
 };
 </script>

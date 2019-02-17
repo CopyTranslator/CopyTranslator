@@ -35,7 +35,11 @@ class WindowController {
       this.ctrlKey = event.ctrlKey;
     });
     ioHook.on("keyup", (event: any) => {
-      this.ctrlKey = !event.ctrlKey;
+      if (event.keycode == 29) {
+        this.ctrlKey = false;
+      } else {
+        this.ctrlKey = event.ctrlKey;
+      }
     });
     ioHook.on("mousewheel", (event: any) => {
       if (!this.ctrlKey) return;

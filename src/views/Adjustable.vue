@@ -15,7 +15,7 @@ export default {
   },
   computed: {
     fontSize() {
-      return `fontSize:${this.size.toString()}px;`;
+      return `fontSize:${this.size.toString()}px;width:100%;height:95vh`;
     }
   },
   methods: {

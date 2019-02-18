@@ -6,6 +6,7 @@ import MuseUI from "muse-ui";
 import { ipcRenderer } from "electron";
 import { MessageType } from "./tools/enums";
 import "muse-ui/dist/muse-ui.css";
+
 Vue.use(MuseUI);
 
 var remote = require("electron").remote;
@@ -14,6 +15,7 @@ var controller = remote.getGlobal("controller");
 Vue.prototype.$t = controller.getT();
 Vue.prototype.$log = remote.getGlobal("log");
 Vue.prototype.$controller = controller;
+
 new Vue({
   router,
   store,

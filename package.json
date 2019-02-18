@@ -14,7 +14,6 @@
     "locale": "tsc ./src/preprocess/generateLocales.ts && node ./src/preprocess/generateLocales.js && del src\\preprocess\\generateLocales.js"
   },
   "dependencies": {
-    "@hscmap/vue-menu": "^2.8.3",
     "disable-scroll": "^0.4.1",
     "electron-clipboard-extended": "^1.1.1",
     "iohook": "^0.3.1",
@@ -24,8 +23,6 @@
     "translation.js": "^0.7.5",
     "vue": "^2.5.21",
     "vue-router": "^3.0.1",
-    "vue-textarea-autogrow": "^0.1.0",
-    "vuetify": "^1.5.1",
     "vuex": "^3.0.1"
   },
   "devDependencies": {

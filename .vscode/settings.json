@@ -1,6 +1,4 @@
 {
-    "workbench.colorTheme": "Material Theme Ocean",
-    "workbench.iconTheme": "eq-material-theme-icons-ocean",
     "explorer.confirmDelete": false,
     "git.autofetch": true,
     "terminal.integrated.rendererType": "dom",

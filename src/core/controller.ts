@@ -7,7 +7,7 @@ import { windowController } from "../tools/windowController";
 import { envConfig } from "../tools/envConfig";
 import { l10n, L10N } from "../tools/l10n";
 import { RuleName, reverseRuleName, ruleKeys } from "../tools/rule";
-import { StringProcessor } from "./stringProcessor";
+import { normalizeAppend, isChinese } from "./stringProcessor";
 import { BrowserWindow, app, MenuItem, shell } from "electron";
 import { BaseMenu } from "../tools/menu";
 import { TrayManager } from "../tools/tray";
@@ -58,7 +58,6 @@ class Controller {
   src: string = "";
   result: string = "";
   lastAppend: string = "";
-  stringProccessor: StringProcessor = new StringProcessor();
   focusWin: WindowWrapper = new WindowWrapper();
   translator: Translator = new GoogleTranslator();
   config: ConfigParser = initConfig();
@@ -104,10 +103,14 @@ class Controller {
   }
 
   checkClipboard() {
-    let text = this.stringProccessor.normalizeAppend(clipboard.readText());
-    if (this.check_valid(text)) {
+    let text = normalizeAppend(clipboard.readText());
+    if (this.checkValid(text)) {
       this.doTranslate(text);
     }
+  }
+
+  tryTranslate(text: string) {
+    this.doTranslate(normalizeAppend(text));
   }
 
   getT() {
@@ -132,7 +135,7 @@ class Controller {
     });
   }
 
-  check_valid(text: string) {
+  checkValid(text: string) {
     if (
       this.result == text ||
       this.src == text ||
@@ -144,7 +147,7 @@ class Controller {
       this.isWord =
         this.get(RuleName.smartDict) &&
         text.split(" ").length <= 3 &&
-        !StringProcessor.isChinese(text) &&
+        !isChinese(text) &&
         !this.get(RuleName.incrementalCopy);
       return true;
     }
@@ -227,6 +230,12 @@ class Controller {
     } else {
       clipboard.stopWatching();
     }
+  }
+  saveWindow(routeName: string) {
+    this.focusWin.restore(this.config.values[routeName]);
+  }
+  restoreWindow(routeName: string) {
+    this.focusWin.restore(this.config.values[routeName]);
   }
 
   restoreFromConfig() {

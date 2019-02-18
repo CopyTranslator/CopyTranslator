@@ -19,7 +19,7 @@
       <mu-switch v-model="config.autoHide" :label="$t('autoHide')" @click="setValue('autoHide')"></mu-switch>
       <mu-switch v-model="config.smartDict" :label="$t('smartDict')" @click="setValue('smartDict')"></mu-switch>
     </mu-col>  
-    </mu-row >
+    </mu-row>
     <mu-row @click="loaded=true">
         <mu-select :label="$t('localeSetting')" full-width v-model="locale" >
           <mu-option v-for="locale in locales"  :key="locale.short" :label="locale.localeName" :value="locale.short"></mu-option>

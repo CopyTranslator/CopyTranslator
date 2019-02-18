@@ -17,6 +17,5 @@
             "autoFix": true
         }
     ],
-    "typescript.updateImportsOnFileMove.enabled": "always",
-    "prettier.eslintIntegration": true,
+    "typescript.updateImportsOnFileMove.enabled": "always"
 }

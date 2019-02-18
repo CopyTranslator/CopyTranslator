@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div >
   </div>
 </template>
 
@@ -10,14 +10,11 @@ export default {
   name: "Adjustable",
   data: function() {
     return {
-      size: 20
+      size: 20,
+      barHeight: 0
     };
   },
-  computed: {
-    fontSize() {
-      return `fontSize:${this.size.toString()}px;width:100%;height:95vh`;
-    }
-  },
+  computed: {},
   methods: {
     setZoomFactor(value) {
       this.size -= value;
@@ -31,6 +28,7 @@ export default {
           break;
       }
     });
+    this.barHeight = this.$refs.bar.$el.clientHeight;
   }
 };
 </script>

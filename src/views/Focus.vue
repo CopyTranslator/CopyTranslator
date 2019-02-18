@@ -1,10 +1,9 @@
 <template>
-  <div v-resize="onChange" >
-    <StatusBar></StatusBar>
+  <div>
+    <StatusBar ref="bar"></StatusBar>
     <div v-on:contextmenu="openMenu('Focus')">
-      
-    <textarea  id="area"
-       :style="fontSize"
+    <textarea 
+       :style="focusStyle"
           v-model="result" v-if="sharedResult"  
         ></textarea> 
       </div>
@@ -25,16 +24,14 @@ export default {
   data: function() {
     return {
       result: "",
-      size: this.$controller.config.values.focus.fontSize,
-      h: 50
+      size: this.$controller.config.values.focus.fontSize
     };
   },
-  methods: {
-    onChange(value = null) {}
-  },
+  methods: {},
   computed: {
-    height() {
-      return this.size.toString();
+    focusStyle() {
+      return `fontSize:${this.size.toString()}px;width:100%;height:${this
+        .windowHeight - this.barHeight}px;`;
     }
   },
   watch: {
@@ -44,8 +41,7 @@ export default {
     result: function(newSource, oldSource) {}
   },
   mounted: function() {
-    this.onChange();
-    disableScroll.on();
+    this.barHeight = this.$refs.bar.$el.clientHeight;
   }
 };
 </script>

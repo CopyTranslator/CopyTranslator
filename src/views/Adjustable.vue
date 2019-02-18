@@ -1,5 +1,5 @@
 <template>
-  <div >
+  <div>
   </div>
 </template>
 
@@ -11,13 +11,17 @@ export default {
   data: function() {
     return {
       size: 20,
-      barHeight: 0
+      barHeight: 0,
+      windowHeight: window.innerHeight
     };
   },
   computed: {},
   methods: {
     setZoomFactor(value) {
       this.size -= value;
+    },
+    syncHeight() {
+      this.windowHeight = window.innerHeight;
     }
   },
   mounted: function() {
@@ -28,7 +32,10 @@ export default {
           break;
       }
     });
-    this.barHeight = this.$refs.bar.$el.clientHeight;
+    window.addEventListener("resize", this.syncHeight);
+  },
+  destroyed() {
+    window.removeEventListener("resize", this.syncHeight);
   }
 };
 </script>

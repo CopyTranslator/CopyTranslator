@@ -75,8 +75,10 @@ class WindowWrapper {
     }
   }
   restore(param: ModeConfig) {
-    if (this.window)
+    if (this.window) {
       this.window.setBounds(Object.assign(this.getBound(), param));
+      this.window.setAlwaysOnTop(this.stayTop);
+    }
   }
 }
 

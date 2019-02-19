@@ -14,11 +14,13 @@ interface SharedConfig {
   userLocaleDir: string;
   configPath: string;
   configDir: string;
+  style: string;
 }
 
 interface DiffConfig {
   systemLocaleDir: string;
   iconPath: string;
+  styleTemplate: string;
 }
 
 interface EnvConfig {
@@ -29,17 +31,20 @@ interface EnvConfig {
 const sharedConfig: SharedConfig = {
   configDir: path.join(os.homedir(), "copytranslator"),
   userLocaleDir: path.join(os.homedir(), "copytranslator", "locales"),
-  configPath: path.join(os.homedir(), "copytranslator", "copytranslator.json")
+  configPath: path.join(os.homedir(), "copytranslator", "copytranslator.json"),
+  style: path.join(os.homedir(), "copytranslator", "styles.css")
 };
 
 const ProductionConfig: DiffConfig = {
   systemLocaleDir: path.join(process.resourcesPath, "locales"),
-  iconPath: path.join(process.resourcesPath, "icon.ico")
+  iconPath: path.join(process.resourcesPath, "icon.ico"),
+  styleTemplate: path.join(process.resourcesPath, "styles.css")
 };
 
 const DevConfig: DiffConfig = {
   systemLocaleDir: path.join(process.cwd(), "dist_locales"),
-  iconPath: path.join(process.cwd(), "icon.ico")
+  iconPath: path.join(process.cwd(), "icon.ico"),
+  styleTemplate: path.join(process.cwd(), "src", "styles.css")
 };
 
 const envConfig: EnvConfig = {

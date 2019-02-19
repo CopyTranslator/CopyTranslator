@@ -12,6 +12,10 @@ module.exports = {
           {
             from: `icon.ico`,
             to: `icon.ico`
+          },
+          {
+            from: `src/styles.css`,
+            to: `styles.css`
           }
         ],
         win: {

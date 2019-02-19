@@ -1,13 +1,13 @@
 <template>
-  <div>
-    <StatusBar ref="bar"></StatusBar>
-    <div v-on:contextmenu="openMenu('Focus')">
-    <textarea class="focusText"  
-       v-bind:style="focusStyle"
-          v-model="sharedResult.result" v-if="sharedResult"  
-        ></textarea> 
-      </div>
-  </div>
+    <div>
+        <StatusBar ref="bar"></StatusBar>
+        <div v-on:contextmenu="openMenu('Focus')">
+    <textarea class="focusText"
+              v-bind:style="focusStyle"
+              v-model="sharedResult.result" v-if="sharedResult"
+    ></textarea>
+        </div>
+    </div>
 </template>
 
 <script>

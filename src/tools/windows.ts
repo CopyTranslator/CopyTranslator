@@ -10,7 +10,9 @@ class WindowWrapper {
   window: BrowserWindow | undefined = undefined;
   stayTop: boolean = false;
   stored: string = RouteName.Focus;
+
   constructor() {}
+
   sendMsg(type: string, msg: any) {
     if (this.window) this.window.webContents.send(type, msg);
   }
@@ -67,6 +69,7 @@ class WindowWrapper {
       this.window = undefined;
     });
   }
+
   getBound(): Rectangle {
     if (this.window) {
       return this.window.getBounds();
@@ -79,6 +82,7 @@ class WindowWrapper {
       };
     }
   }
+
   restore(param: ModeConfig) {
     if (this.window) {
       this.window.setBounds(Object.assign(this.getBound(), param));

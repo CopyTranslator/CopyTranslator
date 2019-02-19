@@ -37,9 +37,11 @@ function rgb(r: number, g: number, b: number) {
   const t = "#" + R + G + B;
   return t;
 }
+
 function mkenum<T extends { [index: string]: U }, U extends string>(x: T) {
   return x;
 }
+
 const ColorStatus = mkenum({
   None: rgb(255, 255, 255),
   Listen: rgb(84, 255, 159),

@@ -1,4 +1,5 @@
 import { Rule, RuleName, ruleKeys } from "./rule";
+
 var fs = require("fs");
 
 type Rules = { [key: string]: Rule }; //类型别名
@@ -9,7 +10,9 @@ function getEnumValue(key: RuleName): string {
 class ConfigParser {
   rules: Rules = {};
   values: { [key: string]: any } = {};
+
   constructor() {}
+
   addRule(key: RuleName, rule: Rule) {
     let keyValue = getEnumValue(key);
     if (rule.check && !rule.check(rule.predefined)) {
@@ -36,6 +39,7 @@ class ConfigParser {
       this.values[keyValue] = value;
     }
   }
+
   setByKeyValue(keyValue: string, value: any): boolean | undefined {
     if (!ruleKeys.includes(keyValue)) {
       return false;
@@ -64,6 +68,7 @@ class ConfigParser {
       return false;
     }
   }
+
   saveValues(fileName: string) {
     fs.writeFileSync(fileName, JSON.stringify(this.values, null, 4));
   }

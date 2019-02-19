@@ -1,11 +1,12 @@
 <template>
-  <div>
-  </div>
+    <div>
+    </div>
 </template>
 
 <script>
 import { MessageType, WinOpt } from "../tools/enums";
 import { ipcRenderer as ipc } from "electron";
+
 export default {
   name: "Adjustable",
   data: function() {

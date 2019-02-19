@@ -1,4 +1,5 @@
 var _ = require("lodash");
+
 enum RuleName {
   autoCopy,
   listenClipboard,
@@ -39,6 +40,7 @@ interface ModeConfig {
   width: number;
   fontSize: number;
 }
+
 type CheckFuction = (value: any) => boolean;
 
 interface Rule {
@@ -50,6 +52,7 @@ interface Rule {
 class BoolRule implements Rule {
   predefined: boolean;
   msg: string;
+
   constructor(predefined: boolean, msg: string) {
     this.predefined = predefined;
     this.msg = msg;
@@ -60,6 +63,7 @@ class NumberRule implements Rule {
   predefined: number;
   msg: string;
   check?: CheckFuction;
+
   constructor(predefined: number, msg: string, check?: CheckFuction) {
     this.predefined = predefined;
     this.msg = msg;
@@ -73,6 +77,7 @@ class ModeRule implements Rule {
   predefined: ModeConfig;
   msg: string;
   check?: CheckFuction;
+
   constructor(predefined: ModeConfig, msg: string, check?: CheckFuction) {
     this.predefined = predefined;
     this.msg = msg;

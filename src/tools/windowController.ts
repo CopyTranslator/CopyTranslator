@@ -1,4 +1,5 @@
 import { BrowserWindow, ipcMain as ipc } from "electron";
+
 const ioHook = require("iohook");
 import { MessageType, WinOpt } from "./enums";
 
@@ -8,6 +9,7 @@ class WindowController {
   isFollow: boolean = false;
   currentWindow: BrowserWindow | undefined = undefined;
   ctrlKey = false;
+
   bind() {
     ipc.on(MessageType.WindowOpt.toString(), (event: any, args: any) => {
       var arg = args.args;

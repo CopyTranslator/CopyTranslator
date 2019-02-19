@@ -3,6 +3,7 @@ import { app, protocol } from "electron";
 import { installVueDevtools } from "vue-cli-plugin-electron-builder/lib";
 import { log } from "./tools/logger";
 import { Controller } from "./core/controller";
+
 const isDevelopment = process.env.NODE_ENV !== "production";
 
 (<any>global).log = log;

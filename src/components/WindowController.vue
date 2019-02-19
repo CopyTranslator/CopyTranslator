@@ -5,6 +5,7 @@
 <script>
 import { MessageType, WinOpt } from "../tools/enums";
 import { ipcRenderer as ipc, webFrame } from "electron";
+
 export default {
   name: "WindowController",
   methods: {

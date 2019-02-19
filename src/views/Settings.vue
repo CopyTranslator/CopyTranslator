@@ -1,38 +1,59 @@
 <template>
     <div v-on:contextmenu="openMenu('Settings')">
-      <StatusBar></StatusBar>
-     <mu-container v-if="config" ref="config"> 
-     <mu-row style="text-align:left">
-      <mu-col span="3" align-self="start" >
-        <mu-switch v-model="config.autoCopy" :label="$t('autoCopy')" @click="setValue('autoCopy')"></mu-switch>
-        <mu-switch v-model="config.incrementalCopy" :label="$t('incrementalCopy')" @click="setValue('incrementalCopy')"></mu-switch>
-        </mu-col>
-      <mu-col span="3">
-        <mu-switch v-model="config.listenClipboard" :label="$t('listenClipboard')" @click="setValue('listenClipboard')"></mu-switch>
-        <mu-switch v-model="config.stayTop" :label="$t('stayTop')" @click="setValue('stayTop')"></mu-switch>
-        </mu-col>
-      <mu-col span="3">
-        <mu-switch v-model="config.autoShow" :label="$t('autoShow')" @click="setValue('autoShow')"></mu-switch>
-        <mu-switch v-model="config.detectLanguage" :label="$t('detectLanguage')" @click="setValue('detectLanguage')"></mu-switch>
-      </mu-col>
-    <mu-col span="3">
-      <mu-switch v-model="config.autoHide" :label="$t('autoHide')" @click="setValue('autoHide')"></mu-switch>
-      <mu-switch v-model="config.smartDict" :label="$t('smartDict')" @click="setValue('smartDict')"></mu-switch>
-    </mu-col>  
-    </mu-row>
-    <mu-row @click="loaded=true">
-        <mu-select :label="$t('localeSetting')" full-width v-model="locale" >
-          <mu-option v-for="locale in locales"  :key="locale.short" :label="locale.localeName" :value="locale.short"></mu-option>
-      </mu-select>
-      </mu-row>
-      <mu-button full-width color="primary" @click="backStored" >{{$t("return")}}</mu-button>
-  </mu-container>
+        <StatusBar></StatusBar>
+        <div v-if="config" >
+            <el-row style="text-align:left;">
+                <el-col :span="6" align-self="start">
+                  <el-row>
+                    <el-switch v-model="config.autoCopy" :active-text="$t('autoCopy')"
+                              @change="setValue('autoCopy')"></el-switch>
+                              </el-row>
+                              <el-row>
+                    <el-switch v-model="config.incrementalCopy" :active-text="$t('incrementalCopy')"
+                              @change="setValue('incrementalCopy')"></el-switch>
+                              </el-row>
+                </el-col>
+                <el-col :span="6">
+                  <el-row>
+                    <el-switch v-model="config.listenClipboard" :active-text="$t('listenClipboard')"
+                              @change="setValue('listenClipboard')"></el-switch>
+                  </el-row>
+                  <el-row>
+                    <el-switch v-model="config.stayTop" :active-text="$t('stayTop')"
+                              @change="setValue('stayTop')"></el-switch></el-row>
+                </el-col>
+                <el-col :span="6">
+                  <el-row>
+                    <el-switch v-model="config.autoShow" :active-text="$t('autoShow')"
+                              @change="setValue('autoShow')"></el-switch></el-row>
+                    <el-row><el-switch v-model="config.detectLanguage" :active-text="$t('detectLanguage')"
+                              @change="setValue('detectLanguage')"></el-switch></el-row>
+                </el-col>
+                <el-col :span="6">
+                  <el-row>
+                    <el-switch v-model="config.autoHide" :active-text="$t('autoHide')"
+                              @change="setValue('autoHide')"></el-switch></el-row>
+                    <el-row><el-switch v-model="config.smartDict" :active-text="$t('smartDict')"
+                              @change="setValue('smartDict')"></el-switch></el-row>
+                </el-col>
+            </el-row>
+            <el-row>
+              <el-col v-if="locale" :span="24">
+                <el-select v-model="locale">
+                    <el-option v-for="locale in locales" :key="locale.short" :label="locale.localeName"
+                              :value="locale.short"></el-option>
+                </el-select>
+                </el-col>
+            </el-row>
+            <el-button @click="backStored">{{$t("return")}}</el-button>
+        </div>
     </div>
 </template>
 
 <script>
 import StatusBar from "../components/StatusBar";
 import WindowController from "../components/WindowController";
+
 export default {
   name: "Settings",
   mixins: [WindowController],
@@ -40,8 +61,7 @@ export default {
     return {
       config: undefined,
       locale: undefined,
-      locales: [],
-      loaded: false,
+      locales: this.$controller.locales.getLocales(),
       prevRoute: undefined
     };
   },
@@ -51,7 +71,7 @@ export default {
   watch: {
     locale: function(newLocale, oldLocale) {
       this.$controller.setByKeyValue("locale", newLocale);
-      if (this.loaded) {
+      if (oldLocale != undefined) {
         this.$controller.focusWin.load("Settings");
       }
       this.syncConfig();
@@ -59,10 +79,6 @@ export default {
   },
   mounted: function() {
     this.syncConfig();
-    this.getLocales();
-    this.$nextTick(() => {
-      this.resize(null, this.$el.clientHeight + 10);
-    });
   },
   beforeRouteEnter(to, from, next) {
     next(vm => {
@@ -77,9 +93,6 @@ export default {
     setValue(keyValue) {
       this.$controller.setByKeyValue(keyValue, this.config[keyValue]);
       this.syncConfig();
-    },
-    getLocales() {
-      this.locales = this.$controller.locales.getLocales();
     },
     backStored() {
       this.$router.push({ name: this.$controller.focusWin.stored });

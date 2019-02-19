@@ -1,6 +1,7 @@
 import { Menu, MenuItem, BrowserWindow } from "electron";
 import { RuleName } from "./rule";
 import { ConfigParser, getEnumValue as r } from "./configParser";
+
 //r can be used to transform a enum to string
 
 enum RouteName {
@@ -46,9 +47,11 @@ function NewMenuItem(option: MenuOption, func: Function) {
 
 class BaseMenu {
   func: Function;
+
   constructor(func: Function) {
     this.func = func;
   }
+
   initMenu(menu: Menu, items: Array<MenuOption>) {
     const t = (<any>global).controller.getT();
     items.forEach(item => {
@@ -56,6 +59,7 @@ class BaseMenu {
       menu.append(NewMenuItem(item, this.func));
     });
   }
+
   popup(id: RouteName) {
     let menu = new Menu();
     let config = (<any>global).controller.config;
@@ -63,6 +67,7 @@ class BaseMenu {
     menu.popup({});
   }
 }
+
 function normalItem(label: string) {
   return {
     label: label,
@@ -73,6 +78,7 @@ function normalItem(label: string) {
 
 function getItems(config: ConfigParser, type: RouteName) {
   let items: Array<MenuOption> = [];
+
   function checkItem(key: RuleName) {
     const label = r(key);
     return {
@@ -82,6 +88,7 @@ function getItems(config: ConfigParser, type: RouteName) {
       id: label
     };
   }
+
   items.push(normalItem("copySource"));
   items.push(normalItem("copyResult"));
   items.push(normalItem("clear"));

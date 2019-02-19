@@ -1,11 +1,12 @@
 <template>
-    <div :style="styleNow"  v-on:dblclick="minify" v-on:mousedown="bindDrag" ></div>
+    <div :style="styleNow" v-on:dblclick="minify" v-on:mousedown="bindDrag"></div>
 </template>
 
 <script>
 import WindowController from "./WindowController";
 import { MessageType, WinOpt } from "../tools/enums";
 import { ipcRenderer as ipc } from "electron";
+
 export default {
   mixins: [WindowController],
   data: function() {

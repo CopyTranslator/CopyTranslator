@@ -1,16 +1,16 @@
 import Vue from "vue";
-import App from "./App.vue";
 import router from "./router";
 import store from "./store";
-import MuseUI from "muse-ui";
 import { ipcRenderer } from "electron";
 import { MessageType } from "./tools/enums";
-import "muse-ui/dist/muse-ui.css";
-
-Vue.use(MuseUI);
+import ElementUI from "element-ui";
+import "element-ui/lib/theme-chalk/index.css";
+import App from "./App.vue";
 
 var remote = require("electron").remote;
 var controller = remote.getGlobal("controller");
+
+Vue.use(ElementUI);
 
 Vue.prototype.$t = controller.getT();
 Vue.prototype.$log = remote.getGlobal("log");
@@ -27,5 +27,6 @@ new Vue({
         store.commit("setShared", arg);
       }
     );
+    controller.checkClipboard();
   }
 }).$mount("#app");

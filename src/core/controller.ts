@@ -65,6 +65,7 @@ class Controller {
   menu = new BaseMenu(onMenuClick);
   tray: TrayManager = new TrayManager();
   isWord: boolean = false;
+
   constructor() {
     this.config.loadValues(envConfig.sharedConfig.configPath);
     this.restoreFromConfig();
@@ -110,7 +111,9 @@ class Controller {
   }
 
   tryTranslate(text: string) {
-    this.doTranslate(normalizeAppend(text));
+    if (text != "") {
+      this.doTranslate(normalizeAppend(text));
+    }
   }
 
   getT() {
@@ -197,6 +200,7 @@ class Controller {
       target: target
     };
   }
+
   doTranslate(text: string) {
     const language = this.preProcess(text);
     this.translator
@@ -207,6 +211,7 @@ class Controller {
           this.postProcess(language);
         } else {
           this.onError("translate error");
+          this.setCurrentColor();
         }
       })
       .catch(err => {
@@ -217,6 +222,7 @@ class Controller {
   source() {
     return this.config.values.source;
   }
+
   target() {
     return this.config.values.target;
   }
@@ -231,9 +237,11 @@ class Controller {
       clipboard.stopWatching();
     }
   }
+
   saveWindow(routeName: string) {
     this.focusWin.restore(this.config.values[routeName]);
   }
+
   restoreWindow(routeName: string) {
     this.focusWin.restore(this.config.values[routeName]);
   }
@@ -243,6 +251,7 @@ class Controller {
       this.setByKeyValue(keyValue, this.config.values[keyValue], false);
     }
   }
+
   setByKeyValue(ruleKey: string, value: any, save = true) {
     let ruleValue = reverseRuleName[ruleKey];
     switch (ruleValue) {
@@ -277,4 +286,5 @@ class Controller {
     }
   }
 }
+
 export { Controller };

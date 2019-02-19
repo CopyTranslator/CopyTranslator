@@ -1,17 +1,22 @@
 import { TranslatorType } from "./enums";
 import { GoogleLangList, GoogleCodes, GoogleLanguages } from "./languages";
 import { youdao, baidu, google } from "translation.js";
+
 var _ = require("lodash");
 
 abstract class Translator {
   constructor() {}
+
   abstract getLanguages(): [string];
+
   abstract lang2code(lang: string): string;
+
   abstract translate(
     text: string,
     src: string,
     dest: string
   ): Promise<string | undefined>;
+
   abstract detect(text: string): Promise<string | undefined>; //return lang
 }
 
@@ -19,9 +24,11 @@ class GoogleTranslator extends Translator {
   getLanguages() {
     return GoogleLangList;
   }
+
   lang2code(lang: string) {
     return GoogleLanguages[lang];
   }
+
   async translate(
     text: string,
     src: string,
@@ -39,6 +46,7 @@ class GoogleTranslator extends Translator {
       return undefined;
     }
   }
+
   async detect(text: string): Promise<string | undefined> {
     try {
       let lang = await google.detect(text);
@@ -49,4 +57,5 @@ class GoogleTranslator extends Translator {
     }
   }
 }
+
 export { Translator, GoogleTranslator };

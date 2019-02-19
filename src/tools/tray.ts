@@ -3,7 +3,9 @@ import { envConfig } from "./envConfig";
 
 class TrayManager {
   tray: Tray | undefined;
+
   constructor() {}
+
   init() {
     this.tray = new Tray(envConfig.diffConfig.iconPath);
     this.tray.setToolTip("CopyTranslator");
@@ -12,4 +14,5 @@ class TrayManager {
     });
   }
 }
+
 export { TrayManager };

@@ -13,7 +13,7 @@ export default {
   },
   data: function() {
     return {
-      languages: [],
+      languages: this.$controller.translator.getLanguages(),
       source: this.$controller.source(),
       target: this.$controller.target()
     };

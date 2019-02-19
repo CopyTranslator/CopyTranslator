@@ -21,6 +21,6 @@ function generateLocales(
 
 // prettier-ignore
 generateLocales({
-  "en": en,
-  "zh-cn": zh_cn
-},localeDir);
+    "en": en,
+    "zh-cn": zh_cn
+}, localeDir);

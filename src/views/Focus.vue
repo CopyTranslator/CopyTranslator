@@ -2,8 +2,8 @@
   <div>
     <StatusBar ref="bar"></StatusBar>
     <div v-on:contextmenu="openMenu('Focus')">
-    <textarea 
-       :style="focusStyle"
+    <textarea class="focusText"  
+       v-bind:style="focusStyle"
           v-model="sharedResult.result" v-if="sharedResult"  
         ></textarea> 
       </div>
@@ -27,8 +27,11 @@ export default {
   },
   computed: {
     focusStyle() {
-      return `fontSize:${this.size.toString()}px;width:100%;height:${this
-        .windowHeight - this.barHeight}px;`;
+      return {
+        fontSize: this.size.toString() + "px",
+        width: "100%",
+        height: (this.windowHeight - this.barHeight).toString() + "px"
+      };
     }
   },
   mounted: function() {

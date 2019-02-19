@@ -1,13 +1,13 @@
 <template>
-    <div v-on:contextmenu="openMenu('Focus')">
+    <div v-on:contextmenu="openMenu('Contrast')">
       <StatusBar ref="bar"></StatusBar>
       <div class="contrast">
-        <div class="textPanel">
-          <textarea v-if="sharedResult" :style="area"  v-model="sharedResult.src"></textarea>
-     <textarea :style="area" v-if="sharedResult" v-model="sharedResult.result">
+        <div>
+          <textarea class="contrastText" v-if="sharedResult" :style="area"  v-model="sharedResult.src"></textarea>
+     <textarea class="contrastText" :style="area" v-if="sharedResult" v-model="sharedResult.result">
      </textarea>
      </div>
-        <div class="settingPanel">
+        <div >
            <mu-select :label="$t('sourceLanguage')"  v-model="source" full-width >
           <mu-option v-for="lang in languages"  :key="lang" :label="lang" :value="lang"></mu-option>
       </mu-select>

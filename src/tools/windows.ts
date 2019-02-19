@@ -4,6 +4,7 @@ import { MessageType, WinOpt, ColorStatus } from "./enums";
 import { ModeConfig } from "./rule";
 import { RouteName } from "./menu";
 import { url } from "inspector";
+import { loadStyles } from "./style";
 
 class WindowWrapper {
   window: BrowserWindow | undefined = undefined;
@@ -46,6 +47,10 @@ class WindowWrapper {
       this.window.loadURL(`file://${__dirname}/index.html#${routerName}`);
     }
     this.window.setAlwaysOnTop(this.stayTop);
+    let windowPointer = this.window;
+    this.window.webContents.on("did-finish-load", function() {
+      windowPointer.webContents.insertCSS(loadStyles());
+    });
   }
 
   createWindow(param: ModeConfig) {

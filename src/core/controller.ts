@@ -1,58 +1,18 @@
 import { Translator, GoogleTranslator } from "../tools/translator";
 import { initConfig } from "../tools/configuration";
 import { ConfigParser, getEnumValue } from "../tools/configParser";
-import { MessageType, WinOpt, ColorStatus } from "../tools/enums";
+import { MessageType, ColorStatus } from "../tools/enums";
 import { WindowWrapper } from "../tools/windows";
 import { windowController } from "../tools/windowController";
 import { envConfig } from "../tools/envConfig";
 import { l10n, L10N } from "../tools/l10n";
 import { RuleName, reverseRuleName, ruleKeys } from "../tools/rule";
 import { normalizeAppend, isChinese } from "./stringProcessor";
-import { BrowserWindow, app, MenuItem, shell } from "electron";
+import { app } from "electron";
 import { BaseMenu } from "../tools/menu";
 import { TrayManager } from "../tools/tray";
-import { constants } from "./constant";
-
+import { onMenuClick } from "../tools/action";
 const clipboard = require("electron-clipboard-extended");
-
-function onMenuClick(
-  menuItem: MenuItem,
-  browserWindow: BrowserWindow,
-  event: Event,
-  id: string
-) {
-  var controller = (<any>global).controller;
-  if (ruleKeys.includes(id)) {
-    controller.setByKeyValue(id, menuItem.checked);
-  } else {
-    switch (id) {
-      case "contrastMode":
-        controller.focusWin.routeTo("Contrast");
-        break;
-      case "focusMode":
-        controller.focusWin.routeTo("Focus");
-        break;
-      case "exit":
-        controller.onExit();
-        break;
-      case "clear":
-        controller.clear();
-        break;
-      case "copySource":
-        clipboard.writeText(controller.src);
-        break;
-      case "copyResult":
-        clipboard.writeText(controller.result);
-        break;
-      case "settings":
-        controller.focusWin.routeTo("Settings");
-        break;
-      case "helpAndUpdate":
-        shell.openExternal(constants.homepage);
-        break;
-    }
-  }
-}
 
 class Controller {
   src: string = "";

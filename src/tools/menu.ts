@@ -31,7 +31,7 @@ interface MenuOption {
   ) => void;
 }
 
-function NewMenuItem(option: MenuOption, func: Function) {
+function NewMenuItem(option: MenuOption, callback: Function) {
   var key = option.id;
   if (!option.click) {
     option.click = function(
@@ -39,24 +39,24 @@ function NewMenuItem(option: MenuOption, func: Function) {
       browserWindow: BrowserWindow,
       event: Event
     ) {
-      func(menuItem, browserWindow, event, key);
+      callback(menuItem, browserWindow, event, key);
     };
   }
   return new MenuItem(option);
 }
 
 class BaseMenu {
-  func: Function;
+  callback: Function;
 
-  constructor(func: Function) {
-    this.func = func;
+  constructor(callback: Function) {
+    this.callback = callback;
   }
 
   initMenu(menu: Menu, items: Array<MenuOption>) {
     const t = (<any>global).controller.getT();
     items.forEach(item => {
       item.label = t(item.label);
-      menu.append(NewMenuItem(item, this.func));
+      menu.append(NewMenuItem(item, this.callback));
     });
   }
 

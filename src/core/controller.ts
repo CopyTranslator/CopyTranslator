@@ -9,9 +9,9 @@ import { l10n, L10N } from "../tools/l10n";
 import { RuleName, reverseRuleName, ruleKeys } from "../tools/rule";
 import { normalizeAppend, isChinese } from "./stringProcessor";
 import { app } from "electron";
-import { BaseMenu } from "../tools/menu";
+import { ActionManager } from "../tools/action";
 import { TrayManager } from "../tools/tray";
-import { onMenuClick } from "../tools/action";
+import { handleActions } from "./actionCallback";
 const clipboard = require("electron-clipboard-extended");
 
 class Controller {
@@ -22,7 +22,7 @@ class Controller {
   translator: Translator = new GoogleTranslator();
   config: ConfigParser = initConfig();
   locales: L10N = l10n;
-  menu = new BaseMenu(onMenuClick);
+  action = new ActionManager(handleActions);
   tray: TrayManager = new TrayManager();
   isWord: boolean = false;
 
@@ -35,6 +35,7 @@ class Controller {
     this.focusWin.createWindow(this.config.values.focus);
     windowController.bind();
     this.tray.init();
+    this.action.init();
   }
 
   onExit() {
@@ -43,6 +44,7 @@ class Controller {
       this.focusWin.getBound()
     );
     this.setByKeyValue("focus", focus);
+    this.action.unregister();
     app.quit();
   }
 
@@ -210,6 +212,9 @@ class Controller {
     for (let keyValue in this.config.values) {
       this.setByKeyValue(keyValue, this.config.values[keyValue], false);
     }
+  }
+  switchValue(ruleKey: string) {
+    this.setByKeyValue(ruleKey, !this.config.values[ruleKey]);
   }
 
   setByKeyValue(ruleKey: string, value: any, save = true) {

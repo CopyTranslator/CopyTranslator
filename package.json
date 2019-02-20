@@ -11,7 +11,8 @@
     "electron:serve": "vue-cli-service electron:serve",
     "postinstall": "electron-builder install-app-deps",
     "rebuild": "electron-rebuild",
-    "locale": "tsc ./src/preprocess/generateLocales.ts && node ./src/preprocess/generateLocales.js && del src\\preprocess\\generateLocales.js"
+    "prebuild": "tsc ./src/preprocess/prebuild.ts && node ./src/preprocess/prebuild.js",
+    "clean":"del src\\*\\*.js"
   },
   "dependencies": {
     "electron-clipboard-extended": "^1.1.1",

@@ -2,7 +2,7 @@ import { BrowserWindow, Rectangle } from "electron";
 import { createProtocol } from "vue-cli-plugin-electron-builder/lib";
 import { MessageType, WinOpt, ColorStatus } from "./enums";
 import { ModeConfig } from "./rule";
-import { RouteName } from "./menu";
+import { RouteName } from "./action";
 import { url } from "inspector";
 import { loadStyles } from "./style";
 

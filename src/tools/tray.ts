@@ -10,7 +10,7 @@ class TrayManager {
     this.tray = new Tray(envConfig.diffConfig.iconPath);
     this.tray.setToolTip("CopyTranslator");
     this.tray.on("right-click", event => {
-      (<any>global).controller.menu.popup("Tray");
+      (<any>global).controller.action.popup("Tray");
     });
   }
 }

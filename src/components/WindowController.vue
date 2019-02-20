@@ -31,7 +31,8 @@ export default {
       }
     },
     openMenu(id = null) {
-      this.$controller.menu.popup(id);
+      console.log(this.$controller.action);
+      this.$controller.action.popup(id);
     },
     resize(w = null, h = null, x = null, y = null) {
       this.windowOpt(WinOpt.Resize, {

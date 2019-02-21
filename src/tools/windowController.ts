@@ -2,6 +2,7 @@ import { BrowserWindow, ipcMain as ipc } from "electron";
 
 const ioHook = require("iohook");
 import { MessageType, WinOpt } from "./enums";
+import { RuleName } from "./rule";
 
 class WindowController {
   x: number = 0;
@@ -55,7 +56,12 @@ class WindowController {
     ioHook.on("mouseup", (event: MouseEvent) => {
       this.isFollow = false;
       this.currentWindow = undefined;
+      var controller = (<any>global).controller;
+      if (controller.get(RuleName.autoHide)) {
+        controller.focusWin.blur();
+      }
     });
+
     ioHook.on("mousedrag", (event: MouseEvent) => {
       if (this.isFollow && this.currentWindow && event.button === 0) {
         let x_now = event.x;

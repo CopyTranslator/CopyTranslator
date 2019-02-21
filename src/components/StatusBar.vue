@@ -11,7 +11,7 @@ export default {
   mixins: [WindowController],
   data: function() {
     return {
-      colorNow: "red"
+      colorNow: "white"
     };
   },
   computed: {

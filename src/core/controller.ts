@@ -8,7 +8,7 @@ import { envConfig } from "../tools/envConfig";
 import { l10n, L10N } from "../tools/l10n";
 import { RuleName, reverseRuleName, ruleKeys } from "../tools/rule";
 import { normalizeAppend, isChinese } from "./stringProcessor";
-import { app } from "electron";
+import { app, Rectangle } from "electron";
 import { ActionManager } from "../tools/action";
 import { TrayManager } from "../tools/tray";
 import { handleActions } from "./actionCallback";
@@ -125,6 +125,7 @@ class Controller {
       clipboard.writeText(this.src);
     }
     this.setCurrentColor();
+    this.focusWin.edgeShow();
     this.sync(language);
   }
 
@@ -200,8 +201,13 @@ class Controller {
     }
   }
 
-  saveWindow(routeName: string) {
-    this.focusWin.restore(this.config.values[routeName]);
+  saveWindow(routeName: string, bound: Rectangle, fontSize: number) {
+    this.setByKeyValue(
+      routeName,
+      Object.assign(this.config.values[routeName], bound, {
+        fontSize: fontSize
+      })
+    );
   }
 
   restoreWindow(routeName: string) {
@@ -213,6 +219,7 @@ class Controller {
       this.setByKeyValue(keyValue, this.config.values[keyValue], false);
     }
   }
+
   switchValue(ruleKey: string) {
     this.setByKeyValue(ruleKey, !this.config.values[ruleKey]);
   }
@@ -224,7 +231,6 @@ class Controller {
         this.setWatch(value);
         break;
       case RuleName.stayTop:
-        this.focusWin.stayTop = value;
         if (this.focusWin.window) {
           this.focusWin.window.focus();
           this.focusWin.window.setAlwaysOnTop(value);

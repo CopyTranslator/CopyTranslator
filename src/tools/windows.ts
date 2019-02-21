@@ -1,14 +1,13 @@
-import { BrowserWindow, Rectangle } from "electron";
+import { BrowserWindow, Rectangle, screen } from "electron";
 import { createProtocol } from "vue-cli-plugin-electron-builder/lib";
 import { MessageType, WinOpt, ColorStatus } from "./enums";
-import { ModeConfig } from "./rule";
+import { ModeConfig, RuleName } from "./rule";
 import { RouteName } from "./action";
 import { url } from "inspector";
 import { loadStyles } from "./style";
 
 class WindowWrapper {
   window: BrowserWindow | undefined = undefined;
-  stayTop: boolean = false;
   stored: string = RouteName.Focus;
 
   constructor() {}
@@ -48,11 +47,100 @@ class WindowWrapper {
       // Load the index.html when not in development
       this.window.loadURL(`file://${__dirname}/index.html#${routerName}`);
     }
-    this.window.setAlwaysOnTop(this.stayTop);
     let windowPointer = this.window;
     this.window.webContents.on("did-finish-load", function() {
       windowPointer.webContents.insertCSS(loadStyles());
     });
+    var that = this;
+    this.window.on("blur", () => {
+      that.edgeHide();
+    });
+  }
+
+  setBounds(bounds: Rectangle) {
+    if (this.window) {
+      this.window.setBounds(bounds);
+    }
+  }
+
+  edgeHide() {
+    let { x, y, width, height } = this.getBound();
+    let xEnd = x + width;
+    let yEnd = y + height;
+    const {
+      width: screenWidth,
+      height: screenHeight
+    } = screen.getPrimaryDisplay().workAreaSize;
+    if (
+      (x <= 0 || xEnd >= screenWidth || y <= 0) &&
+      (<any>global).controller.get(RuleName.autoHide)
+    ) {
+      if (y <= 0) {
+        while (yEnd > 0) {
+          y--;
+          yEnd--;
+          this.setBounds({ x: x, y: y, width: width, height: height });
+        }
+      } else if (x < 0) {
+        while (xEnd >= 0) {
+          x--;
+          xEnd--;
+          this.setBounds({ x: x, y: y, width: width, height: height });
+        }
+      } else if (xEnd >= screenWidth) {
+        while (x < screenWidth) {
+          x++;
+          this.setBounds({ x: x, y: y, width: width, height: height });
+        }
+      }
+    }
+  }
+
+  edgeShow() {
+    let { x, y, width, height } = this.getBound();
+    let xEnd = x + width;
+    let yEnd = y + height;
+    const {
+      width: screenWidth,
+      height: screenHeight
+    } = screen.getPrimaryDisplay().workAreaSize;
+    if (
+      (xEnd <= 0 || x >= screenWidth || yEnd <= 0) &&
+      (<any>global).controller.get(RuleName.autoHide)
+    ) {
+      if (xEnd <= 0) {
+        while (x <= 0) {
+          x++;
+          xEnd++;
+          this.setBounds({ x: x, y: y, width: width, height: height });
+        }
+      } else if (x >= screenWidth) {
+        while (xEnd >= screenWidth) {
+          x--;
+          xEnd--;
+          this.setBounds({ x: x, y: y, width: width, height: height });
+        }
+      } else if (yEnd <= 0) {
+        while (y <= 0) {
+          y++;
+          yEnd++;
+          this.setBounds({ x: x, y: y, width: width, height: height });
+        }
+      }
+    }
+  }
+
+  show() {
+    if (this.window) {
+      this.window.showInactive();
+      this.window.moveTop();
+    }
+  }
+
+  blur() {
+    if (this.window) {
+      this.window.blur();
+    }
   }
 
   createWindow(param: ModeConfig) {
@@ -86,7 +174,9 @@ class WindowWrapper {
   restore(param: ModeConfig) {
     if (this.window) {
       this.window.setBounds(Object.assign(this.getBound(), param));
-      this.window.setAlwaysOnTop(this.stayTop);
+      this.window.setAlwaysOnTop(
+        (<any>global).controller.get(RuleName.stayTop)
+      );
     }
   }
 }

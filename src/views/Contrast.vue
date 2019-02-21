@@ -62,7 +62,8 @@ export default {
   data: function() {
     return {
       config: undefined,
-      size: this.$controller.config.values.contrast.fontSize
+      size: this.$controller.config.values.contrast.fontSize,
+      routeName: "contrast"
     };
   },
   computed: {
@@ -78,7 +79,9 @@ export default {
   mounted: function() {
     this.barHeight = this.$refs.bar.$el.clientHeight;
     this.syncConfig();
+    this.$controller.restoreWindow("contrast");
   },
+
   methods: {
     translate() {
       this.$controller.tryTranslate(this.sharedResult.src);

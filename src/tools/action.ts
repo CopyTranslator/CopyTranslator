@@ -39,7 +39,7 @@ interface Action {
   ) => void;
 }
 
-function NewMenuItem(action: Action, callback: Function) {
+function ActionWrapper(action: Action, callback: Function) {
   var key = action.id;
   if (!action.click) {
     action.click = function(
@@ -88,7 +88,7 @@ class ActionManager {
   getActions(config: ConfigParser, callback: Function) {
     let items: Array<Action> = [];
     function normalAction(id: string) {
-      return NewMenuItem(
+      return ActionWrapper(
         {
           type: MenuItemType.normal,
           id: id
@@ -98,7 +98,7 @@ class ActionManager {
     }
     function switchAction(ruleName: RuleName) {
       const id = r(ruleName);
-      return NewMenuItem(
+      return ActionWrapper(
         {
           type: MenuItemType.checkbox,
           checked: config.values[id],

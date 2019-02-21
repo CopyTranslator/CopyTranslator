@@ -31,7 +31,6 @@ export default {
       }
     },
     openMenu(id = null) {
-      console.log(this.$controller.action);
       this.$controller.action.popup(id);
     },
     resize(w = null, h = null, x = null, y = null) {
@@ -47,6 +46,16 @@ export default {
     ipc.on(MessageType.Router.toString(), (event, arg) => {
       this.changeMode(arg);
     });
+    if (this.routeName) this.$controller.restoreWindow(this.routerName);
+  },
+  destroyed: function() {
+    if (this.routerName) {
+      this.$controller.saveWindow(
+        this.routeName,
+        this.$controller.focusWin.getBound(),
+        this.size
+      );
+    }
   }
 };
 </script>

@@ -80,7 +80,7 @@ const en: Locale = {
   result: "Result", //译文
   sourceLanguage: "Source Language",
   targetLanguage: "Target Language",
-  detectLanguage: "Detected Language",
+  detectLanguage: "Detect Language",
   languageDetected: "Language detected",
   clear: "Clear",
   helpAndUpdate: "Help And Update",

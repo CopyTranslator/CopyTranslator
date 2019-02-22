@@ -93,13 +93,16 @@ Append the copied text to the source other than replace it, especially useful wh
 - The `Contrast Mode` is in accordance with the user's previous usage habits, and the original text is displayed against the translation.
 - `Focus mode` only provides a translation window for you to follow the translation. When using the focus mode, please check the `Stay on top` and `Listen Clipboard`. Check the `Auto copy` if necessary, 
 
+
+### Customization
+- Interface style, font, background and other styles can be easily customized.
+- Customizible Global Hotkey
+- Vast interface language to choose from and you are able to create or download locale language files.
+
 ### Other features
 
 - Support for rich languages, `CopyTranslator` support whatever Google translation supports.
 - Many automated customization options are available, such as `Auto Copy`, `Config Memorization`, `Auto Hide`, `Auto Display`.
-- Support global hotkeys and convenient shortcut operations.
-- International, interface language can choose from English or Simplified Chinese.
-- It occupies less memory and has only a few ten megabytes of  resident memory.
 - There will be more new features in`CopyTranslator` , so stay tuned.
 
 Please refer to the [User Manual](https://github.com/copytranslator/copytranslator/wiki/Usage-%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97) to know more about `CopyTranslator`
@@ -134,7 +137,7 @@ Designer: [Mārtiņš Zemlickis](http://mzemlickis.lv/)
 
 - [Electron](https://electronjs.org):Build cross platform desktop apps with JavaScript, HTML, and CSS
 - [Vue](http://vuejs.org): The Progressive JavaScript Framework.
-- [Vuetify](https://vuetifyjs.com): to build user interface.
+- [Element](http://element-cn.eleme.io/#/zh-CN): to build user interface.
 - [translation.js](https://github.com/Selection-Translator/translation.js): core translate engine.
 - [iohook](https://github.com/wilix-team/iohook): For handling mouse and keyboard event 
 - [robotjs](http://robotjs.io/): For simulating keyboard input.

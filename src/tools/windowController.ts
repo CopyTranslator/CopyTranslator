@@ -1,8 +1,13 @@
 import { BrowserWindow, ipcMain as ipc } from "electron";
-
 const ioHook = require("iohook");
 import { MessageType, WinOpt } from "./enums";
 import { RuleName } from "./rule";
+
+import robot from "robotjs";
+function simulateCopy() {
+  robot.keyTap("c", "control");
+  robot.keyTap("C", "control");
+}
 
 class WindowController {
   x: number = 0;
@@ -10,6 +15,10 @@ class WindowController {
   isFollow: boolean = false;
   currentWindow: BrowserWindow | undefined = undefined;
   ctrlKey = false;
+  drag = false;
+  lastDown = Date.now();
+  lastX = 0;
+  lastY = 0;
 
   bind() {
     ipc.on(MessageType.WindowOpt.toString(), (event: any, args: any) => {
@@ -60,8 +69,20 @@ class WindowController {
       if (controller.get(RuleName.autoHide)) {
         controller.focusWin.blur();
       }
+      if (
+        Date.now() - this.lastDown > 300 &&
+        Math.abs(event.x - this.lastX) < 4 &&
+        Math.abs(event.y - this.lastY) < 4
+      ) {
+        console.log("tryed");
+        simulateCopy();
+      }
     });
-
+    ioHook.on("mousedown", (event: MouseEvent) => {
+      this.lastDown = Date.now();
+      this.lastX = event.x;
+      this.lastY = event.y;
+    });
     ioHook.on("mousedrag", (event: MouseEvent) => {
       if (this.isFollow && this.currentWindow && event.button === 0) {
         let x_now = event.x;
@@ -75,6 +96,7 @@ class WindowController {
         bounds.y += dy;
         this.currentWindow.setBounds(bounds);
       }
+      this.drag = true;
     });
     //注册的指令。send到主进程main.js中。
     // Register and start hook

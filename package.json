@@ -2,7 +2,11 @@
   "name": "copytranslator",
   "version": "0.0.8",
   "private": true,
-  "author": "Elliott Zheng",
+  "author": { 
+    "name" : "Elliott Zheng", 
+    "email" : "copytranslator@hypercube.top",
+    "url" : "https://hypercube.top"
+  },    
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
@@ -10,9 +14,9 @@
     "electron:build": "npm run prebuild && vue-cli-service electron:build",
     "electron:serve": "vue-cli-service electron:serve",
     "postinstall": "electron-builder install-app-deps",
-    "rebuild": "electron-rebuild",
+    "rebuild": "npm rebuild --runtime=electron --target=3.0.0 --disturl=https://atom.io/download/atom-shell --abi=64",
     "prebuild": "tsc ./src/preprocess/prebuild.ts && node ./src/preprocess/prebuild.js",
-    "clean":"del src\\*\\*.js"
+    "clean": "del src\\*\\*.js"
   },
   "dependencies": {
     "electron-clipboard-extended": "^1.1.1",
@@ -20,6 +24,7 @@
     "iohook": "^0.3.1",
     "lodash": "^4.17.11",
     "log4js": "^4.0.1",
+    "robotjs": "^0.5.1",
     "translation.js": "^0.7.5",
     "vue": "^2.5.21",
     "vue-router": "^3.0.1",

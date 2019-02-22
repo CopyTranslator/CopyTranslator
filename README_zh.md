@@ -80,15 +80,17 @@
 - `对照模式`符合用户以前的的使用习惯，原文与译文对照显示。
 - `专注模式`只提供译文窗口，便于您关注译文。使用专注模式时注意勾选`始终置顶`及`监听剪贴板`,必要时应勾选`自动复制`。
 
+### 可玩性超强的自定义
+- 界面的风格，字体，背景等样式可以方便地自定义。
+- 支持**自定义全局热键**及方便的快捷键操作
+- 国际化，提供多种界面语言供选择，**并支持自行创建或下载区域语言文件。**
+
 ### 其他特性
 - 支持语言丰富，Google翻译支持啥我们就支持啥。
 - 更多自动化的自定义选项可供选择，如`自动复制`，`设置记忆`，`贴边隐藏`,`自动显示`
-- 支持全局热键及方便的快捷键操作
-- 国际化，界面语言可选择English/简体中文
-- 占用内存小，运行时常驻内存只有十几兆。
 - `CopyTranslator`还将继续加入更多新特性，敬请期待。
 
-请查阅[使用指南](https://github.com/elliottzheng/CopyTranslator/wiki/Usage-%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97)了解更多
+请查阅[使用指南](https://github.com/copytranslator/CopyTranslator/wiki/Usage-%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97)了解更多
 
 
 
@@ -122,7 +124,7 @@
 
 - [Electron](https://electronjs.org)：使用 JavaScript, HTML 和 CSS 构建跨平台的桌面应用
 - [Vue](http://vuejs.org)：渐进式 JavaScript 框架
-- [Vuetify](https://vuetifyjs.com): Material Design 组件库
+- [Element](http://element-cn.eleme.io/#/zh-CN): 一套为开发者、设计师和产品经理准备的基于 Vue 2.0 的桌面端组件库
 - [translation.js](https://github.com/Selection-Translator/translation.js): 核心翻译引擎
 - [iohook](https://github.com/wilix-team/iohook): 捕获全局鼠标和键盘事件
 - [robotjs](http://robotjs.io/): 模拟键盘输入

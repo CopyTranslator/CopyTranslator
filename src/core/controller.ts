@@ -66,6 +66,7 @@ class Controller {
   }
 
   checkClipboard() {
+    console.log(clipboard.readText());
     let text = normalizeAppend(clipboard.readText());
     if (this.checkValid(text)) {
       this.doTranslate(text);

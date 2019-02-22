@@ -10,27 +10,21 @@ module.exports = {
             to: `locales`
           },
           {
-            from: `icon.ico`,
-            to: `icon.ico`
+            from: `icon.png`,
+            to: `icon.png`
           },
           {
             from: `src/styles.css`,
             to: `styles.css`
           }
         ],
-        win: {
-          icon: "icon.ico",
+        linux: {
           target: [
             {
-              target: "nsis",
-              arch: ["x64"] //"ia32"
+              target: "deb",
+              arch: ["x64"]
             }
           ]
-        },
-        nsis: {
-          installerIcon: "icon.ico",
-          oneClick: false,
-          perMachine: false
         }
       },
       externals: ["iohook"],

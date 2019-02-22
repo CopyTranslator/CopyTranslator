@@ -27,6 +27,14 @@ module.exports = {
             }
           ]
         },
+        linux: {
+          target: [
+            {
+              target: "deb",
+              arch: ["x64"]
+            }
+          ]
+        },
         nsis: {
           installerIcon: "icon.ico",
           oneClick: false,

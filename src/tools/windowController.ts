@@ -13,6 +13,7 @@ class WindowController {
 
   bind() {
     ipc.on(MessageType.WindowOpt.toString(), (event: any, args: any) => {
+      console.log(event,args);
       var arg = args.args;
       var currentWindow = BrowserWindow.fromWebContents(event.sender);
       switch (args.type) {

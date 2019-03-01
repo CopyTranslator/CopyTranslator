@@ -3,9 +3,9 @@
   "version": "0.0.8",
   "private": true,
   "author": {
-    "name" : "Elliott Zheng",
-    "email" : "copytranslator@hypercube.top",
-    "url" : "https://hypercube.top"
+    "name": "Elliott Zheng",
+    "email": "copytranslator@hypercube.top",
+    "url": "https://hypercube.top"
   },
   "scripts": {
     "serve": "vue-cli-service serve",
@@ -21,11 +21,9 @@
   "dependencies": {
     "electron-clipboard-extended": "^1.1.1",
     "element-ui": "^2.5.4",
-    "http2": "^3.3.7",
     "iohook": "^0.3.1",
     "lodash": "^4.17.11",
     "log4js": "^4.0.1",
-    "robotjs": "^0.5.1",
     "translation.js": "^0.7.5",
     "vue": "^2.5.21",
     "vue-router": "^3.0.1",
@@ -40,14 +38,13 @@
     "@vue/eslint-config-typescript": "^3.2.0",
     "babel-eslint": "^10.0.1",
     "electron": "^3.0.0",
-    "electron-chromedriver": "^4.0.0-beta.1",
     "electron-rebuild": "^1.8.2",
     "eslint": "^5.8.0",
     "eslint-plugin-typescript": "^0.14.0",
     "eslint-plugin-vue": "^5.0.0",
     "typescript": "~3.1.1",
     "typescript-eslint-parser": "^22.0.0",
-    "vue-cli-plugin-electron-builder": "^1.0.0-rc.10",
+    "vue-cli-plugin-electron-builder": "^1.1.0",
     "vue-template-compiler": "^2.5.21"
   },
   "cmake-js": {
@@ -60,9 +57,7 @@
       "electron-64"
     ],
     "platforms": [
-      "win32",
-      "darwin",
-      "linux"
+      "win32"
     ],
     "arches": [
       "ia32",

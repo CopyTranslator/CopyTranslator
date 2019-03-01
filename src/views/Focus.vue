@@ -15,7 +15,6 @@ import StatusBar from "../components/StatusBar";
 import BaseView from "./BaseView";
 import WindowController from "../components/WindowController";
 import Adjustable from "./Adjustable";
-import { constants } from "http2";
 
 export default {
   name: "FocusMode",

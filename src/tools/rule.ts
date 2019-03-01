@@ -14,6 +14,7 @@ enum RuleName {
     // mode config
     focus,
     contrast,
+    settingsConfig,
     //
     source,
     target,

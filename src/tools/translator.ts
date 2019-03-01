@@ -1,8 +1,19 @@
 import {TranslatorType} from "./enums";
-import {GoogleLangList, GoogleCodes, GoogleLanguages, isChineseLike} from "./languages";
+import {GoogleLangList, GoogleCodes, GoogleLanguages} from "./languages";
 import {youdao, baidu, google} from "translation.js";
+import {Phonetic, TranslateResult} from "translation.js/declaration/api/types";
 
 var _ = require("lodash");
+
+
+/*
+在短时间内请求多次，会被谷歌直接封掉IP，所以上一次commit试图通过多次异步请求后组合并没有什么卵用
+ */
+/** 统一的查询结果的数据结构 */
+interface MyTranslateResult extends TranslateResult {
+    resultString?: string;
+}
+
 
 abstract class Translator {
 
@@ -10,51 +21,16 @@ abstract class Translator {
 
     abstract lang2code(lang: string): string;
 
-    async translate(
+    abstract translate(
         text: string,
         src: string,
         dest: string
-    ): Promise<string | undefined> {
-        const from = this.lang2code(src);
-        const to = this.lang2code(dest);
-        text = text.replace(/([?？！!.。][ ]?)/g, "$1##");
-        let sentences = _.split(text, "##");
-        const _translate = this._translate;
-        let promises = sentences.map(async (sentence: string) => {
-            return new Promise(async function (resolve, reject) {
-                try {
-                    let res = await _translate(sentence, from, to);
-                    resolve(res);
-                } catch (e) {
-                    reject();
-                }
-            })
-        });
-        try {
-            let values = await Promise.all(promises);
-            return _.join(values, isChineseLike(to) ? "" : " ");
-        } catch (e) {
-            return undefined;
-        }
-    };
-
-    abstract _translate(
-        text: string,
-        from: string,
-        to: string
-    ): Promise<string | undefined>;
+    ): Promise<MyTranslateResult | undefined>;
 
     abstract detect(text: string): Promise<string | undefined>; //return lang
 }
 
 class GoogleTranslator extends Translator {
-    com: boolean = false;
-
-    constructor(com = false) {
-        super();
-        this.com = com;
-    }
-
     getLanguages() {
         return GoogleLangList;
     }
@@ -63,22 +39,22 @@ class GoogleTranslator extends Translator {
         return GoogleLanguages[lang];
     }
 
-    async _translate(
+    async translate(
         text: string,
-        from: string,
-        to: string
-    ): Promise<string | undefined> {
+        src: string,
+        dest: string
+    ): Promise<MyTranslateResult | undefined> {
         try {
-            let res = await google.translate({
+            let res: MyTranslateResult = await google.translate({
                 text: text,
-                from: from,
-                to: to,
-                com: this.com
+                from: this.lang2code(src),
+                to: this.lang2code(dest)
             });
-            return _.join(res.result, isChineseLike(to) ? "" : " ");
+            res.resultString = _.join(res.result, " ");
+            return res;
         } catch (e) {
-            console.log(e);
-            return "";
+            (<any>global).log.debug(e);
+            return undefined;
         }
     }
 
@@ -93,4 +69,4 @@ class GoogleTranslator extends Translator {
     }
 }
 
-export {Translator, GoogleTranslator};
+export {Translator, GoogleTranslator, MyTranslateResult};

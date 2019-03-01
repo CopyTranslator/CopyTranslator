@@ -1,4 +1,4 @@
-import {Translator, GoogleTranslator} from "../tools/translator";
+import {Translator, GoogleTranslator, MyTranslateResult} from "../tools/translator";
 import {initConfig} from "../tools/configuration";
 import {ConfigParser, getEnumValue} from "../tools/configParser";
 import {MessageType, ColorStatus} from "../tools/enums";
@@ -13,13 +13,14 @@ import {ActionManager} from "../tools/action";
 import {TrayManager} from "../tools/tray";
 import {handleActions} from "./actionCallback";
 
+
 const clipboard = require("electron-clipboard-extended");
 
 class Controller {
     src: string = "";
     result: string = "";
     lastAppend: string = "";
-    focusWin: WindowWrapper = new WindowWrapper();
+    win: WindowWrapper = new WindowWrapper();
     translator: Translator = new GoogleTranslator();
     config: ConfigParser = initConfig();
     locales: L10N = l10n;
@@ -34,7 +35,7 @@ class Controller {
     }
 
     createWindow() {
-        this.focusWin.createWindow(this.config.values.focus);
+        this.win.createWindow(this.config.values.focus);
         windowController.bind();
         this.tray.init();
         this.action.init();
@@ -44,7 +45,7 @@ class Controller {
     onExit() {
         let focus = Object.assign(
             this.config.values.focus,
-            this.focusWin.getBound()
+            this.win.getBound()
         );
         this.setByKeyValue("focus", focus);
         this.action.unregister();
@@ -89,18 +90,24 @@ class Controller {
         (<any>global).log.error(msg);
     }
 
-    sync(language: any = null) {
+    sync(res: MyTranslateResult | undefined = undefined, language: any = undefined) {
         if (!language)
             language = {
                 source: this.source(),
                 target: this.target()
             };
-        this.focusWin.sendMsg(MessageType.TranslateResult.toString(), {
+        let extra: any = {};
+        if (res) {
+            this.isWord = !!res.dict;
+            extra.phonetic = res.phonetic;
+            extra.dict = res.dict;
+        }
+        this.win.sendMsg(MessageType.TranslateResult.toString(), Object.assign({
             src: this.src,
             result: this.result,
             source: language.source,
             target: language.target
-        });
+        }, extra));
     }
 
     checkValid(text: string) {
@@ -121,15 +128,15 @@ class Controller {
         }
     }
 
-    postProcess(language: any) {
+    postProcess(language: any, result: MyTranslateResult) {
         if (this.get(RuleName.autoCopy)) {
             clipboard.writeText(this.result);
         } else if (this.get(RuleName.autoPurify)) {
             clipboard.writeText(this.src);
         }
         this.setCurrentColor();
-        this.focusWin.edgeShow();
-        this.sync(language);
+        this.win.edgeShow();
+        this.sync(result, language);
     }
 
     setCurrentColor(fail = false) {
@@ -137,26 +144,26 @@ class Controller {
         const copy = this.get(RuleName.autoCopy);
         const incremental = this.get(RuleName.incrementalCopy);
         if (fail) {
-            this.focusWin.switchColor(ColorStatus.Fail);
+            this.win.switchColor(ColorStatus.Fail);
             return;
         }
         if (!listen) {
-            this.focusWin.switchColor(ColorStatus.None);
+            this.win.switchColor(ColorStatus.None);
             return;
         }
         if (incremental) {
             if (copy) {
-                this.focusWin.switchColor(ColorStatus.IncrementalCopy);
+                this.win.switchColor(ColorStatus.IncrementalCopy);
             } else {
-                this.focusWin.switchColor(ColorStatus.Incremental);
+                this.win.switchColor(ColorStatus.Incremental);
             }
             return;
         }
         if (copy) {
-            this.focusWin.switchColor(ColorStatus.AutoCopy);
+            this.win.switchColor(ColorStatus.AutoCopy);
             return;
         }
-        this.focusWin.switchColor(ColorStatus.Listen);
+        this.win.switchColor(ColorStatus.Listen);
     }
 
     preProcess(text: string) {
@@ -164,7 +171,7 @@ class Controller {
         this.setSrc(text);
         let source = this.source();
         let target = this.target();
-        this.focusWin.switchColor(ColorStatus.Translating);
+        this.win.switchColor(ColorStatus.Translating);
         return {
             source: source,
             target: target
@@ -172,16 +179,16 @@ class Controller {
     }
 
     doTranslate(text: string) {
-        if (this.translating)
+        if (this.translating) //翻译无法被打断
             return;
         this.translating = true;
         const language = this.preProcess(text);
         this.translator
             .translate(this.src, language.source, language.target)
             .then(res => {
-                if (res) {
-                    this.result = res;
-                    this.postProcess(language);
+                if (res && res.resultString) {
+                    this.result = res.resultString;
+                    this.postProcess(language, res);
                 } else {
                     this.onError("translate error");
                     this.setCurrentColor(true);
@@ -221,8 +228,9 @@ class Controller {
         );
     }
 
-    restoreWindow(routeName: string) {
-        this.focusWin.restore(this.config.values[routeName]);
+    restoreWindow(routeName: string | undefined) {
+        if (routeName)
+            this.win.restore(this.config.values[routeName]);
     }
 
     restoreFromConfig() {
@@ -242,9 +250,9 @@ class Controller {
                 this.setWatch(value);
                 break;
             case RuleName.stayTop:
-                if (this.focusWin.window) {
-                    this.focusWin.window.focus();
-                    this.focusWin.window.setAlwaysOnTop(value);
+                if (this.win.window) {
+                    this.win.window.focus();
+                    this.win.window.setAlwaysOnTop(value);
                 }
                 break;
             case RuleName.incrementalCopy:

@@ -70,7 +70,7 @@ class ActionManager {
             (<any>global).controller.config,
             this.callback
         );
-        this.load();
+        this.loadShortcuts();
         this.register();
     }
 
@@ -154,7 +154,8 @@ class ActionManager {
         menu.popup({});
     }
 
-    load() {
+
+    loadShortcuts() {
         try {
             this.shortcuts = JSON.parse(
                 fs.readFileSync(envConfig.sharedConfig.shortcut, "utf-8")

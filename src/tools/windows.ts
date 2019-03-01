@@ -8,6 +8,7 @@ import {loadStyles} from "./style";
 class WindowWrapper {
     window: BrowserWindow | undefined = undefined;
     stored: string = RouteName.Focus;
+    stayTop: boolean = false;
 
     constructor() {
     }

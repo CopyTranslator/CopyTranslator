@@ -111,4 +111,8 @@ const GoogleLanguages: { [key: string]: string; } = {
 const GoogleCodes = _.invert(GoogleLanguages);
 const GoogleLangList = _.keys(GoogleLanguages);
 
-export { GoogleCodes, GoogleLangList, GoogleLanguages };
+function isChineseLike(code: string): boolean {
+    return code in ["zh-cn", "zh-tw", "ja"]
+}
+
+export {GoogleCodes, GoogleLangList, GoogleLanguages, isChineseLike};

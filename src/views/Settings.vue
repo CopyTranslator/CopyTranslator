@@ -1,48 +1,55 @@
 <template>
     <div v-on:contextmenu="openMenu('Settings')">
         <StatusBar></StatusBar>
-        <div v-if="config" >
+        <div v-if="config">
             <el-row style="text-align:left;">
                 <el-col :span="6" align-self="start">
-                  <el-row>
-                    <el-switch v-model="config.autoCopy" :active-text="$t('autoCopy')"
-                              @change="setValue('autoCopy')"></el-switch>
-                              </el-row>
-                              <el-row>
-                    <el-switch v-model="config.incrementalCopy" :active-text="$t('incrementalCopy')"
-                              @change="setValue('incrementalCopy')"></el-switch>
-                              </el-row>
+                    <el-row>
+                        <el-switch v-model="config.autoCopy" :active-text="$t('autoCopy')"
+                                   @change="setValue('autoCopy')"></el-switch>
+                    </el-row>
+                    <el-row>
+                        <el-switch v-model="config.incrementalCopy" :active-text="$t('incrementalCopy')"
+                                   @change="setValue('incrementalCopy')"></el-switch>
+                    </el-row>
                 </el-col>
                 <el-col :span="6">
-                  <el-row>
-                    <el-switch v-model="config.listenClipboard" :active-text="$t('listenClipboard')"
-                              @change="setValue('listenClipboard')"></el-switch>
-                  </el-row>
-                  <el-row>
-                    <el-switch v-model="config.stayTop" :active-text="$t('stayTop')"
-                              @change="setValue('stayTop')"></el-switch></el-row>
+                    <el-row>
+                        <el-switch v-model="config.listenClipboard" :active-text="$t('listenClipboard')"
+                                   @change="setValue('listenClipboard')"></el-switch>
+                    </el-row>
+                    <el-row>
+                        <el-switch v-model="config.stayTop" :active-text="$t('stayTop')"
+                                   @change="setValue('stayTop')"></el-switch>
+                    </el-row>
                 </el-col>
                 <el-col :span="6">
-                  <el-row>
-                    <el-switch v-model="config.autoShow" :active-text="$t('autoShow')"
-                              @change="setValue('autoShow')"></el-switch></el-row>
-                    <el-row><el-switch v-model="config.detectLanguage" :active-text="$t('detectLanguage')"
-                              @change="setValue('detectLanguage')"></el-switch></el-row>
+                    <el-row>
+                        <el-switch v-model="config.autoShow" :active-text="$t('autoShow')"
+                                   @change="setValue('autoShow')"></el-switch>
+                    </el-row>
+                    <el-row>
+                        <el-switch v-model="config.detectLanguage" :active-text="$t('detectLanguage')"
+                                   @change="setValue('detectLanguage')"></el-switch>
+                    </el-row>
                 </el-col>
                 <el-col :span="6">
-                  <el-row>
-                    <el-switch v-model="config.autoHide" :active-text="$t('autoHide')"
-                              @change="setValue('autoHide')"></el-switch></el-row>
-                    <el-row><el-switch v-model="config.smartDict" :active-text="$t('smartDict')"
-                              @change="setValue('smartDict')"></el-switch></el-row>
+                    <el-row>
+                        <el-switch v-model="config.autoHide" :active-text="$t('autoHide')"
+                                   @change="setValue('autoHide')"></el-switch>
+                    </el-row>
+                    <el-row>
+                        <el-switch v-model="config.smartDict" :active-text="$t('smartDict')"
+                                   @change="setValue('smartDict')"></el-switch>
+                    </el-row>
                 </el-col>
             </el-row>
             <el-row>
-              <el-col v-if="locale" :span="24">
-                <el-select v-model="locale">
-                    <el-option v-for="locale in locales" :key="locale.short" :label="locale.localeName"
-                              :value="locale.short"></el-option>
-                </el-select>
+                <el-col v-if="locale" :span="24">
+                    <el-select v-model="locale">
+                        <el-option v-for="locale in locales" :key="locale.short" :label="locale.localeName"
+                                   :value="locale.short"></el-option>
+                    </el-select>
                 </el-col>
             </el-row>
             <el-button @click="backStored">{{$t("return")}}</el-button>

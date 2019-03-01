@@ -3,31 +3,35 @@
         <StatusBar ref="bar"></StatusBar>
         <el-row class="contrast" :gutter="5">
             <el-col :span="20">
+
                 <textarea class="contrastText" v-if="sharedResult" :style="area" v-model="sharedResult.src"></textarea>
-                <textarea class="contrastText" :style="area" v-if="sharedResult" v-model="sharedResult.result"></textarea>
+
+                <textarea class="contrastText" :style="area" v-if="sharedResult"
+                          v-model="sharedResult.result"></textarea>
             </el-col>
             <el-col :span="4" class="controlPanel" v-if="config">
-               <el-switch v-model="config.autoCopy" :active-text="$t('autoCopy')" @change="setValue('autoCopy')"></el-switch>   
-               <el-switch v-model="config.incrementalCopy" :active-text="$t('incrementalCopy')"
-                              @change="setValue('incrementalCopy')"></el-switch>
+                <el-switch v-model="config.autoCopy" :active-text="$t('autoCopy')"
+                           @change="setValue('autoCopy')"></el-switch>
+                <el-switch v-model="config.incrementalCopy" :active-text="$t('incrementalCopy')"
+                           @change="setValue('incrementalCopy')"></el-switch>
                 <el-switch v-model="config.listenClipboard" :active-text="$t('listenClipboard')"
-                              @change="setValue('listenClipboard')"></el-switch>
+                           @change="setValue('listenClipboard')"></el-switch>
                 <el-switch v-model="config.stayTop" :active-text="$t('stayTop')"
-                              @change="setValue('stayTop')"></el-switch>
-                
-                    <el-switch v-model="config.autoShow" :active-text="$t('autoShow')"
-                              @change="setValue('autoShow')"></el-switch>
-                  <el-switch v-model="config.detectLanguage" :active-text="$t('detectLanguage')"
-                              @change="setValue('detectLanguage')"></el-switch>
-                  
-                    <el-switch v-model="config.autoHide" :active-text="$t('autoHide')"
-                              @change="setValue('autoHide')"></el-switch>
-                    <el-switch v-model="config.smartDict" :active-text="$t('smartDict')"
-                              @change="setValue('smartDict')"></el-switch>
+                           @change="setValue('stayTop')"></el-switch>
+
+                <el-switch v-model="config.autoShow" :active-text="$t('autoShow')"
+                           @change="setValue('autoShow')"></el-switch>
+                <el-switch v-model="config.detectLanguage" :active-text="$t('detectLanguage')"
+                           @change="setValue('detectLanguage')"></el-switch>
+
+                <el-switch v-model="config.autoHide" :active-text="$t('autoHide')"
+                           @change="setValue('autoHide')"></el-switch>
+                <el-switch v-model="config.smartDict" :active-text="$t('smartDict')"
+                           @change="setValue('smartDict')"></el-switch>
                 <p style="text-align: left">{{$t('sourceLanguage')}}</p>
                 <el-select style="width:100%" v-model="source" placeholder="请选择">
                     <el-option
-                            v-for="item in languages" 
+                            v-for="item in languages"
                             :key="item"
                             :label="item"
                             :value="item">
@@ -42,7 +46,7 @@
                             :value="item">
                     </el-option>
                 </el-select>
-                <el-button class="noMargin"  @click="changeMode('Focus')">{{$t("switchMode")}}</el-button>
+                <el-button class="noMargin" @click="changeMode('Focus')">{{$t("switchMode")}}</el-button>
                 <el-button class="noMargin" @click="translate">{{$t("translate")}}</el-button>
                 <el-button class="noMargin" @click="changeMode('Settings')">{{$t("settings")}}</el-button>
             </el-col>
@@ -101,6 +105,7 @@ export default {
 p {
   font-size: 14px;
 }
+
 .contrastText {
   width: 100%;
   padding: 0;

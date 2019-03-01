@@ -46,9 +46,9 @@
                             :value="item">
                     </el-option>
                 </el-select>
-                <el-button class="noMargin" @click="changeMode('Focus')">{{$t("switchMode")}}</el-button>
-                <el-button class="noMargin" @click="translate">{{$t("translate")}}</el-button>
-                <el-button class="noMargin" @click="changeMode('Settings')">{{$t("settings")}}</el-button>
+                <el-button type="primary" class="noMargin" @click="changeMode('Focus')">{{$t("switchMode")}}</el-button>
+                <el-button type="primary" class="noMargin" @click="translate">{{$t("translate")}}</el-button>
+                <el-button type="primary"  class="noMargin" @click="changeMode('Settings')">{{$t("settings")}}</el-button>
             </el-col>
         </el-row>
     </div>
@@ -116,7 +116,8 @@ p {
 }
 
 .noMargin {
-  margin: 0 !important;
+  margin-left: 0 !important;
+  margin-top: 2px;
 }
 
 .controlPanel {

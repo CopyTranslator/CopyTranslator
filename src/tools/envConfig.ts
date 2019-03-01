@@ -40,14 +40,14 @@ const sharedConfig: SharedConfig = {
 
 const ProductionConfig: DiffConfig = {
   systemLocaleDir: path.join(process.resourcesPath, "locales"),
-  iconPath: path.join(process.resourcesPath, "icon.ico"),
+  iconPath: path.join(process.resourcesPath, "icon.png"),
   styleTemplate: path.join(process.resourcesPath, "styles.css"),
   shortcutTemplate: path.join(process.resourcesPath, "shortcuts.json")
 };
 
 const DevConfig: DiffConfig = {
   systemLocaleDir: path.join(process.cwd(), "dist_locales"),
-  iconPath: path.join(process.cwd(), "icon.ico"),
+  iconPath: path.join(process.cwd(), "icon.png"),
   styleTemplate: path.join(process.cwd(), "src", "styles.css"),
   shortcutTemplate: path.join(process.cwd(), "src", "shortcuts.json")
 };

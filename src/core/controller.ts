@@ -8,11 +8,10 @@ import { envConfig } from "../tools/envConfig";
 import { l10n, L10N } from "../tools/l10n";
 import { RuleName, reverseRuleName, ruleKeys } from "../tools/rule";
 import { normalizeAppend, isChinese } from "./stringProcessor";
-import { app, Rectangle } from "electron";
+import { app, Rectangle,clipboard } from "electron";
 import { ActionManager } from "../tools/action";
 import { TrayManager } from "../tools/tray";
 import { handleActions } from "./actionCallback";
-const clipboard = require("electron-clipboard-extended");
 
 class Controller {
   src: string = "";
@@ -36,6 +35,7 @@ class Controller {
     windowController.bind();
     this.tray.init();
     this.action.init();
+    setInterval(this.checkClipboard,1000);
   }
 
   onExit() {
@@ -192,14 +192,7 @@ class Controller {
   }
 
   setWatch(watch: boolean) {
-    if (watch) {
-      clipboard.on("text-changed", () => {
-        this.checkClipboard();
-      });
-      clipboard.startWatching();
-    } else {
-      clipboard.stopWatching();
-    }
+    console.log("set")
   }
 
   saveWindow(routeName: string, bound: Rectangle, fontSize: number) {

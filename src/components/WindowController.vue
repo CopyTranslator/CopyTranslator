@@ -8,6 +8,11 @@ import { ipcRenderer as ipc, webFrame } from "electron";
 
 export default {
   name: "WindowController",
+  data: function() {
+    return {
+      routeName: undefined
+    };
+  },
   methods: {
     windowOpt(type, args = null) {
       ipc.send(MessageType.WindowOpt.toString(), {
@@ -46,13 +51,13 @@ export default {
     ipc.on(MessageType.Router.toString(), (event, arg) => {
       this.changeMode(arg);
     });
-    if (this.routeName) this.$controller.restoreWindow(this.routerName);
+    if (this.routeName) this.$controller.restoreWindow(this.routeName);
   },
   destroyed: function() {
-    if (this.routerName) {
+    if (this.routeName) {
       this.$controller.saveWindow(
         this.routeName,
-        this.$controller.focusWin.getBound(),
+        this.$controller.win.getBound(),
         this.size
       );
     }

@@ -4,22 +4,24 @@
         <div v-on:contextmenu="openMenu('Focus')">
     <textarea class="focusText"
               v-bind:style="focusStyle"
-              v-model="sharedResult.result" v-if="sharedResult"
+              v-model="sharedResult.result" v-if="sharedResult&&!sharedResult.dict"
     ></textarea>
+            <DictResult :size="size"></DictResult>
         </div>
     </div>
 </template>
 
 <script>
 import StatusBar from "../components/StatusBar";
-import BaseView from "./BaseView";
+import BaseView from "../components/BaseView";
 import WindowController from "../components/WindowController";
-import Adjustable from "./Adjustable";
+import Adjustable from "../components/Adjustable";
+import DictResult from "../components/DictResult";
 
 export default {
   name: "FocusMode",
   mixins: [BaseView, WindowController, Adjustable],
-  components: { StatusBar },
+  components: { DictResult, StatusBar },
   data: function() {
     return {
       size: this.$controller.config.values.focus.fontSize,

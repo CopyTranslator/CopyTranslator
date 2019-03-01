@@ -9,7 +9,9 @@ export default new Vuex.Store({
             src: "",
             result: "",
             source: "",
-            target: ""
+            target: "",
+            dict: undefined,
+            phonetic: undefined
         }
     },
     mutations: {

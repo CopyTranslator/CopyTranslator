@@ -22,10 +22,10 @@ function handleActions(
     } else {
         switch (id) {
             case "contrastMode":
-                controller.focusWin.routeTo("Contrast");
+                controller.win.routeTo("Contrast");
                 break;
             case "focusMode":
-                controller.focusWin.routeTo("Focus");
+                controller.win.routeTo("Focus");
                 break;
             case "exit":
                 controller.onExit();
@@ -40,7 +40,7 @@ function handleActions(
                 clipboard.writeText(controller.result);
                 break;
             case "settings":
-                controller.focusWin.routeTo("Settings");
+                controller.win.routeTo("Settings");
                 break;
             case "helpAndUpdate":
                 shell.openExternal(constants.homepage);

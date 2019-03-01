@@ -56,9 +56,9 @@
 
 <script>
 import StatusBar from "../components/StatusBar";
-import BaseView from "./BaseView";
+import BaseView from "../components/BaseView";
 import WindowController from "../components/WindowController";
-import Adjustable from "./Adjustable";
+import Adjustable from "../components/Adjustable";
 
 export default {
   name: "Contrast",
@@ -83,7 +83,6 @@ export default {
   mounted: function() {
     this.barHeight = this.$refs.bar.$el.clientHeight;
     this.syncConfig();
-    this.$controller.restoreWindow("contrast");
   },
 
   methods: {

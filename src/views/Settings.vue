@@ -69,7 +69,8 @@ export default {
       config: undefined,
       locale: undefined,
       locales: this.$controller.locales.getLocales(),
-      prevRoute: undefined
+      prevRoute: undefined,
+      routeName: "settingsConfig"
     };
   },
   components: {
@@ -78,8 +79,8 @@ export default {
   watch: {
     locale: function(newLocale, oldLocale) {
       this.$controller.setByKeyValue("locale", newLocale);
-      if (oldLocale != undefined) {
-        this.$controller.focusWin.load("Settings");
+      if (oldLocale !== undefined) {
+        this.$controller.win.load("Settings");
       }
       this.syncConfig();
     }
@@ -89,7 +90,7 @@ export default {
   },
   beforeRouteEnter(to, from, next) {
     next(vm => {
-      if (from.name) vm.$controller.focusWin.stored = from.name;
+      if (from.name) vm.$controller.win.stored = from.name;
     });
   },
   methods: {
@@ -102,7 +103,7 @@ export default {
       this.syncConfig();
     },
     backStored() {
-      this.$router.push({ name: this.$controller.focusWin.stored });
+      this.$router.push({ name: this.$controller.win.stored });
     }
   }
 };

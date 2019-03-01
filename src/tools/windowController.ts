@@ -50,7 +50,7 @@ class WindowController {
         });
         ioHook.on("mousewheel", (event: any) => {
             if (!this.ctrlKey) return;
-            var window = BrowserWindow.getFocusedWindow();
+            const window = BrowserWindow.getFocusedWindow();
             if (window)
                 window.webContents.send(MessageType.WindowOpt.toString(), {
                     type: WinOpt.Zoom,
@@ -60,10 +60,6 @@ class WindowController {
         ioHook.on("mouseup", (event: MouseEvent) => {
             this.isFollow = false;
             this.currentWindow = undefined;
-            var controller = (<any>global).controller;
-            if (controller.get(RuleName.autoHide)) {
-                controller.focusWin.blur();
-            }
             if (
                 Date.now() - this.lastDown > 300 &&
                 Math.abs(event.x - this.lastX) < 4 &&

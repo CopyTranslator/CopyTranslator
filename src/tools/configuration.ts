@@ -1,7 +1,6 @@
 import {ConfigParser} from "./configParser";
 import {BoolRule, ModeRule, NumberRule, RuleName} from "./rule";
 import {TranslatorType, FrameMode} from "./enums";
-import {autoUpdater} from "electron";
 
 function initConfig(
     config: ConfigParser | undefined = undefined
@@ -89,6 +88,22 @@ function initConfig(
                 fontSize: 15
             },
             "parameters of contrast mode",
+            (value: any) => {
+                return true;
+            }
+        )
+    );
+
+    config.addRule(RuleName.settingsConfig,
+        new ModeRule(
+            {
+                x: 300,
+                y: 500,
+                height: 600,
+                width: 800,
+                fontSize: 15
+            },
+            "parameters of setting panel",
             (value: any) => {
                 return true;
             }

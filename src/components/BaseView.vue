@@ -15,7 +15,8 @@ export default {
     return {
       languages: this.$controller.translator.getLanguages(),
       source: this.$controller.source(),
-      target: this.$controller.target()
+      target: this.$controller.target(),
+      isWord: false
     };
   },
   watch: {

@@ -71,9 +71,12 @@ export default {
   },
   computed: {
     area() {
-      return `fontSize:${this.size.toString()}px;height:${(this.windowHeight -
-        this.barHeight) /
-        2}px`;
+      return {
+        fontSize: `${this.size.toString()}px`,
+        height: `${((this.windowHeight - this.barHeight) / 2)-5}px`,
+        margin: `0`,
+        padding: `0`
+      };
     }
   },
   components: {
@@ -121,6 +124,6 @@ p {
 
 .controlPanel {
   display: grid;
-  grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
 }
 </style>

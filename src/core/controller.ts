@@ -177,7 +177,7 @@ class Controller {
         } catch (e) {
             console.log("detect fail");
         }
-        
+
         if (src_lang == dest_lang) {
             dest_lang = should_src;
         } else if (!this.get(RuleName.detectLanguage)) {

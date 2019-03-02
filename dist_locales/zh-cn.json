@@ -29,5 +29,6 @@
     "viewSource": "查看原文",
     "localeSetting": "区域设置",
     "return": "返回",
-    "retryTranslate": "重试翻译"
+    "retryTranslate": "重试翻译",
+    "tapCopy": "点按复制"
 }

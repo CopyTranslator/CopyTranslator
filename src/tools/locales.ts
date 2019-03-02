@@ -30,6 +30,7 @@ interface Locale {
     localeSetting: string;
     return: string;
     retryTranslate:string;
+    tapCopy:string;
 }
 
 const zh_cn: Locale = {
@@ -63,7 +64,8 @@ const zh_cn: Locale = {
     viewSource: "查看原文",
     localeSetting: "区域设置",
     return: "返回",
-    retryTranslate:"重试翻译"
+    retryTranslate:"重试翻译",
+    tapCopy:"点按复制"
 };
 
 const en: Locale = {
@@ -97,7 +99,8 @@ const en: Locale = {
     viewSource: "View Source",
     localeSetting: "Locale",
     return: "Return",
-    retryTranslate:"Retry Translate"
+    retryTranslate:"Retry Translate",
+    tapCopy:"Tap Copy"
 };
 
 export {en, zh_cn, Locale};

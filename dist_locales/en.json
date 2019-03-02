@@ -29,5 +29,6 @@
     "viewSource": "View Source",
     "localeSetting": "Locale",
     "return": "Return",
-    "retryTranslate": "Retry Translate"
+    "retryTranslate": "Retry Translate",
+    "tapCopy": "Tap Copy"
 }

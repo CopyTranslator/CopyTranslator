@@ -52,6 +52,9 @@ class WindowWrapper {
         this.window.on("blur", () => {
             that.edgeHide();
         });
+        this.window.on("focus", () => {
+            that.edgeShow();
+        })
     }
 
     setBounds(bounds: Rectangle) {
@@ -73,19 +76,19 @@ class WindowWrapper {
             (<any>global).controller.get(RuleName.autoHide)
         ) {
             if (y <= 0) {
-                while (yEnd > 0) {
+                while (yEnd > 10) {
                     y--;
                     yEnd--;
                     this.setBounds({x: x, y: y, width: width, height: height});
                 }
             } else if (x < 0) {
-                while (xEnd >= 0) {
+                while (xEnd >= 10) {
                     x--;
                     xEnd--;
                     this.setBounds({x: x, y: y, width: width, height: height});
                 }
             } else if (xEnd >= screenWidth) {
-                while (x < screenWidth) {
+                while (x < screenWidth - 10) {
                     x++;
                     this.setBounds({x: x, y: y, width: width, height: height});
                 }
@@ -102,34 +105,34 @@ class WindowWrapper {
             height: screenHeight
         } = screen.getPrimaryDisplay().workAreaSize;
         if (
-            (xEnd <= 0 || x >= screenWidth || yEnd <= 0) &&
+            (x <= 0 || xEnd >= screenWidth || y <= 0) &&
             (<any>global).controller.get(RuleName.autoHide)
         ) {
-            if (xEnd <= 0) {
-                while (x <= 0) {
-                    x++;
-                    xEnd++;
-                    this.setBounds({x: x, y: y, width: width, height: height});
-                }
-            } else if (x >= screenWidth) {
-                while (xEnd >= screenWidth) {
-                    x--;
-                    xEnd--;
-                    this.setBounds({x: x, y: y, width: width, height: height});
-                }
-            } else if (yEnd <= 0) {
-                while (y <= 0) {
-                    y++;
-                    yEnd++;
-                    this.setBounds({x: x, y: y, width: width, height: height});
-                }
+            while (x < 0) {
+                x++;
+                xEnd++;
+                this.setBounds({x: x, y: y, width: width, height: height});
+            }
+
+            while (xEnd > screenWidth) {
+                x--;
+                xEnd--;
+                this.setBounds({x: x, y: y, width: width, height: height});
+            }
+
+            while (y < 0) {
+                y++;
+                yEnd++;
+                this.setBounds({x: x, y: y, width: width, height: height});
             }
         }
     }
 
     show() {
         if (this.window) {
-            this.window.showInactive();
+            if(this.window.isMinimized())
+                this.window.restore();
+            this.window.focus();
             this.window.moveTop();
         }
     }

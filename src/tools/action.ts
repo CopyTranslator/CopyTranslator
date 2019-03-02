@@ -126,6 +126,7 @@ class ActionManager {
         items.push(switchAction(RuleName.autoShow));
         items.push(switchAction(RuleName.stayTop));
         items.push(switchAction(RuleName.listenClipboard));
+        items.push(switchAction(RuleName.tapCopy));
         items.push(normalAction("focusMode"));
         items.push(normalAction("contrastMode"));
         items.push(normalAction("settings"));

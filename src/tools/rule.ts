@@ -9,6 +9,7 @@ enum RuleName {
     autoPaste,
     autoPurify,
     autoShow,
+    tapCopy,
     frameMode,
     translatorType,
     // mode config

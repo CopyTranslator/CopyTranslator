@@ -24,6 +24,7 @@
     "iohook": "^0.3.1",
     "lodash": "^4.17.11",
     "log4js": "^4.0.1",
+    "robotjs": "^0.5.1",
     "translation.js": "^0.7.5",
     "vue": "^2.5.21",
     "vue-router": "^3.0.1",

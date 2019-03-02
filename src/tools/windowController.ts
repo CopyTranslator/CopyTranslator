@@ -4,6 +4,16 @@ const ioHook = require("iohook");
 import {MessageType, WinOpt} from "./enums";
 import {RuleName} from "./rule";
 
+var robot = require("robotjs");
+
+function simulateCopy() {
+    robot.keyTap("C", "control");
+}
+
+function simulatePaste() {
+    robot.keyTap("V", "control");
+}
+
 class WindowController {
     x: number = 0;
     y: number = 0;
@@ -11,6 +21,7 @@ class WindowController {
     currentWindow: BrowserWindow | undefined = undefined;
     ctrlKey = false;
     drag = false;
+    tapCopy=false;
     lastDown = Date.now();
     lastX = 0;
     lastY = 0;
@@ -60,12 +71,12 @@ class WindowController {
         ioHook.on("mouseup", (event: MouseEvent) => {
             this.isFollow = false;
             this.currentWindow = undefined;
-            if (
+            if (this.tapCopy&&
                 Date.now() - this.lastDown > 300 &&
                 Math.abs(event.x - this.lastX) < 4 &&
                 Math.abs(event.y - this.lastY) < 4
             ) {
-                console.log("tryed");
+                simulateCopy();
             }
         });
         ioHook.on("mousedown", (event: MouseEvent) => {
@@ -95,4 +106,4 @@ class WindowController {
 }
 
 let windowController = new WindowController();
-export {windowController};
+export {windowController,simulatePaste};

@@ -21,6 +21,11 @@ function initConfig(
         new BoolRule(true, "detect language")
     );
     config.addRule(
+        RuleName.tapCopy,
+        new BoolRule(false, "catch simulate copy")
+    );
+
+    config.addRule(
         RuleName.incrementalCopy,
         new BoolRule(false, "incremental copy")
     );

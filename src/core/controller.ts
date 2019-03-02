@@ -3,10 +3,10 @@ import {initConfig} from "../tools/configuration";
 import {ConfigParser, getEnumValue} from "../tools/configParser";
 import {ColorStatus, MessageType} from "../tools/enums";
 import {WindowWrapper} from "../tools/windows";
-import {windowController} from "../tools/windowController";
+import {simulatePaste, windowController} from "../tools/windowController";
 import {envConfig} from "../tools/envConfig";
 import {l10n, L10N} from "../tools/l10n";
-import {reverseRuleName, RuleName} from "../tools/rule";
+import {reverseRuleName, Rule, RuleName} from "../tools/rule";
 import {normalizeAppend} from "./stringProcessor";
 import {app, Rectangle} from "electron";
 import {ActionManager} from "../tools/action";
@@ -113,27 +113,26 @@ class Controller {
     }
 
     checkValid(text: string) {
-        if (
-            this.result == text ||
+        return !(this.result == text ||
             this.src == text ||
             this.lastAppend == text ||
-            text == ""
-        ) {
-            return false;
-        } else {
-
-            return true;
-        }
+            text == "");
     }
 
     postProcess(language: any, result: MyTranslateResult) {
         if (this.get(RuleName.autoCopy)) {
             clipboard.writeText(this.result);
+            if (this.get(RuleName.autoPaste)) {
+                simulatePaste();
+            }
         } else if (this.get(RuleName.autoPurify)) {
             clipboard.writeText(this.src);
         }
         this.setCurrentColor();
-        this.win.edgeShow();
+        if (this.get(RuleName.autoShow)) {
+            this.win.edgeShow();
+            this.win.show();
+        }
         this.sync(result, language);
     }
 
@@ -180,11 +179,10 @@ class Controller {
         // if(this.get(RuleName.detectLanguage)){
         //
         // }
-        console.log(src_lang, dest_lang, should_src);
         if (src_lang == dest_lang) {
             src_lang = dest_lang;
             dest_lang = should_src;
-        } else if(!this.get(RuleName.detectLanguage)){
+        } else if (!this.get(RuleName.detectLanguage)) {
             src_lang = should_src
         }
 
@@ -286,6 +284,9 @@ class Controller {
                 if (value) {
                     this.setByKeyValue(getEnumValue(RuleName.autoPurify), false);
                 }
+                break;
+            case RuleName.tapCopy:
+                windowController.tapCopy=value;
                 break;
         }
         if (save) {

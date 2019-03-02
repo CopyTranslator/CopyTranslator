@@ -26,8 +26,6 @@
 
                 <el-switch v-model="config.autoHide" :active-text="$t('autoHide')"
                            @change="setValue('autoHide')"></el-switch>
-                <el-switch v-model="config.smartDict" :active-text="$t('smartDict')"
-                           @change="setValue('smartDict')"></el-switch>
                 <p style="text-align: left">{{$t('sourceLanguage')}}</p>
                 <el-select style="width:100%" v-model="source" placeholder="请选择">
                     <el-option
@@ -48,7 +46,8 @@
                 </el-select>
                 <el-button type="primary" class="noMargin" @click="changeMode('Focus')">{{$t("switchMode")}}</el-button>
                 <el-button type="primary" class="noMargin" @click="translate">{{$t("translate")}}</el-button>
-                <el-button type="primary"  class="noMargin" @click="changeMode('Settings')">{{$t("settings")}}</el-button>
+                <el-button type="primary" class="noMargin" @click="changeMode('Settings')">{{$t("settings")}}
+                </el-button>
             </el-col>
         </el-row>
     </div>

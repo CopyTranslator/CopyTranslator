@@ -1,12 +1,12 @@
 <template>
-    <div class="dict" v-bind:style="dictStyle" v-if="sharedResult&&sharedResult.dict">
+    <div contenteditable="true" class="dict" v-bind:style="dictStyle" v-if="sharedResult&&sharedResult.dict">
         <p class="dictSrc">[{{sharedResult.src}}]</p>
         <p class="dictResult">{{sharedResult.result}}</p>
         <div v-if="sharedResult.phonetic">
             <p class="notation">Phonetic:</p>
             <p class="dictPhonetic" v-for="item in sharedResult.phonetic" :key="item">{{item}}</p>
         </div>
-        <div >
+        <div>
             <p class="notation">Basic Explains:</p>
             <p class="dictExp" v-for="item in sharedResult.dict" :key="item">{{item}}</p>
         </div>
@@ -23,7 +23,8 @@ export default {
   computed: {
     dictStyle() {
       return {
-        fontSize: this.size.toString() + "px"
+        fontSize: this.size.toString() + "px",
+        height: "100%;"
       };
     }
   }
@@ -34,13 +35,16 @@ export default {
 .dict {
   text-align: left;
 }
+
 .notation {
   color: cornflowerblue;
 }
+
 .dictSrc {
   color: deeppink;
 }
+
 .dictExp {
-  margin-left:10vw;
+  margin-left: 10vw;
 }
 </style>

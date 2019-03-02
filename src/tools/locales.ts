@@ -29,6 +29,7 @@ interface Locale {
     viewSource: string;
     localeSetting: string;
     return: string;
+    retryTranslate:string;
 }
 
 const zh_cn: Locale = {
@@ -61,7 +62,8 @@ const zh_cn: Locale = {
     settings: "设置",
     viewSource: "查看原文",
     localeSetting: "区域设置",
-    return: "返回"
+    return: "返回",
+    retryTranslate:"重试翻译"
 };
 
 const en: Locale = {
@@ -94,7 +96,8 @@ const en: Locale = {
     settings: "Settings",
     viewSource: "View Source",
     localeSetting: "Locale",
-    return: "Return"
+    return: "Return",
+    retryTranslate:"Retry Translate"
 };
 
 export {en, zh_cn, Locale};

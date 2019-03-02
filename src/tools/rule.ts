@@ -37,7 +37,7 @@ interface ModeConfig {
     y: number;
     height: number;
     width: number;
-    fontSize: number;
+    fontSize?: number;
 }
 
 type CheckFuction = (value: any) => boolean;
@@ -51,7 +51,9 @@ interface Rule {
 class BoolRule implements Rule {
     predefined: boolean;
     msg: string;
-
+    static check = function (value: any) {
+        return typeof value == "boolean";
+    };
     constructor(predefined: boolean, msg: string) {
         this.predefined = predefined;
         this.msg = msg;
@@ -68,6 +70,10 @@ class NumberRule implements Rule {
         this.msg = msg;
         if (check) {
             this.check = check;
+        } else {
+            this.check = function (value) {
+                return typeof value == "number";
+            }
         }
     }
 }
@@ -75,13 +81,18 @@ class NumberRule implements Rule {
 class ModeRule implements Rule {
     predefined: ModeConfig;
     msg: string;
-    check?: CheckFuction;
+    check: CheckFuction;
 
-    constructor(predefined: ModeConfig, msg: string, check?: CheckFuction) {
+    constructor(predefined: ModeConfig, msg: string) {
         this.predefined = predefined;
         this.msg = msg;
-        if (check) {
-            this.check = check;
+        this.check = function (value: any) {
+            for (let key in predefined) {
+                if (!value.hasOwnProperty(key) || (typeof value[key] !== typeof (<any>predefined)[key])) {
+                    return false;
+                }
+            }
+            return true;
         }
     }
 }

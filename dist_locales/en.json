@@ -28,5 +28,6 @@
     "settings": "Settings",
     "viewSource": "View Source",
     "localeSetting": "Locale",
-    "return": "Return"
+    "return": "Return",
+    "retryTranslate": "Retry Translate"
 }

@@ -1,13 +1,13 @@
-import {Translator, GoogleTranslator, MyTranslateResult} from "../tools/translator";
+import {GoogleTranslator, MyTranslateResult, Translator} from "../tools/translator";
 import {initConfig} from "../tools/configuration";
 import {ConfigParser, getEnumValue} from "../tools/configParser";
-import {MessageType, ColorStatus} from "../tools/enums";
+import {ColorStatus, MessageType} from "../tools/enums";
 import {WindowWrapper} from "../tools/windows";
 import {windowController} from "../tools/windowController";
 import {envConfig} from "../tools/envConfig";
 import {l10n, L10N} from "../tools/l10n";
-import {RuleName, reverseRuleName, ruleKeys} from "../tools/rule";
-import {normalizeAppend, isChinese} from "./stringProcessor";
+import {reverseRuleName, RuleName} from "../tools/rule";
+import {normalizeAppend} from "./stringProcessor";
 import {app, Rectangle} from "electron";
 import {ActionManager} from "../tools/action";
 import {TrayManager} from "../tools/tray";
@@ -26,7 +26,6 @@ class Controller {
     locales: L10N = l10n;
     action = new ActionManager(handleActions);
     tray: TrayManager = new TrayManager();
-    isWord: boolean = false;
     translating: boolean = false; //正在翻译
 
     constructor() {
@@ -91,14 +90,17 @@ class Controller {
     }
 
     sync(res: MyTranslateResult | undefined = undefined, language: any = undefined) {
-        if (!language)
+        if (!language) {
             language = {
                 source: this.source(),
                 target: this.target()
             };
+        } else {
+            language.source = this.translator.code2lang(language.source);
+            language.target = this.translator.code2lang(language.target);
+        }
         let extra: any = {};
         if (res) {
-            this.isWord = !!res.dict;
             extra.phonetic = res.phonetic;
             extra.dict = res.dict;
         }
@@ -119,11 +121,7 @@ class Controller {
         ) {
             return false;
         } else {
-            this.isWord =
-                this.get(RuleName.smartDict) &&
-                text.split(" ").length <= 3 &&
-                !isChinese(text) &&
-                !this.get(RuleName.incrementalCopy);
+
             return true;
         }
     }
@@ -166,23 +164,44 @@ class Controller {
         this.win.switchColor(ColorStatus.Listen);
     }
 
-    preProcess(text: string) {
+    async preProcess(text: string) {
         this.lastAppend = text;
         this.setSrc(text);
-        let source = this.source();
-        let target = this.target();
+        let should_src = this.translator.lang2code(this.source());
+        let dest_lang = this.translator.lang2code(this.target());
+        let src_lang = should_src;
+        try {
+            let lang = await this.translator.detect(text);
+            if (lang)
+                src_lang = lang.toLowerCase();
+        } catch (e) {
+            console.log("detect fail");
+        }
+        // if(this.get(RuleName.detectLanguage)){
+        //
+        // }
+        console.log(src_lang, dest_lang, should_src);
+        if (src_lang == dest_lang) {
+            src_lang = dest_lang;
+            dest_lang = should_src;
+        } else if(!this.get(RuleName.detectLanguage)){
+            src_lang = should_src
+        }
+
         this.win.switchColor(ColorStatus.Translating);
         return {
-            source: source,
-            target: target
+            source: src_lang,
+            target: dest_lang
         };
+
+
     }
 
-    doTranslate(text: string) {
+    async doTranslate(text: string) {
         if (this.translating) //翻译无法被打断
             return;
         this.translating = true;
-        const language = this.preProcess(text);
+        const language = await this.preProcess(text);
         this.translator
             .translate(this.src, language.source, language.target)
             .then(res => {

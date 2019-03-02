@@ -1,12 +1,12 @@
 <template>
     <div v-on:contextmenu="openMenu('Focus')" style="width:100vw;height:100vh;">
         <StatusBar ref="bar"></StatusBar>
-        <div >
+        <div>
     <textarea class="focusText"
               v-bind:style="focusStyle"
               v-model="sharedResult.result" v-if="sharedResult&&!sharedResult.dict"
     ></textarea>
-            <DictResult  :size="size"></DictResult>
+            <DictResult :size="size"></DictResult>
         </div>
     </div>
 </template>

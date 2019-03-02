@@ -113,7 +113,8 @@ class Controller {
     }
 
     checkValid(text: string) {
-        return !(this.result == text ||
+        const urlExp=/^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/;
+        return !(urlExp.test(text)||this.result == text ||
             this.src == text ||
             this.lastAppend == text ||
             text == "");
@@ -176,11 +177,8 @@ class Controller {
         } catch (e) {
             console.log("detect fail");
         }
-        // if(this.get(RuleName.detectLanguage)){
-        //
-        // }
+        
         if (src_lang == dest_lang) {
-            src_lang = dest_lang;
             dest_lang = should_src;
         } else if (!this.get(RuleName.detectLanguage)) {
             src_lang = should_src

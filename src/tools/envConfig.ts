@@ -1,6 +1,9 @@
-let os = require("os");
+var os = require("os");
 var path = require("path");
 var fs = require("fs");
+
+
+const iconName=os.type() == "Windows_NT" ? "icon.ico" : "icon.png";
 
 function mkdir(path: string) {
     if (fs.existsSync(path)) {
@@ -40,14 +43,14 @@ const sharedConfig: SharedConfig = {
 
 const ProductionConfig: DiffConfig = {
     systemLocaleDir: path.join(process.resourcesPath, "locales"),
-    iconPath: path.join(process.resourcesPath, "icon.png"),
+    iconPath: path.join(process.resourcesPath, iconName),
     styleTemplate: path.join(process.resourcesPath, "styles.css"),
     shortcutTemplate: path.join(process.resourcesPath, "shortcuts.json")
 };
 
 const DevConfig: DiffConfig = {
     systemLocaleDir: path.join(process.cwd(), "dist_locales"),
-    iconPath: path.join(process.cwd(), "icon.png"),
+    iconPath: path.join(process.cwd(), iconName),
     styleTemplate: path.join(process.cwd(), "src", "styles.css"),
     shortcutTemplate: path.join(process.cwd(), "src", "shortcuts.json")
 };
@@ -62,3 +65,5 @@ mkdir(envConfig.sharedConfig.configDir);
 mkdir(envConfig.sharedConfig.userLocaleDir);
 
 export {envConfig};
+export default iconName;
+

@@ -1,3 +1,6 @@
+const iconName =
+  require("os").type() === "Windows_NT" ? "icon.ico" : "icon.png";
+
 module.exports = {
   pluginOptions: {
     electronBuilder: {
@@ -10,8 +13,8 @@ module.exports = {
             to: `locales`
           },
           {
-            from: `icon.ico`,
-            to: `icon.ico`
+            from: iconName,
+            to: iconName
           },
           {
             from: `src/styles.css`,
@@ -19,7 +22,7 @@ module.exports = {
           }
         ],
         win: {
-          icon: "icon.ico",
+          icon: iconName,
           target: [
             {
               target: "nsis",
@@ -33,10 +36,11 @@ module.exports = {
               target: "deb",
               arch: ["x64"]
             }
-          ]
+          ],
+          icon: iconName
         },
         nsis: {
-          installerIcon: "icon.ico",
+          installerIcon: iconName,
           oneClick: false,
           perMachine: false
         }

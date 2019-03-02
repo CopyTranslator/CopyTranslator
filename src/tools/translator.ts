@@ -21,10 +21,12 @@ abstract class Translator {
 
     abstract lang2code(lang: string): string;
 
+    abstract code2lang(code: string): string;
+
     abstract translate(
         text: string,
-        src: string,
-        dest: string
+        srcCode: string,
+        destCode: string
     ): Promise<MyTranslateResult | undefined>;
 
     abstract detect(text: string): Promise<string | undefined>; //return lang
@@ -35,20 +37,25 @@ class GoogleTranslator extends Translator {
         return GoogleLangList;
     }
 
+
     lang2code(lang: string) {
         return GoogleLanguages[lang];
     }
 
+    code2lang(code: string): string {
+        return GoogleCodes[code];
+    }
+
     async translate(
         text: string,
-        src: string,
-        dest: string
+        srcCode: string,
+        destCode: string
     ): Promise<MyTranslateResult | undefined> {
         try {
             let res: MyTranslateResult = await google.translate({
                 text: text,
-                from: this.lang2code(src),
-                to: this.lang2code(dest)
+                from: srcCode,
+                to: destCode
             });
             res.resultString = _.join(res.result, " ");
             return res;

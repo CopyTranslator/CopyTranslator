@@ -116,6 +116,7 @@ class ActionManager {
         items.push(normalAction("copySource"));
         items.push(normalAction("copyResult"));
         items.push(normalAction("clear"));
+        items.push(normalAction("retryTranslate"));
         items.push(switchAction(RuleName.autoCopy));
         items.push(switchAction(RuleName.autoPaste));
         items.push(switchAction(RuleName.autoPurify));
@@ -142,7 +143,7 @@ class ActionManager {
                 noContain = ["focusMode"];
                 break;
             case RouteName.Contrast:
-                noContain = ["contrastMode"];
+                noContain = ["contrastMode","retryTranslate"];
                 break;
             case RouteName.Settings:
                 noContain = ["settings"];

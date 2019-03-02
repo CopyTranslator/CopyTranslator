@@ -1,5 +1,5 @@
 <template>
-    <div :style="styleNow" v-on:dblclick="minify" v-on:mousedown="bindDrag"></div>
+    <div :style="styleNow" v-on:dblclick="minify" v-on:mousedown="bindDrag" ></div>
 </template>
 
 <script>

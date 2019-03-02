@@ -3,6 +3,7 @@ import {RuleName, reverseRuleName, ruleKeys} from "../tools/rule";
 import {BrowserWindow, MenuItem, shell} from "electron";
 
 import {constants} from "../core/constant";
+import {Controller} from "@/core/controller";
 
 const clipboard = require("electron-clipboard-extended");
 
@@ -12,7 +13,7 @@ function handleActions(
     browserWindow: BrowserWindow | undefined = undefined,
     event: Event | undefined = undefined
 ) {
-    var controller = (<any>global).controller;
+    const controller = (<Controller>(<any>global).controller);
     if (ruleKeys.includes(id)) {
         if (menuItem) {
             controller.setByKeyValue(id, menuItem.checked);
@@ -45,6 +46,8 @@ function handleActions(
             case "helpAndUpdate":
                 shell.openExternal(constants.homepage);
                 break;
+            case "retryTranslate":
+                controller.doTranslate(controller.src);
         }
     }
 }

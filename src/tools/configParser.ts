@@ -49,7 +49,11 @@ class ConfigParser {
         if (check && !check(value)) {
             return false;
         } else {
-            this.values[keyValue] = value;
+            if (typeof this.rules[keyValue].predefined == "object") {
+                this.values[keyValue] = Object.assign(this.values[keyValue], value);
+            } else {
+                this.values[keyValue] = value;
+            }
             return true;
         }
     }

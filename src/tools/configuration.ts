@@ -67,11 +67,11 @@ function initConfig(
         RuleName.focus,
         new ModeRule(
             {
-                x: 100,
-                y: 200,
-                height: 200,
-                width: 300,
-                fontSize: 15
+                x: 532,
+                y: 186,
+                height: 483,
+                width: 1225,
+                fontSize: 33
             },
             "parameters of focus mode"
         )
@@ -81,32 +81,25 @@ function initConfig(
         RuleName.contrast,
         new ModeRule(
             {
-                x: 300,
-                y: 500,
-                height: 600,
-                width: 800,
+                x: 535,
+                y: 186,
+                height: 483,
+                width: 1222,
                 fontSize: 15
             },
-            "parameters of contrast mode",
-            (value: any) => {
-                return true;
-            }
+            "parameters of contrast mode"
         )
     );
 
     config.addRule(RuleName.settingsConfig,
         new ModeRule(
             {
-                x: 300,
-                y: 500,
-                height: 600,
-                width: 800,
-                fontSize: 15
+                x: 799,
+                y: 123,
+                height: 143,
+                width: 800
             },
-            "parameters of setting panel",
-            (value: any) => {
-                return true;
-            }
+            "parameters of setting panel"
         )
     );
 

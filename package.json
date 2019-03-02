@@ -38,7 +38,6 @@
     "@vue/eslint-config-typescript": "^3.2.0",
     "babel-eslint": "^10.0.1",
     "electron": "^3.0.0",
-    "electron-rebuild": "^1.8.2",
     "eslint": "^5.8.0",
     "eslint-plugin-typescript": "^0.14.0",
     "eslint-plugin-vue": "^5.0.0",

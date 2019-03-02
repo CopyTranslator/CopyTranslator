@@ -8,10 +8,6 @@ import {loadStyles} from "./style";
 class WindowWrapper {
     window: BrowserWindow | undefined = undefined;
     stored: string = RouteName.Focus;
-    stayTop: boolean = false;
-
-    constructor() {
-    }
 
     sendMsg(type: string, msg: any) {
         if (this.window) this.window.webContents.send(type, msg);

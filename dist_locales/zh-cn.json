@@ -28,5 +28,6 @@
     "settings": "设置",
     "viewSource": "查看原文",
     "localeSetting": "区域设置",
-    "return": "返回"
+    "return": "返回",
+    "retryTranslate": "重试翻译"
 }

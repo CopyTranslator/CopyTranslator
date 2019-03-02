@@ -44,8 +44,9 @@
                     </el-row>
                 </el-col>
             </el-row>
-            <el-row>
-                <el-col v-if="locale" :span="24">
+            <el-row v-if="locale">
+                <el-col :span="6" style="text-align: right"><p style="text-align: right">{{$t('localeSetting')}}</p></el-col>
+                <el-col :span="18" >
                     <el-select v-model="locale">
                         <el-option v-for="locale in locales" :key="locale.short" :label="locale.localeName"
                                    :value="locale.short"></el-option>

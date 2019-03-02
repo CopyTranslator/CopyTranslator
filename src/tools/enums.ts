@@ -43,7 +43,7 @@ function mkenum<T extends { [index: string]: U }, U extends string>(x: T) {
 }
 
 const ColorStatus = mkenum({
-    None: rgb(255, 255, 255),
+    None: rgb(190,190,190),
     Listen: rgb(84, 255, 159),
     AutoCopy: rgb(152, 245, 255),
     Translating: rgb(238, 238, 0),

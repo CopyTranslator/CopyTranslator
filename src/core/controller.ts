@@ -1,11 +1,12 @@
 import {
+  BaiduTranslator,
   GoogleTranslator,
   MyTranslateResult,
-  Translator
+  Translator, YoudaoTranslator
 } from "../tools/translator";
 import { initConfig } from "../tools/configuration";
 import { ConfigParser, getEnumValue } from "../tools/configParser";
-import { ColorStatus, MessageType } from "../tools/enums";
+import {ColorStatus, MessageType, TranslatorType} from "../tools/enums";
 import { WindowWrapper } from "../tools/windows";
 import { simulatePaste, windowController } from "../tools/windowController";
 import { envConfig } from "../tools/envConfig";
@@ -24,7 +25,7 @@ class Controller {
   result: string = "";
   lastAppend: string = "";
   win: WindowWrapper = new WindowWrapper();
-  translator: Translator = new GoogleTranslator();
+  translator: Translator=new GoogleTranslator();
   config: ConfigParser = initConfig();
   locales: L10N = l10n;
   action = new ActionManager(handleActions);
@@ -68,7 +69,6 @@ class Controller {
   }
 
   checkClipboard() {
-    console.log(clipboard.readText());
     let text = normalizeAppend(clipboard.readText());
     if (this.checkValid(text)) {
       this.doTranslate(text);
@@ -186,9 +186,9 @@ class Controller {
     let src_lang = should_src;
     try {
       let lang = await this.translator.detect(text);
-      if (lang) src_lang = lang.toLowerCase();
+      if (lang) src_lang = lang;
     } catch (e) {
-      console.log("detect fail");
+      this.onError(e);
     }
 
     if (src_lang == dest_lang) {
@@ -296,6 +296,23 @@ class Controller {
         break;
       case RuleName.tapCopy:
         windowController.tapCopy = value;
+        break;
+      case RuleName.translatorType:
+        switch(value){
+          case TranslatorType.Google:
+            this.translator=new GoogleTranslator();
+            break;
+          case TranslatorType.Baidu:
+            this.translator=new BaiduTranslator();
+            break;
+          case TranslatorType.Youdao:
+            this.translator=new YoudaoTranslator();
+            break;
+        }
+        if(!(this.get(RuleName.source) in this.translator.getLanguages()))
+          this.setByKeyValue("source","English");
+        if(!(this.get(RuleName.target) in this.translator.getLanguages()))
+          this.setByKeyValue("target","Chinese(Simplified)");
         break;
     }
     if (save) {

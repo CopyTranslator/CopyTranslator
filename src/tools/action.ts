@@ -10,7 +10,7 @@ const fs = require("fs");
 import {RuleName} from "./rule";
 import {ConfigParser, getEnumValue as r} from "./configParser";
 import {envConfig} from "./envConfig";
-import {HideDirection} from "./enums";
+import {HideDirection, TranslatorType} from "./enums";
 
 const _ = require("lodash");
 
@@ -146,6 +146,7 @@ class ActionManager {
         }
 
         items.push(enumAction(RuleName.hideDirect, HideDirection));
+        items.push(enumAction(RuleName.translatorType, TranslatorType));
         items.push(normalAction("copySource"));
         items.push(normalAction("copyResult"));
         items.push(normalAction("clear"));

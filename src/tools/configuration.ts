@@ -143,7 +143,7 @@ function initConfig(
     ));
 
     config.addRule(RuleName.trayMenu, new GroupRule(
-        ["copySource","copyResult","clear","retryTranslate","contrastMode","focusMode","settings","helpAndUpdate","exit"], "the menu of tray"
+        ["translatorType","copySource","copyResult","clear","retryTranslate","contrastMode","focusMode","settings","helpAndUpdate","exit"], "the menu of tray"
     ));
 
     config.addRule(RuleName.contrastOption, new GroupRule(

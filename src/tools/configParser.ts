@@ -16,7 +16,7 @@ class ConfigParser {
   addRule(key: RuleName, rule: Rule) {
     let keyValue = getEnumValue(key);
     if (rule.check && !rule.check(rule.predefined)) {
-      throw "Rule " + key + " is invald!";
+      throw "Rule " + keyValue + " is invald!";
     }
     this.rules[keyValue] = rule;
     this.values[keyValue] = rule.predefined;

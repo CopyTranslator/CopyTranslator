@@ -21,13 +21,13 @@ new Vue({
     store,
     render: h => h(App),
     created: function () {
+        ipcRenderer.setMaxListeners(100);
         ipcRenderer.on(
             MessageType.TranslateResult.toString(),
             (event: any, arg: any) => {
                 store.commit("setShared", arg);
             }
         );
-
         if (controller.res)
             controller.sync();
         else {

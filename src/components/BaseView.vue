@@ -20,15 +20,15 @@ export default {
     };
   },
   watch: {
-    // 如果 source,target 发生改变，这个函数就会运行
+    // 如果 sourceLanguage,targetLanguage 发生改变，这个函数就会运行
     source: function(newSource, oldSource) {
-      this.$controller.setByKeyValue("source", newSource);
+      this.$controller.setByKeyValue("sourceLanguage", newSource);
       if (this.routeName === "contrast") {
         this.translate();
       }
     },
     target: function(newTarget, oldTarget) {
-      this.$controller.setByKeyValue("target", newTarget);
+      this.$controller.setByKeyValue("targetLanguage", newTarget);
       if (this.routeName === "contrast") {
         this.translate();
       }

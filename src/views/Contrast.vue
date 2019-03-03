@@ -2,48 +2,16 @@
     <div v-on:contextmenu="openMenu('Contrast')">
         <StatusBar ref="bar"></StatusBar>
         <el-row class="contrast" :gutter="5">
-            <el-col :span="20">
-
+            <el-col :span="18">
                 <textarea class="contrastText" v-if="sharedResult" :style="area" v-model="sharedResult.src"></textarea>
 
                 <textarea class="contrastText" :style="area" v-if="sharedResult"
                           v-model="sharedResult.result"></textarea>
             </el-col>
-            <el-col :span="4" class="controlPanel" v-if="config">
-                <el-switch v-model="config.autoCopy" :active-text="$t('autoCopy')"
-                           @change="setValue('autoCopy')"></el-switch>
-                <el-switch v-model="config.incrementalCopy" :active-text="$t('incrementalCopy')"
-                           @change="setValue('incrementalCopy')"></el-switch>
-                <el-switch v-model="config.listenClipboard" :active-text="$t('listenClipboard')"
-                           @change="setValue('listenClipboard')"></el-switch>
-                <el-switch v-model="config.stayTop" :active-text="$t('stayTop')"
-                           @change="setValue('stayTop')"></el-switch>
-
-                <el-switch v-model="config.autoShow" :active-text="$t('autoShow')"
-                           @change="setValue('autoShow')"></el-switch>
-                <el-switch v-model="config.detectLanguage" :active-text="$t('detectLanguage')"
-                           @change="setValue('detectLanguage')"></el-switch>
-
-                <el-switch v-model="config.autoHide" :active-text="$t('autoHide')"
-                           @change="setValue('autoHide')"></el-switch>
-                <p style="text-align: left">{{$t('sourceLanguage')}}</p>
-                <el-select style="width:100%" v-model="source" placeholder="请选择">
-                    <el-option
-                            v-for="item in languages"
-                            :key="item"
-                            :label="item"
-                            :value="item">
-                    </el-option>
-                </el-select>
-                <p style="text-align: left">{{$t('targetLanguage')}}</p>
-                <el-select v-model="target" placeholder="请选择" name="???">
-                    <el-option
-                            v-for="item in languages"
-                            :key="item"
-                            :label="item"
-                            :value="item">
-                    </el-option>
-                </el-select>
+            <el-col :span="6" class="controlPanel">
+                <div style="text-align: left;">
+                    <Action v-for="actionId in actionKeys" :action-id="actionId" :key="actionId"></Action>
+                </div>
                 <el-button type="primary" class="noMargin" @click="changeMode('Focus')">{{$t("switchMode")}}</el-button>
                 <el-button type="primary" class="noMargin" @click="translate">{{$t("translate")}}</el-button>
                 <el-button type="primary" class="noMargin" @click="changeMode('Settings')">{{$t("settings")}}
@@ -58,15 +26,15 @@ import StatusBar from "../components/StatusBar";
 import BaseView from "../components/BaseView";
 import WindowController from "../components/WindowController";
 import Adjustable from "../components/Adjustable";
-
+import Action from "../components/Action";
 export default {
   name: "Contrast",
   mixins: [BaseView, WindowController, Adjustable],
   data: function() {
     return {
-      config: undefined,
       size: this.$controller.config.values.contrast.fontSize,
-      routeName: "contrast"
+      routeName: "contrast",
+      actionKeys: this.$controller.config.values.contrastOption
     };
   },
   computed: {
@@ -80,23 +48,18 @@ export default {
     }
   },
   components: {
-    StatusBar
+    StatusBar,
+    Action
   },
   mounted: function() {
     this.barHeight = this.$refs.bar.$el.clientHeight;
-    this.syncConfig();
+    this.$nextTick(function() {
+      this.actionKeys = this.$controller.config.values.contrastOption;
+    });
   },
-
   methods: {
     translate() {
       this.$controller.tryTranslate(this.sharedResult.src);
-    },
-    syncConfig() {
-      this.config = this.$controller.config.getValues();
-    },
-    setValue(keyValue) {
-      this.$controller.setByKeyValue(keyValue, this.config[keyValue]);
-      this.syncConfig();
     }
   }
 };
@@ -120,10 +83,6 @@ p {
 .noMargin {
   margin-left: 0 !important;
   margin-top: 2px;
-}
-
-.controlPanel {
-  display: grid;
-  grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+  width: 100%;
 }
 </style>

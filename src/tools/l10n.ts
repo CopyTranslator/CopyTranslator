@@ -59,5 +59,5 @@ let locales = L10N.loadLocales([
     envConfig.diffConfig.systemLocaleDir,
     envConfig.sharedConfig.userLocaleDir
 ]);
-var l10n = new L10N({resources: locales});
+let l10n = new L10N({resources: locales});
 export {l10n, L10N};

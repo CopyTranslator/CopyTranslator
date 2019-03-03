@@ -2,7 +2,6 @@ import {ConfigParser} from "./configParser";
 import {BoolRule, GroupRule, ModeRule, RuleName} from "./rule";
 import {FrameMode, HideDirection, TranslatorType} from "./enums";
 import {RouteName} from "./action";
-import {Route} from "vue-router";
 
 function initConfig(
     config: ConfigParser | undefined = undefined
@@ -77,7 +76,6 @@ function initConfig(
             return !!HideDirection[value];
         }
     });
-
 
     config.addRule(
         RuleName.focus,

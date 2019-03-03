@@ -2,7 +2,7 @@
     <div v-on:contextmenu="openMenu('Focus')" style="width:100vw;height:100vh;">
         <StatusBar ref="bar"></StatusBar>
         <div>
-    <textarea class="focusText"
+    <textarea class="focusText" @keyup.ctrl.13="shortcut" @keyup.ctrl.71="google" @keyup.ctrl.66="baidu"
               v-bind:style="focusStyle"
               v-model="sharedResult.result" v-if="sharedResult&&!sharedResult.dict"
     ></textarea>
@@ -17,7 +17,7 @@ import BaseView from "../components/BaseView";
 import WindowController from "../components/WindowController";
 import Adjustable from "../components/Adjustable";
 import DictResult from "../components/DictResult";
-
+import { shell } from "electron";
 export default {
   name: "FocusMode",
   mixins: [BaseView, WindowController, Adjustable],
@@ -27,6 +27,21 @@ export default {
       size: this.$controller.config.values.focus.fontSize,
       routeName: "focus"
     };
+  },
+  methods: {
+    shortcut() {
+      this.$controller.tryTranslate(this.sharedResult.result);
+    },
+    baidu() {
+      shell.openExternal(
+        `https://www.baidu.com/s?ie=utf-8&wd=${this.sharedResult.result}`
+      );
+    },
+    google() {
+      shell.openExternal(
+        `https://www.google.com/search?q=${this.sharedResult.result}`
+      );
+    }
   },
   computed: {
     focusStyle() {

@@ -7,8 +7,8 @@ import ElementUI from "element-ui";
 import "element-ui/lib/theme-chalk/index.css";
 import App from "./App.vue";
 
-var remote = require("electron").remote;
-var controller = remote.getGlobal("controller");
+const remote = require("electron").remote;
+const controller = remote.getGlobal("controller");
 
 Vue.use(ElementUI);
 
@@ -32,7 +32,6 @@ new Vue({
             controller.sync();
         else {
             controller.checkClipboard();
-
         }
 
     }

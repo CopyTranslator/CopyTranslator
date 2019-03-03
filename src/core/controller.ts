@@ -2,11 +2,17 @@ import {
   BaiduTranslator,
   GoogleTranslator,
   MyTranslateResult,
-  Translator, YoudaoTranslator
+  Translator,
+  YoudaoTranslator
 } from "../tools/translator";
 import { initConfig } from "../tools/configuration";
 import { ConfigParser, getEnumValue } from "../tools/configParser";
-import {ColorStatus, MessageType, TranslatorType} from "../tools/enums";
+import {
+  ColorStatus,
+  MessageType,
+  TranslatorType,
+  WinOpt
+} from "../tools/enums";
 import { WindowWrapper } from "../tools/windows";
 import { simulatePaste, windowController } from "../tools/windowController";
 import { envConfig } from "../tools/envConfig";
@@ -14,7 +20,7 @@ import { l10n, L10N } from "../tools/l10n";
 import { reverseRuleName, RuleName } from "../tools/rule";
 import { normalizeAppend } from "./stringProcessor";
 import { app, Rectangle } from "electron";
-import {ActionManager, RouteName} from "../tools/action";
+import { ActionManager } from "../tools/action";
 import { TrayManager } from "../tools/tray";
 import { handleActions } from "./actionCallback";
 
@@ -23,10 +29,10 @@ const clipboard = require("electron-clipboard-extended");
 class Controller {
   src: string = "";
   result: string = "";
-  res:MyTranslateResult|undefined;
+  res: MyTranslateResult | undefined;
   lastAppend: string = "";
   win: WindowWrapper = new WindowWrapper();
-  translator: Translator=new GoogleTranslator();
+  translator: Translator = new GoogleTranslator();
   config: ConfigParser = initConfig();
   locales: L10N = l10n;
   action = new ActionManager(handleActions);
@@ -66,7 +72,7 @@ class Controller {
     this.src = "";
     this.result = "";
     this.lastAppend = "";
-    this.res=undefined;
+    this.res = undefined;
     this.sync();
   }
 
@@ -84,16 +90,14 @@ class Controller {
   }
 
   getT() {
-    return this.locales.getT(this.config.get(RuleName.locale));
+    return this.locales.getT(this.config.get(RuleName.localeSetting));
   }
 
   onError(msg: string) {
     (<any>global).log.error(msg);
   }
 
-  sync(
-    language: any = undefined
-  ) {
+  sync(language: any = undefined) {
     if (!language) {
       language = {
         source: this.source(),
@@ -123,7 +127,7 @@ class Controller {
   }
 
   checkValid(text: string) {
-    const urlExp = /^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/;
+    const urlExp = /^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([/\w .-]*)*\/?$/;
     return !(
       urlExp.test(text) ||
       this.result == text ||
@@ -149,7 +153,7 @@ class Controller {
         !(this.get(RuleName.autoCopy) && this.get(RuleName.autoPaste))
       );
     }
-    this.res=result;
+    this.res = result;
     this.sync(language);
   }
 
@@ -157,7 +161,7 @@ class Controller {
     const listen = this.get(RuleName.listenClipboard);
     const copy = this.get(RuleName.autoCopy);
     const incremental = this.get(RuleName.incrementalCopy);
-    const paste=this.get(RuleName.autoPaste);
+    const paste = this.get(RuleName.autoPaste);
     if (fail) {
       this.win.switchColor(ColorStatus.Fail);
       return;
@@ -167,16 +171,16 @@ class Controller {
       return;
     }
     if (incremental) {
-      if (copy&&paste) {
+      if (copy && paste) {
         this.win.switchColor(ColorStatus.IncrementalCopyPaste);
-      } else if(copy){
+      } else if (copy) {
         this.win.switchColor(ColorStatus.IncrementalCopy);
-      } else{
+      } else {
         this.win.switchColor(ColorStatus.Incremental);
       }
       return;
     }
-    if (copy&&paste) {
+    if (copy && paste) {
       this.win.switchColor(ColorStatus.AutoPaste);
       return;
     }
@@ -277,10 +281,13 @@ class Controller {
   switchValue(ruleKey: string) {
     this.setByKeyValue(ruleKey, !this.config.values[ruleKey]);
   }
+  refresh(ruleKey: string | null = null) {
+    this.action.refreshActions();
+    this.win.winOpt(WinOpt.Refresh, ruleKey);
+  }
 
-  setByKeyValue(ruleKey: string, value: any, save = true) {
-    let ruleValue = reverseRuleName[ruleKey];
-    switch (ruleValue) {
+  setByRuleName(ruleName: RuleName, value: any, save = true, refresh = true) {
+    switch (ruleName) {
       case RuleName.listenClipboard:
         this.setWatch(value);
         break;
@@ -295,41 +302,67 @@ class Controller {
         break;
       case RuleName.autoPurify:
         if (value) {
-          this.setByKeyValue(getEnumValue(RuleName.autoCopy), false);
+          this.setByRuleName(RuleName.autoCopy, false, save, refresh);
         }
         break;
       case RuleName.autoCopy:
         if (value) {
-          this.setByKeyValue(getEnumValue(RuleName.autoPurify), false);
+          this.setByKeyValue(
+            getEnumValue(RuleName.autoPurify),
+            false,
+            save,
+            refresh
+          );
         }
         break;
       case RuleName.tapCopy:
         windowController.tapCopy = value;
         break;
       case RuleName.translatorType:
-        switch(value){
+        switch (value) {
           case TranslatorType.Google:
-            this.translator=new GoogleTranslator();
+            this.translator = new GoogleTranslator();
             break;
           case TranslatorType.Baidu:
-            this.translator=new BaiduTranslator();
+            this.translator = new BaiduTranslator();
             break;
           case TranslatorType.Youdao:
-            this.translator=new YoudaoTranslator();
+            this.translator = new YoudaoTranslator();
             break;
         }
-        if(!(this.get(RuleName.source) in this.translator.getLanguages()))
-          this.setByKeyValue("source","English");
-        if(!(this.get(RuleName.target) in this.translator.getLanguages()))
-          this.setByKeyValue("target","Chinese(Simplified)");
+        if (
+          !(this.get(RuleName.sourceLanguage) in this.translator.getLanguages())
+        )
+          this.setByRuleName(RuleName.sourceLanguage, "English", save, refresh);
+        if (
+          !(this.get(RuleName.targetLanguage) in this.translator.getLanguages())
+        )
+          this.setByRuleName(
+            RuleName.targetLanguage,
+            "Chinese(Simplified)",
+            save,
+            refresh
+          );
         this.win.load(this.get(RuleName.frameMode));
         break;
     }
+    this.config.set(ruleName, value);
+    this.setCurrentColor();
     if (save) {
-      this.config.setByKeyValue(ruleKey, value);
-      this.setCurrentColor();
       this.config.saveValues(envConfig.sharedConfig.configPath);
+      if (refresh) {
+        this.refresh();
+      } else if (ruleName == RuleName.autoPurify) {
+        this.refresh("autoCopy");
+      } else if (ruleName == RuleName.autoCopy) {
+        this.refresh("autoPurify");
+      }
     }
+  }
+
+  setByKeyValue(ruleKey: string, value: any, save = true, refresh = true) {
+    let ruleValue = reverseRuleName[ruleKey];
+    this.setByRuleName(ruleValue, value, save, refresh);
   }
 }
 

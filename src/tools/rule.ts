@@ -26,9 +26,9 @@ enum RuleName {
     trayMenu,
     contrastOption,
     //
-    source,
-    target,
-    locale
+    sourceLanguage,
+    targetLanguage,
+    localeSetting
 }
 
 let ruleKeys: Array<string> = Object.values(RuleName).filter(
@@ -126,6 +126,20 @@ class ModeRule implements Rule {
                 }
             }
             return true;
+        }
+    }
+}
+
+export class EnumRule implements Rule{
+    predefined: any;
+    msg: string;
+    check: CheckFuction;
+
+    constructor(predefined: any, msg: string,type:any) {
+        this.predefined = predefined;
+        this.msg = msg;
+        this.check = function (value: any) {
+            return value in Object.values(type).filter(k => (typeof k as any) == "number");
         }
     }
 }

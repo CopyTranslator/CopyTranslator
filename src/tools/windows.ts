@@ -14,7 +14,7 @@ class WindowWrapper {
     if (this.window) this.window.webContents.send(type, msg);
   }
 
-  winOpt(type: WinOpt, args: any) {
+  winOpt(type: WinOpt, args: any=null) {
     this.sendMsg(MessageType.WindowOpt.toString(), {
       type: type,
       args: args

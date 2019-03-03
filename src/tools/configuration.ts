@@ -1,6 +1,8 @@
 import {ConfigParser} from "./configParser";
 import {BoolRule, GroupRule, ModeRule, RuleName} from "./rule";
 import {FrameMode, HideDirection, TranslatorType} from "./enums";
+import {RouteName} from "./action";
+import {Route} from "vue-router";
 
 function initConfig(
     config: ConfigParser | undefined = undefined
@@ -53,10 +55,10 @@ function initConfig(
     );
 
     config.addRule(RuleName.frameMode, {
-        predefined: FrameMode.Contrast,
+        predefined: RouteName.Focus,
         msg: "current frame mode",
-        check: (value: FrameMode) => {
-            return !!FrameMode[value];
+        check: (value: RouteName) => {
+            return !!RouteName[value];
         }
     });
 
@@ -132,17 +134,16 @@ function initConfig(
         msg: "locale setting"
     });
 
-
     config.addRule(RuleName.contrastMenu, new GroupRule(
-        ["settings"], "the context menu of contrast mode"
+        ["copySource","copyResult","clear","retryTranslate","focusMode","settings","exit"], "the context menu of contrast mode"
     ));
 
     config.addRule(RuleName.focusMenu, new GroupRule(
-        ["settings"], "the context menu of focus mode"
+        ["copySource","copyResult","clear","retryTranslate","contrastMode","settings","exit"], "the context menu of focus mode"
     ));
 
     config.addRule(RuleName.trayMenu, new GroupRule(
-        ["settings"], "the menu of tray"
+        ["copySource","copyResult","clear","retryTranslate","contrastMode","focusMode","settings","helpAndUpdate","exit"], "the menu of tray"
     ));
 
     config.addRule(RuleName.contrastOption, new GroupRule(

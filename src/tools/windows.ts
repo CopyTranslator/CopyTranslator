@@ -1,9 +1,10 @@
-import { BrowserWindow, Rectangle, screen } from "electron";
-import { createProtocol } from "vue-cli-plugin-electron-builder/lib";
-import { ColorStatus, HideDirection, MessageType, WinOpt } from "./enums";
-import { ModeConfig, RuleName } from "./rule";
-import { RouteName } from "./action";
-import { loadStyles } from "./style";
+import {BrowserWindow, Rectangle, screen} from "electron";
+import {createProtocol} from "vue-cli-plugin-electron-builder/lib";
+import {ColorStatus, HideDirection, MessageType, WinOpt} from "./enums";
+import {ModeConfig, RuleName} from "./rule";
+import {RouteName} from "./action";
+import {loadStyles} from "./style";
+import {Controller} from "@/core/controller";
 
 class WindowWrapper {
   window: BrowserWindow | undefined = undefined;
@@ -24,10 +25,11 @@ class WindowWrapper {
     this.winOpt(WinOpt.ChangeColor, color);
   }
 
-  routeTo(routerName: string) {
+  routeTo(routeName: string) {
     if (this.window) {
       this.window.focus();
-      this.window.webContents.send(MessageType.Router.toString(), routerName);
+      this.window.webContents.send(MessageType.Router.toString(), routeName);
+      (<Controller>(<any>global).controller).setByKeyValue("frameMode",routeName);
     }
   }
 
@@ -48,7 +50,7 @@ class WindowWrapper {
     this.window.webContents.on("did-finish-load", function() {
       windowPointer.webContents.insertCSS(loadStyles());
     });
-    var that = this;
+    const that = this;
     this.window.on("blur", () => {
       that.edgeHide(that.onEdge());
     });
@@ -162,7 +164,23 @@ class WindowWrapper {
     }
   }
 
-  createWindow(param: ModeConfig) {
+  createWindow(routeName:RouteName) {
+    let param:ModeConfig|undefined;
+    switch(routeName){
+      case RouteName.Focus:
+        param=(<any>global).controller.get(RuleName.focus);
+        break;
+      case RouteName.Contrast:
+        param=(<any>global).controller.get(RuleName.contrast);
+        break;
+      case RouteName.Settings:
+        param=(<any>global).controller.get(RuleName.settingsConfig);
+        break;
+      default:
+        break;
+    }
+    if(!param)
+      return;
     // Create the browser window.
     this.window = new BrowserWindow({
       x: param.x,
@@ -171,7 +189,7 @@ class WindowWrapper {
       height: param.height,
       frame: false
     });
-    this.load();
+    this.load(routeName);
     this.window.on("closed", () => {
       this.window = undefined;
     });

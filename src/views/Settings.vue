@@ -71,7 +71,6 @@ export default {
       config: undefined,
       locale: undefined,
       locales: this.$controller.locales.getLocales(),
-      prevRoute: undefined,
       routeName: "settingsConfig"
     };
   },
@@ -105,7 +104,7 @@ export default {
       this.syncConfig();
     },
     backStored() {
-      this.$router.push({ name: this.$controller.win.stored });
+      this.changeMode(this.$controller.win.stored);
     }
   }
 };

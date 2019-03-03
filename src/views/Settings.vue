@@ -9,7 +9,7 @@
                                    @change="setValue('autoCopy')"></el-switch>
                     </el-row>
                     <el-row>
-                        <el-switch v-model="config.incrementalCopy" :active-text="$t('incrementalCopy')"
+                        <el-switch v-model="config.incrementalCopy" :active-text="$t('incrementalCopy')" 
                                    @change="setValue('incrementalCopy')"></el-switch>
                     </el-row>
                 </el-col>
@@ -45,8 +45,9 @@
                 </el-col>
             </el-row>
             <el-row v-if="locale">
-                <el-col :span="6" style="text-align: right"><p style="text-align: right">{{$t('localeSetting')}}</p></el-col>
-                <el-col :span="18" >
+                <el-col :span="6" style="text-align: right"><p style="text-align: right">{{$t('localeSetting')}}</p>
+                </el-col>
+                <el-col :span="18">
                     <el-select v-model="locale">
                         <el-option v-for="locale in locales" :key="locale.short" :label="locale.localeName"
                                    :value="locale.short"></el-option>

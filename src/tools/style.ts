@@ -1,24 +1,24 @@
-import {envConfig} from "./envConfig";
+import { envConfig } from "./envConfig";
 
 var fs = require("fs");
 
 function loadStyles(): string {
-    if (!fs.existsSync(envConfig.sharedConfig.style)) {
-        try {
-            fs.copyFileSync(
-                envConfig.diffConfig.styleTemplate,
-                envConfig.sharedConfig.style
-            );
-        } catch (e) {
-            console.log(e);
-        }
-    }
+  if (!fs.existsSync(envConfig.sharedConfig.style)) {
     try {
-        let styles = fs.readFileSync(envConfig.sharedConfig.style, "utf-8");
-        return styles.toString();
+      fs.copyFileSync(
+        envConfig.diffConfig.styleTemplate,
+        envConfig.sharedConfig.style
+      );
     } catch (e) {
-        return "";
+      console.log(e);
     }
+  }
+  try {
+    let styles = fs.readFileSync(envConfig.sharedConfig.style, "utf-8");
+    return styles.toString();
+  } catch (e) {
+    return "";
+  }
 }
 
-export {loadStyles};
+export { loadStyles };

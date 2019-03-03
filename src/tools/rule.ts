@@ -1,3 +1,5 @@
+import {en} from "./locales";
+
 enum RuleName {
     autoCopy,
     listenClipboard,
@@ -10,12 +12,19 @@ enum RuleName {
     autoPurify,
     autoShow,
     tapCopy,
+    //enum rule
     frameMode,
     translatorType,
+    hideDirect,
     // mode config
     focus,
     contrast,
     settingsConfig,
+    //groups
+    contrastMenu,
+    focusMenu,
+    trayMenu,
+    contrastOption,
     //
     source,
     target,
@@ -41,6 +50,28 @@ interface ModeConfig {
     fontSize?: number;
 }
 
+class GroupRule implements Rule {
+    predefined: Array<string>;
+    msg: string;
+    static check = function (value: any) {
+        if (!(value instanceof Array)) {
+            return false
+        }
+        const keys = Object.keys(en);
+        for (let key in value) {
+            if ((!(value[key] in ruleKeys)) && !(value[key] in keys)) {
+                return false;
+            }
+        }
+    };
+
+    constructor(predefined: Array<string>, msg: string) {
+        this.predefined = predefined;
+        this.msg = msg;
+    }
+}
+
+
 type CheckFuction = (value: any) => boolean;
 
 interface Rule {
@@ -55,6 +86,7 @@ class BoolRule implements Rule {
     static check = function (value: any) {
         return typeof value == "boolean";
     };
+
     constructor(predefined: boolean, msg: string) {
         this.predefined = predefined;
         this.msg = msg;
@@ -107,5 +139,6 @@ export {
     RuleName,
     reverseRuleName,
     ruleKeys,
-    ModeConfig
+    ModeConfig,
+    GroupRule
 };

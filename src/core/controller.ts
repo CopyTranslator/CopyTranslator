@@ -13,7 +13,7 @@ import { l10n, L10N } from "../tools/l10n";
 import { reverseRuleName, RuleName } from "../tools/rule";
 import { normalizeAppend } from "./stringProcessor";
 import { app, Rectangle } from "electron";
-import { ActionManager } from "../tools/action";
+import {ActionManager, RouteName} from "../tools/action";
 import { TrayManager } from "../tools/tray";
 import { handleActions } from "./actionCallback";
 
@@ -37,7 +37,7 @@ class Controller {
   }
 
   createWindow() {
-    this.win.createWindow(this.config.values.focus);
+    this.win.createWindow(this.get(RuleName.frameMode));
     windowController.bind();
     this.tray.init();
     this.action.init();
@@ -68,6 +68,7 @@ class Controller {
   }
 
   checkClipboard() {
+    console.log(clipboard.readText());
     let text = normalizeAppend(clipboard.readText());
     if (this.checkValid(text)) {
       this.doTranslate(text);

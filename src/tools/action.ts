@@ -185,6 +185,8 @@ class ActionManager {
                 contain = controller.get(RuleName.contrastMenu);
                 break;
             case RouteName.Tray:
+                contain = controller.get(RuleName.trayMenu);
+                break;
             case RouteName.Settings:
                 contain = Object.keys(this.actions);
                 break;

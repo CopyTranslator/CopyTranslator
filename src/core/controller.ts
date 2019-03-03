@@ -313,6 +313,7 @@ class Controller {
           this.setByKeyValue("source","English");
         if(!(this.get(RuleName.target) in this.translator.getLanguages()))
           this.setByKeyValue("target","Chinese(Simplified)");
+        this.win.load(this.get(RuleName.frameMode));
         break;
     }
     if (save) {

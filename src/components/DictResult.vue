@@ -4,7 +4,7 @@
         <p class="dictResult">{{sharedResult.result}}</p>
         <div v-if="sharedResult.phonetic">
             <p class="notation">Phonetic:</p>
-            <p class="dictPhonetic" v-for="item in sharedResult.phonetic" :key="item">{{item}}</p>
+            <p class="dictPhonetic" v-for="item in sharedResult.phonetic" :key="item.name">{{item.name}}:[{{item.value}}]</p>
         </div>
         <div>
             <p class="notation">Basic Explains:</p>
@@ -46,5 +46,8 @@ export default {
 
 .dictExp {
   margin-left: 10vw;
+}
+.dictPhonetic{
+    margin-left: 10vw;
 }
 </style>

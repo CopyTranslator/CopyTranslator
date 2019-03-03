@@ -21,6 +21,9 @@ export default {
       });
     },
     changeMode(routerName) {
+      this.$controller.win.routeTo(routerName);
+    },
+    changeModeNoSave(routerName) {
       this.$router.push({ name: routerName });
     },
     minify(event) {
@@ -49,7 +52,7 @@ export default {
   },
   mounted: function() {
     ipc.on(MessageType.Router.toString(), (event, arg) => {
-      this.changeMode(arg);
+      this.changeModeNoSave(arg);
     });
     if (this.routeName) this.$controller.restoreWindow(this.routeName);
   },

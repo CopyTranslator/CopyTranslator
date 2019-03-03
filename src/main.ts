@@ -27,6 +27,11 @@ new Vue({
         store.commit("setShared", arg);
       }
     );
-    controller.checkClipboard();
+    if(controller.result=="")
+      controller.checkClipboard();
+    else{
+      controller.sync();
+    }
+
   }
 }).$mount("#app");

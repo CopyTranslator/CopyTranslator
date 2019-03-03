@@ -27,5 +27,7 @@
     "settings": "設定",
     "viewSource": "檢視來源",
     "localeSetting": "語系",
-    "return": "返回"
+    "return": "返回",
+    "retryTranslate": "重試翻譯",
+    "tapCopy": "點選複製"
 }

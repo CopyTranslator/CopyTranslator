@@ -23,6 +23,7 @@ const clipboard = require("electron-clipboard-extended");
 class Controller {
   src: string = "";
   result: string = "";
+  res:MyTranslateResult|undefined;
   lastAppend: string = "";
   win: WindowWrapper = new WindowWrapper();
   translator: Translator=new GoogleTranslator();
@@ -90,7 +91,6 @@ class Controller {
   }
 
   sync(
-    res: MyTranslateResult | undefined = undefined,
     language: any = undefined
   ) {
     if (!language) {
@@ -103,9 +103,9 @@ class Controller {
       language.target = this.translator.code2lang(language.target);
     }
     let extra: any = {};
-    if (res) {
-      extra.phonetic = res.phonetic;
-      extra.dict = res.dict;
+    if (this.res) {
+      extra.phonetic = this.res.phonetic;
+      extra.dict = this.res.dict;
     }
     this.win.sendMsg(
       MessageType.TranslateResult.toString(),
@@ -148,7 +148,8 @@ class Controller {
         !(this.get(RuleName.autoCopy) && this.get(RuleName.autoPaste))
       );
     }
-    this.sync(result, language);
+    this.res=result;
+    this.sync(language);
   }
 
   setCurrentColor(fail = false) {

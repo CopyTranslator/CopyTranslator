@@ -1,7 +1,7 @@
 var _ = require("lodash");
-
+type Dict = { [key: string]: string; };
 // prettier-ignore
-const GoogleLanguages: { [key: string]: string; } = {
+export const GoogleLanguages: Dict = {
     'Afrikaans': 'af',
     'Albanian': 'sq',
     'Amharic': 'am',
@@ -16,8 +16,8 @@ const GoogleLanguages: { [key: string]: string; } = {
     'Catalan': 'ca',
     'Cebuano': 'ceb',
     'Chichewa': 'ny',
-    'Chinese(Simplified)': 'zh-cn',
-    'Chinese(Traditional)': 'zh-tw',
+    'Chinese(Simplified)': 'zh-CN',
+    'Chinese(Traditional)': 'zh-TW',
     'Corsican': 'co',
     'Croatian': 'hr',
     'Czech': 'cs',
@@ -108,11 +108,58 @@ const GoogleLanguages: { [key: string]: string; } = {
     'Zulu': 'zu'
 };
 
-const GoogleCodes = _.invert(GoogleLanguages);
-const GoogleLangList = _.keys(GoogleLanguages);
+// prettier-ignore
+export const BaiduLanguages:Dict =
+    {
+        English: 'en',
+        Thai: 'th',
+        Russian: 'ru',
+        Portuguese: 'pt',
+        Greek: 'el',
+        Dutch: 'nl',
+        Polish: 'pl',
+        Bulgarian: 'bg',
+        Estonian: 'et',
+        Danish: 'da',
+        Finnish: 'fi',
+        Czech: 'cs',
+        Romanian: 'ro',
+        Slovenian: 'sl',
+        Swedish: 'sv',
+        Hungarian: 'hu',
+        German: 'de',
+        Italian: 'it',
+        'Chinese(Simplified)': 'zh-CN',
+        'Chinese(Traditional)': 'zh-TW',
+        Japanese: 'ja',
+        Korean: 'ko',
+        Spanish: 'es',
+        French: 'fr',
+        Arabic: 'ar'
+    };
 
-function isChineseLike(code: string): boolean {
+// prettier-ignore
+export const YoudaoLanguages:Dict = {
+    English: 'en',
+    Russian: 'ru',
+    Portuguese: 'pt',
+    Spanish: 'es',
+    'Chinese(Simplified)': 'zh-CN',
+    Japanese: 'ja',
+    Korean: 'ko',
+    French: 'fr'
+};
+
+export const GoogleCodes = _.invert(GoogleLanguages);
+export const GoogleLangList = _.keys(GoogleLanguages);
+export const BaiduCodes = _.invert(BaiduLanguages);
+export const BaiduLangList = _.keys(BaiduLanguages);
+export const YoudaoCodes = _.invert(YoudaoLanguages);
+export const YoudaoLangList = _.keys(YoudaoLanguages);
+
+
+export function isChineseLike(code: string): boolean {
     return code in ["zh-cn", "zh-tw", "ja"]
 }
 
-export {GoogleCodes, GoogleLangList, GoogleLanguages, isChineseLike};
+

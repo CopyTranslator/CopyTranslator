@@ -31,5 +31,6 @@
     "retryTranslate": "重試翻譯",
     "tapCopy": "點選複製",
     "hideDirect": "Hide Direction",
-    "autoPurify": "Auto Purify"
+    "autoPurify": "Auto Purify",
+    "translatorType": "Translator Type"
 }

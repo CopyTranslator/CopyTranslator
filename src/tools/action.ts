@@ -92,10 +92,19 @@ class ActionManager {
         let config = controller.config;
         const t = controller.getT();
         for (let key in this.actions) {
-            this.actions[key].label = t(key);
-            if (this.actions[key].type == MenuItemType.checkbox) {
-                this.actions[key].checked = config.values[key];
+            let action=this.actions[key];
+            action.label = t(key);
+            if (action.type == MenuItemType.checkbox) {
+                action.checked = config.values[key];
             }
+            if(action.submenu){
+                const value=config.values[key];
+                for(const key2 in action.submenu){
+                    const param=parseInt(decompose(action.submenu[key2].id)[1]);
+                    action.submenu[key2].checked = param == value;
+                }
+            }
+
         }
     }
 
@@ -135,7 +144,7 @@ class ActionManager {
                             k => (typeof k as any) == "number"
                         ).map((e) => {
                             return ActionWrapper({
-                                type: MenuItemType.normal,
+                                type: MenuItemType.checkbox,
                                 id: compose([id, (<number>e).toString()]),
                                 label: type[<number>e]
                             }, callback)

@@ -66,6 +66,7 @@ class Controller {
     this.src = "";
     this.result = "";
     this.lastAppend = "";
+    this.res=undefined;
     this.sync();
   }
 
@@ -156,6 +157,7 @@ class Controller {
     const listen = this.get(RuleName.listenClipboard);
     const copy = this.get(RuleName.autoCopy);
     const incremental = this.get(RuleName.incrementalCopy);
+    const paste=this.get(RuleName.autoPaste);
     if (fail) {
       this.win.switchColor(ColorStatus.Fail);
       return;
@@ -165,11 +167,17 @@ class Controller {
       return;
     }
     if (incremental) {
-      if (copy) {
+      if (copy&&paste) {
+        this.win.switchColor(ColorStatus.IncrementalCopyPaste);
+      } else if(copy){
         this.win.switchColor(ColorStatus.IncrementalCopy);
-      } else {
+      } else{
         this.win.switchColor(ColorStatus.Incremental);
       }
+      return;
+    }
+    if (copy&&paste) {
+      this.win.switchColor(ColorStatus.AutoPaste);
       return;
     }
     if (copy) {

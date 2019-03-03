@@ -46,9 +46,6 @@ fs.readdirSync(localeDir).filter((e: string) => !(e.replace(".json", "") in Obje
     resources[name] = locale;
 });
 
-console.log(resources);
-
-
 generateLocales(resources, localeDir);
 
 generateShortcuts(shortcutPath, defaultShortcuts);

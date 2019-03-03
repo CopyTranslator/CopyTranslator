@@ -73,7 +73,7 @@ export default {
     area() {
       return {
         fontSize: `${this.size.toString()}px`,
-        height: `${((this.windowHeight - this.barHeight) / 2)-5}px`,
+        height: `${(this.windowHeight - this.barHeight) / 2 - 5}px`,
         margin: `0`,
         padding: `0`
       };

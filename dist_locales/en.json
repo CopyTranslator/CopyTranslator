@@ -30,5 +30,6 @@
     "localeSetting": "Locale",
     "return": "Return",
     "retryTranslate": "Retry Translate",
-    "tapCopy": "Tap Copy"
+    "tapCopy": "Tap Copy",
+    "hideDirect": "Hide Direction"
 }

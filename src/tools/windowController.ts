@@ -1,10 +1,10 @@
 import {BrowserWindow, ipcMain as ipc} from "electron";
-
 const ioHook = require("iohook");
 import {MessageType, WinOpt} from "./enums";
 import {RuleName} from "./rule";
+import {Controller} from "@/core/controller";
 
-var robot = require("robotjs");
+const robot = require("robotjs");
 
 function simulateCopy() {
     robot.keyTap("C", "control");
@@ -21,7 +21,7 @@ class WindowController {
     currentWindow: BrowserWindow | undefined = undefined;
     ctrlKey = false;
     drag = false;
-    tapCopy=false;
+    tapCopy = false;
     lastDown = Date.now();
     lastX = 0;
     lastY = 0;
@@ -30,6 +30,7 @@ class WindowController {
         ipc.on(MessageType.WindowOpt.toString(), (event: any, args: any) => {
             var arg = args.args;
             var currentWindow = BrowserWindow.fromWebContents(event.sender);
+            const controller = <Controller>(<any>global).controller;
             switch (args.type) {
                 case WinOpt.Drag:
                     this.currentWindow = currentWindow;
@@ -38,7 +39,7 @@ class WindowController {
                     this.y = arg.y;
                     break;
                 case WinOpt.Minify:
-                    BrowserWindow.fromWebContents(event.sender).minimize();
+                    controller.win.edgeHide(controller.get(RuleName.hideDirect));
                     break;
                 case WinOpt.Resize:
                     var bounds = currentWindow.getBounds();
@@ -71,7 +72,7 @@ class WindowController {
         ioHook.on("mouseup", (event: MouseEvent) => {
             this.isFollow = false;
             this.currentWindow = undefined;
-            if (this.tapCopy&&
+            if (this.tapCopy &&
                 Date.now() - this.lastDown > 300 &&
                 Math.abs(event.x - this.lastX) < 4 &&
                 Math.abs(event.y - this.lastY) < 4
@@ -83,6 +84,7 @@ class WindowController {
             this.lastDown = Date.now();
             this.lastX = event.x;
             this.lastY = event.y;
+
         });
         ioHook.on("mousedrag", (event: MouseEvent) => {
             if (this.isFollow && this.currentWindow && event.button === 0) {
@@ -106,4 +108,4 @@ class WindowController {
 }
 
 let windowController = new WindowController();
-export {windowController,simulatePaste};
+export {windowController, simulatePaste};

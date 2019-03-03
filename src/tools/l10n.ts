@@ -1,5 +1,5 @@
-var fs = require("fs");
-var path = require("path");
+const fs = require("fs");
+const path = require("path");
 import {envConfig} from "./envConfig";
 import {en, Locale} from "./locales";
 
@@ -14,12 +14,16 @@ class L10N {
     }
 
     getT(key: string = "en") {
-        var locale = this.resources[key];
-        if (!locale) (<Locale>locale) = en;
-
+        let locale:Locale=en;
+        try {
+            locale = JSON.parse(fs.readFileSync(this.resources[key]));
+        } catch (e) {
+            console.log(`load ${this.resources[key]} fail`);
+        }
         function T(key: string) {
-            if (locale[key]) return locale[key];
-            else {
+            if ((<any>locale)[key]) {
+                return (<any>locale)[key];
+            } else {
                 return (<any>en)[key];
             }
         }
@@ -30,7 +34,12 @@ class L10N {
     getLocales() {
         let locales = [];
         for (let key in this.resources) {
-            locales.push({short: key, localeName: this.resources[key].localeName});
+            try {
+                const locale = JSON.parse(fs.readFileSync(this.resources[key]));
+                locales.push({short: key, localeName: locale.localeName});
+            }catch (e) {
+                console.log(`load ${this.resources[key]} fail`);
+            }
         }
         return locales;
     }
@@ -39,13 +48,7 @@ class L10N {
         let resources: Resources = {};
         localeDirs.forEach((localeDir: string) => {
             fs.readdirSync(localeDir).forEach((fileName: string) => {
-                try {
-                    const filePath = path.join(localeDir, fileName);
-                    let resource = JSON.parse(fs.readFileSync(filePath));
-                    resources[fileName.replace(".json", "")] = resource;
-                } catch (e) {
-                    (<any>global).log.debug("load error locales");
-                }
+                resources[fileName.replace(".json", "")] = path.join(localeDir, fileName);
             });
         });
         return resources;

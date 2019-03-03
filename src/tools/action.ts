@@ -11,6 +11,7 @@ import {RuleName} from "./rule";
 import {ConfigParser, getEnumValue as r} from "./configParser";
 import {Shortcut} from "./shortcuts";
 import {envConfig} from "./envConfig";
+import {HideDirection} from "./enums";
 
 //r can be used to transform a enum to string
 
@@ -34,6 +35,7 @@ interface Action {
     type: MenuItemType;
     checked?: boolean;
     id: string;
+    submenu?: Array<Action>
     click?: (
         menuItem: MenuItem,
         browserWindow: BrowserWindow,
@@ -75,9 +77,9 @@ class ActionManager {
     }
 
     refreshActions() {
-        var controller = (<any>global).controller;
+        const controller = (<any>global).controller;
         let config = controller.config;
-        var t = controller.getT();
+        const t = controller.getT();
         if (this.actions) {
             this.actions.forEach(e => {
                 e.label = t(e.id);
@@ -113,6 +115,26 @@ class ActionManager {
             );
         }
 
+        function enumAction(ruleName: RuleName, type: any) {
+            const id = r(ruleName);
+            return ActionWrapper(
+                {
+                    type: MenuItemType.submenu,
+                    id: id,
+                    submenu:
+                        Object.values(type).filter(
+                            k => (typeof k as any) !== "number"
+                        ).map((e) => {
+                            return ActionWrapper({
+                                type:MenuItemType.normal,
+                                id:`${id}|${e}`,
+                            },callback)
+                        })
+                },
+                callback
+            );
+        }
+        items.push(enumAction(RuleName.hideDirect,HideDirection));
         items.push(normalAction("copySource"));
         items.push(normalAction("copyResult"));
         items.push(normalAction("clear"));
@@ -144,7 +166,7 @@ class ActionManager {
                 noContain = ["focusMode"];
                 break;
             case RouteName.Contrast:
-                noContain = ["contrastMode","retryTranslate"];
+                noContain = ["contrastMode", "retryTranslate"];
                 break;
             case RouteName.Settings:
                 noContain = ["settings"];
@@ -156,6 +178,9 @@ class ActionManager {
         menu.popup({});
     }
 
+    loadInterface() {
+        const groups = ["contrastMenu", "focusMenu", "trayMenu", "contrastOption"];
+    }
 
     loadShortcuts() {
         try {

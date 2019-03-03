@@ -1,6 +1,6 @@
 import {ConfigParser} from "./configParser";
-import {BoolRule, ModeRule, NumberRule, RuleName} from "./rule";
-import {TranslatorType, FrameMode} from "./enums";
+import {BoolRule, GroupRule, ModeRule, RuleName} from "./rule";
+import {FrameMode, HideDirection, TranslatorType} from "./enums";
 
 function initConfig(
     config: ConfigParser | undefined = undefined
@@ -62,11 +62,20 @@ function initConfig(
 
     config.addRule(RuleName.translatorType, {
         predefined: TranslatorType.Google,
-        msg: "parameters of contrast mode",
+        msg: "type of translator",
         check: (value: TranslatorType) => {
             return !!TranslatorType[value];
         }
     });
+
+    config.addRule(RuleName.hideDirect, {
+        predefined: HideDirection.Up,
+        msg: "HideDirection",
+        check: (value: HideDirection) => {
+            return !!HideDirection[value];
+        }
+    });
+
 
     config.addRule(
         RuleName.focus,
@@ -122,6 +131,24 @@ function initConfig(
         predefined: "en",
         msg: "locale setting"
     });
+
+
+    config.addRule(RuleName.contrastMenu, new GroupRule(
+        [""], "the context menu of contrast mode"
+    ));
+
+    config.addRule(RuleName.focusMenu, new GroupRule(
+        ["settings"], "the context menu of focus mode"
+    ));
+
+    config.addRule(RuleName.trayMenu, new GroupRule(
+        ["settings"], "the menu of tray"
+    ));
+
+    config.addRule(RuleName.contrastOption, new GroupRule(
+        ["settings"], "the options of contrast mode"
+    ));
+
 
     return config;
 }

@@ -1,6 +1,6 @@
-var os = require("os");
-var path = require("path");
-var fs = require("fs");
+const os = require("os");
+const path = require("path");
+const fs = require("fs");
 
 const iconName = os.type() == "Windows_NT" ? "icon.ico" : "icon.png";
 

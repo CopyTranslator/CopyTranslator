@@ -6,14 +6,24 @@ import {
     Accelerator
 } from "electron";
 
-var fs = require("fs");
+const fs = require("fs");
 import {RuleName} from "./rule";
 import {ConfigParser, getEnumValue as r} from "./configParser";
-import {Shortcut} from "./shortcuts";
 import {envConfig} from "./envConfig";
 import {HideDirection} from "./enums";
 
+const _ = require("lodash");
+
 //r can be used to transform a enum to string
+
+
+function compose(actions: Array<string>) {
+    return _.join(actions, "|");
+}
+
+function decompose(id: string) {
+    return id.split("|");
+}
 
 enum MenuItemType {
     normal = "normal",
@@ -44,7 +54,7 @@ interface Action {
 }
 
 function ActionWrapper(action: Action, callback: Function) {
-    var key = action.id;
+    const key = action.id;
     if (!action.click) {
         action.click = function (
             menuItem: MenuItem,
@@ -57,13 +67,14 @@ function ActionWrapper(action: Action, callback: Function) {
     return action;
 }
 
+type Actions = { [key: string]: Action };
+
 class ActionManager {
-    actions: Array<Action>;
+    actions: Actions = {};
     shortcuts: { [key: string]: Accelerator } = {};
     callback: Function;
 
     constructor(callback: Function) {
-        this.actions = [];
         this.callback = callback;
     }
 
@@ -80,17 +91,15 @@ class ActionManager {
         const controller = (<any>global).controller;
         let config = controller.config;
         const t = controller.getT();
-        if (this.actions) {
-            this.actions.forEach(e => {
-                e.label = t(e.id);
-                if (e.type == MenuItemType.checkbox) {
-                    e.checked = config.values[e.id];
-                }
-            });
+        for (let key in this.actions) {
+            this.actions[key].label = t(key);
+            if (this.actions[key].type == MenuItemType.checkbox) {
+                this.actions[key].checked = config.values[key];
+            }
         }
     }
 
-    getActions(config: ConfigParser, callback: Function) {
+    getActions(config: ConfigParser, callback: Function): Actions {
         let items: Array<Action> = [];
 
         function normalAction(id: string) {
@@ -123,18 +132,20 @@ class ActionManager {
                     id: id,
                     submenu:
                         Object.values(type).filter(
-                            k => (typeof k as any) !== "number"
+                            k => (typeof k as any) == "number"
                         ).map((e) => {
                             return ActionWrapper({
-                                type:MenuItemType.normal,
-                                id:`${id}|${e}`,
-                            },callback)
+                                type: MenuItemType.normal,
+                                id: compose([id, (<number>e).toString()]),
+                                label: type[<number>e]
+                            }, callback)
                         })
                 },
                 callback
             );
         }
-        items.push(enumAction(RuleName.hideDirect,HideDirection));
+
+        items.push(enumAction(RuleName.hideDirect, HideDirection));
         items.push(normalAction("copySource"));
         items.push(normalAction("copyResult"));
         items.push(normalAction("clear"));
@@ -154,32 +165,34 @@ class ActionManager {
         items.push(normalAction("settings"));
         items.push(normalAction("helpAndUpdate"));
         items.push(normalAction("exit"));
-        return items;
+        let itemGroup: Actions = {};
+        items.forEach((e) => {
+            itemGroup[e.id] = e;
+        });
+        return itemGroup;
     }
 
     popup(id: RouteName) {
         this.refreshActions();
         let menu = new Menu();
-        var noContain: Array<string> = [];
+        let contain: Array<string> = [];
+        const controller = (<any>global).controller;
         switch (id) {
             case RouteName.Focus:
-                noContain = ["focusMode"];
+                contain = controller.get(RuleName.focusMenu);
                 break;
             case RouteName.Contrast:
-                noContain = ["contrastMode", "retryTranslate"];
+                contain = controller.get(RuleName.contrastMenu);
                 break;
+            case RouteName.Tray:
             case RouteName.Settings:
-                noContain = ["settings"];
+                contain = Object.keys(this.actions);
                 break;
         }
-        this.actions.filter(e => !noContain.includes(e.id)).forEach(item => {
-            menu.append(new MenuItem(item));
+        contain.forEach(key => {
+            menu.append(new MenuItem(this.actions[key]));
         });
         menu.popup({});
-    }
-
-    loadInterface() {
-        const groups = ["contrastMenu", "focusMenu", "trayMenu", "contrastOption"];
     }
 
     loadShortcuts() {
@@ -200,7 +213,7 @@ class ActionManager {
 
     register() {
         Object.keys(this.shortcuts).forEach(key => {
-            const action = this.actions.filter(t => key == t.id)[0];
+            const action = this.actions[key];
             if (action) {
                 globalShortcut.register(this.shortcuts[key], <Function>action.click);
             }
@@ -214,4 +227,4 @@ class ActionManager {
     }
 }
 
-export {RouteName, ActionManager};
+export {RouteName, ActionManager, compose, decompose};

@@ -3,7 +3,7 @@
     - core  : anything about translation and string process
     - tools : anything
     - views : vue view
-    - conpoments : vue conpoments
+    - components : vue components
 
 ## Build from source
 ```bash

@@ -5,8 +5,10 @@ import { envConfig } from "../tools/envConfig";
 
 import { constants } from "../core/constant";
 import { Controller } from "@/core/controller";
+import {compose, decompose} from "../tools/action";
 
-var _ = require("lodash");
+
+const _ = require("lodash");
 
 const clipboard = require("electron-clipboard-extended");
 
@@ -18,7 +20,15 @@ function handleActions(
 ) {
   const controller = <Controller>(<any>global).controller;
   console.log(id);
+  const params=decompose(id);
+  id=params[0];
+  const param=params[1];
   if (ruleKeys.includes(id)) {
+    if(param){
+      console.log("true");
+      controller.setByKeyValue(id,parseInt(param));
+      return;
+    }
     if (menuItem) {
       controller.setByKeyValue(id, menuItem.checked);
     } else {

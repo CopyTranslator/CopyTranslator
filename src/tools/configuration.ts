@@ -134,7 +134,7 @@ function initConfig(
 
 
     config.addRule(RuleName.contrastMenu, new GroupRule(
-        [""], "the context menu of contrast mode"
+        ["settings"], "the context menu of contrast mode"
     ));
 
     config.addRule(RuleName.focusMenu, new GroupRule(

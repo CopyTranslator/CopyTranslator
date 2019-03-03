@@ -14,7 +14,7 @@
     "sourceLanguage": "原始語言",
     "targetLanguage": "目標語言",
     "detectLanguage": "偵測語言",
-    "languageDetected":"偵測到的語言",
+    "languageDetected": "偵測到的語言",
     "clear": "清除",
     "helpAndUpdate": "協助與更新",
     "exit": "結束",
@@ -29,5 +29,7 @@
     "localeSetting": "語系",
     "return": "返回",
     "retryTranslate": "重試翻譯",
-    "tapCopy": "點選複製"
+    "tapCopy": "點選複製",
+    "hideDirect": "Hide Direction",
+    "autoPurify": "Auto Purify"
 }

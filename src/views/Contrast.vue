@@ -2,13 +2,13 @@
     <div v-on:contextmenu="openMenu('Contrast')">
         <StatusBar ref="bar"></StatusBar>
         <el-row class="contrast" :gutter="5">
-            <el-col :span="18">
+            <el-col :span="19">
                 <textarea class="contrastText" v-if="sharedResult" :style="area" v-model="sharedResult.src"></textarea>
 
                 <textarea class="contrastText" :style="area" v-if="sharedResult"
                           v-model="sharedResult.result"></textarea>
             </el-col>
-            <el-col :span="6" class="controlPanel">
+            <el-col :span="5" class="controlPanel">
                 <div style="text-align: left;">
                     <Action v-for="actionId in actionKeys" :action-id="actionId" :key="actionId"></Action>
                 </div>

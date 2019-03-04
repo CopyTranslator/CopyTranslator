@@ -46,9 +46,10 @@ export default {
     },
     sync() {
       this.action = this.$controller.action.actions[this.actionId];
+      const value = this.$controller.config.values[this.actionId];
       switch (this.action.type) {
         case "checkbox":
-          this.checked = this.$controller.config.values[this.actionId];
+          this.checked = value;
           break;
         case "submenu":
           if (this.action.subMenuGenerator)
@@ -58,7 +59,7 @@ export default {
           }
           this.enumValue = compose([
             this.actionId,
-            this.$controller.config.values[this.actionId].toString()
+            typeof value == "string" ? value : value.toString()
           ]);
           break;
       }

@@ -5,7 +5,7 @@
             <div style="text-align: left;">
             <Action v-for="actionId in actionKeys" :action-id="actionId" :key="actionId"></Action>
             </div>
-            <el-button @click="backStored">{{$t("return")}}</el-button>
+            <el-button style="width:100%;" @click="backStored">{{$t("return")}}</el-button>
         </div>
     </div>
 </template>

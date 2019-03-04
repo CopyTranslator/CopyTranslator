@@ -30,7 +30,7 @@ enum MenuItemType {
 }
 
 enum RouteName {
-  Focus = "focus",
+  Focus = "Focus",
   Contrast = "Contrast",
   Settings = "Settings",
   Tray = "Tray"
@@ -274,7 +274,11 @@ class ActionManager {
     contain.forEach(key => {
       menu.append(new MenuItem(refresh(key, this.actions[key])));
     });
-    menu.popup({});
+    try {
+      menu.popup({});
+    } catch (e) {
+      console.log(e);
+    }
   }
 
   loadShortcuts() {

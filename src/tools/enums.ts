@@ -26,7 +26,8 @@ enum MessageType {
   WindowOpt,
   TranslateResult,
   OpenMenu,
-  Router
+  Router,
+  UpdateT
 }
 
 enum WinOpt {
@@ -57,10 +58,9 @@ const ColorStatus = mkenum({
   Translating: rgb(238, 238, 0),
   Incremental: rgb(147, 112, 219),
   IncrementalCopy: rgb(199, 21, 133),
-  AutoPaste:rgb(0,0,139),
-  IncrementalCopyPaste:rgb(0,0,128),
-  Fail: rgb(255, 0, 0),
-
+  AutoPaste: rgb(0, 0, 139),
+  IncrementalCopyPaste: rgb(0, 0, 128),
+  Fail: rgb(255, 0, 0)
 });
 type ColorStatus = (typeof ColorStatus)[keyof typeof ColorStatus];
 

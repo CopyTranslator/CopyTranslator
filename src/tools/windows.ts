@@ -69,12 +69,16 @@ class WindowWrapper {
   }
 
   onEdge() {
-    let { x, y, width } = this.getBound();
-    let xEnd = x + width;
-    const { width: screenWidth } = screen.getPrimaryDisplay().workAreaSize;
     if (!(<any>global).controller.get(RuleName.autoHide)) {
       return HideDirection.None;
     }
+    let { x, y, width } = this.getBound();
+    const { x: xBound, width: screenWidth } = screen.getDisplayMatching(
+      this.getBound()
+    ).bounds;
+    x -= xBound;
+    let xEnd = x + width;
+
     if (x <= 0) return HideDirection.Left;
     if (xEnd >= screenWidth) {
       return HideDirection.Right;
@@ -85,13 +89,21 @@ class WindowWrapper {
   }
 
   edgeHide(hideDirection: HideDirection) {
-    let { x, y, width, height } = this.getBound();
+    const bound = this.getBound();
+    let { x, y, width, height } = bound;
+    const { x: xBound, width: screenWidth } = screen.getDisplayMatching(
+      bound
+    ).bounds;
     let xEnd = x + width;
     let yEnd = y + height;
-    const {
-      width: screenWidth,
-      height: screenHeight
-    } = screen.getPrimaryDisplay().workAreaSize;
+    if (hideDirection == HideDirection.Up) {
+      //TODO findout what's the problem
+      while (yEnd > 10) {
+        y--;
+        yEnd--;
+        this.setBounds({ x: x, y: y, width: width, height: height });
+      }
+    }
     switch (hideDirection) {
       case HideDirection.Up:
         while (yEnd > 10) {
@@ -101,14 +113,14 @@ class WindowWrapper {
         }
         break;
       case HideDirection.Left:
-        while (xEnd >= 10) {
+        while (xEnd >= xBound + 10) {
           x--;
           xEnd--;
           this.setBounds({ x: x, y: y, width: width, height: height });
         }
         break;
       case HideDirection.Right:
-        while (x < screenWidth - 10) {
+        while (x < xBound + screenWidth - 10) {
           x++;
           this.setBounds({ x: x, y: y, width: width, height: height });
         }
@@ -123,17 +135,18 @@ class WindowWrapper {
 
   edgeShow() {
     let { x, y, width, height } = this.getBound();
+    const { x: xBound, width: screenWidth } = screen.getDisplayMatching(
+      this.getBound()
+    ).bounds;
     let xEnd = x + width;
     let yEnd = y + height;
-    const { width: screenWidth } = screen.getPrimaryDisplay().workAreaSize;
-
-    while (x < 0) {
+    while (x < xBound) {
       x++;
       xEnd++;
       this.setBounds({ x: x, y: y, width: width, height: height });
     }
 
-    while (xEnd > screenWidth) {
+    while (xEnd > xBound + screenWidth) {
       x--;
       xEnd--;
       this.setBounds({ x: x, y: y, width: width, height: height });

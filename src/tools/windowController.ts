@@ -1,4 +1,4 @@
-import { BrowserWindow, ipcMain as ipc } from "electron";
+import { BrowserWindow, ipcMain as ipc, screen, Display } from "electron";
 const ioHook = require("iohook");
 import { MessageType, WinOpt } from "./enums";
 import { RuleName } from "./rule";

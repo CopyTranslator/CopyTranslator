@@ -2,10 +2,11 @@
 sidebarDepth: 6
 ---
 # 进阶教程
+CopyTranslator 提供了丰富的自定义功能，但是需要用户有一定的动手能力。
 
 ## 自定义界面语言
 
-由于我无法自己维护所有界面语言文件，因此最新版本的最新的界面语言文件可能不会和`CopyTranslator`一同发布（除了`en`和`zh-cn`）。现在，您可以下载本仓库目录`dist_locales`下的`{{locale}}.json`，并将其放在下面`{{userDir}}/copytranslator/locales`，`CopyTranslator`将在启动时检测它们，然后您可以在设置面板上选择它们。、
+由于我无法自己维护所有界面语言文件，因此最新版本的最新的界面语言文件可能不会和`CopyTranslator`一同发布（除了`en`和`zh-cn`）。现在，您可以下载本仓库目录[dist_locales](https://github.com/CopyTranslator/CopyTranslator/tree/phoenix/dist_locales)下的语言文件 `{locale}.json`，并将其放在`{userDir}/copytranslator/locales`下面，`CopyTranslator`将在启动时检测它们，然后您可以在设置面板上选择它们。、
 
 
 ## 自定义界面样式/风格
@@ -37,6 +38,9 @@ sidebarDepth: 6
 
 }
 ```
+::: tip
+CSS文件的编写可以参考[HTML中文网](https://www.html.cn/book/css/all-properties.html)。欢迎大家分享自己编写的`style.css`文件。
+:::
 
 ## 动作系统
 
@@ -76,9 +80,9 @@ sidebarDepth: 6
 ## 自定义全局快捷键
 
 对于大多数[动作](#动作系统)，您可以通过修改`{{userDir}}/copytranslator/shortcut.json`来绑定全局快捷键。
-
-**注意：当快捷键已被其他应用程序占用时，绑定将失败。**
-
+::: warning
+当快捷键已被其他应用程序占用时，绑定将失败。
+:::
 每条记录的形式为：`action:accelerator`。
 
 以下为一个例子
@@ -94,7 +98,7 @@ sidebarDepth: 6
 
 对于所有可用操作，请参看 [动作](#动作系统)。 
 
-所有可用的加速器，请查看[Electron Accelerator ](https://electronjs.org/docs/api/accelerator)。
+所有可用的快捷键，请查看[Electron Accelerator](https://electronjs.org/docs/api/accelerator)。
 
 ## 自定义右键菜单/面板
 

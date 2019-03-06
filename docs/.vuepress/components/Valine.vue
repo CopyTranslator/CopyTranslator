@@ -1,5 +1,8 @@
 <template>
+<div>
+  <h2>评论</h2>
   <div id="vcomments"></div>
+</div>
 </template>
 
 <script>
@@ -21,8 +24,13 @@ export default {
       notify:false, 
       verify:false, 
       avatar:'mm', 
-      placeholder: 'just go go' 
+      placeholder: '支持markdown回复哦' 
     });
   },
 }
 </script>
+<style>
+.comment{
+  background:gray;
+}
+</style>

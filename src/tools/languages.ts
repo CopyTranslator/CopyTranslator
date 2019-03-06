@@ -1,5 +1,5 @@
 var _ = require("lodash");
-type Dict = { [key: string]: string; };
+type Dict = { [key: string]: string };
 // prettier-ignore
 export const GoogleLanguages: Dict = {
     'Afrikaans': 'af',
@@ -157,9 +157,6 @@ export const BaiduLangList = _.keys(BaiduLanguages);
 export const YoudaoCodes = _.invert(YoudaoLanguages);
 export const YoudaoLangList = _.keys(YoudaoLanguages);
 
-
 export function isChineseLike(code: string): boolean {
-    return code in ["zh-cn", "zh-tw", "ja"]
+  return code in ["zh-cn", "zh-tw", "ja"];
 }
-
-

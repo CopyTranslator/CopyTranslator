@@ -12,11 +12,11 @@
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
     "electron:build": "npm run prebuild && vue-cli-service electron:build",
-    "electron:serve": "vue-cli-service electron:serve",
+    "electron:serve": "npm run prebuild && vue-cli-service electron:serve",
     "postinstall": "electron-builder install-app-deps",
     "rebuild": "npm rebuild --runtime=electron --target=3.0.0 --disturl=https://atom.io/download/atom-shell --abi=64",
-    "prebuild": "tsc ./src/preprocess/prebuild.ts && node ./src/preprocess/prebuild.js",
-    "clean": "del src\\*\\*.js"
+    "prebuild": "tsc ./src/preprocess/prebuild.ts && node ./src/preprocess/prebuild.js && npm run clean",
+    "clean":"del src\\*.js /s"
   },
   "dependencies": {
     "electron-clipboard-extended": "^1.1.1",
@@ -24,6 +24,7 @@
     "iohook": "^0.3.1",
     "lodash": "^4.17.11",
     "log4js": "^4.0.1",
+    "mathjs": "^5.6.0",
     "robotjs": "^0.5.1",
     "translation.js": "^0.7.5",
     "vue": "^2.5.21",

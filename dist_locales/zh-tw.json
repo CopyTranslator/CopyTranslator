@@ -32,5 +32,7 @@
     "tapCopy": "點選複製",
     "hideDirect": "Hide Direction",
     "autoPurify": "Auto Purify",
-    "translatorType": "Translator Type"
+    "translatorType": "Translator Type",
+    "eval": "Eval",
+    "evaluate": "Evaluate"
 }

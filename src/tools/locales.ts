@@ -31,8 +31,9 @@ interface Locale {
   return: string;
   retryTranslate: string;
   tapCopy: string;
-  hideDirect:string;
-  translatorType:string;
+  hideDirect: string;
+  translatorType: string;
+  evaluate: string;
 }
 
 const zh_cn: Locale = {
@@ -68,8 +69,9 @@ const zh_cn: Locale = {
   return: "返回",
   retryTranslate: "重试翻译",
   tapCopy: "点按复制",
-  hideDirect:"隐藏方向",
-  translatorType:"翻译器"
+  hideDirect: "隐藏方向",
+  translatorType: "翻译器",
+  evaluate: "评估"
 };
 
 const en: Locale = {
@@ -105,8 +107,9 @@ const en: Locale = {
   return: "Return",
   retryTranslate: "Retry Translate",
   tapCopy: "Tap Copy",
-  hideDirect:"Hide Direction",
-  translatorType:"Translator Type"
+  hideDirect: "Hide Direction",
+  translatorType: "Translator Type",
+  evaluate: "Evaluate"
 };
 
 export { en, zh_cn, Locale };

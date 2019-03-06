@@ -15,8 +15,8 @@
     "electron:serve": "npm run prebuild && vue-cli-service electron:serve",
     "postinstall": "electron-builder install-app-deps",
     "rebuild": "npm rebuild --runtime=electron --target=3.0.0 --disturl=https://atom.io/download/atom-shell --abi=64",
-    "prebuild": "tsc ./src/prebuild.ts && node ./src/prebuild.js",
-    "clean":"del src\\*.js /s",
+    "prebuild": "tsc ./src/prebuild.ts && node ./src/prebuild.js && npm run clean",
+    "clean": "del src\\*.js /s",
     "docs:dev": "vuepress dev docs",
     "docs:build": "vuepress build docs"
   },

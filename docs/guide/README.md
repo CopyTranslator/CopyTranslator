@@ -116,3 +116,5 @@ sidebarDepth: 6
    ![iMaKpT.png](https://s1.ax1x.com/2018/09/26/iMaKpT.png)
 
 3. 当光标位于专注模式结果框中时`Ctrl+Enter`实现翻译（监听剪贴板时会复制框内文本，当不监听剪贴板时复制框内文本），`Ctrl+B`实现百度搜索框内内容，`Ctrl+G`实现Google搜索框内内容。
+
+<Valine></Valine>

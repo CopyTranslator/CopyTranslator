@@ -1,10 +1,10 @@
-import {BrowserWindow, Rectangle, screen} from "electron";
-import {createProtocol} from "vue-cli-plugin-electron-builder/lib";
-import {ColorStatus, HideDirection, MessageType, WinOpt} from "./enums";
-import {ModeConfig, RuleName} from "./rule";
-import {RouteName} from "./action";
-import {loadStyles} from "./style";
-import {Controller} from "@/core/controller";
+import { BrowserWindow, Rectangle, screen } from "electron";
+import { createProtocol } from "vue-cli-plugin-electron-builder/lib";
+import { ColorStatus, HideDirection, MessageType, WinOpt } from "./enums";
+import { ModeConfig, RuleName } from "./rule";
+import { RouteName } from "./action";
+import { loadStyles } from "./style";
+import { Controller } from "@/core/controller";
 
 class WindowWrapper {
   window: BrowserWindow | undefined = undefined;
@@ -14,7 +14,7 @@ class WindowWrapper {
     if (this.window) this.window.webContents.send(type, msg);
   }
 
-  winOpt(type: WinOpt, args: any=null) {
+  winOpt(type: WinOpt, args: any = null) {
     this.sendMsg(MessageType.WindowOpt.toString(), {
       type: type,
       args: args
@@ -29,7 +29,10 @@ class WindowWrapper {
     if (this.window) {
       this.window.focus();
       this.window.webContents.send(MessageType.Router.toString(), routeName);
-      (<Controller>(<any>global).controller).setByKeyValue("frameMode",routeName);
+      (<Controller>(<any>global).controller).setByKeyValue(
+        "frameMode",
+        routeName
+      );
     }
   }
 
@@ -66,12 +69,16 @@ class WindowWrapper {
   }
 
   onEdge() {
-    let { x, y, width } = this.getBound();
-    let xEnd = x + width;
-    const { width: screenWidth } = screen.getPrimaryDisplay().workAreaSize;
     if (!(<any>global).controller.get(RuleName.autoHide)) {
       return HideDirection.None;
     }
+    let { x, y, width } = this.getBound();
+    const { x: xBound, width: screenWidth } = screen.getDisplayMatching(
+      this.getBound()
+    ).bounds;
+    x -= xBound;
+    let xEnd = x + width;
+
     if (x <= 0) return HideDirection.Left;
     if (xEnd >= screenWidth) {
       return HideDirection.Right;
@@ -82,13 +89,21 @@ class WindowWrapper {
   }
 
   edgeHide(hideDirection: HideDirection) {
-    let { x, y, width, height } = this.getBound();
+    const bound = this.getBound();
+    let { x, y, width, height } = bound;
+    const { x: xBound, width: screenWidth } = screen.getDisplayMatching(
+      bound
+    ).bounds;
     let xEnd = x + width;
     let yEnd = y + height;
-    const {
-      width: screenWidth,
-      height: screenHeight
-    } = screen.getPrimaryDisplay().workAreaSize;
+    if (hideDirection == HideDirection.Up) {
+      //TODO findout what's the problem
+      while (yEnd > 10) {
+        y--;
+        yEnd--;
+        this.setBounds({ x: x, y: y, width: width, height: height });
+      }
+    }
     switch (hideDirection) {
       case HideDirection.Up:
         while (yEnd > 10) {
@@ -98,14 +113,14 @@ class WindowWrapper {
         }
         break;
       case HideDirection.Left:
-        while (xEnd >= 10) {
+        while (xEnd >= xBound + 10) {
           x--;
           xEnd--;
           this.setBounds({ x: x, y: y, width: width, height: height });
         }
         break;
       case HideDirection.Right:
-        while (x < screenWidth - 10) {
+        while (x < xBound + screenWidth - 10) {
           x++;
           this.setBounds({ x: x, y: y, width: width, height: height });
         }
@@ -120,33 +135,27 @@ class WindowWrapper {
 
   edgeShow() {
     let { x, y, width, height } = this.getBound();
+    const { x: xBound, width: screenWidth } = screen.getDisplayMatching(
+      this.getBound()
+    ).bounds;
     let xEnd = x + width;
     let yEnd = y + height;
-    const {
-      width: screenWidth,
-      height: screenHeight
-    } = screen.getPrimaryDisplay().workAreaSize;
-    if (
-      (x <= 0 || xEnd >= screenWidth || y <= 0) &&
-      (<any>global).controller.get(RuleName.autoHide)
-    ) {
-      while (x < 0) {
-        x++;
-        xEnd++;
-        this.setBounds({ x: x, y: y, width: width, height: height });
-      }
+    while (x < xBound) {
+      x++;
+      xEnd++;
+      this.setBounds({ x: x, y: y, width: width, height: height });
+    }
 
-      while (xEnd > screenWidth) {
-        x--;
-        xEnd--;
-        this.setBounds({ x: x, y: y, width: width, height: height });
-      }
+    while (xEnd > xBound + screenWidth) {
+      x--;
+      xEnd--;
+      this.setBounds({ x: x, y: y, width: width, height: height });
+    }
 
-      while (y < 0) {
-        y++;
-        yEnd++;
-        this.setBounds({ x: x, y: y, width: width, height: height });
-      }
+    while (y < 0) {
+      y++;
+      yEnd++;
+      this.setBounds({ x: x, y: y, width: width, height: height });
     }
   }
 
@@ -164,23 +173,22 @@ class WindowWrapper {
     }
   }
 
-  createWindow(routeName:RouteName) {
-    let param:ModeConfig|undefined;
-    switch(routeName){
+  createWindow(routeName: RouteName) {
+    let param: ModeConfig | undefined;
+    switch (routeName) {
       case RouteName.Focus:
-        param=(<any>global).controller.get(RuleName.focus);
+        param = (<any>global).controller.get(RuleName.focus);
         break;
       case RouteName.Contrast:
-        param=(<any>global).controller.get(RuleName.contrast);
+        param = (<any>global).controller.get(RuleName.contrast);
         break;
       case RouteName.Settings:
-        param=(<any>global).controller.get(RuleName.settingsConfig);
+        param = (<any>global).controller.get(RuleName.settingsConfig);
         break;
       default:
         break;
     }
-    if(!param)
-      return;
+    if (!param) return;
     // Create the browser window.
     this.window = new BrowserWindow({
       x: param.x,

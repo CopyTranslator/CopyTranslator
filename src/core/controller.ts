@@ -281,8 +281,8 @@ class Controller {
   switchValue(ruleKey: string) {
     this.setByKeyValue(ruleKey, !this.config.values[ruleKey]);
   }
+
   refresh(ruleKey: string | null = null) {
-    this.action.refreshActions();
     this.win.winOpt(WinOpt.Refresh, ruleKey);
   }
 
@@ -348,6 +348,9 @@ class Controller {
     }
     this.config.set(ruleName, value);
     this.setCurrentColor();
+    if (ruleName == RuleName.localeSetting) {
+      this.win.sendMsg(MessageType.UpdateT.toString(), null);
+    }
     if (save) {
       this.config.saveValues(envConfig.sharedConfig.configPath);
       if (refresh) {

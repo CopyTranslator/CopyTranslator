@@ -51,7 +51,7 @@ function initConfig(
   );
 
   config.addRule(RuleName.frameMode, {
-    predefined: RouteName.Focus,
+    predefined: RouteName.Contrast,
     msg: "current frame mode"
   });
 
@@ -69,10 +69,10 @@ function initConfig(
     RuleName.focus,
     new ModeRule(
       {
-        x: 532,
-        y: 186,
-        height: 483,
-        width: 1225,
+        x: 1390,
+        y: 133,
+        height: 722,
+        width: 229,
         fontSize: 33
       },
       "parameters of focus mode"
@@ -85,8 +85,8 @@ function initConfig(
       {
         x: 535,
         y: 186,
-        height: 483,
-        width: 1222,
+        height: 585,
+        width: 1094,
         fontSize: 15
       },
       "parameters of contrast mode"
@@ -97,10 +97,10 @@ function initConfig(
     RuleName.settingsConfig,
     new ModeRule(
       {
-        x: 799,
-        y: 123,
-        height: 143,
-        width: 800
+        x: 1390,
+        y: 133,
+        height: 787,
+        width: 362
       },
       "parameters of setting panel"
     )
@@ -125,16 +125,16 @@ function initConfig(
     RuleName.contrastMenu,
     new GroupRule(
       [
+        "copySource",
+        "copyResult",
+        "clear",
+        "retryTranslate",
         "autoCopy",
         "autoPaste",
         "incrementalCopy",
         "autoPurify",
         "tapCopy",
         "stayTop",
-        "copySource",
-        "copyResult",
-        "clear",
-        "retryTranslate",
         "focusMode",
         "settings",
         "exit"

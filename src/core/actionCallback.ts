@@ -8,7 +8,6 @@ import { Controller } from "@/core/controller";
 import { decompose } from "../tools/action";
 
 const _ = require("lodash");
-const math = require("mathjs");
 
 const clipboard = require("electron-clipboard-extended");
 
@@ -24,7 +23,8 @@ function handleActions(
   const param = params[1];
   if (ruleKeys.includes(id)) {
     if (param) {
-      controller.setByKeyValue(id, parseInt(param));
+      const intVal = parseInt(param);
+      controller.setByKeyValue(id, intVal ? intVal : param);
       return;
     }
     if (menuItem) {
@@ -34,9 +34,6 @@ function handleActions(
     }
   } else {
     switch (id) {
-      case "eval":
-        console.log(math.eval(clipboard.readText()));
-        break;
       case "contrastMode":
         controller.win.routeTo("Contrast");
         break;

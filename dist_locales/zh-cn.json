@@ -32,5 +32,6 @@
     "retryTranslate": "重试翻译",
     "tapCopy": "点按复制",
     "hideDirect": "隐藏方向",
-    "translatorType": "翻译器"
+    "translatorType": "翻译器",
+    "evaluate": "评估"
 }

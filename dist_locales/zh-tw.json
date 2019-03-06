@@ -32,5 +32,6 @@
     "tapCopy": "點選複製",
     "hideDirect": "隱藏方向",
     "autoPurify": "自動淨化",
-    "translatorType": "翻譯程式類型"
+    "translatorType": "翻譯程式類型",
+    "evaluate": "Evaluate"
 }

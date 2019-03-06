@@ -1,6 +1,9 @@
 module.exports = {
   title: 'CopyTranslator',
   description: '复制即翻译的外文辅助阅读翻译解决方案',
+  head: [
+    ['link', { rel: 'icon', href: `/icon.png` }]
+  ],
   themeConfig: {
       nav: [
         { text: '主页', link: '/' },

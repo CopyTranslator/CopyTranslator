@@ -32,5 +32,7 @@
     "retryTranslate": "Retry Translate",
     "tapCopy": "Tap Copy",
     "hideDirect": "Hide Direction",
-    "translatorType": "Translator Type"
+    "translatorType": "Translator Type",
+    "eval": "Eval",
+    "evaluate": "Evaluate"
 }

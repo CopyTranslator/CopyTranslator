@@ -173,6 +173,7 @@ function initConfig(
     RuleName.trayMenu,
     new GroupRule(
       [
+        "eval",
         "translatorType",
         "hideDirect",
         "copySource",

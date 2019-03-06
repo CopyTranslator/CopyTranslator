@@ -194,6 +194,7 @@ class ActionManager {
     items.push(switchAction(RuleName.tapCopy));
     items.push(normalAction("focusMode"));
     items.push(normalAction("contrastMode"));
+    items.push(normalAction("eval"));
 
     const languageGenerator = (ruleName: RuleName) => {
       const id = r(ruleName);

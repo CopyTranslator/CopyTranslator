@@ -1,8 +1,8 @@
 const fs = require("fs");
 const path = require("path");
 const _ = require("lodash");
-import { en, zh_cn, Locale } from "../tools/locales";
-import { defaultShortcuts, Shortcuts } from "../tools/shortcuts";
+import { en, zh_cn, Locale } from "./tools/locales";
+import { defaultShortcuts, Shortcuts } from "./tools/shortcuts";
 
 type Resources = { [key: string]: Locale };
 

@@ -42,33 +42,34 @@ sidebarDepth: 6
 
 以下是目前所有可用动作的列表。
 
-```
+```json
 //down below are status switching action
-
-autoCopy
-autoPaste
-autoPurify
-tapCopy
-detectLanguage
-incrementalCopy
-autoHide
-autoShow
-stayTop
-listenClipboard
-translatorType|{{0|1|2}} //change translator，0 means Google,1 means Youdao,2 means Baidu
-hideDirect|{{0|1|2|3|4}} //set the hide direction when double click on status bar. 0-4 means Up,Right,Left,None,Minify.
-
+"switchActions": [
+    "autoCopy",
+    "autoPaste",
+    "autoPurify",
+    "tapCopy",
+    "detectLanguage",
+    "incrementalCopy",
+    "autoHide",
+    "autoShow",
+    "stayTop",
+    "listenClipboard",
+    "translatorType"//|{{0|1|2}} change translator，0 means Google,1 means Youdao,2 means Baidu
+    "hideDirect"//|{{0|1|2|3|4}} //set the hide direction when double click on status bar. 0-4 means Up,Right,Left,None,Minify.
+]
 //down below are actions that do a specific thing.
-
-copySource
-copyResult
-clear
-focusMode
-contrastMode
-settings
-helpAndUpdate
-exit
-retryTranslate
+"normalAction":[
+    "copySource",
+    "copyResult",
+    "clear",
+    "focusMode",
+    "contrastMode",
+    "settings",
+    "helpAndUpdate",
+    "exit",
+    "retryTranslate"
+]
 ```
 
 

@@ -41,7 +41,7 @@ function initConfig(
   );
 
   config.addRule(
-    RuleName.autoPurify,
+    RuleName.autoFormat,
     new BoolRule(false, "auto replace the contene in clipboard")
   );
 
@@ -132,7 +132,7 @@ function initConfig(
         "autoCopy",
         "autoPaste",
         "incrementalCopy",
-        "autoPurify",
+        "autoFormat",
         "tapCopy",
         "stayTop",
         "focusMode",
@@ -158,7 +158,7 @@ function initConfig(
         "incrementalCopy",
         "autoHide",
         "autoShow",
-        "autoPurify",
+        "autoFormat",
         "tapCopy",
         "stayTop",
         "listenClipboard",
@@ -173,7 +173,6 @@ function initConfig(
     RuleName.trayMenu,
     new GroupRule(
       [
-        "eval",
         "translatorType",
         "hideDirect",
         "copySource",
@@ -186,7 +185,7 @@ function initConfig(
         "incrementalCopy",
         "autoHide",
         "autoShow",
-        "autoPurify",
+        "autoFormat",
         "tapCopy",
         "stayTop",
         "listenClipboard",
@@ -210,7 +209,7 @@ function initConfig(
         "incrementalCopy",
         "autoHide",
         "autoShow",
-        "autoPurify",
+        "autoFormat",
         "tapCopy",
         "stayTop",
         "listenClipboard",

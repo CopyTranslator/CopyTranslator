@@ -33,4 +33,4 @@ CopyTranslator是采用 GPL v2 协议许可的开源项目，**使用完全免�
 
    欢迎加入我们的 [Gitter](https://gitter.im/CopyTranslator/Lobby?utm_source=share-link&utm_medium=link&utm_campaign=share-link)聊天室。 新版本正式发布前，您将收到通知。
 
-
+<Valine></Valine>

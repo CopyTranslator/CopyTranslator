@@ -184,7 +184,7 @@ class ActionManager {
     items.push(normalAction("retryTranslate"));
     items.push(switchAction(RuleName.autoCopy));
     items.push(switchAction(RuleName.autoPaste));
-    items.push(switchAction(RuleName.autoPurify));
+    items.push(switchAction(RuleName.autoFormat));
     items.push(switchAction(RuleName.detectLanguage));
     items.push(switchAction(RuleName.incrementalCopy));
     items.push(switchAction(RuleName.autoHide));
@@ -194,7 +194,6 @@ class ActionManager {
     items.push(switchAction(RuleName.tapCopy));
     items.push(normalAction("focusMode"));
     items.push(normalAction("contrastMode"));
-    items.push(normalAction("eval"));
 
     const languageGenerator = (ruleName: RuleName) => {
       const id = r(ruleName);

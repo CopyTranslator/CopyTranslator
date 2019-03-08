@@ -143,7 +143,7 @@ class Controller {
       if (this.get(RuleName.autoPaste)) {
         simulatePaste();
       }
-    } else if (this.get(RuleName.autoPurify)) {
+    } else if (this.get(RuleName.autoFormat)) {
       clipboard.writeText(this.src);
     }
     this.setCurrentColor();
@@ -300,7 +300,7 @@ class Controller {
       case RuleName.incrementalCopy:
         this.clear();
         break;
-      case RuleName.autoPurify:
+      case RuleName.autoFormat:
         if (value) {
           this.setByRuleName(RuleName.autoCopy, false, save, refresh);
         }
@@ -308,7 +308,7 @@ class Controller {
       case RuleName.autoCopy:
         if (value) {
           this.setByKeyValue(
-            getEnumValue(RuleName.autoPurify),
+            getEnumValue(RuleName.autoFormat),
             false,
             save,
             refresh
@@ -355,7 +355,7 @@ class Controller {
       this.config.saveValues(envConfig.sharedConfig.configPath);
       if (refresh) {
         this.refresh();
-      } else if (ruleName == RuleName.autoPurify) {
+      } else if (ruleName == RuleName.autoFormat) {
         this.refresh("autoCopy");
       } else if (ruleName == RuleName.autoCopy) {
         this.refresh("autoPurify");

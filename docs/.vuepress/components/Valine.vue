@@ -1,6 +1,6 @@
 <template>
 <div>
-  <h2>评论</h2>
+  <h1>评论</h1>
   <div id="vcomments"></div>
 </div>
 </template>
@@ -14,7 +14,6 @@ export default {
     if (typeof window !== 'undefined') {
       this.window = window
       window.AV = require('leancloud-storage')
-      
     }
      
     new Valine({

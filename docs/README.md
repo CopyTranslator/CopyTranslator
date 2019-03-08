@@ -12,3 +12,4 @@ features:
   details: 自动识别所复制的文本，根据所设置的源语言与目标语言自动进行转换，你怎么想就怎么翻译。
 footer: GPL v2 Licensed | Copyright © 2019-present Elliott Zheng
 ---
+

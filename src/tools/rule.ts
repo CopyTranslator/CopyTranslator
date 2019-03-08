@@ -9,7 +9,7 @@ enum RuleName {
   smartDict,
   autoHide,
   autoPaste,
-  autoPurify,
+  autoFormat,
   autoShow,
   tapCopy,
   //enum rule

@@ -4,7 +4,7 @@ module.exports = {
   head: [
     ['link', { rel: 'icon', href: `/icon.png` }]
   ],
-  base: '/docs/',
+  // base: '/docs/',
   plugins: {
     '@vssue/vuepress-plugin-vssue': {
       // 设置 `platform` 而不是 `api`

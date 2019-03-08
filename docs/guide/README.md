@@ -90,7 +90,8 @@ sidebarDepth: 6
 对照模式提供了一个交互式框架,可以快速地设置，同时可以原文和译文对照着看。
 
 
-![win10.png](https://gitee.com/ylzheng/CopyTranslator/raw/master/screenshot/screenshot.png)
+
+![win10.png](https://s2.ax1x.com/2019/03/08/ASEOD1.png)
 
 #### 专注模式
 
@@ -108,12 +109,12 @@ sidebarDepth: 6
 
    - `闪区`颜色会指示软件状态，根据你的设置会变换颜色。提示你当前是否监听剪贴板，是否打开了`自动复制`选项等等或者现在正在请求服务器翻译等等，具体颜色自行体验。
 
-     ![1528470182001](https://gitee.com/ylzheng/CopyTranslator/raw/master/screenshot/newfocus.png)
+     ![1528470182001](https://s2.ax1x.com/2019/03/08/ASEXHx.png)
 
-2. 字体缩放：现在两个模式均可通过Ctrl+wheel进行字体缩放。
+2. 字体缩放：现在两个模式均可通过Ctrl+滚轮进行字体缩放。
 
 
-   ![iMaKpT.png](https://s1.ax1x.com/2018/09/26/iMaKpT.png)
+   ![iMaKpT.png](https://s2.ax1x.com/2019/03/08/ASVnPS.png)
 
 3. 当光标位于专注模式结果框中时`Ctrl+Enter`实现翻译（监听剪贴板时会复制框内文本，当不监听剪贴板时复制框内文本），`Ctrl+B`实现百度搜索框内内容，`Ctrl+G`实现Google搜索框内内容。
 

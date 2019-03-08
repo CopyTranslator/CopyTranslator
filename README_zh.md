@@ -97,7 +97,7 @@
 
 ## 使用指南以及下载和安装方式
 
-**请查看本项目[WIKI](https://github.com/elliottzheng/CopyTranslator/wiki)**。
+**请查看本项目[WIKI](https://github.com/copytranslator/CopyTranslator/wiki)**。
 
 **`CopyTranslator`经过多次迭代，功能越来越丰富，越来越人性化，请一定阅读完整[使用指南](https://github.com/elliottzheng/CopyTranslator/wiki/Usage-%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97)，才能最大限度发挥其功能**。
 

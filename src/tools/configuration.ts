@@ -219,6 +219,10 @@ function initConfig(
       "the options of contrast mode"
     )
   );
+  config.addRule(RuleName.notices, {
+    predefined: [""],
+    msg: "id of notices that have been read"
+  });
 
   return config;
 }

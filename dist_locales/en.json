@@ -33,5 +33,12 @@
     "tapCopy": "Tap Copy",
     "hideDirect": "Hide Direction",
     "translatorType": "Translator Type",
-    "evaluate": "Evaluate"
+    "evaluate": "Evaluate",
+    "homepage": "Homepage",
+    "userManual": "User Manual",
+    "checkUpdate": "Check Update",
+    "toDownload": "To Download",
+    "changelog": "Change Log",
+    "cancel": "Cancel",
+    "ok": "OK"
 }

@@ -4,7 +4,7 @@ import { dialog, BrowserWindow, MenuItem, nativeImage, shell } from "electron";
 import { envConfig } from "../tools/envConfig";
 
 import { constants } from "../core/constant";
-import { Controller } from "@/core/controller";
+import { Controller } from "../core/controller";
 import { decompose } from "../tools/action";
 
 const _ = require("lodash");

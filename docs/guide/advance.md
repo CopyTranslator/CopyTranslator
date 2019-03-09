@@ -22,7 +22,7 @@ CopyTranslator 提供了丰富的自定义功能，但是需要用户有一定�
 ```css
 .focusText {
     /*modify the style of the focus result textarea*/
-    font-family: Monaco; 
+    font-family: Monaco; /*设置专注模式的字体为 Monaco*/
 }
 
 .contrastText {
@@ -44,14 +44,14 @@ CSS文件的编写可以参考[HTML中文网](https://www.html.cn/book/css/all-p
 
 ## 动作系统
 
-以下是目前所有可用动作的列表。
+以下是目前所有可用动作的列表。动作系统统一了界面设置，菜单设置，按钮等等。
 
 ```json
-//down below are status switching action
+//下面是切换选项的动作
 "switchActions": [
     "autoCopy",
     "autoPaste",
-    "autoPurify",
+    "autoFormat",
     "tapCopy",
     "detectLanguage",
     "incrementalCopy",
@@ -62,7 +62,7 @@ CSS文件的编写可以参考[HTML中文网](https://www.html.cn/book/css/all-p
     "translatorType"//|{{0|1|2}} change translator，0 means Google,1 means Youdao,2 means Baidu
     "hideDirect"//|{{0|1|2|3|4}} //set the hide direction when double click on status bar. 0-4 means Up,Right,Left,None,Minify.
 ]
-//down below are actions that do a specific thing.
+//以下是做一个特定的事的动作
 "normalAction":[
     "copySource",
     "copyResult",
@@ -74,6 +74,31 @@ CSS文件的编写可以参考[HTML中文网](https://www.html.cn/book/css/all-p
     "exit",
     "retryTranslate"
 ]
+//以下是Electron 原生角色
+
+"roles":[
+    "undo",
+    "redo",
+    "cut",
+    "copy",
+    "paste",
+    "pasteAndMatchStyle",
+    "selectAll",
+    "delete",
+    "minimize",
+    "close",
+    "quit",
+    "reload",
+    "forcereload",
+    "toggledevtools",
+    "toggleFullScreen",
+    "resetzoom",
+    "zoomin",
+    "zoomout",
+    "editMenu",
+    "windowMenu"
+]
+
 ```
 
 

@@ -43,6 +43,7 @@ interface Action {
   checked?: boolean;
   id: string;
   submenu?: Array<Action>;
+  role?: string;
   subMenuGenerator?: () => Array<Action>;
   click?: (
     menuItem: MenuItem,
@@ -51,9 +52,12 @@ interface Action {
   ) => void;
 }
 
-function ActionWrapper(action: Action, callback: Function) {
+function ActionWrapper(
+  action: Action,
+  callback: Function | undefined = undefined
+) {
   const key = action.id;
-  if (!action.click) {
+  if (!action.click && callback) {
     action.click = function(
       menuItem: MenuItem,
       browserWindow: BrowserWindow,
@@ -66,6 +70,28 @@ function ActionWrapper(action: Action, callback: Function) {
 }
 
 type Actions = { [key: string]: Action };
+const roles = [
+  "undo",
+  "redo",
+  "cut",
+  "copy",
+  "paste",
+  "pasteAndMatchStyle",
+  "selectAll",
+  "delete",
+  "minimize",
+  "close",
+  "quit",
+  "reload",
+  "forcereload",
+  "toggledevtools",
+  "toggleFullScreen",
+  "resetzoom",
+  "zoomin",
+  "zoomout",
+  "editMenu",
+  "windowMenu"
+];
 
 class ActionManager {
   actions: Actions = {};
@@ -89,10 +115,15 @@ class ActionManager {
     let config = controller.config;
     const t = controller.getT();
     function refreshSingle(key: string, action: Action): Action {
+      if (action.role) {
+        action.click = undefined;
+        return action;
+      }
       action.label = t(key);
       if (action.type == MenuItemType.checkbox) {
         action.checked = config.values[key];
       }
+
       if (action.subMenuGenerator) {
         action.submenu = action.subMenuGenerator();
       }
@@ -107,14 +138,6 @@ class ActionManager {
     }
     return refreshSingle;
   }
-  refreshActions(actions: Actions | undefined = undefined) {
-    if (!actions) actions = this.actions;
-    const refresh = this.getRefresh();
-    for (let key in actions) {
-      let action = actions[key];
-      refresh(key, action);
-    }
-  }
 
   getActions(config: ConfigParser, callback: Function): Actions {
     let items: Array<Action> = [];
@@ -127,6 +150,13 @@ class ActionManager {
         },
         callback
       );
+    }
+    function roleAction(role: string) {
+      return {
+        role: role,
+        id: role,
+        type: MenuItemType.normal
+      };
     }
 
     function switchAction(ruleName: RuleName) {
@@ -195,6 +225,9 @@ class ActionManager {
     items.push(switchAction(RuleName.tapCopy));
     items.push(normalAction("focusMode"));
     items.push(normalAction("contrastMode"));
+    roles.forEach((role: string) => {
+      items.push(roleAction(role));
+    });
 
     const languageGenerator = (ruleName: RuleName) => {
       const id = r(ruleName);
@@ -312,4 +345,4 @@ class ActionManager {
   }
 }
 
-export { RouteName, ActionManager, MenuItemType, compose, decompose };
+export { RouteName, ActionManager, MenuItemType, compose, decompose, roles };

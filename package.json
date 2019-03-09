@@ -18,7 +18,8 @@
     "prebuild": "tsc ./src/prebuild.ts && node ./src/prebuild.js && npm run clean",
     "clean": "del src\\*.js /s",
     "docs:dev": "vuepress dev docs",
-    "docs:build": "vuepress build docs"
+    "docs:build": "vuepress build docs",
+    "docs:deploy": "sh docs/.vuepress/release/sync.sh deploy"
   },
   "dependencies": {
     "electron-clipboard-extended": "^1.1.1",

@@ -24,7 +24,6 @@ interface DiffConfig {
   systemLocaleDir: string;
   iconPath: string;
   styleTemplate: string;
-  shortcutTemplate: string;
 }
 
 interface EnvConfig {
@@ -43,15 +42,13 @@ const sharedConfig: SharedConfig = {
 const ProductionConfig: DiffConfig = {
   systemLocaleDir: path.join(process.resourcesPath, "locales"),
   iconPath: path.join(process.resourcesPath, iconName),
-  styleTemplate: path.join(process.resourcesPath, "styles.css"),
-  shortcutTemplate: path.join(process.resourcesPath, "shortcuts.json")
+  styleTemplate: path.join(process.resourcesPath, "styles.css")
 };
 
 const DevConfig: DiffConfig = {
   systemLocaleDir: path.join(process.cwd(), "dist_locales"),
   iconPath: path.join(process.cwd(), iconName),
-  styleTemplate: path.join(process.cwd(), "src", "styles.css"),
-  shortcutTemplate: path.join(process.cwd(), "src", "shortcuts.json")
+  styleTemplate: path.join(process.cwd(), "src", "styles.css")
 };
 
 const envConfig: EnvConfig = {

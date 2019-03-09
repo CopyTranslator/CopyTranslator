@@ -17,5 +17,6 @@
             "autoFix": true
         }
     ],
-    "typescript.updateImportsOnFileMove.enabled": "always"
+    "typescript.updateImportsOnFileMove.enabled": "always",
+    "terminal.integrated.shell.windows": "D:\\software\\Git\\bin\\bash.exe"
 }

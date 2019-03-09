@@ -1,4 +1,5 @@
 import { en } from "./locales";
+import { roles } from "./action";
 
 enum RuleName {
   autoCopy,
@@ -59,7 +60,11 @@ class GroupRule implements Rule {
     }
     const keys = Object.keys(en);
     for (let key in value) {
-      if (!(value[key] in ruleKeys) && !(value[key] in keys)) {
+      if (
+        !(value[key] in ruleKeys) &&
+        !(value[key] in keys) &&
+        !(value[key] in roles)
+      ) {
         return false;
       }
     }

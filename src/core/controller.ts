@@ -23,6 +23,7 @@ import { app, Rectangle } from "electron";
 import { ActionManager } from "../tools/action";
 import { TrayManager } from "../tools/tray";
 import { handleActions } from "./actionCallback";
+import { checkUpdate, checkNotice } from "../tools/checker";
 
 const clipboard = require("electron-clipboard-extended");
 
@@ -49,6 +50,8 @@ class Controller {
     windowController.bind();
     this.tray.init();
     this.action.init();
+    checkUpdate();
+    checkNotice();
   }
 
   onExit() {

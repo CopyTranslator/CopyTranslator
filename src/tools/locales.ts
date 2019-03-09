@@ -34,6 +34,13 @@ interface Locale {
   hideDirect: string;
   translatorType: string;
   evaluate: string;
+  homepage: string;
+  userManual: string;
+  checkUpdate: string;
+  toDownload: string;
+  changelog: string;
+  cancel: string;
+  ok: string;
 }
 
 const zh_cn: Locale = {
@@ -71,7 +78,14 @@ const zh_cn: Locale = {
   tapCopy: "点按复制",
   hideDirect: "隐藏方向",
   translatorType: "翻译器",
-  evaluate: "评估"
+  evaluate: "评估",
+  homepage: "官网",
+  userManual: "用户手册",
+  checkUpdate: "检查更新",
+  toDownload: "前往下载",
+  changelog: "更新日志",
+  cancel: "取消",
+  ok: "确定"
 };
 
 const en: Locale = {
@@ -109,7 +123,14 @@ const en: Locale = {
   tapCopy: "Tap Copy",
   hideDirect: "Hide Direction",
   translatorType: "Translator Type",
-  evaluate: "Evaluate"
+  evaluate: "Evaluate",
+  homepage: "Homepage",
+  userManual: "User Manual",
+  checkUpdate: "Check Update",
+  toDownload: "To Download",
+  changelog: "Change Log",
+  cancel: "Cancel",
+  ok: "OK"
 };
 
 export { en, zh_cn, Locale };

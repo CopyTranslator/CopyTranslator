@@ -33,5 +33,12 @@
     "hideDirect": "隱藏方向",
     "autoPurify": "自動淨化",
     "translatorType": "翻譯程式類型",
-    "evaluate": "評估"
+    "evaluate": "評估",
+    "homepage": "Homepage",
+    "userManual": "User Manual",
+    "checkUpdate": "Check Update",
+    "toDownload": "Download",
+    "changelog": "Change log",
+    "cancel": "Cancel",
+    "ok": "OK"
 }

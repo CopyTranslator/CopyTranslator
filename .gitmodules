@@ -1,0 +1,3 @@
+[submodule "docs/.vuepress/release"]
+	path = docs/.vuepress/release
+	url = https://github.com/CopyTranslator/copytranslator.github.io.git

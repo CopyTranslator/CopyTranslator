@@ -227,6 +227,7 @@ class Controller {
       .translate(this.src, language.source, language.target)
       .then(res => {
         if (res && res.resultString) {
+          res.resultString = normalizeAppend(res.resultString);
           this.result = res.resultString;
           this.postProcess(language, res);
         } else {

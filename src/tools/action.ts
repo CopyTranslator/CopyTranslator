@@ -10,6 +10,7 @@ import { ConfigParser, getEnumValue as r } from "./configParser";
 //r can be used to transform a enum to string
 import { envConfig } from "./envConfig";
 import { HideDirection, TranslatorType } from "./enums";
+import { defaultShortcuts } from "./shortcuts";
 
 const fs = require("fs");
 const _ = require("lodash");
@@ -282,17 +283,15 @@ class ActionManager {
   }
 
   loadShortcuts() {
+    this.shortcuts = defaultShortcuts;
     try {
       this.shortcuts = JSON.parse(
         fs.readFileSync(envConfig.sharedConfig.shortcut, "utf-8")
       );
     } catch (e) {
-      fs.copyFileSync(
-        envConfig.diffConfig.shortcutTemplate,
-        envConfig.sharedConfig.shortcut
-      );
-      this.shortcuts = JSON.parse(
-        fs.readFileSync(envConfig.sharedConfig.shortcut, "utf-8")
+      fs.writeFileSync(
+        envConfig.sharedConfig.shortcut,
+        JSON.stringify(defaultShortcuts, null, 4)
       );
     }
   }

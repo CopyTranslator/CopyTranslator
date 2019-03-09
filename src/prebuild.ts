@@ -2,12 +2,10 @@ const fs = require("fs");
 const path = require("path");
 const _ = require("lodash");
 import { en, zh_cn, Locale } from "./tools/locales";
-import { defaultShortcuts, Shortcuts } from "./tools/shortcuts";
 
 type Resources = { [key: string]: Locale };
 
 const localeDir = path.join(process.cwd(), "dist_locales");
-const shortcutPath = path.join(process.cwd(), "src", "shortcuts.json");
 
 function mkdir(dir: string) {
   if (!fs.existsSync(dir)) {
@@ -26,10 +24,6 @@ function generateLocales(
       JSON.stringify(locales[key], null, 4)
     );
   }
-}
-
-function generateShortcuts(filename: string, shortcuts: Shortcuts) {
-  fs.writeFileSync(filename, JSON.stringify(shortcuts, null, 4));
 }
 
 // prettier-ignore
@@ -52,5 +46,3 @@ fs.readdirSync(localeDir)
   });
 
 generateLocales(resources, localeDir);
-
-generateShortcuts(shortcutPath, defaultShortcuts);

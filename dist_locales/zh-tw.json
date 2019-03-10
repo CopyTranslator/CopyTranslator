@@ -34,11 +34,11 @@
     "autoPurify": "自動淨化",
     "translatorType": "翻譯程式類型",
     "evaluate": "評估",
-    "homepage": "Homepage",
-    "userManual": "User Manual",
-    "checkUpdate": "Check Update",
-    "toDownload": "Download",
-    "changelog": "Change log",
-    "cancel": "Cancel",
-    "ok": "OK"
+    "homepage": "首頁",
+    "userManual": "使用者手冊",
+    "checkUpdate": "檢查更新",
+    "toDownload": "下載",
+    "changelog": "變更紀錄",
+    "cancel": "取消",
+    "ok": "確定"
 }

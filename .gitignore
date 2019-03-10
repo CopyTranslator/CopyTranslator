@@ -27,5 +27,6 @@ build
 
 # tsc build output, because I'm using ts, so js is the build result
 src/*/*.js
+src/*.js
 dist
 /package-lock.json

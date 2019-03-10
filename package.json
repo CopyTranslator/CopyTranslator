@@ -11,8 +11,8 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "electron:build": "vue-cli-service electron:build",
-    "electron:serve": "vue-cli-service electron:serve",
+    "electron:build": "npm run prebuild && vue-cli-service electron:build",
+    "electron:serve": "npm run prebuild && vue-cli-service electron:serve",
     "postinstall": "electron-builder install-app-deps",
     "rebuild": "npm rebuild --runtime=electron --target=3.0.0 --disturl=https://atom.io/download/atom-shell --abi=64",
     "prebuild": "tsc ./src/prebuild.ts && node ./src/prebuild.js && npm run clean",
@@ -65,7 +65,8 @@
     ],
     "platforms": [
       "win32",
-      "darwin"
+      "darwin",
+      "linux"
     ],
     "arches": [
       "ia32",

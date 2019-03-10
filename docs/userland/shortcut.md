@@ -23,3 +23,7 @@ sidebarDepth: 6
 - 作者：[Elliott Zheng](https://github.com/elliottzheng)
 - 源码：[Github](https://github.com/CopyTranslator/CopyTranslator/blob/4edc7970231246832e3415cf9d8450ff070b1b1d/src/shortcuts.json)
 - 描述：将切换监听剪贴板的动作绑定到快捷键`CommandOrControl+J`
+
+
+
+<Valine></Valine>

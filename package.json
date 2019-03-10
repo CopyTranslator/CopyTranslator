@@ -11,8 +11,8 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "electron:build": "npm run prebuild && vue-cli-service electron:build",
-    "electron:serve": "npm run prebuild && vue-cli-service electron:serve",
+    "electron:build": "vue-cli-service electron:build",
+    "electron:serve": "vue-cli-service electron:serve",
     "postinstall": "electron-builder install-app-deps",
     "rebuild": "npm rebuild --runtime=electron --target=3.0.0 --disturl=https://atom.io/download/atom-shell --abi=64",
     "prebuild": "tsc ./src/prebuild.ts && node ./src/prebuild.js && npm run clean",
@@ -27,6 +27,7 @@
     "iohook": "^0.3.1",
     "lodash": "^4.17.11",
     "log4js": "^4.0.1",
+    "node-gyp": "^3.8.0",
     "robotjs": "^0.5.1",
     "translation.js": "^0.7.5",
     "vue": "^2.5.21",
@@ -47,7 +48,7 @@
     "eslint-plugin-typescript": "^0.14.0",
     "eslint-plugin-vue": "^5.0.0",
     "leancloud-storage": "^3.12.0",
-    "typescript": "^3.2.1",
+    "typescript": "^3.3.3333",
     "typescript-eslint-parser": "^22.0.0",
     "valine": "^1.3.4",
     "vue-cli-plugin-electron-builder": "^1.1.1",
@@ -63,7 +64,8 @@
       "electron-64"
     ],
     "platforms": [
-      "win32"
+      "win32",
+      "darwin"
     ],
     "arches": [
       "ia32",

@@ -39,6 +39,15 @@ module.exports = {
           ],
           icon: iconName
         },
+        mac:{
+          target:[
+            {
+              target:"dmg",
+              arch:["x64"]
+            }
+          ],
+          icon:iconName
+        },
         nsis: {
           installerIcon: iconName,
           oneClick: false,

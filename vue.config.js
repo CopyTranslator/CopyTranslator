@@ -15,10 +15,6 @@ module.exports = {
           {
             from: iconName,
             to: iconName
-          },
-          {
-            from: `src/styles.css`,
-            to: `styles.css`
           }
         ],
         win: {
@@ -39,14 +35,14 @@ module.exports = {
           ],
           icon: iconName
         },
-        mac:{
-          target:[
+        mac: {
+          target: [
             {
-              target:"dmg",
-              arch:["x64"]
+              target: "dmg",
+              arch: ["x64"]
             }
           ],
-          icon:iconName
+          icon: iconName
         },
         nsis: {
           installerIcon: iconName,

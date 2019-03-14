@@ -55,8 +55,9 @@ class Controller {
   }
 
   onExit() {
-    let focus = Object.assign(this.config.values.focus, this.win.getBound());
-    this.setByKeyValue("focus", focus);
+    // let focus = Object.assign(this.get(RuleName.focus), this.win.getBound());
+    // this.setByKeyValue("focus", focus);
+    this.config.saveValues(envConfig.sharedConfig.configPath);
     this.action.unregister();
     app.quit();
   }
@@ -226,6 +227,7 @@ class Controller {
       return;
     this.translating = true;
     const language = await this.preProcess(text);
+
     this.translator
       .translate(this.src, language.source, language.target)
       .then(res => {
@@ -245,11 +247,11 @@ class Controller {
   }
 
   source() {
-    return this.config.values.source;
+    return this.get(RuleName.sourceLanguage);
   }
 
   target() {
-    return this.config.values.target;
+    return this.get(RuleName.targetLanguage);
   }
 
   setWatch(watch: boolean) {

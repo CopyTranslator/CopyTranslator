@@ -28,10 +28,12 @@
     "lodash": "^4.17.11",
     "log4js": "^4.0.1",
     "node-gyp": "^3.8.0",
+    "node-notifier": "^5.4.0",
     "robotjs": "^0.5.1",
     "translation.js": "^0.7.5",
     "vue": "^2.5.21",
     "vue-router": "^3.0.1",
+    "vuepress-plugin-sitemap": "^2.1.1",
     "vuex": "^3.0.1"
   },
   "devDependencies": {

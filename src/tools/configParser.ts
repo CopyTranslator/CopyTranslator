@@ -61,7 +61,7 @@ class ConfigParser {
     try {
       let values = JSON.parse(fs.readFileSync(fileName));
       ruleKeys.forEach(keyValue => {
-        if (values[keyValue]) {
+        if (values[keyValue] != undefined) {
           this.setByKeyValue(keyValue, values[keyValue]);
         }
       });

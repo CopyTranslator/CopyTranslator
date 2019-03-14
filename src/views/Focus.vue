@@ -18,13 +18,14 @@ import WindowController from "../components/WindowController";
 import Adjustable from "../components/Adjustable";
 import DictResult from "../components/DictResult";
 import { shell } from "electron";
+import { RuleName } from "@/tools/rule";
 export default {
   name: "FocusMode",
   mixins: [BaseView, WindowController, Adjustable],
   components: { DictResult, StatusBar },
   data: function() {
     return {
-      size: this.$controller.config.values.focus.fontSize,
+      size: this.$controller.get(RuleName.focus).fontSize,
       routeName: "focus"
     };
   },

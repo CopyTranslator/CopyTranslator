@@ -77,7 +77,8 @@ module.exports = {
             title:"支持",
             collapsable: false,
             children: [
-              ''
+              '',
+              'contributing'
             ]
           }
         ],

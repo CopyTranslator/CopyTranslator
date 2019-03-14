@@ -88,10 +88,6 @@ interface Rule {
 class BoolRule implements Rule {
   predefined: boolean;
   msg: string;
-  static check = function(value: any) {
-    return typeof value == "boolean";
-  };
-
   constructor(predefined: boolean, msg: string) {
     this.predefined = predefined;
     this.msg = msg;

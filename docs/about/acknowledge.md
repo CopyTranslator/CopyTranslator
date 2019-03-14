@@ -6,6 +6,9 @@
 
 图标设计师：[Mārtiņš Zemlickis](http://mzemlickis.lv/)
 
+## 代码贡献者
+- Mac 维护者 [黎紫珊](https://github.com/Sandural)
+
 ## 开源库
 所基于的开源库太多，难以罗列，在这里仅列出主要的几项：
 - [Electron](https://electronjs.org)：使用 JavaScript, HTML 和 CSS 构建跨平台的桌面应用

@@ -27,14 +27,15 @@ import BaseView from "../components/BaseView";
 import WindowController from "../components/WindowController";
 import Adjustable from "../components/Adjustable";
 import Action from "../components/Action";
+import { RuleName } from "@/tools/rule";
 export default {
   name: "Contrast",
   mixins: [BaseView, WindowController, Adjustable],
   data: function() {
     return {
-      size: this.$controller.config.values.contrast.fontSize,
+      size: this.$controller.get(RuleName.contrast).fontSize,
       routeName: "contrast",
-      actionKeys: this.$controller.config.values.contrastOption
+      actionKeys: this.$controller.get(RuleName.contrastOption)
     };
   },
   computed: {
@@ -54,7 +55,7 @@ export default {
   mounted: function() {
     this.barHeight = this.$refs.bar.$el.clientHeight;
     this.$nextTick(function() {
-      this.actionKeys = this.$controller.config.values.contrastOption;
+      this.actionKeys = this.$controller.get(RuleName.contrastOption);
     });
   },
   methods: {

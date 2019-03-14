@@ -19,7 +19,7 @@ function initConfig(
   );
   config.addRule(
     RuleName.detectLanguage,
-    new BoolRule(true, "detect language")
+    new BoolRule(false, "detect language")
   );
   config.addRule(RuleName.tapCopy, new BoolRule(false, "catch simulate copy"));
 

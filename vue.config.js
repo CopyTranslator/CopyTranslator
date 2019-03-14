@@ -23,6 +23,14 @@ module.exports = {
             {
               target: "nsis",
               arch: ["x64"] //"ia32"
+            },
+            {
+              target: "portable",
+              arch: ["x64"] //"ia32"
+            },
+            {
+              target: "zip",
+              arch: ["x64"] //"ia32"
             }
           ]
         },

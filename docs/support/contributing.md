@@ -17,7 +17,7 @@ sidebarDepth: 6
 ## Build from source
 You need to install `node-gyp` and `windows-build-tools`(for windows users) globally first.
 ```bash
-git clone https://github.com/copytranslator/CopyTranslator.git
+git clone --recursive https://github.com/copytranslator/CopyTranslator.git
 cd CopyTranslator
 npm install 
 npm run rebuild

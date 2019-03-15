@@ -25,11 +25,10 @@
     "electron-clipboard-extended": "^1.1.1",
     "element-ui": "^2.5.4",
     "iohook": "^0.3.1",
+    "isomorphic-fetch": "^2.2.1",
     "lodash": "^4.17.11",
     "log4js": "^4.0.1",
     "md5": "^2.2.1",
-    "node-fetch": "^2.3.0",
-    "node-gyp": "^3.8.0",
     "robotjs": "^0.5.1",
     "translation.js": "^0.7.5",
     "vue": "^2.5.21",
@@ -37,6 +36,7 @@
     "vuex": "^3.0.1"
   },
   "devDependencies": {
+    "@types/lodash": "^4.14.123",
     "@types/md5": "^2.1.33",
     "@types/node": "^11.11.0",
     "@vue/cli-plugin-babel": "^3.2.0",
@@ -51,10 +51,11 @@
     "eslint-plugin-typescript": "^0.14.0",
     "eslint-plugin-vue": "^5.0.0",
     "leancloud-storage": "^3.12.0",
+    "node-gyp": "^3.8.0",
     "typescript": "^3.3.3333",
     "typescript-eslint-parser": "^22.0.0",
     "valine": "^1.3.4",
-    "vue-cli-plugin-electron-builder": "^1.1.1",
+    "vue-cli-plugin-electron-builder": "^1.1.3",
     "vue-template-compiler": "^2.5.21"
   },
   "cmake-js": {

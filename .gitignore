@@ -30,3 +30,4 @@ src/*/*.js
 src/*.js
 dist
 /package-lock.json
+/yarn.lock

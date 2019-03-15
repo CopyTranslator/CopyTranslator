@@ -1,6 +1,8 @@
 const iconName =
   require("os").type() === "Windows_NT" ? "icon.ico" : "icon.png";
 
+const trayIconName = require('os').platform() === 'darwin' ? 'icon@2x.png' : "icon.png"
+
 module.exports = {
   pluginOptions: {
     electronBuilder: {
@@ -11,6 +13,10 @@ module.exports = {
           {
             from: `dist_locales`,
             to: `locales`
+          },
+          {
+            from: trayIconName,
+            to: trayIconName
           },
           {
             from: iconName,

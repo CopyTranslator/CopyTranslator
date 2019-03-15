@@ -1,6 +1,7 @@
 import { ConfigParser } from "./configParser";
 import { BoolRule, EnumRule, GroupRule, ModeRule, RuleName } from "./rule";
-import { FrameMode, HideDirection, TranslatorType } from "./enums";
+import { FrameMode, HideDirection } from "./enums";
+import { TranslatorType } from "./translation/translators";
 import { RouteName } from "./action";
 
 function initConfig(

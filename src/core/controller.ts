@@ -1,18 +1,8 @@
-import {
-  BaiduTranslator,
-  GoogleTranslator,
-  MyTranslateResult,
-  Translator,
-  YoudaoTranslator
-} from "../tools/translator";
+import { TranslatorType, translators } from "../tools/translation/translators";
+import { CommonTranslateResult, Translator } from "../tools/translation";
 import { initConfig } from "../tools/configuration";
 import { ConfigParser, getEnumValue } from "../tools/configParser";
-import {
-  ColorStatus,
-  MessageType,
-  TranslatorType,
-  WinOpt
-} from "../tools/enums";
+import { ColorStatus, MessageType, WinOpt } from "../tools/enums";
 import { WindowWrapper } from "../tools/windows";
 import { simulatePaste, windowController } from "../tools/windowController";
 import { envConfig } from "../tools/envConfig";
@@ -30,10 +20,10 @@ const clipboard = require("electron-clipboard-extended");
 class Controller {
   src: string = "";
   result: string = "";
-  res: MyTranslateResult | undefined;
+  res: CommonTranslateResult | undefined;
   lastAppend: string = "";
   win: WindowWrapper = new WindowWrapper();
-  translator: Translator = new GoogleTranslator();
+  translator: Translator = new translators.google();
   config: ConfigParser = initConfig();
   locales: L10N = l10n;
   action = new ActionManager(handleActions);
@@ -141,7 +131,7 @@ class Controller {
     );
   }
 
-  postProcess(language: any, result: MyTranslateResult) {
+  postProcess(language: any, result: CommonTranslateResult) {
     if (this.get(RuleName.autoCopy)) {
       clipboard.writeText(this.result);
       if (this.get(RuleName.autoPaste)) {
@@ -231,6 +221,7 @@ class Controller {
     this.translator
       .translate(this.src, language.source, language.target)
       .then(res => {
+        console.log(res);
         if (res && res.resultString) {
           res.resultString = normalizeAppend(res.resultString);
           this.result = res.resultString;
@@ -327,13 +318,16 @@ class Controller {
       case RuleName.translatorType:
         switch (value) {
           case TranslatorType.Google:
-            this.translator = new GoogleTranslator();
+            this.translator = new translators.google();
             break;
           case TranslatorType.Baidu:
-            this.translator = new BaiduTranslator();
+            this.translator = new translators.baidu();
+            break;
+          case TranslatorType.Sogou:
+            this.translator = new translators.sogou();
             break;
           case TranslatorType.Youdao:
-            this.translator = new YoudaoTranslator();
+            this.translator = new translators.youdao();
             break;
         }
         if (

@@ -1,0 +1,75 @@
+import { CommonTranslateResult, Translator, Dict } from "..";
+import { baidu } from "translation.js";
+const _ = require("lodash");
+export const BaiduLanguages: Dict = {
+  English: "en",
+  Thai: "th",
+  Russian: "ru",
+  Portuguese: "pt",
+  Greek: "el",
+  Dutch: "nl",
+  Polish: "pl",
+  Bulgarian: "bg",
+  Estonian: "et",
+  Danish: "da",
+  Finnish: "fi",
+  Czech: "cs",
+  Romanian: "ro",
+  Slovenian: "sl",
+  Swedish: "sv",
+  Hungarian: "hu",
+  German: "de",
+  Italian: "it",
+  "Chinese(Simplified)": "zh-CN",
+  "Chinese(Traditional)": "zh-TW",
+  Japanese: "ja",
+  Korean: "ko",
+  Spanish: "es",
+  French: "fr",
+  Arabic: "ar"
+};
+
+const BaiduCodes = _.invert(BaiduLanguages);
+const BaiduLangList = _.keys(BaiduLanguages);
+
+export class BaiduTranslator extends Translator {
+  getLanguages() {
+    return BaiduLangList;
+  }
+
+  lang2code(lang: string) {
+    return BaiduLanguages[lang];
+  }
+
+  code2lang(code: string): string {
+    return BaiduCodes[code];
+  }
+
+  async translate(
+    text: string,
+    srcCode: string,
+    destCode: string
+  ): Promise<CommonTranslateResult | undefined> {
+    try {
+      let res: CommonTranslateResult = await baidu.translate({
+        text: text,
+        from: srcCode,
+        to: destCode
+      });
+      res.resultString = _.join(res.result, " ");
+      return res;
+    } catch (e) {
+      (<any>global).log.debug(e);
+      return undefined;
+    }
+  }
+
+  async detect(text: string): Promise<string | undefined> {
+    try {
+      return await baidu.detect(text);
+    } catch (e) {
+      (<any>global).log.debug(e);
+      return undefined;
+    }
+  }
+}

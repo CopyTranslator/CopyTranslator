@@ -9,11 +9,13 @@ import { RuleName } from "./rule";
 import { ConfigParser, getEnumValue as r } from "./configParser";
 //r can be used to transform a enum to string
 import { envConfig } from "./envConfig";
-import { HideDirection, TranslatorType } from "./enums";
+import { HideDirection } from "./enums";
+import { TranslatorType } from "./translation/translators";
 import { defaultShortcuts } from "./shortcuts";
 
 const fs = require("fs");
 const _ = require("lodash");
+
 function compose(actions: Array<string>) {
   return _.join(actions, "|");
 }

@@ -1,9 +1,3 @@
-enum TranslatorType {
-  Google,
-  Youdao,
-  Baidu
-}
-
 enum FrameMode {
   Contrast,
   Focus
@@ -47,7 +41,9 @@ function rgb(r: number, g: number, b: number) {
   return "#" + R + G + B;
 }
 
-function mkenum<T extends { [index: string]: U }, U extends string>(x: T) {
+export function mkenum<T extends { [index: string]: U }, U extends string>(
+  x: T
+) {
   return x;
 }
 
@@ -65,7 +61,6 @@ const ColorStatus = mkenum({
 type ColorStatus = (typeof ColorStatus)[keyof typeof ColorStatus];
 
 export {
-  TranslatorType,
   FrameMode,
   YoudaoStatus,
   ColorStatus,

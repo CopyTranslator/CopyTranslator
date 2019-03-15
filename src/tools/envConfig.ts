@@ -4,6 +4,8 @@ const fs = require("fs");
 
 const iconName = os.type() == "Windows_NT" ? "icon.ico" : "icon.png";
 
+const trayName = "tray.png";
+
 function mkdir(path: string) {
   if (fs.existsSync(path)) {
     return;
@@ -23,6 +25,7 @@ interface SharedConfig {
 interface DiffConfig {
   systemLocaleDir: string;
   iconPath: string;
+  trayIconPath: string;
   styleTemplate: string;
 }
 
@@ -42,12 +45,14 @@ const sharedConfig: SharedConfig = {
 const ProductionConfig: DiffConfig = {
   systemLocaleDir: path.join(process.resourcesPath, "locales"),
   iconPath: path.join(process.resourcesPath, iconName),
+  trayIconPath: path.join(process.resourcesPath, trayName),
   styleTemplate: path.join(process.resourcesPath, "styles.css")
 };
 
 const DevConfig: DiffConfig = {
   systemLocaleDir: path.join(process.cwd(), "dist_locales"),
   iconPath: path.join(process.cwd(), iconName),
+  trayIconPath: path.join(process.cwd(), trayName),
   styleTemplate: path.join(process.cwd(), "src", "styles.css")
 };
 

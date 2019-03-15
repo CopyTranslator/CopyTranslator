@@ -16,7 +16,7 @@
     "postinstall": "electron-builder install-app-deps",
     "rebuild": "npm rebuild --runtime=electron --target=3.0.0 --disturl=https://atom.io/download/atom-shell --abi=64",
     "prebuild": "tsc ./src/prebuild.ts && node ./src/prebuild.js && npm run clean",
-    "clean": "del src\\*.js /s",
+    "clean": "node clean.js",
     "docs:dev": "vuepress dev docs",
     "docs:build": "vuepress build docs",
     "docs:deploy": "sh docs/.vuepress/release/sync.sh deploy"

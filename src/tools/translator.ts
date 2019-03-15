@@ -7,17 +7,14 @@ import {
   GoogleLanguages,
   YoudaoCodes,
   YoudaoLangList,
-  YoudaoLanguages
+  YoudaoLanguages,
+  SogouCodes,
+  SogouLangList,
+  SogouLanguages
 } from "./languages";
 import { MyTranslateResult, langcodes } from "./translation";
 import { baidu, google, youdao } from "translation.js";
-import {
-  sogouTranslate,
-  getSogouToken,
-  SogouStorage,
-  SogouSearchResult,
-  sogouCodes
-} from "./sogou";
+import { sogouTranslate, getSogouToken, SogouStorage } from "./sogou";
 const _ = require("lodash");
 
 /*
@@ -168,6 +165,7 @@ class SogouTranslator extends Translator {
     token: "b33bf8c58706155663d1ad5dba4192dc",
     tokenDate: Date.now()
   };
+
   constructor() {
     super();
     getSogouToken()
@@ -176,42 +174,30 @@ class SogouTranslator extends Translator {
       })
       .catch(() => "");
   }
+
   getLanguages() {
-    return BaiduLangList;
+    return SogouLangList;
   }
 
   lang2code(lang: string) {
-    return BaiduLanguages[lang];
+    return SogouLanguages[lang];
   }
 
   code2lang(code: string): string {
-    return BaiduCodes[code];
+    return SogouCodes[code];
   }
-  code2sogou(code: string) {
-    return BaiduCodes[code];
-  }
-  sogou2code(code: string) {
-    return BaiduCodes[code];
-  }
+
   async translate(
     text: string,
     srcCode: string,
     destCode: string
   ): Promise<MyTranslateResult | undefined> {
     try {
-      let sogouRes: SogouSearchResult = await sogouTranslate(
+      let res: MyTranslateResult = await sogouTranslate(
         text,
-        this.code2sogou(srcCode),
-        this.code2sogou(destCode)
+        srcCode,
+        destCode
       );
-      let res: MyTranslateResult = {
-        text: sogouRes.result.searchText,
-        raw: undefined,
-        link: "",
-        from: srcCode,
-        to: destCode,
-        resultString: sogouRes.result.trans
-      };
       return res;
     } catch (e) {
       (<any>global).log.debug(e);

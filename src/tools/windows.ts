@@ -195,6 +195,8 @@ class WindowWrapper {
       y: param.y,
       width: param.width,
       height: param.height,
+      minWidth: 800,
+      minHeight: 600,
       // frame: false
     });
     this.load(routeName);

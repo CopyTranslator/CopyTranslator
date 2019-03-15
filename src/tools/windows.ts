@@ -195,7 +195,9 @@ class WindowWrapper {
       y: param.y,
       width: param.width,
       height: param.height,
-      frame: false
+      minWidth: 800,
+      minHeight: 600,
+      // frame: false
     });
     this.load(routeName);
     this.window.on("closed", () => {

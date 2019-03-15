@@ -1,7 +1,7 @@
 const iconName =
   require("os").type() === "Windows_NT" ? "icon.ico" : "icon.png";
 
-const trayIconName = require('os').platform() === 'darwin' ? 'icon@2x.png' : "icon@2x.png"
+const trayIconName = require('os').platform() === 'darwin' ? 'icon@2x.png' : "icon.png"
 
 module.exports = {
   pluginOptions: {

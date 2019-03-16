@@ -2,6 +2,7 @@
   "name": "copytranslator",
   "version": "0.0.8",
   "private": true,
+  "description": "Foreign language assisted reading and translation solution",
   "author": {
     "name": "Elliott Zheng",
     "email": "copytranslator@hypercube.top",

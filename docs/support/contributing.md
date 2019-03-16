@@ -65,6 +65,19 @@ export default {
 For both focus mode, contrast mode, and tray, we generate menu on real time. they share the same `BaseMenu` object, but the content of the menu can be different according to the context.
 
 
+### Notification on Windows
+In vue.config.js
+```js
+builderOptions: {
+  appId: "com.copytranslator.copytranslator"
+}
+```
+In main process
+```ts
+app.setAppUserModelId("com.copytranslator.copytranslator");
+```
+You need to first install the application once for further develop.
+
 ## Publish Documentation
 Make sure you are Elliott Zheng 
 ```bash

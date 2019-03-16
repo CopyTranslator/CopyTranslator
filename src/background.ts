@@ -1,11 +1,12 @@
 "use strict";
-import { app, protocol } from "electron";
+import { app, protocol, Notification } from "electron";
 import { installVueDevtools } from "vue-cli-plugin-electron-builder/lib";
 import { log } from "./tools/logger";
 import { Controller } from "./core/controller";
 import { EventEmitter } from "events";
-
 const isDevelopment = process.env.NODE_ENV !== "production";
+
+app.setAppUserModelId("com.copytranslator.copytranslator");
 
 (<any>global).log = log;
 let controller = new Controller();

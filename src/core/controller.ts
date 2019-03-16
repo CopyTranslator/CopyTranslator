@@ -221,7 +221,6 @@ class Controller {
     this.translator
       .translate(this.src, language.source, language.target)
       .then(res => {
-        console.log(res);
         if (res && res.resultString) {
           res.resultString = normalizeAppend(res.resultString);
           this.result = res.resultString;

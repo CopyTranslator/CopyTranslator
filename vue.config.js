@@ -1,7 +1,7 @@
 const iconName =
   require("os").type() === "Windows_NT" ? "icon.ico" : "icon.png";
 
-const trayIconName = "tray.png";
+const trayIconName = "tray@2x.png";
 
 module.exports = {
   pluginOptions: {

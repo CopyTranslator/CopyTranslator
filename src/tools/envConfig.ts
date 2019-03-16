@@ -4,7 +4,7 @@ const fs = require("fs");
 
 const iconName = os.type() == "Windows_NT" ? "icon.ico" : "icon.png";
 
-const trayName = "tray.png";
+const trayName = "tray@2x.png";
 
 function mkdir(path: string) {
   if (fs.existsSync(path)) {

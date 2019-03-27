@@ -62,6 +62,11 @@ class Controller {
     return this.config.values[getEnumValue(ruleName)];
   }
 
+  resotreDefaultSetting() {
+    this.config.restoreDefault(envConfig.sharedConfig.configPath);
+    this.restoreFromConfig();
+  }
+
   clear() {
     this.src = "";
     this.result = "";

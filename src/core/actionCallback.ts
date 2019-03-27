@@ -90,6 +90,10 @@ function handleNormalAction(actionId: string) {
       break;
     case "retryTranslate":
       controller.doTranslate(controller.src);
+      break;
+    case "restoreDefault":
+      controller.resotreDefaultSetting();
+      break;
   }
 }
 

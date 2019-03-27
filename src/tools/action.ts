@@ -227,6 +227,7 @@ class ActionManager {
     items.push(switchAction(RuleName.tapCopy));
     items.push(normalAction("focusMode"));
     items.push(normalAction("contrastMode"));
+    items.push(normalAction("restoreDefault"));
     roles.forEach((role: string) => {
       items.push(roleAction(role));
     });

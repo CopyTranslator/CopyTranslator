@@ -10,6 +10,7 @@ function getEnumValue(key: RuleName): string {
 class ConfigParser {
   rules: Rules = {};
   values: { [key: string]: any } = {};
+  defaultValues: { [key: string]: any } = {};
 
   constructor() {}
 
@@ -20,6 +21,7 @@ class ConfigParser {
     }
     this.rules[keyValue] = rule;
     this.values[keyValue] = rule.predefined;
+    this.defaultValues[keyValue] = rule.predefined;
   }
 
   getValues() {
@@ -71,6 +73,11 @@ class ConfigParser {
       this.saveValues(fileName);
       return false;
     }
+  }
+
+  restoreDefault(fileName: string) {
+    this.values = this.defaultValues;
+    this.saveValues(fileName);
   }
 
   saveValues(fileName: string) {

@@ -40,5 +40,7 @@
     "toDownload": "下載",
     "changelog": "變更紀錄",
     "cancel": "取消",
-    "ok": "確定"
+    "ok": "確定",
+    "resetDefault": "Restore default settings",
+    "restoreDefault": "Restore default settings"
 }

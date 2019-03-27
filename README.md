@@ -14,13 +14,15 @@
 
 **Foreign language assisted reading and translation solution**
 
-**Please update to latest version as soon as possible. This is a new version that you have never experienced before. It is also the only available version (all the previous version is invalid now). Trust me, you will fall in love with it within minutes.**
+**Please update to latest version [![](https://img.shields.io/github/release/copytranslator/copytranslator.svg)](https://github.com/copytranslator/copytranslator/releases)as soon as possible. This is a new version that you have never experienced before. It is also the only available version (all the previous version is invalid now). Trust me, you will fall in love with it within minutes.**
 
 **If you found it helpful to you, no need to follow or fork, just give me a star and recommend it to your friends around you.**
 
 (Online translation resources come from the Internet, copyright belongs to related websites, and this software is only for academic exchange.)
 
 **This software is free and open source. If you find someone selling this software , please report it in the Issue.**
+
+<div align="center">:heart: Like this project? Support me on <a href="https://afdian.net/@elliottzheng/plan" target="_blank">Afdian</a>.
 
 ## Introduction
 
@@ -42,7 +44,7 @@ Just open the `CopyTranslator` and copy the PDF text to clipboard,  `CopyTransla
 
 ### Copy=Translate
 
-**Greatly simplify the steps required for translation**, just copy the text to the clipboard, and wait to view the translation results in the next second, enjoy the WYSIWYG pleasure, and we also have the [Tap to Copy](#Tap to Copy) mechanism , making it easier for you to copy text.
+**Greatly simplify the steps required for translation**, just copy the text to the clipboard, and wait to view the translation results in the next second, enjoy the WYSIWYG pleasure, and we also have the [Tap to Copy](#Tap-to-Copy) mechanism , making it easier for you to copy text.
 
 ### Solve the problem of PDF copy translation
 
@@ -58,7 +60,7 @@ More efficient, while keeping the original segment as much as possible.
 
 ![entoch](./assets/entoch.png)
 
-### Tap to Copy
+### Tap to Copy(Experimental)
 
 After turning on the `listen Clipboard` option, just select the text, and hover the mouse over the selected text to release the mouse over 0.3s. That is, **after long press and  release, it can be copied.** This can prevent us from over moving the mouse (right click to choose Copy) or tired of  pressing `Ctrl+C`.
 
@@ -69,7 +71,7 @@ After turning on the `listen Clipboard` option, just select the text, and hover 
 Unparalleled powerful focus mode, while it's just a simple text box, it can meet the needs of 90% of daily translation!
 
 - **The translation is displayed in the `Focus mode` and `Contrast Mode` at the same time**. 
-- **The result of [Smart Dictionary](#Smart Dictionary) is only displayed in `Focus Mode`, colorful text helps you quickly distinguish between items**.
+- **The result of [Smart Dictionary](#Smart-Dictionary) is only displayed in `Focus Mode`, colorful text helps you quickly distinguish between items**.
 - **Drag text to focus mode box, you can get translation results directly**.
 - **When the cursor is in the focus mode result box, `Ctrl+Enter` to translate the contents of the box, `Ctrl+B` to use Baidu to search the contents of the box, and `Ctrl+G` to use Google to search the contents of the box**.
 - **The right-click menu of `Focus mode` can be used to set up almost all options as well as all the function**.
@@ -80,13 +82,11 @@ Unparalleled powerful focus mode, while it's just a simple text box, it can meet
 
 ### Smart Dictionary
 
-Sentences with words less than 3 will be view as phrase or word, you will see a more detailed explanations in `Focus Mode`. Check the `Smart Dict ` option to enable it. **Note: It is limited to the languages `Youdao` supported , but you don't need and cannot  manually choose language**.Based on API provided by [Youdao](https://github.com/longcw/youdao)
-
-![1537871607106](assets/1537871607106.png)
+For phrase or word, you will see a more detailed explanations in `Focus Mode`. ![1537871607106](assets/1537871607106.png)
 
 ### Incremental Copy
 
-Append the copied text to the source other than replace it, especially useful when the paragraph is separated in different page. Check the `Incremental Copy ` option to enable it.
+Append the copied text to the source other than replace it, **especially useful when the paragraph is separated in different page.** Check the `Incremental Copy ` option to enable it.
 
 ### Dual Mode Free Switching to Cope with Different Scenes
 
@@ -105,21 +105,25 @@ Append the copied text to the source other than replace it, especially useful wh
 - Many automated customization options are available, such as `Auto Copy`, `Config Memorization`, `Auto Hide`, `Auto Display`.
 - There will be more new features in`CopyTranslator` , so stay tuned.
 
-Please refer to the [User Manual](https://github.com/copytranslator/copytranslator/wiki/Usage-%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97) to know more about `CopyTranslator`
+Please refer to the [Documentation](https://copytranslator.github.io) to learn more about `CopyTranslator`
 
-## User Manual and download and installation methods
+## User Manual/Documentation/Homepage
 
-Please refer to the project [WIKI](https://github.com/copytranslator/copytranslator/wiki) .
+Link: [User Manual](https://copytranslator.github.io/guide/)
 
-**After several iterations, `CopyTranslator` has became more and more powerful as well as user-friendly. It is recommended to read the full project [wiki](https://github.com/copytranslator/copytranslator/wiki) to make best use of it**.
+## Download/Install
+
+Link: [Install Guide](https://copytranslator.github.io/guide/download.html)
+
+**After several iterations, `CopyTranslator` has became more and more powerful as well as user-friendly. It is recommended to read the full  [User Manual](https://copytranslator.github.io/guide/) to make best use of it**.
 
 ## Reprint statement
 
-This software is free open source software, the developer is [Elliott Zheng](https://github.com/elliottzheng), STAR and PR are welcomed.  **Please  attach the project address when forwarding, and the reprinting `CopyTranslator`without project address/software official website is infringement.**
+This software is free open source software, the developer is [Elliott Zheng](https://github.com/elliottzheng), STAR and PR are welcomed.  **Please  attach the project address when forwarding, and the reprinting `CopyTranslator` without project homepage/software official website is infringement.**
 
 ## Related Links
 
-- [Software official website](https://hypercube.top/copytranslator/) 
+- [Software official website](https://copytranslator.github.io/) 
 - [Project homepage on Github ](https://github.com/copytranslator/CopyTranslator) 
 - [Project homepage on Gitee](https://gitee.com/ylzheng/CopyTranslator) 
 - [Offical Blogs](https://www.cnblogs.com/elliottzheng/p/9060159.html) 
@@ -127,20 +131,7 @@ This software is free open source software, the developer is [Elliott Zheng](htt
 
 ## Acknowledgements
 
-`CopyTranslator`'s rebirth depends on the contributions of the following people or organizations.
-
-### UI and UX Design
-
-Designer: [Mārtiņš Zemlickis](http://mzemlickis.lv/)
-
-### Libraries
-
-- [Electron](https://electronjs.org):Build cross platform desktop apps with JavaScript, HTML, and CSS
-- [Vue](http://vuejs.org): The Progressive JavaScript Framework.
-- [Element](http://element-cn.eleme.io/#/zh-CN): to build user interface.
-- [translation.js](https://github.com/Selection-Translator/translation.js): core translate engine.
-- [iohook](https://github.com/wilix-team/iohook): For handling mouse and keyboard event 
-- [robotjs](http://robotjs.io/): For simulating keyboard input.
+`CopyTranslator`'s rebirth depends on the contributions of many devoted people. As the limited space, there is a detailed list here: [Acknowledgements](https://copytranslator.github.io/about/acknowledge.html%E7%95%8C%E9%A2%E4%B8%8E%BA%A4%E4%BA%92%E8%BE%AE%A1).
 
 ## License
 

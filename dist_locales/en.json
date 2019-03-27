@@ -40,5 +40,6 @@
     "toDownload": "To Download",
     "changelog": "Change Log",
     "cancel": "Cancel",
-    "ok": "OK"
+    "ok": "OK",
+    "restoreDefault": "Restore default settings"
 }

@@ -21,10 +21,10 @@ new Vue({
   store,
   render: h => h(App),
   created: function() {
-    let myNotification = new Notification("标题2", { body: "通知正文内容2" });
-    myNotification.onclick = () => {
-      console.log("通知被点击");
-    };
+    // let myNotification = new Notification("标题2", { body: "通知正文内容2" });
+    // myNotification.onclick = () => {
+    //   console.log("通知被点击");
+    // };
     ipcRenderer.setMaxListeners(100);
     ipcRenderer.on(
       MessageType.TranslateResult.toString(),

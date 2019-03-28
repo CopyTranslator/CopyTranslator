@@ -1,5 +1,5 @@
 const patterns: Array<RegExp> = [/([?!.])[ ]?\n/g, /([？！。])[ \n]/g]; //The first one is English like, the second is for Chinese like.
-const pattern2 = /#([?？！!.。])#/g;
+export const sentenceEnds = /#([?？！!.。])#/g;
 
 function isChinese(src: string) {
   /*校验是否中文名称组成 */
@@ -15,7 +15,7 @@ function normalizeAppend(src: string) {
     src = src.replace(e, "#$1#");
   });
   src = src.replace(/\n/g, " ");
-  src = src.replace(pattern2, "$1\n");
+  src = src.replace(sentenceEnds, "$1\n");
   return src;
 }
 

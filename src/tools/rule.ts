@@ -13,6 +13,7 @@ enum RuleName {
   autoFormat,
   autoShow,
   tapCopy,
+  enableNotify,
   //enum rule
   frameMode,
   translatorType,
@@ -30,8 +31,7 @@ enum RuleName {
   sourceLanguage,
   targetLanguage,
   localeSetting,
-  notices,
-  enableNotify
+  notices
 }
 
 let ruleKeys: Array<string> = Object.values(RuleName).filter(

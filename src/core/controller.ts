@@ -340,7 +340,7 @@ class Controller {
             this.translator = new translators.youdao();
             break;
         }
-        this.doTranslate(this.src);
+        this.clear();
         if (
           !(this.get(RuleName.sourceLanguage) in this.translator.getLanguages())
         )

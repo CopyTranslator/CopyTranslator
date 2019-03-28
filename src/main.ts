@@ -40,7 +40,7 @@ new Vue({
     ipcRenderer.on(MessageType.UpdateT.toString(), (event: any, arg: any) => {
       Vue.prototype.$t = controller.getT();
     });
-    if (controller.res) controller.doTranslate(controller.src);
+    if (controller.res) controller.sync();
     else {
       controller.checkClipboard();
     }

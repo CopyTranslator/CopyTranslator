@@ -42,5 +42,6 @@
     "cancel": "取消",
     "ok": "確定",
     "resetDefault": "Restore default settings",
-    "restoreDefault": "Restore default settings"
+    "restoreDefault": "Restore default settings",
+    "enableNotify": "Enable Notify"
 }

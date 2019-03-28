@@ -57,9 +57,9 @@ class WindowWrapper {
     this.window.on("blur", () => {
       that.edgeHide(that.onEdge());
     });
-    this.window.on("focus", () => {
-      that.edgeShow();
-    });
+    // this.window.on("focus", () => {
+    //   that.edgeShow();
+    // });
   }
 
   setBounds(bounds: Rectangle) {
@@ -84,7 +84,6 @@ class WindowWrapper {
       return HideDirection.Right;
     }
     if (y <= 0) return HideDirection.Up;
-
     return HideDirection.None;
   }
 
@@ -162,7 +161,7 @@ class WindowWrapper {
   show(focus = true) {
     if (this.window) {
       if (this.window.isMinimized()) this.window.restore();
-      if (focus) this.window.focus();
+      // if (focus) this.window.focus();
       this.window.moveTop();
     }
   }

@@ -41,5 +41,6 @@
     "changelog": "Change Log",
     "cancel": "Cancel",
     "ok": "OK",
-    "restoreDefault": "Restore default settings"
+    "restoreDefault": "Restore default settings",
+    "enableNotify": "Enable Notify"
 }

@@ -1,9 +1,19 @@
 <template>
-    <div id="app">
-        <router-view/>
-    </div>
+  <div id="app" v-on:mouseenter="mouseOver">
+    <router-view />
+  </div>
 </template>
 
+<script>
+export default {
+  name: "App",
+  methods: {
+    mouseOver(obj) {
+      this.$controller.expandWindow();
+    }
+  }
+};
+</script>
 <style>
 #app {
   font-family: "Avenir", Helvetica, Arial, sans-serif;

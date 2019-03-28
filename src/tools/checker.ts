@@ -27,7 +27,7 @@ export function checkUpdate() {
         dialog.showMessageBox(
           <BrowserWindow>controller.win.window,
           {
-            title: "Update Availble " + info.version,
+            title: "A newer version is available " + info.version,
             message: info.abstract,
             buttons: [t("toDownload"), t("changelog"), t("cancel")],
             icon: nativeImage.createFromPath(envConfig.diffConfig.iconPath),

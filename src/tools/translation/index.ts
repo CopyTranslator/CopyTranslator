@@ -1,5 +1,7 @@
 import { TranslateResult } from "translation.js/declaration/api/types";
+import { sentenceEnds } from "../../core/stringProcessor";
 /** 统一的查询结果的数据结构 */
+const _ = require("lodash");
 export interface CommonTranslateResult extends TranslateResult {
   resultString?: string;
 }
@@ -16,6 +18,33 @@ export function handleNetWorkError(): Promise<never> {
 export function handleNoResult<T = any>(): Promise<T> {
   return Promise.reject(SearchErrorType.NoResult);
 }
+
+function countSentences(str: string) {
+  let t = str.match(sentenceEnds);
+  return t ? t.length : 0;
+}
+
+export function reSegment(text: string, result: string[]) {
+  let resultString = "";
+  let index = 0;
+  const sentences = text.split("\n");
+  if (sentences.length == 1) {
+    return _.join(result, " ");
+  }
+  const counts = sentences.map(countSentences);
+  // print("counts");
+  console.log(counts, sentences);
+  counts.forEach(count => {
+    for (let i = 0; i < count; i++) {
+      index++;
+      resultString += " " + result[index];
+    }
+    resultString += "\n";
+  });
+  console.log(resultString);
+  return resultString;
+}
+
 /*
 在短时间内请求多次，会被谷歌直接封掉IP，所以上一次commit试图通过多次异步请求后组合并没有什么卵用
  */

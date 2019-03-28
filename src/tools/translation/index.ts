@@ -25,15 +25,16 @@ function countSentences(str: string) {
 }
 
 export function reSegment(text: string, result: string[]) {
-  let resultString = "";
-  let index = 0;
   const sentences = text.split("\n");
   if (sentences.length == 1) {
     return _.join(result, " ");
   }
   const counts = sentences.map(countSentences);
-  // print("counts");
-  console.log(counts, sentences);
+  if (_.sum(counts) != result.length) {
+    return _.join(result, " ");
+  }
+  let resultString = "";
+  let index = 0;
   counts.forEach(count => {
     for (let i = 0; i < count; i++) {
       index++;
@@ -41,7 +42,6 @@ export function reSegment(text: string, result: string[]) {
     }
     resultString += "\n";
   });
-  console.log(resultString);
   return resultString;
 }
 

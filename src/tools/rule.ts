@@ -30,7 +30,8 @@ enum RuleName {
   sourceLanguage,
   targetLanguage,
   localeSetting,
-  notices
+  notices,
+  enableNotify
 }
 
 let ruleKeys: Array<string> = Object.values(RuleName).filter(

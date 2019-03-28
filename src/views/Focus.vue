@@ -1,14 +1,19 @@
 <template>
-    <div v-on:contextmenu="openMenu('Focus')" style="width:100vw;height:100vh;">
-        <StatusBar ref="bar"></StatusBar>
-        <div>
-    <textarea class="focusText" @keyup.ctrl.13="shortcut" @keyup.ctrl.71="google" @keyup.ctrl.66="baidu"
-              v-bind:style="focusStyle"
-              v-model="sharedResult.result" v-if="sharedResult&&!sharedResult.dict"
-    ></textarea>
-            <DictResult :size="size"></DictResult>
-        </div>
+  <div v-on:contextmenu="openMenu('Focus')" style="width:100vw;height:100vh;">
+    <StatusBar ref="bar"></StatusBar>
+    <div>
+      <textarea
+        class="focusText"
+        @keyup.ctrl.13="shortcut"
+        @keyup.ctrl.71="google"
+        @keyup.ctrl.66="baidu"
+        v-bind:style="focusStyle"
+        v-model="sharedResult.result"
+        v-if="sharedResult && !sharedResult.dict"
+      ></textarea>
+      <DictResult :size="size"></DictResult>
     </div>
+  </div>
 </template>
 
 <script>
@@ -60,5 +65,4 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-</style>
+<style scoped></style>

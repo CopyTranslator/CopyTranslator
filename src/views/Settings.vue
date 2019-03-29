@@ -1,7 +1,7 @@
 <template>
-  <div v-on:contextmenu="openMenu('Settings')">
+  <div>
     <StatusBar></StatusBar>
-    <div style="text-align: left;">
+    <div v-on:contextmenu="openMenu('Settings')" style="text-align: left;">
       <div style="text-align: left;">
         <Action
           v-for="actionId in actionKeys"

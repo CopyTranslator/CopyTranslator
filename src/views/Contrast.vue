@@ -1,7 +1,11 @@
 <template>
-  <div v-on:contextmenu="openMenu('Contrast')">
+  <div>
     <StatusBar ref="bar"></StatusBar>
-    <el-row class="contrast" :gutter="5">
+    <el-row
+      v-on:contextmenu="openMenu('Contrast')"
+      class="contrast"
+      :gutter="5"
+    >
       <el-col :span="19">
         <textarea
           class="contrastText"

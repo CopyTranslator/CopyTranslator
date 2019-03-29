@@ -1,7 +1,7 @@
 <template>
-  <div v-on:contextmenu="openMenu('Focus')" style="width:100vw;height:100vh;">
+  <div style="width:100vw;height:100vh;">
     <StatusBar ref="bar"></StatusBar>
-    <div>
+    <div v-on:contextmenu="openMenu('Focus')">
       <textarea
         class="focusText"
         @keyup.ctrl.13="shortcut"

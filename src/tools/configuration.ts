@@ -216,6 +216,7 @@ function initConfig(
         "autoHide",
         "autoShow",
         "autoFormat",
+        "enableNotify",
         "tapCopy",
         "stayTop",
         "listenClipboard",

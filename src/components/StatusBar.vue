@@ -4,6 +4,7 @@
     :style="styleNow"
     v-on:dblclick="minify"
     v-on:mousedown="bindDrag"
+    v-on:contextmenu="switchListen"
   ></div>
 </template>
 
@@ -27,6 +28,9 @@ export default {
   methods: {
     switchColor(color) {
       this.colorNow = color;
+    },
+    switchListen() {
+      this.$controller.action.callback("listenClipboard");
     }
   },
   mounted: function() {

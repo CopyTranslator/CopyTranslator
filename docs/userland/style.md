@@ -3,7 +3,7 @@ sidebarDepth: 6
 ---
 # 样式
 ## 使用方法
-您可以通过修改`{userDir}/copytranslator/styles.css`文件来自定义`CopyTranslator`的界面风格，样式。
+您可以通过修改[配置目录](/guide/questions.html#copytranslator%E7%9A%84%E9%85%8D%E7%BD%AE%E7%9B%AE%E5%BD%95%E5%9C%A8%E5%93%AA%E9%87%8C)下的`styles.css`文件来自定义`CopyTranslator`的界面风格，样式。
 
 可以修改的属性包括但不限于：字体，颜色，背景，边框。
 

@@ -57,7 +57,6 @@ class ConfigParser {
         this.values[keyValue] = Object.assign(this.values[keyValue], value);
       } else {
         this.values[keyValue] = value;
-        console.log(keyValue);
       }
       return true;
     }

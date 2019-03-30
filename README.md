@@ -14,7 +14,7 @@
 
 **Foreign language assisted reading and translation solution**
 
-**Please update to latest version [![](https://img.shields.io/github/release/copytranslator/copytranslator.svg)](https://github.com/copytranslator/copytranslator/releases)as soon as possible. This is a new version that you have never experienced before. It is also the only available version (all the previous version is invalid now). Trust me, you will fall in love with it within minutes.**
+**Please update to latest version [![](https://img.shields.io/github/release/copytranslator/copytranslator.svg)](https://github.com/copytranslator/copytranslator/releases)as soon as possible. This is a new version that you have never experienced before. Trust me, you will fall in love with it within minutes.**
 
 **If you found it helpful to you, no need to follow or fork, just give me a star and recommend it to your friends around you.**
 
@@ -32,7 +32,7 @@ Researchers always have to read a lot of literature, and understanding the conte
 
 Just open the `CopyTranslator` and copy the PDF text to clipboard,  `CopyTranslator` will watch the clipboard changes, then it will process the clipboard contents (such as removing extra line breaks, etc.) and display the translation results. The translation effect is greatly improved compared to the direct copy and paste to the web version of the translation, and the time required for translation is greatly reduced. With the powerful Google translation API, the translation quality is guaranteed. There are also a wealth of options you can set, such as automatically copy translation results to the clipboard, [Incremental Copy](#Incremental Copy), [Smart Translation](#Smart Translation), etc., it effectively improve people's reading and translation efficiency of foreign literature.
 
-**After several iterations, `CopyTranslator` has became more and more powerful as well as user-friendly. It is recommended to read the full usage guide [wiki](https://github.com/copytranslator/copytranslator/wiki) to make best use of it**.
+**After several iterations, `CopyTranslator` has became more and more powerful as well as user-friendly. It is recommended to read the full [User Manual](https://copytranslator.github.io/guide/) to make best use of it**.
 
 ### Core usage
 

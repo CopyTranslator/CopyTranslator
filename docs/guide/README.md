@@ -124,16 +124,16 @@ sidebarDepth: 6
 3. 当光标位于专注模式结果框中时`Ctrl+Enter`实现翻译（监听剪贴板时会复制框内文本，当不监听剪贴板时复制框内文本），`Ctrl+B`实现百度搜索框内内容，`Ctrl+G`实现Google搜索框内内容。
 
 ## 进阶教程
-CopyTranslator 提供了丰富的自定义功能，但是需要用户有一定的动手能力。
+CopyTranslator 提供了强大的自定义功能，但是需要用户有一定的动手能力。
 
 ### 自定义界面语言
 
-由于我无法自己维护所有界面语言文件，因此最新版本的最新的界面语言文件可能不会和`CopyTranslator`一同发布（除了`en`和`zh-cn`）。现在，您可以下载本仓库目录[dist_locales](https://github.com/CopyTranslator/CopyTranslator/tree/phoenix/dist_locales)下的语言文件 `{locale}.json`，并将其放在`{userDir}/copytranslator/locales`下面，`CopyTranslator`将在启动时检测它们，然后您可以在设置面板上选择它们。、
+由于我无法自己维护所有界面语言文件，因此最新版本的最新的界面语言文件可能不会和`CopyTranslator`一同发布（除了`en`和`zh-cn`）。现在，您可以下载本仓库目录[dist_locales](https://github.com/CopyTranslator/CopyTranslator/tree/master/dist_locales)下的语言文件 `{locale}.json`，并将其放在[配置目录](/guide/questions.html#copytranslator%E7%9A%84%E9%85%8D%E7%BD%AE%E7%9B%AE%E5%BD%95%E5%9C%A8%E5%93%AA%E9%87%8C)下的`locales`文件夹下面，`CopyTranslator`将在启动时检测它们，然后您可以在设置面板上选择它们。、
 
 
 ### 自定义界面样式/风格
 
-您可以通过修改`{userDir}/copytranslator/styles.css`文件来自定义`CopyTranslator`的界面风格，样式。
+您可以通过修改[配置目录](/guide/questions.html#copytranslator%E7%9A%84%E9%85%8D%E7%BD%AE%E7%9B%AE%E5%BD%95%E5%9C%A8%E5%93%AA%E9%87%8C)下的`styles.css`文件来自定义`CopyTranslator`的界面风格，样式。
 
 可以修改的属性包括但不限于：字体，颜色，背景，边框。
 
@@ -226,7 +226,7 @@ CSS文件的编写可以参考[HTML中文网](https://www.html.cn/book/css/all-p
 
 ### 自定义全局快捷键
 
-对于大多数[动作](#动作系统)，您可以通过修改`{userDir}/copytranslator/shortcut.json`来绑定全局快捷键。
+对于大多数[动作](#动作系统)，您可以通过修改[配置目录](/guide/questions.html#copytranslator%E7%9A%84%E9%85%8D%E7%BD%AE%E7%9B%AE%E5%BD%95%E5%9C%A8%E5%93%AA%E9%87%8C)的`shortcut.json`来绑定全局快捷键。
 ::: warning
 当快捷键已被其他应用程序占用时，绑定将失败。
 :::
@@ -249,7 +249,7 @@ CSS文件的编写可以参考[HTML中文网](https://www.html.cn/book/css/all-p
 
 ### 自定义右键菜单/面板
 
-当然！您可以自定义`CopyTranslator`的上下文菜单。只要改变`{userDir}/copytranslator/copytranslator.json`中的`contrastMenu`，`focusMenu`，`trayMenu`的值;所有[动作](#动作系统)几乎都可以用作菜单项。
+当然！您可以自定义`CopyTranslator`的上下文菜单。只要改变[配置目录](/guide/questions.html#copytranslator%E7%9A%84%E9%85%8D%E7%BD%AE%E7%9B%AE%E5%BD%95%E5%9C%A8%E5%93%AA%E9%87%8C)下的`copytranslator.json`中的`contrastMenu`，`focusMenu`，`trayMenu`的值;所有[动作](#动作系统)几乎都可以用作菜单项。
 
 ```json
     "contrastMenu": [
@@ -283,6 +283,7 @@ CSS文件的编写可以参考[HTML中文网](https://www.html.cn/book/css/all-p
         "exit"
     ],
 ```
+
 
 
 

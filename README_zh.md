@@ -18,7 +18,7 @@
 
 **本软件免费开源，如果您发现有人在网上售卖此软件，请帮忙举报下**
 
-<div align="center">:heart: 喜欢这个项目? 可以在<a href="https://afdian.net/@elliottzheng/plan" target="_blank">爱发电</a>请作者喝杯咖啡   
+<div align="center">:heart: 喜欢这个项目? 可以在<a href="https://afdian.net/@elliottzheng/plan" target="_blank">爱发电</a>请作者喝杯咖啡</div>   
 
 
 ## 简介

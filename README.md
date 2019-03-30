@@ -8,7 +8,7 @@
 [![](https://img.shields.io/github/release/copytranslator/copytranslator.svg)](https://github.com/copytranslator/copytranslator/releases)
 [![](https://img.shields.io/gitter/room/copytranslator/copytranslator.svg)](https://gitter.im/CopyTranslator/Lobby?utm_source=share-link&utm_medium=link&utm_campaign=share-link)
 [![](https://img.shields.io/github/downloads/copytranslator/copytranslator/total.svg)](https://github.com/copytranslator/copytranslator/wiki/Downloads-%E4%B8%8B%E8%BD%BD%E4%B8%8E%E5%AE%89%E8%A3%85)
-[![](https://img.shields.io/badge/Project%20Phoenix%20-ongoing-orange.svg)](https://github.com/copytranslator/copytranslator/tree/phoenix)
+
 [![](https://img.shields.io/github/license/copytranslator/copytranslator.svg)](./LICENSE)
 
 
@@ -22,7 +22,7 @@
 
 **This software is free and open source. If you find someone selling this software , please report it in the Issue.**
 
-<div align="center">:heart: Like this project? Support me on <a href="https://afdian.net/@elliottzheng/plan" target="_blank">Afdian</a>.
+<div align="center">:heart: Like this project? Support me on <a href="https://afdian.net/@elliottzheng/plan" target="_blank">Afdian</a></div>
 
 ## Introduction
 

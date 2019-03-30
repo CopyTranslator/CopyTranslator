@@ -50,10 +50,14 @@ class ConfigParser {
     if (check && !check(value)) {
       return false;
     } else {
-      if (typeof this.rules[keyValue].predefined == "object") {
+      if (
+        this.rules[keyValue].predefined instanceof Object &&
+        !Array.isArray(this.rules[keyValue].predefined)
+      ) {
         this.values[keyValue] = Object.assign(this.values[keyValue], value);
       } else {
         this.values[keyValue] = value;
+        console.log(keyValue);
       }
       return true;
     }

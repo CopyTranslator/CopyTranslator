@@ -8,6 +8,7 @@ sidebarDepth: 6
 ## 在线交流与反馈
 加入我们的[![](https://img.shields.io/gitter/room/copytranslator/copytranslator.svg)](https://gitter.im/CopyTranslator/Lobby?utm_source=share-link&utm_medium=link&utm_campaign=share-link)聊天室。
 ## 下载
+当前最新版本：[![](https://img.shields.io/github/release/copytranslator/copytranslator.svg)](https://github.com/copytranslator/copytranslator/releases)
 :::warning
 本人不承担软件二次分发的风险，因此请尽量通过本文档提供的下载方式下载。
 :::

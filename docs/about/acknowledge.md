@@ -17,7 +17,7 @@
 - [translation.js](https://github.com/Selection-Translator/translation.js): 核心翻译引擎
 - [iohook](https://github.com/wilix-team/iohook): 捕获全局鼠标和键盘事件
 - [robotjs](http://robotjs.io/): 模拟键盘输入
-- [Saladict](https://github.com/crimx/ext-saladict) 沙拉查词-聚合词典划词翻译
+- [Saladict](https://github.com/crimx/ext-saladict) 沙拉查词-聚合词典划词翻译--Sogou Engine
 
 ## 界面语言维护
 
@@ -25,4 +25,4 @@
 
 ## 推广
 
-感谢亲爱的朋友们，用户们
+感谢亲爱的朋友们，用户们的推荐和肯定

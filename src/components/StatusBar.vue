@@ -1,5 +1,11 @@
 <template>
-    <div class="statusBar" :style="styleNow" v-on:dblclick="minify" v-on:mousedown="bindDrag"></div>
+  <div
+    class="statusBar"
+    :style="styleNow"
+    v-on:dblclick="minify"
+    v-on:mousedown="bindDrag"
+    v-on:contextmenu="switchListen"
+  ></div>
 </template>
 
 <script>
@@ -22,6 +28,9 @@ export default {
   methods: {
     switchColor(color) {
       this.colorNow = color;
+    },
+    switchListen() {
+      this.$controller.action.callback("listenClipboard");
     }
   },
   mounted: function() {
@@ -37,5 +46,4 @@ export default {
 };
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>

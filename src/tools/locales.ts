@@ -41,6 +41,8 @@ interface Locale {
   changelog: string;
   cancel: string;
   ok: string;
+  restoreDefault: string;
+  enableNotify: string;
 }
 
 const zh_cn: Locale = {
@@ -85,7 +87,9 @@ const zh_cn: Locale = {
   toDownload: "前往下载",
   changelog: "更新日志",
   cancel: "取消",
-  ok: "确定"
+  ok: "确定",
+  restoreDefault: "恢复默认设置",
+  enableNotify: "启用通知"
 };
 
 const en: Locale = {
@@ -130,7 +134,9 @@ const en: Locale = {
   toDownload: "To Download",
   changelog: "Change Log",
   cancel: "Cancel",
-  ok: "OK"
+  ok: "OK",
+  restoreDefault: "Restore default settings",
+  enableNotify: "Enable Notify"
 };
 
 export { en, zh_cn, Locale };

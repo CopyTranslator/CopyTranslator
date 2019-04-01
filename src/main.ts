@@ -6,6 +6,7 @@ import { MessageType } from "./tools/enums";
 import ElementUI from "element-ui";
 import "element-ui/lib/theme-chalk/index.css";
 import App from "./App.vue";
+import { constants, version } from "./core/constant";
 
 const remote = require("electron").remote;
 const controller = remote.getGlobal("controller");
@@ -26,6 +27,14 @@ new Vue({
       MessageType.TranslateResult.toString(),
       (event: any, arg: any) => {
         store.commit("setShared", arg);
+        if (arg.notify) {
+          new Notification(constants.appName + " " + version, {
+            body: arg.result
+          });
+        }
+        // notification.onclick = () => {
+        //   console.log("通知被点击");
+        // };
       }
     );
     ipcRenderer.on(MessageType.UpdateT.toString(), (event: any, arg: any) => {

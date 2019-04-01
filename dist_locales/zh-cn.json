@@ -40,5 +40,7 @@
     "toDownload": "前往下载",
     "changelog": "更新日志",
     "cancel": "取消",
-    "ok": "确定"
+    "ok": "确定",
+    "restoreDefault": "恢复默认设置",
+    "enableNotify": "启用通知"
 }

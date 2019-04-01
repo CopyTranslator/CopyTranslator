@@ -1,7 +1,6 @@
-import { CommonTranslateResult, Translator, Dict } from "..";
+import { CommonTranslateResult, Translator, Dict, reSegment } from "..";
 import { google } from "translation.js";
 const _ = require("lodash");
-
 const GoogleLanguages: Dict = {
   Afrikaans: "af",
   Albanian: "sq",
@@ -135,7 +134,7 @@ export class GoogleTranslator extends Translator {
         from: srcCode,
         to: destCode
       });
-      res.resultString = _.join(res.result, " ");
+      res.resultString = reSegment(text, <string[]>res.result);
       return res;
     } catch (e) {
       (<any>global).log.debug(e);

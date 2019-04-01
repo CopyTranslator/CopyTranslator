@@ -1,4 +1,4 @@
-import { CommonTranslateResult, Translator, Dict } from "..";
+import { CommonTranslateResult, Translator, Dict, reSegment } from "..";
 import { youdao } from "translation.js";
 const _ = require("lodash");
 const YoudaoLanguages: Dict = {
@@ -38,7 +38,7 @@ export class YoudaoTranslator extends Translator {
         from: srcCode,
         to: destCode
       });
-      res.resultString = _.join(res.result, " ");
+      res.resultString = reSegment(text, <string[]>res.result);
       return res;
     } catch (e) {
       (<any>global).log.debug(e);

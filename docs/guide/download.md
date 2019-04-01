@@ -13,7 +13,7 @@ sidebarDepth: 6
 本人不承担软件二次分发的风险，因此请尽量通过本文档提供的下载方式下载。
 :::
 
-以下列方式下载最新的Windows版本安装包：
+以下列方式下载最新版本安装包：
 - [Github Releases](https://github.com/copytranslator/copytranslator/releases)
 - [Bintray](https://bintray.com/elliottzheng/CopyTranslator/CopyTranslator/_latestVersion)
 - [百度云](https://pan.baidu.com/s/1mySoacl-V6tGE2xCH79wyQ)
@@ -21,11 +21,6 @@ sidebarDepth: 6
 
 ### Windows
 安装即用
-
-### Linux 
-暂时不支持Linux, 虽然Electron是天生跨平台的，但是我主要是在windows上开发的，对Linux上的Electron不太熟悉。在经过简单的尝试后，因为平台之间存在些许差异，我发现很难自己维护所有平台。
-
-**如果您熟悉Linux中npm、node和electron的开发**，并且愿意帮助维护Linux的CopyTranslator，可以直接回复这个[issue](https://github.com/CopyTranslator/CopyTranslator/issues/48)。也可以给我发邮件[copytranslator@hypercube.top](mailto:copytranslator@hypercube.top)
 
 ### Mac
 下载dmg文件
@@ -35,7 +30,10 @@ sidebarDepth: 6
 ![](https://s2.ax1x.com/2019/03/10/ApT0YT.png)
 ![](https://s2.ax1x.com/2019/03/10/ApT6X9.png)
 
+### Linux 
+暂时不支持Linux, 虽然Electron是天生跨平台的，但是我主要是在windows上开发的，对Linux上的Electron不太熟悉。在经过简单的尝试后，因为平台之间存在些许差异，我发现很难自己维护所有平台。
 
+**如果您熟悉Linux中npm、node和electron的开发**，并且愿意帮助维护Linux的CopyTranslator，可以直接回复这个[issue](https://github.com/CopyTranslator/CopyTranslator/issues/48)。也可以给我发邮件[copytranslator@hypercube.top](mailto:copytranslator@hypercube.top)
 
 ## 订阅更新
 - 在[Github](https://github.com/CopyTranslator/CopyTranslator)上`watch`本项目

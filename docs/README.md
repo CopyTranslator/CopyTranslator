@@ -2,7 +2,7 @@
 home: true
 heroImage: /icon.png
 actionText: 快速上手 →
-actionLink: /guide/
+actionLink: /guide/download
 features:
 - title: 复制即翻译
   details: 只需复制文本到剪贴板，下一秒即可查看翻译结果，享受所见即所得的快感。

@@ -44,9 +44,14 @@ class Controller {
     checkNotice();
   }
 
+  foldWindow() {
+    this.win.edgeHide(this.win.onEdge());
+  }
+  expandWindow() {
+    this.win.edgeShow();
+  }
+
   onExit() {
-    // let focus = Object.assign(this.get(RuleName.focus), this.win.getBound());
-    // this.setByKeyValue("focus", focus);
     this.config.saveValues(envConfig.sharedConfig.configPath);
     this.action.unregister();
     app.quit();
@@ -60,6 +65,11 @@ class Controller {
 
   get(ruleName: RuleName) {
     return this.config.values[getEnumValue(ruleName)];
+  }
+
+  resotreDefaultSetting() {
+    this.config.restoreDefault(envConfig.sharedConfig.configPath);
+    this.restoreFromConfig();
   }
 
   clear() {
@@ -113,7 +123,8 @@ class Controller {
           src: this.src,
           result: this.result,
           source: language.source,
-          target: language.target
+          target: language.target,
+          notify: this.get(RuleName.enableNotify)
         },
         extra
       )
@@ -329,6 +340,7 @@ class Controller {
             this.translator = new translators.youdao();
             break;
         }
+        this.clear();
         if (
           !(this.get(RuleName.sourceLanguage) in this.translator.getLanguages())
         )

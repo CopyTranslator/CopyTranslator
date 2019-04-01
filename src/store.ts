@@ -11,7 +11,8 @@ export default new Vuex.Store({
       source: "",
       target: "",
       dict: undefined,
-      phonetic: undefined
+      phonetic: undefined,
+      notify: false
     }
   },
   mutations: {

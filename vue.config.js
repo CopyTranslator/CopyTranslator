@@ -8,6 +8,7 @@ module.exports = {
     electronBuilder: {
       mainProcessTypeChecking: false,
       builderOptions: {
+        appId: "com.copytranslator.copytranslator",
         asar: true,
         extraResources: [
           {

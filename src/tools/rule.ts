@@ -13,6 +13,7 @@ enum RuleName {
   autoFormat,
   autoShow,
   tapCopy,
+  enableNotify,
   //enum rule
   frameMode,
   translatorType,

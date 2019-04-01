@@ -2,6 +2,7 @@
   "name": "copytranslator",
   "version": "0.0.8",
   "private": true,
+  "description": "Foreign language assisted reading and translation solution",
   "author": {
     "name": "Elliott Zheng",
     "email": "copytranslator@hypercube.top",
@@ -42,7 +43,7 @@
     "@vue/cli-plugin-babel": "^3.2.0",
     "@vue/cli-plugin-eslint": "^3.2.0",
     "@vue/cli-plugin-typescript": "^3.3.0",
-    "@vue/cli-service": "^3.2.0",
+    "@vue/cli-service": "^3.5.3",
     "@vue/eslint-config-prettier": "^4.0.1",
     "@vue/eslint-config-typescript": "^3.2.0",
     "babel-eslint": "^10.0.1",

@@ -1,13 +1,19 @@
 <template>
-    <div v-on:contextmenu="openMenu('Settings')">
-        <StatusBar></StatusBar>
-        <div style="text-align: left;">
-            <div style="text-align: left;">
-            <Action v-for="actionId in actionKeys" :action-id="actionId" :key="actionId"></Action>
-            </div>
-            <el-button style="width:100%;" @click="backStored">{{$t("return")}}</el-button>
-        </div>
+  <div>
+    <StatusBar></StatusBar>
+    <div v-on:contextmenu="openMenu('Settings')" style="text-align: left;">
+      <div style="text-align: left;">
+        <Action
+          v-for="actionId in actionKeys"
+          :action-id="actionId"
+          :key="actionId"
+        ></Action>
+      </div>
+      <el-button style="width:100%;" @click="backStored">{{
+        $t("return")
+      }}</el-button>
     </div>
+  </div>
 </template>
 
 <script>
@@ -44,5 +50,4 @@ export default {
 };
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>

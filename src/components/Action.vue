@@ -1,15 +1,23 @@
 <template>
-    <div v-if="action">
-        <el-switch v-if="action.type==='checkbox'" v-model="checked" :active-text="$t(action.id)"
-                   @change="setValue()"></el-switch>
-        <div v-else-if="action.type==='submenu'">
-            <p>{{$t(actionId)}}</p>
-            <el-select v-model="enumValue">
-                <el-option v-for="item in enums" :key="item.id" :label="item.label"
-                           :value="item.id"></el-option>
-            </el-select>
-        </div>
+  <div v-if="action">
+    <el-switch
+      v-if="action.type === 'checkbox'"
+      v-model="checked"
+      :active-text="$t(action.id)"
+      @change="setValue()"
+    ></el-switch>
+    <div v-else-if="action.type === 'submenu'">
+      <p>{{ $t(actionId) }}</p>
+      <el-select v-model="enumValue">
+        <el-option
+          v-for="item in enums"
+          :key="item.id"
+          :label="item.label"
+          :value="item.id"
+        ></el-option>
+      </el-select>
     </div>
+  </div>
 </template>
 
 <script>
@@ -78,5 +86,4 @@ export default {
 };
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>

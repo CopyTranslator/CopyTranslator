@@ -50,6 +50,10 @@ function initConfig(
     RuleName.autoShow,
     new BoolRule(false, "auto show after translate")
   );
+  config.addRule(
+    RuleName.enableNotify,
+    new BoolRule(false, "notify after translate")
+  );
 
   config.addRule(RuleName.frameMode, {
     predefined: RouteName.Contrast,
@@ -190,6 +194,7 @@ function initConfig(
         "tapCopy",
         "stayTop",
         "listenClipboard",
+        "enableNotify",
         "contrastMode",
         "focusMode",
         "settings",
@@ -211,6 +216,7 @@ function initConfig(
         "autoHide",
         "autoShow",
         "autoFormat",
+        "enableNotify",
         "tapCopy",
         "stayTop",
         "listenClipboard",

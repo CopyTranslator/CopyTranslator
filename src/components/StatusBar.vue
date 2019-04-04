@@ -1,11 +1,13 @@
 <template>
-  <div
-    class="statusBar"
-    :style="styleNow"
-    v-on:dblclick="minify"
-    v-on:mousedown="bindDrag"
-    v-on:contextmenu="switchListen"
-  ></div>
+  <div class="statusBar" :style="styleNow">
+    <el-row style="height:100%;width:100%">
+      <el-col
+        :span="20"
+        style="width:100%; -webkit-app-region: drag; background: #d3dce6"
+      ></el-col>
+      <el-col :span="4"><div style="width:100%;background:blue;"></div></el-col>
+    </el-row>
+  </div>
 </template>
 
 <script>
@@ -22,7 +24,7 @@ export default {
   },
   computed: {
     styleNow() {
-      return `height: 15px;background: ${this.colorNow};`;
+      return `height: 15px;`;
     }
   },
   methods: {
@@ -38,6 +40,8 @@ export default {
       switch (arg.type) {
         case WinOpt.ChangeColor:
           this.switchColor(arg.args);
+          console.log(Color.fromHex(arg.args));
+          this.$titlebar.updateBackground(Color.fromHex(arg.args));
           break;
       }
     });
@@ -46,4 +50,7 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.statusBar {
+}
+</style>

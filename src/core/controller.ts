@@ -4,7 +4,6 @@ import { initConfig } from "../tools/configuration";
 import { ConfigParser, getEnumValue } from "../tools/configParser";
 import { ColorStatus, MessageType, WinOpt } from "../tools/enums";
 import { WindowWrapper } from "../tools/windows";
-import { simulatePaste, windowController } from "../tools/windowController";
 import { envConfig } from "../tools/envConfig";
 import { l10n, L10N } from "../tools/l10n";
 import { reverseRuleName, RuleName } from "../tools/rule";
@@ -37,7 +36,6 @@ class Controller {
 
   createWindow() {
     this.win.createWindow(this.get(RuleName.frameMode));
-    windowController.bind();
     this.tray.init();
     this.action.init();
     checkUpdate();
@@ -48,7 +46,9 @@ class Controller {
     this.win.edgeHide(this.win.onEdge());
   }
   expandWindow() {
-    this.win.edgeShow();
+    if (this.get(RuleName.autoShow)) {
+      this.win.edgeShow();
+    }
   }
 
   onExit() {
@@ -146,7 +146,7 @@ class Controller {
     if (this.get(RuleName.autoCopy)) {
       clipboard.writeText(this.result);
       if (this.get(RuleName.autoPaste)) {
-        simulatePaste();
+        console.log("try paste");
       }
     } else if (this.get(RuleName.autoFormat)) {
       clipboard.writeText(this.src);
@@ -323,7 +323,7 @@ class Controller {
         }
         break;
       case RuleName.tapCopy:
-        windowController.tapCopy = value;
+        console.log("switch tap copy");
         break;
       case RuleName.translatorType:
         switch (value) {

@@ -25,12 +25,10 @@
   "dependencies": {
     "electron-clipboard-extended": "^1.1.1",
     "element-ui": "^2.5.4",
-    "iohook": "^0.3.1",
     "isomorphic-fetch": "^2.2.1",
     "lodash": "^4.17.11",
     "log4js": "^4.0.1",
     "md5": "^2.2.1",
-    "robotjs": "^0.5.1",
     "translation.js": "^0.7.5",
     "vue": "^2.5.21",
     "vue-router": "^3.0.1",
@@ -48,6 +46,7 @@
     "@vue/eslint-config-typescript": "^3.2.0",
     "babel-eslint": "^10.0.1",
     "electron": "^3.0.0",
+    "electron-devtools-installer": "^2.2.4",
     "eslint": "^5.8.0",
     "eslint-plugin-typescript": "^0.14.0",
     "eslint-plugin-vue": "^5.0.0",
@@ -62,21 +61,6 @@
   "cmake-js": {
     "runtime": "electron",
     "runtimeVersion": "^3.0.0"
-  },
-  "iohook": {
-    "targets": [
-      "node-64",
-      "electron-64"
-    ],
-    "platforms": [
-      "win32",
-      "darwin",
-      "linux"
-    ],
-    "arches": [
-      "ia32",
-      "x64"
-    ]
   },
   "main": "background.js"
 }

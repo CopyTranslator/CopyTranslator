@@ -57,9 +57,9 @@ class WindowWrapper {
     this.window.on("blur", () => {
       that.edgeHide(that.onEdge());
     });
-    // this.window.on("focus", () => {
-    //   that.edgeShow();
-    // });
+    this.window.on("focus", () => {
+      that.edgeShow();
+    });
   }
 
   setBounds(bounds: Rectangle) {

@@ -38,6 +38,7 @@ export default {
         });
       }
     },
+    close(event) {},
     openMenu(id = null) {
       this.$controller.action.popup(id);
     },

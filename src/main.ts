@@ -7,16 +7,9 @@ import ElementUI from "element-ui";
 import "element-ui/lib/theme-chalk/index.css";
 import App from "./App.vue";
 import { constants, version } from "./core/constant";
-import { Titlebar, Color } from "custom-electron-titlebar";
 
 const remote = require("electron").remote;
 const controller = remote.getGlobal("controller");
-
-// Vue.prototype.$titlebar = new Titlebar({
-//   backgroundColor: Color.WHITE,
-//   icon: "./icon.ico",
-//   shadow: true
-// });
 
 Vue.use(ElementUI);
 

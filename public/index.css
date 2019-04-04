@@ -1,0 +1,116 @@
+.titlebar {
+	padding: 0 3px;
+	background-color: #f6f6f6;
+}
+
+.titlebar.webkit-draggable {
+	-webkit-app-region: drag;
+}
+
+.titlebar-stoplight {
+	float: left;
+	text-align: left;
+}
+
+.titlebar:after,
+.titlebar-stoplight:after {
+	content: ' ';
+	display: table;
+	clear: both;
+}
+
+.titlebar-stoplight:hover svg,
+.titlebar-stoplight:hover svg.fullscreen-svg,
+.titlebar-stoplight:hover svg.maximize-svg {
+	opacity: 1;
+}
+
+.titlebar.alt svg.fullscreen-svg {
+	display: none;
+}
+
+.titlebar.alt svg.maximize-svg {
+	display: block;
+}
+
+.titlebar-close,
+.titlebar-minimize,
+.titlebar-fullscreen {
+	float: left;
+	width: 10px;
+	height: 10px;
+	border-radius: 50%;
+	margin: 6px 4px;
+	line-height: 0;
+}
+
+.titlebar.webkit-draggable .titlebar-close,
+.titlebar.webkit-draggable .titlebar-minimize,
+.titlebar.webkit-draggable .titlebar-fullscreen {
+	-webkit-app-region: no-drag;
+}
+
+.titlebar-close {
+	border: 1px solid #e2463f;
+	background-color: #ff5f57;
+	margin-left: 6px;
+}
+
+.titlebar-close:active {
+	border-color: #ad3934;
+	background-color: #bf4943;
+}
+
+.titlebar-close svg {
+	width: 6px;
+	height: 6px;
+	margin-top: 2px;
+	margin-left: 2px;
+	opacity: 0;
+}
+
+.titlebar-minimize {
+	border: 1px solid #e1a116;
+	background-color: #ffbd2e;
+}
+
+.titlebar-minimize:active {
+	border-color: #ad7d15;
+	background-color: #bf9123;
+}
+
+.titlebar-minimize svg {
+	width: 8px;
+	height: 8px;
+	margin-top: 1px;
+	margin-left: 1px;
+	opacity: 0;
+}
+
+.titlebar-fullscreen,
+.titlebar-maximize {
+	border: 1px solid #12ac28;
+	background-color: #28c940;
+}
+
+.titlebar-fullscreen:active {
+	border-color: #128622;
+	background-color: #1f9a31;
+}
+
+.titlebar-fullscreen svg.fullscreen-svg {
+	width: 6px;
+	height: 6px;
+	margin-top: 2px;
+	margin-left: 2px;
+	opacity: 0;
+}
+
+.titlebar-fullscreen svg.maximize-svg {
+	width: 8px;
+	height: 8px;
+	margin-top: 1px;
+	margin-left: 1px;
+	opacity: 0;
+	display: none;
+}

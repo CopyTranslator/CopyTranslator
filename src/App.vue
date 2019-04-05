@@ -1,17 +1,12 @@
 <template>
-  <div id="app" v-on:mouseenter="mouseOver">
+  <div id="app">
     <router-view />
   </div>
 </template>
 
 <script>
 export default {
-  name: "App",
-  methods: {
-    mouseOver(obj) {
-      this.$controller.expandWindow();
-    }
-  }
+  name: "App"
 };
 </script>
 <style>

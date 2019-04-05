@@ -3,9 +3,12 @@
     class="statusBar"
     :style="styleNow"
     v-on:dblclick="minify"
-    v-on:mousedown="bindDrag"
     v-on:contextmenu="switchListen"
-  ></div>
+  >
+    <i class="el-icon-rank dragButton"></i>
+    <i class="el-icon-rank dragButton" style="float:left;"></i>
+    <i class="el-icon-rank dragButton" style="float:right;"></i>
+  </div>
 </template>
 
 <script>
@@ -22,7 +25,7 @@ export default {
   },
   computed: {
     styleNow() {
-      return `height: 15px;background: ${this.colorNow};`;
+      return `background: ${this.colorNow}; `;
     }
   },
   methods: {
@@ -46,4 +49,12 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.statusBar {
+  width: 100%;
+  height: 20px;
+}
+.dragButton {
+  -webkit-app-region: drag;
+}
+</style>

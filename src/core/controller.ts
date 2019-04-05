@@ -130,9 +130,19 @@ class Controller {
       )
     );
   }
+  checkLength(text: string) {
+    const threshold = 3000;
+    if (text.length > threshold) {
+      this.setCurrentColor(true);
+      return false;
+    } else return true;
+  }
 
   checkValid(text: string) {
     const urlExp = /^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([/\w .-]*)*\/?$/;
+    if (!this.checkLength(text)) {
+      return false;
+    }
     return !(
       urlExp.test(text) ||
       this.result == text ||
@@ -223,7 +233,7 @@ class Controller {
   }
 
   async doTranslate(text: string) {
-    if (this.translating)
+    if (this.translating || !this.checkLength(text))
       //翻译无法被打断
       return;
     this.translating = true;
@@ -243,6 +253,7 @@ class Controller {
         this.translating = false;
       })
       .catch(err => {
+        this.translating = false;
         console.error(err);
       });
   }

@@ -69,9 +69,7 @@
       "electron-64"
     ],
     "platforms": [
-      "win32",
-      "darwin",
-      "linux"
+      "win32"
     ],
     "arches": [
       "ia32",

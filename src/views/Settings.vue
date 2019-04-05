@@ -1,7 +1,11 @@
 <template>
   <div>
     <StatusBar></StatusBar>
-    <div v-on:contextmenu="openMenu('Settings')" style="text-align: left;">
+    <div
+      v-on:contextmenu="openMenu('Settings')"
+      v-on:dblclick="minify"
+      style="text-align: left;"
+    >
       <div style="text-align: left;">
         <Action
           v-for="actionId in actionKeys"

@@ -23,7 +23,6 @@
     "docs:deploy": "sh docs/.vuepress/release/sync.sh deploy"
   },
   "dependencies": {
-    "custom-electron-titlebar": "^3.0.8",
     "electron-clipboard-extended": "^1.1.1",
     "element-ui": "^2.5.4",
     "iohook": "^0.3.1",

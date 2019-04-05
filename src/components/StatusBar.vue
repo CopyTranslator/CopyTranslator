@@ -6,6 +6,8 @@
     v-on:contextmenu="switchListen"
   >
     <i class="el-icon-rank dragButton"></i>
+    <i class="el-icon-rank dragButton" style="float:left;"></i>
+    <i class="el-icon-rank dragButton" style="float:right;"></i>
   </div>
 </template>
 
@@ -53,7 +55,6 @@ export default {
   height: 20px;
 }
 .dragButton {
-  float: right;
   -webkit-app-region: drag;
 }
 </style>

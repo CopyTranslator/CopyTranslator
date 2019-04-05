@@ -11,10 +11,12 @@ function normalizeAppend(src: string) {
   src = src.replace(/\r\n/g, "\n");
   src = src.replace(/\r/g, "\n");
   src = src.replace(/-\n/g, "");
+
   patterns.forEach(function(e) {
     src = src.replace(e, "#$1#");
   });
   src = src.replace(/\n/g, " ");
+
   src = src.replace(sentenceEnds, "$1\n");
   return src;
 }

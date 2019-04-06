@@ -44,34 +44,34 @@ export default {
   },
   methods: {
     shortcut() {
-      this.$controller.tryTranslate(this.getModifiedResult());
+      const text = this.getModifiedText();
+      const arg = {
+        src: "",
+        result: "",
+        source: "",
+        target: "",
+        dict: undefined,
+        phonetic: undefined,
+        notify: false
+      };
+      this.$store.commit("setShared", arg);
+      this.$controller.tryTranslate(text);
     },
-    getModifiedResult() {
+    getModifiedText() {
       if (this.sharedResult && !this.sharedResult.dict) {
         return this.sharedResult.result;
       } else {
-        const t = this.$refs.dictResult.$el.innerText;
-        const arg = {
-          src: "",
-          result: "",
-          source: "",
-          target: "",
-          dict: undefined,
-          phonetic: undefined,
-          notify: false
-        };
-        this.$store.commit("setShared", arg);
-        return t;
+        return this.$refs.dictResult.$el.innerText;
       }
     },
     baidu() {
       shell.openExternal(
-        `https://www.baidu.com/s?ie=utf-8&wd=${this.sharedResult.result}`
+        `https://www.baidu.com/s?ie=utf-8&wd=${this.getModifiedText()}`
       );
     },
     google() {
       shell.openExternal(
-        `https://www.google.com/search?q=${this.sharedResult.result}`
+        `https://www.google.com/search?q=${this.getModifiedText()}`
       );
     }
   },

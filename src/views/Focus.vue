@@ -1,17 +1,25 @@
 <template>
   <div style="width:100vw;height:100vh;">
     <StatusBar ref="bar"></StatusBar>
-    <div style="height:100%" v-on:contextmenu="openMenu('Focus')">
+    <div
+      style="height:100%"
+      v-on:contextmenu="openMenu('Focus')"
+      @keyup.ctrl.13="shortcut"
+      @keyup.ctrl.71="google"
+      @keyup.ctrl.66="baidu"
+    >
       <textarea
+        ref="normalResult"
         class="focusText"
-        @keyup.ctrl.13="shortcut"
-        @keyup.ctrl.71="google"
-        @keyup.ctrl.66="baidu"
         v-bind:style="focusStyle"
         v-model="sharedResult.result"
         v-if="sharedResult && !sharedResult.dict"
       ></textarea>
-      <DictResult :size="size"></DictResult>
+      <DictResult
+        v-if="sharedResult && sharedResult.dict"
+        ref="dictResult"
+        :size="size"
+      ></DictResult>
     </div>
   </div>
 </template>
@@ -36,7 +44,25 @@ export default {
   },
   methods: {
     shortcut() {
-      this.$controller.tryTranslate(this.sharedResult.result);
+      this.$controller.tryTranslate(this.getModifiedResult());
+    },
+    getModifiedResult() {
+      if (this.sharedResult && !this.sharedResult.dict) {
+        return this.sharedResult.result;
+      } else {
+        const t = this.$refs.dictResult.$el.innerText;
+        const arg = {
+          src: "",
+          result: "",
+          source: "",
+          target: "",
+          dict: undefined,
+          phonetic: undefined,
+          notify: false
+        };
+        this.$store.commit("setShared", arg);
+        return t;
+      }
     },
     baidu() {
       shell.openExternal(

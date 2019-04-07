@@ -1,5 +1,5 @@
 ![logo](https://user-images.githubusercontent.com/22427645/50773452-d738dd80-12cb-11e9-9b7c-45e5d7f74c8a.png)
-[![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors)
+[![All Contributors](https://img.shields.io/badge/all_contributors-2-orange.svg?style=flat-square)](#contributors)
 
 # CopyTranslator 
 
@@ -144,7 +144,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
 
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
 <!-- prettier-ignore -->
-<table><tr><td align="center"><a href="https://about.me/s8321414"><img src="https://avatars2.githubusercontent.com/u/9457283?v=4" width="100px;" alt="Jeff Huang"/><br /><sub><b>Jeff Huang</b></sub></a><br /><a href="#translation-s8321414" title="Translation">🌍</a></td></tr></table>
+<table><tr><td align="center"><a href="https://about.me/s8321414"><img src="https://avatars2.githubusercontent.com/u/9457283?v=4" width="100px;" alt="Jeff Huang"/><br /><sub><b>Jeff Huang</b></sub></a><br /><a href="#translation-s8321414" title="Translation">🌍</a></td><td align="center"><a href="https://github.com/Sandural"><img src="https://avatars3.githubusercontent.com/u/16163090?v=4" width="100px;" alt="黎紫珊"/><br /><sub><b>黎紫珊</b></sub></a><br /><a href="#platform-Sandural" title="Packaging/porting to new platform">📦</a></td></tr></table>
 
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 

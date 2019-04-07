@@ -1,5 +1,5 @@
 # Comment that will be sent if an issue is judged to be closed
-comment: "This issue is closed because it does not meet our issue template. Please read it.此问题已关闭，因为它不符合我们的问题模板。请读一下。"
+comment: "This issue is closed because it does not meet our issue template. Please read it.此Issue已关闭，因为它不符合我们的Issue模板。请务必按照issue模板填写issue。"
 issueConfigs:
 # There can be several configs for different kind of issues.
 - content:

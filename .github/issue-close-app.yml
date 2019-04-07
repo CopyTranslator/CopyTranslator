@@ -1,0 +1,8 @@
+# Comment that will be sent if an issue is judged to be closed
+comment: "This issue is closed because it does not meet our issue template. Please read it.此问题已关闭，因为它不符合我们的问题模板。请读一下。"
+issueConfigs:
+# There can be several configs for different kind of issues.
+- content:
+  - "重要：请不要删除模板自行填写，所有不按照模板填写的issue，我们将不会处理。"
+# The issue is judged to be legal if it includes all keywords from any of these two configs.
+# Or it will be closed by the app.

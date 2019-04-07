@@ -15,12 +15,22 @@
       ]
     },
     {
+      "login": "mzemlickis",
+      "name": "Mārtiņš Zemlickis",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/4556944?v=4",
+      "profile": "http://mzemlickis.lv",
+      "contributions": [
+        "design"
+      ]
+      },
+      {
       "login": "Sandural",
       "name": "黎紫珊",
       "avatar_url": "https://avatars3.githubusercontent.com/u/16163090?v=4",
       "profile": "https://github.com/Sandural",
       "contributions": [
         "platform"
+
       ]
     }
   ],

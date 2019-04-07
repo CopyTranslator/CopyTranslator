@@ -1,4 +1,5 @@
 ![logo](https://user-images.githubusercontent.com/22427645/50773452-d738dd80-12cb-11e9-9b7c-45e5d7f74c8a.png)
+[![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors)
 
 # CopyTranslator 
 
@@ -136,3 +137,15 @@ This software is free open source software, the developer is [Elliott Zheng](htt
 ## License
 
 The code is licensed under GNU GENERAL PUBLIC LICENSE 2.0. For more details, read the [LICENSE](./LICENSE) file.
+
+## Contributors
+
+Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
+
+<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+<!-- prettier-ignore -->
+<table><tr><td align="center"><a href="https://about.me/s8321414"><img src="https://avatars2.githubusercontent.com/u/9457283?v=4" width="100px;" alt="Jeff Huang"/><br /><sub><b>Jeff Huang</b></sub></a><br /><a href="#translation-s8321414" title="Translation">🌍</a></td></tr></table>
+
+<!-- ALL-CONTRIBUTORS-LIST:END -->
+
+This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome!

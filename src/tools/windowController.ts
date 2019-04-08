@@ -69,6 +69,21 @@ class WindowController {
           rotation: event.rotation
         });
     });
+    ioHook.on("mouseup", (event: MouseEvent) => {
+      if (
+        this.tapCopy &&
+        Date.now() - this.lastDown > 300 &&
+        Math.abs(event.x - this.lastX) < 4 &&
+        Math.abs(event.y - this.lastY) < 4
+      ) {
+        simulateCopy();
+      }
+    });
+    ioHook.on("mousedown", (event: MouseEvent) => {
+      this.lastDown = Date.now();
+      this.lastX = event.x;
+      this.lastY = event.y;
+    });
     //注册的指令。send到主进程main.js中。
     // Register and start hook
     ioHook.start(false);

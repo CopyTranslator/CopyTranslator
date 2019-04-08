@@ -97,30 +97,30 @@ class WindowWrapper {
     let yEnd = y + height;
     if (hideDirection == HideDirection.Up) {
       //TODO findout what's the problem
-      while (yEnd > 10) {
-        y--;
-        yEnd--;
+      if (yEnd > 10) {
+        y -= yEnd - 10;
+        yEnd -= yEnd - 10;
         this.setBounds({ x: x, y: y, width: width, height: height });
       }
     }
     switch (hideDirection) {
       case HideDirection.Up:
-        while (yEnd > 10) {
-          y--;
-          yEnd--;
+        if (yEnd > 10) {
+          y -= yEnd - 10;
+          yEnd -= yEnd - 10;
           this.setBounds({ x: x, y: y, width: width, height: height });
         }
         break;
       case HideDirection.Left:
-        while (xEnd >= xBound + 10) {
-          x--;
-          xEnd--;
+        if (xEnd > xBound + 10) {
+          x -= xEnd - (xBound + 10);
+          xEnd -= xEnd - (xBound + 10);
           this.setBounds({ x: x, y: y, width: width, height: height });
         }
         break;
       case HideDirection.Right:
-        while (x < xBound + screenWidth - 10) {
-          x++;
+        if (x < xBound + screenWidth - 10) {
+          x += xBound + screenWidth - 10 - x;
           this.setBounds({ x: x, y: y, width: width, height: height });
         }
         break;
@@ -139,21 +139,23 @@ class WindowWrapper {
     ).bounds;
     let xEnd = x + width;
     let yEnd = y + height;
-    while (x < xBound) {
-      x++;
-      xEnd++;
+    if (x < xBound) {
+      const val = xBound - x;
+      x += val;
+      xEnd += val;
       this.setBounds({ x: x, y: y, width: width, height: height });
     }
 
-    while (xEnd > xBound + screenWidth) {
-      x--;
-      xEnd--;
+    if (xEnd > xBound + screenWidth) {
+      const val = xEnd - (xBound + screenWidth);
+      x -= val;
+      xEnd -= val;
       this.setBounds({ x: x, y: y, width: width, height: height });
     }
 
-    while (y < 0) {
-      y++;
-      yEnd++;
+    if (y < 0) {
+      yEnd = y;
+      y = 0;
       this.setBounds({ x: x, y: y, width: width, height: height });
     }
   }

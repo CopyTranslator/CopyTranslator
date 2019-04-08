@@ -5,6 +5,7 @@ import {
   Dict,
   Translator
 } from "..";
+import { BaiduTranslator } from "./baidu";
 const md5 = require("md5");
 require("isomorphic-fetch");
 const _ = require("lodash");
@@ -239,6 +240,7 @@ export async function getSogouToken(): Promise<string> {
 }
 
 export class SogouTranslator extends Translator {
+  detector: Translator = new BaiduTranslator();
   sogouStorage: SogouStorage = {
     token: "b33bf8c58706155663d1ad5dba4192dc",
     tokenDate: Date.now()
@@ -284,6 +286,15 @@ export class SogouTranslator extends Translator {
   }
 
   async detect(text: string): Promise<string | undefined> {
-    return undefined;
+    try {
+      const lang = await this.detector.detect(text);
+      if (_.includes(SogouLangList, this.code2lang(<string>lang))) {
+        return lang;
+      } else {
+        throw "language not found";
+      }
+    } catch (e) {
+      return undefined;
+    }
   }
 }

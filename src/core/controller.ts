@@ -337,6 +337,9 @@ class Controller {
         windowController.tapCopy = value;
         break;
       case RuleName.translatorType:
+        if (TranslatorType.Google == value) {
+          this.translator = new translators.google();
+        }
         switch (value) {
           case TranslatorType.Google:
             this.translator = new translators.google();
@@ -351,6 +354,7 @@ class Controller {
             this.translator = new translators.youdao();
             break;
         }
+
         this.clear();
         if (
           !(this.get(RuleName.sourceLanguage) in this.translator.getLanguages())

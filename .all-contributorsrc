@@ -1,15 +1,42 @@
 {
-  "files": ["README.md"],
+  "files": [
+    "README.md"
+  ],
   "imageSize": 100,
-  "contributorsPerLine": 7,
-  "badgeTemplate": "[![All Contributors](https://img.shields.io/badge/all_contributors-<%= contributors.length %>-orange.svg?style=flat-square)](#contributors)",
-  "contributorTemplate": "<%= avatarBlock %><br /><%= contributions %>",
-  "types": {
-    "custom": {
-      "symbol": "🔭",
-      "description": "A custom contribution type.",
-      "link": "[<%= symbol %>](<%= url %> \"<%= description %>\"),"
+  "commit": false,
+  "contributors": [
+    {
+      "login": "s8321414",
+      "name": "Jeff Huang",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/9457283?v=4",
+      "profile": "https://about.me/s8321414",
+      "contributions": [
+        "translation"
+      ]
+    },
+    {
+      "login": "mzemlickis",
+      "name": "Mārtiņš Zemlickis",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/4556944?v=4",
+      "profile": "http://mzemlickis.lv",
+      "contributions": [
+        "design"
+      ]
+      },
+      {
+      "login": "Sandural",
+      "name": "黎紫珊",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/16163090?v=4",
+      "profile": "https://github.com/Sandural",
+      "contributions": [
+        "platform"
+
+      ]
     }
-  },
-  "contributors": []
+  ],
+  "contributorsPerLine": 7,
+  "projectName": "CopyTranslator",
+  "projectOwner": "CopyTranslator",
+  "repoType": "github",
+  "repoHost": "https://github.com"
 }

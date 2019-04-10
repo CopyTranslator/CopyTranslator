@@ -1,5 +1,5 @@
 import { TranslateResult } from "translation.js/declaration/api/types";
-import { sentenceEnds } from "../../core/stringProcessor";
+export const sentenceEnds = /[?？！!.。]/g;
 /** 统一的查询结果的数据结构 */
 const _ = require("lodash");
 export interface CommonTranslateResult extends TranslateResult {
@@ -21,13 +21,14 @@ export function handleNoResult<T = any>(): Promise<T> {
 
 function countSentences(str: string) {
   let t = str.match(sentenceEnds);
-  return t ? t.length : 0;
+  return t ? t.length : 1;
 }
 
 export function reSegment(text: string, result: string[]) {
   const sentences = text.split("\n");
   if (sentences.length == 1) {
-    return _.join(result, " ");
+    let resultString = _.join(result, " ");
+    return resultString;
   }
   const counts = sentences.map(countSentences);
   if (_.sum(counts) != result.length) {
@@ -37,8 +38,8 @@ export function reSegment(text: string, result: string[]) {
   let index = 0;
   counts.forEach(count => {
     for (let i = 0; i < count; i++) {
-      index++;
       resultString += " " + result[index];
+      index++;
     }
     resultString += "\n";
   });

@@ -27,7 +27,7 @@ new Vue({
       MessageType.TranslateResult.toString(),
       (event: any, arg: any) => {
         store.commit("setShared", arg);
-        if (arg.notify) {
+        if (arg.notify && arg.result.length > 0) {
           new Notification(constants.appName + " " + version, {
             body: arg.result
           });

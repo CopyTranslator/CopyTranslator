@@ -5,7 +5,7 @@ import {
   Dict,
   Translator
 } from "..";
-import { BaiduTranslator } from "./baidu";
+import { BaiduTranslator, BaiduCodes } from "./baidu";
 const md5 = require("md5");
 require("isomorphic-fetch");
 const _ = require("lodash");
@@ -288,7 +288,7 @@ export class SogouTranslator extends Translator {
   async detect(text: string): Promise<string | undefined> {
     try {
       const lang = await this.detector.detect(text);
-      if (_.includes(SogouLangList, this.code2lang(<string>lang))) {
+      if (_.includes(SogouLangList, BaiduCodes[<string>lang])) {
         return lang;
       } else {
         throw "language not found";

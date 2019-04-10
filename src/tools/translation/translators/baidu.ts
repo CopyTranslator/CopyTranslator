@@ -29,7 +29,7 @@ export const BaiduLanguages: Dict = {
   Arabic: "ar"
 };
 
-const BaiduCodes = _.invert(BaiduLanguages);
+export const BaiduCodes = _.invert(BaiduLanguages);
 const BaiduLangList = _.keys(BaiduLanguages);
 
 export class BaiduTranslator extends Translator {

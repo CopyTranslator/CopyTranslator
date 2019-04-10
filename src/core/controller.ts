@@ -353,6 +353,9 @@ class Controller {
           case TranslatorType.Youdao:
             this.translator = new translators.youdao();
             break;
+          case TranslatorType.Caiyun:
+            this.translator = new translators.caiyun();
+            break;
         }
 
         this.clear();

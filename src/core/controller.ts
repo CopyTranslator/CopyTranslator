@@ -35,6 +35,10 @@ class Controller {
     this.restoreFromConfig();
   }
 
+  public static getInstance(): Controller {
+    return (<any>global).controller;
+  }
+
   createWindow() {
     this.win.createWindow(this.get(RuleName.frameMode));
     windowController.bind();
@@ -81,7 +85,10 @@ class Controller {
   }
 
   checkClipboard() {
-    let text = normalizeAppend(clipboard.readText());
+    let text = normalizeAppend(
+      clipboard.readText(),
+      this.get(RuleName.autoPurify)
+    );
     if (this.checkValid(text)) {
       this.doTranslate(text);
     }
@@ -89,7 +96,7 @@ class Controller {
 
   tryTranslate(text: string) {
     if (text != "") {
-      this.doTranslate(normalizeAppend(text));
+      this.doTranslate(normalizeAppend(text, this.get(RuleName.autoPurify)));
     }
   }
 
@@ -243,7 +250,10 @@ class Controller {
       .translate(this.src, language.source, language.target)
       .then(res => {
         if (res && res.resultString) {
-          res.resultString = normalizeAppend(res.resultString);
+          res.resultString = normalizeAppend(
+            res.resultString,
+            this.get(RuleName.autoPurify)
+          );
           this.result = res.resultString;
           this.postProcess(language, res);
         } else {

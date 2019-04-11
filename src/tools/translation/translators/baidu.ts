@@ -1,5 +1,5 @@
 import { CommonTranslateResult, Translator, Dict, reSegment } from "..";
-import { baidu } from "translation.js";
+import { baidu } from "copy-translation.js";
 const _ = require("lodash");
 export const BaiduLanguages: Dict = {
   English: "en",
@@ -56,7 +56,7 @@ export class BaiduTranslator extends Translator {
         from: srcCode,
         to: destCode
       });
-      res.resultString = reSegment(text, <string[]>res.result);
+      res.resultString = reSegment(text, <string[]>res.result, destCode);
       return res;
     } catch (e) {
       (<any>global).log.debug(e);

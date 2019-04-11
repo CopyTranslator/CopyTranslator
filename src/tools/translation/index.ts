@@ -1,7 +1,15 @@
-import { TranslateResult } from "translation.js/declaration/api/types";
-export const sentenceEnds = /[?？！!.。]/g;
-/** 统一的查询结果的数据结构 */
+import { TranslateResult } from "copy-translation.js/declaration/api/types";
+export const chnEnds = /[？。！]/g;
+export const engEnds = /[?.!]/g;
+export const chnBreaks = /[？。！\n]/g;
+export const engBreaks = /[?.!\n]/g;
+const chineseStyles = ["zh-CN", "zh-TW", "ja", "ko"];
 const _ = require("lodash");
+export function notEnglish(destCode: string) {
+  return _.includes(chineseStyles, destCode);
+}
+/** 统一的查询结果的数据结构 */
+
 export interface CommonTranslateResult extends TranslateResult {
   resultString?: string;
 }
@@ -19,26 +27,34 @@ export function handleNoResult<T = any>(): Promise<T> {
   return Promise.reject(SearchErrorType.NoResult);
 }
 
-function countSentences(str: string) {
-  let t = str.match(sentenceEnds);
+function countSentences(str: string, ends: RegExp) {
+  str = str.trim();
+  if (str.length < 1) {
+    return 0;
+  }
+  let t = str.match(ends);
   return t ? t.length : 1;
 }
 
-export function reSegment(text: string, result: string[]) {
+export function reSegment(text: string, result: string[], destCode: string) {
+  console.log(result);
   const sentences = text.split("\n");
+  const noEng = notEnglish(destCode);
+  const seprator = noEng ? "" : " ";
+  const ends: RegExp = noEng ? chnEnds : engEnds;
   if (sentences.length == 1) {
-    let resultString = _.join(result, " ");
+    let resultString = _.join(result, seprator);
     return resultString;
   }
-  const counts = sentences.map(countSentences);
+  const counts = sentences.map(sentence => countSentences(sentence, ends));
   if (_.sum(counts) != result.length) {
-    return _.join(result, " ");
+    return _.join(result, seprator);
   }
   let resultString = "";
   let index = 0;
   counts.forEach(count => {
     for (let i = 0; i < count; i++) {
-      resultString += " " + result[index];
+      resultString += seprator + result[index];
       index++;
     }
     resultString += "\n";

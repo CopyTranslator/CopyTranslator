@@ -1,6 +1,8 @@
 import { Tray, Menu } from "electron";
 import { envConfig } from "./envConfig";
 import { constants } from "../core/constant";
+import { Controller } from "../core/controller";
+import { RouteName } from "./action";
 
 class TrayManager {
   tray: Tray | undefined;
@@ -9,7 +11,7 @@ class TrayManager {
     this.tray = new Tray(envConfig.diffConfig.trayIconPath);
     this.tray.setToolTip(constants.appName);
     this.tray.on("right-click", event => {
-      (<any>global).controller.action.popup("Tray");
+      (<Controller>(<any>global).controller).action.popup(RouteName.Tray);
     });
   }
 }

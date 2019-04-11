@@ -47,6 +47,11 @@ function initConfig(
   );
 
   config.addRule(
+    RuleName.autoPurify,
+    new BoolRule(true, "remove extra linebreak when translate")
+  );
+
+  config.addRule(
     RuleName.autoShow,
     new BoolRule(false, "auto show after translate")
   );
@@ -122,7 +127,7 @@ function initConfig(
   });
 
   config.addRule(RuleName.localeSetting, {
-    predefined: "en",
+    predefined: "zh-cn",
     msg: "localeSetting setting"
   });
 
@@ -136,6 +141,7 @@ function initConfig(
         "retryTranslate",
         "autoCopy",
         "autoPaste",
+        "autoPurify",
         "incrementalCopy",
         "autoFormat",
         "tapCopy",
@@ -159,6 +165,7 @@ function initConfig(
         "retryTranslate",
         "autoCopy",
         "autoPaste",
+        "autoPurify",
         "detectLanguage",
         "incrementalCopy",
         "autoHide",
@@ -186,6 +193,7 @@ function initConfig(
         "retryTranslate",
         "autoCopy",
         "autoPaste",
+        "autoPurify",
         "detectLanguage",
         "incrementalCopy",
         "autoHide",
@@ -215,6 +223,7 @@ function initConfig(
         "incrementalCopy",
         "autoHide",
         "autoShow",
+        "autoPurify",
         "autoFormat",
         "enableNotify",
         "tapCopy",

@@ -23,6 +23,7 @@
     "docs:deploy": "sh docs/.vuepress/release/sync.sh deploy"
   },
   "dependencies": {
+    "copy-translation.js": "0.0.8",
     "electron-clipboard-extended": "^1.1.1",
     "element-ui": "^2.5.4",
     "iohook": "^0.3.1",
@@ -31,7 +32,6 @@
     "log4js": "^4.0.1",
     "md5": "^2.2.1",
     "robotjs": "^0.5.1",
-    "translation.js": "^0.7.5",
     "vue": "^2.5.21",
     "vue-router": "^3.0.1",
     "vuex": "^3.0.1"

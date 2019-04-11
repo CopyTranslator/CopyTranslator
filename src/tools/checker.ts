@@ -22,7 +22,7 @@ export function checkUpdate() {
       if (res && res.data.version > version) {
         const info = res.data;
         const mirror = info.mirrors[res.key];
-        const controller = (<any>global).controller;
+        const controller = <Controller>(<any>global).controller;
         const t = controller.getT();
         dialog.showMessageBox(
           <BrowserWindow>controller.win.window,

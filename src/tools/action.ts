@@ -12,6 +12,7 @@ import { envConfig } from "./envConfig";
 import { HideDirection } from "./enums";
 import { TranslatorType } from "./translation/translators";
 import { defaultShortcuts } from "./shortcuts";
+import { Controller } from "../core/controller";
 
 const fs = require("fs");
 const _ = require("lodash");
@@ -106,14 +107,14 @@ class ActionManager {
 
   init() {
     this.actions = this.getActions(
-      (<any>global).controller.config,
+      (<Controller>(<any>global).controller).config,
       this.callback
     );
     this.loadShortcuts();
     this.register();
   }
   getRefresh() {
-    const controller = (<any>global).controller;
+    const controller = <Controller>(<any>global).controller;
     let config = controller.config;
     const t = controller.getT();
     function refreshSingle(key: string, action: Action): Action {
@@ -218,6 +219,7 @@ class ActionManager {
     items.push(switchAction(RuleName.autoCopy));
     items.push(switchAction(RuleName.autoPaste));
     items.push(switchAction(RuleName.autoFormat));
+    items.push(switchAction(RuleName.autoPurify));
     items.push(switchAction(RuleName.detectLanguage));
     items.push(switchAction(RuleName.incrementalCopy));
     items.push(switchAction(RuleName.autoHide));
@@ -237,7 +239,7 @@ class ActionManager {
     const languageGenerator = (ruleName: RuleName) => {
       const id = r(ruleName);
       return () => {
-        return (<any>global).controller.translator
+        return (<Controller>(<any>global).controller).translator
           .getLanguages()
           .map((e: string) => {
             return ActionWrapper(
@@ -267,7 +269,7 @@ class ActionManager {
 
     const localeGenerator = () => {
       const id = r(RuleName.localeSetting);
-      return (<any>global).controller.locales
+      return (<Controller>(<any>global).controller).locales
         .getLocales()
         .map((locale: any) => {
           return ActionWrapper(
@@ -294,7 +296,7 @@ class ActionManager {
   popup(id: RouteName) {
     let menu = new Menu();
     let contain: Array<string> = [];
-    const controller = (<any>global).controller;
+    const controller = <Controller>(<any>global).controller;
     switch (id) {
       case RouteName.Focus:
         contain = controller.get(RuleName.focusMenu);

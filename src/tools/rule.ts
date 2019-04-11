@@ -14,6 +14,7 @@ enum RuleName {
   autoShow,
   tapCopy,
   enableNotify,
+  autoPurify,
   //enum rule
   frameMode,
   translatorType,

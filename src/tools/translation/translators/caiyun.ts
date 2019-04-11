@@ -1,21 +1,32 @@
 require("isomorphic-fetch");
-import { CommonTranslateResult, Translator, Dict, reSegment } from "..";
+import {
+  CommonTranslateResult,
+  Translator,
+  Dict,
+  reSegment,
+  chnEnds,
+  engEnds,
+  notEnglish,
+  chnBreaks,
+  engBreaks
+} from "..";
 const _ = require("lodash");
 import { BaiduTranslator, BaiduCodes } from "./baidu";
-import { sentenceEnds } from "../../../core/stringProcessor";
+import { RuleName } from "../../rule";
+import { Controller } from "../../../core/controller";
+
 const CaiyunLanguages: Dict = {
   Japanese: "ja",
   English: "en",
   "Chinese(Simplified)": "zh-CN"
 };
 
-const caiyun2code: Dict = {
-  zh: "zh-CN",
+const code2caiyun: Dict = {
+  "zh-CN": "zh",
   en: "en",
   ja: "ja"
 };
 
-const code2caiyun = _.invert(caiyun2code);
 const CaiyunCodes = _.invert(CaiyunLanguages);
 const CaiyunLangList = _.keys(CaiyunLanguages);
 const TOKEN = "3975l6lr5pcbvidl6jl2";
@@ -25,7 +36,14 @@ async function CaiyunTranslate(
   srcCode: string,
   destCode: string
 ): Promise<CommonTranslateResult | undefined> {
-  let source = text.split(sentenceEnds);
+  const noEng = notEnglish(srcCode);
+  let source: string[] = [];
+  // if ((<Controller>(<any>global).controller).get(RuleName.autoPurify)) {
+  //   source = text.split(noEng ? chnEnds : engEnds);
+  // } else {
+  //   source = text.split(noEng ? chnBreaks : engBreaks);
+  // }
+  source = text.split("\n");
   const payload = {
     source: source,
     trans_type: `${code2caiyun[srcCode]}2${code2caiyun[destCode]}`,
@@ -44,7 +62,7 @@ async function CaiyunTranslate(
     return {
       text: text,
       result: json.target,
-      resultString: reSegment(text, <string[]>json.target),
+      resultString: _.join(json.target, "\n"),
       raw: undefined,
       link: "",
       from: srcCode,

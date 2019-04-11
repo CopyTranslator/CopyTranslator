@@ -4,7 +4,7 @@ import { ColorStatus, HideDirection, MessageType, WinOpt } from "./enums";
 import { ModeConfig, RuleName } from "./rule";
 import { RouteName } from "./action";
 import { loadStyles } from "./style";
-import { Controller } from "@/core/controller";
+import { Controller } from "../core/controller";
 
 class WindowWrapper {
   window: BrowserWindow | undefined = undefined;
@@ -69,7 +69,7 @@ class WindowWrapper {
   }
 
   onEdge() {
-    if (!(<any>global).controller.get(RuleName.autoHide)) {
+    if (!(<Controller>(<any>global).controller).get(RuleName.autoHide)) {
       return HideDirection.None;
     }
     let { x, y, width } = this.getBound();
@@ -178,13 +178,15 @@ class WindowWrapper {
     let param: ModeConfig | undefined;
     switch (routeName) {
       case RouteName.Focus:
-        param = (<any>global).controller.get(RuleName.focus);
+        param = (<Controller>(<any>global).controller).get(RuleName.focus);
         break;
       case RouteName.Contrast:
-        param = (<any>global).controller.get(RuleName.contrast);
+        param = (<Controller>(<any>global).controller).get(RuleName.contrast);
         break;
       case RouteName.Settings:
-        param = (<any>global).controller.get(RuleName.settingsConfig);
+        param = (<Controller>(<any>global).controller).get(
+          RuleName.settingsConfig
+        );
         break;
       default:
         break;
@@ -221,7 +223,7 @@ class WindowWrapper {
     if (this.window) {
       this.window.setBounds(Object.assign(this.getBound(), param));
       this.window.setAlwaysOnTop(
-        (<any>global).controller.get(RuleName.stayTop)
+        (<Controller>(<any>global).controller).get(RuleName.stayTop)
       );
     }
   }

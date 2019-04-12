@@ -32,18 +32,12 @@ async function CaiyunTranslate(
   destCode: string
 ): Promise<CommonTranslateResult | undefined> {
   const noEng = notEnglish(srcCode);
-  console.log(srcCode, destCode);
   let source: string[] = [];
-  if (!noEng) {
-    // source = text.replace(/([.?!\n])\s*[\n]?/g, "$1#|#").split("#|#");
-    source = splitEng(text);
-  } else {
+  if (noEng) {
     source = text.replace(/([。？！\n])\s*[\n]?/g, "$1#|#").split("#|#");
-    // console.log(source);
+  } else {
+    source = splitEng(text);
   }
-  source = _.compact(source);
-  console.log(source);
-
   const payload = {
     source: source,
     trans_type: `${code2caiyun[srcCode]}2${code2caiyun[destCode]}`,
@@ -59,7 +53,6 @@ async function CaiyunTranslate(
       body: JSON.stringify(payload)
     });
     const json = await res.json();
-    console.log(json.target);
     return {
       text: text,
       result: json.target,

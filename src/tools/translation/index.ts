@@ -27,15 +27,56 @@ export function handleNetWorkError(): Promise<never> {
 export function handleNoResult<T = any>(): Promise<T> {
   return Promise.reject(SearchErrorType.NoResult);
 }
-const optional_options = { newline_boundaries: true };
+const optional_options = {};
+
 export function splitEng(text: string): string[] {
-  return tokenizer.sentences(text, optional_options);
+  return _.compact(tokenizer.sentences(text.trim(), optional_options));
 }
-function countSentences(str: string, ends: RegExp) {
-  str = str.trim();
-  let t = _.compact(splitEng(str));
+
+export function splitChn(text: string): string[] {
+  return _.compact(text.trim().split(chnEnds));
+}
+
+function countSentences(str: string, splitFunc: (text: string) => string[]) {
+  let t = splitFunc(str);
+  console.log(t);
   return t.length;
 }
+
+export function reSegmentGoogle(
+  text: string,
+  result: string[],
+  srcCode: string,
+  destCode: string
+) {
+  const sentences = text.split("\n");
+
+  const seprator = notEnglish(destCode) ? "" : " ";
+  const ends: RegExp = notEnglish(srcCode) ? chnEnds : engEnds;
+  const splitFunc = notEnglish(srcCode) ? splitChn : splitEng;
+  if (sentences.length == 1) {
+    let resultString = _.join(result, seprator);
+    return resultString;
+  }
+
+  const counts = sentences.map(sentence => countSentences(sentence, splitFunc));
+  console.log(text, sentences, counts, result);
+  if (_.sum(counts) != result.length) {
+    return _.join(result, "\n");
+  }
+
+  let resultString = "";
+  let index = 0;
+  counts.forEach(count => {
+    for (let i = 0; i < count; i++) {
+      resultString += seprator + result[index];
+      index++;
+    }
+    resultString += "\n";
+  });
+  return resultString;
+}
+
 export function reSegment(
   text: string,
   result: string[],
@@ -45,12 +86,12 @@ export function reSegment(
   const sentences = text.split("\n");
   const seprator = notEnglish(destCode) ? "" : " ";
   const ends: RegExp = notEnglish(srcCode) ? chnEnds : engEnds;
+  const splitFunc = notEnglish(srcCode) ? splitChn : splitEng;
   if (sentences.length == 1) {
     let resultString = _.join(result, seprator);
     return resultString;
   }
-
-  const counts = sentences.map(sentence => countSentences(sentence, ends));
+  const counts = sentences.map(sentence => countSentences(sentence, splitFunc));
 
   if (_.sum(counts) != result.length) {
     return _.join(result, "\n");

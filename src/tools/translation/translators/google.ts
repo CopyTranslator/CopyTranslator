@@ -1,4 +1,4 @@
-import { CommonTranslateResult, Translator, Dict, reSegment } from "..";
+import { CommonTranslateResult, Translator, Dict, reSegmentGoogle } from "..";
 import { google } from "copy-translation.js";
 const _ = require("lodash");
 const GoogleLanguages: Dict = {
@@ -134,7 +134,7 @@ export class GoogleTranslator extends Translator {
         from: srcCode,
         to: destCode
       });
-      res.resultString = reSegment(
+      res.resultString = reSegmentGoogle(
         text,
         <string[]>res.result,
         srcCode,

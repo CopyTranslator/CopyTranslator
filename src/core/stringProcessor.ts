@@ -8,7 +8,7 @@ function isChinese(src: string) {
 }
 
 function normalizeAppend(src: string, purify = true) {
-  if (!purify) return src;
+  if (!purify) return src.trim().replace(/\r/, "");
   src = src.replace(/\r\n/g, "\n");
   src = src.replace(/\r/g, "\n");
   src = src.replace(/-\n/g, "");

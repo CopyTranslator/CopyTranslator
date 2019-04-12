@@ -4,11 +4,7 @@ import {
   Translator,
   Dict,
   reSegment,
-  chnEnds,
-  engEnds,
-  notEnglish,
-  chnBreaks,
-  engBreaks
+  notEnglish
 } from "..";
 const _ = require("lodash");
 import { BaiduTranslator, BaiduCodes } from "./baidu";
@@ -38,12 +34,14 @@ async function CaiyunTranslate(
 ): Promise<CommonTranslateResult | undefined> {
   const noEng = notEnglish(srcCode);
   let source: string[] = [];
-  // if ((<Controller>(<any>global).controller).get(RuleName.autoPurify)) {
-  //   source = text.split(noEng ? chnEnds : engEnds);
-  // } else {
-  //   source = text.split(noEng ? chnBreaks : engBreaks);
-  // }
-  source = text.split("\n");
+  if (!noEng) {
+    source = text.replace(/([.?!\n])\s*[\n]?/g, "$1#|#").split("#|#");
+  } else {
+    source = text.replace(/([。？！\n])\s*[\n]?/g, "$1#|#").split("#|#");
+  }
+  source = _.compact(source);
+  console.log(source);
+
   const payload = {
     source: source,
     trans_type: `${code2caiyun[srcCode]}2${code2caiyun[destCode]}`,
@@ -59,10 +57,11 @@ async function CaiyunTranslate(
       body: JSON.stringify(payload)
     });
     const json = await res.json();
+    console.log(json.target);
     return {
       text: text,
       result: json.target,
-      resultString: _.join(json.target, "\n"),
+      resultString: reSegment(text, json.target, srcCode, destCode),
       raw: undefined,
       link: "",
       from: srcCode,

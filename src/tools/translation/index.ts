@@ -29,27 +29,41 @@ export function handleNoResult<T = any>(): Promise<T> {
 
 function countSentences(str: string, ends: RegExp) {
   str = str.trim();
-  if (str.length < 1) {
-    return 0;
-  }
-  let t = str.match(ends);
-  return t ? t.length : 1;
+  let t = _.compact(str.split(ends));
+  return t.length;
 }
 
-export function reSegment(text: string, result: string[], destCode: string) {
-  console.log(result);
+export function reSegment(
+  text: string,
+  result: string[],
+  srcCode: string,
+  destCode: string
+) {
   const sentences = text.split("\n");
-  const noEng = notEnglish(destCode);
-  const seprator = noEng ? "" : " ";
-  const ends: RegExp = noEng ? chnEnds : engEnds;
+  console.log("sentences", sentences);
+  console.log("result", result);
+  const seprator = notEnglish(destCode) ? "" : " ";
+  const ends: RegExp = notEnglish(srcCode) ? chnEnds : engEnds;
+  const resultEnds: RegExp = notEnglish(destCode) ? chnEnds : engEnds;
   if (sentences.length == 1) {
     let resultString = _.join(result, seprator);
     return resultString;
   }
+
   const counts = sentences.map(sentence => countSentences(sentence, ends));
+
+  // result = _.flatten(
+  //   result.map((sentence: string) => {
+  //     return _.compact(sentence.trim().split(resultEnds));
+  //   })
+  // );
+
+  console.log(result);
+  console.log(counts);
   if (_.sum(counts) != result.length) {
     return _.join(result, seprator);
   }
+
   let resultString = "";
   let index = 0;
   counts.forEach(count => {

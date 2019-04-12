@@ -5,6 +5,7 @@ export const chnBreaks = /[？。！\n]/g;
 export const engBreaks = /[?.!\n]/g;
 const chineseStyles = ["zh-CN", "zh-TW", "ja", "ko"];
 const _ = require("lodash");
+const tokenizer = require("sbd");
 export function notEnglish(destCode: string) {
   return _.includes(chineseStyles, destCode);
 }
@@ -26,13 +27,15 @@ export function handleNetWorkError(): Promise<never> {
 export function handleNoResult<T = any>(): Promise<T> {
   return Promise.reject(SearchErrorType.NoResult);
 }
-
+const optional_options = { newline_boundaries: true };
+export function splitEng(text: string): string[] {
+  return tokenizer.sentences(text, optional_options);
+}
 function countSentences(str: string, ends: RegExp) {
   str = str.trim();
-  let t = _.compact(str.split(ends));
+  let t = _.compact(splitEng(str));
   return t.length;
 }
-
 export function reSegment(
   text: string,
   result: string[],
@@ -40,11 +43,8 @@ export function reSegment(
   destCode: string
 ) {
   const sentences = text.split("\n");
-  console.log("sentences", sentences);
-  console.log("result", result);
   const seprator = notEnglish(destCode) ? "" : " ";
   const ends: RegExp = notEnglish(srcCode) ? chnEnds : engEnds;
-  const resultEnds: RegExp = notEnglish(destCode) ? chnEnds : engEnds;
   if (sentences.length == 1) {
     let resultString = _.join(result, seprator);
     return resultString;
@@ -52,16 +52,8 @@ export function reSegment(
 
   const counts = sentences.map(sentence => countSentences(sentence, ends));
 
-  // result = _.flatten(
-  //   result.map((sentence: string) => {
-  //     return _.compact(sentence.trim().split(resultEnds));
-  //   })
-  // );
-
-  console.log(result);
-  console.log(counts);
   if (_.sum(counts) != result.length) {
-    return _.join(result, seprator);
+    return _.join(result, "\n");
   }
 
   let resultString = "";

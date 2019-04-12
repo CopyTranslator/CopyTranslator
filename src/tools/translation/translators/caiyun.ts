@@ -4,12 +4,11 @@ import {
   Translator,
   Dict,
   reSegment,
-  notEnglish
+  notEnglish,
+  splitEng
 } from "..";
-const _ = require("lodash");
 import { BaiduTranslator, BaiduCodes } from "./baidu";
-import { RuleName } from "../../rule";
-import { Controller } from "../../../core/controller";
+const _ = require("lodash");
 
 const CaiyunLanguages: Dict = {
   Japanese: "ja",
@@ -33,11 +32,14 @@ async function CaiyunTranslate(
   destCode: string
 ): Promise<CommonTranslateResult | undefined> {
   const noEng = notEnglish(srcCode);
+  console.log(srcCode, destCode);
   let source: string[] = [];
   if (!noEng) {
-    source = text.replace(/([.?!\n])\s*[\n]?/g, "$1#|#").split("#|#");
+    // source = text.replace(/([.?!\n])\s*[\n]?/g, "$1#|#").split("#|#");
+    source = splitEng(text);
   } else {
     source = text.replace(/([。？！\n])\s*[\n]?/g, "$1#|#").split("#|#");
+    // console.log(source);
   }
   source = _.compact(source);
   console.log(source);

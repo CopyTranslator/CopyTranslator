@@ -38,7 +38,12 @@ export class YoudaoTranslator extends Translator {
         from: srcCode,
         to: destCode
       });
-      res.resultString = reSegment(text, <string[]>res.result, destCode);
+      res.resultString = reSegment(
+        text,
+        <string[]>res.result,
+        srcCode,
+        destCode
+      );
       return res;
     } catch (e) {
       (<any>global).log.debug(e);

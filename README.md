@@ -44,7 +44,7 @@ Just open the `CopyTranslator` and copy the PDF text to clipboard,  `CopyTransla
 
 ### Copy=Translate
 
-**Greatly simplify the steps required for translation**, just copy the text to the clipboard, and wait to view the translation results in the next second, enjoy the WYSIWYG pleasure, and we also have the [Tap to Copy](#Tap-to-Copy) mechanism , making it easier for you to copy text.
+**Greatly simplify the steps required for translation**, just copy the text to the clipboard, and wait to view the translation results in the next second, enjoy the WYSIWYG pleasure, and we also have the [Tap to Copy](#tap-to-copyexperimental) mechanism , making it easier for you to copy text.
 
 ### Solve the problem of PDF copy translation
 

@@ -1,6 +1,7 @@
 import { CommonTranslateResult, Translator, Dict, reSegment } from "..";
 import { youdao } from "copy-translation.js";
 const _ = require("lodash");
+import { log } from "../../logger";
 const YoudaoLanguages: Dict = {
   English: "en",
   Russian: "ru",
@@ -46,7 +47,7 @@ export class YoudaoTranslator extends Translator {
       );
       return res;
     } catch (e) {
-      (<any>global).log.debug(e);
+      log().debug(e);
       return undefined;
     }
   }
@@ -55,7 +56,7 @@ export class YoudaoTranslator extends Translator {
     try {
       return await youdao.detect(text);
     } catch (e) {
-      (<any>global).log.debug(e);
+      log().debug(e);
       return undefined;
     }
   }

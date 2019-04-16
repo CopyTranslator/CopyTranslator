@@ -8,7 +8,6 @@ const isDevelopment = process.env.NODE_ENV !== "production";
 
 app.setAppUserModelId("com.copytranslator.copytranslator");
 
-(<any>global).log = log;
 let controller = new Controller();
 (<any>global).controller = controller;
 

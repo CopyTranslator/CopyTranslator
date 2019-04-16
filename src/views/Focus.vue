@@ -25,6 +25,7 @@
 </template>
 
 <script>
+import { desktopCapturer, screen, ipcRenderer } from "electron";
 import StatusBar from "../components/StatusBar";
 import BaseView from "../components/BaseView";
 import WindowController from "../components/WindowController";
@@ -32,6 +33,7 @@ import Adjustable from "../components/Adjustable";
 import DictResult from "../components/DictResult";
 import { shell } from "electron";
 import { RuleName } from "@/tools/rule";
+import { constants } from "crypto";
 export default {
   name: "FocusMode",
   mixins: [BaseView, WindowController, Adjustable],
@@ -64,6 +66,7 @@ export default {
         return this.$refs.dictResult.$el.innerText;
       }
     },
+
     baidu() {
       shell.openExternal(
         `https://www.baidu.com/s?ie=utf-8&wd=${this.getModifiedText()}`

@@ -1,7 +1,7 @@
 import Vue from "vue";
 import router from "./router";
 import store from "./store";
-import { ipcRenderer } from "electron";
+import { desktopCapturer, screen, ipcRenderer } from "electron";
 import { MessageType } from "./tools/enums";
 import ElementUI from "element-ui";
 import "element-ui/lib/theme-chalk/index.css";
@@ -40,6 +40,7 @@ new Vue({
     ipcRenderer.on(MessageType.UpdateT.toString(), (event: any, arg: any) => {
       Vue.prototype.$t = controller.getT();
     });
+
     if (controller.res) controller.sync();
     else {
       controller.checkClipboard();

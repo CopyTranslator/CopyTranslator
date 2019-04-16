@@ -8,6 +8,7 @@ import {
   splitEng
 } from "..";
 import { BaiduTranslator, BaiduCodes } from "./baidu";
+import { log } from "../../logger";
 const _ = require("lodash");
 
 const CaiyunLanguages: Dict = {
@@ -90,7 +91,7 @@ export class CaiyunTranslator extends Translator {
       let res = await CaiyunTranslate(text, srcCode, destCode);
       return res;
     } catch (e) {
-      (<any>global).log.debug(e);
+      log().debug(e);
       return undefined;
     }
   }

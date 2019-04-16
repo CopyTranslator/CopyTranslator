@@ -14,6 +14,7 @@ import { ActionManager } from "../tools/action";
 import { TrayManager } from "../tools/tray";
 import { handleActions } from "./actionCallback";
 import { checkUpdate, checkNotice } from "../tools/checker";
+import { log } from "../tools/logger";
 
 const clipboard = require("electron-clipboard-extended");
 
@@ -105,7 +106,7 @@ class Controller {
   }
 
   onError(msg: string) {
-    (<any>global).log.error(msg);
+    log().error(msg);
   }
 
   sync(language: any = undefined) {

@@ -1,5 +1,6 @@
 import { CommonTranslateResult, Translator, Dict, reSegment } from "..";
 import { baidu } from "copy-translation.js";
+import { log } from "../../logger";
 const _ = require("lodash");
 export const BaiduLanguages: Dict = {
   English: "en",
@@ -64,7 +65,7 @@ export class BaiduTranslator extends Translator {
       );
       return res;
     } catch (e) {
-      (<any>global).log.debug(e);
+      log().debug(e);
       return undefined;
     }
   }
@@ -73,7 +74,7 @@ export class BaiduTranslator extends Translator {
     try {
       return await baidu.detect(text);
     } catch (e) {
-      (<any>global).log.debug(e);
+      log().debug(e);
       return undefined;
     }
   }

@@ -1,5 +1,6 @@
 import { CommonTranslateResult, Translator, Dict, reSegmentGoogle } from "..";
 import { google } from "copy-translation.js";
+import { log } from "../../logger";
 const _ = require("lodash");
 const GoogleLanguages: Dict = {
   Afrikaans: "af",
@@ -142,7 +143,7 @@ export class GoogleTranslator extends Translator {
       );
       return res;
     } catch (e) {
-      (<any>global).log.debug(e);
+      log().debug(e);
       return undefined;
     }
   }
@@ -151,7 +152,7 @@ export class GoogleTranslator extends Translator {
     try {
       return await google.detect(text);
     } catch (e) {
-      (<any>global).log.debug(e);
+      log().debug(e);
       return undefined;
     }
   }

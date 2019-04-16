@@ -23,6 +23,7 @@
     "docs:deploy": "sh docs/.vuepress/release/sync.sh deploy"
   },
   "dependencies": {
+    "baidu-aip-sdk": "^2.3.9",
     "copy-translation.js": "0.0.8",
     "electron-clipboard-extended": "^1.1.1",
     "element-ui": "^2.5.4",
@@ -44,7 +45,7 @@
     "@vue/cli-plugin-babel": "^3.2.0",
     "@vue/cli-plugin-eslint": "^3.2.0",
     "@vue/cli-plugin-typescript": "^3.3.0",
-    "@vue/cli-service": "^3.5.3",
+    "@vue/cli-service": "^3.6.0",
     "@vue/eslint-config-prettier": "^4.0.1",
     "@vue/eslint-config-typescript": "^3.2.0",
     "babel-eslint": "^10.0.1",

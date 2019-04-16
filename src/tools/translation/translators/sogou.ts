@@ -8,6 +8,7 @@ import {
 import { BaiduTranslator, BaiduCodes } from "./baidu";
 const md5 = require("md5");
 require("isomorphic-fetch");
+import { log } from "../../logger";
 const _ = require("lodash");
 
 export const SogouLanguages: Dict = {
@@ -280,7 +281,7 @@ export class SogouTranslator extends Translator {
       );
       return res;
     } catch (e) {
-      (<any>global).log.debug(e);
+      log().debug(e);
       return undefined;
     }
   }

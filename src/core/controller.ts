@@ -7,7 +7,7 @@ import { WindowWrapper } from "../tools/windows";
 import { simulatePaste, windowController } from "../tools/windowController";
 import { envConfig } from "../tools/envConfig";
 import { l10n, L10N } from "../tools/l10n";
-import { reverseRuleName, RuleName } from "../tools/rule";
+import { reverseRuleName, RuleName, colorRules } from "../tools/rule";
 import { normalizeAppend } from "./stringProcessor";
 import { app, Rectangle } from "electron";
 import { ActionManager } from "../tools/action";
@@ -180,36 +180,42 @@ class Controller {
     this.sync(language);
   }
 
+  getOptions() {
+    let realOptions = 0;
+    colorRules.map(ruleName => {
+      if (this.get(ruleName)) {
+        realOptions |= ruleName;
+      }
+    });
+    return realOptions;
+  }
+
   setCurrentColor(fail = false) {
-    const listen = this.get(RuleName.listenClipboard);
-    const copy = this.get(RuleName.autoCopy);
-    const incremental = this.get(RuleName.incrementalCopy);
-    const paste = this.get(RuleName.autoPaste);
     if (fail) {
       this.win.switchColor(ColorStatus.Fail);
       return;
     }
-    if (!listen) {
+    if (!this.get(RuleName.listenClipboard)) {
       this.win.switchColor(ColorStatus.None);
       return;
     }
-    if (incremental) {
-      if (copy && paste) {
+    const options = this.getOptions();
+    switch (options) {
+      case RuleName.incrementalCopy | RuleName.autoCopy | RuleName.autoPaste:
         this.win.switchColor(ColorStatus.IncrementalCopyPaste);
-      } else if (copy) {
+        return;
+      case RuleName.incrementalCopy | RuleName.autoCopy:
         this.win.switchColor(ColorStatus.IncrementalCopy);
-      } else {
+        return;
+      case RuleName.incrementalCopy:
         this.win.switchColor(ColorStatus.Incremental);
-      }
-      return;
-    }
-    if (copy && paste) {
-      this.win.switchColor(ColorStatus.AutoPaste);
-      return;
-    }
-    if (copy) {
-      this.win.switchColor(ColorStatus.AutoCopy);
-      return;
+        return;
+      case RuleName.autoCopy | RuleName.autoPaste:
+        this.win.switchColor(ColorStatus.AutoPaste);
+        return;
+      case RuleName.autoCopy:
+        this.win.switchColor(ColorStatus.AutoCopy);
+        return;
     }
     this.win.switchColor(ColorStatus.Listen);
   }
@@ -303,6 +309,7 @@ class Controller {
 
   restoreFromConfig() {
     for (let keyValue in this.config.values) {
+      
       this.setByKeyValue(keyValue, this.config.values[keyValue], false);
     }
   }
@@ -404,7 +411,10 @@ class Controller {
   }
 
   setByKeyValue(ruleKey: string, value: any, save = true, refresh = true) {
+    
     let ruleValue = reverseRuleName[ruleKey];
+    
+    
     this.setByRuleName(ruleValue, value, save, refresh);
   }
 }

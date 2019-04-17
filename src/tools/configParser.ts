@@ -34,6 +34,7 @@ class ConfigParser {
 
   set(key: RuleName, value: any) {
     let keyValue = getEnumValue(key);
+
     let check = this.rules[keyValue].check;
     if (check && !check(value)) {
       throw `${key} check fail`;
@@ -46,6 +47,7 @@ class ConfigParser {
     if (!ruleKeys.includes(keyValue)) {
       return false;
     }
+
     let check = this.rules[keyValue].check;
     if (check && !check(value)) {
       return false;

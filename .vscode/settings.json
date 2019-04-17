@@ -17,5 +17,6 @@
             "autoFix": true
         }
     ],
-    "typescript.updateImportsOnFileMove.enabled": "always"
+    "typescript.updateImportsOnFileMove.enabled": "always",
+    "editor.fontFamily": "Monaco"
 }

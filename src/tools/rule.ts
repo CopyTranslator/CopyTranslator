@@ -1,15 +1,15 @@
 import { en } from "./locales";
 import { roles } from "./action";
-
+const _ = require("lodash");
 enum RuleName {
-  autoCopy,
+  autoCopy = 1,
+  incrementalCopy = 2,
+  autoPaste = 4,
   listenClipboard,
   detectLanguage,
-  incrementalCopy,
   stayTop,
   smartDict,
   autoHide,
-  autoPaste,
   autoFormat,
   autoShow,
   tapCopy,
@@ -35,16 +35,22 @@ enum RuleName {
   notices
 }
 
-let ruleKeys: Array<string> = Object.values(RuleName).filter(
-  k => (typeof k as any) !== "number"
+export const colorRules: RuleName[] = [
+  RuleName.autoCopy,
+  RuleName.incrementalCopy,
+  RuleName.autoPaste
+];
+//是数字列表
+const ruleValues: Array<number> = Object.values(RuleName).filter( 
+  k => (typeof k as any) == "number"
 );
 
-let reverseRuleName: any = {};
-Object.values(RuleName)
-  .filter(k => (typeof k as any) == "number")
-  .forEach(e => {
-    reverseRuleName[ruleKeys[e]] = e;
-  });
+ 
+const reverseRuleName = _.keyBy(ruleValues, function(o:number) {
+  return RuleName[o];
+});
+
+const ruleKeys=Object.keys(reverseRuleName);
 
 interface ModeConfig {
   x: number;

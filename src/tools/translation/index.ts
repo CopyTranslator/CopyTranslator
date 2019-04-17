@@ -39,7 +39,7 @@ export function splitChn(text: string): string[] {
 
 function countSentences(str: string, splitFunc: (text: string) => string[]) {
   let t = splitFunc(str);
-  console.log(t);
+
   return t.length;
 }
 
@@ -60,7 +60,6 @@ export function reSegmentGoogle(
   }
 
   const counts = sentences.map(sentence => countSentences(sentence, splitFunc));
-  console.log(text, sentences, counts, result);
   if (_.sum(counts) != result.length) {
     return _.join(result, "\n");
   }

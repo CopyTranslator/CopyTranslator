@@ -27,6 +27,7 @@ interface DiffConfig {
   iconPath: string;
   trayIconPath: string;
   styleTemplate: string;
+  publicUrl: string;
 }
 
 interface EnvConfig {
@@ -46,14 +47,16 @@ const ProductionConfig: DiffConfig = {
   systemLocaleDir: path.join(process.resourcesPath, "locales"),
   iconPath: path.join(process.resourcesPath, iconName),
   trayIconPath: path.join(process.resourcesPath, trayName),
-  styleTemplate: path.join(process.resourcesPath, "styles.css")
+  styleTemplate: path.join(process.resourcesPath, "styles.css"),
+  publicUrl: `file://${__dirname}`
 };
 
 const DevConfig: DiffConfig = {
   systemLocaleDir: path.join(process.cwd(), "dist_locales"),
   iconPath: path.join(process.cwd(), iconName),
   trayIconPath: path.join(process.cwd(), trayName),
-  styleTemplate: path.join(process.cwd(), "src", "styles.css")
+  styleTemplate: path.join(process.cwd(), "src", "styles.css"),
+  publicUrl: <string>process.env.WEBPACK_DEV_SERVER_URL
 };
 
 const envConfig: EnvConfig = {

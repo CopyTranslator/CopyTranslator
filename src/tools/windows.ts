@@ -2,6 +2,7 @@ import { BrowserWindow, Rectangle, screen } from "electron";
 import { createProtocol } from "vue-cli-plugin-electron-builder/lib";
 import { ColorStatus, HideDirection, MessageType, WinOpt } from "./enums";
 import { ModeConfig, RuleName } from "./rule";
+import { envConfig } from "./envConfig";
 import { RouteName } from "./action";
 import { loadStyles } from "./style";
 import { Controller } from "../core/controller";
@@ -40,14 +41,14 @@ class WindowWrapper {
     if (!this.window) return;
     if (process.env.WEBPACK_DEV_SERVER_URL) {
       // Load the url of the dev server if in development mode
-      this.window.loadURL(
-        process.env.WEBPACK_DEV_SERVER_URL + `/#/${routerName}`
-      );
+      this.window.loadURL(envConfig.diffConfig.publicUrl + `/#/${routerName}`);
       if (!process.env.IS_TEST) this.window.webContents.openDevTools();
     } else {
       createProtocol("app");
       // Load the index.html when not in development
-      this.window.loadURL(`file://${__dirname}/index.html#${routerName}`);
+      this.window.loadURL(
+        `${envConfig.diffConfig.publicUrl}/index.html#${routerName}`
+      );
     }
     let windowPointer = this.window;
     this.window.webContents.on("did-finish-load", function() {

@@ -1,7 +1,7 @@
 import { ruleKeys } from "../tools/rule";
 import { dialog, BrowserWindow, MenuItem, nativeImage, shell } from "electron";
 import { envConfig } from "../tools/envConfig";
-import { checkUpdate } from "../tools/checker";
+import { checkForUpdates } from "../tools/update";
 import { constants, version } from "../core/constant";
 import { Controller } from "../core/controller";
 import { decompose } from "../tools/action";
@@ -81,7 +81,7 @@ function handleNormalAction(actionId: string) {
               shell.openExternal(constants.wiki);
               break;
             case 2:
-              checkUpdate();
+              checkForUpdates();
               break;
           }
         }

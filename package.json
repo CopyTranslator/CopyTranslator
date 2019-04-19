@@ -1,6 +1,6 @@
 {
   "name": "copytranslator",
-  "version": "0.0.8",
+  "version": "0.8.0",
   "private": true,
   "description": "Foreign language assisted reading and translation solution",
   "author": {
@@ -26,6 +26,7 @@
     "baidu-aip-sdk": "^2.3.9",
     "copy-translation.js": "0.0.8",
     "electron-clipboard-extended": "^1.1.1",
+    "electron-updater": "^4.0.6",
     "element-ui": "^2.5.4",
     "iohook": "^0.3.1",
     "isomorphic-fetch": "^2.2.1",
@@ -42,6 +43,7 @@
     "@types/lodash": "^4.14.123",
     "@types/md5": "^2.1.33",
     "@types/node": "^11.11.0",
+    "@types/semver": "^6.0.0",
     "@vue/cli-plugin-babel": "^3.2.0",
     "@vue/cli-plugin-eslint": "^3.2.0",
     "@vue/cli-plugin-typescript": "^3.3.0",

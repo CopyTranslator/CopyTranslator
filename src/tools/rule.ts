@@ -1,6 +1,7 @@
 import { en } from "./locales";
 import { roles } from "./action";
 const _ = require("lodash");
+//前面三个是不能交换顺序的，会出问题
 enum RuleName {
   autoCopy = 1,
   incrementalCopy = 2,
@@ -8,6 +9,7 @@ enum RuleName {
   listenClipboard,
   detectLanguage,
   stayTop,
+  smartTranslate,
   smartDict,
   autoHide,
   autoFormat,

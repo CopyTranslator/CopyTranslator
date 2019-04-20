@@ -11,11 +11,6 @@ enum HideDirection {
   Minify
 }
 
-enum YoudaoStatus {
-  Success,
-  Fail
-}
-
 enum MessageType {
   WindowOpt,
   TranslateResult,
@@ -63,11 +58,4 @@ const ColorStatus = mkenum({
 
 type ColorStatus = (typeof ColorStatus)[keyof typeof ColorStatus];
 
-export {
-  FrameMode,
-  YoudaoStatus,
-  ColorStatus,
-  MessageType,
-  WinOpt,
-  HideDirection
-};
+export { FrameMode, ColorStatus, MessageType, WinOpt, HideDirection };

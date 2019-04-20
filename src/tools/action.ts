@@ -222,6 +222,7 @@ class ActionManager {
     items.push(switchAction(RuleName.autoPurify));
     items.push(switchAction(RuleName.detectLanguage));
     items.push(switchAction(RuleName.incrementalCopy));
+    items.push(switchAction(RuleName.smartTranslate));
     items.push(switchAction(RuleName.autoHide));
     items.push(switchAction(RuleName.autoShow));
     items.push(switchAction(RuleName.stayTop));

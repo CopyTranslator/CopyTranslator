@@ -13,7 +13,8 @@ import { app, Rectangle } from "electron";
 import { ActionManager } from "../tools/action";
 import { TrayManager } from "../tools/tray";
 import { handleActions } from "./actionCallback";
-import { checkUpdate, checkNotice } from "../tools/checker";
+import { checkNotice } from "../tools/checker";
+import { checkForUpdates } from "../tools/update";
 import { log } from "../tools/logger";
 
 const clipboard = require("electron-clipboard-extended");
@@ -33,6 +34,7 @@ class Controller {
 
   constructor() {
     this.config.loadValues(envConfig.configPath);
+    console.log(this.config.values.targetLanguage);
     this.restoreFromConfig();
   }
 
@@ -45,7 +47,7 @@ class Controller {
     windowController.bind();
     this.tray.init();
     this.action.init();
-    checkUpdate();
+    checkForUpdates();
     checkNotice();
   }
 
@@ -376,19 +378,17 @@ class Controller {
         }
 
         this.clear();
-        if (
-          !(this.get(RuleName.sourceLanguage) in this.translator.getLanguages())
-        )
+        if (!this.translator.isValid(this.get(RuleName.sourceLanguage))) {
           this.setByRuleName(RuleName.sourceLanguage, "English", save, refresh);
-        if (
-          !(this.get(RuleName.targetLanguage) in this.translator.getLanguages())
-        )
+        }
+        if (!this.translator.isValid(this.get(RuleName.targetLanguage))) {
           this.setByRuleName(
             RuleName.targetLanguage,
             "Chinese(Simplified)",
             save,
             refresh
           );
+        }
         this.win.load(this.get(RuleName.frameMode));
         break;
     }

@@ -2,7 +2,7 @@ const _ = require("lodash");
 export const constants = {
   appName: "CopyTranslator",
   nickName: "Zouwu",
-  version: "8.2.0",
+  version: "v8.2.0",
   stage: "alpha",
   wiki: "https://copytranslator.github.io/guide",
   homepage: "https://copytranslator.github.io",

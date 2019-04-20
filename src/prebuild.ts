@@ -6,6 +6,11 @@ import { en, zh_cn, Locale } from "./tools/locales";
 type Resources = { [key: string]: Locale };
 
 const localeDir = path.join(process.cwd(), "dist_locales");
+// prettier-ignore
+let resources: Resources = {
+  'en': en,
+  'zh-cn': zh_cn
+};
 
 function mkdir(dir: string) {
   if (!fs.existsSync(dir)) {
@@ -25,12 +30,6 @@ function generateLocales(
     );
   }
 }
-
-// prettier-ignore
-let resources: Resources = {
-    'en': en,
-    'zh-cn': zh_cn
-};
 
 fs.readdirSync(localeDir)
   .filter(

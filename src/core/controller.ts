@@ -32,7 +32,7 @@ class Controller {
   translating: boolean = false; //正在翻译
 
   constructor() {
-    this.config.loadValues(envConfig.sharedConfig.configPath);
+    this.config.loadValues(envConfig.configPath);
     this.restoreFromConfig();
   }
 
@@ -57,7 +57,7 @@ class Controller {
   }
 
   onExit() {
-    this.config.saveValues(envConfig.sharedConfig.configPath);
+    this.config.saveValues(envConfig.configPath);
     this.action.unregister();
     app.quit();
   }
@@ -73,7 +73,7 @@ class Controller {
   }
 
   resotreDefaultSetting() {
-    this.config.restoreDefault(envConfig.sharedConfig.configPath);
+    this.config.restoreDefault(envConfig.configPath);
     this.restoreFromConfig();
   }
 
@@ -309,7 +309,6 @@ class Controller {
 
   restoreFromConfig() {
     for (let keyValue in this.config.values) {
-      
       this.setByKeyValue(keyValue, this.config.values[keyValue], false);
     }
   }
@@ -399,7 +398,7 @@ class Controller {
       this.win.sendMsg(MessageType.UpdateT.toString(), null);
     }
     if (save) {
-      this.config.saveValues(envConfig.sharedConfig.configPath);
+      this.config.saveValues(envConfig.configPath);
       if (refresh) {
         this.refresh();
       } else if (ruleName == RuleName.autoFormat) {
@@ -411,10 +410,8 @@ class Controller {
   }
 
   setByKeyValue(ruleKey: string, value: any, save = true, refresh = true) {
-    
     let ruleValue = reverseRuleName[ruleKey];
-    
-    
+
     this.setByRuleName(ruleValue, value, save, refresh);
   }
 }

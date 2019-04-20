@@ -325,12 +325,10 @@ class ActionManager {
   loadShortcuts() {
     this.shortcuts = defaultShortcuts;
     try {
-      this.shortcuts = JSON.parse(
-        fs.readFileSync(envConfig.sharedConfig.shortcut, "utf-8")
-      );
+      this.shortcuts = JSON.parse(fs.readFileSync(envConfig.shortcut, "utf-8"));
     } catch (e) {
       fs.writeFileSync(
-        envConfig.sharedConfig.shortcut,
+        envConfig.shortcut,
         JSON.stringify(defaultShortcuts, null, 4)
       );
     }

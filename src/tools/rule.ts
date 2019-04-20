@@ -41,16 +41,15 @@ export const colorRules: RuleName[] = [
   RuleName.autoPaste
 ];
 //是数字列表
-const ruleValues: Array<number> = Object.values(RuleName).filter( 
+const ruleValues: Array<number> = Object.values(RuleName).filter(
   k => (typeof k as any) == "number"
 );
 
- 
-const reverseRuleName = _.keyBy(ruleValues, function(o:number) {
+const reverseRuleName = _.keyBy(ruleValues, function(o: number) {
   return RuleName[o];
 });
 
-const ruleKeys=Object.keys(reverseRuleName);
+const ruleKeys = Object.keys(reverseRuleName);
 
 interface ModeConfig {
   x: number;

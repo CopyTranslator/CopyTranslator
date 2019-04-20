@@ -1,9 +1,8 @@
-import { BrowserWindow, ipcMain as ipc, screen, Display } from "electron";
-const ioHook = require("iohook");
+import { BrowserWindow, ipcMain as ipc, screen } from "electron";
 import { MessageType, WinOpt } from "./enums";
 import { RuleName } from "./rule";
 import { Controller } from "../core/controller";
-
+const ioHook = require("iohook");
 const robot = require("robotjs");
 
 function simulateCopy() {
@@ -31,12 +30,25 @@ class WindowController {
       var arg = args.args;
       var currentWindow = BrowserWindow.fromWebContents(event.sender);
       const controller = <Controller>(<any>global).controller;
+      const { x, y } = screen.getCursorScreenPoint();
       switch (args.type) {
-        case WinOpt.Drag:
+        case WinOpt.StartDrag:
+          this.isFollow = true;
+          this.x = x;
+          this.y = y;
           this.currentWindow = currentWindow;
-          this.isFollow = arg.status;
-          this.x = arg.x;
-          this.y = arg.y;
+          break;
+        case WinOpt.Dragging:
+          if (this.isFollow && this.currentWindow) {
+            let dx = x - this.x;
+            let dy = y - this.y;
+            this.x = x;
+            this.y = y;
+            let bounds = this.currentWindow.getBounds();
+            bounds.x += dx;
+            bounds.y += dy;
+            this.currentWindow.setBounds(bounds);
+          }
           break;
         case WinOpt.Minify:
           controller.win.edgeHide(controller.get(RuleName.hideDirect));
@@ -60,6 +72,8 @@ class WindowController {
         this.ctrlKey = event.ctrlKey;
       }
     });
+
+    //字体缩放
     ioHook.on("mousewheel", (event: any) => {
       if (!this.ctrlKey) return;
       const window = BrowserWindow.getFocusedWindow();
@@ -70,6 +84,16 @@ class WindowController {
         });
     });
     ioHook.on("mouseup", (event: MouseEvent) => {
+      //取消鼠标拖拽跟踪
+      if (this.currentWindow) {
+        this.currentWindow.webContents.send(MessageType.WindowOpt.toString(), {
+          type: WinOpt.EndDrag
+        });
+        this.currentWindow = undefined;
+      }
+      this.isFollow = false;
+
+      //模拟点按复制
       if (
         this.tapCopy &&
         Date.now() - this.lastDown > 300 &&

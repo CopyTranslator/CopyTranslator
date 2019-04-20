@@ -30,10 +30,7 @@ interface DiffConfig {
   publicUrl: string;
 }
 
-interface EnvConfig {
-  diffConfig: DiffConfig;
-  sharedConfig: SharedConfig;
-}
+type EnvConfig = DiffConfig & SharedConfig;
 
 const sharedConfig: SharedConfig = {
   configDir: path.join(os.homedir(), "copytranslator"),
@@ -43,30 +40,27 @@ const sharedConfig: SharedConfig = {
   shortcut: path.join(os.homedir(), "copytranslator", "shortcuts.json")
 };
 
-const ProductionConfig: DiffConfig = {
-  systemLocaleDir: path.join(process.resourcesPath, "locales"),
-  iconPath: path.join(process.resourcesPath, iconName),
-  trayIconPath: path.join(process.resourcesPath, trayName),
-  styleTemplate: path.join(process.resourcesPath, "styles.css"),
-  publicUrl: `file://${__dirname}`
-};
+const diffConfig: DiffConfig =
+  process.env.NODE_ENV == "production"
+    ? {
+        systemLocaleDir: path.join(process.resourcesPath, "locales"),
+        iconPath: path.join(process.resourcesPath, iconName),
+        trayIconPath: path.join(process.resourcesPath, trayName),
+        styleTemplate: path.join(process.resourcesPath, "styles.css"),
+        publicUrl: `file://${__dirname}`
+      }
+    : {
+        systemLocaleDir: path.join(process.cwd(), "dist_locales"),
+        iconPath: path.join(process.cwd(), iconName),
+        trayIconPath: path.join(process.cwd(), trayName),
+        styleTemplate: path.join(process.cwd(), "src", "styles.css"),
+        publicUrl: <string>process.env.WEBPACK_DEV_SERVER_URL
+      };
 
-const DevConfig: DiffConfig = {
-  systemLocaleDir: path.join(process.cwd(), "dist_locales"),
-  iconPath: path.join(process.cwd(), iconName),
-  trayIconPath: path.join(process.cwd(), trayName),
-  styleTemplate: path.join(process.cwd(), "src", "styles.css"),
-  publicUrl: <string>process.env.WEBPACK_DEV_SERVER_URL
-};
+const envConfig: EnvConfig = Object.assign(sharedConfig, diffConfig);
 
-const envConfig: EnvConfig = {
-  sharedConfig: sharedConfig,
-  diffConfig:
-    process.env.NODE_ENV == "production" ? ProductionConfig : DevConfig
-};
-
-mkdir(envConfig.sharedConfig.configDir);
-mkdir(envConfig.sharedConfig.userLocaleDir);
+mkdir(envConfig.configDir);
+mkdir(envConfig.userLocaleDir);
 
 export { envConfig };
 export default iconName;

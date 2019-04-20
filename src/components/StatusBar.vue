@@ -4,17 +4,15 @@
     :style="styleNow"
     v-on:dblclick="minify"
     v-on:contextmenu="switchListen"
-  >
-    <i class="el-icon-rank dragButton"></i>
-    <i class="el-icon-rank dragButton" style="float:left;"></i>
-    <i class="el-icon-rank dragButton" style="float:right;"></i>
-  </div>
+    v-on:mousedown="startDrag"
+  ></div>
 </template>
 
 <script>
 import WindowController from "./WindowController";
 import { MessageType, WinOpt } from "../tools/enums";
 import { ipcRenderer as ipc } from "electron";
+import { WindowWrapper } from "../tools/windows";
 
 export default {
   mixins: [WindowController],
@@ -42,6 +40,9 @@ export default {
         case WinOpt.ChangeColor:
           this.switchColor(arg.args);
           break;
+        case WinOpt.EndDrag:
+          this.endDrag();
+          break;
       }
     });
     this.$controller.setCurrentColor();
@@ -52,7 +53,7 @@ export default {
 <style scoped>
 .statusBar {
   width: 100%;
-  height: 20px;
+  height: 15px;
 }
 .dragButton {
   -webkit-app-region: drag;

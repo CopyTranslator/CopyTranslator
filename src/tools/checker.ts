@@ -30,7 +30,7 @@ export function checkUpdate() {
             title: "A newer version is available " + info.version,
             message: info.abstract,
             buttons: [t("toDownload"), t("changelog"), t("cancel")],
-            icon: nativeImage.createFromPath(envConfig.diffConfig.iconPath),
+            icon: nativeImage.createFromPath(envConfig.iconPath),
             cancelId: 2
           },
           function(response, checkboxChecked) {
@@ -75,7 +75,7 @@ export function checkNotice() {
             message: notice.message,
             buttons: buttons,
             cancelId: buttons.length - 1,
-            icon: nativeImage.createFromPath(envConfig.diffConfig.iconPath)
+            icon: nativeImage.createFromPath(envConfig.iconPath)
           },
           function(response, checkboxChecked) {
             shell.openExternal(notice.buttons[response].ref);

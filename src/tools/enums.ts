@@ -26,7 +26,9 @@ enum MessageType {
 
 enum WinOpt {
   Minify,
-  Drag,
+  StartDrag,
+  Dragging,
+  EndDrag,
   Resize,
   Zoom,
   OpenExternal,
@@ -58,6 +60,7 @@ const ColorStatus = mkenum({
   IncrementalCopyPaste: rgb(0, 0, 128),
   Fail: rgb(255, 0, 0)
 });
+
 type ColorStatus = (typeof ColorStatus)[keyof typeof ColorStatus];
 
 export {

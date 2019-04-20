@@ -10,7 +10,8 @@ export default {
   name: "WindowController",
   data: function() {
     return {
-      routeName: undefined
+      routeName: undefined,
+      animationId: undefined
     };
   },
   methods: {
@@ -29,14 +30,21 @@ export default {
     minify(event) {
       this.windowOpt(WinOpt.Minify);
     },
-    bindDrag(event) {
+    startDrag(event) {
       if (event.button === 0) {
-        this.windowOpt(WinOpt.Drag, {
-          status: true,
-          x: event.screenX,
-          y: event.screenY
-        });
+        requestAnimationFrame(this.dragging);
+        this.windowOpt(WinOpt.StartDrag);
       }
+    },
+    endDrag(e) {
+      if (this.animationId) {
+        cancelAnimationFrame(this.animationId);
+        this.animationId = undefined;
+      } else return;
+    },
+    dragging() {
+      this.windowOpt(WinOpt.Dragging);
+      this.animationId = requestAnimationFrame(this.dragging);
     },
     close(event) {},
     openMenu(id = null) {

@@ -23,10 +23,10 @@ function loadStyles(): string {
 }
 `;
   try {
-    let styles = fs.readFileSync(envConfig.sharedConfig.style, "utf-8");
+    let styles = fs.readFileSync(envConfig.style, "utf-8");
     return styles.toString();
   } catch (e) {
-    fs.writeFileSync(envConfig.sharedConfig.style, defaultStyles);
+    fs.writeFileSync(envConfig.style, defaultStyles);
     return defaultStyles;
   }
 }

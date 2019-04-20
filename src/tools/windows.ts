@@ -1,4 +1,4 @@
-import { BrowserWindow, Rectangle, screen } from "electron";
+import { BrowserWindow, Rectangle, screen, nativeImage } from "electron";
 import { createProtocol } from "vue-cli-plugin-electron-builder/lib";
 import { ColorStatus, HideDirection, MessageType, WinOpt } from "./enums";
 import { ModeConfig, RuleName } from "./rule";
@@ -41,14 +41,12 @@ class WindowWrapper {
     if (!this.window) return;
     if (process.env.WEBPACK_DEV_SERVER_URL) {
       // Load the url of the dev server if in development mode
-      this.window.loadURL(envConfig.diffConfig.publicUrl + `/#/${routerName}`);
+      this.window.loadURL(envConfig.publicUrl + `/#/${routerName}`);
       if (!process.env.IS_TEST) this.window.webContents.openDevTools();
     } else {
       createProtocol("app");
       // Load the index.html when not in development
-      this.window.loadURL(
-        `${envConfig.diffConfig.publicUrl}/index.html#${routerName}`
-      );
+      this.window.loadURL(`${envConfig.publicUrl}/index.html#${routerName}`);
     }
     let windowPointer = this.window;
     this.window.webContents.on("did-finish-load", function() {
@@ -177,17 +175,16 @@ class WindowWrapper {
 
   createWindow(routeName: RouteName) {
     let param: ModeConfig | undefined;
+    const controller = <Controller>(<any>global).controller;
     switch (routeName) {
       case RouteName.Focus:
-        param = (<Controller>(<any>global).controller).get(RuleName.focus);
+        param = controller.get(RuleName.focus);
         break;
       case RouteName.Contrast:
-        param = (<Controller>(<any>global).controller).get(RuleName.contrast);
+        param = controller.get(RuleName.contrast);
         break;
       case RouteName.Settings:
-        param = (<Controller>(<any>global).controller).get(
-          RuleName.settingsConfig
-        );
+        param = controller.get(RuleName.settingsConfig);
         break;
       default:
         break;

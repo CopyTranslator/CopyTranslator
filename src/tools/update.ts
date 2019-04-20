@@ -9,10 +9,7 @@ autoUpdater.autoDownload = false;
 
 function bindUpdateEvents() {
   autoUpdater.on("error", (error: Error) => {
-    dialog.showErrorBox(
-      "Error: ",
-      error == null ? "unknown" : (error.stack || error).toString()
-    );
+    checkUpdate();
   });
   autoUpdater.on("update-available", updateInfo => {
     const width = 500,
@@ -31,7 +28,7 @@ function bindUpdateEvents() {
       height: height,
       titleBarStyle: "hiddenInset",
       maximizable: false,
-      title: "Software Update",
+      title: "软件更新",
       parent: BrowserWindow.getAllWindows()[0],
       icon: nativeImage.createFromPath(envConfig.iconPath)
     });
@@ -61,10 +58,10 @@ function bindUpdateEvents() {
     dialog.showMessageBox(
       {
         type: "info",
-        title: "Install Updates",
+        title: "安装更新",
         icon: nativeImage.createFromPath(envConfig.iconPath),
-        message: "Updates downloaded",
-        buttons: ["Quit and Install now", "Install after Quit", "cancel"],
+        message: "更新已下载",
+        buttons: ["现在退出并安装", "退出后自动安装", "cancel"],
         cancelId: 2
       },
       (response, checkboxChecked) => {
@@ -90,11 +87,5 @@ export async function checkForUpdates() {
     bindUpdateEvents();
     binded = true;
   }
-  try {
-    let t = await autoUpdater.checkForUpdates();
-    console.log(t);
-  } catch (e) {
-    console.log(e);
-    checkUpdate();
-  }
+  autoUpdater.checkForUpdates();
 }

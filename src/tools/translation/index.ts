@@ -125,6 +125,10 @@ export abstract class Translator {
   ): Promise<CommonTranslateResult | undefined>;
 
   abstract detect(text: string): Promise<string | undefined>; //return lang
+
+  isValid(lang: string): boolean {
+    return _.includes(this.getLanguages(), lang);
+  }
 }
 export const langcodes = {
   af: {

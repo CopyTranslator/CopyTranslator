@@ -43,6 +43,7 @@ interface Locale {
   ok: string;
   restoreDefault: string;
   enableNotify: string;
+  smartTranslate: string;
 }
 
 const zh_cn: Locale = {
@@ -89,7 +90,8 @@ const zh_cn: Locale = {
   cancel: "取消",
   ok: "确定",
   restoreDefault: "恢复默认设置",
-  enableNotify: "启用通知"
+  enableNotify: "启用通知",
+  smartTranslate: "智能互译"
 };
 
 const en: Locale = {
@@ -136,7 +138,8 @@ const en: Locale = {
   cancel: "Cancel",
   ok: "OK",
   restoreDefault: "Restore default settings",
-  enableNotify: "Enable Notify"
+  enableNotify: "Enable Notify",
+  smartTranslate: "Smart Translate"
 };
 
 export { en, zh_cn, Locale };

@@ -42,5 +42,6 @@
     "cancel": "取消",
     "ok": "确定",
     "restoreDefault": "恢复默认设置",
-    "enableNotify": "启用通知"
+    "enableNotify": "启用通知",
+    "smartTranslate": "智能互译"
 }

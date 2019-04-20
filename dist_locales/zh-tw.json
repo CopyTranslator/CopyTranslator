@@ -43,5 +43,6 @@
     "ok": "確定",
     "resetDefault": "恢復預設設定",
     "restoreDefault": "恢復預設設定",
-    "enableNotify": "啟用通知"
+    "enableNotify": "啟用通知",
+    "smartTranslate": "Smart Translate"
 }

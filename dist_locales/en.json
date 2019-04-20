@@ -42,5 +42,6 @@
     "cancel": "Cancel",
     "ok": "OK",
     "restoreDefault": "Restore default settings",
-    "enableNotify": "Enable Notify"
+    "enableNotify": "Enable Notify",
+    "smartTranslate": "Smart Translate"
 }

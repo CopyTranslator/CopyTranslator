@@ -222,9 +222,7 @@ class Controller {
     this.win.switchColor(ColorStatus.Listen);
   }
 
-  async preProcess(text: string) {
-    this.lastAppend = text;
-    this.setSrc(text);
+  async decideLanguage(text: string) {
     let should_src = this.translator.lang2code(this.source());
     let dest_lang = this.translator.lang2code(this.target());
     let src_lang = should_src;
@@ -236,16 +234,23 @@ class Controller {
     }
 
     if (src_lang == dest_lang) {
-      dest_lang = should_src;
+      if (this.get(RuleName.smartTranslate)) {
+        dest_lang = should_src;
+      }
     } else if (!this.get(RuleName.detectLanguage)) {
       src_lang = should_src;
     }
 
-    this.win.switchColor(ColorStatus.Translating);
     return {
       source: src_lang,
       target: dest_lang
     };
+  }
+
+  preProcess(text: string) {
+    this.lastAppend = text;
+    this.setSrc(text);
+    this.win.switchColor(ColorStatus.Translating);
   }
 
   async doTranslate(text: string) {
@@ -253,8 +258,11 @@ class Controller {
       //翻译无法被打断
       return;
     this.translating = true;
-    const language = await this.preProcess(text);
-
+    const language = await this.decideLanguage(text);
+    if (language.source == language.target) {
+      return;
+    }
+    this.preProcess(text);
     this.translator
       .translate(this.src, language.source, language.target)
       .then(res => {

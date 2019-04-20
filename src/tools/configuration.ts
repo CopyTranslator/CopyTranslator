@@ -30,6 +30,10 @@ function initConfig(
   );
   config.addRule(RuleName.stayTop, new BoolRule(false, "always stay on top"));
   config.addRule(RuleName.smartDict, new BoolRule(true, "smart dict"));
+  config.addRule(
+    RuleName.smartTranslate,
+    new BoolRule(true, "smart translate")
+  );
 
   config.addRule(
     RuleName.autoPaste,

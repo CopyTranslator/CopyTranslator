@@ -45,7 +45,6 @@ function bindUpdateEvents() {
   });
 
   autoUpdater.on("update-not-available", updateInfo => {
-    console.log(updateInfo);
     dialog.showMessageBox({
       type: "info",
       title: "暂无更新",

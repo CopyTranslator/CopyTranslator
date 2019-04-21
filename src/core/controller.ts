@@ -34,7 +34,6 @@ class Controller {
 
   constructor() {
     this.config.loadValues(envConfig.configPath);
-    console.log(this.config.values.targetLanguage);
     this.restoreFromConfig();
   }
 

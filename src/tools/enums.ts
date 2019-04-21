@@ -28,7 +28,8 @@ enum WinOpt {
   Zoom,
   OpenExternal,
   ChangeColor,
-  Refresh
+  Refresh,
+  SaveMode
 }
 
 function rgb(r: number, g: number, b: number) {

@@ -39,6 +39,7 @@ class WindowWrapper {
 
   load(routerName: RouteName = RouteName.Focus) {
     if (!this.window) return;
+    this.winOpt(WinOpt.SaveMode);
     if (process.env.WEBPACK_DEV_SERVER_URL) {
       // Load the url of the dev server if in development mode
       this.window.loadURL(envConfig.publicUrl + `/#/${routerName}`);

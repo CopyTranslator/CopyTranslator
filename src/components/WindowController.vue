@@ -57,22 +57,30 @@ export default {
         x: x,
         y: y
       });
+    },
+    storeWindow() {
+      if (this.routeName) {
+        this.$controller.saveWindow(
+          this.routeName,
+          this.$controller.win.getBound(),
+          this.size
+        );
+      }
     }
   },
   mounted: function() {
     ipc.on(MessageType.Router.toString(), (event, arg) => {
       this.changeModeNoSave(arg);
     });
+    ipc.on(MessageType.WindowOpt.toString(), (event, arg) => {
+      if (arg.type == WinOpt.SaveMode) {
+        this.storeWindow();
+      }
+    });
     if (this.routeName) this.$controller.restoreWindow(this.routeName);
   },
   destroyed: function() {
-    if (this.routeName) {
-      this.$controller.saveWindow(
-        this.routeName,
-        this.$controller.win.getBound(),
-        this.size
-      );
-    }
+    this.storeWindow();
   }
 };
 </script>

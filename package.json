@@ -12,7 +12,7 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "electron:build": "npm run prebuild && vue-cli-service electron:build && npm run postbuild",
+    "electron:build": "npm run prebuild && vue-cli-service electron:build",
     "electron:serve": "npm run prebuild && vue-cli-service electron:serve",
     "postinstall": "electron-builder install-app-deps",
     "rebuild": "npm rebuild --runtime=electron --target=3.0.0 --disturl=https://atom.io/download/atom-shell --abi=64",

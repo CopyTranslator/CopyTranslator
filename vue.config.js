@@ -53,7 +53,7 @@ module.exports = {
         mac: {
           target: [
             {
-              target: "dmg",
+              target: "default",
               arch: ["x64"]
             }
           ],

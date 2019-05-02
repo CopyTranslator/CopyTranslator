@@ -31,14 +31,6 @@ module.exports = {
               target: "nsis",
               arch: ["x64"] //"ia32"
             }
-            // {
-            //   target: "portable",
-            //   arch: ["x64"] //"ia32"
-            // },
-            // {
-            //   target: "zip",
-            //   arch: ["x64"] //"ia32"
-            // }
           ]
         },
         linux: {
@@ -53,7 +45,7 @@ module.exports = {
         mac: {
           target: [
             {
-              target: "dmg",
+              target: "default",
               arch: ["x64"]
             }
           ],

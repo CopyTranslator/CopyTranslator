@@ -34,7 +34,8 @@ enum RuleName {
   sourceLanguage,
   targetLanguage,
   localeSetting,
-  notices
+  notices,
+  titleBar
 }
 
 export const colorRules: RuleName[] = [
@@ -152,8 +153,9 @@ export class EnumRule implements Rule {
     this.predefined = predefined;
     this.msg = msg;
     this.check = function(value: any) {
-      return (
-        value in Object.values(type).filter(k => (typeof k as any) == "number")
+      return _.includes(
+        Object.values(type).filter(k => (typeof k as any) == "number"),
+        value
       );
     };
   }

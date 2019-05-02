@@ -11,6 +11,12 @@ enum HideDirection {
   Minify
 }
 
+enum TitlebarType {
+  IOHook,
+  Native,
+  Enhance
+}
+
 enum MessageType {
   WindowOpt,
   TranslateResult,
@@ -21,6 +27,7 @@ enum MessageType {
 
 enum WinOpt {
   Minify,
+  Drag,
   StartDrag,
   Dragging,
   EndDrag,
@@ -59,4 +66,11 @@ const ColorStatus = mkenum({
 
 type ColorStatus = (typeof ColorStatus)[keyof typeof ColorStatus];
 
-export { FrameMode, ColorStatus, MessageType, WinOpt, HideDirection };
+export {
+  FrameMode,
+  ColorStatus,
+  MessageType,
+  WinOpt,
+  HideDirection,
+  TitlebarType
+};

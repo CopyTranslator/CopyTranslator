@@ -9,7 +9,7 @@ import { RuleName } from "./rule";
 import { ConfigParser, getEnumValue as r } from "./configParser";
 //r can be used to transform a enum to string
 import { envConfig } from "./envConfig";
-import { HideDirection } from "./enums";
+import { HideDirection, TitlebarType } from "./enums";
 import { TranslatorType } from "./translation/translators";
 import { defaultShortcuts } from "./shortcuts";
 import { Controller } from "../core/controller";
@@ -212,6 +212,7 @@ class ActionManager {
 
     items.push(enumAction(RuleName.hideDirect, HideDirection));
     items.push(enumAction(RuleName.translatorType, TranslatorType));
+    items.push(enumAction(RuleName.titleBar, TitlebarType));
     items.push(normalAction("copySource"));
     items.push(normalAction("copyResult"));
     items.push(normalAction("clear"));
@@ -267,7 +268,6 @@ class ActionManager {
         languageGenerator(RuleName.targetLanguage)
       )
     );
-
     const localeGenerator = () => {
       const id = r(RuleName.localeSetting);
       return (<Controller>(<any>global).controller).locales

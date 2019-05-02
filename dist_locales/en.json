@@ -43,5 +43,6 @@
     "ok": "OK",
     "restoreDefault": "Restore default settings",
     "enableNotify": "Enable Notify",
-    "smartTranslate": "Smart Translate"
+    "smartTranslate": "Smart Translate",
+    "titleBar": "titleBar"
 }

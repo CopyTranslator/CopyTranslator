@@ -30,6 +30,15 @@ export default {
     minify(event) {
       this.windowOpt(WinOpt.Minify);
     },
+    bindDrag(event) {
+      if (event.button === 0) {
+        this.windowOpt(WinOpt.Drag, {
+          status: true,
+          x: event.screenX,
+          y: event.screenY
+        });
+      }
+    },
     startDrag(event) {
       if (event.button === 0) {
         requestAnimationFrame(this.dragging);

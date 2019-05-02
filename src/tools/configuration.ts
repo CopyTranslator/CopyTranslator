@@ -1,6 +1,6 @@
 import { ConfigParser } from "./configParser";
 import { BoolRule, EnumRule, GroupRule, ModeRule, RuleName } from "./rule";
-import { FrameMode, HideDirection } from "./enums";
+import { FrameMode, HideDirection, TitlebarType } from "./enums";
 import { TranslatorType } from "./translation/translators";
 import { RouteName } from "./action";
 
@@ -77,6 +77,11 @@ function initConfig(
   config.addRule(
     RuleName.hideDirect,
     new EnumRule(HideDirection.Up, "HideDirection", HideDirection)
+  );
+
+  config.addRule(
+    RuleName.titleBar,
+    new EnumRule(TitlebarType.Enhance, "titlebar Type", TitlebarType)
   );
 
   config.addRule(
@@ -191,6 +196,7 @@ function initConfig(
       [
         "translatorType",
         "hideDirect",
+        "titleBar",
         "copySource",
         "copyResult",
         "clear",

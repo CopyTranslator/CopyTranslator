@@ -16,6 +16,7 @@ import { handleActions } from "./actionCallback";
 import { checkNotice } from "../tools/checker";
 import { checkForUpdates } from "../tools/update";
 import { log } from "../tools/logger";
+import { ExecException } from "child_process";
 
 const clipboard = require("electron-clipboard-extended");
 
@@ -335,6 +336,9 @@ class Controller {
       case RuleName.listenClipboard:
         this.setWatch(value);
         break;
+      case RuleName.titleBar:
+        value = parseInt(value);
+        break;
       case RuleName.stayTop:
         if (this.win.window) {
           this.win.window.focus();
@@ -418,7 +422,6 @@ class Controller {
 
   setByKeyValue(ruleKey: string, value: any, save = true, refresh = true) {
     let ruleValue = reverseRuleName[ruleKey];
-
     this.setByRuleName(ruleValue, value, save, refresh);
   }
 }

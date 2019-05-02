@@ -43,5 +43,6 @@
     "ok": "确定",
     "restoreDefault": "恢复默认设置",
     "enableNotify": "启用通知",
-    "smartTranslate": "智能互译"
+    "smartTranslate": "智能互译",
+    "titleBar": "标题栏"
 }

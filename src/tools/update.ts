@@ -44,14 +44,14 @@ function bindUpdateEvents() {
     });
   });
 
-  autoUpdater.on("update-not-available", updateInfo => {
-    dialog.showMessageBox({
-      type: "info",
-      title: "暂无更新",
-      message: "当前版本已经是最新",
-      icon: nativeImage.createFromPath(envConfig.iconPath)
-    });
-  });
+  // autoUpdater.on("update-not-available", updateInfo => {
+  //   dialog.showMessageBox({
+  //     type: "info",
+  //     title: "暂无更新",
+  //     message: "当前版本已经是最新",
+  //     icon: nativeImage.createFromPath(envConfig.iconPath)
+  //   });
+  // });
 
   autoUpdater.on("update-downloaded", () => {
     dialog.showMessageBox(

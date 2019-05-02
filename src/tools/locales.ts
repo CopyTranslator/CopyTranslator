@@ -44,6 +44,7 @@ interface Locale {
   restoreDefault: string;
   enableNotify: string;
   smartTranslate: string;
+  titleBar: string;
 }
 
 const zh_cn: Locale = {
@@ -91,7 +92,8 @@ const zh_cn: Locale = {
   ok: "确定",
   restoreDefault: "恢复默认设置",
   enableNotify: "启用通知",
-  smartTranslate: "智能互译"
+  smartTranslate: "智能互译",
+  titleBar: "标题栏"
 };
 
 const en: Locale = {
@@ -139,7 +141,8 @@ const en: Locale = {
   ok: "OK",
   restoreDefault: "Restore default settings",
   enableNotify: "Enable Notify",
-  smartTranslate: "Smart Translate"
+  smartTranslate: "Smart Translate",
+  titleBar: "titleBar"
 };
 
 export { en, zh_cn, Locale };

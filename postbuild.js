@@ -1,6 +1,10 @@
+const os = require("os");
+if (os.platform() !== "win32") {
+  return;
+}
+
 const fs = require("fs");
 const path = require("path");
-const os = require("os");
 const dist_dir = "./dist_electron";
 const filePath = "./package.json";
 const file = fs.readFileSync(filePath, "utf8");

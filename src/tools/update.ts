@@ -3,6 +3,7 @@ import { autoUpdater } from "electron-updater";
 import { Controller } from "../core/controller";
 import { envConfig } from "./envConfig";
 import { checkUpdate } from "./checker";
+
 let window: BrowserWindow | undefined = undefined;
 let binded: boolean = false;
 autoUpdater.autoDownload = false;
@@ -32,26 +33,11 @@ function bindUpdateEvents() {
       parent: BrowserWindow.getAllWindows()[0],
       icon: nativeImage.createFromPath(envConfig.iconPath)
     });
-    window.loadURL(`${envConfig.publicUrl}/dialog.html`);
+    window.loadURL(envConfig.publicUrl + `/#/update`);
     window.webContents.on("did-finish-load", function() {
-      (<BrowserWindow>window).webContents.executeJavaScript(
-        `document.getElementById("releaseNote").innerHTML="${
-          updateInfo.releaseNotes
-        }";document.getElementById("version").innerHTML="${
-          updateInfo.version
-        } ${updateInfo.releaseName}";`
-      );
+      (<BrowserWindow>window).webContents.send("releaseNote", updateInfo);
     });
   });
-
-  // autoUpdater.on("update-not-available", updateInfo => {
-  //   dialog.showMessageBox({
-  //     type: "info",
-  //     title: "暂无更新",
-  //     message: "当前版本已经是最新",
-  //     icon: nativeImage.createFromPath(envConfig.iconPath)
-  //   });
-  // });
 
   autoUpdater.on("update-downloaded", () => {
     dialog.showMessageBox(

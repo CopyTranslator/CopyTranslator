@@ -85,8 +85,6 @@ class Controller():
         self.patterns = [re.compile(r'([?!.])[ ]?\n'), re.compile(r'([？！。])[ \n]')]  # 前面一个处理英语语系的，后面一个可以处理汉语系。
         self.pattern2 = re.compile(r'\$([?？！!.。])\$')
 
-        UpdateThread(self).start()
-
     def SeeSource(self, event):
         if self.src == self.subFrame.destText.GetValue():
             self.subFrame.destText.SetValue(self.src)

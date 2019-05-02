@@ -31,8 +31,6 @@ class UpdateChecker:
 
     @staticmethod
     def check(setting):
-        if time.time() - setting.config['last_ask'] < 172800:
-            return
         try:
             string = urlopen(update_json_url).read().decode()
             string = string[string.find('{'):]

@@ -5,13 +5,13 @@
 # @Software: PyCharm
 
 logopath = 'logo.ico'
-version = 'v0.0.7-Kylin-RC1'
+version = 'v7.2.0 Kylin Ultimate'
 project_name = 'CopyTranslator'
 update_json_url = 'https://hypercube.top/copytranslator/version.json'
-install_url = 'https://github.com/elliottzheng/CopyTranslator/wiki/Downloads-%E4%B8%8B%E8%BD%BD%E4%B8%8E%E5%AE%89%E8%A3%85'
+install_url = 'https://copytranslator.github.io/guide/download.html'
 log_path = 'update_log.txt'
-project_url = 'https://hypercube.top/copytranslator/'
-usage_url = 'https://github.com/elliottzheng/CopyTranslator/wiki/Usage-%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97'
+project_url = 'https://github.com/CopyTranslator/CopyTranslator/'
+usage_url = 'https://copytranslator.github.io/guide/'
 level = 4
 
 levels_log = {

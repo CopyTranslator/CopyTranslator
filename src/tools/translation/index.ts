@@ -1,4 +1,4 @@
-import { TranslateResult } from "copy-translation.js/declaration/api/types";
+import { TranslateResult } from "translation.js/declaration/api/types";
 export const chnEnds = /[？。！]/g;
 export const engEnds = /[?.!]/g;
 export const chnBreaks = /[？。！\n]/g;

@@ -1,5 +1,5 @@
 import { CommonTranslateResult, Translator, Dict, reSegmentGoogle } from "..";
-import { google } from "copy-translation.js";
+import { google } from "translation.js";
 import { log } from "../../logger";
 const _ = require("lodash");
 const GoogleLanguages: Dict = {

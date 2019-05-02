@@ -17,7 +17,7 @@
     "postinstall": "electron-builder install-app-deps",
     "rebuild": "npm rebuild --runtime=electron --target=3.0.0 --disturl=https://atom.io/download/atom-shell --abi=64",
     "prebuild": "tsc ./src/prebuild.ts && node ./src/prebuild.js && npm run clean",
-    "postbuild":"node postbuild.js",
+    "postbuild": "node postbuild.js",
     "clean": "node clean.js",
     "docs:dev": "vuepress dev docs",
     "docs:build": "vuepress build docs",
@@ -25,7 +25,6 @@
   },
   "dependencies": {
     "baidu-aip-sdk": "^2.3.9",
-    "copy-translation.js": "0.0.8",
     "electron-clipboard-extended": "^1.1.1",
     "electron-updater": "^4.0.6",
     "element-ui": "^2.5.4",
@@ -36,6 +35,7 @@
     "md5": "^2.2.1",
     "robotjs": "^0.5.1",
     "sbd": "^1.0.15",
+    "translation.js": "^0.7.8",
     "vue": "^2.5.21",
     "vue-router": "^3.0.1",
     "vuex": "^3.0.1"

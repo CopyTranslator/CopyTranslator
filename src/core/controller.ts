@@ -16,7 +16,6 @@ import { handleActions } from "./actionCallback";
 import { checkNotice } from "../tools/checker";
 import { checkForUpdates } from "../tools/update";
 import { log } from "../tools/logger";
-import { ExecException } from "child_process";
 
 const clipboard = require("electron-clipboard-extended");
 

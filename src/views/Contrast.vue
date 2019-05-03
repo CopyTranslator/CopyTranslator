@@ -2,47 +2,47 @@
   <div>
     <StatusBar ref="bar"></StatusBar>
     <div v-on:contextmenu="openMenu('Contrast')">
-      <el-row class="contrast" :gutter="5">
-        <el-col :span="19">
-          <textarea
-            class="contrastText"
-            v-if="sharedResult"
-            :style="area"
-            v-model="sharedResult.src"
-          ></textarea>
+      <div :style="area2">
+        <textarea
+          class="contrastText div-inline"
+          v-if="sharedResult"
+          :style="area"
+          v-model="sharedResult.src"
+        ></textarea>
 
-          <textarea
-            class="contrastText"
-            :style="area"
-            v-if="sharedResult"
-            v-model="sharedResult.result"
-          ></textarea>
-        </el-col>
-        <el-col :span="5" class="controlPanel">
-          <div style="text-align: left;">
-            <Action
-              v-for="actionId in actionKeys"
-              :action-id="actionId"
-              :key="actionId"
-            ></Action>
-          </div>
-          <el-button
-            type="primary"
-            class="noMargin"
-            @click="changeMode('Focus')"
-            >{{ $t("switchMode") }}</el-button
-          >
-          <el-button type="primary" class="noMargin" @click="translate">{{
-            $t("translate")
-          }}</el-button>
-          <el-button
-            type="primary"
-            class="noMargin"
-            @click="changeMode('Settings')"
-            >{{ $t("settings") }}
-          </el-button>
-        </el-col>
-      </el-row>
+        <textarea
+          class="contrastText div-inline"
+          :style="area"
+          v-if="sharedResult"
+          v-model="sharedResult.result"
+        ></textarea>
+      </div>
+
+      <div
+        class="controlPanel div-inline"
+        style="text-align: left;float:right;"
+      >
+        <Action
+          v-for="actionId in actionKeys"
+          :action-id="actionId"
+          :key="actionId"
+        ></Action>
+        <el-button
+          type="primary"
+          class="noMargin"
+          @click="changeMode('Focus')"
+          >{{ $t("switchMode") }}</el-button
+        >
+        <el-button type="primary" class="noMargin" @click="translate">{{
+          $t("translate")
+        }}</el-button>
+        <el-button
+          type="primary"
+          class="noMargin"
+          @click="changeMode('Settings')"
+          >{{ $t("settings") }}
+        </el-button>
+      </div>
     </div>
   </div>
 </template>
@@ -72,6 +72,12 @@ export default {
         margin: `0`,
         padding: `0`
       };
+    },
+    area2() {
+      return {
+        width: `${this.windowWidth - 155}px`,
+        float: "left"
+      };
     }
   },
   components: {
@@ -97,6 +103,10 @@ p {
   font-size: 14px;
 }
 
+.controlPanel {
+  width: 150px;
+}
+
 .contrastText {
   width: 100%;
   padding: 0;
@@ -111,5 +121,9 @@ p {
   margin-left: 0 !important;
   margin-top: 2px;
   width: 100%;
+}
+
+.div-inline {
+  display: inline;
 }
 </style>

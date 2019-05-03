@@ -12,7 +12,8 @@ export default {
     return {
       size: 20,
       barHeight: 0,
-      windowHeight: window.innerHeight
+      windowHeight: window.innerHeight,
+      windowWidth: window.innerWidth
     };
   },
   computed: {},
@@ -22,6 +23,7 @@ export default {
     },
     syncHeight() {
       this.windowHeight = window.innerHeight;
+      this.windowWidth = window.innerWidth;
     }
   },
   mounted: function() {

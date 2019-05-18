@@ -15,7 +15,8 @@ function bindUpdateEvents() {
   autoUpdater.on("update-available", updateInfo => {
     const width = 500,
       height = 500;
-    const bound = (<Controller>(<any>global).controller).win.getBound();
+    const current_win = (<Controller>(<any>global).controller).win;
+    const bound = current_win.getBound();
     const {
       x: xBound,
       x: yBound,
@@ -30,11 +31,17 @@ function bindUpdateEvents() {
       titleBarStyle: "hiddenInset",
       maximizable: false,
       title: "软件更新",
-      parent: BrowserWindow.getAllWindows()[0],
+      parent: current_win.window,
       icon: nativeImage.createFromPath(envConfig.iconPath)
     });
-    window.loadURL(envConfig.publicUrl + `/#/update`);
-    window.webContents.on("did-finish-load", function() {
+    if (process.env.WEBPACK_DEV_SERVER_URL) {
+      // Load the url of the dev server if in development mode
+      window.loadURL(envConfig.publicUrl + `/#/Update`);
+    } else {
+      // Load the index.html when not in development
+      window.loadURL(`${envConfig.publicUrl}/index.html#Update`);
+    }
+    ipcMain.on("releaseNote", (event: any, args: any) => {
       (<BrowserWindow>window).webContents.send("releaseNote", updateInfo);
     });
   });

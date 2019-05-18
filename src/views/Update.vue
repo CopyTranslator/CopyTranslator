@@ -4,10 +4,10 @@ name: Update
 notes:
 -->
 <template>
-  <div id="update">
-    <p v-html="releaseName" id="version"></p>
-    <p>更新日志:</p>
-    <div v-html="releaseNote" id="releaseNote"></div>
+  <div>
+    <h1 v-html="version"></h1>
+    <h2>更新日志:</h2>
+    <div v-html="releaseNote"></div>
     <el-button type="primary" @click="confirmUpdate()">下载更新</el-button>
   </div>
 </template>
@@ -22,7 +22,6 @@ export default {
     return {
       releaseNote: null,
       version: null,
-      releaseName: null,
       updateTitle: null
     };
   },
@@ -40,13 +39,12 @@ export default {
       }
     }
   },
-
   created() {
     ipcRenderer.on("releaseNote", (event, data) => {
       this.releaseNote = data.releaseNotes;
-      this.version = data.version;
-      this.releaseName = data.releaseName;
+      this.version = data.version + " " + data.releaseName;
     });
+    ipcRenderer.send("releaseNote");
   }
 };
 </script>
@@ -59,5 +57,6 @@ export default {
   text-align: left;
   font-size: 14px;
   padding-left: 30px;
+  height: 60%;
 }
 </style>

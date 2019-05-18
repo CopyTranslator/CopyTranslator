@@ -37,7 +37,8 @@ enum RouteName {
   Focus = "Focus",
   Contrast = "Contrast",
   Settings = "Settings",
-  Tray = "Tray"
+  Tray = "Tray",
+  Update = "Update"
 }
 
 interface Action {

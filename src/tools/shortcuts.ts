@@ -6,10 +6,10 @@ interface Shortcut {
 }
 
 type Shortcuts = { [key: string]: string };
+
 const defaultShortcuts: Shortcuts = {
   focusMode: "Shift+F1",
-  contrastMode: "Shift+F2",
-  listenClipboard: "CommandOrControl+L"
+  contrastMode: "Shift+F2"
 };
 
 export { Shortcut, defaultShortcuts, Shortcuts };

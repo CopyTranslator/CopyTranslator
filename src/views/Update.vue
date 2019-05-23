@@ -31,7 +31,7 @@ export default {
   },
 
   methods: {
-    confirmUpdate() {
+    autoDownload() {
       ipcRenderer.send("confirm-update");
     },
     manualDownload() {

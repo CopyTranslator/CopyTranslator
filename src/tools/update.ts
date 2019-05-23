@@ -41,7 +41,7 @@ function bindUpdateEvents() {
       // Load the index.html when not in development
       window.loadURL(`${envConfig.publicUrl}/index.html#Update`);
     }
-    ipcMain.on("releaseNote", (event: any, args: any) => {
+    window.webContents.on("did-finish-load", function() {
       (<BrowserWindow>window).webContents.send("releaseNote", updateInfo);
     });
   });

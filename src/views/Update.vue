@@ -6,9 +6,12 @@ notes:
 <template>
   <div>
     <h1 v-html="version"></h1>
-    <h2>更新日志:</h2>
-    <div v-html="releaseNote"></div>
-    <el-button type="primary" @click="confirmUpdate()">下载更新</el-button>
+    <h2 style="text-align:left">更新日志</h2>
+    <div id="releaseNote" v-html="releaseNote"></div>
+    <el-button v-if="!isMac" type="success" @click="autoDownload()"
+      >自动下载更新</el-button
+    >
+    <el-button type="primary" @click="manualDownload()">手动下载更新</el-button>
   </div>
 </template>
 
@@ -22,21 +25,19 @@ export default {
     return {
       releaseNote: null,
       version: null,
-      updateTitle: null
+      updateTitle: null,
+      isMac: os.platform() !== "win32"
     };
   },
 
   methods: {
     confirmUpdate() {
-      if (os.platform() === "win32") {
-        ipcRenderer.send("confirm-update");
-      } else {
-        shell.openExternal(
-          `https://github.com/CopyTranslator/CopyTranslator/releases/tag/v${
-            this.version
-          }`
-        );
-      }
+      ipcRenderer.send("confirm-update");
+    },
+    manualDownload() {
+      shell.openExternal(
+        "https://copytranslator.github.io/guide/download.html"
+      );
     }
   },
   created() {
@@ -44,7 +45,6 @@ export default {
       this.releaseNote = data.releaseNotes;
       this.version = data.version + " " + data.releaseName;
     });
-    ipcRenderer.send("releaseNote");
   }
 };
 </script>
@@ -57,6 +57,6 @@ export default {
   text-align: left;
   font-size: 14px;
   padding-left: 30px;
-  height: 60%;
+  height: 60vh;
 }
 </style>

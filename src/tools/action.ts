@@ -43,7 +43,8 @@ enum RouteName {
   Contrast = "Contrast",
   Settings = "Settings",
   Tray = "Tray",
-  Update = "Update"
+  Update = "Update",
+  ApiConfig = "ApiConfig"
 }
 
 interface Action {
@@ -297,6 +298,7 @@ class ActionManager {
 
     items.push(normalAction("focusMode"));
     items.push(normalAction("contrastMode"));
+    items.push(normalAction("ApiConfig"));
     items.push(normalAction("restoreDefault"));
 
     items.push(constantAction(RuleName.APP_ID));

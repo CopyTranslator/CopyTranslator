@@ -52,6 +52,9 @@ function handleNormalAction(actionId: string) {
     case "exit":
       controller.onExit();
       break;
+    case "capture":
+      controller.capture();
+      break;
     case "clear":
       controller.clear();
       break;

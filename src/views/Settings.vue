@@ -14,6 +14,9 @@
         ></Action>
       </div>
       <el-button style="width:100%;" @click="backStored">{{
+        $t("ApiConfig")
+      }}</el-button>
+      <el-button style="width:100%;" @click="backStored">{{
         $t("return")
       }}</el-button>
     </div>

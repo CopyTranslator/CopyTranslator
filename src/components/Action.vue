@@ -17,10 +17,6 @@
         ></el-option>
       </el-select>
     </div>
-    <el-input
-      v-else-if="action.actionType === 'constant'"
-      v-model="value"
-    ></el-input>
   </div>
 </template>
 

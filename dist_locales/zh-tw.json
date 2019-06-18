@@ -49,5 +49,6 @@
     "APP_ID": "APP_ID",
     "API_KEY": "API_KEY",
     "SECRET_KEY": "SECRET_KEY",
-    "capture": "capture"
+    "capture": "capture",
+    "ApiConfig": "API Config"
 }

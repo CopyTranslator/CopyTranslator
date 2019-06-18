@@ -1,18 +1,18 @@
 import { Controller } from "../core/controller";
 import { RuleName } from "./rule";
 
-var AipOcrClient = require("baidu-aip-sdk").ocr;
-var ba64 = require("ba64");
-var fs = require("fs");
+const AipOcrClient = require("baidu-aip-sdk").ocr;
+const ba64 = require("ba64");
+const fs = require("fs");
 
 export class Recognizer {
   client: any;
-  setUp() {
+  setUp(force = false) {
     const controller = <Controller>(<any>global).controller;
     const APP_ID = controller.get(RuleName.APP_ID);
     const API_KEY = controller.get(RuleName.API_KEY);
     const SECRET_KEY = controller.get(RuleName.SECRET_KEY);
-    if (APP_ID != "" && API_KEY != "" && SECRET_KEY != "") {
+    if (force || (APP_ID != "" && API_KEY != "" && SECRET_KEY != "")) {
       this.client = new AipOcrClient(APP_ID, API_KEY, SECRET_KEY);
     }
   }

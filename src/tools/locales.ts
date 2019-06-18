@@ -49,6 +49,7 @@ interface Locale {
   APP_ID: string;
   SECRET_KEY: string;
   capture: string;
+  ApiConfig: string;
 }
 
 const zh_cn: Locale = {
@@ -101,7 +102,8 @@ const zh_cn: Locale = {
   APP_ID: "APP_ID",
   API_KEY: "API_KEY",
   SECRET_KEY: "SECRET_KEY",
-  capture: "截图"
+  capture: "截图",
+  ApiConfig: "API 设置"
 };
 
 const en: Locale = {
@@ -154,7 +156,8 @@ const en: Locale = {
   APP_ID: "APP_ID",
   API_KEY: "API_KEY",
   SECRET_KEY: "SECRET_KEY",
-  capture: "capture"
+  capture: "capture",
+  ApiConfig: "API Config"
 };
 
 export { en, zh_cn, Locale };

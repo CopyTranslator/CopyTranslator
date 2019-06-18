@@ -16,7 +16,7 @@ import { handleActions } from "./actionCallback";
 import { checkNotice } from "../tools/checker";
 import { checkForUpdates } from "../tools/update";
 import { log } from "../tools/logger";
-import { Recognizer, recognizer } from "../tools/ocr";
+import { recognizer } from "../tools/ocr";
 
 const clipboard = require("electron-clipboard-extended");
 const _ = require("lodash");
@@ -255,6 +255,13 @@ class Controller {
     this.lastAppend = text;
     this.setSrc(text);
     this.win.switchColor(ColorStatus.Translating);
+  }
+
+  setUpRecognizer(APP_ID: string, API_KEY: string, SECRET_KEY: string) {
+    this.setByRuleName(RuleName.APP_ID, APP_ID, true, false);
+    this.setByRuleName(RuleName.API_KEY, API_KEY, true, false);
+    this.setByRuleName(RuleName.SECRET_KEY, SECRET_KEY, true, false);
+    recognizer.setUp(true);
   }
 
   async doTranslate(text: string) {

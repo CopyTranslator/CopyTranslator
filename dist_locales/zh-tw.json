@@ -45,5 +45,9 @@
     "restoreDefault": "恢復預設設定",
     "enableNotify": "啟用通知",
     "smartTranslate": "智慧型翻譯",
-    "titleBar": "標題列"
+    "titleBar": "標題列",
+    "APP_ID": "APP_ID",
+    "API_KEY": "API_KEY",
+    "SECRET_KEY": "SECRET_KEY",
+    "capture": "capture"
 }

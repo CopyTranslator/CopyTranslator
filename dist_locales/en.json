@@ -44,5 +44,9 @@
     "restoreDefault": "Restore default settings",
     "enableNotify": "Enable Notify",
     "smartTranslate": "Smart Translate",
-    "titleBar": "titleBar"
+    "titleBar": "titleBar",
+    "APP_ID": "APP_ID",
+    "API_KEY": "API_KEY",
+    "SECRET_KEY": "SECRET_KEY",
+    "capture": "capture"
 }

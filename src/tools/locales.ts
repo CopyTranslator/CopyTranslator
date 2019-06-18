@@ -45,6 +45,10 @@ interface Locale {
   enableNotify: string;
   smartTranslate: string;
   titleBar: string;
+  API_KEY: string;
+  APP_ID: string;
+  SECRET_KEY: string;
+  capture: string;
 }
 
 const zh_cn: Locale = {
@@ -93,7 +97,11 @@ const zh_cn: Locale = {
   restoreDefault: "恢复默认设置",
   enableNotify: "启用通知",
   smartTranslate: "智能互译",
-  titleBar: "标题栏"
+  titleBar: "标题栏样式",
+  APP_ID: "APP_ID",
+  API_KEY: "API_KEY",
+  SECRET_KEY: "SECRET_KEY",
+  capture: "截图"
 };
 
 const en: Locale = {
@@ -142,7 +150,11 @@ const en: Locale = {
   restoreDefault: "Restore default settings",
   enableNotify: "Enable Notify",
   smartTranslate: "Smart Translate",
-  titleBar: "titleBar"
+  titleBar: "titleBar",
+  APP_ID: "APP_ID",
+  API_KEY: "API_KEY",
+  SECRET_KEY: "SECRET_KEY",
+  capture: "capture"
 };
 
 export { en, zh_cn, Locale };

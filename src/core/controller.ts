@@ -16,8 +16,10 @@ import { handleActions } from "./actionCallback";
 import { checkNotice } from "../tools/checker";
 import { checkForUpdates } from "../tools/update";
 import { log } from "../tools/logger";
+import { Recognizer, recognizer } from "../tools/ocr";
 
 const clipboard = require("electron-clipboard-extended");
+const _ = require("lodash");
 
 class Controller {
   src: string = "";
@@ -46,10 +48,13 @@ class Controller {
     windowController.bind();
     this.tray.init();
     this.action.init();
+    recognizer.setUp();
     checkForUpdates();
     checkNotice();
   }
-
+  capture() {
+    (<any>global).shortcutCapture.shortcutCapture();
+  }
   foldWindow() {
     this.win.edgeHide(this.win.onEdge());
   }
@@ -292,10 +297,22 @@ class Controller {
     return this.get(RuleName.targetLanguage);
   }
 
+  checkImage() {
+    recognizer.recognize(clipboard.readImage().toDataURL());
+  }
+
+  postProcessImage(words_result: Array<{ words: string }>) {
+    let src = _.join(words_result.map(item => item["words"]), "\n");
+    this.tryTranslate(src);
+  }
+
   setWatch(watch: boolean) {
     if (watch) {
       clipboard.on("text-changed", () => {
         this.checkClipboard();
+      });
+      clipboard.on("image-changed", () => {
+        this.checkImage();
       });
       clipboard.startWatching();
     } else {

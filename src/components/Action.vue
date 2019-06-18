@@ -17,6 +17,10 @@
         ></el-option>
       </el-select>
     </div>
+    <el-input
+      v-else-if="action.actionType === 'constant'"
+      v-model="value"
+    ></el-input>
   </div>
 </template>
 
@@ -32,6 +36,7 @@ export default {
     return {
       action: undefined,
       checked: false,
+      value: undefined,
       enumValue: undefined,
       enums: []
     };
@@ -70,6 +75,9 @@ export default {
             typeof value == "string" ? value : value.toString()
           ]);
           break;
+      }
+      if (this.action.actionType == "constant") {
+        this.value = value;
       }
     }
   },

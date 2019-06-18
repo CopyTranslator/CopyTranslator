@@ -3,7 +3,8 @@ import {
   BrowserWindow,
   globalShortcut,
   Menu,
-  MenuItem
+  MenuItem,
+  MenuItemConstructorOptions
 } from "electron";
 import { RuleName } from "./rule";
 import { ConfigParser, getEnumValue as r } from "./configParser";
@@ -33,6 +34,10 @@ enum MenuItemType {
   radio = "radio"
 }
 
+enum ActionType {
+  constant = "constant"
+}
+
 enum RouteName {
   Focus = "Focus",
   Contrast = "Contrast",
@@ -43,8 +48,9 @@ enum RouteName {
 
 interface Action {
   label?: string;
-  type: MenuItemType;
+  type?: MenuItemType;
   checked?: boolean;
+  actionType?: ActionType | MenuItemType;
   id: string;
   submenu?: Array<Action>;
   role?: string;
@@ -61,6 +67,11 @@ function ActionWrapper(
   callback: Function | undefined = undefined
 ) {
   const key = action.id;
+  if (action.type) {
+    action.actionType = action.type;
+  } else {
+    action.type = MenuItemType.normal;
+  }
   if (!action.click && callback) {
     action.click = function(
       menuItem: MenuItem,
@@ -114,6 +125,7 @@ class ActionManager {
     this.loadShortcuts();
     this.register();
   }
+
   getRefresh() {
     const controller = <Controller>(<any>global).controller;
     let config = controller.config;
@@ -145,7 +157,7 @@ class ActionManager {
 
   getActions(config: ConfigParser, callback: Function): Actions {
     let items: Array<Action> = [];
-
+    //普通的按钮，执行一项操作
     function normalAction(id: string) {
       return ActionWrapper(
         {
@@ -155,6 +167,7 @@ class ActionManager {
         callback
       );
     }
+    //原生角色
     function roleAction(role: string) {
       return {
         role: role,
@@ -162,7 +175,19 @@ class ActionManager {
         type: MenuItemType.normal
       };
     }
+    //设置常量
+    function constantAction(ruleName: RuleName) {
+      const id = r(ruleName);
+      return ActionWrapper(
+        {
+          actionType: ActionType.constant,
+          id: id
+        },
+        callback
+      );
+    }
 
+    //切换状态的动作
     function switchAction(ruleName: RuleName) {
       const id = r(ruleName);
       return ActionWrapper(
@@ -175,6 +200,7 @@ class ActionManager {
       );
     }
 
+    //枚举类型，应该是select的一种特化
     function enumAction(ruleName: RuleName, type: any) {
       const id = r(ruleName);
       return ActionWrapper(
@@ -197,6 +223,7 @@ class ActionManager {
         callback
       );
     }
+    //自动生成子菜单
     function selectAction(
       ruleName: RuleName,
       subMenuGenerator: () => Array<Action>
@@ -210,34 +237,6 @@ class ActionManager {
         callback
       );
     }
-
-    items.push(enumAction(RuleName.hideDirect, HideDirection));
-    items.push(enumAction(RuleName.translatorType, TranslatorType));
-    items.push(enumAction(RuleName.titleBar, TitlebarType));
-    items.push(normalAction("copySource"));
-    items.push(normalAction("copyResult"));
-    items.push(normalAction("clear"));
-    items.push(normalAction("retryTranslate"));
-    items.push(switchAction(RuleName.autoCopy));
-    items.push(switchAction(RuleName.autoPaste));
-    items.push(switchAction(RuleName.autoFormat));
-    items.push(switchAction(RuleName.autoPurify));
-    items.push(switchAction(RuleName.detectLanguage));
-    items.push(switchAction(RuleName.incrementalCopy));
-    items.push(switchAction(RuleName.smartTranslate));
-    items.push(switchAction(RuleName.autoHide));
-    items.push(switchAction(RuleName.autoShow));
-    items.push(switchAction(RuleName.stayTop));
-    items.push(switchAction(RuleName.listenClipboard));
-    items.push(switchAction(RuleName.tapCopy));
-    items.push(switchAction(RuleName.enableNotify));
-    items.push(normalAction("focusMode"));
-    items.push(normalAction("contrastMode"));
-    items.push(normalAction("restoreDefault"));
-
-    roles.forEach((role: string) => {
-      items.push(roleAction(role));
-    });
 
     const languageGenerator = (ruleName: RuleName) => {
       const id = r(ruleName);
@@ -257,18 +256,6 @@ class ActionManager {
       };
     };
 
-    items.push(
-      selectAction(
-        RuleName.sourceLanguage,
-        languageGenerator(RuleName.sourceLanguage)
-      )
-    );
-    items.push(
-      selectAction(
-        RuleName.targetLanguage,
-        languageGenerator(RuleName.targetLanguage)
-      )
-    );
     const localeGenerator = () => {
       const id = r(RuleName.localeSetting);
       return (<Controller>(<any>global).controller).locales
@@ -284,17 +271,69 @@ class ActionManager {
           );
         });
     };
-    items.push(selectAction(RuleName.localeSetting, localeGenerator));
 
+    items.push(enumAction(RuleName.hideDirect, HideDirection));
+    items.push(enumAction(RuleName.translatorType, TranslatorType));
+    items.push(enumAction(RuleName.titleBar, TitlebarType));
+
+    items.push(normalAction("copySource"));
+    items.push(normalAction("copyResult"));
+    items.push(normalAction("clear"));
+    items.push(normalAction("retryTranslate"));
+
+    items.push(switchAction(RuleName.autoCopy));
+    items.push(switchAction(RuleName.autoPaste));
+    items.push(switchAction(RuleName.autoFormat));
+    items.push(switchAction(RuleName.autoPurify));
+    items.push(switchAction(RuleName.detectLanguage));
+    items.push(switchAction(RuleName.incrementalCopy));
+    items.push(switchAction(RuleName.smartTranslate));
+    items.push(switchAction(RuleName.autoHide));
+    items.push(switchAction(RuleName.autoShow));
+    items.push(switchAction(RuleName.stayTop));
+    items.push(switchAction(RuleName.listenClipboard));
+    items.push(switchAction(RuleName.tapCopy));
+    items.push(switchAction(RuleName.enableNotify));
+
+    items.push(normalAction("focusMode"));
+    items.push(normalAction("contrastMode"));
+    items.push(normalAction("restoreDefault"));
+
+    items.push(constantAction(RuleName.APP_ID));
+    items.push(constantAction(RuleName.API_KEY));
+    items.push(constantAction(RuleName.SECRET_KEY));
+
+    //role action
+    roles.forEach((role: string) => {
+      items.push(roleAction(role));
+    });
+
+    items.push(
+      selectAction(
+        RuleName.sourceLanguage,
+        languageGenerator(RuleName.sourceLanguage)
+      )
+    );
+    items.push(
+      selectAction(
+        RuleName.targetLanguage,
+        languageGenerator(RuleName.targetLanguage)
+      )
+    );
+
+    items.push(selectAction(RuleName.localeSetting, localeGenerator));
     items.push(normalAction("settings"));
     items.push(normalAction("helpAndUpdate"));
     items.push(normalAction("exit"));
+
+    //下面将数组变为字典
     let itemGroup: Actions = {};
     items.forEach(e => {
       itemGroup[e.id] = e;
     });
     return itemGroup;
   }
+
   popup(id: RouteName) {
     let menu = new Menu();
     let contain: Array<string> = [];
@@ -310,7 +349,7 @@ class ActionManager {
         contain = controller.get(RuleName.trayMenu);
         break;
       case RouteName.Settings:
-        contain = Object.keys(this.actions);
+        contain = ["APP_ID"];
         break;
     }
     const refresh = this.getRefresh();

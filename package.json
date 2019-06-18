@@ -24,6 +24,7 @@
     "docs:deploy": "sh docs/.vuepress/release/sync.sh deploy"
   },
   "dependencies": {
+    "ba64": "^3.0.9",
     "baidu-aip-sdk": "^2.3.9",
     "electron-clipboard-extended": "^1.1.1",
     "electron-updater": "^4.0.6",
@@ -35,6 +36,7 @@
     "md5": "^2.2.1",
     "robotjs": "^0.5.1",
     "sbd": "^1.0.15",
+    "shortcut-capture": "^1.2.1",
     "translation.js": "^0.7.8",
     "vue": "^2.5.21",
     "vue-router": "^3.0.1",

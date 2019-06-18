@@ -35,7 +35,11 @@ enum RuleName {
   targetLanguage,
   localeSetting,
   notices,
-  titleBar
+  titleBar,
+  //以下为用户手动设置常量
+  APP_ID,
+  API_KEY,
+  SECRET_KEY
 }
 
 export const colorRules: RuleName[] = [
@@ -99,6 +103,15 @@ class BoolRule implements Rule {
   predefined: boolean;
   msg: string;
   constructor(predefined: boolean, msg: string) {
+    this.predefined = predefined;
+    this.msg = msg;
+  }
+}
+
+class StringRule implements Rule {
+  predefined: string;
+  msg: string;
+  constructor(predefined: string, msg: string) {
     this.predefined = predefined;
     this.msg = msg;
   }
@@ -171,5 +184,6 @@ export {
   reverseRuleName,
   ruleKeys,
   ModeConfig,
-  GroupRule
+  GroupRule,
+  StringRule
 };

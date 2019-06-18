@@ -66,7 +66,9 @@ export default {
         return this.$refs.dictResult.$el.innerText;
       }
     },
-
+    capture() {
+      this.$controller.capture();
+    },
     baidu() {
       shell.openExternal(
         `https://www.baidu.com/s?ie=utf-8&wd=${this.getModifiedText()}`
@@ -93,5 +95,4 @@ export default {
 };
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped></style>

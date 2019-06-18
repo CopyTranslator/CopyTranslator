@@ -4,7 +4,9 @@ import { installVueDevtools } from "vue-cli-plugin-electron-builder/lib";
 import { log } from "./tools/logger";
 import { Controller } from "./core/controller";
 import { EventEmitter } from "events";
+import { recognizer } from "./tools/ocr";
 const isDevelopment = process.env.NODE_ENV !== "production";
+import ShortcutCapture from "shortcut-capture";
 
 app.setAppUserModelId("com.copytranslator.copytranslator");
 
@@ -42,6 +44,11 @@ app.on("ready", async () => {
     // Install Vue Devtools
     await installVueDevtools();
   }
+  const shortcutCapture = new ShortcutCapture();
+  (<any>global).shortcutCapture = shortcutCapture;
+  shortcutCapture.on("capture", ({ dataURL, bounds }) =>
+    recognizer.recognize(dataURL)
+  );
   controller.createWindow();
 });
 

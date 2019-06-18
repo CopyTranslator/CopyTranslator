@@ -1,5 +1,12 @@
 import { ConfigParser } from "./configParser";
-import { BoolRule, EnumRule, GroupRule, ModeRule, RuleName } from "./rule";
+import {
+  BoolRule,
+  EnumRule,
+  GroupRule,
+  ModeRule,
+  StringRule,
+  RuleName
+} from "./rule";
 import { FrameMode, HideDirection, TitlebarType } from "./enums";
 import { TranslatorType } from "./translation/translators";
 import { RouteName } from "./action";
@@ -249,6 +256,10 @@ function initConfig(
     predefined: [""],
     msg: "id of notices that have been read"
   });
+
+  config.addRule(RuleName.APP_ID, new StringRule("", "APP_ID"));
+  config.addRule(RuleName.API_KEY, new StringRule("", "API_KEY"));
+  config.addRule(RuleName.SECRET_KEY, new StringRule("", "SECRET_KEY"));
 
   return config;
 }

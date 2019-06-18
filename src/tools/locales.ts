@@ -102,7 +102,7 @@ const zh_cn: Locale = {
   APP_ID: "APP_ID",
   API_KEY: "API_KEY",
   SECRET_KEY: "SECRET_KEY",
-  capture: "截图",
+  capture: "截图翻译",
   ApiConfig: "API 设置"
 };
 
@@ -156,7 +156,7 @@ const en: Locale = {
   APP_ID: "APP_ID",
   API_KEY: "API_KEY",
   SECRET_KEY: "SECRET_KEY",
-  capture: "capture",
+  capture: "Screenshot Translate",
   ApiConfig: "API Config"
 };
 

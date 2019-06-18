@@ -390,9 +390,7 @@ class Controller {
         windowController.tapCopy = value;
         break;
       case RuleName.translatorType:
-        if (TranslatorType.Google == value) {
-          this.translator = new translators.google();
-        }
+        value = parseInt(value, 10);
         switch (value) {
           case TranslatorType.Google:
             this.translator = new translators.google();
@@ -410,7 +408,6 @@ class Controller {
             this.translator = new translators.caiyun();
             break;
         }
-
         this.clear();
         if (!this.translator.isValid(this.get(RuleName.sourceLanguage))) {
           this.setByRuleName(RuleName.sourceLanguage, "English", save, refresh);
@@ -426,6 +423,7 @@ class Controller {
         this.win.load(this.get(RuleName.frameMode));
         break;
     }
+
     this.config.set(ruleName, value);
     this.setCurrentColor();
     if (ruleName == RuleName.localeSetting) {

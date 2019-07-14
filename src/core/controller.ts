@@ -359,9 +359,6 @@ class Controller {
       case RuleName.listenClipboard:
         this.setWatch(value);
         break;
-      case RuleName.titleBar:
-        value = parseInt(value);
-        break;
       case RuleName.stayTop:
         if (this.win.window) {
           this.win.window.focus();

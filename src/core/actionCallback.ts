@@ -23,7 +23,7 @@ function handleActions(
     const controller = <Controller>(<any>global).controller;
     if (param) {
       const intVal = parseInt(param);
-      controller.setByKeyValue(id, intVal ? intVal : param);
+      controller.setByKeyValue(id, Number.isNaN(intVal) ? param : intVal);
       return;
     }
     if (menuItem) {

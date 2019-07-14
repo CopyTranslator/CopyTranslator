@@ -32,9 +32,6 @@ new Vue({
             body: arg.result
           });
         }
-        // notification.onclick = () => {
-        //   console.log("通知被点击");
-        // };
       }
     );
     ipcRenderer.on(MessageType.UpdateT.toString(), (event: any, arg: any) => {

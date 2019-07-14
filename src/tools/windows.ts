@@ -60,6 +60,7 @@ class WindowWrapper {
     this.window.on("focus", () => {
       that.edgeShow();
     });
+    this.window.setSkipTaskbar(true);
   }
 
   setBounds(bounds: Rectangle) {
@@ -95,14 +96,6 @@ class WindowWrapper {
     ).bounds;
     let xEnd = x + width;
     let yEnd = y + height;
-    if (hideDirection == HideDirection.Up) {
-      //TODO findout what's the problem
-      if (yEnd > 10) {
-        y -= yEnd - 10;
-        yEnd -= yEnd - 10;
-        this.setBounds({ x: x, y: y, width: width, height: height });
-      }
-    }
     switch (hideDirection) {
       case HideDirection.Up:
         if (yEnd > 10) {

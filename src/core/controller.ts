@@ -3,7 +3,7 @@ import { CommonTranslateResult, Translator } from "../tools/translation";
 import { initConfig } from "../tools/configuration";
 import { ConfigParser, getEnumValue } from "../tools/configParser";
 import { ColorStatus, MessageType, WinOpt } from "../tools/enums";
-import { WindowWrapper } from "../tools/windows";
+import { WindowWrapper } from "../tools/views/windows";
 import { simulatePaste, windowController } from "../tools/windowController";
 import { envConfig } from "../tools/envConfig";
 import { l10n, L10N } from "../tools/l10n";
@@ -14,7 +14,7 @@ import { ActionManager } from "../tools/action";
 import { TrayManager } from "../tools/tray";
 import { handleActions } from "./actionCallback";
 import { checkNotice } from "../tools/checker";
-import { checkForUpdates } from "../tools/update";
+import { checkForUpdates } from "../tools/views/update";
 import { log } from "../tools/logger";
 import { recognizer } from "../tools/ocr";
 
@@ -92,10 +92,11 @@ class Controller {
   }
 
   checkClipboard() {
-    let text = normalizeAppend(
-      clipboard.readText(),
-      this.get(RuleName.autoPurify)
-    );
+    let originalText = clipboard.readText();
+    if (!this.checkLength(originalText)) {
+      return;
+    }
+    let text = normalizeAppend(originalText, this.get(RuleName.autoPurify));
     if (this.checkValid(text)) {
       this.doTranslate(text);
     }
@@ -304,6 +305,7 @@ class Controller {
     return this.get(RuleName.targetLanguage);
   }
 
+  // OCR 相关
   checkImage() {
     recognizer.recognize(clipboard.readImage().toDataURL());
   }
@@ -387,7 +389,6 @@ class Controller {
         windowController.tapCopy = value;
         break;
       case RuleName.translatorType:
-        value = parseInt(value, 10);
         switch (value) {
           case TranslatorType.Google:
             this.translator = new translators.google();

@@ -352,7 +352,7 @@ class ActionManager {
         contain = controller.get(RuleName.trayMenu);
         break;
       case RouteName.Settings:
-        contain = ["APP_ID"];
+        contain = Object.keys(this.actions);
         break;
     }
     const refresh = this.getRefresh();

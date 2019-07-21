@@ -10,7 +10,6 @@
 import WindowController from "./WindowController";
 import { MessageType, WinOpt } from "../tools/enums";
 import { ipcRenderer as ipc } from "electron";
-import { WindowWrapper } from "../tools/windows";
 import StatusBarV3 from "./StatusBarV3";
 import { RuleName } from "../tools/rule";
 import StatusBarV2 from "./StatusBarV2";

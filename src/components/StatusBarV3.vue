@@ -12,7 +12,6 @@
 import WindowController from "./WindowController";
 import { MessageType, WinOpt } from "../tools/enums";
 import { ipcRenderer as ipc } from "electron";
-import { WindowWrapper } from "../tools/windows";
 
 export default {
   name: "StatusBarV3",

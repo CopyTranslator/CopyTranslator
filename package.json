@@ -1,6 +1,6 @@
 {
   "name": "copytranslator",
-  "version": "8.3.5",
+  "version": "8.2.0",
   "private": true,
   "description": "Foreign language assisted reading and translation solution",
   "author": {
@@ -37,7 +37,7 @@
     "robotjs": "^0.5.1",
     "sbd": "^1.0.15",
     "shortcut-capture": "^1.2.1",
-    "translation.js": "^0.7.8",
+    "translation.js": "^0.7.9",
     "vue": "^2.5.21",
     "vue-router": "^3.0.1",
     "vuex": "^3.0.1"

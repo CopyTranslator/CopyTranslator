@@ -1,6 +1,5 @@
 <template>
   <div>
-    <StatusBar></StatusBar>
     <div
       v-on:contextmenu="openMenu('Settings')"
       v-on:dblclick="minify"
@@ -13,9 +12,6 @@
           :key="actionId"
         ></Action>
       </div>
-      <el-button style="width:100%;" @click="backStored">{{
-        $t("ApiConfig")
-      }}</el-button>
       <el-button style="width:100%;" @click="backStored">{{
         $t("return")
       }}</el-button>
@@ -41,8 +37,7 @@ export default {
     };
   },
   components: {
-    Action,
-    StatusBar
+    Action
   },
   beforeRouteEnter(to, from, next) {
     next(vm => {

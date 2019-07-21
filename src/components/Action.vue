@@ -17,6 +17,11 @@
         ></el-option>
       </el-select>
     </div>
+    <div v-else-if="actionId === 'ApiConfig'">
+      <el-button style="width:100%;" @click="handleNormal">{{
+        $t("ApiConfig")
+      }}</el-button>
+    </div>
   </div>
 </template>
 
@@ -40,18 +45,16 @@ export default {
   watch: {
     enumValue(newEnumValue, oldEnumValue) {
       if (oldEnumValue) {
-        this.$controller.setByKeyValue(
-          this.actionId,
-          decompose(this.enumValue)[1],
-          true,
-          false
-        );
+        this.$controller.action.callback(newEnumValue);
       }
     }
   },
   methods: {
     setValue() {
       this.$controller.setByKeyValue(this.actionId, this.checked, true, false);
+    },
+    handleNormal() {
+      this.$controller.action.callback(this.actionId);
     },
     sync() {
       this.action = this.$controller.action.actions[this.actionId];

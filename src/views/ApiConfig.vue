@@ -6,6 +6,9 @@ notes:
 <template>
   <div>
     <StatusBar ref="bar"></StatusBar>
+    <el-button type="text" style="width:100%;" @click="tutorial">
+      Baidu文字识别API申请教程
+    </el-button>
     <p>APP_ID</p>
     <el-input v-model="APP_ID"></el-input>
     <p>API_KEY</p>
@@ -15,9 +18,6 @@ notes:
     <el-button style="width:100%;" @click="backStored">{{
       $t("return")
     }}</el-button>
-    <el-button style="width:100%;" @click="tutorial">
-      Baidu文字识别API申请教程
-    </el-button>
   </div>
 </template>
 

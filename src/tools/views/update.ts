@@ -1,8 +1,10 @@
 import { dialog, BrowserWindow, screen, nativeImage, ipcMain } from "electron";
 import { autoUpdater } from "electron-updater";
-import { Controller } from "../core/controller";
-import { envConfig } from "./envConfig";
-import { checkUpdate } from "./checker";
+import { Controller } from "../../core/controller";
+import { envConfig } from "../envConfig";
+import { checkUpdate } from "../checker";
+import { loadRoute } from "./index";
+import { RouteName } from "../action";
 
 let window: BrowserWindow | undefined = undefined;
 let binded: boolean = false;
@@ -34,13 +36,7 @@ function bindUpdateEvents() {
       parent: current_win.window,
       icon: nativeImage.createFromPath(envConfig.iconPath)
     });
-    if (process.env.WEBPACK_DEV_SERVER_URL) {
-      // Load the url of the dev server if in development mode
-      window.loadURL(envConfig.publicUrl + `/#/Update`);
-    } else {
-      // Load the index.html when not in development
-      window.loadURL(`${envConfig.publicUrl}/index.html#Update`);
-    }
+    loadRoute(window, RouteName.Update);
     window.webContents.on("did-finish-load", function() {
       (<BrowserWindow>window).webContents.send("releaseNote", updateInfo);
     });

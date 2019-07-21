@@ -152,7 +152,7 @@ const en: Locale = {
   restoreDefault: "Restore default settings",
   enableNotify: "Enable Notify",
   smartTranslate: "Smart Translate",
-  titleBar: "titleBar",
+  titleBar: "TitleBar",
   APP_ID: "APP_ID",
   API_KEY: "API_KEY",
   SECRET_KEY: "SECRET_KEY",

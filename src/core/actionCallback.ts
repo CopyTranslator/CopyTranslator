@@ -1,10 +1,11 @@
 import { ruleKeys } from "../tools/rule";
 import { dialog, BrowserWindow, MenuItem, nativeImage, shell } from "electron";
 import { envConfig } from "../tools/envConfig";
-import { checkForUpdates } from "../tools/update";
+import { checkForUpdates } from "../tools/views/update";
 import { constants, version } from "../core/constant";
 import { Controller } from "../core/controller";
 import { decompose } from "../tools/action";
+import { showSettings } from "../tools/views";
 
 const _ = require("lodash");
 
@@ -22,16 +23,19 @@ function handleActions(
   if (ruleKeys.includes(id)) {
     const controller = <Controller>(<any>global).controller;
     if (param) {
+      //设置 枚举值的 action
       const intVal = parseInt(param);
       controller.setByKeyValue(id, Number.isNaN(intVal) ? param : intVal);
       return;
     }
     if (menuItem) {
+      // 设置切换按钮的值
       controller.setByKeyValue(id, menuItem.checked);
     } else {
       controller.switchValue(id);
     }
   } else {
+    //处理普通动作
     handleNormalAction(id);
   }
 }
@@ -65,7 +69,8 @@ function handleNormalAction(actionId: string) {
       clipboard.writeText(controller.result);
       break;
     case "settings":
-      controller.win.routeTo("Settings");
+      showSettings();
+      // controller.win.routeTo("Settings");
       break;
     case "helpAndUpdate":
       dialog.showMessageBox(

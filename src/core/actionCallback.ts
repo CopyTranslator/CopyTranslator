@@ -70,7 +70,6 @@ function handleNormalAction(actionId: string) {
       break;
     case "settings":
       showSettings();
-
       break;
     case "helpAndUpdate":
       dialog.showMessageBox(

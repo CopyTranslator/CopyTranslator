@@ -1,6 +1,5 @@
 <template>
   <div style="width:100vw;height:100vh;">
-    <StatusBar ref="bar"></StatusBar>
     <div
       style="height:100%"
       v-on:contextmenu="openMenu('Focus')"
@@ -26,7 +25,6 @@
 
 <script>
 import { desktopCapturer, screen, ipcRenderer } from "electron";
-import StatusBar from "../components/StatusBar";
 import BaseView from "../components/BaseView";
 import WindowController from "../components/WindowController";
 import Adjustable from "../components/Adjustable";
@@ -37,7 +35,7 @@ import { constants } from "crypto";
 export default {
   name: "FocusMode",
   mixins: [BaseView, WindowController, Adjustable],
-  components: { DictResult, StatusBar },
+  components: { DictResult },
   data: function() {
     return {
       size: this.$controller.get(RuleName.focus).fontSize,
@@ -85,12 +83,9 @@ export default {
       return {
         fontSize: this.size.toString() + "px",
         width: "100%",
-        height: (this.windowHeight - this.barHeight).toString() + "px"
+        height: this.windowHeight.toString() + "px"
       };
     }
-  },
-  mounted: function() {
-    this.barHeight = this.$refs.bar.$el.clientHeight;
   }
 };
 </script>

@@ -1,6 +1,5 @@
 <template>
   <div>
-    <StatusBar ref="bar"></StatusBar>
     <div v-on:contextmenu="openMenu('Contrast')">
       <div :style="area2">
         <textarea
@@ -48,7 +47,6 @@
 </template>
 
 <script>
-import StatusBar from "../components/StatusBar";
 import BaseView from "../components/BaseView";
 import WindowController from "../components/WindowController";
 import Adjustable from "../components/Adjustable";
@@ -68,7 +66,7 @@ export default {
     area() {
       return {
         fontSize: `${this.size.toString()}px`,
-        height: `${(this.windowHeight - this.barHeight) / 2 - 5}px`,
+        height: `${this.windowHeight / 2 - 5}px`,
         margin: `0`,
         padding: `0`
       };
@@ -81,11 +79,9 @@ export default {
     }
   },
   components: {
-    StatusBar,
     Action
   },
   mounted: function() {
-    this.barHeight = this.$refs.bar.$el.clientHeight;
     this.$nextTick(function() {
       this.actionKeys = this.$controller.get(RuleName.contrastOption);
     });

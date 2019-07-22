@@ -14,16 +14,6 @@ function simulatePaste() {
 }
 
 class WindowController {
-  xV1: number = 0;
-  yV1: number = 0;
-  isFollowV1: boolean = false;
-  currentWindowV1: BrowserWindow | undefined = undefined;
-
-  xV3: number = 0;
-  yV3: number = 0;
-  isFollowV3: boolean = false;
-  currentWindowV3: BrowserWindow | undefined = undefined;
-
   ctrlKey = false;
   drag = false;
   tapCopy = false;
@@ -38,33 +28,10 @@ class WindowController {
       const controller = <Controller>(<any>global).controller;
       const { x, y } = screen.getCursorScreenPoint();
       switch (args.type) {
-        case WinOpt.Drag:
-          this.currentWindowV1 = currentWindow;
-          this.isFollowV1 = arg.status;
-          this.xV1 = arg.x;
-          this.yV1 = arg.y;
-          break;
         case WinOpt.CloseMe:
           currentWindow.close();
           break;
-        case WinOpt.StartDrag:
-          this.isFollowV3 = true;
-          this.xV3 = x;
-          this.yV3 = y;
-          this.currentWindowV3 = currentWindow;
-          break;
-        case WinOpt.Dragging:
-          if (this.isFollowV3 && this.currentWindowV3) {
-            let dx = x - this.xV3;
-            let dy = y - this.yV3;
-            this.xV3 = x;
-            this.yV3 = y;
-            let bounds = this.currentWindowV3.getBounds();
-            bounds.x += dx;
-            bounds.y += dy;
-            this.currentWindowV3.setBounds(bounds);
-          }
-          break;
+
         case WinOpt.Minify:
           controller.win.edgeHide(controller.get(RuleName.hideDirect));
           break;
@@ -99,20 +66,6 @@ class WindowController {
         });
     });
     ioHook.on("mouseup", (event: MouseEvent) => {
-      //取消鼠标拖拽跟踪
-      if (this.currentWindowV3) {
-        this.currentWindowV3.webContents.send(
-          MessageType.WindowOpt.toString(),
-          {
-            type: WinOpt.EndDrag
-          }
-        );
-        this.currentWindowV3 = undefined;
-      }
-      this.isFollowV3 = false;
-      this.isFollowV1 = false;
-      this.currentWindowV1 = undefined;
-
       //模拟点按复制
       if (
         this.tapCopy &&
@@ -129,18 +82,6 @@ class WindowController {
       this.lastY = event.y;
     });
     ioHook.on("mousedrag", (event: MouseEvent) => {
-      if (this.isFollowV1 && this.currentWindowV1 && event.button === 0) {
-        let x_now = event.x;
-        let y_now = event.y;
-        let dx = x_now - this.xV1;
-        let dy = y_now - this.yV1;
-        this.xV1 = x_now;
-        this.yV1 = y_now;
-        let bounds = this.currentWindowV1.getBounds();
-        bounds.x += dx;
-        bounds.y += dy;
-        this.currentWindowV1.setBounds(bounds);
-      }
       this.drag = true;
     });
     //注册的指令。send到主进程main.js中。

@@ -5,7 +5,6 @@ notes:
 -->
 <template>
   <div>
-    <StatusBar ref="bar"></StatusBar>
     <el-button type="text" style="width:100%;" @click="tutorial">
       Baidu文字识别API申请教程
     </el-button>
@@ -33,13 +32,11 @@ notes:
 <script>
 import { RuleName } from "../tools/rule";
 import WindowController from "../components/WindowController";
-import StatusBar from "../components/StatusBar";
 import { shell } from "electron";
 
 export default {
   name: "Focus",
   mixins: [WindowController],
-  components: { StatusBar },
   data() {
     return {
       routeName: "Focus",

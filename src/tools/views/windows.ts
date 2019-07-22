@@ -1,5 +1,4 @@
 import { BrowserWindow, Rectangle, screen, nativeImage } from "electron";
-import { createProtocol } from "vue-cli-plugin-electron-builder/lib";
 import { ColorStatus, HideDirection, MessageType, WinOpt } from "../enums";
 import { ModeConfig, RuleName } from "../rule";
 import { envConfig } from "../envConfig";
@@ -182,7 +181,8 @@ export class WindowWrapper {
       x: param.x,
       y: param.y,
       width: param.width,
-      height: param.height
+      height: param.height,
+      icon: nativeImage.createFromPath(envConfig.iconPath)
     });
     this.load(routeName);
     this.window.on("closed", () => {

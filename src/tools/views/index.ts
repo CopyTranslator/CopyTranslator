@@ -1,4 +1,10 @@
-import { BrowserWindow, Rectangle, screen, nativeImage } from "electron";
+import {
+  BrowserWindow,
+  Rectangle,
+  screen,
+  nativeImage,
+  remote
+} from "electron";
 import { createProtocol } from "vue-cli-plugin-electron-builder/lib";
 import { ColorStatus, HideDirection, MessageType, WinOpt } from "../enums";
 import { ModeConfig, RuleName } from "../rule";
@@ -21,7 +27,8 @@ export function loadRoute(
     if (main) {
       createProtocol("app");
     }
-    window.loadURL(`${envConfig.publicUrl}/index.html${routeName}`);
+    const url = `${envConfig.publicUrl}/index.html#${routeName}`;
+    window.loadURL(url);
   }
 }
 
@@ -48,6 +55,8 @@ export function showSettings() {
     minimizable: false,
     title: t("settings"),
     parent: current_win.window,
+    show: true,
+    modal: true,
     icon: nativeImage.createFromPath(envConfig.iconPath)
   });
   loadRoute(window, RouteName.Settings);
@@ -74,9 +83,13 @@ export function showAPIConfig() {
     titleBarStyle: "hiddenInset",
     maximizable: false,
     minimizable: false,
-    title: t("ApiConfig"),
     parent: current_win.window,
+    modal: true,
+    title: t("ApiConfig"),
     icon: nativeImage.createFromPath(envConfig.iconPath)
   });
   loadRoute(window, RouteName.ApiConfig);
+  window.once("ready-to-show", () => {
+    window.show();
+  });
 }

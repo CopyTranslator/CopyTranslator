@@ -1,6 +1,10 @@
 <template>
-  <div class="ctrlBtn" v-on:contextmenu="switchListen">
-    <el-button :style="styleNow" circle></el-button>
+  <div
+    class="ctrlBtn"
+    v-on:dblclick="minify"
+    v-on:contextmenu="openMenu('Focus')"
+  >
+    <el-button :style="styleNow" @click="switchListen" circle></el-button>
   </div>
 </template>
 
@@ -11,6 +15,7 @@ import { ipcRenderer as ipc } from "electron";
 
 export default {
   name: "ControlButton",
+  mixins: [WindowController],
   data: function() {
     return {
       colorNow: "white"

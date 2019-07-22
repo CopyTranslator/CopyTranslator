@@ -1,8 +1,7 @@
 <template>
-  <div style="width:100vw;height:100vh;">
+  <div style="width:100%;height:100vh;">
     <div
       style="height:100%"
-      v-on:contextmenu="openMenu('Focus')"
       @keyup.ctrl.13="shortcut"
       @keyup.ctrl.71="google"
       @keyup.ctrl.66="baidu"
@@ -86,7 +85,7 @@ export default {
       return {
         fontSize: this.size.toString() + "px",
         width: "100%",
-        height: this.windowHeight.toString() + "px"
+        height: "100vh"
       };
     }
   }

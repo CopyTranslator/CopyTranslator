@@ -1,8 +1,3 @@
-<!--
-by: lizishan 2019-04-23
-name: Update
-notes:
--->
 <template>
   <div>
     <el-button type="text" style="width:100%;" @click="tutorial">

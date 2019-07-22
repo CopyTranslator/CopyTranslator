@@ -17,11 +17,6 @@
         ></el-option>
       </el-select>
     </div>
-    <div v-else-if="actionId === 'ApiConfig'">
-      <el-button style="width:100%;" @click="handleNormal">{{
-        $t("ApiConfig")
-      }}</el-button>
-    </div>
   </div>
 </template>
 
@@ -52,9 +47,6 @@ export default {
   methods: {
     setValue() {
       this.$controller.setByKeyValue(this.actionId, this.checked, true, false);
-    },
-    handleNormal() {
-      this.$controller.action.callback(this.actionId);
     },
     sync() {
       this.action = this.$controller.action.actions[this.actionId];

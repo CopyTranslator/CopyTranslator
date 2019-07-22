@@ -44,7 +44,9 @@ enum RouteName {
   Settings = "Settings",
   Tray = "Tray",
   Update = "Update",
-  ApiConfig = "ApiConfig"
+  ApiConfig = "ApiConfig",
+  FocusText = "FocusText", // 专注模式 文本框
+  CustomPanel = "CustomPanel"
 }
 
 interface Action {
@@ -127,16 +129,16 @@ class ActionManager {
     this.register();
   }
 
-  getRefresh() {
+  getRefreshFunc() {
     const controller = <Controller>(<any>global).controller;
     let config = controller.config;
     const t = controller.getT();
     function refreshSingle(key: string, action: Action): Action {
+      action.label = t(key);
       if (action.role) {
         action.click = undefined;
         return action;
       }
-      action.label = t(key);
       if (action.type == MenuItemType.checkbox) {
         action.checked = config.values[key];
       }
@@ -353,8 +355,11 @@ class ActionManager {
       case RouteName.Settings:
         contain = Object.keys(this.actions);
         break;
+      case RouteName.FocusText:
+        contain = ["copyResult", "copySource", "copy", "paste", "cut", "clear"];
+        break;
     }
-    const refresh = this.getRefresh();
+    const refresh = this.getRefreshFunc();
     contain.forEach(key => {
       menu.append(new MenuItem(refresh(key, this.actions[key])));
     });

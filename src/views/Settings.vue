@@ -1,10 +1,6 @@
 <template>
   <div>
-    <div
-      v-on:contextmenu="openMenu('Settings')"
-      v-on:dblclick="minify"
-      style="text-align: left;"
-    >
+    <div v-on:dblclick="minify" style="text-align: left;">
       <div style="text-align: left;">
         <Action
           v-for="actionId in actionKeys"
@@ -12,7 +8,6 @@
           :key="actionId"
         ></Action>
       </div>
-      <el-button style="width:100%;" @click="closeMe">{{ $t("ok") }}</el-button>
     </div>
   </div>
 </template>

@@ -59,7 +59,7 @@ export function showSettings() {
     modal: true,
     icon: nativeImage.createFromPath(envConfig.iconPath)
   });
-  loadRoute(window, RouteName.Settings);
+  loadRoute(window, RouteName.CustomPanel);
 }
 
 export function showAPIConfig() {

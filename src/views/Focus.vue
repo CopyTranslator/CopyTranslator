@@ -5,6 +5,7 @@
       @keyup.ctrl.13="shortcut"
       @keyup.ctrl.71="google"
       @keyup.ctrl.66="baidu"
+      v-on:contextmenu="openMenu('FocusText')"
     >
       <textarea
         ref="normalResult"

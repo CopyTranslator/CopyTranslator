@@ -5,6 +5,7 @@ import Contrast from "./views/Contrast.vue";
 import Settings from "./views/Settings.vue";
 import Update from "./views/Update.vue";
 import ApiConfig from "./views/ApiConfig.vue";
+import CustomPanel from "./views/CustomPanel.vue";
 Vue.use(Router);
 
 export default new Router({
@@ -39,6 +40,11 @@ export default new Router({
       path: "/ApiConfig",
       name: "ApiConfig",
       component: ApiConfig
+    },
+    {
+      path: "/CustomPanel",
+      name: "CustomPanel",
+      component: CustomPanel
     }
   ]
 });

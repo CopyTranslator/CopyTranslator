@@ -15,9 +15,18 @@ notes:
     <el-input v-model="API_KEY"></el-input>
     <p>SECRET_KEY</p>
     <el-input v-model="SECRET_KEY"></el-input>
-    <el-button style="width:100%;" @click="backStored">{{
-      $t("return")
-    }}</el-button>
+    <el-row :gutter="2">
+      <el-col :span="12">
+        <el-button type="primary" style="width:100%;" @click="confirm">{{
+          $t("ok")
+        }}</el-button>
+      </el-col>
+      <el-col :span="12">
+        <el-button type="info" style="width:100%;" @click="close">{{
+          $t("return")
+        }}</el-button>
+      </el-col>
+    </el-row>
   </div>
 </template>
 
@@ -39,19 +48,17 @@ export default {
       SECRET_KEY: this.$controller.get(RuleName.SECRET_KEY)
     };
   },
-  beforeRouteEnter(to, from, next) {
-    next(vm => {
-      if (from.name) vm.$controller.win.stored = from.name;
-    });
-  },
   methods: {
-    backStored() {
+    confirm() {
       this.$controller.setUpRecognizer(
         this.APP_ID,
         this.API_KEY,
         this.SECRET_KEY
       );
-      this.changeMode(this.$controller.win.stored);
+      this.closeMe();
+    },
+    close() {
+      this.closeMe();
     },
     tutorial() {
       shell.openExternal("https://www.bilibili.com/video/av53888416/");

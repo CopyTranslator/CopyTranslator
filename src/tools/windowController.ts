@@ -44,6 +44,9 @@ class WindowController {
           this.xV1 = arg.x;
           this.yV1 = arg.y;
           break;
+        case WinOpt.CloseMe:
+          currentWindow.close();
+          break;
         case WinOpt.StartDrag:
           this.isFollowV3 = true;
           this.xV3 = x;

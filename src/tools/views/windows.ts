@@ -7,7 +7,7 @@ import { RouteName } from "../action";
 import { loadStyles } from "../style";
 import { Controller } from "../../core/controller";
 
-class WindowWrapper {
+export class WindowWrapper {
   window: BrowserWindow | undefined = undefined;
   stored: string = RouteName.Focus;
 
@@ -189,8 +189,7 @@ class WindowWrapper {
       x: param.x,
       y: param.y,
       width: param.width,
-      height: param.height,
-      frame: false
+      height: param.height
     });
     this.load(routeName);
     this.window.on("closed", () => {
@@ -220,5 +219,3 @@ class WindowWrapper {
     }
   }
 }
-
-export { WindowWrapper };

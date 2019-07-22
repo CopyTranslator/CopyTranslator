@@ -37,9 +37,38 @@ export function showSettings() {
     height: height,
     titleBarStyle: "hiddenInset",
     maximizable: false,
+    minimizable: false,
     title: t("settings"),
     parent: current_win.window,
     icon: nativeImage.createFromPath(envConfig.iconPath)
   });
   loadRoute(window, RouteName.Settings);
+}
+
+export function showAPIConfig() {
+  const width = 354,
+    height = 510;
+  const controller = <Controller>(<any>global).controller;
+  const current_win = controller.win;
+  const bound = current_win.getBound();
+  const {
+    x: xBound,
+    x: yBound,
+    width: screenWidth,
+    height: screenHeight
+  } = screen.getDisplayMatching(bound).bounds;
+  const t = controller.getT();
+  const window = new BrowserWindow({
+    x: xBound + (screenWidth - width) / 2,
+    y: yBound + (screenHeight - height) / 2,
+    width: width,
+    height: height,
+    titleBarStyle: "hiddenInset",
+    maximizable: false,
+    minimizable: false,
+    title: t("ApiConfig"),
+    parent: current_win.window,
+    icon: nativeImage.createFromPath(envConfig.iconPath)
+  });
+  loadRoute(window, RouteName.ApiConfig);
 }

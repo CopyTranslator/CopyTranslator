@@ -36,7 +36,8 @@ enum WinOpt {
   OpenExternal,
   ChangeColor,
   Refresh,
-  SaveMode
+  SaveMode,
+  CloseMe
 }
 
 function rgb(r: number, g: number, b: number) {

@@ -30,6 +30,9 @@ export default {
     minify(event) {
       this.windowOpt(WinOpt.Minify);
     },
+    closeMe() {
+      this.windowOpt(WinOpt.CloseMe);
+    },
     bindDrag(event) {
       if (event.button === 0) {
         this.windowOpt(WinOpt.Drag, {

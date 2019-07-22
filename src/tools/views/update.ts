@@ -32,6 +32,7 @@ function bindUpdateEvents() {
       height: height,
       titleBarStyle: "hiddenInset",
       maximizable: false,
+      minimizable: false,
       title: "软件更新",
       parent: current_win.window,
       icon: nativeImage.createFromPath(envConfig.iconPath)

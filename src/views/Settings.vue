@@ -12,9 +12,7 @@
           :key="actionId"
         ></Action>
       </div>
-      <el-button style="width:100%;" @click="backStored">{{
-        $t("return")
-      }}</el-button>
+      <el-button style="width:100%;" @click="closeMe">{{ $t("ok") }}</el-button>
     </div>
   </div>
 </template>
@@ -39,16 +37,7 @@ export default {
   components: {
     Action
   },
-  beforeRouteEnter(to, from, next) {
-    next(vm => {
-      if (from.name) vm.$controller.win.stored = from.name;
-    });
-  },
-  methods: {
-    backStored() {
-      this.changeMode(this.$controller.win.stored);
-    }
-  }
+  methods: {}
 };
 </script>
 

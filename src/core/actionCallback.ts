@@ -5,7 +5,7 @@ import { checkForUpdates } from "../tools/views/update";
 import { constants, version } from "../core/constant";
 import { Controller } from "../core/controller";
 import { decompose } from "../tools/action";
-import { showSettings } from "../tools/views";
+import { showSettings, showAPIConfig } from "../tools/views";
 
 const _ = require("lodash");
 
@@ -51,7 +51,7 @@ function handleNormalAction(actionId: string) {
       controller.win.routeTo("Focus");
       break;
     case "ApiConfig":
-      controller.win.routeTo("ApiConfig");
+      showAPIConfig();
       break;
     case "exit":
       controller.onExit();
@@ -70,7 +70,7 @@ function handleNormalAction(actionId: string) {
       break;
     case "settings":
       showSettings();
-      // controller.win.routeTo("Settings");
+
       break;
     case "helpAndUpdate":
       dialog.showMessageBox(

@@ -7,12 +7,20 @@ import { RouteName } from "../action";
 import { en } from "../locales";
 import { Controller } from "../../core/controller";
 
-export function loadRoute(window: BrowserWindow, routeName: RouteName) {
+export function loadRoute(
+  window: BrowserWindow,
+  routeName: RouteName,
+  main: boolean = false
+) {
   if (process.env.WEBPACK_DEV_SERVER_URL) {
     // Load the url of the dev server if in development mode
     window.loadURL(envConfig.publicUrl + `/#/${routeName}`);
+    if (!process.env.IS_TEST && main) window.webContents.openDevTools();
   } else {
     // Load the index.html when not in development
+    if (main) {
+      createProtocol("app");
+    }
     window.loadURL(`${envConfig.publicUrl}/index.html${routeName}`);
   }
 }

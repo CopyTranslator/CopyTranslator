@@ -6,6 +6,7 @@ import { envConfig } from "../envConfig";
 import { RouteName } from "../action";
 import { loadStyles } from "../style";
 import { Controller } from "../../core/controller";
+import { loadRoute } from ".";
 
 export class WindowWrapper {
   window: BrowserWindow | undefined = undefined;
@@ -40,15 +41,7 @@ export class WindowWrapper {
   load(routerName: RouteName = RouteName.Focus) {
     if (!this.window) return;
     this.winOpt(WinOpt.SaveMode);
-    if (process.env.WEBPACK_DEV_SERVER_URL) {
-      // Load the url of the dev server if in development mode
-      this.window.loadURL(envConfig.publicUrl + `/#/${routerName}`);
-      if (!process.env.IS_TEST) this.window.webContents.openDevTools();
-    } else {
-      createProtocol("app");
-      // Load the index.html when not in development
-      this.window.loadURL(`${envConfig.publicUrl}/index.html#${routerName}`);
-    }
+    loadRoute(this.window, routerName, true);
     let windowPointer = this.window;
     this.window.webContents.on("did-finish-load", function() {
       windowPointer.webContents.insertCSS(loadStyles());

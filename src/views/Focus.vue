@@ -20,6 +20,7 @@
         :size="size"
       ></DictResult>
     </div>
+    <ControlButton></ControlButton>
   </div>
 </template>
 
@@ -32,10 +33,12 @@ import DictResult from "../components/DictResult";
 import { shell } from "electron";
 import { RuleName } from "@/tools/rule";
 import { constants } from "crypto";
+import ControlButton from "../components/ControlButton";
+
 export default {
   name: "FocusMode",
   mixins: [BaseView, WindowController, Adjustable],
-  components: { DictResult },
+  components: { DictResult, ControlButton },
   data: function() {
     return {
       size: this.$controller.get(RuleName.focus).fontSize,

@@ -17,10 +17,6 @@ function loadStyles(): string {
 .contrast {
     /*modify the style of the contrast mode panel*/
 }
-
-.statusBar {
-
-}
 `;
   try {
     let styles = fs.readFileSync(envConfig.style, "utf-8");

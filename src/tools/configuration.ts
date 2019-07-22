@@ -7,7 +7,7 @@ import {
   StringRule,
   RuleName
 } from "./rule";
-import { FrameMode, HideDirection, TitlebarType } from "./enums";
+import { FrameMode, HideDirection } from "./enums";
 import { TranslatorType } from "./translation/translators";
 import { RouteName } from "./action";
 
@@ -85,12 +85,6 @@ function initConfig(
     RuleName.hideDirect,
     new EnumRule(HideDirection.Up, "HideDirection", HideDirection)
   );
-
-  config.addRule(
-    RuleName.titleBar,
-    new EnumRule(TitlebarType.Enhance, "titlebar Type", TitlebarType)
-  );
-
   config.addRule(
     RuleName.focus,
     new ModeRule(

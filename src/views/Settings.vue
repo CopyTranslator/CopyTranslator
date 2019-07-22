@@ -18,7 +18,6 @@
 </template>
 
 <script>
-import StatusBar from "../components/StatusBar";
 import WindowController from "../components/WindowController";
 import Action from "../components/Action";
 
@@ -30,7 +29,6 @@ export default {
       config: undefined,
       locale: undefined,
       locales: this.$controller.locales.getLocales(),
-      routeName: "settingsConfig",
       actionKeys: Object.keys(this.$controller.action.actions)
     };
   },

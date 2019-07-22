@@ -11,7 +11,6 @@ export default {
   data: function() {
     return {
       size: 20,
-      barHeight: 0,
       windowHeight: window.innerHeight,
       windowWidth: window.innerWidth
     };

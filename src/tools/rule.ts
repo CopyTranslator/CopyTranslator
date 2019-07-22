@@ -35,7 +35,6 @@ enum RuleName {
   targetLanguage,
   localeSetting,
   notices,
-  titleBar,
   //以下为用户手动设置常量
   APP_ID,
   API_KEY,

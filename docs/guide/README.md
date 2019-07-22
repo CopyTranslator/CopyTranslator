@@ -159,9 +159,6 @@ CopyTranslator 提供了强大的自定义功能，但是需要用户有一定�
     /*modify the style of the contrast mode panel*/
 }
 
-.statusBar {
-
-}
 ```
 ::: tip
 CSS文件的编写可以参考[HTML中文网](https://www.html.cn/book/css/all-properties.html)。欢迎大家分享自己编写的`style.css`文件。

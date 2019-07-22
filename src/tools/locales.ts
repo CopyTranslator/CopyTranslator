@@ -49,6 +49,26 @@ interface Locale {
   SECRET_KEY: string;
   capture: string;
   ApiConfig: string;
+  undo: string;
+  redo: string;
+  cut: string;
+  copy: string;
+  paste: string;
+  pasteAndMatchStyle: string;
+  selectAll: string;
+  delete: string;
+  minimize: string;
+  close: string;
+  quit: string;
+  reload: string;
+  forcereload: string;
+  toggledevtools: string;
+  toggleFullScreen: string;
+  resetzoom: string;
+  zoomin: string;
+  zoomout: string;
+  editMenu: string;
+  windowMenu: string;
 }
 
 const zh_cn: Locale = {
@@ -101,7 +121,27 @@ const zh_cn: Locale = {
   API_KEY: "API_KEY",
   SECRET_KEY: "SECRET_KEY",
   capture: "截图翻译",
-  ApiConfig: "API 设置"
+  ApiConfig: "API 设置",
+  undo: "撤销",
+  redo: "重做",
+  cut: "剪切",
+  copy: "复制",
+  paste: "粘贴",
+  pasteAndMatchStyle: "粘贴并匹配样式",
+  selectAll: "全选",
+  delete: "删除",
+  minimize: "最小化",
+  close: "关闭",
+  quit: "退出",
+  reload: "重载",
+  forcereload: "强制重载",
+  toggledevtools: "开启开发者工具",
+  toggleFullScreen: "开启全屏",
+  resetzoom: "重置缩放",
+  zoomin: "放大",
+  zoomout: "缩小",
+  editMenu: "编辑菜单",
+  windowMenu: "窗口菜单"
 };
 
 const en: Locale = {
@@ -154,7 +194,27 @@ const en: Locale = {
   API_KEY: "API_KEY",
   SECRET_KEY: "SECRET_KEY",
   capture: "Screenshot Translate",
-  ApiConfig: "API Config"
+  ApiConfig: "API Config",
+  undo: "undo",
+  redo: "redo",
+  cut: "cut",
+  copy: "copy",
+  paste: "paste",
+  pasteAndMatchStyle: "pasteAndMatchStyle",
+  selectAll: "selectAll",
+  delete: "delete",
+  minimize: "minimize",
+  close: "close",
+  quit: "quit",
+  reload: "reload",
+  forcereload: "forcereload",
+  toggledevtools: "toggledevtools",
+  toggleFullScreen: "toggleFullScreen",
+  resetzoom: "resetzoom",
+  zoomin: "zoomin",
+  zoomout: "zoomout",
+  editMenu: "editMenu",
+  windowMenu: "windowMenu"
 };
 
 export { en, zh_cn, Locale };

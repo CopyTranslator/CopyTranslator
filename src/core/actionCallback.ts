@@ -50,9 +50,6 @@ function handleNormalAction(actionId: string) {
     case "focusMode":
       controller.win.routeTo("Focus");
       break;
-    case "ApiConfig":
-      showAPIConfig();
-      break;
     case "exit":
       controller.onExit();
       break;

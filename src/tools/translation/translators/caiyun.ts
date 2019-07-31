@@ -91,7 +91,7 @@ export class CaiyunTranslator extends Translator {
       let res = await CaiyunTranslate(text, srcCode, destCode);
       return res;
     } catch (e) {
-      log().debug(e);
+      console.log(e);
       return undefined;
     }
   }

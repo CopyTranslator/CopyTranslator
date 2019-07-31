@@ -281,7 +281,7 @@ export class SogouTranslator extends Translator {
       );
       return res;
     } catch (e) {
-      log().debug(e);
+      console.log(e);
       return undefined;
     }
   }

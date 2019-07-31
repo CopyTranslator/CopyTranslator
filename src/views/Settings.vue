@@ -24,7 +24,7 @@ export default {
       config: undefined,
       locale: undefined,
       locales: this.$controller.locales.getLocales(),
-      actionKeys: Object.keys(this.$controller.action.actions)
+      actionKeys: this.$controller.action.getKeys("Settings")
     };
   },
   components: {

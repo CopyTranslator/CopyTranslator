@@ -143,7 +143,7 @@ export class GoogleTranslator extends Translator {
       );
       return res;
     } catch (e) {
-      log().debug(e);
+      console.log(e);
       return undefined;
     }
   }
@@ -152,7 +152,7 @@ export class GoogleTranslator extends Translator {
     try {
       return await google.detect(text);
     } catch (e) {
-      log().debug(e);
+      console.log(e);
       return undefined;
     }
   }

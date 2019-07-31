@@ -70,5 +70,6 @@
     "zoomin": "zoomin",
     "zoomout": "zoomout",
     "editMenu": "editMenu",
-    "windowMenu": "windowMenu"
+    "windowMenu": "windowMenu",
+    "switches": "Switches"
 }

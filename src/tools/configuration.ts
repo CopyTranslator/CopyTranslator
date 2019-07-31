@@ -197,7 +197,6 @@ function initConfig(
       [
         "translatorType",
         "hideDirect",
-        "titleBar",
         "copySource",
         "copyResult",
         "clear",

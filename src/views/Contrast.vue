@@ -1,12 +1,13 @@
 <template>
   <div>
-    <div v-on:contextmenu="openMenu('Contrast')">
+    <div>
       <div :style="area2">
         <textarea
           class="contrastText div-inline"
           v-if="sharedResult"
           :style="area"
           v-model="sharedResult.src"
+          v-on:contextmenu="openMenu('FocusText')"
         ></textarea>
 
         <textarea
@@ -14,6 +15,7 @@
           :style="area"
           v-if="sharedResult"
           v-model="sharedResult.result"
+          v-on:contextmenu="openMenu('FocusText')"
         ></textarea>
       </div>
 
@@ -35,10 +37,7 @@
         <el-button type="primary" class="noMargin" @click="translate">{{
           $t("translate")
         }}</el-button>
-        <el-button
-          type="primary"
-          class="noMargin"
-          @click="changeMode('Settings')"
+        <el-button type="primary" class="noMargin" @click="toSetting"
           >{{ $t("settings") }}
         </el-button>
       </div>
@@ -89,6 +88,9 @@ export default {
   methods: {
     translate() {
       this.$controller.tryTranslate(this.sharedResult.src);
+    },
+    toSetting() {
+      this.$controller.action.callback("settings");
     }
   }
 };

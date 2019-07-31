@@ -37,11 +37,6 @@ export default new Router({
       component: Update
     },
     {
-      path: "/ApiConfig",
-      name: "ApiConfig",
-      component: ApiConfig
-    },
-    {
       path: "/CustomPanel",
       name: "CustomPanel",
       component: CustomPanel

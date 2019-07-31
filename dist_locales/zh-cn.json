@@ -48,7 +48,7 @@
     "API_KEY": "API_KEY",
     "SECRET_KEY": "SECRET_KEY",
     "capture": "截图翻译",
-    "ApiConfig": "API 设置",
+    "ApiConfig": "OCR 设置",
     "undo": "撤销",
     "redo": "重做",
     "cut": "剪切",
@@ -68,5 +68,6 @@
     "zoomin": "放大",
     "zoomout": "缩小",
     "editMenu": "编辑菜单",
-    "windowMenu": "窗口菜单"
+    "windowMenu": "窗口菜单",
+    "switches": "开关"
 }

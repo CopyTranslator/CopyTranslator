@@ -5,11 +5,11 @@
         <el-tab-pane :label="$t('settings')" name="first">
           <Settings></Settings>
         </el-tab-pane>
-        <el-tab-pane :label="$t('ApiConfig')" name="second">
-          <ApiConfig></ApiConfig>
+        <el-tab-pane :label="$t('switches')" name="second">
+          <SwitchPanel></SwitchPanel>
         </el-tab-pane>
         <el-tab-pane :label="$t('ApiConfig')" name="third">
-          <SwitchPanel></SwitchPanel>
+          <ApiConfig></ApiConfig>
         </el-tab-pane>
       </el-tabs>
     </div>

@@ -69,6 +69,7 @@ interface Locale {
   zoomout: string;
   editMenu: string;
   windowMenu: string;
+  switches: string;
 }
 
 const zh_cn: Locale = {
@@ -121,7 +122,7 @@ const zh_cn: Locale = {
   API_KEY: "API_KEY",
   SECRET_KEY: "SECRET_KEY",
   capture: "截图翻译",
-  ApiConfig: "API 设置",
+  ApiConfig: "OCR 设置",
   undo: "撤销",
   redo: "重做",
   cut: "剪切",
@@ -141,7 +142,8 @@ const zh_cn: Locale = {
   zoomin: "放大",
   zoomout: "缩小",
   editMenu: "编辑菜单",
-  windowMenu: "窗口菜单"
+  windowMenu: "窗口菜单",
+  switches: "开关"
 };
 
 const en: Locale = {
@@ -194,7 +196,7 @@ const en: Locale = {
   API_KEY: "API_KEY",
   SECRET_KEY: "SECRET_KEY",
   capture: "Screenshot Translate",
-  ApiConfig: "API Config",
+  ApiConfig: "OCR Config",
   undo: "undo",
   redo: "redo",
   cut: "cut",
@@ -214,7 +216,8 @@ const en: Locale = {
   zoomin: "zoomin",
   zoomout: "zoomout",
   editMenu: "editMenu",
-  windowMenu: "windowMenu"
+  windowMenu: "windowMenu",
+  switches: "Switches"
 };
 
 export { en, zh_cn, Locale };

@@ -6,11 +6,8 @@ import {
   remote
 } from "electron";
 import { createProtocol } from "vue-cli-plugin-electron-builder/lib";
-import { ColorStatus, HideDirection, MessageType, WinOpt } from "../enums";
-import { ModeConfig, RuleName } from "../rule";
 import { envConfig } from "../envConfig";
 import { RouteName } from "../action";
-import { en } from "../locales";
 import { Controller } from "../../core/controller";
 
 export function loadRoute(
@@ -33,8 +30,8 @@ export function loadRoute(
 }
 
 export function showSettings() {
-  const width = 260,
-    height = 800;
+  const width = 320,
+    height = 640;
   const controller = <Controller>(<any>global).controller;
   const current_win = controller.win;
   const bound = current_win.getBound();
@@ -56,7 +53,6 @@ export function showSettings() {
     title: t("settings"),
     parent: current_win.window,
     show: true,
-    modal: true,
     icon: nativeImage.createFromPath(envConfig.iconPath)
   });
   loadRoute(window, RouteName.CustomPanel);
@@ -84,7 +80,6 @@ export function showAPIConfig() {
     maximizable: false,
     minimizable: false,
     parent: current_win.window,
-    modal: true,
     title: t("ApiConfig"),
     icon: nativeImage.createFromPath(envConfig.iconPath)
   });

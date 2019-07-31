@@ -46,7 +46,8 @@ enum RouteName {
   Update = "Update",
   ApiConfig = "ApiConfig",
   FocusText = "FocusText", // 专注模式 文本框
-  CustomPanel = "CustomPanel"
+  CustomPanel = "CustomPanel",
+  SwitchPanel = "SwitchPanel"
 }
 
 interface Action {
@@ -299,7 +300,6 @@ class ActionManager {
 
     items.push(normalAction("focusMode"));
     items.push(normalAction("contrastMode"));
-    items.push(normalAction("ApiConfig"));
     items.push(normalAction("capture"));
     items.push(normalAction("restoreDefault"));
 
@@ -337,9 +337,7 @@ class ActionManager {
     });
     return itemGroup;
   }
-
-  popup(id: RouteName) {
-    let menu = new Menu();
+  getKeys(id: RouteName) {
     let contain: Array<string> = [];
     const controller = <Controller>(<any>global).controller;
     switch (id) {
@@ -353,13 +351,25 @@ class ActionManager {
         contain = controller.get(RuleName.trayMenu);
         break;
       case RouteName.Settings:
-        contain = Object.keys(this.actions);
+        contain = Object.keys(this.actions).filter(
+          x => this.actions[x].type == MenuItemType.submenu
+        );
         break;
       case RouteName.FocusText:
         contain = ["copyResult", "copySource", "copy", "paste", "cut", "clear"];
         break;
+      case RouteName.SwitchPanel:
+        contain = Object.keys(this.actions).filter(
+          x => this.actions[x].type == MenuItemType.checkbox
+        );
+        break;
     }
+    return contain;
+  }
+  popup(id: RouteName) {
+    const contain = this.getKeys(id);
     const refresh = this.getRefreshFunc();
+    let menu = new Menu();
     contain.forEach(key => {
       menu.append(new MenuItem(refresh(key, this.actions[key])));
     });

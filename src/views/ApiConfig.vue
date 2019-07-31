@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-button type="text" style="width:100%;" @click="tutorial">
+    <el-button type="text warning" style="width:100%;" @click="tutorial">
       Baidu文字识别API申请教程
     </el-button>
     <p>APP_ID</p>

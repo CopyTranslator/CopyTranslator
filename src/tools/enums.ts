@@ -60,4 +60,7 @@ const ColorStatus = mkenum({
 
 type ColorStatus = (typeof ColorStatus)[keyof typeof ColorStatus];
 
+//下面开始设计各个菜单的内容
+const switchKeys = [];
+
 export { FrameMode, ColorStatus, MessageType, WinOpt, HideDirection };

@@ -8,9 +8,11 @@
         <el-tab-pane :label="$t('ApiConfig')" name="second">
           <ApiConfig></ApiConfig>
         </el-tab-pane>
+        <el-tab-pane :label="$t('ApiConfig')" name="third">
+          <SwitchPanel></SwitchPanel>
+        </el-tab-pane>
       </el-tabs>
     </div>
-    <el-button @click="closeMe" style="float:right">{{ $t("ok") }}</el-button>
   </div>
 </template>
 
@@ -20,6 +22,7 @@ import WindowController from "../components/WindowController";
 import { shell } from "electron";
 import Settings from "./Settings";
 import ApiConfig from "./ApiConfig";
+import SwitchPanel from "./SwitchPanel";
 
 export default {
   name: "Focus",
@@ -32,7 +35,8 @@ export default {
   methods: {},
   components: {
     Settings,
-    ApiConfig
+    ApiConfig,
+    SwitchPanel
   }
 };
 </script>

@@ -65,7 +65,7 @@ export class BaiduTranslator extends Translator {
       );
       return res;
     } catch (e) {
-      log().debug(e);
+      console.log(e);
       return undefined;
     }
   }
@@ -74,7 +74,7 @@ export class BaiduTranslator extends Translator {
     try {
       return await baidu.detect(text);
     } catch (e) {
-      log().debug(e);
+      console.log(e);
       return undefined;
     }
   }

@@ -47,7 +47,7 @@ export class YoudaoTranslator extends Translator {
       );
       return res;
     } catch (e) {
-      log().debug(e);
+      console.log(e);
       return undefined;
     }
   }
@@ -56,7 +56,7 @@ export class YoudaoTranslator extends Translator {
     try {
       return await youdao.detect(text);
     } catch (e) {
-      log().debug(e);
+      console.log(e);
       return undefined;
     }
   }

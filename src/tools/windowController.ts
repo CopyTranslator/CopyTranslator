@@ -31,7 +31,6 @@ class WindowController {
         case WinOpt.CloseMe:
           currentWindow.close();
           break;
-
         case WinOpt.Minify:
           controller.win.edgeHide(controller.get(RuleName.hideDirect));
           break;

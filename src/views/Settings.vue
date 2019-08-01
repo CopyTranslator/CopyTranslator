@@ -1,36 +1,43 @@
 <template>
-  <div>
-    <div v-on:dblclick="minify" style="text-align: left;">
-      <div style="text-align: left;">
-        <Action
-          v-for="actionId in actionKeys"
-          :action-id="actionId"
-          :key="actionId"
-        ></Action>
-      </div>
+  <div style="height:100%">
+    <div style="height:80%">
+      <el-tabs v-model="activeName">
+        <el-tab-pane :label="$t('settings')" name="first">
+          <Options></Options>
+        </el-tab-pane>
+        <el-tab-pane :label="$t('switches')" name="second">
+          <Switches></Switches>
+        </el-tab-pane>
+        <el-tab-pane :label="$t('ApiConfig')" name="third">
+          <OCRConfig></OCRConfig>
+        </el-tab-pane>
+      </el-tabs>
     </div>
   </div>
 </template>
 
 <script>
+import { RuleName } from "../tools/rule";
 import WindowController from "../components/WindowController";
-import Action from "../components/Action";
+import { shell } from "electron";
+import Options from "./Options";
+import OCRConfig from "./OCRConfig";
+import Switches from "./Switches";
 
 export default {
-  name: "Settings",
+  name: "Focus",
   mixins: [WindowController],
-  data: function() {
+  data() {
     return {
-      config: undefined,
-      locale: undefined,
-      locales: this.$controller.locales.getLocales(),
-      actionKeys: this.$controller.action.getKeys("Settings")
+      activeName: "first"
     };
   },
+  methods: {},
   components: {
-    Action
-  },
-  methods: {}
+    Options,
+    OCRConfig,
+    Switches
+  }
 };
 </script>
 

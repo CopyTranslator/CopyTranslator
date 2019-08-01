@@ -70,6 +70,7 @@ interface Locale {
   editMenu: string;
   windowMenu: string;
   switches: string;
+  options: string;
 }
 
 const zh_cn: Locale = {
@@ -143,7 +144,8 @@ const zh_cn: Locale = {
   zoomout: "缩小",
   editMenu: "编辑菜单",
   windowMenu: "窗口菜单",
-  switches: "开关"
+  switches: "开关",
+  options: "选项"
 };
 
 const en: Locale = {
@@ -217,7 +219,8 @@ const en: Locale = {
   zoomout: "zoomout",
   editMenu: "editMenu",
   windowMenu: "windowMenu",
-  switches: "Switches"
+  switches: "Switches",
+  options: "Options"
 };
 
 export { en, zh_cn, Locale };

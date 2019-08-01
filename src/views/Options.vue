@@ -17,14 +17,14 @@ import WindowController from "../components/WindowController";
 import Action from "../components/Action";
 
 export default {
-  name: "SwitchPanel",
+  name: "Options",
   mixins: [WindowController],
   data: function() {
     return {
       config: undefined,
       locale: undefined,
       locales: this.$controller.locales.getLocales(),
-      actionKeys: this.$controller.action.getKeys("SwitchPanel")
+      actionKeys: this.$controller.action.getKeys("Options")
     };
   },
   components: {

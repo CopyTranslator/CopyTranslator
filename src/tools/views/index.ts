@@ -55,7 +55,7 @@ export function showSettings() {
     show: true,
     icon: nativeImage.createFromPath(envConfig.iconPath)
   });
-  loadRoute(window, RouteName.CustomPanel);
+  loadRoute(window, RouteName.Settings);
 }
 
 export function showAPIConfig() {

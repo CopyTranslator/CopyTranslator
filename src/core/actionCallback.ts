@@ -8,7 +8,6 @@ import { decompose } from "../tools/action";
 import { showSettings, showAPIConfig } from "../tools/views";
 
 const _ = require("lodash");
-
 const clipboard = require("electron-clipboard-extended");
 
 function handleActions(

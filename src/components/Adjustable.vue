@@ -19,6 +19,7 @@ export default {
   methods: {
     setZoomFactor(value) {
       this.size -= value;
+      this.storeWindow();
     },
     syncHeight() {
       this.windowHeight = window.innerHeight;

@@ -297,6 +297,7 @@ class ActionManager {
     items.push(switchAction(RuleName.listenClipboard));
     items.push(switchAction(RuleName.tapCopy));
     items.push(switchAction(RuleName.enableNotify));
+    items.push(switchAction(RuleName.skipTaskbar));
 
     items.push(normalAction("focusMode"));
     items.push(normalAction("contrastMode"));

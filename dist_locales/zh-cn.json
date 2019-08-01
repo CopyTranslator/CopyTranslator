@@ -70,5 +70,6 @@
     "editMenu": "编辑菜单",
     "windowMenu": "窗口菜单",
     "switches": "开关",
-    "options": "选项"
+    "options": "选项",
+    "skipTaskbar": "隐藏任务栏"
 }

@@ -71,6 +71,8 @@ function initConfig(
     new BoolRule(false, "notify after translate")
   );
 
+  config.addRule(RuleName.skipTaskbar, new BoolRule(false, "hide the taskbar"));
+
   config.addRule(RuleName.frameMode, {
     predefined: RouteName.Contrast,
     msg: "current frame mode"

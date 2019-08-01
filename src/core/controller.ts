@@ -367,6 +367,9 @@ class Controller {
           this.win.window.setAlwaysOnTop(value);
         }
         break;
+      case RuleName.skipTaskbar:
+        this.win.setSkipTaskbar(value);
+        break;
       case RuleName.incrementalCopy:
         this.clear();
         break;

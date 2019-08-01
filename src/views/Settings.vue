@@ -2,13 +2,13 @@
   <div style="height:100%">
     <div style="height:80%">
       <el-tabs v-model="activeName">
-        <el-tab-pane :label="$t('settings')" name="first">
+        <el-tab-pane :label="$t('options')" name="first">
           <Options></Options>
         </el-tab-pane>
         <el-tab-pane :label="$t('switches')" name="second">
           <Switches></Switches>
         </el-tab-pane>
-        <el-tab-pane :label="$t('ApiConfig')" name="third">
+        <el-tab-pane :label="$t('OCRConfig')" name="third">
           <OCRConfig></OCRConfig>
         </el-tab-pane>
       </el-tabs>

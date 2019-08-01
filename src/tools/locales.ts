@@ -48,7 +48,7 @@ interface Locale {
   APP_ID: string;
   SECRET_KEY: string;
   capture: string;
-  ApiConfig: string;
+  OCRConfig: string;
   undo: string;
   redo: string;
   cut: string;
@@ -124,7 +124,7 @@ const zh_cn: Locale = {
   API_KEY: "API_KEY",
   SECRET_KEY: "SECRET_KEY",
   capture: "截图翻译",
-  ApiConfig: "OCR 设置",
+  OCRConfig: "OCR 设置",
   undo: "撤销",
   redo: "重做",
   cut: "剪切",
@@ -200,7 +200,7 @@ const en: Locale = {
   API_KEY: "API_KEY",
   SECRET_KEY: "SECRET_KEY",
   capture: "Screenshot Translate",
-  ApiConfig: "OCR Config",
+  OCRConfig: "OCR Config",
   undo: "undo",
   redo: "redo",
   cut: "cut",

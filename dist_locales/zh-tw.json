@@ -50,7 +50,7 @@
     "API_KEY": "API_KEY",
     "SECRET_KEY": "SECRET_KEY",
     "capture": "截圖翻譯",
-    "ApiConfig": "API 設定",
+    "OCRConfig": "OCR 設定",
     "undo": "復原",
     "redo": "重做",
     "cut": "剪下",

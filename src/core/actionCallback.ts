@@ -5,7 +5,7 @@ import { checkForUpdates } from "../tools/views/update";
 import { constants, version } from "../core/constant";
 import { Controller } from "../core/controller";
 import { decompose } from "../tools/action";
-import { showSettings, showAPIConfig } from "../tools/views";
+import { showSettings, showOCRConfig } from "../tools/views";
 
 const _ = require("lodash");
 const clipboard = require("electron-clipboard-extended");

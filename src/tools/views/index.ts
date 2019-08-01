@@ -58,7 +58,7 @@ export function showSettings() {
   loadRoute(window, RouteName.Settings);
 }
 
-export function showAPIConfig() {
+export function showOCRConfig() {
   const width = 354,
     height = 510;
   const controller = <Controller>(<any>global).controller;
@@ -80,10 +80,10 @@ export function showAPIConfig() {
     maximizable: false,
     minimizable: false,
     parent: current_win.window,
-    title: t("ApiConfig"),
+    title: t("OCRConfig"),
     icon: nativeImage.createFromPath(envConfig.iconPath)
   });
-  loadRoute(window, RouteName.ApiConfig);
+  loadRoute(window, RouteName.OCRConfig);
   window.once("ready-to-show", () => {
     window.show();
   });

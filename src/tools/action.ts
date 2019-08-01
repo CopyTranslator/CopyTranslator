@@ -47,7 +47,8 @@ enum RouteName {
   OCRConfig = "OCRConfig",
   FocusText = "FocusText", // 专注模式 文本框
   Options = "Options",
-  Switches = "Switches"
+  Switches = "Switches",
+  MenuDrag = "MenuDrag"
 }
 
 interface Action {
@@ -364,6 +365,10 @@ class ActionManager {
       case RouteName.FocusText:
         contain = ["copyResult", "copySource", "copy", "paste", "cut", "clear"];
         break;
+      case RouteName.MenuDrag:
+        contain = Object.keys(this.actions).filter(
+          x => this.actions[x].actionType != ActionType.constant
+        );
     }
     return contain;
   }

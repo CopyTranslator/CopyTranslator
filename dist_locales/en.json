@@ -48,7 +48,7 @@
     "API_KEY": "API_KEY",
     "SECRET_KEY": "SECRET_KEY",
     "capture": "Screenshot Translate",
-    "ApiConfig": "OCR Config",
+    "OCRConfig": "OCR Config",
     "undo": "undo",
     "redo": "redo",
     "cut": "cut",

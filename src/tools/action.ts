@@ -44,7 +44,7 @@ enum RouteName {
   Settings = "Settings",
   Tray = "Tray",
   Update = "Update",
-  ApiConfig = "ApiConfig",
+  OCRConfig = "OCRConfig",
   FocusText = "FocusText", // 专注模式 文本框
   Options = "Options",
   Switches = "Switches"

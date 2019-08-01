@@ -48,7 +48,7 @@
     "API_KEY": "API_KEY",
     "SECRET_KEY": "SECRET_KEY",
     "capture": "截图翻译",
-    "ApiConfig": "OCR 设置",
+    "OCRConfig": "OCR 设置",
     "undo": "撤销",
     "redo": "重做",
     "cut": "剪切",

@@ -92,7 +92,6 @@ function handleNormalAction(actionId: string) {
           }
         }
       );
-
       break;
     case "retryTranslate":
       controller.doTranslate(controller.src);

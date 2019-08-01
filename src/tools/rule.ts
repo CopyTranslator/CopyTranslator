@@ -17,6 +17,7 @@ enum RuleName {
   tapCopy,
   enableNotify,
   autoPurify,
+  skipTaskbar,
   //enum rule
   frameMode,
   translatorType,

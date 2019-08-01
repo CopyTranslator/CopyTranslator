@@ -1,4 +1,10 @@
-import { BrowserWindow, Rectangle, screen, nativeImage } from "electron";
+import {
+  BrowserWindow,
+  Rectangle,
+  screen,
+  nativeImage,
+  TouchBarSlider
+} from "electron";
 import { ColorStatus, HideDirection, MessageType, WinOpt } from "../enums";
 import { ModeConfig, RuleName } from "../rule";
 import { envConfig } from "../envConfig";
@@ -52,7 +58,6 @@ export class WindowWrapper {
     this.window.on("focus", () => {
       that.edgeShow();
     });
-    this.window.setSkipTaskbar(true);
   }
 
   setBounds(bounds: Rectangle) {
@@ -188,6 +193,13 @@ export class WindowWrapper {
     this.window.on("closed", () => {
       this.window = undefined;
     });
+    this.setSkipTaskbar(controller.get(RuleName.skipTaskbar));
+  }
+
+  setSkipTaskbar(value: boolean) {
+    if (this.window) {
+      this.window.setSkipTaskbar(value);
+    }
   }
 
   getBound(): Rectangle {

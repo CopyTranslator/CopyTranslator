@@ -71,6 +71,7 @@ interface Locale {
   windowMenu: string;
   switches: string;
   options: string;
+  skipTaskbar: string;
 }
 
 const zh_cn: Locale = {
@@ -145,7 +146,8 @@ const zh_cn: Locale = {
   editMenu: "编辑菜单",
   windowMenu: "窗口菜单",
   switches: "开关",
-  options: "选项"
+  options: "选项",
+  skipTaskbar: "隐藏任务栏"
 };
 
 const en: Locale = {
@@ -220,7 +222,8 @@ const en: Locale = {
   editMenu: "editMenu",
   windowMenu: "windowMenu",
   switches: "Switches",
-  options: "Options"
+  options: "Options",
+  skipTaskbar: "Skip Taskbar"
 };
 
 export { en, zh_cn, Locale };

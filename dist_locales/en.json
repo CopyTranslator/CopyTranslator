@@ -70,5 +70,6 @@
     "editMenu": "editMenu",
     "windowMenu": "windowMenu",
     "switches": "Switches",
-    "options": "Options"
+    "options": "Options",
+    "skipTaskbar": "Skip Taskbar"
 }

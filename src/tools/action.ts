@@ -46,8 +46,8 @@ enum RouteName {
   Update = "Update",
   ApiConfig = "ApiConfig",
   FocusText = "FocusText", // 专注模式 文本框
-  CustomPanel = "CustomPanel",
-  SwitchPanel = "SwitchPanel"
+  Options = "Options",
+  Switches = "Switches"
 }
 
 interface Action {
@@ -350,18 +350,18 @@ class ActionManager {
       case RouteName.Tray:
         contain = controller.get(RuleName.trayMenu);
         break;
-      case RouteName.Settings:
+      case RouteName.Options:
         contain = Object.keys(this.actions).filter(
           x => this.actions[x].type == MenuItemType.submenu
         );
         break;
-      case RouteName.FocusText:
-        contain = ["copyResult", "copySource", "copy", "paste", "cut", "clear"];
-        break;
-      case RouteName.SwitchPanel:
+      case RouteName.Switches:
         contain = Object.keys(this.actions).filter(
           x => this.actions[x].type == MenuItemType.checkbox
         );
+        break;
+      case RouteName.FocusText:
+        contain = ["copyResult", "copySource", "copy", "paste", "cut", "clear"];
         break;
     }
     return contain;

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-button type="text warning" style="width:100%;" @click="tutorial">
+    <el-button type="text" style="width:100%;" @click="tutorial">
       Baidu文字识别API申请教程
     </el-button>
     <p>APP_ID</p>
@@ -30,11 +30,10 @@ import WindowController from "../components/WindowController";
 import { shell } from "electron";
 
 export default {
-  name: "Focus",
+  name: "OCRConfig",
   mixins: [WindowController],
   data() {
     return {
-      routeName: "Focus",
       APP_ID: this.$controller.get(RuleName.APP_ID),
       API_KEY: this.$controller.get(RuleName.API_KEY),
       SECRET_KEY: this.$controller.get(RuleName.SECRET_KEY)

@@ -33,31 +33,6 @@ export default {
     closeMe() {
       this.windowOpt(WinOpt.CloseMe);
     },
-    bindDrag(event) {
-      if (event.button === 0) {
-        this.windowOpt(WinOpt.Drag, {
-          status: true,
-          x: event.screenX,
-          y: event.screenY
-        });
-      }
-    },
-    startDrag(event) {
-      if (event.button === 0) {
-        requestAnimationFrame(this.dragging);
-        this.windowOpt(WinOpt.StartDrag);
-      }
-    },
-    endDrag(e) {
-      if (this.animationId) {
-        cancelAnimationFrame(this.animationId);
-        this.animationId = undefined;
-      } else return;
-    },
-    dragging() {
-      this.windowOpt(WinOpt.Dragging);
-      this.animationId = requestAnimationFrame(this.dragging);
-    },
     close(event) {},
     openMenu(id = null) {
       this.$controller.action.popup(id);

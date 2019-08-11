@@ -48,7 +48,8 @@ enum RouteName {
   FocusText = "FocusText", // 专注模式 文本框
   Options = "Options",
   Switches = "Switches",
-  MenuDrag = "MenuDrag"
+  MenuDrag = "MenuDrag",
+  AllActions = "AllActions"
 }
 
 interface Action {
@@ -343,6 +344,9 @@ class ActionManager {
     let contain: Array<string> = [];
     const controller = <Controller>(<any>global).controller;
     switch (id) {
+      case RouteName.AllActions:
+        contain = Object.keys(this.actions);
+        break;
       case RouteName.Focus:
         contain = controller.get(RuleName.focusMenu);
         break;
@@ -375,10 +379,13 @@ class ActionManager {
   popup(id: RouteName) {
     const contain = this.getKeys(id);
     const refresh = this.getRefreshFunc();
+    const all_keys = this.getKeys(RouteName.AllActions);
     let menu = new Menu();
-    contain.forEach(key => {
-      menu.append(new MenuItem(refresh(key, this.actions[key])));
-    });
+    contain
+      .filter(key => _.includes(all_keys, key))
+      .forEach(key => {
+        menu.append(new MenuItem(refresh(key, this.actions[key])));
+      });
     try {
       menu.popup({});
     } catch (e) {

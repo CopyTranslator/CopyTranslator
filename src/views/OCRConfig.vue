@@ -9,18 +9,9 @@
     <el-input v-model="API_KEY"></el-input>
     <p>SECRET_KEY</p>
     <el-input v-model="SECRET_KEY"></el-input>
-    <el-row :gutter="2">
-      <el-col :span="12">
-        <el-button type="primary" style="width:100%;" @click="confirm">{{
-          $t("ok")
-        }}</el-button>
-      </el-col>
-      <el-col :span="12">
-        <el-button type="info" style="width:100%;" @click="close">{{
-          $t("return")
-        }}</el-button>
-      </el-col>
-    </el-row>
+    <el-button type="primary" style="width:100%;" @click="confirm">{{
+      $t("ok")
+    }}</el-button>
   </div>
 </template>
 

@@ -147,9 +147,6 @@ function initConfig(
     RuleName.contrastMenu,
     new GroupRule(
       [
-        "copySource",
-        "copyResult",
-        "clear",
         "retryTranslate",
         "autoCopy",
         "autoPaste",
@@ -170,9 +167,6 @@ function initConfig(
     RuleName.focusMenu,
     new GroupRule(
       [
-        "copySource",
-        "copyResult",
-        "clear",
         "contrastMode",
         "retryTranslate",
         "autoCopy",

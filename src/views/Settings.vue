@@ -11,9 +11,6 @@
         <el-tab-pane :label="$t('OCRConfig')" name="third">
           <OCRConfig></OCRConfig>
         </el-tab-pane>
-        <el-tab-pane :label="$t('OCRConfig')" name="fourth">
-          <MenuDrag></MenuDrag>
-        </el-tab-pane>
       </el-tabs>
     </div>
   </div>
@@ -26,7 +23,6 @@ import { shell } from "electron";
 import Options from "./Options";
 import OCRConfig from "./OCRConfig";
 import Switches from "./Switches";
-import MenuDrag from "./MenuDrag";
 
 export default {
   name: "Focus",
@@ -40,8 +36,7 @@ export default {
   components: {
     Options,
     OCRConfig,
-    Switches,
-    MenuDrag
+    Switches
   }
 };
 </script>

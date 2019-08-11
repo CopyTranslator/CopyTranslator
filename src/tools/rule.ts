@@ -1,5 +1,6 @@
 import { en } from "./locales";
-import { roles } from "./action";
+import { roles, RouteName } from "./action";
+import { Controller } from "../core/controller";
 const _ = require("lodash");
 //前面三个是不能交换顺序的，会出问题
 enum RuleName {
@@ -69,22 +70,18 @@ interface ModeConfig {
 class GroupRule implements Rule {
   predefined: Array<string>;
   msg: string;
-  static check = function(value: any) {
-    if (!(value instanceof Array)) {
-      return false;
-    }
-    const keys = Object.keys(en);
-    for (let key in value) {
-      if (
-        !(value[key] in ruleKeys) &&
-        !(value[key] in keys) &&
-        !(value[key] in roles)
-      ) {
-        return false;
-      }
-    }
-  };
-
+  // check(value: any) {
+  //   if (!(value instanceof Array)) {
+  //     return false;
+  //   }
+  //   for (const key in value) {
+  //     if (!_.includes(this.predefined, key)) {
+  //       return false;
+  //     }
+  //   }
+  //   return true;
+  //   //TODO fix this in next version
+  // }
   constructor(predefined: Array<string>, msg: string) {
     this.predefined = predefined;
     this.msg = msg;

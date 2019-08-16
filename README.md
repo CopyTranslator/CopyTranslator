@@ -131,7 +131,7 @@ This software is free open source software, the developer is [Elliott Zheng](htt
 
 ## Acknowledgements
 
-`CopyTranslator`'s rebirth depends on the contributions of many devoted people. As the limited space, there is a detailed list here: [Acknowledgements](https://copytranslator.github.io/about/acknowledge.html%E7%95%8C%E9%A2%E4%B8%8E%BA%A4%E4%BA%92%E8%BE%AE%A1).
+`CopyTranslator`'s rebirth depends on the contributions of many devoted people. As the limited space, there is a detailed list here: [Acknowledgements](https://copytranslator.github.io/about/acknowledge.html).
 
 ## License
 

@@ -31,6 +31,7 @@ module.exports = {
       lastUpdated: 'Last Updated', // string | boolean
       nav: [
         { text: '主页', link: '/' },
+        { text: '下载', link: '/download/'},
         { text: '指南', link: '/guide/' },
         { text: '更新日志', link: '/changelogs/0.0.8' },
         { text: '用户生态', link: '/userland/' },
@@ -55,9 +56,8 @@ module.exports = {
             title:"指南",
             collapsable: false,
             children: [
-              'download',
-              '8.3.0',
               '8.4.0',
+              '8.3.0',
               'questions'
             ]
           }

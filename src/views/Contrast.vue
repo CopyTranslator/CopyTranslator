@@ -21,7 +21,7 @@
 
       <div
         class="controlPanel div-inline"
-        style="text-align: left;float:right;"
+        style="text-align: left;float:right; padding: 5px;"
       >
         <Action
           v-for="actionId in actionKeys"
@@ -72,7 +72,7 @@ export default {
     },
     area2() {
       return {
-        width: `${this.windowWidth - 155}px`,
+        width: `${this.windowWidth - 165}px`,
         float: "left"
       };
     }

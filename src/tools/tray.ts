@@ -8,7 +8,7 @@ class TrayManager {
   tray: Tray | undefined;
   constructor() {}
   init() {
-    this.tray = new Tray(envConfig.trayIconPath);
+    this.tray = this.tray ? this.tray : new Tray(envConfig.trayIconPath);
     this.tray.setToolTip(constants.appName);
     this.tray.on("right-click", event => {
       (<Controller>(<any>global).controller).action.popup(RouteName.Tray);

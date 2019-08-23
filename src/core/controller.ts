@@ -44,9 +44,9 @@ class Controller {
   }
 
   createWindow() {
+    this.tray.init();
     this.win.createWindow(this.get(RuleName.frameMode));
     windowController.bind();
-    this.tray.init();
     this.action.init();
     recognizer.setUp();
     checkForUpdates();

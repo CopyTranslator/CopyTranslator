@@ -1,9 +1,11 @@
 import {
+  app,
   BrowserWindow,
   Rectangle,
   screen,
   nativeImage,
-  TouchBarSlider
+  TouchBarSlider,
+  Menu
 } from "electron";
 import { ColorStatus, HideDirection, MessageType, WinOpt } from "../enums";
 import { ModeConfig, RuleName } from "../rule";
@@ -194,6 +196,54 @@ export class WindowWrapper {
       this.window = undefined;
     });
     this.setSkipTaskbar(controller.get(RuleName.skipTaskbar));
+    // 复制粘贴的功能还是蛮重要的
+    let menu = Menu.buildFromTemplate([
+      {
+        label: '编辑',
+        submenu: [{
+          label: '撤销',
+          accelerator: 'CmdOrCtrl+Z',
+          role: 'undo'
+        }, {
+          label: '重做',
+          accelerator: 'Shift+CmdOrCtrl+Z',
+          role: 'redo'
+        }, {
+          type: 'separator'
+        }, {
+          label: '剪切',
+          accelerator: 'CmdOrCtrl+X',
+          role: 'cut'
+        }, {
+          label: '复制',
+          accelerator: 'CmdOrCtrl+C',
+          role: 'copy'
+        }, {
+          label: '粘贴',
+          accelerator: 'CmdOrCtrl+V',
+          role: 'paste'
+        }, {
+          label: '全选',
+          accelerator: 'CmdOrCtrl+A',
+          role: 'selectall'
+        },{
+          label: '退出',
+          accelerator: 'Command+Q',
+          click: function () {
+            app.quit()
+          }
+        }]
+      },
+      {
+        label: 'Window',
+        submenu: [
+          { role: 'minimize' },
+          { role: 'zoom' }
+        ]
+      }
+      ]);
+    Menu.setApplicationMenu(menu)
+
   }
 
   setSkipTaskbar(value: boolean) {

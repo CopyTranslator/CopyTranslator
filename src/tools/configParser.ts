@@ -32,6 +32,10 @@ class ConfigParser {
     return this.values[getEnumValue(key)];
   }
 
+  get_tooltip(key: RuleName) {
+    return this.rules[getEnumValue(key)].msg;
+  }
+
   set(key: RuleName, value: any) {
     let keyValue = getEnumValue(key);
 

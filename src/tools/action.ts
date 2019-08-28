@@ -60,6 +60,7 @@ interface Action {
   id: string;
   submenu?: Array<Action>;
   role?: string;
+  tooltip?: string;
   subMenuGenerator?: () => Array<Action>;
   click?: (
     menuItem: MenuItem,
@@ -168,7 +169,8 @@ class ActionManager {
       return ActionWrapper(
         {
           type: MenuItemType.normal,
-          id: id
+          id: id,
+          tooltip: id
         },
         callback
       );
@@ -178,7 +180,8 @@ class ActionManager {
       return {
         role: role,
         id: role,
-        type: MenuItemType.normal
+        type: MenuItemType.normal,
+        tooltip: role
       };
     }
     //设置常量
@@ -187,7 +190,8 @@ class ActionManager {
       return ActionWrapper(
         {
           actionType: ActionType.constant,
-          id: id
+          id: id,
+          tooltip: id
         },
         callback
       );
@@ -200,7 +204,8 @@ class ActionManager {
         {
           type: MenuItemType.checkbox,
           checked: config.values[id],
-          id: id
+          id: id,
+          tooltip: config.get_tooltip(ruleName)
         },
         callback
       );
@@ -213,6 +218,7 @@ class ActionManager {
         {
           type: MenuItemType.submenu,
           id: id,
+          tooltip: config.get_tooltip(ruleName),
           submenu: Object.values(type)
             .filter(k => (typeof k as any) == "number")
             .map(e => {
@@ -238,7 +244,8 @@ class ActionManager {
         {
           type: MenuItemType.submenu,
           id: r(ruleName),
-          subMenuGenerator: subMenuGenerator
+          subMenuGenerator: subMenuGenerator,
+          tooltip: config.get_tooltip(ruleName)
         },
         callback
       );

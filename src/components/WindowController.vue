@@ -21,6 +21,9 @@ export default {
         args: args
       });
     },
+    callback(cmd) {
+      this.$controller.action.callback(cmd);
+    },
     changeMode(routerName) {
       this.$controller.win.routeTo(routerName);
     },

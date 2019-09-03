@@ -52,6 +52,7 @@ function handleNormalAction(actionId: string) {
     case "focusMode":
       controller.win.routeTo("Focus");
       break;
+    case "quit":
     case "exit":
       controller.onExit();
       break;

@@ -20,13 +20,14 @@
         ref="dictResult"
         :size="size"
       ></DictResult>
-      <el-input
-        @keyup.13="exectueCmd"
-        v-if="isOpen"
-        style="width:100%;"
-        v-model="cmd"
-      ></el-input>
     </div>
+
+    <el-input
+      v-if="isOpen"
+      @keyup.enter.native="exectueCmd"
+      style="width:100%;"
+      v-model="cmd"
+    ></el-input>
 
     <ControlButton></ControlButton>
   </div>
@@ -60,7 +61,8 @@ export default {
       this.isOpen = !this.isOpen;
     },
     exectueCmd() {
-      console.log(cmd);
+      console.log(this.cmd);
+      this.callback(this.cmd);
     },
     shortcut() {
       const text = this.getModifiedText();

@@ -1,5 +1,5 @@
 <template>
-  <div style="height:100%">
+  <div style="height:100%; margin: 10px">
     <div style="height:80%">
       <el-tabs v-model="activeName">
         <el-tab-pane :label="$t('options')" name="first">

@@ -16,7 +16,6 @@ function handleActions(
   browserWindow: BrowserWindow | undefined = undefined,
   event: Event | undefined = undefined
 ) {
-  console.log(id);
   const params = decompose(id);
   id = params[0];
   const param = params[1];

@@ -2,6 +2,7 @@
   <div style="width:100%;height:100%;">
     <div
       style="height:100%"
+      @keyup.alt.13="toggleCmdline"
       @keyup.ctrl.13="shortcut"
       @keyup.ctrl.71="google"
       @keyup.ctrl.66="baidu"
@@ -19,7 +20,14 @@
         ref="dictResult"
         :size="size"
       ></DictResult>
+      <el-input
+        @keyup.13="exectueCmd"
+        v-if="isOpen"
+        style="width:100%;"
+        v-model="cmd"
+      ></el-input>
     </div>
+
     <ControlButton></ControlButton>
   </div>
 </template>
@@ -42,10 +50,18 @@ export default {
   data: function() {
     return {
       size: this.$controller.get(RuleName.focus).fontSize,
-      routeName: "focus"
+      routeName: "focus",
+      cmd: "",
+      isOpen: false
     };
   },
   methods: {
+    toggleCmdline() {
+      this.isOpen = !this.isOpen;
+    },
+    exectueCmd() {
+      console.log(cmd);
+    },
     shortcut() {
       const text = this.getModifiedText();
       const arg = {

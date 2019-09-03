@@ -12,4 +12,16 @@ const defaultShortcuts: Shortcuts = {
   contrastMode: "Shift+F2"
 };
 
-export { Shortcut, defaultShortcuts, Shortcuts };
+const defaultLocalShortcuts: Shortcuts = {
+  undo: "CmdOrCtrl+Z",
+  redo: "Shift+CmdOrCtrl+Z",
+  cut: "CmdOrCtrl+X",
+  copy: "CmdOrCtrl+C",
+  paste: "CmdOrCtrl+V",
+  selectAll: "CmdOrCtrl+A",
+  copyResult: "CmdOrCtrl+S",
+  copySource: "CmdOrCtrl+D",
+  quit: "Cmd+Q"
+};
+
+export { Shortcut, defaultShortcuts, Shortcuts, defaultLocalShortcuts };

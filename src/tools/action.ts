@@ -12,7 +12,7 @@ import { ConfigParser, getEnumValue as r } from "./configParser";
 import { envConfig } from "./envConfig";
 import { HideDirection } from "./enums";
 import { TranslatorType } from "./translation/translators";
-import { defaultShortcuts } from "./shortcuts";
+import { defaultShortcuts, defaultLocalShortcuts } from "./shortcuts";
 import { Controller } from "../core/controller";
 
 const fs = require("fs");
@@ -61,6 +61,7 @@ interface Action {
   submenu?: Array<Action>;
   role?: string;
   tooltip?: string;
+  accelerator?: string;
   subMenuGenerator?: () => Array<Action>;
   click?: (
     menuItem: MenuItem,
@@ -118,6 +119,7 @@ const roles = [
 class ActionManager {
   actions: Actions = {};
   shortcuts: { [key: string]: Accelerator } = {};
+  localShortcuts: { [key: string]: Accelerator } = {};
   callback: Function;
 
   constructor(callback: Function) {
@@ -129,8 +131,10 @@ class ActionManager {
       (<Controller>(<any>global).controller).config,
       this.callback
     );
-    this.loadShortcuts();
+    this.loadGlobalShortcuts();
     this.register();
+    this.loadLocalShortcuts();
+    this.registerLocalShortcuts();
   }
 
   getRefreshFunc() {
@@ -383,6 +387,7 @@ class ActionManager {
     }
     return contain;
   }
+
   popup(id: RouteName) {
     const contain = this.getKeys(id);
     const refresh = this.getRefreshFunc();
@@ -400,7 +405,7 @@ class ActionManager {
     }
   }
 
-  loadShortcuts() {
+  loadGlobalShortcuts() {
     this.shortcuts = defaultShortcuts;
     try {
       this.shortcuts = JSON.parse(fs.readFileSync(envConfig.shortcut, "utf-8"));
@@ -408,6 +413,20 @@ class ActionManager {
       fs.writeFileSync(
         envConfig.shortcut,
         JSON.stringify(defaultShortcuts, null, 4)
+      );
+    }
+  }
+
+  loadLocalShortcuts() {
+    this.localShortcuts = defaultLocalShortcuts;
+    try {
+      this.localShortcuts = JSON.parse(
+        fs.readFileSync(envConfig.localShortcut, "utf-8")
+      );
+    } catch (e) {
+      fs.writeFileSync(
+        envConfig.localShortcut,
+        JSON.stringify(defaultLocalShortcuts, null, 4)
       );
     }
   }
@@ -425,6 +444,27 @@ class ActionManager {
     Object.values(this.shortcuts).forEach(accelerator => {
       globalShortcut.unregister(accelerator);
     });
+  }
+
+  registerLocalShortcuts() {
+    let menu = new Menu();
+    const refresh = this.getRefreshFunc();
+    Object.keys(this.localShortcuts).forEach(key => {
+      let action = this.actions[key];
+      if (action) {
+        menu.append(
+          new MenuItem(
+            Object.assign(
+              {
+                accelerator: this.localShortcuts[key]
+              },
+              refresh(key, action)
+            )
+          )
+        );
+      }
+    });
+    Menu.setApplicationMenu(menu);
   }
 }
 

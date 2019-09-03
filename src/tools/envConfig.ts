@@ -20,6 +20,7 @@ interface SharedConfig {
   configDir: string;
   style: string;
   shortcut: string;
+  localShortcut: string;
 }
 
 interface DiffConfig {
@@ -37,7 +38,12 @@ const sharedConfig: SharedConfig = {
   userLocaleDir: path.join(os.homedir(), "copytranslator", "locales"),
   configPath: path.join(os.homedir(), "copytranslator", "copytranslator.json"),
   style: path.join(os.homedir(), "copytranslator", "styles.css"),
-  shortcut: path.join(os.homedir(), "copytranslator", "shortcuts.json")
+  shortcut: path.join(os.homedir(), "copytranslator", "shortcuts.json"),
+  localShortcut: path.join(
+    os.homedir(),
+    "copytranslator",
+    "localShortcuts.json"
+  )
 };
 
 const diffConfig: DiffConfig =

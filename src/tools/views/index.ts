@@ -47,7 +47,8 @@ export function showSettings() {
     y: yBound + (screenHeight - height) / 2,
     width: width,
     height: height,
-    titleBarStyle: "hiddenInset",
+    // titleBarStyle: "hiddenInset",
+    autoHideMenuBar: true,
     maximizable: false,
     minimizable: false,
     title: t("settings"),
@@ -56,35 +57,4 @@ export function showSettings() {
     icon: nativeImage.createFromPath(envConfig.iconPath)
   });
   loadRoute(window, RouteName.Settings);
-}
-
-export function showOCRConfig() {
-  const width = 354,
-    height = 510;
-  const controller = <Controller>(<any>global).controller;
-  const current_win = controller.win;
-  const bound = current_win.getBound();
-  const {
-    x: xBound,
-    x: yBound,
-    width: screenWidth,
-    height: screenHeight
-  } = screen.getDisplayMatching(bound).bounds;
-  const t = controller.getT();
-  const window = new BrowserWindow({
-    x: xBound + (screenWidth - width) / 2,
-    y: yBound + (screenHeight - height) / 2,
-    width: width,
-    height: height,
-    titleBarStyle: "hiddenInset",
-    maximizable: false,
-    minimizable: false,
-    parent: current_win.window,
-    title: t("OCRConfig"),
-    icon: nativeImage.createFromPath(envConfig.iconPath)
-  });
-  loadRoute(window, RouteName.OCRConfig);
-  window.once("ready-to-show", () => {
-    window.show();
-  });
 }

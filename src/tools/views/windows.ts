@@ -187,6 +187,7 @@ export class WindowWrapper {
     this.window = new BrowserWindow({
       x: param.x,
       y: param.y,
+      autoHideMenuBar: true,
       width: param.width,
       height: param.height,
       icon: nativeImage.createFromPath(envConfig.iconPath)

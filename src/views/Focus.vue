@@ -7,6 +7,7 @@
       @keyup.ctrl.71="google"
       @keyup.ctrl.66="baidu"
       v-on:contextmenu="openMenu('FocusText')"
+      v-on:drop="log2"
     >
       <textarea
         ref="normalResult"
@@ -59,6 +60,9 @@ export default {
   methods: {
     toggleCmdline() {
       this.isOpen = !this.isOpen;
+    },
+    log2(event) {
+      console.log(event.dataTransfer.getData("text/plain"));
     },
     exectueCmd() {
       console.log(this.cmd);

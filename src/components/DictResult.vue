@@ -5,12 +5,14 @@
     v-bind:style="dictStyle"
     v-if="sharedResult && sharedResult.dict"
   >
-    <p class="dictSrc">[{{ sharedResult.src }}]</p>
-    <p class="dictResult">{{ sharedResult.result }}</p>
+    <p class="dictSrc noMargin">
+      [{{ sharedResult.src }}] {{ sharedResult.result }}
+    </p>
+    <!-- <p class="dictResult noMargin"></p> -->
     <div v-if="sharedResult.phonetic">
-      <p class="notation">Phonetic:</p>
+      <p class="notation noMargin">Phonetic:</p>
       <p
-        class="dictPhonetic"
+        class="dictPhonetic noMargin"
         v-for="item in sharedResult.phonetic"
         :key="item.name"
       >
@@ -18,8 +20,8 @@
       </p>
     </div>
     <div>
-      <p class="notation">Basic Explains:</p>
-      <p class="dictExp" v-for="item in sharedResult.dict" :key="item">
+      <p class="notation noMargin">Basic Explains:</p>
+      <p class="dictExp noMargin" v-for="item in sharedResult.dict" :key="item">
         {{ item }}
       </p>
     </div>
@@ -47,6 +49,9 @@ export default {
 <style scoped>
 .dict {
   text-align: left;
+  margin-top: 0%;
+  padding-top: 0%;
+  top: 0%;
 }
 
 .notation {
@@ -59,8 +64,12 @@ export default {
 
 .dictExp {
   margin-left: 10vw;
+  overflow: hidden;
 }
 .dictPhonetic {
   margin-left: 10vw;
+}
+.noMargin {
+  margin: 0px;
 }
 </style>

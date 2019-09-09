@@ -1,6 +1,6 @@
 npm
 <template>
-  <div id="app">
+  <div id="app" class="application">
     <router-view />
   </div>
 </template>
@@ -12,7 +12,6 @@ export default {
 </script>
 <style>
 #app {
-  font-family: "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
@@ -21,6 +20,7 @@ export default {
 
 body {
   margin: 0%;
+  overflow: hidden;
 }
 
 #nav {

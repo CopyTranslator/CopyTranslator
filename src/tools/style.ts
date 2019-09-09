@@ -2,8 +2,7 @@ import { envConfig } from "./envConfig";
 
 var fs = require("fs");
 
-function loadStyles(): string {
-  const defaultStyles = `
+const defaultStyles = `
 .application{ /*在这里设置整个应用的字体*/
     font-family: "微软雅黑","PingHei";
 }
@@ -22,11 +21,18 @@ function loadStyles(): string {
     /*modify the style of the contrast mode panel*/
 }
 `;
+let loadedStyles: undefined | string;
+
+function loadStyles(): string {
+  if (loadedStyles) {
+    return loadedStyles;
+  }
   try {
-    let styles = fs.readFileSync(envConfig.style, "utf-8");
-    return styles.toString();
+    loadedStyles = <string>fs.readFileSync(envConfig.style, "utf-8").toString();
+    return loadedStyles;
   } catch (e) {
     fs.writeFileSync(envConfig.style, defaultStyles);
+    loadedStyles = defaultStyles;
     return defaultStyles;
   }
 }

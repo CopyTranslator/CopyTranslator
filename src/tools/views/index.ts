@@ -9,6 +9,13 @@ import { createProtocol } from "vue-cli-plugin-electron-builder/lib";
 import { envConfig } from "../envConfig";
 import { RouteName } from "../action";
 import { Controller } from "../../core/controller";
+import { loadStyles } from "../style";
+
+export function insertStyles(window: BrowserWindow) {
+  window.webContents.on("did-finish-load", function() {
+    window.webContents.insertCSS(loadStyles());
+  });
+}
 
 export function loadRoute(
   window: BrowserWindow,
@@ -57,4 +64,5 @@ export function showSettings() {
     icon: nativeImage.createFromPath(envConfig.iconPath)
   });
   loadRoute(window, RouteName.Settings);
+  insertStyles(window);
 }

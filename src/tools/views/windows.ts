@@ -11,9 +11,8 @@ import { ColorStatus, HideDirection, MessageType, WinOpt } from "../enums";
 import { ModeConfig, RuleName } from "../rule";
 import { envConfig } from "../envConfig";
 import { RouteName } from "../action";
-import { loadStyles } from "../style";
 import { Controller } from "../../core/controller";
-import { loadRoute } from ".";
+import { loadRoute, insertStyles } from ".";
 
 export class WindowWrapper {
   window: BrowserWindow | undefined = undefined;
@@ -49,10 +48,7 @@ export class WindowWrapper {
     if (!this.window) return;
     this.winOpt(WinOpt.SaveMode);
     loadRoute(this.window, routerName, true);
-    let windowPointer = this.window;
-    this.window.webContents.on("did-finish-load", function() {
-      windowPointer.webContents.insertCSS(loadStyles());
-    });
+    insertStyles(this.window);
     const that = this;
     this.window.on("blur", () => {
       that.edgeHide(that.onEdge());

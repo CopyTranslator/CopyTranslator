@@ -3,7 +3,7 @@ import { autoUpdater } from "electron-updater";
 import { Controller } from "../../core/controller";
 import { envConfig } from "../envConfig";
 import { checkUpdate } from "../checker";
-import { loadRoute } from "./index";
+import { loadRoute, insertStyles } from "./index";
 import { RouteName } from "../action";
 
 let window: BrowserWindow | undefined = undefined;
@@ -38,6 +38,7 @@ function bindUpdateEvents() {
       icon: nativeImage.createFromPath(envConfig.iconPath)
     });
     loadRoute(window, RouteName.Update);
+    insertStyles(window);
     window.webContents.on("did-finish-load", function() {
       (<BrowserWindow>window).webContents.send("releaseNote", updateInfo);
     });

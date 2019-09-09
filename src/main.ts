@@ -16,7 +16,7 @@ import {
   Option,
   Input
 } from "element-ui";
-
+import "normalize.css/normalize.css";
 import "../theme/index.css";
 import App from "./App.vue";
 import { constants, version } from "./core/constant";

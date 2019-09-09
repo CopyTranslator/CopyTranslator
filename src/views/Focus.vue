@@ -9,27 +9,35 @@
       v-on:contextmenu="openMenu('FocusText')"
       v-on:drop="log2"
     >
-      <textarea
-        ref="normalResult"
-        class="focusText"
-        v-bind:style="focusStyle"
-        v-model="sharedResult.result"
-        v-if="sharedResult && !sharedResult.dict"
-      ></textarea>
-      <DictResult
-        v-if="sharedResult && sharedResult.dict"
-        ref="dictResult"
-        :size="size"
-      ></DictResult>
-    </div>
+      <el-row style="width:100%;height:100vh">
+        <el-col
+          style="height:100%"
+          v-for="engine in activeEngines"
+          :key="engine"
+          :span="24 / activeEngines.length"
+        >
+          <textarea
+            ref="normalResult"
+            class="focusText"
+            v-bind:style="focusStyle"
+            v-model="sharedResult.result"
+            v-if="sharedResult && !sharedResult.dict"
+          ></textarea>
 
+          <DictResult
+            v-if="sharedResult && sharedResult.dict"
+            ref="dictResult"
+            :size="size"
+          ></DictResult>
+        </el-col>
+      </el-row>
+    </div>
     <el-input
       v-if="isOpen"
       @keyup.enter.native="exectueCmd"
       style="width:100%;"
       v-model="cmd"
     ></el-input>
-
     <ControlButton></ControlButton>
   </div>
 </template>
@@ -42,7 +50,6 @@ import Adjustable from "../components/Adjustable";
 import DictResult from "../components/DictResult";
 import { shell } from "electron";
 import { RuleName } from "@/tools/rule";
-import { constants } from "crypto";
 import ControlButton from "../components/ControlButton";
 
 export default {
@@ -54,6 +61,7 @@ export default {
       size: this.$controller.get(RuleName.focus).fontSize,
       routeName: "focus",
       cmd: "",
+      activeEngines: ["baidu"],
       isOpen: false
     };
   },

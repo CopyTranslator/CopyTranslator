@@ -11,7 +11,7 @@ import { ConfigParser, getEnumValue as r } from "./configParser";
 //r can be used to transform a enum to string
 import { envConfig } from "./envConfig";
 import { HideDirection } from "./enums";
-import { TranslatorType } from "./translation/translators";
+import { TranslatorType } from "./translators";
 import { defaultShortcuts, defaultLocalShortcuts } from "./shortcuts";
 import { Controller } from "../core/controller";
 

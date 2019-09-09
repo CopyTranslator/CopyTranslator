@@ -18,8 +18,10 @@
 - [iohook](https://github.com/wilix-team/iohook): 捕获全局鼠标和键盘事件
 - [robotjs](http://robotjs.io/): 模拟键盘输入
 - [Saladict](https://github.com/crimx/ext-saladict) 沙拉查词-聚合词典划词翻译--Sogou Engine
-- [dadda-translate-crx](https://github.com/waynecz/dadda-translate-crx) 比较好看的 Chrome 划词翻译(搜狗)插件，自带生词簿及吐司弹词记忆，可与有道、扇贝单词同步 
+- [eazydict](https://github.com/keenwon/eazydict) 简单易用的命令行词典
+- [dadda-translate-crx](https://github.com/waynecz/dadda-translate-crx) 比较好看的 Chrome 划词翻译(搜狗)插件，自带生词簿及吐司单词记忆，可与有道、扇贝单词同步 
 - [iciba-translate-userscript](https://github.com/Firefox-Pro-Coding/iciba-translate-userscript) iciba划词翻译 userscript
+
 ## 界面语言维护
 
 - 繁体中文: [Jeff Huang](https://github.com/s8321414)

@@ -1,5 +1,5 @@
-import { TranslatorType, translators } from "../tools/translation/translators";
-import { CommonTranslateResult, Translator } from "../tools/translation";
+import { TranslatorType, translators } from "../tools/translators";
+import { CommonTranslateResult, Translator } from "../tools/translators/helper";
 import { initConfig } from "../tools/configuration";
 import { ConfigParser, getEnumValue } from "../tools/configParser";
 import { ColorStatus, MessageType, WinOpt } from "../tools/enums";

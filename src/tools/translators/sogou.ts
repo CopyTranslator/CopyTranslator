@@ -4,7 +4,7 @@ import {
   handleNoResult,
   Dict,
   Translator
-} from "..";
+} from "./helper";
 import { BaiduTranslator, BaiduCodes } from "./baidu";
 const md5 = require("md5");
 require("isomorphic-fetch");

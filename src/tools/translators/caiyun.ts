@@ -6,7 +6,7 @@ import {
   reSegment,
   notEnglish,
   splitEng
-} from "..";
+} from "./helper";
 import { BaiduTranslator, BaiduCodes } from "./baidu";
 
 import * as _ from "lodash";

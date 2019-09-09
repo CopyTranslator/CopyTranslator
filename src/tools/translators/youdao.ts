@@ -1,49 +1,31 @@
-import { CommonTranslateResult, Translator, Dict, reSegment } from "..";
-import { baidu } from "translation.js";
-
+import { CommonTranslateResult, Translator, Dict, reSegment } from "./helper";
+import { youdao } from "translation.js";
 import * as _ from "lodash";
-export const BaiduLanguages: Dict = {
+
+const YoudaoLanguages: Dict = {
   English: "en",
-  Thai: "th",
   Russian: "ru",
   Portuguese: "pt",
-  Greek: "el",
-  Dutch: "nl",
-  Polish: "pl",
-  Bulgarian: "bg",
-  Estonian: "et",
-  Danish: "da",
-  Finnish: "fi",
-  Czech: "cs",
-  Romanian: "ro",
-  Slovenian: "sl",
-  Swedish: "sv",
-  Hungarian: "hu",
-  German: "de",
-  Italian: "it",
+  Spanish: "es",
   "Chinese(Simplified)": "zh-CN",
-  "Chinese(Traditional)": "zh-TW",
   Japanese: "ja",
   Korean: "ko",
-  Spanish: "es",
-  French: "fr",
-  Arabic: "ar"
+  French: "fr"
 };
+const YoudaoCodes = _.invert(YoudaoLanguages);
+const YoudaoLangList = _.keys(YoudaoLanguages);
 
-export const BaiduCodes = _.invert(BaiduLanguages);
-const BaiduLangList = _.keys(BaiduLanguages);
-
-export class BaiduTranslator extends Translator {
+export class YoudaoTranslator extends Translator {
   getLanguages() {
-    return BaiduLangList;
+    return YoudaoLangList;
   }
 
   lang2code(lang: string) {
-    return BaiduLanguages[lang];
+    return YoudaoLanguages[lang];
   }
 
   code2lang(code: string): string {
-    return BaiduCodes[code];
+    return YoudaoCodes[code];
   }
 
   async translate(
@@ -52,7 +34,7 @@ export class BaiduTranslator extends Translator {
     destCode: string
   ): Promise<CommonTranslateResult | undefined> {
     try {
-      let res: CommonTranslateResult = await baidu.translate({
+      let res: CommonTranslateResult = await youdao.translate({
         text: text,
         from: srcCode,
         to: destCode
@@ -72,7 +54,7 @@ export class BaiduTranslator extends Translator {
 
   async detect(text: string): Promise<string | undefined> {
     try {
-      return await baidu.detect(text);
+      return await youdao.detect(text);
     } catch (e) {
       console.log(e);
       return undefined;

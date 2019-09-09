@@ -8,7 +8,7 @@ import {
   RuleName
 } from "./rule";
 import { FrameMode, HideDirection } from "./enums";
-import { TranslatorType } from "./translation/translators";
+import { TranslatorType } from "./translators";
 import { RouteName } from "./action";
 
 function initConfig(

@@ -1,4 +1,9 @@
-import { CommonTranslateResult, Translator, Dict, reSegmentGoogle } from "..";
+import {
+  CommonTranslateResult,
+  Translator,
+  Dict,
+  reSegmentGoogle
+} from "./helper";
 import { google } from "translation.js";
 
 import * as _ from "lodash";

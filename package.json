@@ -59,6 +59,7 @@
     "@vue/eslint-config-prettier": "^4.0.1",
     "@vue/eslint-config-typescript": "^3.2.0",
     "babel-eslint": "^10.0.1",
+    "babel-plugin-component": "^1.1.1",
     "electron": "^3.0.0",
     "element-theme-chalk": "^2.11.1",
     "eslint": "^5.8.0",
@@ -87,7 +88,6 @@
       "darwin"
     ],
     "arches": [
-      "ia32",
       "x64"
     ]
   },

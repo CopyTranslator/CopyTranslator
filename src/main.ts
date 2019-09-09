@@ -3,7 +3,20 @@ import router from "./router";
 import store from "./store";
 import { ipcRenderer } from "electron";
 import { MessageType } from "./tools/enums";
-import ElementUI from "element-ui";
+
+import {
+  Button,
+  Select,
+  Switch,
+  Tooltip,
+  Row,
+  Col,
+  Tabs,
+  TabPane,
+  Option,
+  Input
+} from "element-ui";
+
 import "../theme/index.css";
 import App from "./App.vue";
 import { constants, version } from "./core/constant";
@@ -11,7 +24,16 @@ import { constants, version } from "./core/constant";
 const remote = require("electron").remote;
 const controller = remote.getGlobal("controller");
 
-Vue.use(ElementUI);
+Vue.use(Button);
+Vue.use(Select);
+Vue.use(Tooltip);
+Vue.use(Switch);
+Vue.use(Col);
+Vue.use(Row);
+Vue.use(Tabs);
+Vue.use(TabPane);
+Vue.use(Option);
+Vue.use(Input);
 
 Vue.prototype.$t = controller.getT();
 Vue.prototype.$log = remote.getGlobal("log");

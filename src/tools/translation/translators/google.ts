@@ -1,7 +1,7 @@
 import { CommonTranslateResult, Translator, Dict, reSegmentGoogle } from "..";
 import { google } from "translation.js";
-import { log } from "../../logger";
-const _ = require("lodash");
+
+import * as _ from "lodash";
 const GoogleLanguages: Dict = {
   Afrikaans: "af",
   Albanian: "sq",

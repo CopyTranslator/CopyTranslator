@@ -1,6 +1,6 @@
 const fs = require("fs");
 const path = require("path");
-const _ = require("lodash");
+import * as _ from "lodash";
 import { en, zh_cn, Locale } from "./tools/locales";
 
 type Resources = { [key: string]: Locale };

@@ -4,7 +4,7 @@ import { dialog, nativeImage, shell, BrowserWindow } from "electron";
 import { envConfig } from "./envConfig";
 import { Controller } from "../core/controller";
 import { RuleName } from "./rule";
-const _ = require("lodash");
+import * as _ from "lodash";
 
 type Button = {
   label: string;

@@ -4,7 +4,7 @@ export const engEnds = /[?.!]/g;
 export const chnBreaks = /[？。！\n]/g;
 export const engBreaks = /[?.!\n]/g;
 const chineseStyles = ["zh-CN", "zh-TW", "ja", "ko"];
-const _ = require("lodash");
+import * as _ from "lodash";
 const tokenizer = require("sbd");
 export function notEnglish(destCode: string) {
   return _.includes(chineseStyles, destCode);
@@ -112,7 +112,7 @@ export function reSegment(
 在短时间内请求多次，会被谷歌直接封掉IP，所以上一次commit试图通过多次异步请求后组合并没有什么卵用
  */
 export abstract class Translator {
-  abstract getLanguages(): [string];
+  abstract getLanguages(): string[];
 
   abstract lang2code(lang: string): string;
 

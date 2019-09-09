@@ -1,7 +1,7 @@
 import { en } from "./locales";
 import { roles, RouteName } from "./action";
 import { Controller } from "../core/controller";
-const _ = require("lodash");
+import * as _ from "lodash";
 //前面三个是不能交换顺序的，会出问题
 enum RuleName {
   autoCopy = 1,

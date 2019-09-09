@@ -7,7 +7,7 @@ import { Controller } from "../core/controller";
 import { decompose } from "../tools/action";
 import { showSettings } from "../tools/views";
 
-const _ = require("lodash");
+import * as _ from "lodash";
 const clipboard = require("electron-clipboard-extended");
 
 function handleActions(

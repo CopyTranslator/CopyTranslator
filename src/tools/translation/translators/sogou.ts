@@ -8,8 +8,7 @@ import {
 import { BaiduTranslator, BaiduCodes } from "./baidu";
 const md5 = require("md5");
 require("isomorphic-fetch");
-import { log } from "../../logger";
-const _ = require("lodash");
+import * as _ from "lodash";
 
 export const SogouLanguages: Dict = {
   "Chinese(Simplified)": "zh-CN",

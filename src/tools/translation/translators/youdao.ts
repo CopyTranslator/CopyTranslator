@@ -1,7 +1,7 @@
 import { CommonTranslateResult, Translator, Dict, reSegment } from "..";
 import { youdao } from "translation.js";
-const _ = require("lodash");
-import { log } from "../../logger";
+import * as _ from "lodash";
+
 const YoudaoLanguages: Dict = {
   English: "en",
   Russian: "ru",

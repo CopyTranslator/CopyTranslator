@@ -24,11 +24,6 @@ sidebarDepth: 6
 
 ### Mac
 下载dmg文件
-:::warning
-**初次打开后请手动允许copytranslator使用辅助功能，否则copytranslator将无法移动**
-:::
-![](https://s2.ax1x.com/2019/03/10/ApT0YT.png)
-![](https://s2.ax1x.com/2019/03/10/ApT6X9.png)
 
 ### Linux 
 暂时不支持Linux, 虽然Electron是天生跨平台的，但是我主要是在windows上开发的，对Linux上的Electron不太熟悉。在经过简单的尝试后，因为平台之间存在些许差异，我发现很难自己维护所有平台。

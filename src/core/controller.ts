@@ -15,11 +15,10 @@ import { TrayManager } from "../tools/tray";
 import { handleActions } from "./actionCallback";
 import { checkNotice } from "../tools/checker";
 import { checkForUpdates } from "../tools/views/update";
-import { log } from "../tools/logger";
 import { recognizer } from "../tools/ocr";
 
 const clipboard = require("electron-clipboard-extended");
-const _ = require("lodash");
+import * as _ from "lodash";
 
 class Controller {
   src: string = "";
@@ -113,7 +112,7 @@ class Controller {
   }
 
   onError(msg: string) {
-    log().error(msg);
+    console.log(msg);
   }
 
   sync(language: any = undefined) {

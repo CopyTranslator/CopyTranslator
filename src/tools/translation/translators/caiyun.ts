@@ -8,8 +8,8 @@ import {
   splitEng
 } from "..";
 import { BaiduTranslator, BaiduCodes } from "./baidu";
-import { log } from "../../logger";
-const _ = require("lodash");
+
+import * as _ from "lodash";
 
 const CaiyunLanguages: Dict = {
   Japanese: "ja",

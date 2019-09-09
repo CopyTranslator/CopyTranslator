@@ -16,7 +16,7 @@ import { defaultShortcuts, defaultLocalShortcuts } from "./shortcuts";
 import { Controller } from "../core/controller";
 
 const fs = require("fs");
-const _ = require("lodash");
+import * as _ from "lodash";
 
 function compose(actions: Array<string>) {
   return _.join(actions, "|");

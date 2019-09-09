@@ -3,7 +3,7 @@ import { YoudaoTranslator } from "./youdao";
 import { BaiduTranslator } from "./baidu";
 import { GoogleTranslator } from "./google";
 import { CaiyunTranslator } from "./caiyun";
-const _ = require("lodash");
+import * as _ from "lodash";
 export enum TranslatorType {
   Google,
   Youdao,

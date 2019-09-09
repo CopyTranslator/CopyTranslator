@@ -1,7 +1,7 @@
 import { CommonTranslateResult, Translator, Dict, reSegment } from "..";
 import { baidu } from "translation.js";
-import { log } from "../../logger";
-const _ = require("lodash");
+
+import * as _ from "lodash";
 export const BaiduLanguages: Dict = {
   English: "en",
   Thai: "th",

@@ -3,6 +3,10 @@
   "version": "8.5.0",
   "private": true,
   "description": "Foreign language assisted reading and translation solution",
+  "repository": {
+    "type" : "git",
+    "url" : "https://github.com/copytranslator/copytranslator.git"
+  },
   "author": {
     "name": "Elliott Zheng",
     "email": "copytranslator@hypercube.top",

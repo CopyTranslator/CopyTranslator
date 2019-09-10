@@ -22,5 +22,5 @@ export const translators: { [key: string]: any } = {
 };
 
 export const translatorNames: Array<string> = Object.values(TranslatorType)
-  .filter(k => (typeof k as any) != "number")
+  .filter((x): x is string => typeof x == "string")
   .map(_.toLower);

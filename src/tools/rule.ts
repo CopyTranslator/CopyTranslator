@@ -50,7 +50,7 @@ export const colorRules: RuleName[] = [
 ];
 //是数字列表
 const ruleValues: Array<number> = Object.values(RuleName).filter(
-  k => (typeof k as any) == "number"
+  (k): k is number => typeof k == "number"
 );
 
 const reverseRuleName = _.keyBy(ruleValues, function(o: number) {

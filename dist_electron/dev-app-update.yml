@@ -1,0 +1,4 @@
+owner: copytranslator
+repo: copytranslator
+provider: github
+updaterCacheDirName: copytranslator-updater

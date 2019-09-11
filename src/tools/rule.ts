@@ -70,18 +70,6 @@ interface ModeConfig {
 class GroupRule implements Rule {
   predefined: Array<string>;
   msg: string;
-  // check(value: any) {
-  //   if (!(value instanceof Array)) {
-  //     return false;
-  //   }
-  //   for (const key in value) {
-  //     if (!_.includes(this.predefined, key)) {
-  //       return false;
-  //     }
-  //   }
-  //   return true;
-  //   //TODO fix this in next version
-  // }
   constructor(predefined: Array<string>, msg: string) {
     this.predefined = predefined;
     this.msg = msg;

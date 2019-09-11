@@ -87,7 +87,7 @@ export default {
   },
   methods: {
     translate() {
-      this.$controller.tryTranslate(this.sharedResult.src);
+      this.$controller.tryTranslate(this.sharedResult.src, true);
     },
     toSetting() {
       this.$controller.action.callback("settings");

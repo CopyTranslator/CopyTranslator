@@ -1,4 +1,6 @@
 import { GoogleEngine, YoudaoEngine, BingEngine } from "./easy";
+import { WordEngine } from "./types";
+import { Dict } from "../dict";
 
 export enum WordEngineType {
   Google = "google",
@@ -6,8 +8,8 @@ export enum WordEngineType {
   Bing = "bing"
 }
 
-export const engines: { [key: string]: any } = {
-  bing: BingEngine,
-  google: GoogleEngine,
-  youdao: YoudaoEngine
-};
+export const getEngine = Dict<WordEngine>([
+  [WordEngineType.Bing, new BingEngine()],
+  [WordEngineType.Youdao, new YoudaoEngine()],
+  [WordEngineType.Google, new GoogleEngine()]
+]);

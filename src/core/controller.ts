@@ -188,7 +188,7 @@ class Controller {
 
   getOptions() {
     let realOptions = 0;
-    colorRules.map(ruleName => {
+    colorRules.forEach(ruleName => {
       if (this.get(ruleName)) {
         realOptions |= ruleName;
       }

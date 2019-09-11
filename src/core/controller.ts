@@ -101,8 +101,11 @@ class Controller {
     }
   }
 
-  tryTranslate(text: string) {
+  tryTranslate(text: string, clear = false) {
     if (text != "") {
+      if (clear) {
+        this.clear();
+      }
       this.doTranslate(normalizeAppend(text, this.get(RuleName.autoPurify)));
     }
   }
@@ -265,9 +268,10 @@ class Controller {
   }
 
   async doTranslate(text: string) {
-    if (this.translating || !this.checkLength(text))
+    if (this.translating || !this.checkLength(text)) {
       //翻译无法被打断
       return;
+    }
     this.translating = true;
     const language = await this.decideLanguage(text);
     if (language.source == language.target) {

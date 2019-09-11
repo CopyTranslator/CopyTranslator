@@ -224,7 +224,7 @@ class ActionManager {
           id: id,
           tooltip: config.get_tooltip(ruleName),
           submenu: Object.values(type)
-            .filter(k => (typeof k as any) == "number")
+            .filter((k): k is number => typeof k == "number")
             .map(e => {
               return ActionWrapper(
                 {

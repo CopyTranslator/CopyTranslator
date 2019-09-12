@@ -1,6 +1,7 @@
 export function Dict<T>(tuples: Array<[any, T]>) {
   let dict: { [key: number]: any } = {};
   let string_dict: { [key: string]: any } = {};
+  const range = tuples.map(t => t[0]);
 
   tuples.forEach(t => {
     switch (typeof t[0]) {
@@ -21,5 +22,8 @@ export function Dict<T>(tuples: Array<[any, T]>) {
         return dict[key];
     }
   }
-  return getByEnum;
+  return {
+    getFunc: getByEnum,
+    range: range
+  };
 }

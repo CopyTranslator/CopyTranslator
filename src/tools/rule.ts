@@ -151,10 +151,7 @@ export class EnumRule implements Rule {
     this.predefined = predefined;
     this.msg = msg;
     this.check = function(value: any) {
-      return _.includes(
-        Object.values(type).filter(k => (typeof k as any) == "number"),
-        value
-      );
+      return _.includes(Object.values(type), value);
     };
   }
 }

@@ -8,8 +8,11 @@ export enum WordEngineType {
   Bing = "bing"
 }
 
-export const getEngine = Dict<WordEngine>([
+export const engineDict = Dict<WordEngine>([
   [WordEngineType.Bing, new BingEngine()],
   [WordEngineType.Youdao, new YoudaoEngine()],
   [WordEngineType.Google, new GoogleEngine()]
 ]);
+
+export const getEngine = engineDict.getFunc;
+export const engineRange = engineDict.range;

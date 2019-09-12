@@ -24,6 +24,4 @@ const translatorDict = Dict([
 export const getTranslator = translatorDict.getFunc;
 export const translatorRange = translatorDict.range;
 
-export const translatorNames: Array<string> = Object.values(TranslatorType).map(
-  _.toLower
-);
+export const translatorNames = translatorRange;

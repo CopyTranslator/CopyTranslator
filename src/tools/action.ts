@@ -11,7 +11,7 @@ import { ConfigParser, getEnumValue as r } from "./configParser";
 //r can be used to transform a enum to string
 import { envConfig } from "./envConfig";
 import { HideDirection } from "./enums";
-import { TranslatorType } from "./translators";
+import { TranslatorType, translatorRange } from "./translators";
 import { defaultShortcuts, defaultLocalShortcuts } from "./shortcuts";
 import { Controller } from "../core/controller";
 
@@ -239,6 +239,29 @@ class ActionManager {
         callback
       );
     }
+    //枚举类型，应该是select的一种特化
+    function dictAction(ruleName: RuleName, range: any) {
+      const id = r(ruleName);
+      return ActionWrapper(
+        {
+          type: MenuItemType.submenu,
+          id: id,
+          tooltip: config.get_tooltip(ruleName),
+          submenu: range.map((e: any) => {
+            return ActionWrapper(
+              {
+                type: MenuItemType.checkbox,
+                id: compose([id, e.toString()]),
+                label: e
+              },
+              callback
+            );
+          })
+        },
+        callback
+      );
+    }
+
     //自动生成子菜单
     function selectAction(
       ruleName: RuleName,
@@ -290,7 +313,7 @@ class ActionManager {
     };
 
     items.push(enumAction(RuleName.hideDirect, HideDirection));
-    items.push(enumAction(RuleName.translatorType, TranslatorType));
+    items.push(dictAction(RuleName.translatorType, translatorRange));
 
     items.push(normalAction("copySource"));
     items.push(normalAction("copyResult"));

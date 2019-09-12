@@ -1,4 +1,4 @@
-import { TranslatorType, translators } from "../tools/translators";
+import { TranslatorType, getTranslator } from "../tools/translators";
 import { CommonTranslateResult, Translator } from "../tools/translators/helper";
 import { initConfig } from "../tools/configuration";
 import { ConfigParser, getEnumValue } from "../tools/configParser";
@@ -26,7 +26,7 @@ class Controller {
   res: CommonTranslateResult | undefined;
   lastAppend: string = "";
   win: WindowWrapper = new WindowWrapper();
-  translator: Translator = new translators.google();
+  translator: Translator = getTranslator(TranslatorType.Google);
   config: ConfigParser = initConfig();
   locales: L10N = l10n;
   action = new ActionManager(handleActions);
@@ -395,23 +395,7 @@ class Controller {
         windowController.tapCopy = value;
         break;
       case RuleName.translatorType:
-        switch (value) {
-          case TranslatorType.Google:
-            this.translator = new translators.google();
-            break;
-          case TranslatorType.Baidu:
-            this.translator = new translators.baidu();
-            break;
-          case TranslatorType.Sogou:
-            this.translator = new translators.sogou();
-            break;
-          case TranslatorType.Youdao:
-            this.translator = new translators.youdao();
-            break;
-          case TranslatorType.Caiyun:
-            this.translator = new translators.caiyun();
-            break;
-        }
+        this.translator = getTranslator(value);
         this.clear();
         if (!this.translator.isValid(this.get(RuleName.sourceLanguage))) {
           this.setByRuleName(RuleName.sourceLanguage, "English", save, refresh);

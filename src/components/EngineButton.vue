@@ -18,7 +18,7 @@ const _ = import("lodash");
 export default {
   name: "EngineButton",
   mixins: [WindowController],
-  props: ["engine", "idx"],
+  props: ["engine"],
   data: function() {
     return {
       activeClass: ["btnBase"]
@@ -27,7 +27,7 @@ export default {
   computed: {},
   methods: {
     switchTranslator() {
-      this.callback("translatorType|" + this.idx.toString());
+      this.callback("translatorType|" + this.engine);
     }
   },
   mounted: function() {
@@ -41,19 +41,19 @@ export default {
   width: 100%;
   height: 100%;
 }
-.baidu {
+.Baidu {
   background-image: url("../images/baidu.svg");
 }
-.google {
+.Google {
   background-image: url("../images/google.svg");
 }
-.caiyun {
+.Caiyun {
   background-image: url("../images/caiyun.png");
 }
-.sogou {
+.Sogou {
   background-image: url("../images/sogou.svg");
 }
-.youdao {
+.Youdao {
   background-image: url("../images/youdao.png");
 }
 .btnBase {

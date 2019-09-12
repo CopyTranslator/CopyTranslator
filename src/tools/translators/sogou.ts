@@ -73,6 +73,7 @@ export const SogouLanguages: Dict = {
   "Yucatan Mayan": "yua",
   "Cantonese(Traditional)": "yue"
 };
+
 const sogoucode: Dict = {
   "zh-CHS": "zh-CN",
   "zh-CHT": "zh-TW",

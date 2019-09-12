@@ -7,7 +7,7 @@
         :span="span"
         :offset="index == 0 ? start : 0"
       >
-        <EngineButton :engine="engine" :idx="index"></EngineButton>
+        <EngineButton :engine="engine"></EngineButton>
       </el-col>
       <el-col :span="span">
         <div v-on:dblclick="minify" v-on:contextmenu="openMenu('Focus')">

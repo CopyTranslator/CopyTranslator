@@ -61,7 +61,7 @@ export default {
       size: this.$controller.get(RuleName.focus).fontSize,
       routeName: "focus",
       cmd: "",
-      activeEngines: ["baidu"],
+      activeEngines: ["Baidu"],
       isOpen: false
     };
   },

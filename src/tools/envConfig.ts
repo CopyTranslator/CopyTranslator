@@ -25,6 +25,7 @@ interface SharedConfig {
 
 interface DiffConfig {
   systemLocaleDir: string;
+  executableDir: string;
   iconPath: string;
   trayIconPath: string;
   styleTemplate: string;
@@ -50,6 +51,7 @@ const diffConfig: DiffConfig =
   process.env.NODE_ENV == "production"
     ? {
         systemLocaleDir: path.join(process.resourcesPath, "locales"),
+        executableDir: path.join(process.resourcesPath, "exe"),
         iconPath: path.join(process.resourcesPath, iconName),
         trayIconPath: path.join(process.resourcesPath, trayName),
         styleTemplate: path.join(process.resourcesPath, "styles.css"),
@@ -57,6 +59,7 @@ const diffConfig: DiffConfig =
       }
     : {
         systemLocaleDir: path.join(process.cwd(), "dist_locales"),
+        executableDir: path.join(process.cwd(), "exe"),
         iconPath: path.join(process.cwd(), iconName),
         trayIconPath: path.join(process.cwd(), trayName),
         styleTemplate: path.join(process.cwd(), "src", "styles.css"),

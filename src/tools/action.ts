@@ -16,10 +16,10 @@ import { defaultShortcuts, defaultLocalShortcuts } from "./shortcuts";
 import { Controller } from "../core/controller";
 
 const fs = require("fs");
-import * as _ from "lodash";
+import _ from "lodash";
 
 function compose(actions: Array<string>) {
-  return _.join(actions, "|");
+  return actions.join("|");
 }
 
 function decompose(id: string) {
@@ -417,7 +417,7 @@ class ActionManager {
     const all_keys = this.getKeys(RouteName.AllActions);
     let menu = new Menu();
     contain
-      .filter(key => _.includes(all_keys, key))
+      .filter(key => all_keys.includes(key))
       .forEach(key => {
         menu.append(new MenuItem(refresh(key, this.actions[key])));
       });

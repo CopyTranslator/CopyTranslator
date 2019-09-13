@@ -1,6 +1,5 @@
 const fs = require("fs");
 const path = require("path");
-import * as _ from "lodash";
 import { en, zh_cn, Locale } from "./tools/locales";
 
 type Resources = { [key: string]: Locale };
@@ -33,7 +32,7 @@ function generateLocales(
 
 fs.readdirSync(localeDir)
   .filter(
-    (e: string) => !_.includes(Object.keys(resources), e.replace(".json", ""))
+    (e: string) => !Object.keys(resources).includes(e.replace(".json", ""))
   )
   .forEach((fileName: string) => {
     const name = fileName.replace(".json", "");

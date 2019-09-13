@@ -1,7 +1,7 @@
 import { en } from "./locales";
 import { roles, RouteName } from "./action";
 import { Controller } from "../core/controller";
-import * as _ from "lodash";
+import keyBy from "lodash.keyby";
 //前面三个是不能交换顺序的，会出问题
 enum RuleName {
   autoCopy = 1,
@@ -53,7 +53,7 @@ const ruleValues: Array<number> = Object.values(RuleName).filter(
   (k): k is number => typeof k == "number"
 );
 
-const reverseRuleName = _.keyBy(ruleValues, function(o: number) {
+const reverseRuleName = keyBy(ruleValues, function(o: number) {
   return RuleName[o];
 });
 
@@ -151,7 +151,7 @@ export class EnumRule implements Rule {
     this.predefined = predefined;
     this.msg = msg;
     this.check = function(value: any) {
-      return _.includes(Object.values(type), value);
+      return Object.values(type).includes(value);
     };
   }
 }

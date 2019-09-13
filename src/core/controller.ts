@@ -18,7 +18,7 @@ import { checkForUpdates } from "../tools/views/update";
 import { recognizer } from "../tools/ocr";
 
 const clipboard = require("electron-clipboard-extended");
-import * as _ from "lodash";
+import _ from "lodash";
 
 class Controller {
   src: string = "";
@@ -314,7 +314,7 @@ class Controller {
   }
 
   postProcessImage(words_result: Array<{ words: string }>) {
-    let src = _.join(words_result.map(item => item["words"]), "\n");
+    let src = words_result.map(item => item["words"]).join("\n");
     this.tryTranslate(src);
   }
 

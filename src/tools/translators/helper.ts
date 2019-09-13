@@ -4,10 +4,11 @@ export const engEnds = /[?.!]/g;
 export const chnBreaks = /[？。！\n]/g;
 export const engBreaks = /[?.!\n]/g;
 const chineseStyles = ["zh-CN", "zh-TW", "ja", "ko"];
-import * as _ from "lodash";
+import compact from "lodash.compact";
+import sum from "lodash.sum";
 const tokenizer = require("sbd");
 export function notEnglish(destCode: string) {
-  return _.includes(chineseStyles, destCode);
+  return chineseStyles.includes(destCode);
 }
 /** 统一的查询结果的数据结构 */
 
@@ -30,11 +31,11 @@ export function handleNoResult<T = any>(): Promise<T> {
 const optional_options = {};
 
 export function splitEng(text: string): string[] {
-  return _.compact(tokenizer.sentences(text.trim(), optional_options));
+  return compact(tokenizer.sentences(text.trim(), optional_options));
 }
 
 export function splitChn(text: string): string[] {
-  return _.compact(text.trim().split(chnEnds));
+  return compact(text.trim().split(chnEnds));
 }
 
 function countSentences(str: string, splitFunc: (text: string) => string[]) {
@@ -55,13 +56,13 @@ export function reSegmentGoogle(
   const ends: RegExp = notEnglish(srcCode) ? chnEnds : engEnds;
   const splitFunc = notEnglish(srcCode) ? splitChn : splitEng;
   if (sentences.length == 1) {
-    let resultString = _.join(result, seprator);
+    let resultString = result.join(seprator);
     return resultString;
   }
 
   const counts = sentences.map(sentence => countSentences(sentence, splitFunc));
-  if (_.sum(counts) != result.length) {
-    return _.join(result, "\n");
+  if (sum(counts) != result.length) {
+    return result.join("\n");
   }
 
   let resultString = "";
@@ -87,13 +88,13 @@ export function reSegment(
   const ends: RegExp = notEnglish(srcCode) ? chnEnds : engEnds;
   const splitFunc = notEnglish(srcCode) ? splitChn : splitEng;
   if (sentences.length == 1) {
-    let resultString = _.join(result, seprator);
+    let resultString = result.join(seprator);
     return resultString;
   }
   const counts = sentences.map(sentence => countSentences(sentence, splitFunc));
 
-  if (_.sum(counts) != result.length) {
-    return _.join(result, "\n");
+  if (sum(counts) != result.length) {
+    return result.join("\n");
   }
 
   let resultString = "";
@@ -127,9 +128,10 @@ export abstract class Translator {
   abstract detect(text: string): Promise<string | undefined>; //return lang
 
   isValid(lang: string): boolean {
-    return _.includes(this.getLanguages(), lang);
+    return this.getLanguages().includes(lang);
   }
 }
+
 export const langcodes = {
   af: {
     en: "Afrikaans",

@@ -6,7 +6,7 @@ import {
 } from "./helper";
 import { google } from "translation.js";
 
-import * as _ from "lodash";
+import invert from "lodash.invert";
 const GoogleLanguages: Dict = {
   Afrikaans: "af",
   Albanian: "sq",
@@ -113,8 +113,8 @@ const GoogleLanguages: Dict = {
   Yoruba: "yo",
   Zulu: "zu"
 };
-const GoogleCodes = _.invert(GoogleLanguages);
-const GoogleLangList = _.keys(GoogleLanguages);
+const GoogleCodes = invert(GoogleLanguages);
+const GoogleLangList = Object.keys(GoogleLanguages);
 
 export class GoogleTranslator extends Translator {
   getLanguages() {

@@ -1,6 +1,6 @@
 import { CommonTranslateResult, Translator, Dict, reSegment } from "./helper";
 import { youdao } from "translation.js";
-import * as _ from "lodash";
+import invert from "lodash.invert";
 
 const YoudaoLanguages: Dict = {
   English: "en",
@@ -12,8 +12,8 @@ const YoudaoLanguages: Dict = {
   Korean: "ko",
   French: "fr"
 };
-const YoudaoCodes = _.invert(YoudaoLanguages);
-const YoudaoLangList = _.keys(YoudaoLanguages);
+const YoudaoCodes = invert(YoudaoLanguages);
+const YoudaoLangList = Object.keys(YoudaoLanguages);
 
 export class YoudaoTranslator extends Translator {
   getLanguages() {

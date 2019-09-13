@@ -9,7 +9,7 @@ import {
 } from "./helper";
 import { BaiduTranslator, BaiduCodes } from "./baidu";
 
-import * as _ from "lodash";
+import invert from "lodash.invert";
 
 const CaiyunLanguages: Dict = {
   Japanese: "ja",
@@ -23,8 +23,8 @@ const code2caiyun: Dict = {
   ja: "ja"
 };
 
-const CaiyunCodes = _.invert(CaiyunLanguages);
-const CaiyunLangList = _.keys(CaiyunLanguages);
+const CaiyunCodes = invert(CaiyunLanguages);
+const CaiyunLangList = Object.keys(CaiyunLanguages);
 const TOKEN = "3975l6lr5pcbvidl6jl2";
 
 async function CaiyunTranslate(
@@ -99,7 +99,7 @@ export class CaiyunTranslator extends Translator {
   async detect(text: string): Promise<string | undefined> {
     try {
       const lang = await this.detector.detect(text);
-      if (_.includes(CaiyunLangList, BaiduCodes[<string>lang])) {
+      if (CaiyunLangList.includes(BaiduCodes[<string>lang])) {
         return lang;
       } else {
         throw "language not found";

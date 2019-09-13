@@ -4,7 +4,7 @@ import { BaiduTranslator } from "./baidu";
 import { GoogleTranslator } from "./google";
 import { CaiyunTranslator } from "./caiyun";
 import { Dict } from "../dict";
-import * as _ from "lodash";
+import _ from "lodash";
 
 export enum TranslatorType {
   Google = "Google",

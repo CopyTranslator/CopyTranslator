@@ -1,7 +1,7 @@
 import { CommonTranslateResult, Translator, Dict, reSegment } from "./helper";
 import { baidu } from "translation.js";
 
-import * as _ from "lodash";
+import invert from "lodash.invert";
 export const BaiduLanguages: Dict = {
   English: "en",
   Thai: "th",
@@ -30,8 +30,8 @@ export const BaiduLanguages: Dict = {
   Arabic: "ar"
 };
 
-export const BaiduCodes = _.invert(BaiduLanguages);
-const BaiduLangList = _.keys(BaiduLanguages);
+export const BaiduCodes = invert(BaiduLanguages);
+const BaiduLangList = Object.keys(BaiduLanguages);
 
 export class BaiduTranslator extends Translator {
   getLanguages() {

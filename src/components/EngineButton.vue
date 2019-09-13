@@ -13,7 +13,6 @@
 import WindowController from "./WindowController";
 import { MessageType, WinOpt } from "../tools/enums";
 import { ipcRenderer as ipc } from "electron";
-const _ = import("lodash");
 
 export default {
   name: "EngineButton",

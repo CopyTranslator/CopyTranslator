@@ -8,7 +8,7 @@ import {
 import { BaiduTranslator, BaiduCodes } from "./baidu";
 const md5 = require("md5");
 require("isomorphic-fetch");
-import * as _ from "lodash";
+import invert from "lodash.invert";
 
 export const SogouLanguages: Dict = {
   "Chinese(Simplified)": "zh-CN",
@@ -137,12 +137,12 @@ const sogoucode: Dict = {
   yua: "yua",
   yue: "yue"
 };
-const codesogou = _.invert(sogoucode);
+const codesogou = invert(sogoucode);
 
 const sogou2code = (sogou: string): string => sogoucode[sogou];
 const code2sogou = (code: string): string => codesogou[code];
-const SogouLangList = _.keys(SogouLanguages);
-const SogouCodes = _.invert(SogouLanguages);
+const SogouLangList = Object.keys(SogouLanguages);
+const SogouCodes = invert(SogouLanguages);
 
 interface SogouStorage {
   // sogou search token
@@ -289,7 +289,7 @@ export class SogouTranslator extends Translator {
   async detect(text: string): Promise<string | undefined> {
     try {
       const lang = await this.detector.detect(text);
-      if (_.includes(SogouLangList, BaiduCodes[<string>lang])) {
+      if (SogouLangList.includes(BaiduCodes[<string>lang])) {
         return lang;
       } else {
         throw "language not found";

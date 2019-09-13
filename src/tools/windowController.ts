@@ -3,14 +3,30 @@ import { MessageType, WinOpt } from "./enums";
 import { RuleName } from "./rule";
 import { Controller } from "../core/controller";
 const ioHook = require("iohook");
-const robot = require("robotjs");
+import { exec } from "child_process";
+import path from "path";
+import { envConfig } from "./envConfig";
+const is_win = require("os").type() === "Windows_NT";
+
+function simulate(key: string) {
+  exec(
+    `${path.join(envConfig.executableDir, "ctrl.exe")} ${key}`,
+    (err: any, stdout: any, stderr: any) => {
+      if (err) {
+        console.log(err);
+      } else {
+        console.log(key);
+      }
+    }
+  );
+}
 
 function simulateCopy() {
-  robot.keyTap("C", "control");
+  simulate("C");
 }
 
 function simulatePaste() {
-  robot.keyTap("V", "control");
+  simulate("V");
 }
 
 class WindowController {
@@ -20,6 +36,9 @@ class WindowController {
   lastDown = Date.now();
   lastX = 0;
   lastY = 0;
+  newY = 0;
+  newX = 0;
+  copied: boolean = false;
 
   bind() {
     ipc.on(MessageType.WindowOpt.toString(), (event: any, args: any) => {
@@ -66,22 +85,30 @@ class WindowController {
     });
     ioHook.on("mouseup", (event: MouseEvent) => {
       //模拟点按复制
+      // this.copied = false;
       if (
         this.tapCopy &&
-        Date.now() - this.lastDown > 300 &&
-        Math.abs(event.x - this.lastX) < 4 &&
-        Math.abs(event.y - this.lastY) < 4
+        is_win &&
+        !this.copied &&
+        Date.now() - this.lastDown > 100 &&
+        Math.abs(this.newX - this.lastX) + Math.abs(this.newY - this.lastY) > 10
       ) {
         simulateCopy();
+        this.copied = true;
       }
     });
+
     ioHook.on("mousedown", (event: MouseEvent) => {
       this.lastDown = Date.now();
       this.lastX = event.x;
       this.lastY = event.y;
+      this.copied = false;
     });
+
     ioHook.on("mousedrag", (event: MouseEvent) => {
       this.drag = true;
+      this.newX = event.x;
+      this.newY = event.y;
     });
     //注册的指令。send到主进程main.js中。
     // Register and start hook

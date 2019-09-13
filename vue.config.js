@@ -1,5 +1,5 @@
-const iconName =
-  require("os").type() === "Windows_NT" ? "icon.ico" : "icon.png";
+const is_win = require("os").type() === "Windows_NT";
+const iconName = is_win ? "icon.ico" : "icon.png";
 
 const trayIconName = "tray@2x.png";
 
@@ -10,20 +10,39 @@ module.exports = {
       builderOptions: {
         appId: "com.copytranslator.copytranslator",
         asar: true,
-        extraResources: [
-          {
-            from: `dist_locales`,
-            to: `locales`
-          },
-          {
-            from: trayIconName,
-            to: trayIconName
-          },
-          {
-            from: iconName,
-            to: iconName
-          }
-        ],
+        extraResources: is_win
+          ? [
+              {
+                from: `dist_locales`,
+                to: `locales`
+              },
+              {
+                from: `exe`,
+                to: `exe`
+              },
+              {
+                from: trayIconName,
+                to: trayIconName
+              },
+              {
+                from: iconName,
+                to: iconName
+              }
+            ]
+          : [
+              {
+                from: `dist_locales`,
+                to: `locales`
+              },
+              {
+                from: trayIconName,
+                to: trayIconName
+              },
+              {
+                from: iconName,
+                to: iconName
+              }
+            ],
         win: {
           icon: iconName,
           target: [

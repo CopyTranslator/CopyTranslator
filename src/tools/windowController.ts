@@ -3,31 +3,7 @@ import { MessageType, WinOpt } from "./enums";
 import { RuleName } from "./rule";
 import { Controller } from "../core/controller";
 const ioHook = require("iohook");
-import { exec } from "child_process";
-import path from "path";
-import { envConfig } from "./envConfig";
-const is_win = require("os").type() === "Windows_NT";
-
-function simulate(key: string) {
-  exec(
-    `${path.join(envConfig.executableDir, "ctrl.exe")} ${key}`,
-    (err: any, stdout: any, stderr: any) => {
-      if (err) {
-        console.log(err);
-      } else {
-        console.log(key);
-      }
-    }
-  );
-}
-
-function simulateCopy() {
-  simulate("C");
-}
-
-function simulatePaste() {
-  simulate("V");
-}
+import simulate from "./simulate";
 
 class WindowController {
   ctrlKey = false;
@@ -88,12 +64,11 @@ class WindowController {
       // this.copied = false;
       if (
         this.tapCopy &&
-        is_win &&
         !this.copied &&
         Date.now() - this.lastDown > 100 &&
         Math.abs(this.newX - this.lastX) + Math.abs(this.newY - this.lastY) > 10
       ) {
-        simulateCopy();
+        simulate.copy();
         this.copied = true;
       }
     });
@@ -117,4 +92,4 @@ class WindowController {
 }
 
 let windowController = new WindowController();
-export { windowController, simulatePaste };
+export { windowController };

@@ -4,7 +4,8 @@ import { initConfig } from "../tools/configuration";
 import { ConfigParser, getEnumValue } from "../tools/configParser";
 import { ColorStatus, MessageType, WinOpt } from "../tools/enums";
 import { WindowWrapper } from "../tools/views/windows";
-import { simulatePaste, windowController } from "../tools/windowController";
+import { windowController } from "../tools/windowController";
+import simulate from "../tools/simulate";
 import { envConfig } from "../tools/envConfig";
 import { l10n, L10N } from "../tools/l10n";
 import { reverseRuleName, RuleName, colorRules } from "../tools/rule";
@@ -173,7 +174,7 @@ class Controller {
     if (this.get(RuleName.autoCopy)) {
       clipboard.writeText(this.result);
       if (this.get(RuleName.autoPaste)) {
-        simulatePaste();
+        simulate.paste();
       }
     } else if (this.get(RuleName.autoFormat)) {
       clipboard.writeText(this.src);

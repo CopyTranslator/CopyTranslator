@@ -1,5 +1,9 @@
-const is_win = require("os").type() === "Windows_NT";
-const iconName = is_win ? "icon.ico" : "icon.png";
+const osType = require("os").type();
+const osSpec = {
+  Windows_NT: { iconName: "icon.ico", extDir: "exe" },
+  Darwin: { iconName: "icon.png", extDir: "scripts" },
+  Linux: { iconName: "icon.png" }
+}[osType];
 
 const trayIconName = "tray@2x.png";
 
@@ -10,41 +14,26 @@ module.exports = {
       builderOptions: {
         appId: "com.copytranslator.copytranslator",
         asar: true,
-        extraResources: is_win
-          ? [
-              {
-                from: `dist_locales`,
-                to: `locales`
-              },
-              {
-                from: `exe`,
-                to: `exe`
-              },
-              {
-                from: trayIconName,
-                to: trayIconName
-              },
-              {
-                from: iconName,
-                to: iconName
-              }
-            ]
-          : [
-              {
-                from: `dist_locales`,
-                to: `locales`
-              },
-              {
-                from: trayIconName,
-                to: trayIconName
-              },
-              {
-                from: iconName,
-                to: iconName
-              }
-            ],
+        extraResources: [
+          {
+            from: `dist_locales`,
+            to: `locales`
+          },
+          {
+            from: trayIconName,
+            to: trayIconName
+          },
+          {
+            from: osSpec.iconName,
+            to: osSpec.iconName
+          },
+          {
+            from: osSpec.extDir,
+            to: osSpec.extDir
+          }
+        ],
         win: {
-          icon: iconName,
+          icon: osSpec.iconName,
           target: [
             {
               target: "nsis",
@@ -59,7 +48,7 @@ module.exports = {
               arch: ["x64"]
             }
           ],
-          icon: iconName
+          icon: osSpec.iconName
         },
         mac: {
           target: [
@@ -68,10 +57,10 @@ module.exports = {
               arch: ["x64"]
             }
           ],
-          icon: iconName
+          icon: osSpec.iconName
         },
         nsis: {
-          installerIcon: iconName,
+          installerIcon: osSpec.iconName,
           oneClick: false,
           perMachine: false
         }

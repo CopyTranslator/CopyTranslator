@@ -1,8 +1,19 @@
 const os = require("os");
 const path = require("path");
 const fs = require("fs");
+const osType = <string>os.type();
+console.log(osType);
 
-const iconName = os.type() == "Windows_NT" ? "icon.ico" : "icon.png";
+const osSpec: { [key: string]: { executableDir: string; iconName: string } } = {
+  Windows_NT: {
+    executableDir: "exe",
+    iconName: "icon.ico"
+  },
+  Darwin: { executableDir: "scripts", iconName: "icon.png" },
+  Linux: { executableDir: "scripts", iconName: "icon.png" }
+};
+
+const currentSpec = osSpec[osType];
 
 const trayName = "tray@2x.png";
 
@@ -51,16 +62,19 @@ const diffConfig: DiffConfig =
   process.env.NODE_ENV == "production"
     ? {
         systemLocaleDir: path.join(process.resourcesPath, "locales"),
-        executableDir: path.join(process.resourcesPath, "exe"),
-        iconPath: path.join(process.resourcesPath, iconName),
+        executableDir: path.join(
+          process.resourcesPath,
+          currentSpec.executableDir
+        ),
+        iconPath: path.join(process.resourcesPath, currentSpec.iconName),
         trayIconPath: path.join(process.resourcesPath, trayName),
         styleTemplate: path.join(process.resourcesPath, "styles.css"),
         publicUrl: `file://${__dirname}`
       }
     : {
         systemLocaleDir: path.join(process.cwd(), "dist_locales"),
-        executableDir: path.join(process.cwd(), "exe"),
-        iconPath: path.join(process.cwd(), iconName),
+        executableDir: path.join(process.cwd(), currentSpec.executableDir),
+        iconPath: path.join(process.cwd(), currentSpec.iconName),
         trayIconPath: path.join(process.cwd(), trayName),
         styleTemplate: path.join(process.cwd(), "src", "styles.css"),
         publicUrl: <string>process.env.WEBPACK_DEV_SERVER_URL
@@ -72,4 +86,3 @@ mkdir(envConfig.configDir);
 mkdir(envConfig.userLocaleDir);
 
 export { envConfig };
-export default iconName;

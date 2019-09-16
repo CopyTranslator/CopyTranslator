@@ -5,7 +5,7 @@ const is_win = require("os").type() === "Windows_NT";
 
 function simulate(key: string) {
   exec(
-    `${path.join(envConfig.executableDir, "ctrl.exe")} ${key}`,
+    `"${path.join(envConfig.executableDir, "ctrl.exe")}" ${key}`,
     (err: any, stdout: any, stderr: any) => {
       if (err) {
         console.log(err);

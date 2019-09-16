@@ -1,9 +1,9 @@
 import _ from "lodash";
 export const constants = {
   appName: "CopyTranslator",
-  nickName: "Zouwu",
-  version: "v8.5.0",
-  stage: "alpha",
+  nickName: "Mimicat",
+  version: "v9.0.0",
+  stage: "preview",
   wiki: "https://copytranslator.github.io/guide",
   homepage: "https://copytranslator.github.io",
   downloadPage:

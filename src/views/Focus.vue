@@ -83,6 +83,7 @@ export default {
         result: "",
         source: "",
         target: "",
+        engine: "",
         dict: undefined,
         phonetic: undefined,
         notify: false

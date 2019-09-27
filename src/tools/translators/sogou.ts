@@ -173,7 +173,9 @@ async function sogouTranslate(
     method: "POST",
     headers: {
       "Content-Type": "application/x-www-form-urlencoded",
-      "X-Requested-With": "XMLHttpRequest"
+      "X-Requested-With": "XMLHttpRequest",
+      Referer: "https://fanyi.sogou.com",
+      Origin: "https://fanyi.sogou.com"
     },
     body: `from=${srcCode}&to=${tgtCode}&text=${encodeURIComponent(
       text
@@ -242,6 +244,7 @@ export async function getSogouToken(): Promise<string> {
 
 export class SogouTranslator extends Translator {
   detector: Translator = new BaiduTranslator();
+
   sogouStorage: SogouStorage = {
     token: "b33bf8c58706155663d1ad5dba4192dc",
     tokenDate: Date.now()

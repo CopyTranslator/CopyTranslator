@@ -142,6 +142,7 @@ class Controller {
           result: this.result,
           source: language.source,
           target: language.target,
+          engine: this.get(RuleName.translatorType),
           notify: this.get(RuleName.enableNotify)
         },
         extra
@@ -397,7 +398,6 @@ class Controller {
         break;
       case RuleName.translatorType:
         this.translator = getTranslator(value);
-        this.clear();
         if (!this.translator.isValid(this.get(RuleName.sourceLanguage))) {
           this.setByRuleName(RuleName.sourceLanguage, "English", save, refresh);
         }
@@ -409,7 +409,7 @@ class Controller {
             refresh
           );
         }
-        this.win.load(this.get(RuleName.frameMode));
+        this.doTranslate(this.src);
         break;
     }
 

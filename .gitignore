@@ -31,3 +31,4 @@ src/*.js
 dist
 /package-lock.json
 /yarn.lock
+theme

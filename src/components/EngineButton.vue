@@ -1,8 +1,7 @@
 <template>
   <div class="engineBtn">
     <el-button
-      v-bind:class="activeClass"
-      class="baiduBtn"
+      v-bind:class="[engine, 'btnBase', { inactive: inactive }]"
       @click="switchTranslator"
       circle
     ></el-button>
@@ -13,6 +12,7 @@
 import WindowController from "./WindowController";
 import { MessageType, WinOpt } from "../tools/enums";
 import { ipcRenderer as ipc } from "electron";
+import { RuleName } from "../tools/rule";
 
 export default {
   name: "EngineButton",
@@ -20,17 +20,18 @@ export default {
   props: ["engine"],
   data: function() {
     return {
-      activeClass: ["btnBase"]
+      engineClass: this.engine
     };
   },
-  computed: {},
+  computed: {
+    inactive() {
+      return this.$store.state.sharedResult.engine != this.engine;
+    }
+  },
   methods: {
     switchTranslator() {
       this.callback("translatorType|" + this.engine);
     }
-  },
-  mounted: function() {
-    this.activeClass.push(this.engine);
   }
 };
 </script>
@@ -39,6 +40,9 @@ export default {
 .engineBtn {
   width: 100%;
   height: 100%;
+}
+.inactive {
+  filter: grayscale(90%);
 }
 .Baidu {
   background-image: url("../images/baidu.svg");

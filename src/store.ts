@@ -10,6 +10,7 @@ export default new Vuex.Store({
       result: "",
       source: "",
       target: "",
+      engine: "",
       dict: undefined,
       phonetic: undefined,
       notify: false

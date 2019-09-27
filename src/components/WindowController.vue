@@ -10,8 +10,7 @@ export default {
   name: "WindowController",
   data: function() {
     return {
-      routeName: undefined,
-      animationId: undefined
+      routeName: undefined
     };
   },
   methods: {

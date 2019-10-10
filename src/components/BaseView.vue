@@ -12,7 +12,7 @@ export default {
   },
   data: function() {
     return {
-      languages: this.$controller.translator.getLanguages(),
+      languages: this.$controller.translator.getSupportLanguages(),
       source: this.$controller.source(),
       target: this.$controller.target(),
       isWord: false

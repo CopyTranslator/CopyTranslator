@@ -23,7 +23,7 @@ import WindowController from "./WindowController";
 import { MessageType, WinOpt } from "../tools/enums";
 import { ipcRenderer as ipc } from "electron";
 import EngineButton from "./EngineButton";
-import { translatorNames } from "../tools/translators";
+import { translatorTypes } from "../tools/translators";
 
 export default {
   name: "ControlButton",
@@ -33,7 +33,7 @@ export default {
       start: 18,
       span: 3,
       colorNow: "white",
-      engines: translatorNames
+      engines: translatorTypes
     };
   },
   components: { EngineButton },

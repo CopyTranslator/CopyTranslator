@@ -30,6 +30,9 @@
     "docs:deploy": "sh docs/.vuepress/release/sync.sh deploy"
   },
   "dependencies": {
+    "@opentranslate/baidu": "^1.0.2",
+    "@opentranslate/languages": "^1.0.2",
+    "@opentranslate/translator": "^1.0.2",
     "ba64": "^3.0.9",
     "baidu-aip-sdk": "^2.3.9",
     "chalk": "^2.4.2",
@@ -41,7 +44,6 @@
     "element-ui": "^2.12.0",
     "http": "0.0.0",
     "iohook": "^0.5.1",
-    "isomorphic-fetch": "^2.2.1",
     "lodash.compact": "^3.0.1",
     "lodash.invert": "^4.3.0",
     "lodash.keyby": "^4.6.0",
@@ -50,7 +52,6 @@
     "normalize.css": "^8.0.1",
     "sbd": "^1.0.15",
     "shortcut-capture": "^1.2.1",
-    "translation.js": "^0.7.9",
     "vue": "^2.6.10",
     "vue-router": "^3.1.3",
     "vuedraggable": "^2.23.0",

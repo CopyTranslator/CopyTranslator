@@ -8,7 +8,6 @@ import {
   RuleName
 } from "./rule";
 import { FrameMode, HideDirection } from "./enums";
-import { TranslatorType } from "./translators";
 import { RouteName } from "./action";
 
 function initConfig(
@@ -80,7 +79,7 @@ function initConfig(
 
   config.addRule(
     RuleName.translatorType,
-    new EnumRule(TranslatorType.Google, "type of translator", TranslatorType)
+    new StringRule("Google", "type of translator")
   );
 
   config.addRule(
@@ -129,12 +128,12 @@ function initConfig(
   );
 
   config.addRule(RuleName.sourceLanguage, {
-    predefined: "English",
+    predefined: "en",
     msg: "sourceLanguage language"
   });
 
   config.addRule(RuleName.targetLanguage, {
-    predefined: "Chinese(Simplified)",
+    predefined: "zh-CN",
     msg: "targetLanguage language"
   });
 

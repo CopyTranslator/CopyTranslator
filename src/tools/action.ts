@@ -11,7 +11,7 @@ import { ConfigParser, getEnumValue as r } from "./configParser";
 //r can be used to transform a enum to string
 import { envConfig } from "./envConfig";
 import { HideDirection } from "./enums";
-import { TranslatorType, translatorRange } from "./translators";
+import { TranslatorType, translatorTypes } from "./translators";
 import { defaultShortcuts, defaultLocalShortcuts } from "./shortcuts";
 import { Controller } from "../core/controller";
 
@@ -282,7 +282,7 @@ class ActionManager {
       const id = r(ruleName);
       return () => {
         return (<Controller>(<any>global).controller).translator
-          .getLanguages()
+          .getSupportLanguages()
           .map((e: string) => {
             return ActionWrapper(
               {
@@ -313,7 +313,7 @@ class ActionManager {
     };
 
     items.push(enumAction(RuleName.hideDirect, HideDirection));
-    items.push(dictAction(RuleName.translatorType, translatorRange));
+    items.push(dictAction(RuleName.translatorType, translatorTypes));
 
     items.push(normalAction("copySource"));
     items.push(normalAction("copyResult"));

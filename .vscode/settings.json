@@ -18,5 +18,6 @@
         }
     ],
     "typescript.updateImportsOnFileMove.enabled": "always",
-    "editor.fontFamily": "Monaco"
+    "editor.fontFamily": "Monaco",
+    "python.pythonPath": "e:\\software\\Anaconda3\\python.exe"
 }

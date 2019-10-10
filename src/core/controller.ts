@@ -1,5 +1,6 @@
-import { TranslatorType, getTranslator } from "../tools/translators";
-import { CommonTranslateResult, Translator } from "../tools/translators/helper";
+import { translators } from "../tools/translators";
+import { Translator, TranslateResult } from "@opentranslate/translator";
+import { isValid } from "../tools/translators/helper";
 import { initConfig } from "../tools/configuration";
 import { ConfigParser, getEnumValue } from "../tools/configParser";
 import { ColorStatus, MessageType, WinOpt } from "../tools/enums";
@@ -24,10 +25,10 @@ import _ from "lodash";
 class Controller {
   src: string = "";
   result: string = "";
-  res: CommonTranslateResult | undefined;
+  res: TranslateResult | undefined;
   lastAppend: string = "";
   win: WindowWrapper = new WindowWrapper();
-  translator: Translator = getTranslator(TranslatorType.Google);
+  translator: Translator = <Translator>translators.get("Google");
   config: ConfigParser = initConfig();
   locales: L10N = l10n;
   action = new ActionManager(handleActions);
@@ -125,15 +126,12 @@ class Controller {
         source: this.source(),
         target: this.target()
       };
-    } else {
-      language.source = this.translator.code2lang(language.source);
-      language.target = this.translator.code2lang(language.target);
     }
     let extra: any = {};
-    if (this.res) {
-      extra.phonetic = this.res.phonetic;
-      extra.dict = this.res.dict;
-    }
+    // if (this.res) {
+    //   extra.phonetic = this.res.phonetic;
+    //   extra.dict = this.res.dict;
+    // }
     this.win.sendMsg(
       MessageType.TranslateResult.toString(),
       Object.assign(
@@ -151,7 +149,7 @@ class Controller {
   }
   checkLength(text: string) {
     const threshold = 3000;
-    if (text.length > threshold) {
+    if (text.length > threshold || text.length == 0) {
       this.setCurrentColor(true);
       return false;
     } else return true;
@@ -171,7 +169,7 @@ class Controller {
     );
   }
 
-  postProcess(language: any, result: CommonTranslateResult) {
+  postProcess(language: any, result: TranslateResult) {
     if (this.get(RuleName.autoCopy)) {
       clipboard.writeText(this.result);
       if (this.get(RuleName.autoPaste)) {
@@ -232,11 +230,12 @@ class Controller {
   }
 
   async decideLanguage(text: string) {
-    let should_src = this.translator.lang2code(this.source());
-    let dest_lang = this.translator.lang2code(this.target());
+    let should_src = this.source();
+    let dest_lang = this.target();
     let src_lang = should_src;
     try {
       let lang = await this.translator.detect(text);
+      console.log(lang);
       if (lang) src_lang = lang;
     } catch (e) {
       this.onError(e);
@@ -283,12 +282,12 @@ class Controller {
     this.translator
       .translate(this.src, language.source, language.target)
       .then(res => {
-        if (res && res.resultString) {
-          res.resultString = normalizeAppend(
-            res.resultString,
+        if (res) {
+          const resultString = normalizeAppend(
+            res.trans.paragraphs[0],
             this.get(RuleName.autoPurify)
           );
-          this.result = res.resultString;
+          this.result = resultString;
           this.postProcess(language, res);
         } else {
           this.onError("translate error");
@@ -397,17 +396,12 @@ class Controller {
         windowController.tapCopy = value;
         break;
       case RuleName.translatorType:
-        this.translator = getTranslator(value);
-        if (!this.translator.isValid(this.get(RuleName.sourceLanguage))) {
-          this.setByRuleName(RuleName.sourceLanguage, "English", save, refresh);
+        this.translator = <Translator>translators.get(value);
+        if (!isValid(this.translator, this.source())) {
+          this.setByRuleName(RuleName.sourceLanguage, "en", save, refresh);
         }
-        if (!this.translator.isValid(this.get(RuleName.targetLanguage))) {
-          this.setByRuleName(
-            RuleName.targetLanguage,
-            "Chinese(Simplified)",
-            save,
-            refresh
-          );
+        if (!isValid(this.translator, this.target())) {
+          this.setByRuleName(RuleName.targetLanguage, "zh-CN", save, refresh);
         }
         this.doTranslate(this.src);
         break;

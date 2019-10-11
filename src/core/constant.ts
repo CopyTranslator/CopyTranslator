@@ -1,4 +1,3 @@
-import _ from "lodash";
 export const constants = {
   appName: "CopyTranslator",
   nickName: "Mimicat",

@@ -3,20 +3,18 @@ import {
   BrowserWindow,
   globalShortcut,
   Menu,
-  MenuItem,
-  MenuItemConstructorOptions
+  MenuItem
 } from "electron";
 import { RuleName } from "./rule";
 import { ConfigParser, getEnumValue as r } from "./configParser";
 //r can be used to transform a enum to string
 import { envConfig } from "./envConfig";
 import { HideDirection } from "./enums";
-import { TranslatorType, translatorTypes } from "./translators";
+import { translatorTypes } from "./translators";
 import { defaultShortcuts, defaultLocalShortcuts } from "./shortcuts";
 import { Controller } from "../core/controller";
 
 const fs = require("fs");
-import _ from "lodash";
 
 function compose(actions: Array<string>) {
   return actions.join("|");
@@ -239,15 +237,15 @@ class ActionManager {
         callback
       );
     }
-    //枚举类型，应该是select的一种特化
-    function dictAction(ruleName: RuleName, range: any) {
+    //列表类型，是select的一种特化
+    function listAction(ruleName: RuleName, list: any) {
       const id = r(ruleName);
       return ActionWrapper(
         {
           type: MenuItemType.submenu,
           id: id,
           tooltip: config.get_tooltip(ruleName),
-          submenu: range.map((e: any) => {
+          submenu: list.map((e: any) => {
             return ActionWrapper(
               {
                 type: MenuItemType.checkbox,
@@ -278,11 +276,20 @@ class ActionManager {
       );
     }
 
-    const languageGenerator = (ruleName: RuleName) => {
+    const languageGenerator = (
+      ruleName: RuleName,
+      allowAuto: boolean = true
+    ) => {
       const id = r(ruleName);
       return () => {
         return (<Controller>(<any>global).controller).translator
           .getSupportLanguages()
+          .filter(x => {
+            if (!allowAuto && x == "auto") {
+              return false;
+            }
+            return true;
+          })
           .map((e: string) => {
             return ActionWrapper(
               {
@@ -313,7 +320,7 @@ class ActionManager {
     };
 
     items.push(enumAction(RuleName.hideDirect, HideDirection));
-    items.push(dictAction(RuleName.translatorType, translatorTypes));
+    items.push(listAction(RuleName.translatorType, translatorTypes));
 
     items.push(normalAction("copySource"));
     items.push(normalAction("copyResult"));
@@ -352,13 +359,13 @@ class ActionManager {
     items.push(
       selectAction(
         RuleName.sourceLanguage,
-        languageGenerator(RuleName.sourceLanguage)
+        languageGenerator(RuleName.sourceLanguage, true)
       )
     );
     items.push(
       selectAction(
         RuleName.targetLanguage,
-        languageGenerator(RuleName.targetLanguage)
+        languageGenerator(RuleName.targetLanguage, false)
       )
     );
 

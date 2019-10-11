@@ -338,7 +338,7 @@ class ActionManager {
     items.push(switchAction(RuleName.autoShow));
     items.push(switchAction(RuleName.stayTop));
     items.push(switchAction(RuleName.listenClipboard));
-    items.push(switchAction(RuleName.tapCopy));
+    items.push(switchAction(RuleName.dragCopy));
     items.push(switchAction(RuleName.enableNotify));
     items.push(switchAction(RuleName.skipTaskbar));
 

@@ -8,7 +8,7 @@ const localeDir = path.join(process.cwd(), "dist_locales");
 // prettier-ignore
 let resources: Resources = {
   'en': en,
-  'zh-cn': zh_cn
+  'zh-CN': zh_cn
 };
 
 function mkdir(dir: string) {

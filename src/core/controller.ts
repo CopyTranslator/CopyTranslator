@@ -389,8 +389,8 @@ class Controller {
           );
         }
         break;
-      case RuleName.tapCopy:
-        windowController.tapCopy = value;
+      case RuleName.dragCopy:
+        windowController.dragCopy = value;
         break;
       case RuleName.translatorType:
         this.translator = createTranslator(value);

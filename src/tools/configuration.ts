@@ -28,7 +28,7 @@ function initConfig(
     RuleName.detectLanguage,
     new BoolRule(false, "detect language")
   );
-  config.addRule(RuleName.tapCopy, new BoolRule(false, "catch simulate copy"));
+  config.addRule(RuleName.dragCopy, new BoolRule(false, "catch simulate copy"));
 
   config.addRule(
     RuleName.incrementalCopy,
@@ -152,7 +152,7 @@ function initConfig(
         "autoPurify",
         "incrementalCopy",
         "autoFormat",
-        "tapCopy",
+        "dragCopy",
         "stayTop",
         "focusMode",
         "settings",
@@ -176,7 +176,7 @@ function initConfig(
         "autoHide",
         "autoShow",
         "autoFormat",
-        "tapCopy",
+        "dragCopy",
         "stayTop",
         "listenClipboard",
         "settings",
@@ -204,7 +204,7 @@ function initConfig(
         "autoHide",
         "autoShow",
         "autoFormat",
-        "tapCopy",
+        "dragCopy",
         "stayTop",
         "listenClipboard",
         "enableNotify",
@@ -231,7 +231,7 @@ function initConfig(
         "autoPurify",
         "autoFormat",
         "enableNotify",
-        "tapCopy",
+        "dragCopy",
         "stayTop",
         "listenClipboard",
         "sourceLanguage",

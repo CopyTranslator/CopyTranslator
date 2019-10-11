@@ -15,7 +15,7 @@ enum RuleName {
   autoHide,
   autoFormat,
   autoShow,
-  tapCopy,
+  dragCopy,
   enableNotify,
   autoPurify,
   skipTaskbar,

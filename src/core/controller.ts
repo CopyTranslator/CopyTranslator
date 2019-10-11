@@ -1,4 +1,4 @@
-import { translators } from "../tools/translators";
+import { createTranslator } from "../tools/translators";
 import { Translator, TranslateResult } from "@opentranslate/translator";
 import { isValid } from "../tools/translators/helper";
 import { initConfig } from "../tools/configuration";
@@ -20,7 +20,6 @@ import { checkForUpdates } from "../tools/views/update";
 import { recognizer } from "../tools/ocr";
 
 const clipboard = require("electron-clipboard-extended");
-import _ from "lodash";
 
 class Controller {
   src: string = "";
@@ -28,7 +27,7 @@ class Controller {
   res: TranslateResult | undefined;
   lastAppend: string = "";
   win: WindowWrapper = new WindowWrapper();
-  translator: Translator = <Translator>translators.get("Google");
+  translator: Translator = createTranslator("Google");
   config: ConfigParser = initConfig();
   locales: L10N = l10n;
   action = new ActionManager(handleActions);
@@ -128,10 +127,6 @@ class Controller {
       };
     }
     let extra: any = {};
-    // if (this.res) {
-    //   extra.phonetic = this.res.phonetic;
-    //   extra.dict = this.res.dict;
-    // }
     this.win.sendMsg(
       MessageType.TranslateResult.toString(),
       Object.assign(
@@ -233,20 +228,22 @@ class Controller {
     let should_src = this.source();
     let dest_lang = this.target();
     let src_lang = should_src;
-    try {
-      let lang = await this.translator.detect(text);
-      console.log(lang);
-      if (lang) src_lang = lang;
-    } catch (e) {
-      this.onError(e);
+
+    if (should_src === "auto") {
+      src_lang = should_src;
+    } else {
+      try {
+        let lang = await this.translator.detect(text);
+        if (lang) src_lang = lang;
+      } catch (e) {
+        this.onError(e);
+      }
     }
 
     if (src_lang == dest_lang) {
       if (this.get(RuleName.smartTranslate)) {
         dest_lang = should_src;
       }
-    } else if (!this.get(RuleName.detectLanguage)) {
-      src_lang = should_src;
     }
 
     return {
@@ -396,7 +393,7 @@ class Controller {
         windowController.tapCopy = value;
         break;
       case RuleName.translatorType:
-        this.translator = <Translator>translators.get(value);
+        this.translator = createTranslator(value);
         if (!isValid(this.translator, this.source())) {
           this.setByRuleName(RuleName.sourceLanguage, "en", save, refresh);
         }

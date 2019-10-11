@@ -2,7 +2,6 @@ const os = require("os");
 const path = require("path");
 const fs = require("fs");
 const osType = <string>os.type();
-console.log(osType);
 
 const osSpec: { [key: string]: { executableDir: string; iconName: string } } = {
   Windows_NT: {

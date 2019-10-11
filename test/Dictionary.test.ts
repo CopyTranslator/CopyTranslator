@@ -1,8 +1,8 @@
-import { getEngine, WordEngineType } from "../src/tools/dictionaries";
+import { getDictionary } from "../src/tools/dictionaries";
 
 describe("#Bing Dictionary test", () => {
   it("query", () => {
-    const engine = getEngine(WordEngineType.Bing);
+    const engine = getDictionary("Bing");
     engine.query("what are you talking about?").then((res: any) => {
       expect(res.code).toBe(0);
     });
@@ -11,7 +11,7 @@ describe("#Bing Dictionary test", () => {
 
 describe("#Youdao Dictionary test", () => {
   it("query", () => {
-    const engine = getEngine(WordEngineType.Youdao);
+    const engine = getDictionary("Youdao");
     engine.query("what are you talking about?").then((res: any) => {
       expect(res.code).toBe(0);
     });
@@ -20,7 +20,7 @@ describe("#Youdao Dictionary test", () => {
 
 describe("#Google Dictionary test", () => {
   it("query", () => {
-    const engine = getEngine(WordEngineType.Google);
+    const engine = getDictionary("Google");
     engine.query("what are you talking about?").then((res: any) => {
       expect(res.code).toBe(0);
     });

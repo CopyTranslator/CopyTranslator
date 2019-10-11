@@ -6,7 +6,6 @@ import { constants, version } from "../core/constant";
 import { Controller } from "../core/controller";
 import { decompose } from "../tools/action";
 import { showSettings } from "../tools/views";
-import _ from "lodash";
 
 const clipboard = require("electron-clipboard-extended");
 

@@ -1,18 +1,15 @@
-// import { GoogleEngine, YoudaoEngine, BingEngine } from "./easy";
-// import { WordEngine } from "./types";
-// import { Dict } from "../dict";
+import { GoogleEngine, YoudaoEngine, BingEngine } from "./easy";
+import { WordEngine } from "./types";
+export const dictionaryTypes = ["Bing", "Google", "Youdao"] as const;
+export type DictionaryType = (typeof dictionaryTypes)[number];
 
-// export enum WordEngineType {
-//   Google = "google",
-//   Youdao = "youdao",
-//   Bing = "bing"
-// }
+const dictionaryMap: [DictionaryType, WordEngine][] = [
+  ["Bing", new BingEngine()],
+  ["Youdao", new YoudaoEngine()],
+  ["Google", new GoogleEngine()]
+];
 
-// export const engineDict = Dict<WordEngine>([
-//   [WordEngineType.Bing, new BingEngine()],
-//   [WordEngineType.Youdao, new YoudaoEngine()],
-//   [WordEngineType.Google, new GoogleEngine()]
-// ]);
-
-// export const getEngine = engineDict.getFunc;
-// export const engineRange = engineDict.range;
+const dictionaries = new Map(dictionaryMap);
+export function getDictionary(dictType: DictionaryType): WordEngine {
+  return <WordEngine>dictionaries.get(dictType);
+}

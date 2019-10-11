@@ -23,7 +23,7 @@
     "prebuild": "et && tsc ./src/prebuild.ts && node ./src/prebuild.js && npm run clean",
     "postbuild": "node postbuild.js",
     "ts:test": "tsc ./src/test.ts && node ./src/test.js && npm run clean",
-    "test": "jest",
+    "test": "jest --detectOpenHandles",
     "clean": "node clean.js",
     "docs:dev": "vuepress dev docs",
     "docs:build": "vuepress build docs",

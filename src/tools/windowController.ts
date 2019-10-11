@@ -8,7 +8,7 @@ import simulate from "./simulate";
 class WindowController {
   ctrlKey = false;
   drag = false;
-  tapCopy = false;
+  dragCopy = false;
   lastDown = Date.now();
   lastX = 0;
   lastY = 0;
@@ -63,7 +63,7 @@ class WindowController {
       //模拟点按复制
       // this.copied = false;
       if (
-        this.tapCopy &&
+        this.dragCopy &&
         !this.copied &&
         Date.now() - this.lastDown > 100 &&
         Math.abs(this.newX - this.lastX) + Math.abs(this.newY - this.lastY) > 10

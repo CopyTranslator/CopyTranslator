@@ -48,6 +48,7 @@ class L10N {
     let resources: Resources = {};
     localeDirs.forEach((localeDir: string) => {
       fs.readdirSync(localeDir).forEach((fileName: string) => {
+        console.log(fileName);
         resources[fileName.replace(".json", "")] = path.join(
           localeDir,
           fileName

@@ -10,6 +10,7 @@ interface Locale {
   translate: string;
   copySource: string;
   copyResult: string; //复制结果
+  dragCopy: string;
   source: string; // 原文
   result: string; //译文
   sourceLanguage: string;
@@ -30,7 +31,6 @@ interface Locale {
   localeSetting: string;
   return: string;
   retryTranslate: string;
-  tapCopy: string;
   hideDirect: string;
   translatorType: string;
   evaluate: string;
@@ -106,7 +106,7 @@ const zh_cn: Locale = {
   localeSetting: "区域设置",
   return: "返回",
   retryTranslate: "重试翻译",
-  tapCopy: "点按复制",
+  dragCopy: "拖拽复制",
   hideDirect: "隐藏方向",
   translatorType: "翻译器",
   evaluate: "评估",
@@ -182,7 +182,7 @@ const en: Locale = {
   localeSetting: "Locale",
   return: "Return",
   retryTranslate: "Retry Translate",
-  tapCopy: "Tap Copy",
+  dragCopy: "Drag Copy",
   hideDirect: "Hide Direction",
   translatorType: "Translator Type",
   evaluate: "Evaluate",

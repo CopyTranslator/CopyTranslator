@@ -3,7 +3,6 @@ import { version, constants } from "../core/constant";
 import { dialog, nativeImage, shell, BrowserWindow } from "electron";
 import { envConfig } from "./envConfig";
 import { Controller } from "../core/controller";
-import { RuleName } from "./rule";
 import _ from "lodash";
 
 type Button = {
@@ -55,7 +54,7 @@ export function checkUpdate() {
 export function checkNotice() {
   const controller = <Controller>(<any>global).controller;
   const t = controller.getT();
-  let notices = controller.get(RuleName.notices);
+  let notices = controller.get("notices");
   function getButtons(buttons: Array<Button>) {
     let new_buttons = buttons.map(button => button.label);
     new_buttons.push(t("ok"));
@@ -65,7 +64,7 @@ export function checkNotice() {
     .then(res => {
       if (res && notices.indexOf(res.data.id) == -1) {
         notices.push(res.data.id);
-        controller.setByRuleName(RuleName.notices, notices);
+        controller.set("notices", notices);
         const notice = <Notice>res.data;
         if (!notice.buttons) notice.buttons = [];
         const buttons = getButtons(notice.buttons);

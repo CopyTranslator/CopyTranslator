@@ -25,9 +25,9 @@ export default {
   mixins: [WindowController],
   data() {
     return {
-      APP_ID: this.$controller.get(RuleName.APP_ID),
-      API_KEY: this.$controller.get(RuleName.API_KEY),
-      SECRET_KEY: this.$controller.get(RuleName.SECRET_KEY)
+      APP_ID: this.$controller.get("APP_ID"),
+      API_KEY: this.$controller.get("API_KEY"),
+      SECRET_KEY: this.$controller.get("SECRET_KEY")
     };
   },
   methods: {

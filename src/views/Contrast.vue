@@ -56,9 +56,9 @@ export default {
   mixins: [BaseView, WindowController, Adjustable],
   data: function() {
     return {
-      size: this.$controller.get(RuleName.contrast).fontSize,
+      size: this.$controller.get("contrast").fontSize,
       routeName: "contrast",
-      actionKeys: this.$controller.get(RuleName.contrastOption)
+      actionKeys: this.$controller.get("contrastOption")
     };
   },
   computed: {
@@ -82,7 +82,7 @@ export default {
   },
   mounted: function() {
     this.$nextTick(function() {
-      this.actionKeys = this.$controller.get(RuleName.contrastOption);
+      this.actionKeys = this.$controller.get("contrastOption");
     });
   },
   methods: {

@@ -19,18 +19,26 @@
         ></textarea>
       </div>
 
-      <div class="controlPanel div-inline" style="text-align: left;float:right; padding: 5px;">
-        <Action v-for="actionId in actionKeys" :identifier="actionId" :key="actionId"></Action>
+      <div
+        class="controlPanel div-inline"
+        style="text-align: left;float:right; padding: 5px;"
+      >
+        <Action
+          v-for="actionId in actionKeys"
+          :identifier="actionId"
+          :key="actionId"
+        ></Action>
         <el-button
           type="primary"
           class="noMargin"
           @click="changeMode('Focus')"
-        >{{ $t("switchMode") }}</el-button>
-        <el-button type="primary" class="noMargin" @click="translate">{{ $t("translate") }}</el-button>
+          >{{ $t("switchMode") }}</el-button
+        >
+        <el-button type="primary" class="noMargin" @click="translate">{{
+          $t("translate")
+        }}</el-button>
         <el-button type="primary" class="noMargin" @click="toSetting">
-          {{
-          $t("settings")
-          }}
+          {{ $t("settings") }}
         </el-button>
       </div>
     </div>

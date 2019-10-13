@@ -77,12 +77,12 @@ class NumberRule implements Rule {
   }
 }
 
-class ModeRule implements Rule {
-  predefined: ModeConfig;
+class ModeRule<T> implements Rule {
+  predefined: T;
   msg: string;
   check: CheckFuction;
 
-  constructor(predefined: ModeConfig, msg: string) {
+  constructor(predefined: T, msg: string) {
     this.predefined = predefined;
     this.msg = msg;
     this.check = function(value: any) {

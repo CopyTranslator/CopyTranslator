@@ -7,16 +7,14 @@ import { ColorStatus, MessageType, WinOpt } from "../tools/enums";
 import { WindowWrapper } from "../tools/views/windows";
 import { windowController } from "../tools/windowController";
 import simulate from "../tools/simulate";
-import { envConfig } from "../tools/envConfig";
+import { env } from "../tools/env";
 import { l10n, L10N } from "../tools/l10n";
 import { colorRules, getColorRule } from "../tools/rule";
-import { normalizeAppend } from "./stringProcessor";
+import { normalizeAppend } from "../tools/translators/helper";
 import { app, Rectangle } from "electron";
 import { ActionManager } from "../tools/action";
 import { TrayManager } from "../tools/tray";
 import { handleActions } from "./actionCallback";
-import { checkNotice } from "../tools/checker";
-import { checkForUpdates } from "../tools/views/update";
 import { recognizer } from "../tools/ocr";
 import { Identifier } from "@/tools/identifier";
 
@@ -36,7 +34,7 @@ class Controller {
   translating: boolean = false; //正在翻译
 
   constructor() {
-    this.config.loadValues(envConfig.configPath);
+    this.config.loadValues(env.configPath);
     this.action = new ActionManager(handleActions, this);
     this.restoreFromConfig();
   }
@@ -51,8 +49,6 @@ class Controller {
     windowController.bind();
     this.action.init();
     recognizer.setUp();
-    checkForUpdates();
-    checkNotice();
   }
   capture() {
     (<any>global).shortcutCapture.shortcutCapture();
@@ -65,7 +61,7 @@ class Controller {
   }
 
   onExit() {
-    this.config.saveValues(envConfig.configPath);
+    this.config.saveValues(env.configPath);
     this.action.unregister();
     app.quit();
   }
@@ -81,7 +77,7 @@ class Controller {
   }
 
   resotreDefaultSetting() {
-    this.config.restoreDefault(envConfig.configPath);
+    this.config.restoreDefault(env.configPath);
     this.restoreFromConfig();
   }
 
@@ -412,7 +408,7 @@ class Controller {
     this.setCurrentColor();
 
     if (save) {
-      this.config.saveValues(envConfig.configPath);
+      this.config.saveValues(env.configPath);
       if (refresh) {
         this.refresh();
       } else if (identifier == "autoFormat") {

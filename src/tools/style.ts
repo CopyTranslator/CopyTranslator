@@ -1,4 +1,4 @@
-import { envConfig } from "./envConfig";
+import { env } from "./env";
 
 var fs = require("fs");
 
@@ -29,10 +29,10 @@ function loadStyles(): string {
     return loadedStyles;
   }
   try {
-    loadedStyles = <string>fs.readFileSync(envConfig.style, "utf-8").toString();
+    loadedStyles = <string>fs.readFileSync(env.style, "utf-8").toString();
     return loadedStyles;
   } catch (e) {
-    fs.writeFileSync(envConfig.style, defaultStyles);
+    fs.writeFileSync(env.style, defaultStyles);
     loadedStyles = defaultStyles;
     return defaultStyles;
   }

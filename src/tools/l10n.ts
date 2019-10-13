@@ -1,6 +1,6 @@
 const fs = require("fs");
 const path = require("path");
-import { envConfig } from "./envConfig";
+import { env } from "./env";
 import { Identifier, objToMap } from "./identifier";
 import { en, Locale } from "./locales";
 type Resouces = { [string: string]: string };
@@ -54,9 +54,6 @@ class L10N {
   }
 }
 
-let locales = L10N.loadLocales([
-  envConfig.systemLocaleDir,
-  envConfig.userLocaleDir
-]);
+let locales = L10N.loadLocales([env.systemLocaleDir, env.userLocaleDir]);
 let l10n = new L10N({ resources: locales });
 export { l10n, L10N };

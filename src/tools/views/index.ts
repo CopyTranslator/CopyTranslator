@@ -6,7 +6,7 @@ import {
   remote
 } from "electron";
 import { createProtocol } from "vue-cli-plugin-electron-builder/lib";
-import { envConfig } from "../envConfig";
+import { env } from "../env";
 import { RouteName } from "../action";
 import { Controller } from "../../core/controller";
 import { loadStyles } from "../style";
@@ -24,14 +24,14 @@ export function loadRoute(
 ) {
   if (process.env.WEBPACK_DEV_SERVER_URL) {
     // Load the url of the dev server if in development mode
-    window.loadURL(envConfig.publicUrl + `/#/${routeName}`);
+    window.loadURL(env.publicUrl + `/#/${routeName}`);
     if (!process.env.IS_TEST && main) window.webContents.openDevTools();
   } else {
     // Load the index.html when not in development
     if (main) {
       createProtocol("app");
     }
-    const url = `${envConfig.publicUrl}/index.html#${routeName}`;
+    const url = `${env.publicUrl}/index.html#${routeName}`;
     window.loadURL(url);
   }
 }
@@ -60,7 +60,7 @@ export function showSettings() {
     title: t("settings"),
     parent: current_win.window,
     show: true,
-    icon: nativeImage.createFromPath(envConfig.iconPath)
+    icon: nativeImage.createFromPath(env.iconPath)
   });
   loadRoute(window, "Settings");
   insertStyles(window);

@@ -9,7 +9,7 @@ import {
 } from "electron";
 import { ColorStatus, HideDirection, MessageType, WinOpt } from "../enums";
 import { ModeConfig } from "../rule";
-import { envConfig } from "../envConfig";
+import { env } from "../env";
 import { RouteName } from "../action";
 import { Controller } from "../../core/controller";
 import { loadRoute, insertStyles } from ".";
@@ -183,7 +183,7 @@ export class WindowWrapper {
       autoHideMenuBar: true,
       width: param.width,
       height: param.height,
-      icon: nativeImage.createFromPath(envConfig.iconPath)
+      icon: nativeImage.createFromPath(env.iconPath)
     });
     this.load(routeName);
     this.window.on("closed", () => {

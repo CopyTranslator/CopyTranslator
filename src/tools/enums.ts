@@ -15,7 +15,8 @@ enum MessageType {
   TranslateResult,
   OpenMenu,
   Router,
-  UpdateT
+  UpdateT,
+  FirstLoaded
 }
 
 enum WinOpt {

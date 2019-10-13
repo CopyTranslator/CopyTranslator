@@ -79,9 +79,9 @@ const diffConfig: DiffConfig =
         publicUrl: <string>process.env.WEBPACK_DEV_SERVER_URL
       };
 
-const envConfig: EnvConfig = Object.assign(sharedConfig, diffConfig);
+const env: EnvConfig = { ...sharedConfig, ...diffConfig };
 
-mkdir(envConfig.configDir);
-mkdir(envConfig.userLocaleDir);
+mkdir(env.configDir);
+mkdir(env.userLocaleDir);
 
-export { envConfig };
+export { env };

@@ -1,7 +1,7 @@
 import { raceGet } from "./network";
 import { version, constants } from "../core/constant";
 import { dialog, nativeImage, shell, BrowserWindow } from "electron";
-import { envConfig } from "./envConfig";
+import { env } from "./env";
 import { Controller } from "../core/controller";
 import _ from "lodash";
 
@@ -30,7 +30,7 @@ export function checkUpdate() {
             title: "A newer version is available " + info.version,
             message: info.abstract,
             buttons: [t("toDownload"), t("changelog"), t("cancel")],
-            icon: nativeImage.createFromPath(envConfig.iconPath),
+            icon: nativeImage.createFromPath(env.iconPath),
             cancelId: 2
           },
           function(response, checkboxChecked) {
@@ -75,7 +75,7 @@ export function checkNotice() {
             message: notice.message,
             buttons: buttons,
             cancelId: buttons.length - 1,
-            icon: nativeImage.createFromPath(envConfig.iconPath)
+            icon: nativeImage.createFromPath(env.iconPath)
           },
           function(response, checkboxChecked) {
             shell.openExternal(notice.buttons[response].ref);

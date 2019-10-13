@@ -1,5 +1,12 @@
 import { ConfigParser } from "./configParser";
-import { BoolRule, GroupRule, ModeRule, StringRule, UnionRule } from "./rule";
+import {
+  BoolRule,
+  GroupRule,
+  ModeRule,
+  StringRule,
+  UnionRule,
+  ModeConfig
+} from "./rule";
 import { FrameMode, HideDirection, hideDirections, frameModes } from "./enums";
 import { languages, Language } from "@opentranslate/languages";
 import { translatorTypes, TranslatorType } from "./translators/";
@@ -66,7 +73,7 @@ function initConfig(
 
   config.addRule(
     "focus",
-    new ModeRule(
+    new ModeRule<ModeConfig>(
       {
         x: 1390,
         y: 133,
@@ -80,11 +87,11 @@ function initConfig(
 
   config.addRule(
     "contrast",
-    new ModeRule(
+    new ModeRule<ModeConfig>(
       {
         x: 535,
         y: 186,
-        height: 585,
+        height: 600,
         width: 1094,
         fontSize: 15
       },
@@ -94,7 +101,7 @@ function initConfig(
 
   config.addRule(
     "settingsConfig",
-    new ModeRule(
+    new ModeRule<ModeConfig>(
       {
         x: 1390,
         y: 133,
@@ -127,7 +134,6 @@ function initConfig(
         "retryTranslate",
         "autoCopy",
         "autoPaste",
-        "autoPurify",
         "incrementalCopy",
         "autoFormat",
         "dragCopy",
@@ -148,7 +154,6 @@ function initConfig(
         "retryTranslate",
         "autoCopy",
         "autoPaste",
-        "autoPurify",
         "incrementalCopy",
         "autoHide",
         "autoShow",
@@ -175,7 +180,6 @@ function initConfig(
         "retryTranslate",
         "autoCopy",
         "autoPaste",
-        "autoPurify",
         "incrementalCopy",
         "autoHide",
         "autoShow",
@@ -203,7 +207,6 @@ function initConfig(
         "incrementalCopy",
         "autoHide",
         "autoShow",
-        "autoPurify",
         "autoFormat",
         "enableNotify",
         "dragCopy",

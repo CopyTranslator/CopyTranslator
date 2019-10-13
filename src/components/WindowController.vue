@@ -66,6 +66,10 @@ export default {
         this.storeWindow();
       }
     });
+
+    this.$nextTick(() => {
+      ipc.send(MessageType.FirstLoaded.toString());
+    });
     if (this.routeName) this.$controller.restoreWindow(this.routeName);
   },
   destroyed: function() {

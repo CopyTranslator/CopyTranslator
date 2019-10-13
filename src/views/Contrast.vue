@@ -19,27 +19,19 @@
         ></textarea>
       </div>
 
-      <div
-        class="controlPanel div-inline"
-        style="text-align: left;float:right; padding: 5px;"
-      >
-        <Action
-          v-for="actionId in actionKeys"
-          :identifier="actionId"
-          :key="actionId"
-        ></Action>
+      <div class="controlPanel div-inline" style="text-align: left;float:right; padding: 5px;">
+        <Action v-for="actionId in actionKeys" :identifier="actionId" :key="actionId"></Action>
         <el-button
           type="primary"
           class="noMargin"
           @click="changeMode('Focus')"
-          >{{ $t("switchMode") }}</el-button
-        >
-        <el-button type="primary" class="noMargin" @click="translate">
-          {{ $t("translate") }}
-        </el-button>
-        <el-button type="primary" class="noMargin" @click="toSetting">{{
+        >{{ $t("switchMode") }}</el-button>
+        <el-button type="primary" class="noMargin" @click="translate">{{ $t("translate") }}</el-button>
+        <el-button type="primary" class="noMargin" @click="toSetting">
+          {{
           $t("settings")
-        }}</el-button>
+          }}
+        </el-button>
       </div>
     </div>
   </div>
@@ -79,11 +71,6 @@ export default {
   },
   components: {
     Action
-  },
-  mounted: function() {
-    this.$nextTick(function() {
-      this.actionKeys = this.$controller.get("contrastOption");
-    });
   },
   methods: {
     translate() {

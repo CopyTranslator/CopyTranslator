@@ -8,7 +8,7 @@ interface Shortcut {
 
 export type Shortcuts = Map<Identifier, Accelerator>;
 
-const defaultShortcuts: Shortcuts = new Map([
+const defaultGlobalShortcuts: Shortcuts = new Map([
   ["focusMode", "Shift+F1"],
   ["contrastMode", "Shift+F2"]
 ]);
@@ -25,4 +25,8 @@ const defaultLocalShortcuts: Shortcuts = new Map([
   ["quit", "Cmd+Q"]
 ]);
 
-export { Shortcut, defaultShortcuts, defaultLocalShortcuts };
+export {
+  Shortcut,
+  defaultGlobalShortcuts as defaultShortcuts,
+  defaultLocalShortcuts
+};

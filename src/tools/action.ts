@@ -8,8 +8,8 @@ import {
 
 import { ConfigParser } from "./configParser";
 import { Language } from "@opentranslate/languages";
-import { envConfig } from "./envConfig";
-import { HideDirection, hideDirections } from "./enums";
+import { env } from "./env";
+import { hideDirections } from "./enums";
 import { translatorTypes } from "./translators";
 import {
   defaultShortcuts,
@@ -148,7 +148,6 @@ class ActionManager {
     const controller = this.controller;
     let config = controller.config;
     const t = controller.getT();
-    const l = getLanguageLocales(<Language>controller.get("localeSetting"));
 
     function refreshSingle(key: Identifier, action: Action): Action {
       action.label = t(<Identifier>key);
@@ -411,13 +410,10 @@ class ActionManager {
     this.shortcuts = defaultShortcuts;
     try {
       this.shortcuts = objToMap(
-        JSON.parse(fs.readFileSync(envConfig.shortcut, "utf-8"))
+        JSON.parse(fs.readFileSync(env.shortcut, "utf-8"))
       );
     } catch (e) {
-      fs.writeFileSync(
-        envConfig.shortcut,
-        JSON.stringify(defaultShortcuts, null, 4)
-      );
+      fs.writeFileSync(env.shortcut, JSON.stringify(defaultShortcuts, null, 4));
     }
   }
 
@@ -425,11 +421,11 @@ class ActionManager {
     this.localShortcuts = defaultLocalShortcuts;
     try {
       this.localShortcuts = objToMap(
-        JSON.parse(fs.readFileSync(envConfig.localShortcut, "utf-8"))
+        JSON.parse(fs.readFileSync(env.localShortcut, "utf-8"))
       );
     } catch (e) {
       fs.writeFileSync(
-        envConfig.localShortcut,
+        env.localShortcut,
         JSON.stringify(defaultLocalShortcuts, null, 4)
       );
     }

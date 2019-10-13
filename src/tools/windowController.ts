@@ -3,6 +3,8 @@ import { MessageType, WinOpt } from "./enums";
 import { Controller } from "../core/controller";
 const ioHook = require("iohook");
 import simulate from "./simulate";
+import { checkNotice } from "./checker";
+import { checkForUpdates } from "./views/update";
 
 class WindowController {
   ctrlKey = false;
@@ -16,6 +18,11 @@ class WindowController {
   copied: boolean = false;
 
   bind() {
+    ipc.once(MessageType.FirstLoaded.toString(), (event: any, args: any) => {
+      checkForUpdates();
+      checkNotice();
+    });
+
     ipc.on(MessageType.WindowOpt.toString(), (event: any, args: any) => {
       var arg = args.args;
       var currentWindow = BrowserWindow.fromWebContents(event.sender);
@@ -88,5 +95,4 @@ class WindowController {
   }
 }
 
-let windowController = new WindowController();
-export { windowController };
+export const windowController = new WindowController();

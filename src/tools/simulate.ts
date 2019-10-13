@@ -1,11 +1,11 @@
 import { exec } from "child_process";
 import path from "path";
-import { envConfig } from "./envConfig";
+import { env } from "./env";
 const is_win = require("os").type() === "Windows_NT";
 
 function simulate(key: string) {
   exec(
-    `"${path.join(envConfig.executableDir, "ctrl.exe")}" ${key}`,
+    `"${path.join(env.executableDir, "ctrl.exe")}" ${key}`,
     (err: any, stdout: any, stderr: any) => {
       if (err) {
         console.log(err);
@@ -26,7 +26,7 @@ function simulatePaste() {
 
 function simulateMac(script: string) {
   exec(
-    `osascript ${path.join(envConfig.executableDir, script)}`,
+    `osascript ${path.join(env.executableDir, script)}`,
     (err: any, stdout: any, stderr: any) => {
       if (err) {
         console.log(err);

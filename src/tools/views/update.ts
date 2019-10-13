@@ -1,10 +1,11 @@
 import { dialog, BrowserWindow, screen, nativeImage, ipcMain } from "electron";
 import { autoUpdater } from "electron-updater";
 import { Controller } from "../../core/controller";
-import { envConfig } from "../envConfig";
+import { env } from "../env";
 import { checkUpdate } from "../checker";
 import { loadRoute, insertStyles } from "./index";
-
+import { checkNotice } from "../checker";
+import { WinOpt } from "../enums";
 let window: BrowserWindow | undefined = undefined;
 let binded: boolean = false;
 autoUpdater.autoDownload = false;
@@ -34,7 +35,7 @@ function bindUpdateEvents() {
       minimizable: false,
       title: "软件更新",
       parent: current_win.window,
-      icon: nativeImage.createFromPath(envConfig.iconPath)
+      icon: nativeImage.createFromPath(env.iconPath)
     });
     loadRoute(window, "Update");
     insertStyles(window);
@@ -48,7 +49,7 @@ function bindUpdateEvents() {
       {
         type: "info",
         title: "安装更新",
-        icon: nativeImage.createFromPath(envConfig.iconPath),
+        icon: nativeImage.createFromPath(env.iconPath),
         message: "更新已下载",
         buttons: ["现在退出并安装", "退出后自动安装", "cancel"],
         cancelId: 2

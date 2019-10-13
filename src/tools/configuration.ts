@@ -1,8 +1,8 @@
 import { ConfigParser } from "./configParser";
-import { BoolRule, EnumRule, GroupRule, ModeRule, StringRule } from "./rule";
-import { FrameMode, HideDirection } from "./enums";
-import { RouteName } from "./action";
-
+import { BoolRule, GroupRule, ModeRule, StringRule, UnionRule } from "./rule";
+import { FrameMode, HideDirection, hideDirections, frameModes } from "./enums";
+import { languages, Language } from "@opentranslate/languages";
+import { translatorTypes, TranslatorType } from "./translators/";
 function initConfig(
   config: ConfigParser | undefined = undefined
 ): ConfigParser {
@@ -14,7 +14,6 @@ function initConfig(
   );
 
   config.addRule("listenClipboard", new BoolRule(true, "Listen to Clipboard"));
-  config.addRule("detectLanguage", new BoolRule(false, "detect language"));
   config.addRule("dragCopy", new BoolRule(false, "catch simulate copy"));
 
   config.addRule("incrementalCopy", new BoolRule(false, "incremental copy"));
@@ -44,23 +43,27 @@ function initConfig(
 
   config.addRule("autoShow", new BoolRule(false, "auto show after translate"));
   config.addRule("enableNotify", new BoolRule(false, "notify after translate"));
-
   config.addRule("skipTaskbar", new BoolRule(false, "hide the taskbar"));
 
-  config.addRule("frameMode", {
-    predefined: "Contrast",
-    msg: "current frame mode"
-  });
+  config.addRule(
+    "frameMode",
+    new UnionRule<FrameMode>("Contrast", "current frame mode", frameModes)
+  );
 
   config.addRule(
     "translatorType",
-    new StringRule("Google", "type of translator")
+    new UnionRule<TranslatorType>(
+      "Google",
+      "type of translator",
+      translatorTypes
+    )
   );
 
   config.addRule(
     "hideDirect",
-    new EnumRule(HideDirection.Up, "HideDirection", HideDirection)
+    new UnionRule<HideDirection>("Up", "HideDirection", hideDirections)
   );
+
   config.addRule(
     "focus",
     new ModeRule(
@@ -102,15 +105,15 @@ function initConfig(
     )
   );
 
-  config.addRule("sourceLanguage", {
-    predefined: "en",
-    msg: "sourceLanguage language"
-  });
+  config.addRule(
+    "sourceLanguage",
+    new UnionRule<Language>("en", "sourceLanguage language", languages)
+  );
 
-  config.addRule("targetLanguage", {
-    predefined: "zh-CN",
-    msg: "targetLanguage language"
-  });
+  config.addRule(
+    "targetLanguage",
+    new UnionRule<Language>("zh-CN", "targetLanguage language", languages)
+  );
 
   config.addRule("localeSetting", {
     predefined: "zh-CN",
@@ -146,7 +149,6 @@ function initConfig(
         "autoCopy",
         "autoPaste",
         "autoPurify",
-        "detectLanguage",
         "incrementalCopy",
         "autoHide",
         "autoShow",
@@ -174,7 +176,6 @@ function initConfig(
         "autoCopy",
         "autoPaste",
         "autoPurify",
-        "detectLanguage",
         "incrementalCopy",
         "autoHide",
         "autoShow",
@@ -199,7 +200,6 @@ function initConfig(
       [
         "autoCopy",
         "autoPaste",
-        "detectLanguage",
         "incrementalCopy",
         "autoHide",
         "autoShow",

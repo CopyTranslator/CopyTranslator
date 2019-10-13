@@ -4,7 +4,6 @@ import { Controller } from "../../core/controller";
 import { envConfig } from "../envConfig";
 import { checkUpdate } from "../checker";
 import { loadRoute, insertStyles } from "./index";
-import { RouteName } from "../action";
 
 let window: BrowserWindow | undefined = undefined;
 let binded: boolean = false;

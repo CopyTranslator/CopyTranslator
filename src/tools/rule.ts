@@ -25,9 +25,9 @@ interface ModeConfig {
 }
 
 class GroupRule implements Rule {
-  predefined: Array<string>;
+  predefined: Array<Identifier>;
   msg: string;
-  constructor(predefined: Array<string>, msg: string) {
+  constructor(predefined: Array<Identifier>, msg: string) {
     this.predefined = predefined;
     this.msg = msg;
   }
@@ -99,16 +99,28 @@ class ModeRule implements Rule {
   }
 }
 
-export class EnumRule implements Rule {
+export class OptionRule implements Rule {
   predefined: any;
   msg: string;
   check: CheckFuction;
-
-  constructor(predefined: any, msg: string, type: any) {
+  constructor(predefined: any, msg: string, options: readonly any[]) {
     this.predefined = predefined;
     this.msg = msg;
     this.check = function(value: any) {
-      return Object.values(type).includes(value);
+      return options.includes(value);
+    };
+  }
+}
+
+export class UnionRule<T> implements Rule {
+  predefined: any;
+  msg: string;
+  check: CheckFuction;
+  constructor(predefined: T, msg: string, options: readonly any[]) {
+    this.predefined = predefined;
+    this.msg = msg;
+    this.check = function(value: T) {
+      return options.includes(value);
     };
   }
 }

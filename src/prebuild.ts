@@ -34,8 +34,8 @@ fs.readdirSync(localeDir)
     let locale = objToMap<string>(
       JSON.parse(fs.readFileSync(path.join(localeDir, fileName)))
     );
-    for (const key of en.keys()) {
-      locale.set(key, locale.get(key) || <string>en.get(key));
+    for (const [key, value] of en) {
+      locale.set(key, locale.get(key) || <string>value);
     }
     resources.set(<Language>name, locale);
   });

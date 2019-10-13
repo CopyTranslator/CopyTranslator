@@ -42,7 +42,6 @@ export function capture(x: number, y: number, width: number, height: number) {
         canvas.height = 500;
         ctx.drawImage(img, 0, 0, 500, 500, 0, 0, 500, 500);
         const dataURL = canvas.toDataURL("image/png");
-        console.log(dataURL);
       });
       ipcRenderer.send("shortcut-capture", sources);
     })

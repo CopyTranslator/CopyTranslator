@@ -46,7 +46,6 @@ export default {
   },
   methods: {
     log: function(evt) {
-      console.log(evt);
       this.candidates.sort();
     },
     select(index) {

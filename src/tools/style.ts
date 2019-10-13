@@ -21,6 +21,7 @@ const defaultStyles = `
     /*modify the style of the contrast mode panel*/
 }
 `;
+
 let loadedStyles: undefined | string;
 
 function loadStyles(): string {

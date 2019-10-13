@@ -54,7 +54,6 @@ export function showSettings() {
     y: yBound + (screenHeight - height) / 2,
     width: width,
     height: height,
-    // titleBarStyle: "hiddenInset",
     autoHideMenuBar: true,
     maximizable: false,
     minimizable: false,

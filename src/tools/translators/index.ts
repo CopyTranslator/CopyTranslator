@@ -1,4 +1,8 @@
 import Baidu from "@opentranslate/baidu";
+import Google from "@opentranslate/google";
+import Youdao from "@opentranslate/youdao";
+import Sogou from "@opentranslate/sogou";
+import Caiyun from "@opentranslate/caiyun";
 import { Translator } from "@opentranslate/translator";
 export const translatorTypes = [
   "Baidu",
@@ -11,10 +15,10 @@ export type TranslatorType = (typeof translatorTypes)[number];
 type TranslatorConstructor = { new (): Translator };
 const translatorMap: [TranslatorType, TranslatorConstructor][] = [
   ["Baidu", Baidu],
-  ["Google", Baidu],
-  ["Youdao", Baidu],
-  ["Caiyun", Baidu],
-  ["Sogou", Baidu]
+  ["Google", Google],
+  ["Youdao", Youdao],
+  ["Caiyun", Caiyun],
+  ["Sogou", Sogou]
 ];
 const translators = new Map(translatorMap);
 

@@ -9,12 +9,16 @@ import {
 import { ConfigParser } from "./configParser";
 import { Language } from "@opentranslate/languages";
 import { envConfig } from "./envConfig";
-import { HideDirection } from "./enums";
+import { HideDirection, hideDirections } from "./enums";
 import { translatorTypes } from "./translators";
-import { defaultShortcuts, defaultLocalShortcuts } from "./shortcuts";
+import {
+  defaultShortcuts,
+  defaultLocalShortcuts,
+  Shortcuts
+} from "./shortcuts";
 import { Controller } from "../core/controller";
 import { getLanguageLocales } from "./translators/locale";
-import { Identifier, identifiers } from "./identifier";
+import { Identifier, identifiers, objToMap } from "./identifier";
 
 const fs = require("fs");
 
@@ -28,9 +32,7 @@ function decompose(id: string) {
 
 type MenuItemType = "normal" | "separator" | "submenu" | "checkbox" | "radio";
 
-enum ActionType {
-  constant = "constant"
-}
+type ActionType = "constant";
 
 type RouteName =
   | "Focus"
@@ -112,19 +114,18 @@ const roles: Identifier[] = [
 
 class ActionManager {
   actions = new Map<Identifier, Action>();
-  shortcuts = new Map<Identifier, Accelerator>();
+  shortcuts: Shortcuts = new Map<Identifier, Accelerator>();
   localShortcuts = new Map<Identifier, Accelerator>();
   callback: Function;
+  controller: Controller;
 
-  constructor(callback: Function) {
+  constructor(callback: Function, controller: Controller) {
     this.callback = callback;
+    this.controller = controller;
   }
 
   init() {
-    this.actions = this.getActions(
-      (<Controller>(<any>global).controller).config,
-      this.callback
-    );
+    this.actions = this.getActions(this.controller.config, this.callback);
     this.loadGlobalShortcuts();
     this.register();
     this.loadLocalShortcuts();
@@ -133,16 +134,18 @@ class ActionManager {
 
   update() {
     const refresh = this.getRefreshFunc();
+    console.log("refresh");
     for (const key of this.actions.keys()) {
       this.actions.set(key, refresh(key, <Action>this.actions.get(key)));
     }
   }
+
   getAction(identifier: Identifier): Action {
     return <Action>this.actions.get(identifier);
   }
 
   getRefreshFunc() {
-    const controller = <Controller>(<any>global).controller;
+    const controller = this.controller;
     let config = controller.config;
     const t = controller.getT();
     const l = getLanguageLocales(<Language>controller.get("localeSetting"));
@@ -165,9 +168,6 @@ class ActionManager {
         for (const key2 in action.submenu) {
           const param = decompose(action.submenu[key2].id)[1].toString();
           action.submenu[key2].checked = param == value;
-          if (key === "sourceLanguage" || key === "targetLanguage") {
-            action.submenu[key2].label = l[<Language>action.submenu[key2].id];
-          }
         }
       }
       return action;
@@ -177,7 +177,7 @@ class ActionManager {
 
   getActions(config: ConfigParser, callback: Function): Actions {
     let items: Array<Action> = [];
-    const l = getLanguageLocales(<Language>config.get("localeSetting"));
+
     //普通的按钮，执行一项操作
     function normalAction(id: Identifier) {
       return ActionWrapper(
@@ -202,7 +202,7 @@ class ActionManager {
     function constantAction(identifier: Identifier) {
       return ActionWrapper(
         {
-          actionType: ActionType.constant,
+          actionType: "constant",
           id: identifier,
           tooltip: identifier
         },
@@ -223,29 +223,6 @@ class ActionManager {
       );
     }
 
-    //枚举类型，应该是select的一种特化
-    function enumAction(identifier: Identifier, type: any) {
-      return ActionWrapper(
-        {
-          type: "submenu",
-          id: identifier,
-          tooltip: config.getTooltip(identifier),
-          submenu: Object.values(type)
-            .filter((k): k is number => typeof k == "number")
-            .map(e => {
-              return ActionWrapper(
-                {
-                  type: "checkbox",
-                  id: compose([identifier, (<number>e).toString()]),
-                  label: type[<number>e]
-                },
-                callback
-              );
-            })
-        },
-        callback
-      );
-    }
     //列表类型，是select的一种特化
     function listAction(identifier: Identifier, list: any) {
       return ActionWrapper(
@@ -289,7 +266,8 @@ class ActionManager {
       allowAuto: boolean = true
     ) => {
       return () => {
-        return (<Controller>(<any>global).controller).translator
+        const l = getLanguageLocales(<Language>config.get("localeSetting"));
+        return this.controller.translator
           .getSupportLanguages()
           .filter(x => {
             if (!allowAuto && x == "auto") {
@@ -312,21 +290,19 @@ class ActionManager {
 
     const localeGenerator = () => {
       const id = "localeSetting";
-      return (<Controller>(<any>global).controller).locales
-        .getLocales()
-        .map((locale: any) => {
-          return ActionWrapper(
-            {
-              id: compose([id, locale.short]),
-              label: locale.localeName,
-              type: "checkbox"
-            },
-            callback
-          );
-        });
+      return this.controller.locales.getLocales().map((locale: any) => {
+        return ActionWrapper(
+          {
+            id: compose([id, locale.short]),
+            label: locale.localeName,
+            type: "checkbox"
+          },
+          callback
+        );
+      });
     };
 
-    items.push(enumAction("hideDirect", HideDirection));
+    items.push(listAction("hideDirect", hideDirections));
     items.push(listAction("translatorType", translatorTypes));
 
     items.push(normalAction("copySource"));
@@ -338,7 +314,6 @@ class ActionManager {
     items.push(switchAction("autoPaste"));
     items.push(switchAction("autoFormat"));
     items.push(switchAction("autoPurify"));
-    items.push(switchAction("detectLanguage"));
     items.push(switchAction("incrementalCopy"));
     items.push(switchAction("smartTranslate"));
     items.push(switchAction("autoHide"));
@@ -385,7 +360,7 @@ class ActionManager {
 
   getKeys(routeName: RouteName): Array<Identifier> {
     let contain: Array<Identifier> = [];
-    const controller = <Controller>(<any>global).controller;
+    const controller = this.controller;
     const keys: Array<Identifier> = Array.from(this.actions.keys());
     switch (routeName) {
       case "AllActions":
@@ -401,20 +376,16 @@ class ActionManager {
         contain = controller.get("trayMenu");
         break;
       case "Options":
-        contain = keys.filter(x => this.getAction(x).type == "submenu");
+        contain = keys.filter(x => this.getAction(x).actionType === "submenu");
         break;
       case "Switches":
-        contain = keys.filter(x => {
-          this.getAction(x).type == "checkbox";
-        });
+        contain = keys.filter(x => this.getAction(x).actionType === "checkbox");
         break;
       case "FocusText":
         contain = ["copyResult", "copySource", "copy", "paste", "cut", "clear"];
         break;
       case "MenuDrag":
-        contain = keys.filter(
-          x => this.getAction(x).actionType != ActionType.constant
-        );
+        contain = keys.filter(x => this.getAction(x).actionType !== "constant");
     }
     return contain;
   }
@@ -439,7 +410,9 @@ class ActionManager {
   loadGlobalShortcuts() {
     this.shortcuts = defaultShortcuts;
     try {
-      this.shortcuts = JSON.parse(fs.readFileSync(envConfig.shortcut, "utf-8"));
+      this.shortcuts = objToMap(
+        JSON.parse(fs.readFileSync(envConfig.shortcut, "utf-8"))
+      );
     } catch (e) {
       fs.writeFileSync(
         envConfig.shortcut,
@@ -451,8 +424,8 @@ class ActionManager {
   loadLocalShortcuts() {
     this.localShortcuts = defaultLocalShortcuts;
     try {
-      this.localShortcuts = JSON.parse(
-        fs.readFileSync(envConfig.localShortcut, "utf-8")
+      this.localShortcuts = objToMap(
+        JSON.parse(fs.readFileSync(envConfig.localShortcut, "utf-8"))
       );
     } catch (e) {
       fs.writeFileSync(
@@ -463,15 +436,12 @@ class ActionManager {
   }
 
   register() {
-    Array.from(this.shortcuts.keys()).forEach(key => {
+    for (const [key, accelerator] of this.shortcuts) {
       const action = this.getAction(key);
       if (action) {
-        globalShortcut.register(
-          <Identifier>this.shortcuts.get(key),
-          <Function>action.click
-        );
+        globalShortcut.register(accelerator, <Function>action.click);
       }
-    });
+    }
   }
 
   unregister() {

@@ -1,6 +1,11 @@
 <template>
   <div v-if="action">
-    <el-tooltip effect="light" :content="action.tooltip" placement="top-start" :open-delay="1000">
+    <el-tooltip
+      effect="light"
+      :content="action.tooltip"
+      placement="top-start"
+      :open-delay="1000"
+    >
       <el-switch
         v-if="action.type === 'checkbox'"
         v-model="checked"
@@ -8,9 +13,14 @@
         @change="setValue()"
       ></el-switch>
       <div v-else-if="action.type === 'submenu'">
-        <p>{{ $t(actionId) }}</p>
+        <p>{{ $t(identifier) }}</p>
         <el-select v-model="enumValue">
-          <el-option v-for="item in enums" :key="item.id" :label="item.label" :value="item.id"></el-option>
+          <el-option
+            v-for="item in enums"
+            :key="item.id"
+            :label="item.label"
+            :value="item.id"
+          ></el-option>
         </el-select>
       </div>
     </el-tooltip>
@@ -24,7 +34,7 @@ import { MessageType, WinOpt } from "../tools/enums";
 
 export default {
   name: "Action",
-  props: ["actionId"],
+  props: ["identifier"],
   data: function() {
     return {
       action: undefined,
@@ -43,12 +53,12 @@ export default {
   },
   methods: {
     setValue() {
-      this.$controller.set(this.actionId, this.checked, true, false);
+      this.$controller.set(this.identifier, this.checked, true, false);
     },
     sync() {
-      this.action = this.$controller.action.actions[this.actionId];
-      const value = this.$controller.config.values[this.actionId];
-      switch (this.action.type) {
+      this.action = this.$controller.action.getAction(this.identifier);
+      const value = this.$controller.config.get(this.identifier);
+      switch (this.action.actionType) {
         case "checkbox":
           this.checked = value;
           break;
@@ -59,20 +69,20 @@ export default {
             this.enums = this.action.submenu;
           }
           this.enumValue = compose([
-            this.actionId,
+            this.identifier,
             typeof value == "string" ? value : value.toString()
           ]);
           break;
-      }
-      if (this.action.actionType == "constant") {
-        this.value = value;
+        case "constant":
+          this.value = value;
+          break;
       }
     }
   },
   mounted() {
     ipc.on(MessageType.WindowOpt.toString(), (event, arg) => {
       if (arg.type === WinOpt.Refresh) {
-        if (!arg.args || arg.args === this.actionId) {
+        if (!arg.args || arg.args === this.identifier) {
           this.sync();
         }
       }

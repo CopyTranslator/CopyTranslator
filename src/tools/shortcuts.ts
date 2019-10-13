@@ -6,7 +6,7 @@ interface Shortcut {
   id: Identifier;
 }
 
-type Shortcuts = Map<Identifier, Accelerator>;
+export type Shortcuts = Map<Identifier, Accelerator>;
 
 const defaultShortcuts: Shortcuts = new Map([
   ["focusMode", "Shift+F1"],
@@ -25,4 +25,4 @@ const defaultLocalShortcuts: Shortcuts = new Map([
   ["quit", "Cmd+Q"]
 ]);
 
-export { Shortcut, defaultShortcuts, Shortcuts, defaultLocalShortcuts };
+export { Shortcut, defaultShortcuts, defaultLocalShortcuts };

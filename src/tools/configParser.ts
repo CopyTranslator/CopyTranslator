@@ -25,9 +25,6 @@ class ConfigParser {
     return this.values.get(key);
   }
 
-  getTooltip(key: Identifier) {
-    return this.getRule(key).msg;
-  }
   set(key: Identifier, value: any) {
     let check = this.getRule(key).check;
     if (check && !check(value)) {
@@ -35,6 +32,10 @@ class ConfigParser {
     } else {
       this.values.set(key, value);
     }
+  }
+
+  getTooltip(key: Identifier) {
+    return this.getRule(key).msg;
   }
 
   loadValues(fileName: string): boolean {

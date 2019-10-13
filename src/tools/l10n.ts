@@ -18,7 +18,7 @@ class L10N {
     try {
       locale = JSON.parse(fs.readFileSync(this.resources[key]));
     } catch (e) {
-      console.log(`load ${this.resources[key]} fail`);
+      console.log(`load locale ${this.resources[key]} fail`);
     }
     function T(key: string) {
       if ((<any>locale)[key]) {
@@ -27,7 +27,6 @@ class L10N {
         return (<any>en)[key];
       }
     }
-
     return T;
   }
 
@@ -48,7 +47,6 @@ class L10N {
     let resources: Resources = {};
     localeDirs.forEach((localeDir: string) => {
       fs.readdirSync(localeDir).forEach((fileName: string) => {
-        console.log(fileName);
         resources[fileName.replace(".json", "")] = path.join(
           localeDir,
           fileName

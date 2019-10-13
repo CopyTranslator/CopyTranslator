@@ -7,12 +7,14 @@ import {
 } from "electron";
 import { RuleName } from "./rule";
 import { ConfigParser, getEnumValue as r } from "./configParser";
+import { Language } from "@opentranslate/languages";
 //r can be used to transform a enum to string
 import { envConfig } from "./envConfig";
 import { HideDirection } from "./enums";
 import { translatorTypes } from "./translators";
 import { defaultShortcuts, defaultLocalShortcuts } from "./shortcuts";
 import { Controller } from "../core/controller";
+import { getLanguageLocales } from "./translators/locale";
 
 const fs = require("fs");
 
@@ -134,11 +136,20 @@ class ActionManager {
     this.loadLocalShortcuts();
     this.registerLocalShortcuts();
   }
-
+  update() {
+    const refresh = this.getRefreshFunc();
+    for (const key in this.actions) {
+      this.actions[key] = refresh(key, this.actions[key]);
+    }
+  }
   getRefreshFunc() {
     const controller = <Controller>(<any>global).controller;
     let config = controller.config;
     const t = controller.getT();
+    const l = getLanguageLocales(<Language>(
+      controller.get(RuleName.localeSetting)
+    ));
+
     function refreshSingle(key: string, action: Action): Action {
       action.label = t(key);
       if (action.role) {
@@ -157,6 +168,9 @@ class ActionManager {
         for (const key2 in action.submenu) {
           const param = decompose(action.submenu[key2].id)[1].toString();
           action.submenu[key2].checked = param == value;
+          if (key === "sourceLanguage" || key === "targetLanguage") {
+            action.submenu[key2].label = l[<Language>action.submenu[key2].id];
+          }
         }
       }
       return action;
@@ -166,6 +180,7 @@ class ActionManager {
 
   getActions(config: ConfigParser, callback: Function): Actions {
     let items: Array<Action> = [];
+    const l = getLanguageLocales(<Language>config.values["localeSetting"]);
     //普通的按钮，执行一项操作
     function normalAction(id: string) {
       return ActionWrapper(
@@ -294,7 +309,7 @@ class ActionManager {
             return ActionWrapper(
               {
                 id: compose([id, e]),
-                label: e,
+                label: l[<Language>e],
                 type: MenuItemType.checkbox
               },
               callback

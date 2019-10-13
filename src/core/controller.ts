@@ -408,6 +408,9 @@ class Controller {
     this.setCurrentColor();
     if (ruleName == RuleName.localeSetting) {
       this.win.sendMsg(MessageType.UpdateT.toString(), null);
+      // if (this.config) {
+      //   this.action.update();
+      // }
     }
     if (save) {
       this.config.saveValues(envConfig.configPath);

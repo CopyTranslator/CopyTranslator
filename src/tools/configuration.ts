@@ -138,7 +138,7 @@ function initConfig(
   });
 
   config.addRule(RuleName.localeSetting, {
-    predefined: "zh-cn",
+    predefined: "zh-CN",
     msg: "localeSetting setting"
   });
 

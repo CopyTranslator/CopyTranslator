@@ -23,9 +23,17 @@ export default {
     return {
       config: undefined,
       locale: undefined,
-      locales: this.$controller.locales.getLocales(),
-      actionKeys: this.$controller.action.getKeys("Options")
+      locales: [],
+      actionKeys: []
     };
+  },
+  mounted: function() {
+    this.$proxy.getLocales().then(res => {
+      this.locales = locales;
+    });
+    this.$proxy.getKeys("Options").then(res => {
+      this.actionKeys = res;
+    });
   },
   components: {
     Action

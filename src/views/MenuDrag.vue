@@ -41,8 +41,13 @@ export default {
   data() {
     return {
       selections: [],
-      candidates: this.$controller.action.getKeys("MenuDrag").sort()
+      candidates: []
     };
+  },
+  mounted: function() {
+    this.$proxy.getKeys("MenuDrag").then(res => {
+      this.candidates = res.sort();
+    });
   },
   methods: {
     log: function(evt) {

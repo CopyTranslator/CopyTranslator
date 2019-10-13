@@ -1,6 +1,5 @@
 import { BrowserWindow, ipcMain as ipc, screen } from "electron";
 import { MessageType, WinOpt } from "./enums";
-import { RuleName } from "./rule";
 import { Controller } from "../core/controller";
 const ioHook = require("iohook");
 import simulate from "./simulate";
@@ -27,7 +26,7 @@ class WindowController {
           currentWindow.close();
           break;
         case WinOpt.Minify:
-          controller.win.edgeHide(controller.get(RuleName.hideDirect));
+          controller.win.edgeHide(controller.get("hideDirect"));
           break;
         case WinOpt.Resize:
           var bounds = currentWindow.getBounds();

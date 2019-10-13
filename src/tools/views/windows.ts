@@ -8,7 +8,7 @@ import {
   Menu
 } from "electron";
 import { ColorStatus, HideDirection, MessageType, WinOpt } from "../enums";
-import { ModeConfig, RuleName } from "../rule";
+import { ModeConfig } from "../rule";
 import { envConfig } from "../envConfig";
 import { RouteName } from "../action";
 import { Controller } from "../../core/controller";
@@ -16,7 +16,7 @@ import { loadRoute, insertStyles } from ".";
 
 export class WindowWrapper {
   window: BrowserWindow | undefined = undefined;
-  stored: string = RouteName.Focus;
+  stored: string = "Focus";
 
   sendMsg(type: string, msg: any) {
     if (this.window) this.window.webContents.send(type, msg);
@@ -37,14 +37,11 @@ export class WindowWrapper {
     if (this.window) {
       this.window.focus();
       this.window.webContents.send(MessageType.Router.toString(), routeName);
-      (<Controller>(<any>global).controller).setByKeyValue(
-        "frameMode",
-        routeName
-      );
+      (<Controller>(<any>global).controller).set("frameMode", routeName);
     }
   }
 
-  load(routerName: RouteName = RouteName.Focus) {
+  load(routerName: RouteName = "Focus") {
     if (!this.window) return;
     this.winOpt(WinOpt.SaveMode);
     loadRoute(this.window, routerName, true);
@@ -65,7 +62,7 @@ export class WindowWrapper {
   }
 
   onEdge() {
-    if (!(<Controller>(<any>global).controller).get(RuleName.autoHide)) {
+    if (!(<Controller>(<any>global).controller).get("autoHide")) {
       return HideDirection.None;
     }
     let { x, y, width } = this.getBound();
@@ -166,14 +163,14 @@ export class WindowWrapper {
     let param: ModeConfig | undefined;
     const controller = <Controller>(<any>global).controller;
     switch (routeName) {
-      case RouteName.Focus:
-        param = controller.get(RuleName.focus);
+      case "Focus":
+        param = controller.get("focus");
         break;
-      case RouteName.Contrast:
-        param = controller.get(RuleName.contrast);
+      case "Contrast":
+        param = controller.get("contrast");
         break;
-      case RouteName.Settings:
-        param = controller.get(RuleName.settingsConfig);
+      case "Settings":
+        param = controller.get("settingsConfig");
         break;
       default:
         break;
@@ -192,7 +189,7 @@ export class WindowWrapper {
     this.window.on("closed", () => {
       this.window = undefined;
     });
-    this.setSkipTaskbar(controller.get(RuleName.skipTaskbar));
+    this.setSkipTaskbar(controller.get("skipTaskbar"));
   }
 
   setSkipTaskbar(value: boolean) {
@@ -218,7 +215,7 @@ export class WindowWrapper {
     if (this.window) {
       this.window.setBounds(Object.assign(this.getBound(), param));
       this.window.setAlwaysOnTop(
-        (<Controller>(<any>global).controller).get(RuleName.stayTop)
+        (<Controller>(<any>global).controller).get("stayTop")
       );
     }
   }

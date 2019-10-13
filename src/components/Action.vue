@@ -1,11 +1,6 @@
 <template>
   <div v-if="action">
-    <el-tooltip
-      effect="light"
-      :content="action.tooltip"
-      placement="top-start"
-      :open-delay="1000"
-    >
+    <el-tooltip effect="light" :content="action.tooltip" placement="top-start" :open-delay="1000">
       <el-switch
         v-if="action.type === 'checkbox'"
         v-model="checked"
@@ -15,12 +10,7 @@
       <div v-else-if="action.type === 'submenu'">
         <p>{{ $t(actionId) }}</p>
         <el-select v-model="enumValue">
-          <el-option
-            v-for="item in enums"
-            :key="item.id"
-            :label="item.label"
-            :value="item.id"
-          ></el-option>
+          <el-option v-for="item in enums" :key="item.id" :label="item.label" :value="item.id"></el-option>
         </el-select>
       </div>
     </el-tooltip>
@@ -53,7 +43,7 @@ export default {
   },
   methods: {
     setValue() {
-      this.$controller.setByKeyValue(this.actionId, this.checked, true, false);
+      this.$controller.set(this.actionId, this.checked, true, false);
     },
     sync() {
       this.action = this.$controller.action.actions[this.actionId];

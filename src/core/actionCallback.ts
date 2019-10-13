@@ -6,6 +6,7 @@ import { constants, version } from "../core/constant";
 import { Controller } from "../core/controller";
 import { decompose } from "../tools/action";
 import { showSettings } from "../tools/views";
+import { Identifier } from "@/tools/identifier";
 
 const clipboard = require("electron-clipboard-extended");
 
@@ -16,14 +17,14 @@ function handleActions(
   event: Event | undefined = undefined
 ) {
   const params = decompose(id);
-  id = params[0];
+  const identifier = <Identifier>params[0];
   const param = params[1];
-  if (ruleKeys.includes(id)) {
+  if (ruleKeys.includes(identifier)) {
     const controller = <Controller>(<any>global).controller;
     if (param) {
       //设置 枚举值的 action
       const intVal = parseInt(param);
-      controller.setByKeyValue(id, Number.isNaN(intVal) ? param : intVal);
+      controller.set(identifier, Number.isNaN(intVal) ? param : intVal);
       return;
     }
     if (menuItem) {
@@ -31,9 +32,9 @@ function handleActions(
       if ((<any>menuItem).type === "submenu") {
         return;
       }
-      controller.setByKeyValue(id, menuItem.checked);
+      controller.set(identifier, menuItem.checked);
     } else {
-      controller.switchValue(id);
+      controller.switchValue(identifier);
     }
   } else {
     //处理普通动作

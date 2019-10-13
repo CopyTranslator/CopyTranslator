@@ -1,63 +1,20 @@
 import { en } from "./locales";
 import { roles, RouteName } from "./action";
 import { Controller } from "../core/controller";
+import { Identifier, identifiers } from "./identifier";
 import keyBy from "lodash.keyby";
 //前面三个是不能交换顺序的，会出问题
-enum RuleName {
-  autoCopy = 1,
-  incrementalCopy = 2,
-  autoPaste = 4,
-  listenClipboard,
-  detectLanguage,
-  stayTop,
-  smartTranslate,
-  smartDict,
-  autoHide,
-  autoFormat,
-  autoShow,
-  dragCopy,
-  enableNotify,
-  autoPurify,
-  skipTaskbar,
-  //enum rule
-  frameMode,
-  translatorType,
-  hideDirect,
-  // mode config
-  focus,
-  contrast,
-  settingsConfig,
-  //groups
-  contrastMenu,
-  focusMenu,
-  trayMenu,
-  contrastOption,
-  //
-  sourceLanguage,
-  targetLanguage,
-  localeSetting,
-  notices,
-  //以下为用户手动设置常量
-  APP_ID,
-  API_KEY,
-  SECRET_KEY
+
+export const colorRules = new Map<Identifier, number>([
+  ["autoCopy", 1],
+  ["incrementalCopy", 2],
+  ["autoPaste", 4]
+]);
+export function getColorRule(key: Identifier) {
+  return <number>colorRules.get(key);
 }
 
-export const colorRules: RuleName[] = [
-  RuleName.autoCopy,
-  RuleName.incrementalCopy,
-  RuleName.autoPaste
-];
-//是数字列表
-const ruleValues: Array<number> = Object.values(RuleName).filter(
-  (k): k is number => typeof k == "number"
-);
-
-const reverseRuleName = keyBy(ruleValues, function(o: number) {
-  return RuleName[o];
-});
-
-const ruleKeys = Object.keys(reverseRuleName);
+const ruleKeys = identifiers;
 
 interface ModeConfig {
   x: number;
@@ -162,8 +119,6 @@ export {
   ModeRule,
   BoolRule,
   CheckFuction,
-  RuleName,
-  reverseRuleName,
   ruleKeys,
   ModeConfig,
   GroupRule,

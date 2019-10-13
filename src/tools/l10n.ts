@@ -1,31 +1,25 @@
 const fs = require("fs");
 const path = require("path");
 import { envConfig } from "./envConfig";
+import { Identifier, objToMap } from "./identifier";
 import { en, Locale } from "./locales";
-
-type Resource = { [key: string]: string };
-type Resources = { [key: string]: Resource };
-
+type Resouces = { [string: string]: string };
 class L10N {
-  resources: Resources;
+  resources: Resouces;
 
-  constructor(initValue: { resources: Resources }) {
+  constructor(initValue: { resources: Resouces }) {
     this.resources = initValue.resources;
   }
 
   getT(key: string = "en") {
     let locale: Locale = en;
     try {
-      locale = JSON.parse(fs.readFileSync(this.resources[key]));
+      locale = objToMap(JSON.parse(fs.readFileSync(this.resources[key])));
     } catch (e) {
       console.log(`load locale ${this.resources[key]} fail`);
     }
-    function T(key: string) {
-      if ((<any>locale)[key]) {
-        return (<any>locale)[key];
-      } else {
-        return (<any>en)[key];
-      }
+    function T(key: Identifier): string {
+      return locale.get(key) || <string>en.get(key);
     }
     return T;
   }
@@ -34,7 +28,9 @@ class L10N {
     let locales = [];
     for (let key in this.resources) {
       try {
-        const locale = JSON.parse(fs.readFileSync(this.resources[key]));
+        const locale: { [key: string]: string } = JSON.parse(
+          fs.readFileSync(this.resources[key])
+        );
         locales.push({ short: key, localeName: locale.localeName });
       } catch (e) {
         console.log(`load ${this.resources[key]} fail`);
@@ -44,7 +40,7 @@ class L10N {
   }
 
   static loadLocales(localeDirs: Array<string>) {
-    let resources: Resources = {};
+    let resources: Resouces = {};
     localeDirs.forEach((localeDir: string) => {
       fs.readdirSync(localeDir).forEach((fileName: string) => {
         resources[fileName.replace(".json", "")] = path.join(

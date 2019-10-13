@@ -63,6 +63,6 @@ export function showSettings() {
     show: true,
     icon: nativeImage.createFromPath(envConfig.iconPath)
   });
-  loadRoute(window, RouteName.Settings);
+  loadRoute(window, "Settings");
   insertStyles(window);
 }

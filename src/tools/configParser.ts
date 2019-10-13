@@ -1,79 +1,48 @@
-import { Rule, RuleName, ruleKeys } from "./rule";
-
+import { Rule, ruleKeys } from "./rule";
+import { Identifier } from "./identifier";
 var fs = require("fs");
 
-type Rules = { [key: string]: Rule }; //类型别名
-function getEnumValue(key: RuleName): string {
-  return RuleName[key];
-}
+type Rules = Map<Identifier, Rule>; //类型别名
 
 class ConfigParser {
-  rules: Rules = {};
-  values: { [key: string]: any } = {};
-  defaultValues: { [key: string]: any } = {};
+  rules: Rules = new Map<Identifier, Rule>();
+  values: Map<Identifier, any> = new Map<Identifier, any>();
+  defaultValues: Map<Identifier, any> = new Map<Identifier, any>();
 
   constructor() {}
 
-  addRule(key: RuleName, rule: Rule) {
-    let keyValue = getEnumValue(key);
-    // if (rule.check && !rule.check(rule.predefined)) {
-    //   throw "Rule " + keyValue + " is invald!";
-    // }
-    this.rules[keyValue] = rule;
-    this.values[keyValue] = rule.predefined;
-    this.defaultValues[keyValue] = rule.predefined;
+  addRule(key: Identifier, rule: Rule) {
+    this.rules.set(key, rule);
+    this.values.set(key, rule.predefined);
+    this.defaultValues.set(key, rule.predefined);
   }
 
-  getValues() {
-    return Object.assign({}, this.values);
+  getRule(key: Identifier): Rule {
+    return <Rule>this.rules.get(key);
   }
 
-  get(key: RuleName) {
-    return this.values[getEnumValue(key)];
+  get(key: Identifier) {
+    return this.values.get(key);
   }
 
-  get_tooltip(key: RuleName) {
-    return this.rules[getEnumValue(key)].msg;
+  getTooltip(key: Identifier) {
+    return this.getRule(key).msg;
   }
-
-  set(key: RuleName, value: any) {
-    let keyValue = getEnumValue(key);
-
-    let check = this.rules[keyValue].check;
+  set(key: Identifier, value: any) {
+    let check = this.getRule(key).check;
     if (check && !check(value)) {
       throw `${key} check fail`;
     } else {
-      this.values[keyValue] = value;
-    }
-  }
-
-  setByKeyValue(keyValue: string, value: any): boolean | undefined {
-    if (!ruleKeys.includes(keyValue)) {
-      return false;
-    }
-
-    let check = this.rules[keyValue].check;
-    if (check && !check(value)) {
-      return false;
-    } else {
-      if (
-        this.rules[keyValue].predefined instanceof Object &&
-        !Array.isArray(this.rules[keyValue].predefined)
-      ) {
-        this.values[keyValue] = Object.assign(this.values[keyValue], value);
-      } else {
-        this.values[keyValue] = value;
-      }
-      return true;
+      this.values.set(key, value);
     }
   }
 
   loadValues(fileName: string): boolean {
     try {
       let values = JSON.parse(fs.readFileSync(fileName));
-      ruleKeys.forEach(keyValue => {
-        if (values[keyValue] != undefined) {
-          this.setByKeyValue(keyValue, values[keyValue]);
+      ruleKeys.forEach(key => {
+        if (values[key] != undefined) {
+          this.set(key, values[key]);
         }
       });
       this.saveValues(fileName);
@@ -94,4 +63,4 @@ class ConfigParser {
   }
 }
 
-export { ConfigParser, getEnumValue };
+export { ConfigParser };

@@ -58,7 +58,7 @@ export default {
   components: { DictResult, ControlButton },
   data: function() {
     return {
-      size: this.$controller.get(RuleName.focus).fontSize,
+      size: this.$controller.get("focus").fontSize,
       routeName: "focus",
       cmd: "",
       activeEngines: ["Baidu"],

@@ -1,15 +1,15 @@
 const fs = require("fs");
 const path = require("path");
 import { en, zh_cn, Locale } from "./tools/locales";
-
-type Resources = { [key: string]: Locale };
+import { mapToObj, objToMap } from "./tools/identifier";
+import { Language } from "@opentranslate/languages";
 
 const localeDir = path.join(process.cwd(), "dist_locales");
 // prettier-ignore
-let resources: Resources = {
-  'en': en,
-  'zh-CN': zh_cn
-};
+let resources=new Map<Language,Locale>([
+  ['en', en],
+  ['zh-CN',zh_cn]
+]);
 
 function mkdir(dir: string) {
   if (!fs.existsSync(dir)) {
@@ -17,30 +17,27 @@ function mkdir(dir: string) {
   }
 }
 
-function generateLocales(
-  locales: { [key: string]: Locale },
-  localeDir: string
-) {
+function generateLocales(resources: Map<Language, Locale>, localeDir: string) {
   mkdir(localeDir);
-  for (let key in locales) {
+  for (let key of resources.keys()) {
     fs.writeFileSync(
       path.join(localeDir, key + ".json"),
-      JSON.stringify(locales[key], null, 4)
+      JSON.stringify(mapToObj(<Locale>resources.get(key)), null, 4)
     );
   }
 }
-
+const keys = Array.from(resources.keys());
 fs.readdirSync(localeDir)
-  .filter(
-    (e: string) => !Object.keys(resources).includes(e.replace(".json", ""))
-  )
+  .filter((e: string) => !keys.includes(<Language>e.replace(".json", "")))
   .forEach((fileName: string) => {
     const name = fileName.replace(".json", "");
-    let locale = JSON.parse(fs.readFileSync(path.join(localeDir, fileName)));
-    for (const key in en) {
-      locale[key] = locale[key] ? locale[key] : (<any>en)[key];
+    let locale = objToMap<string>(
+      JSON.parse(fs.readFileSync(path.join(localeDir, fileName)))
+    );
+    for (const key of en.keys()) {
+      locale.set(key, locale.get(key) || <string>en.get(key));
     }
-    resources[name] = locale;
+    resources.set(<Language>name, locale);
   });
 
 generateLocales(resources, localeDir);

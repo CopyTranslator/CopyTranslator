@@ -2,14 +2,14 @@ import { createTranslator } from "../tools/translators";
 import { Translator, TranslateResult } from "@opentranslate/translator";
 import { isValid } from "../tools/translators/helper";
 import { initConfig } from "../tools/configuration";
-import { ConfigParser, getEnumValue } from "../tools/configParser";
+import { ConfigParser } from "../tools/configParser";
 import { ColorStatus, MessageType, WinOpt } from "../tools/enums";
 import { WindowWrapper } from "../tools/views/windows";
 import { windowController } from "../tools/windowController";
 import simulate from "../tools/simulate";
 import { envConfig } from "../tools/envConfig";
 import { l10n, L10N } from "../tools/l10n";
-import { reverseRuleName, RuleName, colorRules } from "../tools/rule";
+import { colorRules, getColorRule } from "../tools/rule";
 import { normalizeAppend } from "./stringProcessor";
 import { app, Rectangle } from "electron";
 import { ActionManager } from "../tools/action";
@@ -18,6 +18,7 @@ import { handleActions } from "./actionCallback";
 import { checkNotice } from "../tools/checker";
 import { checkForUpdates } from "../tools/views/update";
 import { recognizer } from "../tools/ocr";
+import { Identifier } from "@/tools/identifier";
 
 const clipboard = require("electron-clipboard-extended");
 
@@ -45,7 +46,7 @@ class Controller {
 
   createWindow() {
     this.tray.init();
-    this.win.createWindow(this.get(RuleName.frameMode));
+    this.win.createWindow(this.get("frameMode"));
     windowController.bind();
     this.action.init();
     recognizer.setUp();
@@ -69,13 +70,13 @@ class Controller {
   }
 
   setSrc(append: string) {
-    if (this.get(RuleName.incrementalCopy) && this.src != "")
+    if (this.get("incrementalCopy") && this.src != "")
       this.src = this.src + " " + append;
     else this.src = append;
   }
 
-  get(ruleName: RuleName) {
-    return this.config.values[getEnumValue(ruleName)];
+  get(identifier: Identifier) {
+    return this.config.get(identifier);
   }
 
   resotreDefaultSetting() {
@@ -96,7 +97,7 @@ class Controller {
     if (!this.checkLength(originalText)) {
       return;
     }
-    let text = normalizeAppend(originalText, this.get(RuleName.autoPurify));
+    let text = normalizeAppend(originalText, this.get("autoPurify"));
     if (this.checkValid(text)) {
       this.doTranslate(text);
     }
@@ -107,12 +108,12 @@ class Controller {
       if (clear) {
         this.clear();
       }
-      this.doTranslate(normalizeAppend(text, this.get(RuleName.autoPurify)));
+      this.doTranslate(normalizeAppend(text, this.get("autoPurify")));
     }
   }
 
   getT() {
-    return this.locales.getT(this.config.get(RuleName.localeSetting));
+    return this.locales.getT(this.config.get("localeSetting"));
   }
 
   onError(msg: string) {
@@ -135,8 +136,8 @@ class Controller {
           result: this.result,
           source: language.source,
           target: language.target,
-          engine: this.get(RuleName.translatorType),
-          notify: this.get(RuleName.enableNotify)
+          engine: this.get("translatorType"),
+          notify: this.get("enableNotify")
         },
         extra
       )
@@ -165,20 +166,18 @@ class Controller {
   }
 
   postProcess(language: any, result: TranslateResult) {
-    if (this.get(RuleName.autoCopy)) {
+    if (this.get("autoCopy")) {
       clipboard.writeText(this.result);
-      if (this.get(RuleName.autoPaste)) {
+      if (this.get("autoPaste")) {
         simulate.paste();
       }
-    } else if (this.get(RuleName.autoFormat)) {
+    } else if (this.get("autoFormat")) {
       clipboard.writeText(this.src);
     }
     this.setCurrentColor();
-    if (this.get(RuleName.autoShow)) {
+    if (this.get("autoShow")) {
       this.win.edgeShow();
-      this.win.show(
-        !(this.get(RuleName.autoCopy) && this.get(RuleName.autoPaste))
-      );
+      this.win.show(!(this.get("autoCopy") && this.get("autoPaste")));
     }
     this.res = result;
     this.sync(language);
@@ -186,11 +185,11 @@ class Controller {
 
   getOptions() {
     let realOptions = 0;
-    colorRules.forEach(ruleName => {
-      if (this.get(ruleName)) {
-        realOptions |= ruleName;
+    for (let item of colorRules.entries()) {
+      if (this.get(item[0])) {
+        realOptions |= item[1];
       }
-    });
+    }
     return realOptions;
   }
 
@@ -199,25 +198,28 @@ class Controller {
       this.win.switchColor(ColorStatus.Fail);
       return;
     }
-    if (!this.get(RuleName.listenClipboard)) {
+    if (!this.get("listenClipboard")) {
       this.win.switchColor(ColorStatus.None);
       return;
     }
     const options = this.getOptions();
+    const incrementalCopy = getColorRule("incrementalCopy");
+    const autoCopy = getColorRule("autoCopy");
+    const autoPaste = getColorRule("autoPaste");
     switch (options) {
-      case RuleName.incrementalCopy | RuleName.autoCopy | RuleName.autoPaste:
+      case incrementalCopy | autoCopy | autoPaste:
         this.win.switchColor(ColorStatus.IncrementalCopyPaste);
         return;
-      case RuleName.incrementalCopy | RuleName.autoCopy:
+      case incrementalCopy | autoCopy:
         this.win.switchColor(ColorStatus.IncrementalCopy);
         return;
-      case RuleName.incrementalCopy:
+      case incrementalCopy:
         this.win.switchColor(ColorStatus.Incremental);
         return;
-      case RuleName.autoCopy | RuleName.autoPaste:
+      case autoCopy | autoPaste:
         this.win.switchColor(ColorStatus.AutoPaste);
         return;
-      case RuleName.autoCopy:
+      case autoCopy:
         this.win.switchColor(ColorStatus.AutoCopy);
         return;
     }
@@ -241,7 +243,7 @@ class Controller {
     }
 
     if (src_lang == dest_lang) {
-      if (this.get(RuleName.smartTranslate)) {
+      if (this.get("smartTranslate")) {
         dest_lang = should_src;
       }
     }
@@ -259,9 +261,9 @@ class Controller {
   }
 
   setUpRecognizer(APP_ID: string, API_KEY: string, SECRET_KEY: string) {
-    this.setByRuleName(RuleName.APP_ID, APP_ID, true, false);
-    this.setByRuleName(RuleName.API_KEY, API_KEY, true, false);
-    this.setByRuleName(RuleName.SECRET_KEY, SECRET_KEY, true, false);
+    this.set("APP_ID", APP_ID, true, false);
+    this.set("API_KEY", API_KEY, true, false);
+    this.set("SECRET_KEY", SECRET_KEY, true, false);
     recognizer.setUp(true);
   }
 
@@ -282,7 +284,7 @@ class Controller {
         if (res) {
           const resultString = normalizeAppend(
             res.trans.paragraphs[0],
-            this.get(RuleName.autoPurify)
+            this.get("autoPurify")
           );
           this.result = resultString;
           this.postProcess(language, res);
@@ -299,11 +301,11 @@ class Controller {
   }
 
   source() {
-    return this.get(RuleName.sourceLanguage);
+    return this.get("sourceLanguage");
   }
 
   target() {
-    return this.get(RuleName.targetLanguage);
+    return this.get("targetLanguage");
   }
 
   // OCR 相关
@@ -330,83 +332,78 @@ class Controller {
     }
   }
 
-  saveWindow(routeName: string, bound: Rectangle, fontSize: number) {
-    this.setByKeyValue(
+  saveWindow(routeName: Identifier, bound: Rectangle, fontSize: number) {
+    this.set(
       routeName,
-      Object.assign(this.config.values[routeName], bound, {
+      Object.assign(this.get(routeName), bound, {
         fontSize: fontSize
       })
     );
   }
 
-  restoreWindow(routeName: string | undefined) {
-    if (routeName) this.win.restore(this.config.values[routeName]);
+  restoreWindow(routeName: Identifier | undefined) {
+    if (routeName) this.win.restore(this.get(routeName));
   }
 
   restoreFromConfig() {
-    for (let keyValue in this.config.values) {
-      this.setByKeyValue(keyValue, this.config.values[keyValue], false);
+    for (let key of this.config.values.keys()) {
+      this.set(key, this.get(key), false);
     }
   }
 
-  switchValue(ruleKey: string) {
-    this.setByKeyValue(ruleKey, !this.config.values[ruleKey]);
+  switchValue(identifier: Identifier) {
+    this.set(identifier, !this.get(identifier));
   }
 
   refresh(ruleKey: string | null = null) {
     this.win.winOpt(WinOpt.Refresh, ruleKey);
   }
 
-  setByRuleName(ruleName: RuleName, value: any, save = true, refresh = true) {
-    switch (ruleName) {
-      case RuleName.listenClipboard:
+  set(identifier: Identifier, value: any, save = true, refresh = true) {
+    switch (identifier) {
+      case "listenClipboard":
         this.setWatch(value);
         break;
-      case RuleName.stayTop:
+      case "stayTop":
         if (this.win.window) {
           this.win.window.focus();
           this.win.window.setAlwaysOnTop(value);
         }
         break;
-      case RuleName.skipTaskbar:
+      case "skipTaskbar":
         this.win.setSkipTaskbar(value);
         break;
-      case RuleName.incrementalCopy:
+      case "incrementalCopy":
         this.clear();
         break;
-      case RuleName.autoFormat:
+      case "autoFormat":
         if (value) {
-          this.setByRuleName(RuleName.autoCopy, false, save, refresh);
+          this.set("autoCopy", false, save, refresh);
         }
         break;
-      case RuleName.autoCopy:
+      case "autoCopy":
         if (value) {
-          this.setByKeyValue(
-            getEnumValue(RuleName.autoFormat),
-            false,
-            save,
-            refresh
-          );
+          this.set("autoFormat", false, save, refresh);
         }
         break;
-      case RuleName.dragCopy:
+      case "dragCopy":
         windowController.dragCopy = value;
         break;
-      case RuleName.translatorType:
+      case "translatorType":
         this.translator = createTranslator(value);
         if (!isValid(this.translator, this.source())) {
-          this.setByRuleName(RuleName.sourceLanguage, "en", save, refresh);
+          this.set("sourceLanguage", "en", save, refresh);
         }
         if (!isValid(this.translator, this.target())) {
-          this.setByRuleName(RuleName.targetLanguage, "zh-CN", save, refresh);
+          this.set("targetLanguage", "zh-CN", save, refresh);
         }
         this.doTranslate(this.src);
         break;
     }
 
-    this.config.set(ruleName, value);
+    this.config.set(identifier, value);
     this.setCurrentColor();
-    if (ruleName == RuleName.localeSetting) {
+    if (identifier == "localeSetting") {
       this.win.sendMsg(MessageType.UpdateT.toString(), null);
       // if (this.config) {
       //   this.action.update();
@@ -416,17 +413,12 @@ class Controller {
       this.config.saveValues(envConfig.configPath);
       if (refresh) {
         this.refresh();
-      } else if (ruleName == RuleName.autoFormat) {
+      } else if (identifier == "autoFormat") {
         this.refresh("autoCopy");
-      } else if (ruleName == RuleName.autoCopy) {
+      } else if (identifier == "autoCopy") {
         this.refresh("autoPurify");
       }
     }
-  }
-
-  setByKeyValue(ruleKey: string, value: any, save = true, refresh = true) {
-    let ruleValue = reverseRuleName[ruleKey];
-    this.setByRuleName(ruleValue, value, save, refresh);
   }
 }
 

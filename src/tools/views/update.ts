@@ -37,7 +37,7 @@ function bindUpdateEvents() {
       parent: current_win.window,
       icon: nativeImage.createFromPath(envConfig.iconPath)
     });
-    loadRoute(window, RouteName.Update);
+    loadRoute(window, "Update");
     insertStyles(window);
     window.webContents.on("did-finish-load", function() {
       (<BrowserWindow>window).webContents.send("releaseNote", updateInfo);

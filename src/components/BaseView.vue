@@ -12,25 +12,38 @@ export default {
   },
   data: function() {
     return {
-      languages: this.$controller.translator.getSupportLanguages(),
-      source: this.$controller.source(),
-      target: this.$controller.target(),
+      languages: [],
+      source: "en",
+      target: "zh-CN",
       isWord: false
     };
+  },
+  mounted: function() {
+    this.$proxy.getSupportLanguages().then(languages => {
+      this.languages = languages;
+    });
+    this.$proxy.get("sourceLanguage").then(source => {
+      this.source = source;
+    });
+    this.$proxy.get("targetLanguage").then(target => {
+      this.target = target;
+    });
   },
   watch: {
     // 如果 sourceLanguage,targetLanguage 发生改变，这个函数就会运行
     source: function(newSource, oldSource) {
-      this.$controller.set("sourceLanguage", newSource);
-      if (this.routeName === "contrast") {
-        this.translate();
-      }
+      this.$proxy.set("sourceLanguage", newSource).then(() => {
+        if (this.routeName === "contrast") {
+          this.translate();
+        }
+      });
     },
     target: function(newTarget, oldTarget) {
-      this.$controller.set("targetLanguage", newTarget);
-      if (this.routeName === "contrast") {
-        this.translate();
-      }
+      this.$proxy.set("targetLanguage", newTarget).then(() => {
+        if (this.routeName === "contrast") {
+          this.translate();
+        }
+      });
     }
   }
 };

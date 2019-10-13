@@ -21,10 +21,10 @@ export default {
       });
     },
     callback(cmd) {
-      this.$controller.action.callback(cmd);
+      this.$proxy.handleAction(cmd);
     },
     changeMode(routerName) {
-      this.$controller.win.routeTo(routerName);
+      this.$proxy.routeTo(routerName);
     },
     changeModeNoSave(routerName) {
       this.$router.push({ name: routerName });
@@ -37,7 +37,7 @@ export default {
     },
     close(event) {},
     openMenu(id = null) {
-      this.$controller.action.popup(id);
+      this.$proxy.popup(id);
     },
     resize(w = null, h = null, x = null, y = null) {
       this.windowOpt(WinOpt.Resize, {
@@ -47,11 +47,11 @@ export default {
         y: y
       });
     },
-    storeWindow() {
+    async storeWindow() {
       if (this.routeName) {
-        this.$controller.saveWindow(
+        this.$proxy.saveWindow(
           this.routeName,
-          this.$controller.win.getBound(),
+          await this.$proxy.getBound(),
           this.size
         );
       }
@@ -70,7 +70,7 @@ export default {
     this.$nextTick(() => {
       ipc.send(MessageType.FirstLoaded.toString());
     });
-    if (this.routeName) this.$controller.restoreWindow(this.routeName);
+    if (this.routeName) this.$proxy.restoreWindow(this.routeName);
   },
   destroyed: function() {
     this.storeWindow();

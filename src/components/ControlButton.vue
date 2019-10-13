@@ -47,7 +47,7 @@ export default {
       this.colorNow = color;
     },
     switchListen() {
-      this.$controller.action.callback("listenClipboard");
+      this.$proxy.handleAction("listenClipboard");
     }
   },
   mounted: function() {
@@ -58,7 +58,7 @@ export default {
           break;
       }
     });
-    this.$controller.setCurrentColor();
+    this.$proxy.setCurrentColor();
     this.start = this.start - this.span * (this.engines.length - 1);
   }
 };

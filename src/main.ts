@@ -20,9 +20,12 @@ import "normalize.css/normalize.css";
 import "../theme/index.css";
 import App from "./App.vue";
 import { constants, version } from "./core/constant";
+import { IProxy } from "./core/iproxy";
+import { createService } from "./renderer/create";
 
 const remote = require("electron").remote;
 const controller = remote.getGlobal("controller");
+const proxy = createService<IProxy>("EchoService");
 
 Vue.use(Button);
 Vue.use(Select);
@@ -36,7 +39,7 @@ Vue.use(Option);
 Vue.use(Input);
 
 Vue.prototype.$t = controller.getT();
-Vue.prototype.$controller = controller;
+Vue.prototype.$proxy = proxy;
 
 new Vue({
   router,

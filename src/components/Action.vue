@@ -47,27 +47,23 @@ export default {
   watch: {
     enumValue(newEnumValue, oldEnumValue) {
       if (oldEnumValue) {
-        this.$controller.action.callback(newEnumValue);
+        this.$proxy.handleAction(newEnumValue);
       }
     }
   },
   methods: {
     setValue() {
-      this.$controller.set(this.identifier, this.checked, true, false);
+      this.$proxy.set(this.identifier, this.checked, true, false);
     },
-    sync() {
-      this.action = this.$controller.action.getAction(this.identifier);
-      const value = this.$controller.config.get(this.identifier);
+    async sync() {
+      this.action = await this.$proxy.getAction(this.identifier);
+      const value = await this.$proxy.get(this.identifier);
       switch (this.action.actionType) {
         case "checkbox":
           this.checked = value;
           break;
         case "submenu":
-          if (this.action.subMenuGenerator)
-            this.enums = this.action.subMenuGenerator();
-          else {
-            this.enums = this.action.submenu;
-          }
+          this.enums = this.action.submenu;
           this.enumValue = compose([
             this.identifier,
             typeof value == "string" ? value : value.toString()

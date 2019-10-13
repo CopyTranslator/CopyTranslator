@@ -58,12 +58,17 @@ export default {
   components: { DictResult, ControlButton },
   data: function() {
     return {
-      size: this.$controller.get("focus").fontSize,
+      size: 15,
       routeName: "focus",
       cmd: "",
       activeEngines: ["Baidu"],
       isOpen: false
     };
+  },
+  mounted() {
+    this.$proxy.get("focus").then(res => {
+      this.size = res.fontSize;
+    });
   },
   methods: {
     toggleCmdline() {
@@ -88,7 +93,7 @@ export default {
         notify: false
       };
       this.$store.commit("setShared", arg);
-      this.$controller.tryTranslate(text);
+      this.$proxy.tryTranslate(text);
     },
     getModifiedText() {
       if (this.sharedResult && !this.sharedResult.dict) {
@@ -98,7 +103,7 @@ export default {
       }
     },
     capture() {
-      this.$controller.capture();
+      this.$proxy.capture();
     },
     baidu() {
       shell.openExternal(

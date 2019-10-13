@@ -25,18 +25,25 @@ export default {
   mixins: [WindowController],
   data() {
     return {
-      APP_ID: this.$controller.get("APP_ID"),
-      API_KEY: this.$controller.get("API_KEY"),
-      SECRET_KEY: this.$controller.get("SECRET_KEY")
+      APP_ID: undefined,
+      API_KEY: undefined,
+      SECRET_KEY: undefined
     };
+  },
+  mounted: function() {
+    this.$proxy.get("APP_ID").then(res => {
+      this.APP_ID = res;
+    });
+    this.$proxy.get("API_KEY").then(res => {
+      this.API_KEY = res;
+    });
+    this.$proxy.get("SECRET_KEY").then(res => {
+      this.SECRET_KEY = res;
+    });
   },
   methods: {
     confirm() {
-      this.$controller.setUpRecognizer(
-        this.APP_ID,
-        this.API_KEY,
-        this.SECRET_KEY
-      );
+      this.$proxy.setUpRecognizer(this.APP_ID, this.API_KEY, this.SECRET_KEY);
       this.closeMe();
     },
     close() {

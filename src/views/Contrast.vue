@@ -56,10 +56,18 @@ export default {
   mixins: [BaseView, WindowController, Adjustable],
   data: function() {
     return {
-      size: this.$controller.get("contrast").fontSize,
+      size: 15,
       routeName: "contrast",
-      actionKeys: this.$controller.get("contrastOption")
+      actionKeys: []
     };
+  },
+  mounted() {
+    this.$proxy.get("contrast").then(res => {
+      this.size = res.fontSize;
+    });
+    this.$proxy.get("contrastOption").then(res => {
+      this.actionKeys = res;
+    });
   },
   computed: {
     area() {
@@ -82,10 +90,10 @@ export default {
   },
   methods: {
     translate() {
-      this.$controller.tryTranslate(this.sharedResult.src, true);
+      this.$proxy.tryTranslate(this.sharedResult.src, true);
     },
     toSetting() {
-      this.$controller.action.callback("settings");
+      this.$proxy.handleAction("settings");
     }
   }
 };

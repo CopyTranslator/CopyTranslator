@@ -47,7 +47,7 @@ type RouteName =
   | "MenuDrag"
   | "AllActions";
 
-interface Action {
+export interface Action {
   label?: string;
   type?: MenuItemType;
   checked?: boolean;
@@ -134,14 +134,17 @@ class ActionManager {
 
   update() {
     const refresh = this.getRefreshFunc();
-    console.log("refresh");
     for (const key of this.actions.keys()) {
       this.actions.set(key, refresh(key, <Action>this.actions.get(key)));
     }
   }
 
   getAction(identifier: Identifier): Action {
-    return <Action>this.actions.get(identifier);
+    const action = <Action>this.actions.get(identifier);
+    if (action.subMenuGenerator) {
+      action.submenu = action.subMenuGenerator();
+    }
+    return action;
   }
 
   getRefreshFunc() {

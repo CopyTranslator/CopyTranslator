@@ -17,6 +17,7 @@ import { TrayManager } from "../tools/tray";
 import { handleActions } from "./actionCallback";
 import { recognizer } from "../tools/ocr";
 import { Identifier } from "@/tools/identifier";
+import { startService } from "./service";
 
 const clipboard = require("electron-clipboard-extended");
 
@@ -39,6 +40,10 @@ class Controller {
     this.restoreFromConfig();
   }
 
+  handleAction(cmd: string) {
+    handleActions(cmd);
+  }
+
   public static getInstance(): Controller {
     return (<any>global).controller;
   }
@@ -49,10 +54,13 @@ class Controller {
     windowController.bind();
     this.action.init();
     recognizer.setUp();
+    startService(this);
   }
+
   capture() {
     (<any>global).shortcutCapture.shortcutCapture();
   }
+
   foldWindow() {
     this.win.edgeHide(this.win.onEdge());
   }
@@ -356,7 +364,12 @@ class Controller {
     this.win.winOpt(WinOpt.Refresh, identifier);
   }
 
-  set(identifier: Identifier, value: any, save = true, refresh = true) {
+  set(
+    identifier: Identifier,
+    value: any,
+    save: boolean = true,
+    refresh: boolean = true
+  ) {
     this.config.set(identifier, value);
     this.postSet(identifier, value, save, refresh);
   }

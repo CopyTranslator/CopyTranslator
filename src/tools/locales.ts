@@ -152,6 +152,3 @@ export const en = new Map<Identifier, string>([
   ["skipTaskbar", "Skip Taskbar"]
 ]);
 export type Locale = typeof en;
-type LocaleObj = { [key: string]: string };
-
-export type Locales = { [key: string]: Locale };

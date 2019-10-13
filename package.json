@@ -20,7 +20,7 @@
     "electron:serve": "npm run prebuild && vue-cli-service electron:serve",
     "postinstall": "electron-builder install-app-deps",
     "rebuild": "npm rebuild --runtime=electron --target=3.0.0 --disturl=https://atom.io/download/atom-shell --abi=64",
-    "prebuild": "et && tsc ./src/prebuild.ts && node ./src/prebuild.js && npm run clean",
+    "prebuild": "et && tsc ./src/prebuild.ts --downlevelIteration && node ./src/prebuild.js && npm run clean",
     "postbuild": "node postbuild.js",
     "ts:test": "tsc ./src/test.ts && node ./src/test.js && npm run clean",
     "test": "jest --detectOpenHandles",

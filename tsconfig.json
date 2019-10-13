@@ -2,19 +2,20 @@
   "compilerOptions": {
     "target": "esnext",
     "module": "esnext",
-    "resolveJsonModule":true,
+    "resolveJsonModule": true,
     "strict": true,
     "jsx": "preserve",
     "importHelpers": true,
     "moduleResolution": "node",
+    "downlevelIteration": true,
     "experimentalDecorators": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "sourceMap": true,
-    "noEmitOnError":true,
+    "noEmitOnError": true,
     "baseUrl": ".",
     "types": [
-      "webpack-env","jest"
+      "webpack-env", "jest"
     ],
     "paths": {
       "@/*": [

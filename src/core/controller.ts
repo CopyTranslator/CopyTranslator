@@ -31,12 +31,13 @@ class Controller {
   translator: Translator = createTranslator("Google");
   config: ConfigParser = initConfig();
   locales: L10N = l10n;
-  action = new ActionManager(handleActions);
+  action: ActionManager;
   tray: TrayManager = new TrayManager();
   translating: boolean = false; //正在翻译
 
   constructor() {
     this.config.loadValues(envConfig.configPath);
+    this.action = new ActionManager(handleActions, this);
     this.restoreFromConfig();
   }
 
@@ -113,7 +114,7 @@ class Controller {
   }
 
   getT() {
-    return this.locales.getT(this.config.get("localeSetting"));
+    return this.locales.getT(this.get("localeSetting"));
   }
 
   onError(msg: string) {
@@ -185,9 +186,9 @@ class Controller {
 
   getOptions() {
     let realOptions = 0;
-    for (let item of colorRules.entries()) {
-      if (this.get(item[0])) {
-        realOptions |= item[1];
+    for (const [key, value] of colorRules) {
+      if (this.get(key)) {
+        realOptions |= value;
       }
     }
     return realOptions;
@@ -355,11 +356,16 @@ class Controller {
     this.set(identifier, !this.get(identifier));
   }
 
-  refresh(ruleKey: string | null = null) {
-    this.win.winOpt(WinOpt.Refresh, ruleKey);
+  refresh(identifier: Identifier | null = null) {
+    this.win.winOpt(WinOpt.Refresh, identifier);
   }
 
   set(identifier: Identifier, value: any, save = true, refresh = true) {
+    this.config.set(identifier, value);
+    this.postSet(identifier, value, save, refresh);
+  }
+
+  postSet(identifier: Identifier, value: any, save = true, refresh = true) {
     switch (identifier) {
       case "listenClipboard":
         this.setWatch(value);
@@ -399,16 +405,12 @@ class Controller {
         }
         this.doTranslate(this.src);
         break;
+      case "localeSetting":
+        this.win.sendMsg(MessageType.UpdateT.toString(), null);
+        break;
     }
-
-    this.config.set(identifier, value);
     this.setCurrentColor();
-    if (identifier == "localeSetting") {
-      this.win.sendMsg(MessageType.UpdateT.toString(), null);
-      // if (this.config) {
-      //   this.action.update();
-      // }
-    }
+
     if (save) {
       this.config.saveValues(envConfig.configPath);
       if (refresh) {

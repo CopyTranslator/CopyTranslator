@@ -63,7 +63,7 @@ export class WindowWrapper {
 
   onEdge() {
     if (!(<Controller>(<any>global).controller).get("autoHide")) {
-      return HideDirection.None;
+      return "None";
     }
     let { x, y, width } = this.getBound();
     const { x: xBound, width: screenWidth } = screen.getDisplayMatching(
@@ -72,12 +72,12 @@ export class WindowWrapper {
     x -= xBound;
     let xEnd = x + width;
 
-    if (x <= 0) return HideDirection.Left;
+    if (x <= 0) return "Left";
     if (xEnd >= screenWidth) {
-      return HideDirection.Right;
+      return "Right";
     }
-    if (y <= 0) return HideDirection.Up;
-    return HideDirection.None;
+    if (y <= 0) return "Up";
+    return "None";
   }
 
   edgeHide(hideDirection: HideDirection) {
@@ -89,27 +89,27 @@ export class WindowWrapper {
     let xEnd = x + width;
     let yEnd = y + height;
     switch (hideDirection) {
-      case HideDirection.Up:
+      case "Up":
         if (yEnd > 10) {
           y -= yEnd - 10;
           yEnd -= yEnd - 10;
           this.setBounds({ x: x, y: y, width: width, height: height });
         }
         break;
-      case HideDirection.Left:
+      case "Left":
         if (xEnd > xBound + 10) {
           x -= xEnd - (xBound + 10);
           xEnd -= xEnd - (xBound + 10);
           this.setBounds({ x: x, y: y, width: width, height: height });
         }
         break;
-      case HideDirection.Right:
+      case "Right":
         if (x < xBound + screenWidth - 10) {
           x += xBound + screenWidth - 10 - x;
           this.setBounds({ x: x, y: y, width: width, height: height });
         }
         break;
-      case HideDirection.Minify:
+      case "Minify":
         if (this.window) {
           this.window.minimize();
         }

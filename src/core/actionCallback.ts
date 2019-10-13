@@ -6,7 +6,7 @@ import { constants, version } from "../core/constant";
 import { Controller } from "../core/controller";
 import { decompose } from "../tools/action";
 import { showSettings } from "../tools/views";
-import { Identifier } from "@/tools/identifier";
+import { Identifier, identifiers } from "@/tools/identifier";
 
 const clipboard = require("electron-clipboard-extended");
 
@@ -19,26 +19,28 @@ function handleActions(
   const params = decompose(id);
   const identifier = <Identifier>params[0];
   const param = params[1];
-  if (ruleKeys.includes(identifier)) {
-    const controller = <Controller>(<any>global).controller;
-    if (param) {
-      //设置 枚举值的 action
-      const intVal = parseInt(param);
+  const controller = <Controller>(<any>global).controller;
+  const action = controller.action.getAction(identifier);
+  const intVal = parseInt(param);
+  switch (action.actionType) {
+    case "normal":
+      handleNormalAction(identifier);
+      break;
+    case "submenu":
+    case "constant":
       controller.set(identifier, Number.isNaN(intVal) ? param : intVal);
-      return;
-    }
-    if (menuItem) {
-      // 设置切换按钮的值
-      if ((<any>menuItem).type === "submenu") {
-        return;
+      break;
+    case "checkbox":
+      if (menuItem) {
+        // 设置切换按钮的值
+        if ((<any>menuItem).type === "submenu") {
+          return;
+        }
+        controller.set(identifier, menuItem.checked);
+      } else {
+        controller.switchValue(identifier);
       }
-      controller.set(identifier, menuItem.checked);
-    } else {
-      controller.switchValue(identifier);
-    }
-  } else {
-    //处理普通动作
-    handleNormalAction(id);
+      break;
   }
 }
 

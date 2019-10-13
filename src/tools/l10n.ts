@@ -4,6 +4,7 @@ import { envConfig } from "./envConfig";
 import { Identifier, objToMap } from "./identifier";
 import { en, Locale } from "./locales";
 type Resouces = { [string: string]: string };
+
 class L10N {
   resources: Resouces;
 

@@ -1,4 +1,4 @@
-import { BrowserWindow, ipcMain as ipc, screen } from "electron";
+import { BrowserWindow, ipcMain as ipc } from "electron";
 import { MessageType, WinOpt } from "./enums";
 import { Controller } from "../core/controller";
 const ioHook = require("iohook");
@@ -20,7 +20,6 @@ class WindowController {
       var arg = args.args;
       var currentWindow = BrowserWindow.fromWebContents(event.sender);
       const controller = <Controller>(<any>global).controller;
-      const { x, y } = screen.getCursorScreenPoint();
       switch (args.type) {
         case WinOpt.CloseMe:
           currentWindow.close();
@@ -60,7 +59,6 @@ class WindowController {
     });
     ioHook.on("mouseup", (event: MouseEvent) => {
       //模拟点按复制
-      // this.copied = false;
       if (
         this.dragCopy &&
         !this.copied &&

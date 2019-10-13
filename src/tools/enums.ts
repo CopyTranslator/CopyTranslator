@@ -1,15 +1,15 @@
-enum FrameMode {
-  Contrast,
-  Focus
-}
+export const frameModes = ["Contrast", "Focus"] as const;
+export type FrameMode = (typeof frameModes)[number];
 
-enum HideDirection {
-  Up,
-  Right,
-  Left,
-  None,
-  Minify
-}
+export const hideDirections = [
+  "Up",
+  "Right",
+  "Left",
+  "None",
+  "Minify"
+] as const;
+export type HideDirection = (typeof hideDirections)[number];
+
 enum MessageType {
   WindowOpt,
   TranslateResult,
@@ -60,4 +60,4 @@ const ColorStatus = mkenum({
 
 type ColorStatus = (typeof ColorStatus)[keyof typeof ColorStatus];
 
-export { FrameMode, ColorStatus, MessageType, WinOpt, HideDirection };
+export { ColorStatus, MessageType, WinOpt };

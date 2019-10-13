@@ -73,7 +73,6 @@ export default {
       console.log(event.dataTransfer.getData("text/plain"));
     },
     exectueCmd() {
-      console.log(this.cmd);
       this.callback(this.cmd);
     },
     shortcut() {

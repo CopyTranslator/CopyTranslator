@@ -4,7 +4,7 @@
       <div style="text-align: left;">
         <Action
           v-for="actionId in actionKeys"
-          :action-id="actionId"
+          :identifier="actionId"
           :key="actionId"
         ></Action>
       </div>

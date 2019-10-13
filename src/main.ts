@@ -36,7 +36,6 @@ Vue.use(Option);
 Vue.use(Input);
 
 Vue.prototype.$t = controller.getT();
-Vue.prototype.$log = remote.getGlobal("log");
 Vue.prototype.$controller = controller;
 
 new Vue({

@@ -21,7 +21,7 @@ import "../theme/index.css";
 import App from "./App.vue";
 import { constants, version } from "./core/constant";
 import { IProxy } from "./core/iproxy";
-import { createService } from "./renderer/create";
+import { createService } from "./tools/create";
 
 const remote = require("electron").remote;
 const controller = remote.getGlobal("controller");

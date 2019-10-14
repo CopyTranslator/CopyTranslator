@@ -1,4 +1,4 @@
-import { createTranslator } from "../tools/translators";
+import { createTranslator, autoReSegment } from "../tools/translators";
 import { Translator, TranslateResult } from "@opentranslate/translator";
 import { isValid } from "../tools/translators/helper";
 import { initConfig } from "../tools/configuration";
@@ -285,10 +285,11 @@ class Controller {
     this.preProcess(text);
     this.translator
       .translate(this.src, language.source, language.target)
+      .then(res => autoReSegment(res))
       .then(res => {
         if (res) {
           const resultString = normalizeAppend(
-            res.trans.paragraphs[0],
+            res.resultString,
             this.get("autoPurify")
           );
           this.result = resultString;

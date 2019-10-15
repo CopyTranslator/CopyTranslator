@@ -18,7 +18,7 @@ import {
 } from "./shortcuts";
 import { Controller } from "../core/controller";
 import { getLanguageLocales } from "./translators/locale";
-import { Identifier, identifiers, objToMap } from "./identifier";
+import { Identifier, objToMap } from "./identifier";
 
 const fs = require("fs");
 
@@ -47,6 +47,74 @@ type RouteName =
   | "MenuDrag"
   | "AllActions";
 
+type Role =
+  | "undo"
+  | "redo"
+  | "cut"
+  | "copy"
+  | "paste"
+  | "pasteAndMatchStyle"
+  | "delete"
+  | "selectAll"
+  | "reload"
+  | "forceReload"
+  | "toggleDevTools"
+  | "resetZoom"
+  | "zoomIn"
+  | "zoomOut"
+  | "togglefullscreen"
+  | "window"
+  | "minimize"
+  | "close"
+  | "help"
+  | "about"
+  | "services"
+  | "hide"
+  | "hideOthers"
+  | "unhide"
+  | "quit"
+  | "startSpeaking"
+  | "stopSpeaking"
+  | "close"
+  | "minimize"
+  | "zoom"
+  | "front"
+  | "appMenu"
+  | "fileMenu"
+  | "editMenu"
+  | "viewMenu"
+  | "recentDocuments"
+  | "toggleTabBar"
+  | "selectNextTab"
+  | "selectPreviousTab"
+  | "mergeAllWindows"
+  | "clearRecentDocuments"
+  | "moveTabToNewWindow"
+  | "windowMenu";
+
+const roles: Role[] = [
+  "undo",
+  "redo",
+  "cut",
+  "copy",
+  "paste",
+  "pasteAndMatchStyle",
+  "selectAll",
+  "delete",
+  "minimize",
+  "close",
+  "quit",
+  "reload",
+  "forceReload",
+  "toggleDevTools",
+  "togglefullscreen",
+  "resetZoom",
+  "zoomIn",
+  "zoomOut",
+  "editMenu",
+  "windowMenu"
+];
+
 export interface Action {
   label?: string;
   type?: MenuItemType;
@@ -54,7 +122,7 @@ export interface Action {
   actionType?: ActionType | MenuItemType;
   id: string;
   submenu?: Array<Action>;
-  role?: string;
+  role?: Role;
   tooltip?: string;
   accelerator?: string;
   subMenuGenerator?: () => Array<Action>;
@@ -88,29 +156,6 @@ function ActionWrapper(
 }
 
 type Actions = Map<Identifier, Action>;
-
-const roles: Identifier[] = [
-  "undo",
-  "redo",
-  "cut",
-  "copy",
-  "paste",
-  "pasteAndMatchStyle",
-  "selectAll",
-  "delete",
-  "minimize",
-  "close",
-  "quit",
-  "reload",
-  "forcereload",
-  "toggledevtools",
-  "toggleFullScreen",
-  "resetzoom",
-  "zoomin",
-  "zoomout",
-  "editMenu",
-  "windowMenu"
-];
 
 class ActionManager {
   actions = new Map<Identifier, Action>();
@@ -192,7 +237,7 @@ class ActionManager {
       );
     }
     //原生角色
-    function roleAction(role: Identifier): Action {
+    function roleAction(role: Role): Action {
       return {
         role: role,
         id: role,
@@ -277,11 +322,11 @@ class ActionManager {
             }
             return true;
           })
-          .map((e: string) => {
+          .map(e => {
             return ActionWrapper(
               {
                 id: compose([identifier, e]),
-                label: l[<Language>e],
+                label: l[e],
                 type: "checkbox"
               },
               callback
@@ -292,11 +337,12 @@ class ActionManager {
 
     const localeGenerator = () => {
       const id = "localeSetting";
-      return this.controller.locales.getLocales().map((locale: any) => {
+      const l = getLanguageLocales(<Language>config.get("localeSetting"));
+      return this.controller.locales.languages.map(lang => {
         return ActionWrapper(
           {
-            id: compose([id, locale.short]),
-            label: locale.localeName,
+            id: compose([id, lang]),
+            label: l[lang],
             type: "checkbox"
           },
           callback
@@ -336,7 +382,7 @@ class ActionManager {
     items.push(constantAction("SECRET_KEY"));
 
     //role action
-    roles.forEach((role: Identifier) => {
+    roles.forEach(role => {
       items.push(roleAction(role));
     });
 

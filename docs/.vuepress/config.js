@@ -9,16 +9,6 @@ module.exports = {
   ],
   // base: '/docs/',
   plugins: {
-    '@vssue/vuepress-plugin-vssue': {
-      // 设置 `platform` 而不是 `api`
-      platform: 'github',
-
-      // 其他的 Vssue 配置
-      owner: 'CopyTranslator',
-      repo: 'comments',
-      clientId: '28524bb606982ce73bf0',
-      clientSecret: '8bcd70bf3339fb0c0a946738e0327ca53ae3bb37'
-    },
   },
   themeConfig: {
     // 假如你的文档仓库和项目本身不在一个仓库：
@@ -46,7 +36,7 @@ module.exports = {
       },
       {
         text: '更新日志',
-        link: '/changelogs/'
+        link: '/changelogs/v9'
       },
       {
         text: '用户生态',
@@ -89,9 +79,10 @@ module.exports = {
         title: "更新日志",
         collapsable: false,
         children: [
-          '0.0.8',
-          '0.0.7',
-          '0.0.6'
+          'v9',
+          'v8',
+          'v7',
+          'v6'
         ]
       }],
       '/support/': [{

@@ -19,7 +19,7 @@
     "electron:build": "npm run prebuild && vue-cli-service electron:build && npm run postbuild",
     "electron:serve": "npm run prebuild && vue-cli-service electron:serve",
     "postinstall": "electron-builder install-app-deps",
-    "rebuild": "npm rebuild --runtime=electron --target=3.0.0 --disturl=https://atom.io/download/atom-shell --abi=64",
+    "rebuild": "npm rebuild --runtime=electron --target=6.0.0 --disturl=https://atom.io/download/atom-shell --abi=73",
     "prebuild": "et && tsc ./src/prebuild.ts --downlevelIteration && node ./src/prebuild.js && npm run clean",
     "postbuild": "node postbuild.js",
     "ts:test": "tsc ./src/test.ts && node ./src/test.js && npm run clean",
@@ -46,9 +46,8 @@
     "eazydict-youdao": "^2.1.0",
     "electron-clipboard-extended": "^1.1.1",
     "electron-updater": "^4.0.6",
-    "element-ui": "^2.12.0",
-    "http": "0.0.0",
-    "iohook": "^0.5.1",
+    "element-ui": "2.12.0",
+    "iohook": "0.6.1",
     "lodash.compact": "^3.0.1",
     "lodash.invert": "^4.3.0",
     "lodash.keyby": "^4.6.0",
@@ -58,11 +57,11 @@
     "sbd": "^1.0.15",
     "shortcut-capture": "^1.2.1",
     "vue": "^2.6.10",
-    "vue-router": "^3.1.3",
+    "vue-router": "3.0.7",
     "vuedraggable": "^2.23.0",
     "vuex": "^3.1.1"
   },
-  "devDependencies": {
+  "devDependencies": { 
     "@types/jest": "^23.3.14",
     "@types/lodash.compact": "^3.0.6",
     "@types/lodash.invert": "^4.3.6",
@@ -81,7 +80,7 @@
     "babel-eslint": "^10.0.1",
     "babel-plugin-component": "^1.1.1",
     "babel-plugin-lodash": "^3.3.4",
-    "electron": "^3.0.0",
+    "electron": "^6.0.0",
     "element-theme-chalk": "^2.11.1",
     "eslint": "^5.8.0",
     "eslint-plugin-typescript": "^0.14.0",
@@ -94,7 +93,7 @@
     "typescript": "^3.6.3",
     "typescript-eslint-parser": "^22.0.0",
     "valine": "^1.3.4",
-    "vue-cli-plugin-electron-builder": "^1.1.3",
+    "vue-cli-plugin-electron-builder": "^1.4.0",
     "vue-template-compiler": "^2.5.21",
     "yaml": "^1.5.0"
   },
@@ -105,11 +104,10 @@
   "iohook": {
     "targets": [
       "node-64",
-      "electron-64"
+      "electron-73"
     ],
     "platforms": [
-      "win32",
-      "darwin"
+      "win32"
     ],
     "arches": [
       "x64"

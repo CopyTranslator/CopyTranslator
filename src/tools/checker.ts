@@ -3,7 +3,6 @@ import { version, constants } from "../core/constant";
 import { dialog, nativeImage, shell, BrowserWindow } from "electron";
 import { env } from "./env";
 import { Controller } from "../core/controller";
-import _ from "lodash";
 
 type Button = {
   label: string;
@@ -24,16 +23,16 @@ export function checkUpdate() {
         const mirror = info.mirrors[res.key];
         const controller = <Controller>(<any>global).controller;
         const t = controller.getT();
-        dialog.showMessageBox(
-          <BrowserWindow>controller.win.window,
-          {
+        dialog
+          .showMessageBox(<BrowserWindow>controller.win.window, {
             title: "A newer version is available " + info.version,
             message: info.abstract,
             buttons: [t("toDownload"), t("changelog"), t("cancel")],
             icon: nativeImage.createFromPath(env.iconPath),
             cancelId: 2
-          },
-          function(response, checkboxChecked) {
+          })
+          .then(res => res.response)
+          .then(response => {
             switch (response) {
               case 0:
                 shell.openExternal(mirror.installUrl);
@@ -42,8 +41,7 @@ export function checkUpdate() {
                 shell.openExternal(mirror.changelog);
                 break;
             }
-          }
-        );
+          });
       }
     })
     .catch(e => {
@@ -68,19 +66,18 @@ export function checkNotice() {
         const notice = <Notice>res.data;
         if (!notice.buttons) notice.buttons = [];
         const buttons = getButtons(notice.buttons);
-        dialog.showMessageBox(
-          <BrowserWindow>controller.win.window,
-          {
+        dialog
+          .showMessageBox(<BrowserWindow>controller.win.window, {
             title: version,
             message: notice.message,
             buttons: buttons,
             cancelId: buttons.length - 1,
             icon: nativeImage.createFromPath(env.iconPath)
-          },
-          function(response, checkboxChecked) {
+          })
+          .then(res => res.response)
+          .then(response => {
             shell.openExternal(notice.buttons[response].ref);
-          }
-        );
+          });
       }
     })
     .catch(e => {

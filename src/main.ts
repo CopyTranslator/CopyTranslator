@@ -23,8 +23,6 @@ import { constants, version } from "./core/constant";
 import { IProxy } from "./core/iproxy";
 import { createService } from "./tools/create";
 
-const remote = require("electron").remote;
-const controller = remote.getGlobal("controller");
 const proxy = createService<IProxy>("EchoService");
 
 Vue.use(Button);
@@ -37,6 +35,9 @@ Vue.use(Tabs);
 Vue.use(TabPane);
 Vue.use(Option);
 Vue.use(Input);
+
+const remote = require("electron").remote;
+const controller = remote.getGlobal("controller");
 
 Vue.prototype.$t = controller.getT();
 Vue.prototype.$proxy = proxy;
@@ -62,9 +63,6 @@ new Vue({
       Vue.prototype.$t = controller.getT();
     });
 
-    if (controller.res) controller.sync();
-    else {
-      controller.checkClipboard();
-    }
+    proxy.checkSync();
   }
 }).$mount("#app");

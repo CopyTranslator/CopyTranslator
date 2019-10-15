@@ -183,7 +183,10 @@ export class WindowWrapper {
       autoHideMenuBar: true,
       width: param.width,
       height: param.height,
-      icon: nativeImage.createFromPath(env.iconPath)
+      icon: nativeImage.createFromPath(env.iconPath),
+      webPreferences: {
+        nodeIntegration: true
+      }
     });
     this.load(routeName);
     this.window.on("closed", () => {

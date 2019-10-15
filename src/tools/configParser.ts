@@ -1,5 +1,5 @@
-import { Rule, ruleKeys } from "./rule";
-import { Identifier } from "./identifier";
+import { Rule } from "./rule";
+import { Identifier, mapToObj } from "./identifier";
 var fs = require("fs");
 
 type Rules = Map<Identifier, Rule>; //类型别名
@@ -7,14 +7,12 @@ type Rules = Map<Identifier, Rule>; //类型别名
 class ConfigParser {
   rules: Rules = new Map<Identifier, Rule>();
   values: Map<Identifier, any> = new Map<Identifier, any>();
-  defaultValues: Map<Identifier, any> = new Map<Identifier, any>();
 
   constructor() {}
 
-  addRule(key: Identifier, rule: Rule) {
+  setRule(key: Identifier, rule: Rule) {
     this.rules.set(key, rule);
     this.values.set(key, rule.predefined);
-    this.defaultValues.set(key, rule.predefined);
   }
 
   getRule(key: Identifier): Rule {
@@ -41,11 +39,11 @@ class ConfigParser {
   loadValues(fileName: string): boolean {
     try {
       let values = JSON.parse(fs.readFileSync(fileName));
-      ruleKeys.forEach(key => {
+      for (const key of this.rules.keys()) {
         if (values[key] != undefined) {
           this.set(key, values[key]);
         }
-      });
+      }
       this.saveValues(fileName);
       return true;
     } catch (e) {
@@ -55,12 +53,14 @@ class ConfigParser {
   }
 
   restoreDefault(fileName: string) {
-    this.values = this.defaultValues;
+    for (const [key, rule] of this.rules) {
+      this.set(key, rule.predefined);
+    }
     this.saveValues(fileName);
   }
 
   saveValues(fileName: string) {
-    fs.writeFileSync(fileName, JSON.stringify(this.values, null, 4));
+    fs.writeFileSync(fileName, JSON.stringify(mapToObj(this.values), null, 4));
   }
 }
 

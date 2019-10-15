@@ -1,63 +1,78 @@
 import { ConfigParser } from "./configParser";
-import {
-  BoolRule,
-  GroupRule,
-  ModeRule,
-  StringRule,
-  UnionRule,
-  ModeConfig
-} from "./rule";
+import { GroupRule, StructRule, UnionRule, ModeConfig, TypeRule } from "./rule";
 import { FrameMode, HideDirection, hideDirections, frameModes } from "./enums";
 import { languages, Language } from "@opentranslate/languages";
 import { translatorTypes, TranslatorType } from "./translators/";
+import { Identifier, identifiers } from "./identifier";
 function initConfig(
   config: ConfigParser | undefined = undefined
 ): ConfigParser {
   if (!config) config = new ConfigParser();
 
-  config.addRule(
+  config.setRule(
     "autoCopy",
-    new BoolRule(false, "auto copy result to clipboard")
+    new TypeRule<boolean>(false, "auto copy result to clipboard")
   );
 
-  config.addRule("listenClipboard", new BoolRule(true, "Listen to Clipboard"));
-  config.addRule("dragCopy", new BoolRule(false, "catch simulate copy"));
+  config.setRule(
+    "listenClipboard",
+    new TypeRule<boolean>(true, "Listen to Clipboard")
+  );
+  config.setRule(
+    "dragCopy",
+    new TypeRule<boolean>(false, "catch simulate copy")
+  );
 
-  config.addRule("incrementalCopy", new BoolRule(false, "incremental copy"));
-  config.addRule("stayTop", new BoolRule(false, "always stay on top"));
-  config.addRule("smartDict", new BoolRule(true, "smart dict"));
-  config.addRule("smartTranslate", new BoolRule(true, "smart translate"));
+  config.setRule(
+    "incrementalCopy",
+    new TypeRule<boolean>(false, "incremental copy")
+  );
+  config.setRule("stayTop", new TypeRule<boolean>(false, "always stay on top"));
+  config.setRule("smartDict", new TypeRule<boolean>(true, "smart dict"));
+  config.setRule(
+    "smartTranslate",
+    new TypeRule<boolean>(true, "smart translate")
+  );
 
-  config.addRule(
+  config.setRule(
     "autoPaste",
-    new BoolRule(false, "auto paste after translate")
+    new TypeRule<boolean>(false, "auto paste after translate")
   );
 
-  config.addRule(
+  config.setRule(
     "autoHide",
-    new BoolRule(false, "auto hide when close to edge")
+    new TypeRule<boolean>(false, "auto hide when close to edge")
   );
 
-  config.addRule(
+  config.setRule(
     "autoFormat",
-    new BoolRule(false, "auto replace the contene in clipboard")
+    new TypeRule<boolean>(false, "auto replace the contene in clipboard")
   );
 
-  config.addRule(
+  config.setRule(
     "autoPurify",
-    new BoolRule(true, "remove extra linebreak when translate")
+    new TypeRule<boolean>(true, "remove extra linebreak when translate")
   );
 
-  config.addRule("autoShow", new BoolRule(false, "auto show after translate"));
-  config.addRule("enableNotify", new BoolRule(false, "notify after translate"));
-  config.addRule("skipTaskbar", new BoolRule(false, "hide the taskbar"));
+  config.setRule(
+    "autoShow",
+    new TypeRule<boolean>(false, "auto show after translate")
+  );
+  config.setRule(
+    "enableNotify",
+    new TypeRule<boolean>(false, "notify after translate")
+  );
+  config.setRule(
+    "skipTaskbar",
+    new TypeRule<boolean>(false, "hide the taskbar")
+  );
 
-  config.addRule(
+  config.setRule(
     "frameMode",
     new UnionRule<FrameMode>("Contrast", "current frame mode", frameModes)
   );
 
-  config.addRule(
+  config.setRule(
     "translatorType",
     new UnionRule<TranslatorType>(
       "Google",
@@ -66,14 +81,14 @@ function initConfig(
     )
   );
 
-  config.addRule(
+  config.setRule(
     "hideDirect",
     new UnionRule<HideDirection>("Up", "HideDirection", hideDirections)
   );
 
-  config.addRule(
+  config.setRule(
     "focus",
-    new ModeRule<ModeConfig>(
+    new StructRule<ModeConfig>(
       {
         x: 1390,
         y: 133,
@@ -85,9 +100,9 @@ function initConfig(
     )
   );
 
-  config.addRule(
+  config.setRule(
     "contrast",
-    new ModeRule<ModeConfig>(
+    new StructRule<ModeConfig>(
       {
         x: 535,
         y: 186,
@@ -99,9 +114,9 @@ function initConfig(
     )
   );
 
-  config.addRule(
+  config.setRule(
     "settingsConfig",
-    new ModeRule<ModeConfig>(
+    new StructRule<ModeConfig>(
       {
         x: 1390,
         y: 133,
@@ -112,24 +127,24 @@ function initConfig(
     )
   );
 
-  config.addRule(
+  config.setRule(
     "sourceLanguage",
     new UnionRule<Language>("en", "sourceLanguage language", languages)
   );
 
-  config.addRule(
+  config.setRule(
     "targetLanguage",
     new UnionRule<Language>("zh-CN", "targetLanguage language", languages)
   );
 
-  config.addRule("localeSetting", {
-    predefined: "zh-CN",
-    msg: "localeSetting setting"
-  });
+  config.setRule(
+    "localeSetting",
+    new UnionRule<Language>("zh-CN", "localeSetting setting", languages)
+  );
 
-  config.addRule(
+  config.setRule(
     "contrastMenu",
-    new GroupRule(
+    new GroupRule<Identifier>(
       [
         "retryTranslate",
         "autoCopy",
@@ -142,13 +157,14 @@ function initConfig(
         "settings",
         "exit"
       ],
-      "the context menu of contrast mode"
+      "the context menu of contrast mode",
+      identifiers
     )
   );
 
-  config.addRule(
+  config.setRule(
     "focusMenu",
-    new GroupRule(
+    new GroupRule<Identifier>(
       [
         "contrastMode",
         "retryTranslate",
@@ -164,13 +180,14 @@ function initConfig(
         "settings",
         "exit"
       ],
-      "the context menu of focus mode"
+      "the context menu of focus mode",
+      identifiers
     )
   );
 
-  config.addRule(
+  config.setRule(
     "trayMenu",
-    new GroupRule(
+    new GroupRule<Identifier>(
       [
         "translatorType",
         "hideDirect",
@@ -194,13 +211,14 @@ function initConfig(
         "helpAndUpdate",
         "exit"
       ],
-      "the menu of tray"
+      "the menu of tray",
+      identifiers
     )
   );
 
-  config.addRule(
+  config.setRule(
     "contrastOption",
-    new GroupRule(
+    new GroupRule<Identifier>(
       [
         "autoCopy",
         "autoPaste",
@@ -215,17 +233,18 @@ function initConfig(
         "sourceLanguage",
         "targetLanguage"
       ],
-      "the options of contrast mode"
+      "the options of contrast mode",
+      identifiers
     )
   );
-  config.addRule("notices", {
+  config.setRule("notices", {
     predefined: [""],
     msg: "id of notices that have been read"
   });
 
-  config.addRule("APP_ID", new StringRule("", "APP_ID"));
-  config.addRule("API_KEY", new StringRule("", "API_KEY"));
-  config.addRule("SECRET_KEY", new StringRule("", "SECRET_KEY"));
+  config.setRule("APP_ID", new TypeRule<string>("", "APP_ID"));
+  config.setRule("API_KEY", new TypeRule<string>("", "API_KEY"));
+  config.setRule("SECRET_KEY", new TypeRule<string>("", "SECRET_KEY"));
 
   return config;
 }

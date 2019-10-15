@@ -12,7 +12,9 @@ let controller = new Controller();
 (<any>global).controller = controller;
 
 // Standard scheme must be registered before the app is ready
-protocol.registerStandardSchemes(["app"], { secure: true });
+protocol.registerSchemesAsPrivileged([
+  { scheme: "app", privileges: { standard: true, secure: true } }
+]);
 
 // Quit when all windows are closed.
 app.on("window-all-closed", () => {

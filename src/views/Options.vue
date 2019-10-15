@@ -21,16 +21,10 @@ export default {
   mixins: [WindowController],
   data: function() {
     return {
-      config: undefined,
-      locale: undefined,
-      locales: [],
       actionKeys: []
     };
   },
   mounted: function() {
-    this.$proxy.getLocales().then(res => {
-      this.locales = locales;
-    });
     this.$proxy.getKeys("Options").then(res => {
       this.actionKeys = res;
     });

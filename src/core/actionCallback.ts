@@ -58,7 +58,7 @@ function handleNormalAction(identifier: string) {
       controller.onExit();
       break;
     case "capture":
-      controller.capture();
+      (<any>global).shortcutCapture.shortcutCapture();
       break;
     case "clear":
       controller.clear();
@@ -73,17 +73,17 @@ function handleNormalAction(identifier: string) {
       showSettings();
       break;
     case "helpAndUpdate":
-      dialog.showMessageBox(
-        <BrowserWindow>controller.win.window,
-        {
+      dialog
+        .showMessageBox(<BrowserWindow>controller.win.window, {
           title: constants.appName + " " + version,
           message:
             "If you found it useful, please give me a star on GitHub or introduce to your friend.\n如果您感觉本软件对您有所帮助，请在项目Github上给个star或是介绍给您的朋友，谢谢。\n本软件免费开源，如果您是以付费的方式获得本软件，那么你应该是被骗了。[○･｀Д´･ ○]",
           buttons: [t("homepage"), t("userManual"), t("checkUpdate"), "cancel"],
           cancelId: 3,
           icon: nativeImage.createFromPath(env.iconPath)
-        },
-        function(response, checkboxChecked) {
+        })
+        .then(res => res.response)
+        .then(response => {
           switch (response) {
             case 0:
               shell.openExternal(constants.homepage);
@@ -95,8 +95,7 @@ function handleNormalAction(identifier: string) {
               checkForUpdates();
               break;
           }
-        }
-      );
+        });
       break;
     case "retryTranslate":
       controller.doTranslate(controller.src);

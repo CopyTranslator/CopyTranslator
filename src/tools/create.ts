@@ -39,7 +39,7 @@ export function createService<T>(name: string): Promisified<T> {
 
             ipcRenderer.once(
               `proxy-service-res-${promiseCounter}`,
-              (event: string, arg: any) => {
+              (event, arg) => {
                 pendingPromiseCallbacks[arg.promiseCounter](arg.result);
 
                 delete pendingPromiseCallbacks[arg.promiseCounter];

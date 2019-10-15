@@ -3,57 +3,41 @@ const path = require("path");
 import { env } from "./env";
 import { Identifier, objToMap } from "./identifier";
 import { en, Locale } from "./locales";
-type Resouces = { [string: string]: string };
+import { Language } from "@opentranslate/languages";
+
+type Resouces = Map<Language, Locale>;
 
 class L10N {
-  resources: Resouces;
+  resources: Resouces = new Map<Language, Locale>();
 
-  constructor(initValue: { resources: Resouces }) {
-    this.resources = initValue.resources;
+  languages: Language[];
+  constructor(localeDirs: string[]) {
+    localeDirs.forEach((localeDir: string) => {
+      fs.readdirSync(localeDir).forEach((fileName: string) => {
+        const filePath = path.join(localeDir, fileName);
+        try {
+          const locale = objToMap<string>(
+            JSON.parse(fs.readFileSync(filePath))
+          );
+          const lang = fileName.replace(".json", "");
+          this.resources.set(<Language>lang, locale);
+        } catch (e) {
+          console.log(`load ${filePath} fail`);
+        }
+      });
+    });
+    this.languages = Array.from(this.resources.keys());
   }
 
-  getT(key: string = "en") {
+  getT(key: Language = "en") {
     let locale: Locale = en;
-    try {
-      locale = objToMap(JSON.parse(fs.readFileSync(this.resources[key])));
-    } catch (e) {
-      console.log(`load locale ${this.resources[key]} fail`);
-    }
     function T(key: Identifier): string {
       return locale.get(key) || <string>en.get(key);
     }
     return T;
   }
-
-  getLocales() {
-    let locales = [];
-    for (let key in this.resources) {
-      try {
-        const locale: { [key: string]: string } = JSON.parse(
-          fs.readFileSync(this.resources[key])
-        );
-        locales.push({ short: key, localeName: locale.localeName });
-      } catch (e) {
-        console.log(`load ${this.resources[key]} fail`);
-      }
-    }
-    return locales;
-  }
-
-  static loadLocales(localeDirs: Array<string>) {
-    let resources: Resouces = {};
-    localeDirs.forEach((localeDir: string) => {
-      fs.readdirSync(localeDir).forEach((fileName: string) => {
-        resources[fileName.replace(".json", "")] = path.join(
-          localeDir,
-          fileName
-        );
-      });
-    });
-    return resources;
-  }
 }
 
-let locales = L10N.loadLocales([env.systemLocaleDir, env.userLocaleDir]);
-let l10n = new L10N({ resources: locales });
+const localeDirs = [env.systemLocaleDir, env.userLocaleDir];
+let l10n = new L10N(localeDirs);
 export { l10n, L10N };

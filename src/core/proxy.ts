@@ -12,12 +12,13 @@ export class Proxy implements IProxy {
   }
 
   capture() {
-    this.controller.capture();
+    (<any>global).shortcutCapture.shortcutCapture();
   }
 
   set(identifier: Identifier, value: any, save: boolean, refresh: boolean) {
     this.controller.set(identifier, value, save, refresh);
   }
+
   get(identifier: Identifier) {
     return this.controller.get(identifier);
   }
@@ -35,9 +36,6 @@ export class Proxy implements IProxy {
     this.controller.setCurrentColor();
   }
 
-  getLocales() {
-    return this.controller.locales.getLocales();
-  }
   getKeys(routeName: RouteName): Identifier[] {
     return this.controller.action.getKeys(routeName);
   }
@@ -61,5 +59,11 @@ export class Proxy implements IProxy {
   }
   restoreWindow(routeName: Identifier | undefined) {
     this.controller.restoreWindow(routeName);
+  }
+  checkSync() {
+    if (this.controller.res) this.controller.sync();
+    else {
+      this.controller.checkClipboard();
+    }
   }
 }

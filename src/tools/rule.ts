@@ -1,20 +1,15 @@
-import { en } from "./locales";
-import { roles, RouteName } from "./action";
-import { Controller } from "../core/controller";
-import { Identifier, identifiers } from "./identifier";
-import keyBy from "lodash.keyby";
-//前面三个是不能交换顺序的，会出问题
+import { Identifier } from "./identifier";
 
 export const colorRules = new Map<Identifier, number>([
   ["autoCopy", 1],
   ["incrementalCopy", 2],
   ["autoPaste", 4]
 ]);
+
 export function getColorRule(key: Identifier) {
   return <number>colorRules.get(key);
 }
-
-const ruleKeys = identifiers;
+type CheckFuction = (value: any) => boolean;
 
 interface ModeConfig {
   x: number;
@@ -23,61 +18,61 @@ interface ModeConfig {
   width: number;
   fontSize?: number;
 }
-
-class GroupRule implements Rule {
-  predefined: Array<Identifier>;
-  msg: string;
-  constructor(predefined: Array<Identifier>, msg: string) {
-    this.predefined = predefined;
-    this.msg = msg;
-  }
-}
-
-type CheckFuction = (value: any) => boolean;
-
 interface Rule {
   predefined: any;
   msg: string;
   check?: CheckFuction; // 检查是否有效的函数
 }
 
-class BoolRule implements Rule {
-  predefined: boolean;
+class GroupRule<T> implements Rule {
+  predefined: Array<T>;
   msg: string;
-  constructor(predefined: boolean, msg: string) {
+  check: CheckFuction;
+  constructor(predefined: Array<T>, msg: string, options: readonly T[]) {
     this.predefined = predefined;
     this.msg = msg;
+    this.check = (value: Array<T>) => {
+      value.forEach(item => {
+        if (!options.includes(item)) {
+          return false;
+        }
+        return true;
+      });
+      return true;
+    };
   }
 }
 
-class StringRule implements Rule {
-  predefined: string;
+export class UnionRule<T> implements Rule {
+  predefined: any;
   msg: string;
-  constructor(predefined: string, msg: string) {
+  check: CheckFuction;
+  constructor(predefined: T, msg: string, options: readonly T[]) {
     this.predefined = predefined;
     this.msg = msg;
+    this.check = function(value: T) {
+      return options.includes(value);
+    };
   }
 }
-
-class NumberRule implements Rule {
-  predefined: number;
+class TypeRule<T> implements Rule {
+  predefined: T;
   msg: string;
   check?: CheckFuction;
 
-  constructor(predefined: number, msg: string, check?: CheckFuction) {
+  constructor(predefined: T, msg: string, check?: CheckFuction) {
     this.predefined = predefined;
     this.msg = msg;
-    if (check) {
-      this.check = check;
-    } else {
-      this.check = function(value) {
-        return typeof value == "number";
-      };
-    }
+    this.check = function(value) {
+      let result: boolean = typeof value === typeof predefined;
+      if (result && check) {
+        result = result && check(value);
+      }
+      return result;
+    };
   }
 }
-
-class ModeRule<T> implements Rule {
+class StructRule<T extends { [key: string]: any }> implements Rule {
   predefined: T;
   msg: string;
   check: CheckFuction;
@@ -85,11 +80,11 @@ class ModeRule<T> implements Rule {
   constructor(predefined: T, msg: string) {
     this.predefined = predefined;
     this.msg = msg;
-    this.check = function(value: any) {
-      for (let key in predefined) {
+    this.check = function(value: T) {
+      for (const key of Object.keys(predefined)) {
         if (
           !value.hasOwnProperty(key) ||
-          typeof value[key] !== typeof (<any>predefined)[key]
+          typeof value[key] !== typeof predefined[key]
         ) {
           return false;
         }
@@ -99,40 +94,4 @@ class ModeRule<T> implements Rule {
   }
 }
 
-export class OptionRule implements Rule {
-  predefined: any;
-  msg: string;
-  check: CheckFuction;
-  constructor(predefined: any, msg: string, options: readonly any[]) {
-    this.predefined = predefined;
-    this.msg = msg;
-    this.check = function(value: any) {
-      return options.includes(value);
-    };
-  }
-}
-
-export class UnionRule<T> implements Rule {
-  predefined: any;
-  msg: string;
-  check: CheckFuction;
-  constructor(predefined: T, msg: string, options: readonly any[]) {
-    this.predefined = predefined;
-    this.msg = msg;
-    this.check = function(value: T) {
-      return options.includes(value);
-    };
-  }
-}
-
-export {
-  Rule,
-  NumberRule,
-  ModeRule,
-  BoolRule,
-  CheckFuction,
-  ruleKeys,
-  ModeConfig,
-  GroupRule,
-  StringRule
-};
+export { Rule, TypeRule, StructRule, CheckFuction, ModeConfig, GroupRule };

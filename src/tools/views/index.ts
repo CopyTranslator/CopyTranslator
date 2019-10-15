@@ -60,7 +60,10 @@ export function showSettings() {
     title: t("settings"),
     parent: current_win.window,
     show: true,
-    icon: nativeImage.createFromPath(env.iconPath)
+    icon: nativeImage.createFromPath(env.iconPath),
+    webPreferences: {
+      nodeIntegration: true
+    }
   });
   loadRoute(window, "Settings");
   insertStyles(window);

@@ -57,10 +57,6 @@ class Controller {
     startService(this);
   }
 
-  capture() {
-    (<any>global).shortcutCapture.shortcutCapture();
-  }
-
   foldWindow() {
     this.win.edgeHide(this.win.onEdge());
   }
@@ -313,12 +309,6 @@ class Controller {
   target() {
     return this.get("targetLanguage");
   }
-
-  // OCR 相关
-  checkImage() {
-    recognizer.recognize(clipboard.readImage().toDataURL());
-  }
-
   postProcessImage(words_result: Array<{ words: string }>) {
     let src = words_result.map(item => item["words"]).join("\n");
     this.tryTranslate(src);
@@ -330,7 +320,8 @@ class Controller {
         this.checkClipboard();
       });
       clipboard.on("image-changed", () => {
-        this.checkImage();
+        // OCR 相关
+        recognizer.recognize(clipboard.readImage().toDataURL());
       });
       clipboard.startWatching();
     } else {

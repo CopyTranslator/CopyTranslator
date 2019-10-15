@@ -20,7 +20,7 @@ sidebarDepth: 6
 - [蓝奏云](https://www.lanzous.com/b389682)
 
 ### Windows
-安装即用
+下载exe文件，安装即用
 
 ### Mac
 下载dmg文件

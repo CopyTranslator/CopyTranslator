@@ -54,14 +54,17 @@
     "lodash.sum": "^4.0.2",
     "md5": "^2.2.1",
     "normalize.css": "^8.0.1",
+    "reflect-metadata": "^0.1.13",
     "sbd": "^1.0.15",
     "shortcut-capture": "^1.2.1",
     "vue": "^2.6.10",
+    "vue-class-component": "^7.1.0",
+    "vue-property-decorator": "^8.2.2",
     "vue-router": "3.0.7",
     "vuedraggable": "^2.23.0",
     "vuex": "^3.1.1"
   },
-  "devDependencies": { 
+  "devDependencies": {
     "@types/jest": "^23.3.14",
     "@types/lodash.compact": "^3.0.6",
     "@types/lodash.invert": "^4.3.6",

@@ -12,28 +12,26 @@
   </div>
 </template>
 
-<script>
-import WindowController from "../components/WindowController";
-import Action from "../components/Action";
+<script lang="ts">
+import WindowController from "../components/WindowController.vue";
+import Action from "../components/Action.vue";
+import Component from "vue-class-component";
+import { Identifier } from "../tools/identifier";
 
-export default {
-  name: "Switches",
-  mixins: [WindowController],
-  data: function() {
-    return {
-      actionKeys: []
-    };
-  },
-  mounted: function() {
+@Component({
+  components: {
+    Action
+  }
+})
+export default class Switches extends WindowController {
+  actionKeys: Identifier[] = [];
+
+  mounted() {
     this.$proxy.getKeys("Switches").then(keys => {
       this.actionKeys = keys;
     });
-  },
-  components: {
-    Action
-  },
-  methods: {}
-};
+  }
+}
 </script>
 
 <style scoped></style>

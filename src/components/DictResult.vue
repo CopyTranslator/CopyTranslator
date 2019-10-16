@@ -28,22 +28,21 @@
   </div>
 </template>
 
-<script>
-import BaseView from "./BaseView";
+<script lang="ts">
+import BaseView from "./BaseView.vue";
+import { Mixins, Component } from "vue-property-decorator";
 
-export default {
-  name: "DictResult",
-  mixins: [BaseView],
-  props: ["size"],
-  computed: {
-    dictStyle() {
-      return {
-        fontSize: this.size.toString() + "px",
-        height: "100%;"
-      };
-    }
+@Component({
+  props: { size: Number }
+})
+export default class DictResult extends Mixins(BaseView) {
+  get dictStyle() {
+    return {
+      fontSize: this.size.toString() + "px",
+      height: "100%;"
+    };
   }
-};
+}
 </script>
 
 <style scoped>

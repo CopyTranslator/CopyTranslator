@@ -16,29 +16,25 @@
   </div>
 </template>
 
-<script>
-import { RuleName } from "../tools/rule";
-import WindowController from "../components/WindowController";
+<script lang="ts">
+import WindowController from "../components/WindowController.vue";
 import { shell } from "electron";
-import Options from "./Options";
-import OCRConfig from "./OCRConfig";
-import Switches from "./Switches";
+import Options from "./Options.vue";
+import OCRConfig from "./OCRConfig.vue";
+import Switches from "./Switches.vue";
+import Component from "vue-class-component";
+import { Mixins } from "vue-property-decorator";
 
-export default {
-  name: "Focus",
-  mixins: [WindowController],
-  data() {
-    return {
-      activeName: "first"
-    };
-  },
-  methods: {},
+@Component({
   components: {
     Options,
     OCRConfig,
     Switches
   }
-};
+})
+export default class Focus extends WindowController {
+  activeName: string = "first";
+}
 </script>
 
 <style scoped></style>

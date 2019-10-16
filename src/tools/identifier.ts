@@ -1,39 +1,13 @@
-export const identifiers = [
-  "skipTaskbar",
-  "localeName",
-  "stayTop",
-  "listenClipboard",
-  "autoCopy",
-  "autoPaste",
-  "autoPurify",
-  "incrementalCopy",
-  "smartDict",
+export const normalActionTypes = [
   "translate",
   "copySource",
   "copyResult",
-  "dragCopy",
-  "source",
-  "result",
-  "sourceLanguage",
-  "targetLanguage",
-  "detectLanguage",
-  "languageDetected",
   "clear",
   "helpAndUpdate",
   "exit",
-  "contrastMode",
-  "focusMode",
-  "switchMode",
-  "autoHide",
-  "autoFormat",
-  "autoShow",
-  "settings",
   "viewSource",
-  "localeSetting",
   "return",
   "retryTranslate",
-  "hideDirect",
-  "translatorType",
   "evaluate",
   "homepage",
   "userManual",
@@ -43,13 +17,44 @@ export const identifiers = [
   "cancel",
   "ok",
   "restoreDefault",
-  "enableNotify",
-  "smartTranslate",
+  "capture",
+  "notices",
   "API_KEY",
   "APP_ID",
-  "SECRET_KEY",
-  "capture",
-  "OCRConfig",
+  "SECRET_KEY"
+] as const;
+
+const constantActionTypes = [
+  "source",
+  "result",
+  "localeName",
+  "sourceLanguage",
+  "targetLanguage",
+  "localeSetting",
+  "hideDirect",
+  "translatorType",
+  "frameMode"
+] as const;
+
+const switchActionTypes = [
+  "skipTaskbar",
+  "stayTop",
+  "listenClipboard",
+  "autoCopy",
+  "autoPaste",
+  "autoPurify",
+  "autoHide",
+  "autoFormat",
+  "autoShow",
+  "incrementalCopy",
+  "enableNotify",
+  "smartTranslate",
+  "smartDict",
+  "dragCopy"
+] as const;
+
+//Electron 原生 角色
+export const roles = [
   "undo",
   "redo",
   "cut",
@@ -62,28 +67,54 @@ export const identifiers = [
   "close",
   "quit",
   "reload",
-  "forcereload",
-  "toggledevtools",
-  "toggleFullScreen",
-  "resetzoom",
-  "zoomin",
-  "zoomout",
+  "forceReload",
+  "toggleDevTools",
+  "togglefullscreen",
+  "resetZoom",
+  "zoomIn",
+  "zoomOut",
   "editMenu",
-  "windowMenu",
-  "switches",
-  "options",
-  "frameMode",
-  "focus",
-  "contrast",
-  "settingsConfig",
-  "contrastMenu",
-  "focusMenu",
-  "trayMenu",
-  "contrastOption",
-  "notices"
+  "windowMenu"
 ] as const;
 
-export type Identifier = (typeof identifiers)[number];
+//不同位置动作列表
+const menuActionTypes = [
+  "contrastPanel", //面板上显示的
+  "contrastContext", //上下文
+  "focusContext", //上下文
+  "focusRight", // 按钮右键
+  "switches", //设置的开关面板
+  "options", //设置的选项面板
+  "ocrConfig", //设置的配置面板
+  "tray", //任务栏托盘右键菜单
+  "draggableOptions", //
+  "allActions"
+] as const;
+
+//路由名称
+const routeActionTypes = [
+  "focus",
+  "contrast",
+  "settings", //设置页面
+  "update",
+  "menuDrag"
+] as const;
+
+export type Role = (typeof roles)[number];
+export type SwitchActionType = (typeof switchActionTypes)[number];
+export type ConstantActionType = (typeof constantActionTypes)[number];
+export type NormalActionType = (typeof normalActionTypes)[number];
+export type MenuActionType = (typeof menuActionTypes)[number];
+export type RouteActionType = (typeof routeActionTypes)[number];
+
+export type Identifier =
+  | RouteActionType
+  | NormalActionType
+  | MenuActionType
+  | SwitchActionType
+  | ConstantActionType
+  | Role;
+
 export function mapToObj<T>(strMap: Map<Identifier, T>): { [key: string]: T } {
   let obj = Object.create(null);
   for (let [k, v] of strMap) {

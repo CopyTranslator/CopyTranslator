@@ -1,8 +1,3 @@
-<!--
-by: lizishan 2019-04-23
-name: Update
-notes:
--->
 <template>
   <div>
     <h1 v-html="version"></h1>
@@ -15,38 +10,31 @@ notes:
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import { ipcRenderer, shell } from "electron";
 import os from "os";
+import Vue from "vue";
 
-export default {
-  name: "Update",
-  data() {
-    return {
-      releaseNote: null,
-      version: null,
-      updateTitle: null,
-      isMac: os.platform() !== "win32"
-    };
-  },
+export default class Update extends Vue {
+  releaseNote: string | undefined;
+  version: string | undefined;
+  updateTitle: string | undefined;
+  isMac: boolean = os.platform() !== "win32";
 
-  methods: {
-    autoDownload() {
-      ipcRenderer.send("confirm-update");
-    },
-    manualDownload() {
-      shell.openExternal(
-        "https://copytranslator.github.io/guide/download.html"
-      );
-    }
-  },
-  created() {
+  autoDownload() {
+    ipcRenderer.send("confirm-update");
+  }
+  manualDownload() {
+    shell.openExternal("https://copytranslator.github.io/guide/download.html");
+  }
+
+  mounted() {
     ipcRenderer.on("releaseNote", (event, data) => {
       this.releaseNote = data.releaseNotes;
       this.version = data.version + " " + data.releaseName;
     });
   }
-};
+}
 </script>
 
 <style scoped>

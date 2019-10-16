@@ -361,9 +361,12 @@ class Controller {
     value: any,
     save: boolean = true,
     refresh: boolean = true
-  ) {
-    this.config.set(identifier, value);
-    this.postSet(identifier, value, save, refresh);
+  ): boolean {
+    if (this.config.set(identifier, value)) {
+      this.postSet(identifier, value, save, refresh);
+      return true;
+    }
+    return false;
   }
 
   postSet(identifier: Identifier, value: any, save = true, refresh = true) {

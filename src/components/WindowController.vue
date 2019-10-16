@@ -2,62 +2,79 @@
   <div></div>
 </template>
 
-<script>
+<script lang="ts">
 import { MessageType, WinOpt } from "../tools/enums";
 import { ipcRenderer as ipc, webFrame } from "electron";
+import { Identifier } from "../tools/identifier";
+import Vue from "vue";
+import Component, { mixins } from "vue-class-component";
 
-export default {
-  name: "WindowController",
-  data: function() {
-    return {
-      routeName: undefined
-    };
-  },
-  methods: {
-    windowOpt(type, args = null) {
-      ipc.send(MessageType.WindowOpt.toString(), {
-        type: type,
-        args: args
-      });
-    },
-    callback(cmd) {
-      this.$proxy.handleAction(cmd);
-    },
-    changeMode(routerName) {
-      this.$proxy.routeTo(routerName);
-    },
-    changeModeNoSave(routerName) {
-      this.$router.push({ name: routerName });
-    },
-    minify(event) {
-      this.windowOpt(WinOpt.Minify);
-    },
-    closeMe() {
-      this.windowOpt(WinOpt.CloseMe);
-    },
-    close(event) {},
-    openMenu(id = null) {
-      this.$proxy.popup(id);
-    },
-    resize(w = null, h = null, x = null, y = null) {
-      this.windowOpt(WinOpt.Resize, {
-        h: h,
-        w: w,
-        x: x,
-        y: y
-      });
-    },
-    async storeWindow() {
-      if (this.routeName) {
-        this.$proxy.saveWindow(
-          this.routeName,
-          await this.$proxy.getBound(),
-          this.size
-        );
-      }
+@Component
+export default class WindowController extends Vue {
+  routeName: Identifier | undefined = undefined;
+  size: number = 20;
+  windowHeight: number = window.innerHeight;
+  windowWidth: number = window.innerWidth;
+
+  setZoomFactor(value: number) {
+    this.size -= value;
+  }
+  syncHeight() {
+    this.windowHeight = window.innerHeight;
+    this.windowWidth = window.innerWidth;
+  }
+  windowOpt(type: WinOpt, args: any = null) {
+    ipc.send(MessageType.WindowOpt.toString(), {
+      type: type,
+      args: args
+    });
+  }
+
+  callback(cmd: string) {
+    this.$proxy.handleAction(cmd);
+  }
+  changeMode(routerName: Identifier) {
+    this.$proxy.routeTo(routerName);
+  }
+  changeModeNoSave(routerName: Identifier) {
+    this.$router.push({ name: routerName });
+  }
+  minify(event: any) {
+    this.windowOpt(WinOpt.Minify);
+  }
+  closeMe() {
+    this.windowOpt(WinOpt.CloseMe);
+  }
+  openMenu(id: RouteName) {
+    this.$proxy.popup(id);
+  }
+  resize(w = null, h = null, x = null, y = null) {
+    this.windowOpt(WinOpt.Resize, {
+      h: h,
+      w: w,
+      x: x,
+      y: y
+    });
+  }
+  async storeWindow() {
+    if (this.routeName) {
+      this.$proxy.saveWindow(
+        this.routeName,
+        await this.$proxy.getBound(),
+        this.size
+      );
     }
-  },
-  mounted: function() {
+  }
+
+  mounted() {
+    ipc.on(MessageType.WindowOpt.toString(), (event, arg) => {
+      switch (arg.type) {
+        case WinOpt.Zoom:
+          this.setZoomFactor(arg.rotation);
+          break;
+      }
+    });
+    window.addEventListener("resize", this.syncHeight);
     ipc.on(MessageType.Router.toString(), (event, arg) => {
       this.changeModeNoSave(arg);
     });
@@ -71,9 +88,11 @@ export default {
       ipc.send(MessageType.FirstLoaded.toString());
     });
     if (this.routeName) this.$proxy.restoreWindow(this.routeName);
-  },
-  destroyed: function() {
+  }
+
+  destroyed() {
+    window.removeEventListener("resize", this.syncHeight);
     this.storeWindow();
   }
-};
+}
 </script>

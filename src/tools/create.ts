@@ -8,7 +8,7 @@ type PromisifiedFunction<T> = T extends AnyFunction<infer U, infer V>
   ? (...args: U) => Promise<Unpacked<V>>
   : never;
 
-type Promisified<T> = {
+export type Promisified<T> = {
   [K in keyof T]: T[K] extends AnyFunction<infer U, infer V>
     ? PromisifiedFunction<T[K]>
     : never;

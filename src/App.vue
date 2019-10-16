@@ -5,10 +5,11 @@ npm
   </div>
 </template>
 
-<script>
-export default {
-  name: "App"
-};
+<script lang="ts">
+import { Component } from "vue-property-decorator";
+import Vue from "vue";
+@Component()
+export default class App extends Vue {}
 </script>
 <style>
 #app {

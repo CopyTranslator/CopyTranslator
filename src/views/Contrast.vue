@@ -45,58 +45,52 @@
   </div>
 </template>
 
-<script>
-import BaseView from "../components/BaseView";
-import WindowController from "../components/WindowController";
-import Adjustable from "../components/Adjustable";
-import Action from "../components/Action";
-import { RuleName } from "@/tools/rule";
-export default {
-  name: "Contrast",
-  mixins: [BaseView, WindowController, Adjustable],
-  data: function() {
-    return {
-      size: 15,
-      routeName: "contrast",
-      actionKeys: []
-    };
-  },
+<script lang="ts">
+import BaseView from "../components/BaseView.vue";
+import WindowController from "../components/WindowController.vue";
+import Action from "../components/Action.vue";
+import Component from "vue-class-component";
+import { Mixins } from "vue-property-decorator";
+import { Identifier } from "../tools/identifier";
+
+@Component({
+  components: {
+    Action
+  }
+})
+export default class Contrast extends Mixins(BaseView, WindowController) {
+  size: number = 15;
+  readonly routeName = "contrast";
+  actionKeys: Identifier[] = [];
+
   mounted() {
     this.$proxy.get("contrast").then(res => {
       this.size = res.fontSize;
     });
-    this.$proxy.get("contrastOption").then(res => {
+    this.$proxy.getKeys("contrastOption").then(res => {
       this.actionKeys = res;
     });
-  },
-  computed: {
-    area() {
-      return {
-        fontSize: `${this.size.toString()}px`,
-        height: `${this.windowHeight / 2 - 5}px`,
-        margin: `0`,
-        padding: `0`
-      };
-    },
-    area2() {
-      return {
-        width: `${this.windowWidth - 165}px`,
-        float: "left"
-      };
-    }
-  },
-  components: {
-    Action
-  },
-  methods: {
-    translate() {
-      this.$proxy.tryTranslate(this.sharedResult.src, true);
-    },
-    toSetting() {
-      this.$proxy.handleAction("settings");
-    }
   }
-};
+
+  get area() {
+    return {
+      fontSize: `${this.size.toString()}px`,
+      height: `${this.windowHeight / 2 - 5}px`,
+      margin: `0`,
+      padding: `0`
+    };
+  }
+  get area2() {
+    return {
+      width: `${this.windowWidth - 165}px`,
+      float: "left"
+    };
+  }
+
+  toSetting() {
+    this.$proxy.handleAction("settings");
+  }
+}
 </script>
 
 <style scoped>

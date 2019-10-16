@@ -26,9 +26,10 @@ class ConfigParser {
   set(key: Identifier, value: any) {
     let check = this.getRule(key).check;
     if (check && !check(value)) {
-      throw `${key} check fail`;
+      return false;
     } else {
       this.values.set(key, value);
+      return true;
     }
   }
 

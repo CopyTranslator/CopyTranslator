@@ -18,7 +18,13 @@ import {
 } from "./shortcuts";
 import { Controller } from "../core/controller";
 import { getLanguageLocales } from "./translators/locale";
-import { Identifier, objToMap } from "./identifier";
+import {
+  Identifier,
+  objToMap,
+  MenuActionType,
+  Role,
+  roles
+} from "./identifier";
 
 const fs = require("fs");
 
@@ -33,87 +39,6 @@ function decompose(id: string) {
 type MenuItemType = "normal" | "separator" | "submenu" | "checkbox" | "radio";
 
 type ActionType = "constant";
-
-type RouteName =
-  | "Focus"
-  | "Contrast"
-  | "Settings"
-  | "Tray"
-  | "Update"
-  | "OCRConfig"
-  | "FocusText"
-  | "Options"
-  | "Switches"
-  | "MenuDrag"
-  | "AllActions";
-
-type Role =
-  | "undo"
-  | "redo"
-  | "cut"
-  | "copy"
-  | "paste"
-  | "pasteAndMatchStyle"
-  | "delete"
-  | "selectAll"
-  | "reload"
-  | "forceReload"
-  | "toggleDevTools"
-  | "resetZoom"
-  | "zoomIn"
-  | "zoomOut"
-  | "togglefullscreen"
-  | "window"
-  | "minimize"
-  | "close"
-  | "help"
-  | "about"
-  | "services"
-  | "hide"
-  | "hideOthers"
-  | "unhide"
-  | "quit"
-  | "startSpeaking"
-  | "stopSpeaking"
-  | "close"
-  | "minimize"
-  | "zoom"
-  | "front"
-  | "appMenu"
-  | "fileMenu"
-  | "editMenu"
-  | "viewMenu"
-  | "recentDocuments"
-  | "toggleTabBar"
-  | "selectNextTab"
-  | "selectPreviousTab"
-  | "mergeAllWindows"
-  | "clearRecentDocuments"
-  | "moveTabToNewWindow"
-  | "windowMenu";
-
-const roles: Role[] = [
-  "undo",
-  "redo",
-  "cut",
-  "copy",
-  "paste",
-  "pasteAndMatchStyle",
-  "selectAll",
-  "delete",
-  "minimize",
-  "close",
-  "quit",
-  "reload",
-  "forceReload",
-  "toggleDevTools",
-  "togglefullscreen",
-  "resetZoom",
-  "zoomIn",
-  "zoomOut",
-  "editMenu",
-  "windowMenu"
-];
 
 export interface Action {
   label?: string;
@@ -372,8 +297,8 @@ class ActionManager {
     items.push(switchAction("enableNotify"));
     items.push(switchAction("skipTaskbar"));
 
-    items.push(normalAction("focusMode"));
-    items.push(normalAction("contrastMode"));
+    items.push(normalAction("focus"));
+    items.push(normalAction("contrast"));
     items.push(normalAction("capture"));
     items.push(normalAction("restoreDefault"));
 
@@ -406,42 +331,42 @@ class ActionManager {
     return itemGroup;
   }
 
-  getKeys(routeName: RouteName): Array<Identifier> {
+  getKeys(optionType: MenuActionType): Array<Identifier> {
     let contain: Array<Identifier> = [];
     const controller = this.controller;
     const keys: Array<Identifier> = Array.from(this.actions.keys());
-    switch (routeName) {
-      case "AllActions":
+    switch (optionType) {
+      case "allActions":
         contain = keys;
         break;
-      case "Focus":
-        contain = controller.get("focusMenu");
+      case "focusRight":
+        contain = controller.get("focusRight");
         break;
-      case "Contrast":
-        contain = controller.get("contrastMenu");
+      case "contrastPanel":
+        contain = controller.get("contrastPanel");
         break;
-      case "Tray":
-        contain = controller.get("trayMenu");
+      case "tray":
+        contain = controller.get("tray");
         break;
-      case "Options":
+      case "options":
         contain = keys.filter(x => this.getAction(x).actionType === "submenu");
         break;
-      case "Switches":
+      case "switches":
         contain = keys.filter(x => this.getAction(x).actionType === "checkbox");
         break;
-      case "FocusText":
+      case "focusContext":
         contain = ["copyResult", "copySource", "copy", "paste", "cut", "clear"];
         break;
-      case "MenuDrag":
+      case "draggableOptions":
         contain = keys.filter(x => this.getAction(x).actionType !== "constant");
     }
     return contain;
   }
 
-  popup(id: RouteName) {
+  popup(id: MenuActionType) {
     const contain = this.getKeys(id);
     const refresh = this.getRefreshFunc();
-    const all_keys = this.getKeys("AllActions");
+    const all_keys = this.getKeys("allActions");
     let menu = new Menu();
     contain
       .filter(key => all_keys.includes(key))
@@ -517,4 +442,4 @@ class ActionManager {
   }
 }
 
-export { RouteName, ActionManager, MenuItemType, compose, decompose, roles };
+export { ActionManager, MenuItemType, compose, decompose, roles };

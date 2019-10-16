@@ -30,38 +30,38 @@
     </el-col>
   </el-row>
 </template>
-<script>
-import draggable from "vuedraggable";
+<script lang="ts">
+const draggable = require("vuedraggable");
+import Vue from "vue";
+import Component from "vue-class-component";
+import { Identifier } from "../tools/identifier";
 
-export default {
-  name: "MenuDrag",
+@Component({
   components: {
     draggable
-  },
-  data() {
-    return {
-      selections: [],
-      candidates: []
-    };
-  },
-  mounted: function() {
-    this.$proxy.getKeys("MenuDrag").then(res => {
+  }
+})
+export default class MenuDrag extends Vue {
+  selections: Identifier[] = [];
+  candidates: Identifier[] = [];
+
+  mounted() {
+    this.$proxy.getKeys("draggableOptions").then(res => {
       this.candidates = res.sort();
     });
-  },
-  methods: {
-    log: function(evt) {
-      this.candidates.sort();
-    },
-    select(index) {
-      this.selections.push(this.candidates[index]);
-      this.candidates.splice(index, 1);
-    },
-    unselect(index) {
-      this.candidates.push(this.selections[index]);
-      this.candidates.sort();
-      this.selections.splice(index, 1);
-    }
   }
-};
+
+  log(evt: any) {
+    this.candidates.sort();
+  }
+  select(index: number) {
+    this.selections.push(this.candidates[index]);
+    this.candidates.splice(index, 1);
+  }
+  unselect(index: number) {
+    this.candidates.push(this.selections[index]);
+    this.candidates.sort();
+    this.selections.splice(index, 1);
+  }
+}
 </script>

@@ -18,39 +18,35 @@
   </div>
 </template>
 
-<script>
-import WindowController from "./WindowController";
+<script lang="ts">
+import WindowController from "./WindowController.vue";
+import EngineButton from "./EngineButton.vue";
 import { MessageType, WinOpt } from "../tools/enums";
 import { ipcRenderer as ipc } from "electron";
-import EngineButton from "./EngineButton";
 import { translatorTypes } from "../tools/translators";
+import { Vue, Component, Mixins } from "vue-property-decorator";
 
-export default {
-  name: "ControlButton",
-  mixins: [WindowController],
-  data: function() {
-    return {
-      start: 18,
-      span: 3,
-      colorNow: "white",
-      engines: translatorTypes
-    };
-  },
-  components: { EngineButton },
-  computed: {
-    styleNow() {
-      return `background:${this.colorNow};`;
-    }
-  },
-  methods: {
-    switchColor(color) {
-      this.colorNow = color;
-    },
-    switchListen() {
-      this.$proxy.handleAction("listenClipboard");
-    }
-  },
-  mounted: function() {
+@Component
+export default class ControlButton extends Mixins(WindowController) {
+  start: number = 18;
+  span: number = 3;
+  colorNow: string = "white";
+  engines = translatorTypes;
+  components = { EngineButton };
+
+  get styleNow() {
+    return `background:${this.colorNow};`;
+  }
+
+  switchColor(color: string) {
+    this.colorNow = color;
+  }
+
+  switchListen() {
+    this.$proxy.handleAction("listenClipboard");
+  }
+
+  mounted() {
     ipc.on(MessageType.WindowOpt.toString(), (event, arg) => {
       switch (arg.type) {
         case WinOpt.ChangeColor:
@@ -61,7 +57,7 @@ export default {
     this.$proxy.setCurrentColor();
     this.start = this.start - this.span * (this.engines.length - 1);
   }
-};
+}
 </script>
 
 <style scoped>

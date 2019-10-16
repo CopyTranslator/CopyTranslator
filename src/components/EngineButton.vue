@@ -8,32 +8,27 @@
   </div>
 </template>
 
-<script>
-import WindowController from "./WindowController";
-import { MessageType, WinOpt } from "../tools/enums";
-import { ipcRenderer as ipc } from "electron";
-import { RuleName } from "../tools/rule";
+<script lang="ts">
+import WindowController from "./WindowController.vue";
+import Vue from "vue";
+import Component, { mixins } from "vue-class-component";
 
-export default {
-  name: "EngineButton",
-  mixins: [WindowController],
-  props: ["engine"],
-  data: function() {
-    return {
-      engineClass: this.engine
-    };
-  },
-  computed: {
-    inactive() {
-      return this.$store.state.sharedResult.engine != this.engine;
-    }
-  },
-  methods: {
-    switchTranslator() {
-      this.callback("translatorType|" + this.engine);
-    }
+const AppProps = Vue.extend({
+  props: {
+    engine: String
   }
-};
+});
+
+@Component
+export default class App extends mixins(WindowController, AppProps) {
+  engineClass: string = this.engine;
+  get inactive() {
+    return this.$store.state.sharedResult.engine != this.engine;
+  }
+  switchTranslator() {
+    this.callback("translatorType|" + this.engine);
+  }
+}
 </script>
 
 <style scoped>

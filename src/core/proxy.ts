@@ -1,8 +1,8 @@
 import { IProxy } from "./iproxy";
 import { Controller } from "./controller";
-import { Identifier } from "../tools/identifier";
+import { Identifier, MenuActionType } from "../tools/identifier";
 import { handleActions } from "./actionCallback";
-import { Action, RouteName } from "../tools/action";
+import { Action } from "../tools/action";
 import { Rectangle } from "electron";
 
 export class Proxy implements IProxy {
@@ -15,7 +15,12 @@ export class Proxy implements IProxy {
     (<any>global).shortcutCapture.shortcutCapture();
   }
 
-  set(identifier: Identifier, value: any, save: boolean, refresh: boolean) {
+  set(
+    identifier: Identifier,
+    value: any,
+    save: boolean,
+    refresh: boolean
+  ): void {
     this.controller.set(identifier, value, save, refresh);
   }
 
@@ -36,7 +41,7 @@ export class Proxy implements IProxy {
     this.controller.setCurrentColor();
   }
 
-  getKeys(routeName: RouteName): Identifier[] {
+  getKeys(routeName: MenuActionType): Identifier[] {
     return this.controller.action.getKeys(routeName);
   }
   setUpRecognizer(APP_ID: string, API_KEY: string, SECRET_KEY: string): void {
@@ -48,7 +53,7 @@ export class Proxy implements IProxy {
   routeTo(routerName: string): void {
     this.controller.win.routeTo(routerName);
   }
-  popup(id: RouteName): void {
+  popup(id: MenuActionType): void {
     this.controller.action.popup(id);
   }
   saveWindow(routeName: Identifier, bound: Rectangle, fontSize: number): void {

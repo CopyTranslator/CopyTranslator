@@ -3,7 +3,7 @@ import { GroupRule, StructRule, UnionRule, ModeConfig, TypeRule } from "./rule";
 import { FrameMode, HideDirection, hideDirections, frameModes } from "./enums";
 import { languages, Language } from "@opentranslate/languages";
 import { translatorTypes, TranslatorType } from "./translators/";
-import { Identifier, identifiers } from "./identifier";
+import { Identifier } from "./identifier";
 function initConfig(
   config: ConfigParser | undefined = undefined
 ): ConfigParser {
@@ -115,7 +115,7 @@ function initConfig(
   );
 
   config.setRule(
-    "settingsConfig",
+    "settings",
     new StructRule<ModeConfig>(
       {
         x: 1390,
@@ -143,7 +143,7 @@ function initConfig(
   );
 
   config.setRule(
-    "contrastMenu",
+    "contrastPanel",
     new GroupRule<Identifier>(
       [
         "retryTranslate",
@@ -153,20 +153,20 @@ function initConfig(
         "autoFormat",
         "dragCopy",
         "stayTop",
-        "focusMode",
+        "focus",
         "settings",
         "exit"
       ],
       "the context menu of contrast mode",
-      identifiers
+      []
     )
   );
 
   config.setRule(
-    "focusMenu",
+    "focusRight",
     new GroupRule<Identifier>(
       [
-        "contrastMode",
+        "contrast",
         "retryTranslate",
         "autoCopy",
         "autoPaste",
@@ -181,12 +181,12 @@ function initConfig(
         "exit"
       ],
       "the context menu of focus mode",
-      identifiers
+      []
     )
   );
 
   config.setRule(
-    "trayMenu",
+    "tray",
     new GroupRule<Identifier>(
       [
         "translatorType",
@@ -205,19 +205,19 @@ function initConfig(
         "stayTop",
         "listenClipboard",
         "enableNotify",
-        "contrastMode",
-        "focusMode",
+        "contrast",
+        "focus",
         "settings",
         "helpAndUpdate",
         "exit"
       ],
       "the menu of tray",
-      identifiers
+      []
     )
   );
 
   config.setRule(
-    "contrastOption",
+    "contrastPanel",
     new GroupRule<Identifier>(
       [
         "autoCopy",
@@ -234,7 +234,7 @@ function initConfig(
         "targetLanguage"
       ],
       "the options of contrast mode",
-      identifiers
+      []
     )
   );
   config.setRule("notices", {

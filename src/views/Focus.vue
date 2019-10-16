@@ -42,90 +42,87 @@
   </div>
 </template>
 
-<script>
-import { desktopCapturer, screen, ipcRenderer } from "electron";
-import BaseView from "../components/BaseView";
-import WindowController from "../components/WindowController";
-import Adjustable from "../components/Adjustable";
-import DictResult from "../components/DictResult";
+<script lang="ts">
 import { shell } from "electron";
-import { RuleName } from "@/tools/rule";
-import ControlButton from "../components/ControlButton";
+import BaseView from "../components/BaseView.vue";
+import WindowController from "../components/WindowController.vue";
+import DictResult from "../components/DictResult.vue";
+import ControlButton from "../components/ControlButton.vue";
+import { Mixins, Ref, Component } from "vue-property-decorator";
+import { Identifier } from "../tools/identifier";
 
-export default {
-  name: "FocusMode",
-  mixins: [BaseView, WindowController, Adjustable],
-  components: { DictResult, ControlButton },
-  data: function() {
-    return {
-      size: 15,
-      routeName: "focus",
-      cmd: "",
-      activeEngines: ["Baidu"],
-      isOpen: false
-    };
-  },
+@Component({
+  components: {
+    DictResult,
+    ControlButton
+  }
+})
+export default class FocusMode extends Mixins(BaseView, WindowController) {
+  size: number = 15;
+  routeName: Identifier = "focus";
+  cmd: string = "";
+  activeEngines: any[] = ["Baidu"];
+  isOpen: boolean = false;
+  @Ref("dictResult") readonly dictResult!: DictResult;
+
   mounted() {
     this.$proxy.get("focus").then(res => {
       this.size = res.fontSize;
     });
-  },
-  methods: {
-    toggleCmdline() {
-      this.isOpen = !this.isOpen;
-    },
-    log2(event) {
-      console.log(event.dataTransfer.getData("text/plain"));
-    },
-    exectueCmd() {
-      this.callback(this.cmd);
-    },
-    shortcut() {
-      const text = this.getModifiedText();
-      const arg = {
-        src: "",
-        result: "",
-        source: "",
-        target: "",
-        engine: "",
-        dict: undefined,
-        phonetic: undefined,
-        notify: false
-      };
-      this.$store.commit("setShared", arg);
-      this.$proxy.tryTranslate(text);
-    },
-    getModifiedText() {
-      if (this.sharedResult && !this.sharedResult.dict) {
-        return this.sharedResult.result;
-      } else {
-        return this.$refs.dictResult.$el.innerText;
-      }
-    },
-    capture() {
-      this.$proxy.capture();
-    },
-    baidu() {
-      shell.openExternal(
-        `https://www.baidu.com/s?ie=utf-8&wd=${this.getModifiedText()}`
-      );
-    },
-    google() {
-      shell.openExternal(
-        `https://www.google.com/search?q=${this.getModifiedText()}`
-      );
-    }
-  },
-  computed: {
-    focusStyle() {
-      return {
-        fontSize: this.size.toString() + "px",
-        width: "100%",
-        height: "100vh"
-      };
+  }
+
+  toggleCmdline() {
+    this.isOpen = !this.isOpen;
+  }
+  log2(event: any) {
+    console.log(event.dataTransfer.getData("text/plain"));
+  }
+  exectueCmd() {
+    this.callback(this.cmd);
+  }
+  capture() {
+    this.$proxy.capture();
+  }
+  get focusStyle() {
+    return {
+      fontSize: this.size.toString() + "px",
+      width: "100%",
+      height: "100vh"
+    };
+  }
+  getModifiedText() {
+    if (this.sharedResult && !this.sharedResult.dict) {
+      return this.sharedResult.result;
+    } else {
+      return (this.dictResult.$el as any).innerText;
     }
   }
-};
+  baidu() {
+    shell.openExternal(
+      `https://www.baidu.com/s?ie=utf-8&wd=${this.getModifiedText()}`
+    );
+  }
+  google() {
+    shell.openExternal(
+      `https://www.google.com/search?q=${this.getModifiedText()}`
+    );
+  }
+  shortcut() {
+    const text = this.getModifiedText();
+    const arg = {
+      src: "",
+      result: "",
+      source: "",
+      target: "",
+      engine: "",
+      dict: undefined,
+      phonetic: undefined,
+      notify: false
+    };
+    this.$store.commit("setShared", arg);
+    this.$proxy.tryTranslate(text, true);
+  }
+}
 </script>
 
 <style scoped></style>

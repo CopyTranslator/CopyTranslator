@@ -37,7 +37,6 @@ export default class OCRConfig extends WindowController {
       this.SECRET_KEY = res;
     });
   }
-
   confirm() {
     this.$proxy.setUpRecognizer(this.APP_ID, this.API_KEY, this.SECRET_KEY);
     this.closeMe();

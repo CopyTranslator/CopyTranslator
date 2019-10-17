@@ -73,5 +73,14 @@
     "windowMenu": "視窗選單",
     "switches": "開關",
     "options": "選項",
-    "skipTaskbar": "Skip Taskbar"
+    "skipTaskbar": "Skip Taskbar",
+    "contrast": "Contrast Mode",
+    "focus": "Focus Mode",
+    "ocrConfig": "OCR Config",
+    "forceReload": "forcereload",
+    "toggleDevTools": "toggledevtools",
+    "togglefullscreen": "toggleFullScreen",
+    "resetZoom": "resetzoom",
+    "zoomIn": "zoomin",
+    "zoomOut": "zoomout"
 }

@@ -1,15 +1,8 @@
-import {
-  BrowserWindow,
-  Rectangle,
-  screen,
-  nativeImage,
-  remote
-} from "electron";
+import { BrowserWindow, screen, nativeImage } from "electron";
 import { createProtocol } from "vue-cli-plugin-electron-builder/lib";
 import { env } from "../env";
-import { RouteName } from "../action";
-import { Controller } from "../../core/controller";
 import { loadStyles } from "../style";
+import { RouteActionType } from "../types";
 
 export function insertStyles(window: BrowserWindow) {
   window.webContents.on("did-finish-load", function() {
@@ -19,7 +12,7 @@ export function insertStyles(window: BrowserWindow) {
 
 export function loadRoute(
   window: BrowserWindow,
-  routeName: RouteName,
+  routeName: RouteActionType,
   main: boolean = false
 ) {
   if (process.env.WEBPACK_DEV_SERVER_URL) {
@@ -39,7 +32,7 @@ export function loadRoute(
 export function showSettings() {
   const width = 320,
     height = 640;
-  const controller = <Controller>(<any>global).controller;
+  const controller = global.controller;
   const current_win = controller.win;
   const bound = current_win.getBound();
   const {
@@ -65,6 +58,6 @@ export function showSettings() {
       nodeIntegration: true
     }
   });
-  loadRoute(window, "Settings");
+  loadRoute(window, "settings");
   insertStyles(window);
 }

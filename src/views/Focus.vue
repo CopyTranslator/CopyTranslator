@@ -49,7 +49,7 @@ import WindowController from "../components/WindowController.vue";
 import DictResult from "../components/DictResult.vue";
 import ControlButton from "../components/ControlButton.vue";
 import { Mixins, Ref, Component } from "vue-property-decorator";
-import { Identifier } from "../tools/identifier";
+import { Identifier, RouteActionType } from "../tools/types";
 
 @Component({
   components: {
@@ -59,7 +59,7 @@ import { Identifier } from "../tools/identifier";
 })
 export default class FocusMode extends Mixins(BaseView, WindowController) {
   size: number = 15;
-  routeName: Identifier = "focus";
+  routeName: RouteActionType = "focus";
   cmd: string = "";
   activeEngines: any[] = ["Baidu"];
   isOpen: boolean = false;

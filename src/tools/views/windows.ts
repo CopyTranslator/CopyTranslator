@@ -1,18 +1,10 @@
-import {
-  app,
-  BrowserWindow,
-  Rectangle,
-  screen,
-  nativeImage,
-  TouchBarSlider,
-  Menu
-} from "electron";
+import { BrowserWindow, Rectangle, screen, nativeImage } from "electron";
 import { ColorStatus, HideDirection, MessageType, WinOpt } from "../enums";
 import { ModeConfig } from "../rule";
 import { env } from "../env";
-import { RouteName } from "../action";
 import { Controller } from "../../core/controller";
 import { loadRoute, insertStyles } from ".";
+import { RouteActionType } from "../types";
 
 export class WindowWrapper {
   window: BrowserWindow | undefined = undefined;
@@ -33,25 +25,26 @@ export class WindowWrapper {
     this.winOpt(WinOpt.ChangeColor, color);
   }
 
-  routeTo(routeName: string) {
+  routeTo(routeName: RouteActionType) {
     if (this.window) {
       this.window.focus();
       this.window.webContents.send(MessageType.Router.toString(), routeName);
-      (<Controller>(<any>global).controller).set("frameMode", routeName);
+      global.controller.set("frameMode", routeName);
     }
   }
 
-  load(routerName: RouteName = "Focus") {
-    if (!this.window) return;
+  load(routerName: RouteActionType = "focus") {
+    if (!this.window) {
+      return;
+    }
     this.winOpt(WinOpt.SaveMode);
     loadRoute(this.window, routerName, true);
     insertStyles(this.window);
-    const that = this;
     this.window.on("blur", () => {
-      that.edgeHide(that.onEdge());
+      this.edgeHide(this.onEdge());
     });
     this.window.on("focus", () => {
-      that.edgeShow();
+      this.edgeShow();
     });
   }
 
@@ -62,7 +55,7 @@ export class WindowWrapper {
   }
 
   onEdge() {
-    if (!(<Controller>(<any>global).controller).get("autoHide")) {
+    if (!global.controller.get("autoHide")) {
       return "None";
     }
     let { x, y, width } = this.getBound();
@@ -159,23 +152,25 @@ export class WindowWrapper {
     }
   }
 
-  createWindow(routeName: RouteName) {
+  createWindow(routeName: RouteActionType) {
     let param: ModeConfig | undefined;
-    const controller = <Controller>(<any>global).controller;
+    const controller = global.controller;
     switch (routeName) {
-      case "Focus":
+      case "focus":
         param = controller.get("focus");
         break;
-      case "Contrast":
+      case "contrast":
         param = controller.get("contrast");
         break;
-      case "Settings":
-        param = controller.get("settingsConfig");
-        break;
-      default:
+      case "settings":
+        param = controller.get("settings");
         break;
     }
-    if (!param) return;
+
+    if (!param) {
+      throw Error("not implement window type");
+    }
+
     // Create the browser window.
     this.window = new BrowserWindow({
       x: param.x,
@@ -217,9 +212,7 @@ export class WindowWrapper {
   restore(param: ModeConfig) {
     if (this.window) {
       this.window.setBounds(Object.assign(this.getBound(), param));
-      this.window.setAlwaysOnTop(
-        (<Controller>(<any>global).controller).get("stayTop")
-      );
+      this.window.setAlwaysOnTop(global.controller.get("stayTop"));
     }
   }
 }

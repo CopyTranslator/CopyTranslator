@@ -1,4 +1,4 @@
-import { Identifier } from "./identifier";
+import { Identifier } from "./types";
 
 export const colorRules = new Map<Identifier, number>([
   ["autoCopy", 1],

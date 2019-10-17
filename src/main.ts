@@ -22,8 +22,9 @@ import App from "./App.vue";
 import { constants, version } from "./core/constant";
 import { IProxy } from "./core/iproxy";
 import { createService } from "./tools/create";
+import { authorizeKey } from "./tools/types";
 
-const proxy = createService<IProxy>("EchoService");
+const proxy = createService<IProxy>(authorizeKey);
 
 Vue.use(Button);
 Vue.use(Select);

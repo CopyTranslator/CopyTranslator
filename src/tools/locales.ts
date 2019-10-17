@@ -1,4 +1,4 @@
-import { Identifier } from "./identifier";
+import { Identifier } from "./types";
 
 export const zh_cn = new Map<Identifier, string>([
   ["localeName", "简体中文"],

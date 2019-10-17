@@ -1,6 +1,5 @@
 import { env } from "./env";
-
-var fs = require("fs");
+import fs from "fs";
 
 const defaultStyles = `
 .application{ /*在这里设置整个应用的字体*/

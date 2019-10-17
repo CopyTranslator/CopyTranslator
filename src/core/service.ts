@@ -10,10 +10,10 @@ function isPromise(obj: any) {
   );
 }
 
-export function startService(controller: Controller) {
+export function startService(controller: Controller, key: string) {
   const proxy = new Proxy(controller);
   ipcMain.on("proxy-service", (event: any, arg: any) => {
-    if (arg.type === "EchoService") {
+    if (arg.type === key) {
       const res = (proxy as any)[arg.method](...arg.args);
       if (isPromise(res)) {
         res.then((result: any) => {

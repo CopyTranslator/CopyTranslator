@@ -18,13 +18,7 @@ import {
 } from "./shortcuts";
 import { Controller } from "../core/controller";
 import { getLanguageLocales } from "./translators/locale";
-import {
-  Identifier,
-  objToMap,
-  MenuActionType,
-  Role,
-  roles
-} from "./identifier";
+import { Identifier, objToMap, MenuActionType, Role, roles } from "./types";
 
 const fs = require("fs");
 
@@ -58,11 +52,17 @@ export interface Action {
   ) => void;
 }
 
+export interface TopAction extends Action {
+  id: Identifier;
+}
+
 function ActionWrapper(
   action: Action,
   callback: Function | undefined = undefined
 ) {
-  const key = action.id;
+  if (action.role) {
+    return action;
+  }
   if (action.type) {
     action.actionType = action.type;
   } else {
@@ -74,16 +74,16 @@ function ActionWrapper(
       browserWindow: BrowserWindow,
       event: Event
     ) {
-      callback(key, menuItem, browserWindow, event);
+      callback(action.id, menuItem, browserWindow, event);
     };
   }
   return action;
 }
 
-type Actions = Map<Identifier, Action>;
+type Actions = Map<Identifier, TopAction>;
 
 class ActionManager {
-  actions = new Map<Identifier, Action>();
+  actions = new Map<Identifier, TopAction>();
   shortcuts: Shortcuts = new Map<Identifier, Accelerator>();
   localShortcuts = new Map<Identifier, Accelerator>();
   callback: Function;
@@ -105,12 +105,12 @@ class ActionManager {
   update() {
     const refresh = this.getRefreshFunc();
     for (const key of this.actions.keys()) {
-      this.actions.set(key, refresh(key, <Action>this.actions.get(key)));
+      this.actions.set(key, refresh(key, this.actions.get(key) as TopAction));
     }
   }
 
-  getAction(identifier: Identifier): Action {
-    const action = <Action>this.actions.get(identifier);
+  getAction(identifier: Identifier): TopAction {
+    const action = <TopAction>this.actions.get(identifier);
     if (action.subMenuGenerator) {
       action.submenu = action.subMenuGenerator();
     }
@@ -122,33 +122,33 @@ class ActionManager {
     let config = controller.config;
     const t = controller.getT();
 
-    function refreshSingle(key: Identifier, action: Action): Action {
-      action.label = t(<Identifier>key);
+    function refreshFunc(key: Identifier, action: TopAction): TopAction {
+      action.label = t(key);
       if (action.role) {
-        action.click = undefined;
         return action;
       }
-      if (action.type == "checkbox") {
+      if (action.actionType == "checkbox") {
         action.checked = config.get(key);
       }
 
       if (action.subMenuGenerator) {
         action.submenu = action.subMenuGenerator();
       }
+
       if (action.submenu) {
         const value = config.get(key).toString();
-        for (const key2 in action.submenu) {
-          const param = decompose(action.submenu[key2].id)[1].toString();
-          action.submenu[key2].checked = param == value;
+        for (const i in action.submenu) {
+          const param = decompose(action.submenu[i].id)[1].toString();
+          action.submenu[i].checked = param == value;
         }
       }
       return action;
     }
-    return refreshSingle;
+    return refreshFunc;
   }
 
   getActions(config: ConfigParser, callback: Function): Actions {
-    let items: Array<Action> = [];
+    let items: Array<TopAction> = [];
 
     //普通的按钮，执行一项操作
     function normalAction(id: Identifier) {
@@ -159,16 +159,16 @@ class ActionManager {
           tooltip: id
         },
         callback
-      );
+      ) as TopAction;
     }
     //原生角色
-    function roleAction(role: Role): Action {
+    function roleAction(role: Role) {
       return {
         role: role,
         id: role,
         type: "normal",
         tooltip: role
-      };
+      } as TopAction;
     }
     //设置常量
     function constantAction(identifier: Identifier) {
@@ -179,7 +179,7 @@ class ActionManager {
           tooltip: identifier
         },
         callback
-      );
+      ) as TopAction;
     }
 
     //切换状态的动作
@@ -192,11 +192,11 @@ class ActionManager {
           tooltip: config.getTooltip(identifier)
         },
         callback
-      );
+      ) as TopAction;
     }
 
     //列表类型，是select的一种特化
-    function listAction(identifier: Identifier, list: any) {
+    function listAction(identifier: Identifier, list: any): TopAction {
       return ActionWrapper(
         {
           type: "submenu",
@@ -214,7 +214,7 @@ class ActionManager {
           })
         },
         callback
-      );
+      ) as TopAction;
     }
 
     //自动生成子菜单
@@ -230,10 +230,10 @@ class ActionManager {
           tooltip: config.getTooltip(identifier)
         },
         callback
-      );
+      ) as TopAction;
     }
 
-    const languageGenerator = (
+    const createLanguageGenerator = (
       identifier: Identifier,
       allowAuto: boolean = true
     ) => {
@@ -260,19 +260,20 @@ class ActionManager {
       };
     };
 
-    const localeGenerator = () => {
-      const id = "localeSetting";
-      const l = getLanguageLocales(<Language>config.get("localeSetting"));
-      return this.controller.locales.languages.map(lang => {
+    const localeGenerator = (id: Identifier) => {
+      const locales = this.controller.l10n.locales.map(locale => {
         return ActionWrapper(
           {
-            id: compose([id, lang]),
-            label: l[lang],
+            id: compose([id, locale.lang]),
+            label: locale.localeName,
             type: "checkbox"
           },
           callback
         );
       });
+      return () => {
+        return locales;
+      };
     };
 
     items.push(listAction("hideDirect", hideDirections));
@@ -312,21 +313,27 @@ class ActionManager {
     });
 
     items.push(
-      selectAction("sourceLanguage", languageGenerator("sourceLanguage", true))
+      selectAction(
+        "sourceLanguage",
+        createLanguageGenerator("sourceLanguage", true)
+      )
     );
     items.push(
-      selectAction("targetLanguage", languageGenerator("targetLanguage", false))
+      selectAction(
+        "targetLanguage",
+        createLanguageGenerator("targetLanguage", false)
+      )
     );
+    items.push(selectAction("localeSetting", localeGenerator("localeSetting")));
 
-    items.push(selectAction("localeSetting", localeGenerator));
     items.push(normalAction("settings"));
     items.push(normalAction("helpAndUpdate"));
     items.push(normalAction("exit"));
 
     //下面将数组变为字典
-    let itemGroup: Actions = new Map<Identifier, Action>();
+    let itemGroup: Actions = new Map<Identifier, TopAction>();
     items.forEach(action => {
-      itemGroup.set(<Identifier>action.id, action);
+      itemGroup.set(action.id, action);
     });
     return itemGroup;
   }
@@ -364,6 +371,7 @@ class ActionManager {
   }
 
   popup(id: MenuActionType) {
+    global.controller.win.show(true);
     const contain = this.getKeys(id);
     const refresh = this.getRefreshFunc();
     const all_keys = this.getKeys("allActions");

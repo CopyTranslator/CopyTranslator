@@ -1,4 +1,4 @@
-import { Identifier, MenuActionType } from "../tools/identifier";
+import { Identifier, MenuActionType } from "../tools/types";
 import { Action } from "../tools/action";
 import { Rectangle } from "electron";
 

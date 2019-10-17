@@ -1,5 +1,5 @@
 import { Rule } from "./rule";
-import { Identifier, mapToObj } from "./identifier";
+import { Identifier, mapToObj } from "./types";
 var fs = require("fs");
 
 type Rules = Map<Identifier, Rule>; //类型别名

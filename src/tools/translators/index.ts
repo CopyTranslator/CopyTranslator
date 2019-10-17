@@ -43,7 +43,7 @@ const translators = new Map(translatorMap);
 export function getTranslator(
   transType: TranslatorType
 ): TranslatorConstructor {
-  return <TranslatorConstructor>translators.get(transType);
+  return translators.get(transType) as TranslatorConstructor;
 }
 
 export function createTranslator(transType: TranslatorType): Translator {

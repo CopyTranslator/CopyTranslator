@@ -31,7 +31,7 @@
 import { compose, decompose } from "../tools/action";
 import { ipcRenderer as ipc } from "electron";
 import { MessageType, WinOpt } from "../tools/enums";
-import { Identifier, identifiers } from "../tools/identifier";
+import { Identifier } from "../tools/types";
 import { Prop, Component, Watch, Vue } from "vue-property-decorator";
 import { Action as ActionType } from "../tools/action";
 
@@ -39,11 +39,11 @@ import { Action as ActionType } from "../tools/action";
 export default class Action extends Vue {
   @Prop({ default: undefined }) readonly identifier!: Identifier;
 
-  action: ActionType | undefined;
+  action: ActionType | null = null;
   checked: boolean = false;
-  value: any = undefined;
-  command: string | undefined = undefined;
-  options: any = undefined;
+  value: any = null;
+  command: string | null = null;
+  options: any = null;
 
   @Watch("command")
   commandChanged(newcommand: string, oldcommand: string) {

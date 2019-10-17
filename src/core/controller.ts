@@ -1,5 +1,13 @@
-import { createTranslator, autoReSegment } from "../tools/translators";
-import { Translator, TranslateResult } from "@opentranslate/translator";
+import {
+  createTranslator,
+  autoReSegment,
+  TranslatorType
+} from "../tools/translators";
+import {
+  Translator,
+  TranslateResult,
+  Language
+} from "@opentranslate/translator";
 import { isValid } from "../tools/translators/helper";
 import { initConfig } from "../tools/configuration";
 import { ConfigParser } from "../tools/configParser";
@@ -16,7 +24,7 @@ import { ActionManager } from "../tools/action";
 import { TrayManager } from "../tools/tray";
 import { handleActions } from "./actionCallback";
 import { recognizer } from "../tools/ocr";
-import { Identifier } from "@/tools/identifier";
+import { Identifier, authorizeKey } from "../tools/types";
 import { startService } from "./service";
 
 const clipboard = require("electron-clipboard-extended");
@@ -29,7 +37,7 @@ class Controller {
   win: WindowWrapper = new WindowWrapper();
   translator: Translator = createTranslator("Google");
   config: ConfigParser = initConfig();
-  locales: L10N = l10n;
+  l10n: L10N = l10n;
   action: ActionManager;
   tray: TrayManager = new TrayManager();
   translating: boolean = false; //正在翻译
@@ -54,7 +62,7 @@ class Controller {
     windowController.bind();
     this.action.init();
     recognizer.setUp();
-    startService(this);
+    startService(this, authorizeKey);
   }
 
   foldWindow() {
@@ -76,8 +84,8 @@ class Controller {
     else this.src = append;
   }
 
-  get(identifier: Identifier) {
-    return this.config.get(identifier);
+  get<T>(identifier: Identifier) {
+    return this.config.get(identifier) as T;
   }
 
   resotreDefaultSetting() {
@@ -98,7 +106,7 @@ class Controller {
     if (!this.checkLength(originalText)) {
       return;
     }
-    let text = normalizeAppend(originalText, this.get("autoPurify"));
+    let text = normalizeAppend(originalText, this.get<boolean>("autoPurify"));
     if (this.checkValid(text)) {
       this.doTranslate(text);
     }
@@ -109,19 +117,21 @@ class Controller {
       if (clear) {
         this.clear();
       }
-      this.doTranslate(normalizeAppend(text, this.get("autoPurify")));
+      this.doTranslate(normalizeAppend(text, this.get<boolean>("autoPurify")));
     }
   }
 
   getT() {
-    return this.locales.getT(this.get("localeSetting"));
+    return this.l10n.getT(this.get<Language>("localeSetting"));
   }
 
   onError(msg: string) {
     console.log(msg);
   }
 
-  sync(language: any = undefined) {
+  sync(
+    language: { source: Language; target: Language } | undefined = undefined
+  ): void {
     if (!language) {
       language = {
         source: this.source(),
@@ -137,8 +147,8 @@ class Controller {
           result: this.result,
           source: language.source,
           target: language.target,
-          engine: this.get("translatorType"),
-          notify: this.get("enableNotify")
+          engine: this.get<TranslatorType>("translatorType"),
+          notify: this.get<boolean>("enableNotify")
         },
         extra
       )
@@ -167,18 +177,20 @@ class Controller {
   }
 
   postProcess(language: any, result: TranslateResult) {
-    if (this.get("autoCopy")) {
+    if (this.get<boolean>("autoCopy")) {
       clipboard.writeText(this.result);
-      if (this.get("autoPaste")) {
+      if (this.get<boolean>("autoPaste")) {
         simulate.paste();
       }
-    } else if (this.get("autoFormat")) {
+    } else if (this.get<boolean>("autoFormat")) {
       clipboard.writeText(this.src);
     }
     this.setCurrentColor();
-    if (this.get("autoShow")) {
+    if (this.get<boolean>("autoShow")) {
       this.win.edgeShow();
-      this.win.show(!(this.get("autoCopy") && this.get("autoPaste")));
+      this.win.show(
+        !(this.get<boolean>("autoCopy") && this.get<boolean>("autoPaste"))
+      );
     }
     this.res = result;
     this.sync(language);
@@ -187,7 +199,7 @@ class Controller {
   getOptions() {
     let realOptions = 0;
     for (const [key, value] of colorRules) {
-      if (this.get(key)) {
+      if (this.get<boolean>(key)) {
         realOptions |= value;
       }
     }
@@ -199,7 +211,7 @@ class Controller {
       this.win.switchColor(ColorStatus.Fail);
       return;
     }
-    if (!this.get("listenClipboard")) {
+    if (!this.get<boolean>("listenClipboard")) {
       this.win.switchColor(ColorStatus.None);
       return;
     }
@@ -244,7 +256,7 @@ class Controller {
     }
 
     if (src_lang == dest_lang) {
-      if (this.get("smartTranslate")) {
+      if (this.get<boolean>("smartTranslate")) {
         dest_lang = should_src;
       }
     }
@@ -303,11 +315,11 @@ class Controller {
   }
 
   source() {
-    return this.get("sourceLanguage");
+    return this.get<Language>("sourceLanguage");
   }
 
   target() {
-    return this.get("targetLanguage");
+    return this.get<Language>("targetLanguage");
   }
   postProcessImage(words_result: Array<{ words: string }>) {
     let src = words_result.map(item => item["words"]).join("\n");

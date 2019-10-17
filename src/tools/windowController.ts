@@ -26,7 +26,7 @@ class WindowController {
     ipc.on(MessageType.WindowOpt.toString(), (event: any, args: any) => {
       var arg = args.args;
       var currentWindow = BrowserWindow.fromWebContents(event.sender);
-      const controller = <Controller>(<any>global).controller;
+      const controller = global.controller;
       switch (args.type) {
         case WinOpt.CloseMe:
           currentWindow.close();

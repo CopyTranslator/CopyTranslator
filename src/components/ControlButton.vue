@@ -10,7 +10,7 @@
         <EngineButton :engine="engine"></EngineButton>
       </el-col>
       <el-col :span="span">
-        <div v-on:dblclick="minify" v-on:contextmenu="openMenu('Focus')">
+        <div v-on:dblclick="minify" v-on:contextmenu="openMenu('focusRight')">
           <el-button :style="styleNow" @click="switchListen" circle></el-button>
         </div>
       </el-col>
@@ -26,7 +26,11 @@ import { ipcRenderer as ipc } from "electron";
 import { translatorTypes } from "../tools/translators";
 import { Vue, Component, Mixins } from "vue-property-decorator";
 
-@Component
+@Component({
+  components: {
+    EngineButton
+  }
+})
 export default class ControlButton extends Mixins(WindowController) {
   start: number = 18;
   span: number = 3;

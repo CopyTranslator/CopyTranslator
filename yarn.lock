@@ -642,7 +642,7 @@
     core-js "^2.6.5"
     regenerator-runtime "^0.13.2"
 
-"@babel/runtime@^7.0.0", "@babel/runtime@^7.5.5":
+"@babel/runtime@^7.0.0", "@babel/runtime@^7.6.3":
   version "7.6.3"
   resolved "https://registry.npm.taobao.org/@babel/runtime/download/@babel/runtime-7.6.3.tgz#935122c74c73d2240cafd32ddb5fc2a6cd35cf1f"
   integrity sha1-k1Eix0xz0iQMr9Mt21/Cps01zx8=
@@ -754,74 +754,74 @@
   integrity sha1-K1o6s/kYzKSKjHVMCBaOPwPrphs=
 
 "@opentranslate/baidu@^1.0.2":
-  version "1.0.2"
-  resolved "https://registry.npm.taobao.org/@opentranslate/baidu/download/@opentranslate/baidu-1.0.2.tgz#70f3db509e6c80a803a102ddd116d732f8d6f2cb"
-  integrity sha1-cPPbUJ5sgKgDoQLd0RbXMvjW8ss=
+  version "1.0.3"
+  resolved "https://registry.npm.taobao.org/@opentranslate/baidu/download/@opentranslate/baidu-1.0.3.tgz#3ce58f7f258cdd7156ca4fe0fcbbf1bd694beeab"
+  integrity sha1-POWPfyWM3XFWyk/g/LvxvWlL7qs=
   dependencies:
-    "@opentranslate/translator" "^1.0.2"
+    "@opentranslate/translator" "^1.0.3"
     "@types/md5" "^2.1.33"
     md5 "^2.2.1"
     qs "^6.8.0"
 
 "@opentranslate/caiyun@^1.0.2":
-  version "1.0.2"
-  resolved "https://registry.npm.taobao.org/@opentranslate/caiyun/download/@opentranslate/caiyun-1.0.2.tgz#1eff7cb66473a35351c299557280324079297d12"
-  integrity sha1-Hv98tmRzo1NRwplVcoAyQHkpfRI=
+  version "1.0.3"
+  resolved "https://registry.npm.taobao.org/@opentranslate/caiyun/download/@opentranslate/caiyun-1.0.3.tgz#73dcd289dcf5b83b3d4fe631fcfcdd670daad79f"
+  integrity sha1-c9zSidz1uDs9T+Yx/PzdZw2q158=
   dependencies:
-    "@opentranslate/translator" "^1.0.2"
+    "@opentranslate/translator" "^1.0.3"
     "@types/qs" "^6.5.3"
     qs "^6.8.0"
 
 "@opentranslate/google@^1.0.2":
-  version "1.0.2"
-  resolved "https://registry.npm.taobao.org/@opentranslate/google/download/@opentranslate/google-1.0.2.tgz#a0d475833e76189a274d562b24a2a611dad04127"
-  integrity sha1-oNR1gz52GJonTVYrJKKmEdrQQSc=
+  version "1.0.3"
+  resolved "https://registry.npm.taobao.org/@opentranslate/google/download/@opentranslate/google-1.0.3.tgz#199c6d65c65acdeff508247cd9b95da074ada6c6"
+  integrity sha1-GZxtZcZaze/1CCR82bldoHStpsY=
   dependencies:
-    "@opentranslate/translator" "^1.0.2"
+    "@opentranslate/translator" "^1.0.3"
     "@types/qs" "^6.5.3"
     qs "^6.9.0"
 
-"@opentranslate/languages@^1.0.2":
-  version "1.0.2"
-  resolved "https://registry.npm.taobao.org/@opentranslate/languages/download/@opentranslate/languages-1.0.2.tgz#09d6bbf804c42b9a2d779f301cc427ef2de4d8e9"
-  integrity sha1-Cda7+ATEK5otd58wHMQn7y3k2Ok=
+"@opentranslate/languages@^1.0.2", "@opentranslate/languages@^1.0.3":
+  version "1.0.3"
+  resolved "https://registry.npm.taobao.org/@opentranslate/languages/download/@opentranslate/languages-1.0.3.tgz#41213a40a05e79fb8a36519b028cd523df842467"
+  integrity sha1-QSE6QKBeefuKNlGbAozVI9+EJGc=
 
 "@opentranslate/sogou@^1.0.2":
-  version "1.0.2"
-  resolved "https://registry.npm.taobao.org/@opentranslate/sogou/download/@opentranslate/sogou-1.0.2.tgz#a0d929144133f2c5ff7454fab6bf0c4ec4cda043"
-  integrity sha1-oNkpFEEz8sX/dFT6tr8MTsTNoEM=
+  version "1.0.3"
+  resolved "https://registry.npm.taobao.org/@opentranslate/sogou/download/@opentranslate/sogou-1.0.3.tgz#25db20820ef284935a638bb9197c24c69750f679"
+  integrity sha1-Jdsggg7yhJNaY4u5GXwkxpdQ9nk=
   dependencies:
-    "@opentranslate/translator" "^1.0.2"
+    "@opentranslate/translator" "^1.0.3"
     "@types/md5" "^2.1.33"
     "@types/qs" "^6.5.3"
     md5 "^2.2.1"
     qs "^6.8.0"
 
 "@opentranslate/tencent@^1.0.2":
-  version "1.0.2"
-  resolved "https://registry.npm.taobao.org/@opentranslate/tencent/download/@opentranslate/tencent-1.0.2.tgz#59c83ed0eca954d574316f563b04053cada36e1c"
-  integrity sha1-Wcg+0OypVNV0MW9WOwQFPK2jbhw=
+  version "1.0.3"
+  resolved "https://registry.npm.taobao.org/@opentranslate/tencent/download/@opentranslate/tencent-1.0.3.tgz#49e7c3447983a120b40ea51063a77a2d98ce7c71"
+  integrity sha1-SefDRHmDoSC0DqUQY6d6LZjOfHE=
   dependencies:
-    "@opentranslate/translator" "^1.0.2"
+    "@opentranslate/translator" "^1.0.3"
     "@types/qs" "^6.5.3"
     md5 "^2.2.1"
     qs "^6.9.0"
 
-"@opentranslate/translator@^1.0.2":
-  version "1.0.2"
-  resolved "https://registry.npm.taobao.org/@opentranslate/translator/download/@opentranslate/translator-1.0.2.tgz#5bcd859f9f26b2db33a4ac079e7e4cfe744dcd2d"
-  integrity sha1-W82Fn58mstszpKwHnn5M/nRNzS0=
+"@opentranslate/translator@^1.0.2", "@opentranslate/translator@^1.0.3":
+  version "1.0.3"
+  resolved "https://registry.npm.taobao.org/@opentranslate/translator/download/@opentranslate/translator-1.0.3.tgz#c98d864db55084e4fc892093b8d327061ff574be"
+  integrity sha1-yY2GTbVQhOT8iSCTuNMnBh/1dL4=
   dependencies:
-    "@opentranslate/languages" "^1.0.2"
+    "@opentranslate/languages" "^1.0.3"
     axios "^0.19.0"
     franc-min "^4.1.0"
 
 "@opentranslate/youdao@^1.0.2":
-  version "1.0.2"
-  resolved "https://registry.npm.taobao.org/@opentranslate/youdao/download/@opentranslate/youdao-1.0.2.tgz#d5c236cc04a3552ce39ac70f0ccc2a448fde302e"
-  integrity sha1-1cI2zASjVSzjmscPDMwqRI/eMC4=
+  version "1.0.3"
+  resolved "https://registry.npm.taobao.org/@opentranslate/youdao/download/@opentranslate/youdao-1.0.3.tgz#9b78971a722e7441147ef0a021ce1e27d112dcb5"
+  integrity sha1-m3iXGnIudEEUfvCgIc4eJ9ES3LU=
   dependencies:
-    "@opentranslate/translator" "^1.0.2"
+    "@opentranslate/translator" "^1.0.3"
     md5 "^2.2.1"
     qs "^6.9.0"
 
@@ -1846,7 +1846,7 @@ aws4@^1.8.0:
 
 axios@^0.19.0:
   version "0.19.0"
-  resolved "https://registry.npm.taobao.org/axios/download/axios-0.19.0.tgz#8e09bff3d9122e133f7b8101c8fbdd00ed3d2ab8"
+  resolved "https://registry.npm.taobao.org/axios/download/axios-0.19.0.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Faxios%2Fdownload%2Faxios-0.19.0.tgz#8e09bff3d9122e133f7b8101c8fbdd00ed3d2ab8"
   integrity sha1-jgm/89kSLhM/e4EByPvdAO09Krg=
   dependencies:
     follow-redirects "1.5.10"
@@ -9338,7 +9338,7 @@ qs@6.7.0:
 
 qs@^6.5.1, qs@^6.6.0, qs@^6.8.0, qs@^6.9.0:
   version "6.9.0"
-  resolved "https://registry.npm.taobao.org/qs/download/qs-6.9.0.tgz?cache=0&sync_timestamp=1569207136481&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fqs%2Fdownload%2Fqs-6.9.0.tgz#d1297e2a049c53119cb49cca366adbbacc80b409"
+  resolved "https://registry.npm.taobao.org/qs/download/qs-6.9.0.tgz#d1297e2a049c53119cb49cca366adbbacc80b409"
   integrity sha1-0Sl+KgScUxGctJzKNmrbusyAtAk=
 
 qs@~6.5.2:
@@ -11638,7 +11638,7 @@ vm-browserify@^1.0.1:
   resolved "https://registry.npm.taobao.org/vm-browserify/download/vm-browserify-1.1.0.tgz#bd76d6a23323e2ca8ffa12028dc04559c75f9019"
   integrity sha1-vXbWojMj4sqP+hICjcBFWcdfkBk=
 
-vue-class-component@^7.0.1, vue-class-component@^7.1.0:
+vue-class-component@^7.1.0:
   version "7.1.0"
   resolved "https://registry.npm.taobao.org/vue-class-component/download/vue-class-component-7.1.0.tgz#b33efcb10e17236d684f70b1e96f1946ec793e87"
   integrity sha1-sz78sQ4XI21oT3Cx6W8ZRux5Poc=
@@ -11709,11 +11709,11 @@ vue-loader@^15.7.0:
     vue-style-loader "^4.1.0"
 
 vue-property-decorator@^8.2.2:
-  version "8.2.2"
-  resolved "https://registry.npm.taobao.org/vue-property-decorator/download/vue-property-decorator-8.2.2.tgz#ac895e9508ee1bf86e3a28568d94d842c2c8e42f"
-  integrity sha1-rIlelQjuG/huOihWjZTYQsLI5C8=
+  version "8.3.0"
+  resolved "https://registry.npm.taobao.org/vue-property-decorator/download/vue-property-decorator-8.3.0.tgz#536f027dc7d626f37c8d85a2dc02f0a6cb979440"
+  integrity sha1-U28CfcfWJvN8jYWi3ALwpsuXlEA=
   dependencies:
-    vue-class-component "^7.0.1"
+    vue-class-component "^7.1.0"
 
 vue-router@3.0.7:
   version "3.0.7"
@@ -12189,11 +12189,11 @@ yallist@^3.0.0, yallist@^3.0.2, yallist@^3.0.3:
   integrity sha1-27fa+b/YusmrRev2ArjLrQ1dCP0=
 
 yaml@^1.5.0:
-  version "1.7.1"
-  resolved "https://registry.npm.taobao.org/yaml/download/yaml-1.7.1.tgz#86db1b39a6434a7928d3750cbe08303a50a24d6b"
-  integrity sha1-htsbOaZDSnko03UMvggwOlCiTWs=
+  version "1.7.2"
+  resolved "https://registry.npm.taobao.org/yaml/download/yaml-1.7.2.tgz#f26aabf738590ab61efaca502358e48dc9f348b2"
+  integrity sha1-8mqr9zhZCrYe+spQI1jkjcnzSLI=
   dependencies:
-    "@babel/runtime" "^7.5.5"
+    "@babel/runtime" "^7.6.3"
 
 yargs-parser@10.x:
   version "10.1.0"

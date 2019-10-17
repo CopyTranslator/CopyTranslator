@@ -54,6 +54,9 @@ export default class App extends mixins(WindowController, AppProps) {
 .Youdao {
   background-image: url("../images/youdao.png");
 }
+.Tencent {
+  background-image: url("../images/tencent.png");
+}
 .btnBase {
   background-position: center;
   background-size: contain;

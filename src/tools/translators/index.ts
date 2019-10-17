@@ -3,6 +3,7 @@ import Google from "@opentranslate/google";
 import Youdao from "@opentranslate/youdao";
 import Sogou from "@opentranslate/sogou";
 import Caiyun from "@opentranslate/caiyun";
+import Tencent from "@opentranslate/tencent";
 import { Translator, TranslateResult } from "@opentranslate/translator";
 import { reSegment, reSegmentGoogle } from "./helper";
 export { TranslateResult };
@@ -27,7 +28,8 @@ export const translatorTypes = [
   "Caiyun",
   "Google",
   "Youdao",
-  "Sogou"
+  "Sogou",
+  "Tencent"
 ] as const;
 export type TranslatorType = (typeof translatorTypes)[number];
 type TranslatorConstructor = { new (): Translator };
@@ -36,7 +38,8 @@ const translatorMap: [TranslatorType, TranslatorConstructor][] = [
   ["Google", Google],
   ["Youdao", Youdao],
   ["Caiyun", Caiyun],
-  ["Sogou", Sogou]
+  ["Sogou", Sogou],
+  ["Tencent", Tencent]
 ];
 const translators = new Map(translatorMap);
 

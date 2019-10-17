@@ -8,7 +8,7 @@ npm
 <script lang="ts">
 import { Component } from "vue-property-decorator";
 import Vue from "vue";
-@Component()
+@Component
 export default class App extends Vue {}
 </script>
 <style>

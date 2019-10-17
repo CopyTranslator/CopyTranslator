@@ -5,7 +5,7 @@ import { constants, version } from "../core/constant";
 import { Controller } from "../core/controller";
 import { decompose } from "../tools/action";
 import { showSettings } from "../tools/views";
-import { Identifier } from "@/tools/identifier";
+import { Identifier, NormalActionType, RouteActionType } from "../tools/types";
 
 const clipboard = require("electron-clipboard-extended");
 
@@ -18,12 +18,12 @@ function handleActions(
   const params = decompose(id);
   const identifier = <Identifier>params[0];
   const param = params[1];
-  const controller = <Controller>(<any>global).controller;
+  const controller = global.controller;
   const action = controller.action.getAction(identifier);
   const intVal = parseInt(param);
   switch (action.actionType) {
     case "normal":
-      handleNormalAction(identifier);
+      handleNormalAction(<NormalActionType | RouteActionType>identifier);
       break;
     case "submenu":
     case "constant":
@@ -43,17 +43,16 @@ function handleActions(
   }
 }
 
-function handleNormalAction(identifier: string) {
-  const controller = <Controller>(<any>global).controller;
+function handleNormalAction(identifier: NormalActionType | RouteActionType) {
+  const controller = global.controller;
   const t = controller.getT();
   switch (identifier) {
-    case "contrastMode":
-      controller.win.routeTo("Contrast");
+    case "contrast":
+      controller.win.routeTo("contrast");
       break;
-    case "focusMode":
-      controller.win.routeTo("Focus");
+    case "focus":
+      controller.win.routeTo("focus");
       break;
-    case "quit":
     case "exit":
       controller.onExit();
       break;

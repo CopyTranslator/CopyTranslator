@@ -1,6 +1,3 @@
-export const frameModes = ["Contrast", "Focus"] as const;
-export type FrameMode = (typeof frameModes)[number];
-
 export const hideDirections = [
   "Up",
   "Right",

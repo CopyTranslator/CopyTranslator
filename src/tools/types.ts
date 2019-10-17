@@ -18,13 +18,10 @@ export const normalActionTypes = [
   "ok",
   "restoreDefault",
   "capture",
-  "notices",
-  "API_KEY",
-  "APP_ID",
-  "SECRET_KEY"
+  "notices"
 ] as const;
 
-const constantActionTypes = [
+export const constantActionTypes = [
   "source",
   "result",
   "localeName",
@@ -33,10 +30,13 @@ const constantActionTypes = [
   "localeSetting",
   "hideDirect",
   "translatorType",
-  "frameMode"
+  "frameMode",
+  "API_KEY",
+  "APP_ID",
+  "SECRET_KEY"
 ] as const;
 
-const switchActionTypes = [
+export const switchActionTypes = [
   "skipTaskbar",
   "stayTop",
   "listenClipboard",
@@ -78,7 +78,7 @@ export const roles = [
 ] as const;
 
 //不同位置动作列表
-const menuActionTypes = [
+export const menuActionTypes = [
   "contrastPanel", //面板上显示的
   "contrastContext", //上下文
   "focusContext", //上下文
@@ -92,7 +92,7 @@ const menuActionTypes = [
 ] as const;
 
 //路由名称
-const routeActionTypes = [
+export const routeActionTypes = [
   "focus",
   "contrast",
   "settings", //设置页面
@@ -107,6 +107,9 @@ export type NormalActionType = (typeof normalActionTypes)[number];
 export type MenuActionType = (typeof menuActionTypes)[number];
 export type RouteActionType = (typeof routeActionTypes)[number];
 
+export const authorizeKey: string = "CopyTranslator";
+import flatten from "lodash.flatten";
+
 export type Identifier =
   | RouteActionType
   | NormalActionType
@@ -114,7 +117,14 @@ export type Identifier =
   | SwitchActionType
   | ConstantActionType
   | Role;
-
+export const identifiers: readonly Identifier[] = flatten([
+  roles,
+  switchActionTypes,
+  constantActionTypes,
+  normalActionTypes,
+  menuActionTypes,
+  routeActionTypes
+]);
 export function mapToObj<T>(strMap: Map<Identifier, T>): { [key: string]: T } {
   let obj = Object.create(null);
   for (let [k, v] of strMap) {

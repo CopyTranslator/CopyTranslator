@@ -1,8 +1,4 @@
-import {
-  TranslateResult,
-  Translator,
-  Language
-} from "@opentranslate/translator";
+import { Translator, Language } from "@opentranslate/translator";
 import compact from "lodash.compact";
 import sum from "lodash.sum";
 

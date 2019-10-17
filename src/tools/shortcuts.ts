@@ -1,5 +1,5 @@
 import { Accelerator } from "electron";
-import { Identifier } from "./identifier";
+import { Identifier } from "./types";
 
 interface Shortcut {
   accelerator: Accelerator;
@@ -9,8 +9,8 @@ interface Shortcut {
 export type Shortcuts = Map<Identifier, Accelerator>;
 
 const defaultGlobalShortcuts: Shortcuts = new Map([
-  ["focusMode", "Shift+F1"],
-  ["contrastMode", "Shift+F2"]
+  ["focus", "Shift+F1"],
+  ["contrast", "Shift+F2"]
 ]);
 
 const defaultLocalShortcuts: Shortcuts = new Map([

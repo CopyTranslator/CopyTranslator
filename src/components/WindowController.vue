@@ -5,13 +5,13 @@
 <script lang="ts">
 import { MessageType, WinOpt } from "../tools/enums";
 import { ipcRenderer as ipc, webFrame } from "electron";
-import { Identifier } from "../tools/identifier";
+import { RouteActionType, MenuActionType } from "../tools/types";
 import Vue from "vue";
 import Component, { mixins } from "vue-class-component";
 
 @Component
 export default class WindowController extends Vue {
-  routeName: Identifier | undefined = undefined;
+  routeName: RouteActionType | null = null;
   size: number = 20;
   windowHeight: number = window.innerHeight;
   windowWidth: number = window.innerWidth;
@@ -33,10 +33,10 @@ export default class WindowController extends Vue {
   callback(cmd: string) {
     this.$proxy.handleAction(cmd);
   }
-  changeMode(routerName: Identifier) {
+  changeMode(routerName: RouteActionType) {
     this.$proxy.routeTo(routerName);
   }
-  changeModeNoSave(routerName: Identifier) {
+  changeModeNoSave(routerName: RouteActionType) {
     this.$router.push({ name: routerName });
   }
   minify(event: any) {
@@ -45,7 +45,7 @@ export default class WindowController extends Vue {
   closeMe() {
     this.windowOpt(WinOpt.CloseMe);
   }
-  openMenu(id: RouteName) {
+  openMenu(id: MenuActionType) {
     this.$proxy.popup(id);
   }
   resize(w = null, h = null, x = null, y = null) {
@@ -83,7 +83,6 @@ export default class WindowController extends Vue {
         this.storeWindow();
       }
     });
-
     this.$nextTick(() => {
       ipc.send(MessageType.FirstLoaded.toString());
     });

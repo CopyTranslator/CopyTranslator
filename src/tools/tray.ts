@@ -10,7 +10,7 @@ class TrayManager {
     this.tray = this.tray ? this.tray : new Tray(env.trayIconPath);
     this.tray.setToolTip(constants.appName);
     this.tray.on("right-click", event => {
-      (<Controller>(<any>global).controller).action.popup("Tray");
+      global.controller.action.popup("tray");
     });
   }
 }

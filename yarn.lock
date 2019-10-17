@@ -877,6 +877,13 @@
   dependencies:
     "@types/lodash" "*"
 
+"@types/lodash.flatten@^4.4.6":
+  version "4.4.6"
+  resolved "https://registry.npm.taobao.org/@types/lodash.flatten/download/@types/lodash.flatten-4.4.6.tgz#b74c3267c87e44e603137d4621e8a9396b6551f5"
+  integrity sha1-t0wyZ8h+ROYDE31GIeipOWtlUfU=
+  dependencies:
+    "@types/lodash" "*"
+
 "@types/lodash.invert@^4.3.6":
   version "4.3.6"
   resolved "https://registry.npm.taobao.org/@types/lodash.invert/download/@types/lodash.invert-4.3.6.tgz#813a684b5e90985803dba2d92430fef8e782690e"
@@ -7271,6 +7278,11 @@ lodash.escaperegexp@^4.1.2:
   version "4.1.2"
   resolved "https://registry.npm.taobao.org/lodash.escaperegexp/download/lodash.escaperegexp-4.1.2.tgz#64762c48618082518ac3df4ccf5d5886dae20347"
   integrity sha1-ZHYsSGGAglGKw99Mz11YhtriA0c=
+
+lodash.flatten@^4.4.0:
+  version "4.4.0"
+  resolved "https://registry.npm.taobao.org/lodash.flatten/download/lodash.flatten-4.4.0.tgz#f31c22225a9632d2bbf8e4addbef240aa765a61f"
+  integrity sha1-8xwiIlqWMtK7+OSt2+8kCqdlph8=
 
 lodash.invert@^4.3.0:
   version "4.3.0"

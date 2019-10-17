@@ -7,7 +7,7 @@ const fs = require("fs");
 export class Recognizer {
   client: any;
   setUp(force = false) {
-    const controller = <Controller>(<any>global).controller;
+    const controller = global.controller;
     const APP_ID = controller.get("APP_ID");
     const API_KEY = controller.get("API_KEY");
     const SECRET_KEY = controller.get("SECRET_KEY");

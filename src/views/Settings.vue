@@ -8,7 +8,7 @@
         <el-tab-pane :label="$t('switches')" name="second">
           <Switches></Switches>
         </el-tab-pane>
-        <el-tab-pane :label="$t('OCRConfig')" name="third">
+        <el-tab-pane :label="$t('ocrConfig')" name="third">
           <OCRConfig></OCRConfig>
         </el-tab-pane>
       </el-tabs>

@@ -16,22 +16,22 @@ export default new Router({
     },
     {
       path: "/focus",
-      name: "Focus",
+      name: "focus",
       component: Focus
     },
     {
       path: "/contrast",
-      name: "Contrast",
+      name: "contrast",
       component: Contrast
     },
     {
       path: "/update",
-      name: "Update",
+      name: "update",
       component: Update
     },
     {
-      path: "/Settings",
-      name: "Settings",
+      path: "/settings",
+      name: "settings",
       component: Settings
     }
   ]

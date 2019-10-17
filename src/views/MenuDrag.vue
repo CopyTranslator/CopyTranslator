@@ -34,7 +34,7 @@
 const draggable = require("vuedraggable");
 import Vue from "vue";
 import Component from "vue-class-component";
-import { Identifier } from "../tools/identifier";
+import { Identifier } from "../tools/types";
 
 @Component({
   components: {

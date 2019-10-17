@@ -21,7 +21,7 @@ export function checkUpdate() {
       if (res && res.data.version > version) {
         const info = res.data;
         const mirror = info.mirrors[res.key];
-        const controller = <Controller>(<any>global).controller;
+        const controller = global.controller;
         const t = controller.getT();
         dialog
           .showMessageBox(<BrowserWindow>controller.win.window, {
@@ -50,9 +50,9 @@ export function checkUpdate() {
 }
 
 export function checkNotice() {
-  const controller = <Controller>(<any>global).controller;
+  const controller = global.controller;
   const t = controller.getT();
-  let notices = controller.get("notices");
+  let notices = controller.get<Notice[]>("notices");
   function getButtons(buttons: Array<Button>) {
     let new_buttons = buttons.map(button => button.label);
     new_buttons.push(t("ok"));

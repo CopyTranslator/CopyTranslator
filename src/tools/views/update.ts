@@ -4,9 +4,6 @@ import { Controller } from "../../core/controller";
 import { env } from "../env";
 import { checkUpdate } from "../checker";
 import { loadRoute, insertStyles } from "./index";
-import { checkNotice } from "../checker";
-import { WinOpt } from "../enums";
-import { configureRequestOptionsFromUrl } from "builder-util-runtime";
 let window: BrowserWindow | undefined = undefined;
 let binded: boolean = false;
 autoUpdater.autoDownload = false;
@@ -18,7 +15,7 @@ function bindUpdateEvents() {
   autoUpdater.on("update-available", updateInfo => {
     const width = 500,
       height = 500;
-    const current_win = (<Controller>(<any>global).controller).win;
+    const current_win = global.controller.win;
     const bound = current_win.getBound();
     const {
       x: xBound,
@@ -41,7 +38,7 @@ function bindUpdateEvents() {
         nodeIntegration: true
       }
     });
-    loadRoute(window, "Update");
+    loadRoute(window, "update");
     insertStyles(window);
     window.webContents.on("did-finish-load", function() {
       (<BrowserWindow>window).webContents.send("releaseNote", updateInfo);

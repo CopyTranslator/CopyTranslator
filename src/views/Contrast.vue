@@ -7,7 +7,7 @@
           v-if="sharedResult"
           :style="area"
           v-model="sharedResult.src"
-          v-on:contextmenu="openMenu('FocusText')"
+          v-on:contextmenu="openMenu('contrastContext')"
         ></textarea>
 
         <textarea
@@ -15,7 +15,7 @@
           :style="area"
           v-if="sharedResult"
           v-model="sharedResult.result"
-          v-on:contextmenu="openMenu('FocusText')"
+          v-on:contextmenu="openMenu('contrastContext')"
         ></textarea>
       </div>
 
@@ -31,8 +31,8 @@
         <el-button
           type="primary"
           class="noMargin"
-          @click="changeMode('Focus')"
-          >{{ $t("switchMode") }}</el-button
+          @click="changeMode('focus')"
+          >{{ $t("focus") }}</el-button
         >
         <el-button type="primary" class="noMargin" @click="translate">{{
           $t("translate")
@@ -51,11 +51,11 @@ import WindowController from "../components/WindowController.vue";
 import Action from "../components/Action.vue";
 import Component from "vue-class-component";
 import { Mixins } from "vue-property-decorator";
-import { Identifier } from "../tools/identifier";
+import { Identifier } from "../tools/types";
 
 @Component({
   components: {
-    Action
+    Action: Action
   }
 })
 export default class Contrast extends Mixins(BaseView, WindowController) {
@@ -67,7 +67,7 @@ export default class Contrast extends Mixins(BaseView, WindowController) {
     this.$proxy.get("contrast").then(res => {
       this.size = res.fontSize;
     });
-    this.$proxy.getKeys("contrastOption").then(res => {
+    this.$proxy.getKeys("contrastPanel").then(res => {
       this.actionKeys = res;
     });
   }

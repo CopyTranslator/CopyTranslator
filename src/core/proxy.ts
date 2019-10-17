@@ -1,6 +1,6 @@
 import { IProxy } from "./iproxy";
 import { Controller } from "./controller";
-import { Identifier, MenuActionType } from "../tools/identifier";
+import { Identifier, MenuActionType, RouteActionType } from "../tools/types";
 import { handleActions } from "./actionCallback";
 import { Action } from "../tools/action";
 import { Rectangle } from "electron";
@@ -25,7 +25,7 @@ export class Proxy implements IProxy {
   }
 
   get(identifier: Identifier) {
-    return this.controller.get(identifier);
+    return this.controller.get<any>(identifier);
   }
   handleAction(cmd: string) {
     handleActions(cmd);
@@ -50,7 +50,7 @@ export class Proxy implements IProxy {
   tryTranslate(text: string, clear = false): void {
     this.controller.tryTranslate(text, clear);
   }
-  routeTo(routerName: string): void {
+  routeTo(routerName: RouteActionType): void {
     this.controller.win.routeTo(routerName);
   }
   popup(id: MenuActionType): void {

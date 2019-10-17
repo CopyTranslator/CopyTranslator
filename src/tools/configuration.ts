@@ -1,9 +1,14 @@
 import { ConfigParser } from "./configParser";
 import { GroupRule, StructRule, UnionRule, ModeConfig, TypeRule } from "./rule";
-import { FrameMode, HideDirection, hideDirections, frameModes } from "./enums";
+import { HideDirection, hideDirections } from "./enums";
 import { languages, Language } from "@opentranslate/languages";
 import { translatorTypes, TranslatorType } from "./translators/";
-import { Identifier } from "./identifier";
+import {
+  Identifier,
+  RouteActionType,
+  routeActionTypes,
+  identifiers
+} from "./types";
 function initConfig(
   config: ConfigParser | undefined = undefined
 ): ConfigParser {
@@ -69,7 +74,11 @@ function initConfig(
 
   config.setRule(
     "frameMode",
-    new UnionRule<FrameMode>("Contrast", "current frame mode", frameModes)
+    new UnionRule<RouteActionType>(
+      "contrast",
+      "current frame mode",
+      routeActionTypes
+    )
   );
 
   config.setRule(
@@ -158,7 +167,7 @@ function initConfig(
         "exit"
       ],
       "the context menu of contrast mode",
-      []
+      identifiers
     )
   );
 
@@ -181,7 +190,7 @@ function initConfig(
         "exit"
       ],
       "the context menu of focus mode",
-      []
+      identifiers
     )
   );
 
@@ -212,7 +221,7 @@ function initConfig(
         "exit"
       ],
       "the menu of tray",
-      []
+      identifiers
     )
   );
 
@@ -234,7 +243,7 @@ function initConfig(
         "targetLanguage"
       ],
       "the options of contrast mode",
-      []
+      identifiers
     )
   );
   config.setRule("notices", {

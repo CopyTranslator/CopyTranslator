@@ -6,10 +6,9 @@
 import { Watch, Component, Vue } from "vue-property-decorator";
 import WindowController from "./WindowController.vue";
 import { Language } from "@opentranslate/languages";
-import { mixins } from "vue-class-component";
 
 @Component
-export default class BaseView extends mixins(WindowController) {
+export default class BaseView extends WindowController {
   source: Language = "en";
   target: Language = "zh-CN";
 

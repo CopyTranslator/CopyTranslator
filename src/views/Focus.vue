@@ -6,7 +6,7 @@
       @keyup.ctrl.13="shortcut"
       @keyup.ctrl.71="google"
       @keyup.ctrl.66="baidu"
-      v-on:contextmenu="openMenu('FocusText')"
+      v-on:contextmenu="openMenu('focusContext')"
       v-on:drop="log2"
     >
       <el-row style="width:100%;height:100vh">

@@ -32,23 +32,17 @@ export const translatorTypes = [
   "Tencent"
 ] as const;
 export type TranslatorType = (typeof translatorTypes)[number];
-type TranslatorConstructor = { new (): Translator };
-const translatorMap: [TranslatorType, TranslatorConstructor][] = [
-  ["Baidu", Baidu],
-  ["Google", Google],
-  ["Youdao", Youdao],
-  ["Caiyun", Caiyun],
-  ["Sogou", Sogou],
-  ["Tencent", Tencent]
+// type TranslatorConstructor = { new (): Translator };
+const translatorMap: [TranslatorType, Translator][] = [
+  ["Baidu", new Baidu()],
+  ["Google", new Google()],
+  ["Youdao", new Youdao()],
+  ["Caiyun", new Caiyun()],
+  ["Sogou", new Sogou()],
+  ["Tencent", new Tencent()]
 ];
 const translators = new Map(translatorMap);
 
-export function getTranslator(
-  transType: TranslatorType
-): TranslatorConstructor {
-  return translators.get(transType) as TranslatorConstructor;
-}
-
 export function createTranslator(transType: TranslatorType): Translator {
-  return new (getTranslator(transType))();
+  return translators.get(transType) as Translator;
 }

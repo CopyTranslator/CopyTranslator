@@ -10,7 +10,7 @@ import { ConfigParser } from "./configParser";
 import { Language } from "@opentranslate/languages";
 import { env } from "./env";
 import { hideDirections } from "./enums";
-import { translatorTypes } from "./translators";
+import { translatorTypes } from "./translators/types";
 import {
   defaultGlobalShortcuts,
   defaultLocalShortcuts,

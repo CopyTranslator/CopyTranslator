@@ -12,7 +12,7 @@ import { env } from "./env";
 import { hideDirections } from "./enums";
 import { translatorTypes } from "./translators";
 import {
-  defaultShortcuts,
+  defaultGlobalShortcuts,
   defaultLocalShortcuts,
   Shortcuts
 } from "./shortcuts";
@@ -389,13 +389,16 @@ class ActionManager {
   }
 
   loadGlobalShortcuts() {
-    this.shortcuts = defaultShortcuts;
+    this.shortcuts = defaultGlobalShortcuts;
     try {
       this.shortcuts = objToMap(
         JSON.parse(fs.readFileSync(env.shortcut, "utf-8"))
       );
     } catch (e) {
-      fs.writeFileSync(env.shortcut, JSON.stringify(defaultShortcuts, null, 4));
+      fs.writeFileSync(
+        env.shortcut,
+        JSON.stringify(defaultGlobalShortcuts, null, 4)
+      );
     }
   }
 
@@ -431,21 +434,17 @@ class ActionManager {
   registerLocalShortcuts() {
     let menu = new Menu();
     const refresh = this.getRefreshFunc();
-    Array.from(this.localShortcuts.keys()).forEach(key => {
+    for (const [key, accelerator] of this.localShortcuts.entries()) {
       let action = this.getAction(key);
       if (action) {
         menu.append(
-          new MenuItem(
-            Object.assign(
-              {
-                accelerator: this.localShortcuts.get(key)
-              },
-              refresh(key, action)
-            )
-          )
+          new MenuItem({
+            accelerator,
+            ...refresh(key, action)
+          })
         );
       }
-    });
+    }
     Menu.setApplicationMenu(menu);
   }
 }

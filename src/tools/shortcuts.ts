@@ -25,8 +25,4 @@ const defaultLocalShortcuts: Shortcuts = new Map([
   ["quit", "Cmd+Q"]
 ]);
 
-export {
-  Shortcut,
-  defaultGlobalShortcuts as defaultShortcuts,
-  defaultLocalShortcuts
-};
+export { Shortcut, defaultGlobalShortcuts, defaultLocalShortcuts };

@@ -2,7 +2,7 @@ import {
   createTranslator,
   autoReSegment,
   TranslatorType
-} from "../tools/translators";
+} from "../tools/translators/types";
 import {
   Translator,
   TranslateResult,

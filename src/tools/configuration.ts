@@ -2,7 +2,7 @@ import { ConfigParser } from "./configParser";
 import { GroupRule, StructRule, UnionRule, ModeConfig, TypeRule } from "./rule";
 import { HideDirection, hideDirections } from "./enums";
 import { languages, Language } from "@opentranslate/languages";
-import { translatorTypes, TranslatorType } from "./translators/";
+import { translatorTypes, TranslatorType } from "./translators/types";
 import {
   Identifier,
   RouteActionType,
@@ -84,7 +84,7 @@ function initConfig(
   config.setRule(
     "translatorType",
     new UnionRule<TranslatorType>(
-      "Google",
+      "google",
       "type of translator",
       translatorTypes
     )

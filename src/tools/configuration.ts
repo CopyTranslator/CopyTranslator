@@ -2,7 +2,7 @@ import { ConfigParser } from "./configParser";
 import { GroupRule, StructRule, UnionRule, ModeConfig, TypeRule } from "./rule";
 import { HideDirection, hideDirections } from "./enums";
 import { languages, Language } from "@opentranslate/languages";
-import { translatorTypes, TranslatorType } from "./translators/types";
+import { translatorTypes, TranslatorType } from "./translate/types";
 import {
   Identifier,
   RouteActionType,

@@ -1,14 +1,6 @@
-import {
-  createTranslator,
-  autoReSegment,
-  TranslatorType
-} from "../tools/translators/types";
-import {
-  Translator,
-  TranslateResult,
-  Language
-} from "@opentranslate/translator";
-import { isValid } from "../tools/translators/helper";
+import { Compound, TranslatorType } from "../tools/translate";
+import { TranslateResult, Language } from "@opentranslate/translator";
+import { isValid } from "../tools/translate/helper";
 import { initConfig } from "../tools/configuration";
 import { ConfigParser } from "../tools/configParser";
 import { ColorStatus, MessageType, WinOpt } from "../tools/enums";
@@ -18,7 +10,7 @@ import simulate from "../tools/simulate";
 import { env } from "../tools/env";
 import { l10n, L10N } from "../tools/l10n";
 import { colorRules, getColorRule } from "../tools/rule";
-import { normalizeAppend } from "../tools/translators/helper";
+import { normalizeAppend, autoReSegment } from "../tools/translate/helper";
 import { app, Rectangle } from "electron";
 import { ActionManager } from "../tools/action";
 import { TrayManager } from "../tools/tray";
@@ -35,7 +27,7 @@ class Controller {
   res: TranslateResult | undefined;
   lastAppend: string = "";
   win: WindowWrapper = new WindowWrapper();
-  translator: Translator = createTranslator("Google");
+  translator: Compound = new Compound("google", {});
   config: ConfigParser = initConfig();
   l10n: L10N = l10n;
   action: ActionManager;
@@ -412,11 +404,11 @@ class Controller {
         windowController.dragCopy = value;
         break;
       case "translatorType":
-        this.translator = createTranslator(value);
-        if (!isValid(this.translator, this.source())) {
+        this.translator.setMainEngine(value as TranslatorType);
+        if (!this.translator.isValid(this.source())) {
           this.set("sourceLanguage", "en", save, refresh);
         }
-        if (!isValid(this.translator, this.target())) {
+        if (!this.translator.isValid(this.target())) {
           this.set("targetLanguage", "zh-CN", save, refresh);
         }
         this.doTranslate(this.src);

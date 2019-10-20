@@ -10,14 +10,14 @@ import { ConfigParser } from "./configParser";
 import { Language } from "@opentranslate/languages";
 import { env } from "./env";
 import { hideDirections } from "./enums";
-import { translatorTypes } from "./translators/types";
+import { translatorTypes } from "./translate/types";
 import {
   defaultGlobalShortcuts,
   defaultLocalShortcuts,
   Shortcuts
 } from "./shortcuts";
 import { Controller } from "../core/controller";
-import { getLanguageLocales } from "./translators/locale";
+import { getLanguageLocales } from "./translate/locale";
 import { Identifier, objToMap, MenuActionType, Role, roles } from "./types";
 
 const fs = require("fs");

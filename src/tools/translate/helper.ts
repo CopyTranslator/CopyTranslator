@@ -1,12 +1,16 @@
-import { Translator, Language } from "@opentranslate/translator";
+import {
+  Translator,
+  Language,
+  TranslateResult
+} from "@opentranslate/translator";
 import compact from "lodash.compact";
 import sum from "lodash.sum";
+import { CopyTranslateResult } from "./types";
 
 export const chnEnds = /[？。！]/g;
 export const engEnds = /[?.!]/g;
 export const chnBreaks = /[？。！\n]/g;
 export const engBreaks = /[?.!\n]/g;
-
 const chineseStyles = ["zh-CN", "zh-TW", "ja", "ko"];
 
 const tokenizer = require("sbd");
@@ -93,6 +97,20 @@ export function reSegment(
     resultString += "\n";
   });
   return resultString;
+}
+
+export function autoReSegment(result: TranslateResult): CopyTranslateResult {
+  let segmentFunc = reSegment;
+  if (result.engine == "google") {
+    segmentFunc = reSegmentGoogle;
+  }
+  const resultString = segmentFunc(
+    result.text,
+    result.trans.paragraphs,
+    result.from,
+    result.to
+  );
+  return { ...result, resultString };
 }
 
 export function isValid(translator: Translator, lang: Language): boolean {

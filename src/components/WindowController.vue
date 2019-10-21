@@ -19,10 +19,7 @@ export default class WindowController extends Vue {
   setZoomFactor(value: number) {
     this.size -= value;
   }
-  syncHeight() {
-    this.windowHeight = window.innerHeight;
-    this.windowWidth = window.innerWidth;
-  }
+
   windowOpt(type: WinOpt, args: any = null) {
     ipc.send(MessageType.WindowOpt.toString(), {
       type: type,
@@ -48,22 +45,13 @@ export default class WindowController extends Vue {
   openMenu(id: MenuActionType) {
     this.$proxy.popup(id);
   }
-  resize(w = null, h = null, x = null, y = null) {
-    this.windowOpt(WinOpt.Resize, {
-      h: h,
-      w: w,
-      x: x,
-      y: y
-    });
-  }
-  async storeWindow() {
+
+  async onResize() {
     if (this.routeName) {
-      this.$proxy.saveWindow(
-        this.routeName,
-        await this.$proxy.getBound(),
-        this.size
-      );
+      this.$proxy.saveWindow(this.routeName, this.size);
     }
+    this.windowHeight = window.innerHeight;
+    this.windowWidth = window.innerWidth;
   }
 
   mounted() {
@@ -74,7 +62,8 @@ export default class WindowController extends Vue {
           break;
       }
     });
-    window.addEventListener("resize", this.syncHeight);
+    window.addEventListener("resize", this.onResize);
+
     ipc.on(MessageType.Router.toString(), (event, arg) => {
       this.changeModeNoSave(arg);
     });
@@ -90,7 +79,8 @@ export default class WindowController extends Vue {
   }
 
   destroyed() {
-    window.removeEventListener("resize", this.syncHeight);
+    window.removeEventListener("resize", this.onResize);
+
     this.storeWindow();
   }
 }

@@ -56,12 +56,11 @@ export class Proxy implements IProxy {
   popup(id: MenuActionType): void {
     this.controller.action.popup(id);
   }
-  saveWindow(routeName: Identifier, bound: Rectangle, fontSize: number): void {
-    this.controller.saveWindow(routeName, bound, fontSize);
+
+  saveWindow(routeName: RouteActionType, fontSize: number): void {
+    this.controller.win.storeWindow(routeName, fontSize);
   }
-  getBound(): Rectangle {
-    return this.controller.win.getBound();
-  }
+
   restoreWindow(routeName: Identifier | undefined) {
     this.controller.restoreWindow(routeName);
   }

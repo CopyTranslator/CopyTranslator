@@ -1,6 +1,5 @@
-import { Identifier, MenuActionType } from "../tools/types";
+import { Identifier, MenuActionType, RouteActionType } from "../tools/types";
 import { Action } from "../tools/action";
-import { Rectangle } from "electron";
 
 export interface IProxy {
   capture(): void;
@@ -20,8 +19,7 @@ export interface IProxy {
   tryTranslate(text: string, clear: boolean): void;
   routeTo(routerName: string): void;
   popup(id: MenuActionType): void;
-  saveWindow(routeName: Identifier, bound: Rectangle, fontSize: number): void;
-  getBound(): Rectangle;
+  saveWindow(routeName: RouteActionType, fontSize: number): void;
   restoreWindow(routeName: Identifier | undefined): void;
   checkSync(): void;
 }

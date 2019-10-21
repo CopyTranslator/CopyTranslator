@@ -1,6 +1,5 @@
 import { Compound, TranslatorType } from "../tools/translate";
 import { TranslateResult, Language } from "@opentranslate/translator";
-import { isValid } from "../tools/translate/helper";
 import { initConfig } from "../tools/configuration";
 import { ConfigParser } from "../tools/configParser";
 import { ColorStatus, MessageType, WinOpt } from "../tools/enums";
@@ -11,7 +10,7 @@ import { env } from "../tools/env";
 import { l10n, L10N } from "../tools/l10n";
 import { colorRules, getColorRule } from "../tools/rule";
 import { normalizeAppend, autoReSegment } from "../tools/translate/helper";
-import { app, Rectangle } from "electron";
+import { app } from "electron";
 import { ActionManager } from "../tools/action";
 import { TrayManager } from "../tools/tray";
 import { handleActions } from "./actionCallback";
@@ -43,11 +42,6 @@ class Controller {
   handleAction(cmd: string) {
     handleActions(cmd);
   }
-
-  public static getInstance(): Controller {
-    return (<any>global).controller;
-  }
-
   createWindow() {
     this.tray.init();
     this.win.createWindow(this.get("frameMode"));
@@ -55,13 +49,6 @@ class Controller {
     this.action.init();
     recognizer.setUp();
     startService(this, authorizeKey);
-  }
-
-  foldWindow() {
-    this.win.edgeHide(this.win.onEdge());
-  }
-  expandWindow() {
-    this.win.edgeShow();
   }
 
   onExit() {
@@ -115,10 +102,6 @@ class Controller {
 
   getT() {
     return this.l10n.getT(this.get<Language>("localeSetting"));
-  }
-
-  onError(msg: string) {
-    console.log(msg);
   }
 
   sync(
@@ -243,7 +226,7 @@ class Controller {
         let lang = await this.translator.detect(text);
         if (lang) src_lang = lang;
       } catch (e) {
-        this.onError(e);
+        console.log(e);
       }
     }
 
@@ -295,7 +278,6 @@ class Controller {
           this.result = resultString;
           this.postProcess(language, res);
         } else {
-          this.onError("translate error");
           this.setCurrentColor(true);
         }
         this.translating = false;
@@ -331,15 +313,6 @@ class Controller {
     } else {
       clipboard.stopWatching();
     }
-  }
-
-  saveWindow(routeName: Identifier, bound: Rectangle, fontSize: number) {
-    this.set(
-      routeName,
-      Object.assign(this.get(routeName), bound, {
-        fontSize: fontSize
-      })
-    );
   }
 
   restoreWindow(routeName: Identifier | undefined) {

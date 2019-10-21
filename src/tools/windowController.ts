@@ -1,6 +1,5 @@
 import { BrowserWindow, ipcMain as ipc } from "electron";
 import { MessageType, WinOpt } from "./enums";
-import { Controller } from "../core/controller";
 const ioHook = require("iohook");
 import simulate from "./simulate";
 import { checkNotice } from "./checker";
@@ -34,13 +33,6 @@ class WindowController {
         case WinOpt.Minify:
           controller.win.edgeHide(controller.get("hideDirect"));
           break;
-        case WinOpt.Resize:
-          var bounds = currentWindow.getBounds();
-          if (arg.w) bounds.width = arg.w;
-          if (arg.h) bounds.height = arg.h;
-          if (arg.x) bounds.x = arg.x;
-          if (arg.y) bounds.y = arg.y;
-          currentWindow.setBounds(bounds);
       }
     });
     ioHook.on("keydown", (event: any) => {

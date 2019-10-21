@@ -8,7 +8,7 @@ import { RouteActionType } from "../types";
 
 export class WindowWrapper {
   window: BrowserWindow | undefined = undefined;
-  stored: string = "Focus";
+  stored: RouteActionType = "focus";
 
   sendMsg(type: string, msg: any) {
     if (this.window) this.window.webContents.send(type, msg);
@@ -53,8 +53,7 @@ export class WindowWrapper {
       this.window.setBounds(bounds);
     }
   }
-
-  onEdge() {
+  onEdge(): HideDirection {
     if (!global.controller.get("autoHide")) {
       return "None";
     }
@@ -214,5 +213,12 @@ export class WindowWrapper {
       this.window.setBounds(Object.assign(this.getBound(), param));
       this.window.setAlwaysOnTop(global.controller.get("stayTop"));
     }
+  }
+
+  storeWindow(routeName: RouteActionType, fontSize: number) {
+    global.controller.set(routeName, {
+      ...this.getBound(),
+      fontSize
+    });
   }
 }

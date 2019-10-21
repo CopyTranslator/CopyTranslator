@@ -39,22 +39,22 @@ export default class App extends mixins(WindowController, AppProps) {
 .inactive {
   filter: grayscale(90%);
 }
-.Baidu {
+.baidu {
   background-image: url("../images/baidu.svg");
 }
-.Google {
+.google {
   background-image: url("../images/google.svg");
 }
-.Caiyun {
+.caiyun {
   background-image: url("../images/caiyun.png");
 }
-.Sogou {
+.sogou {
   background-image: url("../images/sogou.svg");
 }
-.Youdao {
+.youdao {
   background-image: url("../images/youdao.png");
 }
-.Tencent {
+.tencent {
   background-image: url("../images/tencent.png");
 }
 .btnBase {

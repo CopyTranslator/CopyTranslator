@@ -23,7 +23,7 @@ import WindowController from "./WindowController.vue";
 import EngineButton from "./EngineButton.vue";
 import { MessageType, WinOpt } from "../tools/enums";
 import { ipcRenderer as ipc } from "electron";
-import { translatorTypes } from "../tools/translators";
+import { translatorTypes } from "../tools/translate";
 import { Vue, Component, Mixins } from "vue-property-decorator";
 
 @Component({

@@ -69,7 +69,7 @@ export default class WindowController extends Vue {
     });
     ipc.on(MessageType.WindowOpt.toString(), (event, arg) => {
       if (arg.type == WinOpt.SaveMode) {
-        this.storeWindow();
+        this.onResize();
       }
     });
     this.$nextTick(() => {
@@ -80,8 +80,7 @@ export default class WindowController extends Vue {
 
   destroyed() {
     window.removeEventListener("resize", this.onResize);
-
-    this.storeWindow();
+    this.onResize();
   }
 }
 </script>

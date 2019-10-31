@@ -362,6 +362,7 @@ class ActionManager {
         contain = keys.filter(x => this.getAction(x).actionType === "checkbox");
         break;
       case "focusContext":
+      case "contrastContext":
         contain = ["copyResult", "copySource", "copy", "paste", "cut", "clear"];
         break;
       case "draggableOptions":

@@ -11,7 +11,6 @@ export const translatorTypes = [
   "caiyun",
   "google",
   "youdao",
-  "sogou",
   "tencent"
 ] as const;
 export type TranslatorType = (typeof translatorTypes)[number];

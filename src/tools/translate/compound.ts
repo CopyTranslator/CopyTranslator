@@ -4,8 +4,7 @@ import { AxiosRequestConfig } from "axios";
 import {
   Language,
   TranslateResult,
-  Translator,
-  Languages
+  Translator
 } from "@opentranslate/translator";
 import { autoReSegment } from "./helper";
 

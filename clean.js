@@ -1,5 +1,7 @@
 const path = require("path");
 const fs = require("fs");
+const ignores = [];
+
 function walk(dir) {
   var results = [];
   var list = fs.readdirSync(dir);
@@ -10,7 +12,11 @@ function walk(dir) {
       results = results.concat(walk(file));
     } else {
       // 过滤后缀名（可按你需求进行新增）
-      if (path.extname(file) === ".js") {
+
+      if (
+        path.extname(file) === ".js" &&
+        !ignores.includes(path.basename(file))
+      ) {
         results.push(path.resolve(__dirname, file));
       }
     }

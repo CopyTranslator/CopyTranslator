@@ -37,7 +37,11 @@ module.exports = {
           target: [
             {
               target: "nsis",
-              arch: ["x64"] //"ia32"
+              arch: ["x64"]
+            },
+            {
+              target: "zip",
+              arch: ["x64"]
             }
           ]
         },
@@ -62,7 +66,8 @@ module.exports = {
         nsis: {
           installerIcon: osSpec.iconName,
           oneClick: false,
-          perMachine: false
+          perMachine: false,
+          allowToChangeInstallationDirectory: true
         }
       },
       externals: ["iohook", "shortcut-capture"],

@@ -28,6 +28,7 @@
 </template>
 
 <script lang="ts">
+/* eslint-disable */
 import { compose, decompose } from "../tools/action";
 import { ipcRenderer as ipc } from "electron";
 import { MessageType, WinOpt } from "../tools/enums";

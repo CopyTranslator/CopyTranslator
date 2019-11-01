@@ -57,6 +57,7 @@
     "md5": "^2.2.1",
     "normalize.css": "^8.0.1",
     "reflect-metadata": "^0.1.13",
+    "robotjs": "https://github.com/octalmage/robotjs.git",
     "sbd": "^1.0.15",
     "shortcut-capture": "^1.2.1",
     "vue": "^2.6.10",

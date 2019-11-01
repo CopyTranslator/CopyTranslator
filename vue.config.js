@@ -1,7 +1,7 @@
 const osType = require("os").type();
 const osSpec = {
-  Windows_NT: { iconName: "icon.ico", extDir: "exe" },
-  Darwin: { iconName: "icon.png", extDir: "scripts" },
+  Windows_NT: { iconName: "icon.ico" },
+  Darwin: { iconName: "icon.png" },
   Linux: { iconName: "icon.png" }
 }[osType];
 
@@ -26,10 +26,6 @@ module.exports = {
           {
             from: osSpec.iconName,
             to: osSpec.iconName
-          },
-          {
-            from: osSpec.extDir,
-            to: osSpec.extDir
           }
         ],
         win: {

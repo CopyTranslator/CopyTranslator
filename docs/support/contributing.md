@@ -27,6 +27,8 @@ yarn rebuild
 yarn electron:build
 ```
 
+## 请注意
+
 
 ## Locale settings
 Using my own l10n module, for memory saving purpose. 

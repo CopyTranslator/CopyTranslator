@@ -6,13 +6,7 @@ import {
 
 export type CopyTranslateResult = TranslateResult & { resultString: string };
 export { TranslateResult };
-export const translatorTypes = [
-  "baidu",
-  "caiyun",
-  "google",
-  "youdao",
-  "tencent"
-] as const;
+export const translatorTypes = ["baidu", "google", "youdao"] as const;
 export type TranslatorType = (typeof translatorTypes)[number];
 export interface CopyTranslator {
   translate(

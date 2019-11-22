@@ -248,6 +248,24 @@ class Controller {
     this.win.switchColor(ColorStatus.Translating);
   }
 
+  postTranslate(
+    result: TranslateResult,
+    language: { source: Language; target: Language } | undefined = undefined
+  ) {
+    const res = autoReSegment(result);
+    if (res) {
+      const resultString = normalizeAppend(
+        res.resultString,
+        this.get("autoPurify")
+      );
+      this.result = resultString;
+      this.postProcess(language, res);
+    } else {
+      this.setCurrentColor(true);
+    }
+    this.translating = false;
+  }
+
   setUpRecognizer(APP_ID: string, API_KEY: string, SECRET_KEY: string) {
     this.set("APP_ID", APP_ID, true, false);
     this.set("API_KEY", API_KEY, true, false);
@@ -268,24 +286,32 @@ class Controller {
     this.preProcess(text);
     this.translator
       .translate(this.src, language.source, language.target)
-      .then(res => autoReSegment(res))
-      .then(res => {
-        if (res) {
-          const resultString = normalizeAppend(
-            res.resultString,
-            this.get("autoPurify")
-          );
-          this.result = resultString;
-          this.postProcess(language, res);
-        } else {
-          this.setCurrentColor(true);
-        }
-        this.translating = false;
-      })
+      .then(res => this.postTranslate(res, language))
       .catch(err => {
         this.translating = false;
         console.error(err);
       });
+  }
+  switchEngine(value: TranslatorType) {
+    let isValid = true;
+    this.translator.setMainEngine(value as TranslatorType);
+    if (!this.translator.isValid(this.source())) {
+      this.set("sourceLanguage", "en", true, true);
+      isValid = false;
+    }
+    if (!this.translator.isValid(this.target())) {
+      this.set("targetLanguage", "zh-CN", true, true);
+      isValid = false;
+    }
+    if (isValid) {
+      try {
+        this.postTranslate(this.translator.getBuffer(value as TranslatorType));
+      } catch (e) {
+        this.doTranslate(this.src);
+      }
+    } else {
+      this.doTranslate(this.src);
+    }
   }
 
   source() {
@@ -295,6 +321,7 @@ class Controller {
   target() {
     return this.get<Language>("targetLanguage");
   }
+
   postProcessImage(words_result: Array<{ words: string }>) {
     let src = words_result.map(item => item["words"]).join("\n");
     this.tryTranslate(src);
@@ -306,7 +333,7 @@ class Controller {
         this.checkClipboard();
       });
       clipboard.on("image-changed", () => {
-        // OCR 相关
+        // OCR 相关TranslateResult
         recognizer.recognize(clipboard.readImage().toDataURL());
       });
       clipboard.startWatching();
@@ -377,14 +404,7 @@ class Controller {
         windowController.dragCopy = value;
         break;
       case "translatorType":
-        this.translator.setMainEngine(value as TranslatorType);
-        if (!this.translator.isValid(this.source())) {
-          this.set("sourceLanguage", "en", save, refresh);
-        }
-        if (!this.translator.isValid(this.target())) {
-          this.set("targetLanguage", "zh-CN", save, refresh);
-        }
-        this.doTranslate(this.src);
+        this.switchEngine(value as TranslatorType);
         break;
       case "localeSetting":
         this.win.sendMsg(MessageType.UpdateT.toString(), null);

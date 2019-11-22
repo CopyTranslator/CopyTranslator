@@ -56,7 +56,7 @@ export class Compound implements CopyTranslator {
   }
 
   getBuffer(engine: TranslatorType) {
-    return this.resultBuffer.get(engine);
+    return this.resultBuffer.get(engine) as TranslateResult;
   }
 
   setMainEngine(engineType: TranslatorType) {

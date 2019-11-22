@@ -9,22 +9,9 @@ export const configs = new Map<TranslatorType, Object>([
     }
   ],
   [
-    "caiyun",
-    {
-      token: process.env.VUE_APP_CAIYUN_TOKEN as string
-    }
-  ],
-  [
     "google",
     {
       token: process.env.VUE_APP_GOOGLE_TOKEN as string
-    }
-  ],
-  [
-    "tencent",
-    {
-      secretID: process.env.VUE_APP_TENCENT_SECRET_ID as string,
-      secretKey: process.env.VUE_APP_TENCENT_SECRET_KEY as string
     }
   ],
   [

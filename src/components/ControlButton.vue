@@ -1,12 +1,16 @@
 <template>
   <div class="ctrlBtn">
     <el-row>
-      <el-col
-        v-for="(engine, index) in engines"
-        :key="engine"
-        :span="span"
-        :offset="index == 0 ? start : 0"
-      >
+      <el-col :span="span" :offset="start">
+        <div v-on:contextmenu="callback('copySource')">
+          <el-button
+            v-bind:class="['copyBtn', 'btnBase']"
+            circle
+            @click="callback('copyResult')"
+          ></el-button>
+        </div>
+      </el-col>
+      <el-col v-for="engine in engines" :key="engine" :span="span" :offset="0">
         <EngineButton :engine="engine"></EngineButton>
       </el-col>
       <el-col :span="span">
@@ -32,7 +36,7 @@ import { Vue, Component, Mixins } from "vue-property-decorator";
   }
 })
 export default class ControlButton extends Mixins(WindowController) {
-  start: number = 18;
+  start: number = 15;
   span: number = 3;
   colorNow: string = "white";
   engines = translatorTypes;
@@ -70,5 +74,12 @@ export default class ControlButton extends Mixins(WindowController) {
   bottom: 5px;
   right: 5px;
   width: 220px;
+}
+.btnBase {
+  background-position: center;
+  background-size: contain;
+}
+.copyBtn {
+  background-image: url("../images/copy.png");
 }
 </style>

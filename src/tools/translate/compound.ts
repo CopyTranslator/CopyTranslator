@@ -14,6 +14,7 @@ export class Compound implements CopyTranslator {
   config: AxiosRequestConfig;
   languages: Language[];
   resultBuffer = new Map<TranslatorType, TranslateResult | undefined>();
+  src: string | undefined;
   constructor(
     engineType: TranslatorType = "google",
     config: AxiosRequestConfig = {}
@@ -22,11 +23,13 @@ export class Compound implements CopyTranslator {
     this.languages = this.mainEngine.getSupportLanguages();
     this.config = config;
   }
+
   translate(
     text: string,
     from: Language,
     to: Language
   ): Promise<TranslateResult> {
+    this.src = text;
     for (const [name, translator] of translators.entries()) {
       if (name === this.mainEngine.name) {
         continue;

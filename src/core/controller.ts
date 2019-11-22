@@ -263,7 +263,6 @@ class Controller {
     } else {
       this.setCurrentColor(true);
     }
-    this.translating = false;
   }
 
   setUpRecognizer(APP_ID: string, API_KEY: string, SECRET_KEY: string) {
@@ -287,25 +286,32 @@ class Controller {
     this.translator
       .translate(this.src, language.source, language.target)
       .then(res => this.postTranslate(res, language))
+      .then(() => {
+        this.translating = false;
+      })
       .catch(err => {
         this.translating = false;
         console.error(err);
       });
   }
+
   switchEngine(value: TranslatorType) {
-    let isValid = true;
+    let valid = true;
     this.translator.setMainEngine(value as TranslatorType);
     if (!this.translator.isValid(this.source())) {
       this.set("sourceLanguage", "en", true, true);
-      isValid = false;
+      valid = false;
     }
     if (!this.translator.isValid(this.target())) {
       this.set("targetLanguage", "zh-CN", true, true);
-      isValid = false;
+      valid = false;
     }
-    if (isValid) {
+    if (valid) {
       try {
         this.postTranslate(this.translator.getBuffer(value as TranslatorType));
+        if (this.translator.src !== this.src) {
+          throw "no the same src";
+        }
       } catch (e) {
         this.doTranslate(this.src);
       }

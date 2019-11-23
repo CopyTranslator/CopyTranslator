@@ -1,5 +1,6 @@
 import { Compound, TranslatorType } from "../tools/translate";
-import { TranslateResult, Language } from "@opentranslate/translator";
+import { Language } from "@opentranslate/translator";
+import { CopyTranslateResult } from "../tools/translate/types";
 import { initConfig } from "../tools/configuration";
 import { ConfigParser } from "../tools/configParser";
 import { ColorStatus, MessageType, WinOpt } from "../tools/enums";
@@ -23,7 +24,7 @@ const clipboard = require("electron-clipboard-extended");
 class Controller {
   src: string = "";
   result: string = "";
-  res: TranslateResult | undefined;
+  res: CopyTranslateResult | undefined;
   lastAppend: string = "";
   win: WindowWrapper = new WindowWrapper();
   translator: Compound = new Compound("google", {});
@@ -151,7 +152,7 @@ class Controller {
     );
   }
 
-  postProcess(language: any, result: TranslateResult) {
+  postProcess(language: any, result: CopyTranslateResult) {
     if (this.get<boolean>("autoCopy")) {
       clipboard.writeText(this.result);
       if (this.get<boolean>("autoPaste")) {
@@ -249,10 +250,9 @@ class Controller {
   }
 
   postTranslate(
-    result: TranslateResult,
+    res: CopyTranslateResult,
     language: { source: Language; target: Language } | undefined = undefined
   ) {
-    const res = autoReSegment(result);
     if (res) {
       const resultString = normalizeAppend(
         res.resultString,

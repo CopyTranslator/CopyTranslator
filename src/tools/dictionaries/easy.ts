@@ -1,12 +1,12 @@
-import { WordEngine, DictResult } from "./types";
+import { WordEngine, DictResult, DictionaryType } from "./types";
 
 export class EasyEngine extends WordEngine {
   engine_func: Function;
-  engine: string;
-  constructor(engine: string) {
+  name: DictionaryType;
+  constructor(engine: DictionaryType) {
     super();
     this.engine_func = require(`eazydict-${engine}`);
-    this.engine = engine;
+    this.name = engine;
   }
 
   async query(words: string): Promise<DictResult> {
@@ -17,13 +17,13 @@ export class EasyEngine extends WordEngine {
           explains: res.translates,
           examples: res.examples,
           code: res.error.code,
-          engine: this.engine,
+          engine: this.name,
           url: res.url,
           words: words
         });
       },
       (res: any) => {
-        return Promise.reject({ words: words, code: -1, engine: this.engine });
+        return Promise.reject({ words: words, code: -1, engine: this.name });
       }
     );
   }

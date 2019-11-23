@@ -1,5 +1,5 @@
 import { getTranslator, translators } from "./translators";
-import { TranslatorType, CopyTranslator } from "./types";
+import { TranslatorType, CopyTranslator, CopyTranslateResult } from "./types";
 import { AxiosRequestConfig } from "axios";
 import {
   Language,
@@ -28,7 +28,7 @@ export class Compound implements CopyTranslator {
     text: string,
     from: Language,
     to: Language
-  ): Promise<TranslateResult> {
+  ): Promise<CopyTranslateResult> {
     this.src = text;
     for (const [name, translator] of translators.entries()) {
       if (name === this.mainEngine.name) {
@@ -59,7 +59,7 @@ export class Compound implements CopyTranslator {
   }
 
   getBuffer(engine: TranslatorType) {
-    return this.resultBuffer.get(engine) as TranslateResult;
+    return this.resultBuffer.get(engine) as CopyTranslateResult;
   }
 
   setMainEngine(engineType: TranslatorType) {

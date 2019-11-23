@@ -1,8 +1,6 @@
 import Baidu from "@opentranslate/baidu";
 import Google from "@opentranslate/google";
 import Youdao from "@opentranslate/youdao";
-import Caiyun from "@opentranslate/caiyun";
-import Tencent from "@opentranslate/tencent";
 import { Translator } from "@opentranslate/translator";
 import { TranslatorType } from "./types";
 import { configs } from "./token";

@@ -12,6 +12,9 @@ class TrayManager {
     this.tray.on("right-click", event => {
       global.controller.action.popup("tray");
     });
+    this.tray.on("click", event => {
+      global.controller.win.show();
+    });
   }
 }
 

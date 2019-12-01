@@ -2,6 +2,15 @@
   <div class="ctrlBtn">
     <el-row>
       <el-col :span="span" :offset="start">
+        <div>
+          <el-button
+            v-bind:class="['switchBtn', 'btnBase']"
+            circle
+            @click="callback('contrast')"
+          ></el-button>
+        </div>
+      </el-col>
+      <el-col :span="span">
         <div v-on:contextmenu="callback('copySource')">
           <el-button
             v-bind:class="['copyBtn', 'btnBase']"
@@ -36,7 +45,7 @@ import { Vue, Component, Mixins } from "vue-property-decorator";
   }
 })
 export default class ControlButton extends Mixins(WindowController) {
-  start: number = 15;
+  start: number = 12;
   span: number = 3;
   colorNow: string = "white";
   engines = translatorTypes;
@@ -81,5 +90,8 @@ export default class ControlButton extends Mixins(WindowController) {
 }
 .copyBtn {
   background-image: url("../images/copy.png");
+}
+.switchBtn {
+  background-image: url("../images/switch.png");
 }
 </style>

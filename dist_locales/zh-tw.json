@@ -82,5 +82,6 @@
     "togglefullscreen": "toggleFullScreen",
     "resetZoom": "resetzoom",
     "zoomIn": "zoomin",
-    "zoomOut": "zoomout"
+    "zoomOut": "zoomout",
+    "closeAsQuit": "Close As Quit"
 }

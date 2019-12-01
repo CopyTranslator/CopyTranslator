@@ -68,5 +68,6 @@
     "windowMenu": "windowMenu",
     "switches": "Switches",
     "options": "Options",
-    "skipTaskbar": "Skip Taskbar"
+    "skipTaskbar": "Skip Taskbar",
+    "closeAsQuit": "Close As Quit"
 }

@@ -71,6 +71,7 @@ function initConfig(
     "skipTaskbar",
     new TypeRule<boolean>(false, "hide the taskbar")
   );
+  config.setRule("closeAsQuit", new TypeRule<boolean>(false, "close as quit"));
 
   config.setRule(
     "frameMode",
@@ -175,7 +176,6 @@ function initConfig(
     "focusRight",
     new GroupRule<Identifier>(
       [
-        "contrast",
         "retryTranslate",
         "autoCopy",
         "autoPaste",

@@ -70,7 +70,8 @@ export const zh_cn = new Map<Identifier, string>([
   ["togglefullscreen", "开启全屏"],
   ["resetZoom", "重置缩放"],
   ["zoomIn", "放大"],
-  ["zoomOut", "缩小"]
+  ["zoomOut", "缩小"],
+  ["closeAsQuit", "关闭即退出"]
 ]);
 
 export const en = new Map<Identifier, string>([
@@ -143,6 +144,7 @@ export const en = new Map<Identifier, string>([
   ["windowMenu", "windowMenu"],
   ["switches", "Switches"],
   ["options", "Options"],
-  ["skipTaskbar", "Skip Taskbar"]
+  ["skipTaskbar", "Skip Taskbar"],
+  ["closeAsQuit", "Close As Quit"]
 ]);
 export type Locale = typeof en;

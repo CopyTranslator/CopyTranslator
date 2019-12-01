@@ -50,7 +50,8 @@ export const switchActionTypes = [
   "enableNotify",
   "smartTranslate",
   "smartDict",
-  "dragCopy"
+  "dragCopy",
+  "closeAsQuit"
 ] as const;
 
 //Electron 原生 角色

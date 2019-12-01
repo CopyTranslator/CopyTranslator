@@ -297,6 +297,7 @@ class ActionManager {
     items.push(switchAction("dragCopy"));
     items.push(switchAction("enableNotify"));
     items.push(switchAction("skipTaskbar"));
+    items.push(switchAction("closeAsQuit"));
 
     items.push(normalAction("focus"));
     items.push(normalAction("contrast"));

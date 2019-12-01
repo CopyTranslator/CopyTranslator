@@ -1,12 +1,21 @@
-import { WordEngine, DictResult } from "./types";
+import { WordEngine, DictResult, DictionaryType } from "./types";
+const youdao = require("eazydict-youdao");
+const google = require("eazydict-google");
+const bing = require("eazydict-bing");
+
+const engine_funcs = {
+  bing: bing,
+  google: google,
+  youdao: youdao
+};
 
 export class EasyEngine extends WordEngine {
   engine_func: Function;
-  engine: string;
-  constructor(engine: string) {
+  name: DictionaryType;
+  constructor(engine: DictionaryType) {
     super();
-    this.engine_func = require(`eazydict-${engine}`);
-    this.engine = engine;
+    this.engine_func = engine_funcs[engine];
+    this.name = engine;
   }
 
   async query(words: string): Promise<DictResult> {
@@ -17,23 +26,23 @@ export class EasyEngine extends WordEngine {
           explains: res.translates,
           examples: res.examples,
           code: res.error.code,
-          engine: this.engine,
+          engine: this.name,
           url: res.url,
           words: words
         });
       },
       (res: any) => {
-        return Promise.reject({ words: words, code: -1, engine: this.engine });
+        return Promise.reject({ words: words, code: -1, engine: this.name });
       }
     );
   }
 }
 
-export class BingEngine extends EasyEngine {
-  constructor() {
-    super("bing");
-  }
-}
+// export class BingEngine extends EasyEngine {
+//   constructor() {
+//     super("bing");
+//   }
+// }
 
 export class GoogleEngine extends EasyEngine {
   constructor() {

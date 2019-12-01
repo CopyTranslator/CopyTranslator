@@ -10,7 +10,7 @@ import simulate from "../tools/simulate";
 import { env } from "../tools/env";
 import { l10n, L10N } from "../tools/l10n";
 import { colorRules, getColorRule } from "../tools/rule";
-import { normalizeAppend, autoReSegment } from "../tools/translate/helper";
+import { normalizeAppend } from "../tools/translate/helper";
 import { app } from "electron";
 import { ActionManager } from "../tools/action";
 import { TrayManager } from "../tools/tray";
@@ -18,6 +18,7 @@ import { handleActions } from "./actionCallback";
 import { recognizer } from "../tools/ocr";
 import { Identifier, authorizeKey } from "../tools/types";
 import { startService } from "./service";
+import { Polymer } from "../tools/dictionary/polymer";
 
 const clipboard = require("electron-clipboard-extended");
 
@@ -28,6 +29,7 @@ class Controller {
   lastAppend: string = "";
   win: WindowWrapper = new WindowWrapper();
   translator: Compound = new Compound("google", {});
+  dictionary: Polymer = new Polymer("google");
   config: ConfigParser = initConfig();
   l10n: L10N = l10n;
   action: ActionManager;
@@ -277,6 +279,29 @@ class Controller {
       //翻译无法被打断
       return;
     }
+    if (this.checkIsWord(text)) {
+      this.queryDictionary(text);
+    } else {
+      this.translateSentence(text);
+    }
+  }
+
+  async queryDictionary(text: string) {
+    this.dictionary.query(text).then();
+  }
+
+  checkIsWord(text: string) {
+    if (text.length > 100) {
+      return false;
+    }
+    if (/^[a-zA-Z0-9 ]+$/.test(text) && text.split(" ").length <= 3) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  async translateSentence(text: string) {
     this.translating = true;
     const language = await this.decideLanguage(text);
     if (language.source == language.target) {

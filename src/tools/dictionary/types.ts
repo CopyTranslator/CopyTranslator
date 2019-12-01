@@ -18,17 +18,19 @@ export interface Suggest {
   translate: string;
 }
 
+export const dictionaryTypes = ["google", "youdao"] as const;
+export type DictionaryType = (typeof dictionaryTypes)[number];
 export interface DictResult {
   words: string;
   phonetics?: Array<Phonetic>;
   explains?: Array<Explain>;
   examples?: Array<Example>;
-  suggests: Array<Suggest>;
-  code: number;
-  engine: string;
+  suggests?: Array<Suggest>;
+  engine: DictionaryType;
   url?: string;
 }
 
 export abstract class WordEngine {
+  abstract name: DictionaryType;
   abstract query(words: string): Promise<DictResult>;
 }

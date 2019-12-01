@@ -1,4 +1,4 @@
-import { getDictionary } from "../src/tools/dictionaries/engines";
+import { getDictionary } from "../src/tools/dictionary/engines";
 
 describe("#Bing Dictionary test", () => {
   it("query", () => {

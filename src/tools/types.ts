@@ -30,6 +30,7 @@ export const constantActionTypes = [
   "localeSetting",
   "hideDirect",
   "translatorType",
+  "dictionaryType",
   "frameMode",
   "API_KEY",
   "APP_ID",

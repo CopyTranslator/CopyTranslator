@@ -18,7 +18,7 @@ export interface Suggest {
   translate: string;
 }
 
-export const dictionaryTypes = ["google", "youdao"] as const;
+export const dictionaryTypes = ["google", "youdao", "bing"] as const;
 export type DictionaryType = (typeof dictionaryTypes)[number];
 export interface DictResult {
   words: string;

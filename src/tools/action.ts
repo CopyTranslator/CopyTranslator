@@ -19,6 +19,7 @@ import {
 import { Controller } from "../core/controller";
 import { getLanguageLocales } from "./translate/locale";
 import { Identifier, objToMap, MenuActionType, Role, roles } from "./types";
+import { dictionaryTypes } from "../tools/dictionary/types";
 
 const fs = require("fs");
 
@@ -278,6 +279,7 @@ class ActionManager {
 
     items.push(listAction("hideDirect", hideDirections));
     items.push(listAction("translatorType", translatorTypes));
+    items.push(listAction("dictionaryType", dictionaryTypes));
 
     items.push(normalAction("copySource"));
     items.push(normalAction("copyResult"));

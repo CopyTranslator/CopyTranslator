@@ -9,6 +9,8 @@ import {
   routeActionTypes,
   identifiers
 } from "./types";
+import { DictionaryType, dictionaryTypes } from "../tools/dictionary/types";
+
 function initConfig(
   config: ConfigParser | undefined = undefined
 ): ConfigParser {
@@ -88,6 +90,15 @@ function initConfig(
       "google",
       "type of translator",
       translatorTypes
+    )
+  );
+
+  config.setRule(
+    "dictionaryType",
+    new UnionRule<DictionaryType>(
+      "google",
+      "type of dictionary",
+      dictionaryTypes
     )
   );
 
@@ -199,6 +210,7 @@ function initConfig(
     new GroupRule<Identifier>(
       [
         "translatorType",
+        "dictionaryType",
         "hideDirect",
         "copySource",
         "copyResult",

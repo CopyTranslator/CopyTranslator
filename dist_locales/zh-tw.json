@@ -83,5 +83,6 @@
     "resetZoom": "resetzoom",
     "zoomIn": "zoomin",
     "zoomOut": "zoomout",
-    "closeAsQuit": "Close As Quit"
+    "closeAsQuit": "Close As Quit",
+    "dictionaryType": "Dictionary Type"
 }

@@ -19,10 +19,12 @@ import { recognizer } from "../tools/ocr";
 import { Identifier, authorizeKey } from "../tools/types";
 import { startService } from "./service";
 import { Polymer } from "../tools/dictionary/polymer";
+import { DictionaryType } from "../tools/dictionary/types";
 
 const clipboard = require("electron-clipboard-extended");
 
 class Controller {
+  exited = false;
   src: string = "";
   result: string = "";
   res: CopyTranslateResult | undefined;
@@ -57,6 +59,7 @@ class Controller {
   onExit() {
     this.config.saveValues(env.configPath);
     this.action.unregister();
+    this.exited = true;
     app.quit();
   }
 
@@ -320,9 +323,9 @@ class Controller {
       });
   }
 
-  switchEngine(value: TranslatorType) {
+  switchTranslator(value: TranslatorType) {
     let valid = true;
-    this.translator.setMainEngine(value as TranslatorType);
+    this.translator.setMainEngine(value);
     if (!this.translator.isValid(this.source())) {
       this.set("sourceLanguage", "en", true, true);
       valid = false;
@@ -333,7 +336,7 @@ class Controller {
     }
     if (valid) {
       try {
-        this.postTranslate(this.translator.getBuffer(value as TranslatorType));
+        this.postTranslate(this.translator.getBuffer(value));
         if (this.translator.src !== this.src) {
           throw "no the same src";
         }
@@ -343,6 +346,10 @@ class Controller {
     } else {
       this.doTranslate(this.src);
     }
+  }
+
+  switchDictionary(value: DictionaryType) {
+    this.dictionary.setMainEngine(value);
   }
 
   source() {
@@ -435,7 +442,10 @@ class Controller {
         windowController.dragCopy = value;
         break;
       case "translatorType":
-        this.switchEngine(value as TranslatorType);
+        this.switchTranslator(value as TranslatorType);
+        break;
+      case "dictionaryType":
+        this.switchDictionary(value as DictionaryType);
         break;
       case "localeSetting":
         this.win.sendMsg(MessageType.UpdateT.toString(), null);

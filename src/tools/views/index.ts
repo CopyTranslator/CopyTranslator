@@ -31,7 +31,7 @@ export function loadRoute(
 
 export function showSettings() {
   const width = 320,
-    height = 640;
+    height = 680;
   const controller = global.controller;
   const current_win = controller.win;
   const bound = current_win.getBound();

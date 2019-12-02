@@ -1,8 +1,8 @@
-import { GoogleEngine, YoudaoEngine } from "./easy";
+import { GoogleEngine, YoudaoEngine, BingEngine } from "./easy";
 import { WordEngine, DictionaryType } from "./types";
 
 const dictionaryMap: [DictionaryType, WordEngine][] = [
-  // ["bing", new BingEngine()],
+  ["bing", new BingEngine()],
   ["youdao", new YoudaoEngine()],
   ["google", new GoogleEngine()]
 ];

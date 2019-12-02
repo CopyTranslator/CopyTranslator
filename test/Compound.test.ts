@@ -7,7 +7,7 @@ describe("#Compound test", () => {
       "auto",
       "zh-CN"
     );
-    console.log(result);
-    console.log(engine.resultBuffer);
+    // console.log(result);
+    // console.log(engine.resultBuffer);
   });
 });

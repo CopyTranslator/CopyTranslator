@@ -38,11 +38,11 @@ export class EasyEngine extends WordEngine {
   }
 }
 
-// export class BingEngine extends EasyEngine {
-//   constructor() {
-//     super("bing");
-//   }
-// }
+export class BingEngine extends EasyEngine {
+  constructor() {
+    super("bing");
+  }
+}
 
 export class GoogleEngine extends EasyEngine {
   constructor() {

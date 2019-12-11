@@ -32,3 +32,6 @@ dist
 /package-lock.json
 theme
 yarn.lock
+.VSCodeCounter
+.token
+publish.sh

@@ -15,7 +15,8 @@ import Component, { mixins } from "vue-class-component";
 
 const AppProps = Vue.extend({
   props: {
-    engine: String
+    engine: String,
+    valid: Boolean
   }
 });
 
@@ -23,10 +24,16 @@ const AppProps = Vue.extend({
 export default class App extends mixins(WindowController, AppProps) {
   engineClass: string = this.engine;
   get inactive() {
-    return this.$store.state.sharedResult.engine != this.engine;
+    return this.valid
+      ? this.$store.state.dictResult.engine != this.engine
+      : this.$store.state.sharedResult.engine != this.engine;
   }
   switchTranslator() {
-    this.callback("translatorType|" + this.engine);
+    if (this.valid) {
+      this.callback("dictionaryType|" + this.engine);
+    } else {
+      this.callback("translatorType|" + this.engine);
+    }
   }
 }
 </script>
@@ -53,6 +60,9 @@ export default class App extends mixins(WindowController, AppProps) {
 }
 .youdao {
   background-image: url("../images/youdao.png");
+}
+.bing {
+  background-image: url("../images/bing.png");
 }
 .tencent {
   background-image: url("../images/tencent.png");

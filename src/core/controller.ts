@@ -11,7 +11,7 @@ import { env } from "../tools/env";
 import { l10n, L10N } from "../tools/l10n";
 import { colorRules, getColorRule } from "../tools/rule";
 import { normalizeAppend } from "../tools/translate/helper";
-import { app } from "electron";
+import { app, BrowserWindow } from "electron";
 import { ActionManager } from "../tools/action";
 import { TrayManager } from "../tools/tray";
 import { handleActions } from "./actionCallback";
@@ -19,15 +19,19 @@ import { recognizer } from "../tools/ocr";
 import { Identifier, authorizeKey } from "../tools/types";
 import { startService } from "./service";
 import { Polymer } from "../tools/dictionary/polymer";
-import { DictionaryType } from "../tools/dictionary/types";
-
+import {
+  DictionaryType,
+  DictSuccess,
+  DictFail
+} from "../tools/dictionary/types";
+import { showDragCopyWarning } from "../tools/views/dialog";
 const clipboard = require("electron-clipboard-extended");
 
 class Controller {
-  exited = false;
   src: string = "";
   result: string = "";
   res: CopyTranslateResult | undefined;
+  dictResult: DictSuccess | DictFail = { words: "", valid: false };
   lastAppend: string = "";
   win: WindowWrapper = new WindowWrapper();
   translator: Compound = new Compound("google", {});
@@ -37,6 +41,8 @@ class Controller {
   action: ActionManager;
   tray: TrayManager = new TrayManager();
   translating: boolean = false; //正在翻译
+  exited: boolean = false; //已经退出
+  words: string = "";
 
   constructor() {
     this.config.loadValues(env.configPath);
@@ -47,6 +53,7 @@ class Controller {
   handleAction(cmd: string) {
     handleActions(cmd);
   }
+
   createWindow() {
     this.tray.init();
     this.win.createWindow(this.get("frameMode"));
@@ -75,7 +82,7 @@ class Controller {
 
   resotreDefaultSetting() {
     this.config.restoreDefault(env.configPath);
-    this.restoreFromConfig();
+    this.restoreFromConfig(true);
   }
 
   clear() {
@@ -119,22 +126,17 @@ class Controller {
         target: this.target()
       };
     }
-    let extra: any = {};
-    this.win.sendMsg(
-      MessageType.TranslateResult.toString(),
-      Object.assign(
-        {
-          src: this.src,
-          result: this.result,
-          source: language.source,
-          target: language.target,
-          engine: this.get<TranslatorType>("translatorType"),
-          notify: this.get<boolean>("enableNotify")
-        },
-        extra
-      )
-    );
+
+    this.win.sendMsg(MessageType.TranslateResult.toString(), {
+      src: this.src,
+      result: this.result,
+      source: language.source,
+      target: language.target,
+      engine: this.get<TranslatorType>("translatorType"),
+      notify: this.get<boolean>("enableNotify")
+    });
   }
+
   checkLength(text: string) {
     const threshold = 3000;
     if (text.length > threshold || text.length == 0) {
@@ -144,17 +146,16 @@ class Controller {
   }
 
   checkValid(text: string) {
-    const urlExp = /^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([/\w .-]*)*\/?$/;
-    if (!this.checkLength(text)) {
-      return false;
-    }
-    return !(
-      urlExp.test(text) ||
+    if (
       this.result == text ||
       this.src == text ||
       this.lastAppend == text ||
       text == ""
-    );
+    ) {
+      return false;
+    } else {
+      return true;
+    }
   }
 
   postProcess(language: any, result: CopyTranslateResult) {
@@ -174,6 +175,11 @@ class Controller {
       );
     }
     this.res = result;
+    //同步词典结果
+    if (this.dictResult.words === result.text && !this.dictResult.valid) {
+      this.syncDict();
+    } //翻译完了，然后发现词典有问题，这个时候才发送
+
     this.sync(language);
   }
 
@@ -282,15 +288,50 @@ class Controller {
       //翻译无法被打断
       return;
     }
-    if (this.checkIsWord(text)) {
-      this.queryDictionary(text);
-    } else {
-      this.translateSentence(text);
+    this.tryQueryDictionary(text);
+    this.translateSentence(text);
+  }
+
+  syncDict() {
+    this.win.sendMsg(MessageType.DictResult.toString(), this.dictResult);
+  }
+
+  dictFail(text: string) {
+    this.dictResult = {
+      words: text,
+      valid: false
+    };
+    if (this.res && this.res.text === text) {
+      this.syncDict();
     }
   }
 
-  async queryDictionary(text: string) {
-    this.dictionary.query(text).then();
+  async tryQueryDictionary(text: string) {
+    if (
+      !this.get("smartDict") ||
+      !this.checkIsWord(text) ||
+      this.get("incrementalCopy")
+    ) {
+      this.dictFail(text);
+      return;
+    }
+    this.dictionary
+      .query(text)
+      .then(res => {
+        if (res.explains.length != 0) {
+          this.dictResult = {
+            ...res,
+            valid: true
+          };
+          this.syncDict();
+        } else {
+          throw Error("query dict fail");
+        }
+      })
+      .catch(e => {
+        console.log("query dict fail");
+        this.dictFail(text);
+      });
   }
 
   checkIsWord(text: string) {
@@ -319,6 +360,7 @@ class Controller {
       })
       .catch(err => {
         this.translating = false;
+        this.setCurrentColor(true);
         console.error(err);
       });
   }
@@ -350,6 +392,22 @@ class Controller {
 
   switchDictionary(value: DictionaryType) {
     this.dictionary.setMainEngine(value);
+    if (this.src === this.dictionary.words) {
+      try {
+        const res = this.dictionary.getBuffer(value);
+        if (res.explains.length != 0) {
+          this.dictResult = {
+            ...res,
+            valid: true
+          };
+        } else {
+          throw Error("query dict fail");
+        }
+      } catch (e) {
+        this.dictFail(this.src);
+      }
+      this.syncDict();
+    }
   }
 
   source() {
@@ -384,9 +442,9 @@ class Controller {
     if (routeName) this.win.restore(this.get(routeName));
   }
 
-  restoreFromConfig() {
+  restoreFromConfig(fresh: boolean = false) {
     for (let key of this.config.values.keys()) {
-      this.set(key, this.get(key), false);
+      this.set(key, this.get(key), false, fresh);
     }
   }
 
@@ -395,7 +453,12 @@ class Controller {
   }
 
   refresh(identifier: Identifier | null = null) {
-    this.win.winOpt(WinOpt.Refresh, identifier);
+    for (const window of BrowserWindow.getAllWindows()) {
+      window.webContents.send(MessageType.WindowOpt.toString(), {
+        type: WinOpt.Refresh,
+        args: identifier
+      });
+    }
   }
 
   set(
@@ -415,6 +478,12 @@ class Controller {
     switch (identifier) {
       case "listenClipboard":
         this.setWatch(value);
+        break;
+      case "targetLanguage":
+        this.doTranslate(this.src);
+        break;
+      case "sourceLanguage":
+        this.doTranslate(this.src);
         break;
       case "stayTop":
         if (this.win.window) {
@@ -439,6 +508,9 @@ class Controller {
         }
         break;
       case "dragCopy":
+        if (value) {
+          showDragCopyWarning();
+        }
         windowController.dragCopy = value;
         break;
       case "translatorType":
@@ -455,13 +527,13 @@ class Controller {
 
     if (save) {
       this.config.saveValues(env.configPath);
-      if (refresh) {
-        this.refresh();
-      } else if (identifier == "autoFormat") {
-        this.refresh("autoCopy");
-      } else if (identifier == "autoCopy") {
-        this.refresh("autoPurify");
-      }
+    }
+    if (refresh) {
+      this.refresh(identifier);
+    } else if (identifier == "autoFormat") {
+      this.refresh("autoCopy");
+    } else if (identifier == "autoCopy") {
+      this.refresh("autoPurify");
     }
   }
 }

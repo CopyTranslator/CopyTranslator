@@ -295,6 +295,7 @@ class ActionManager {
     items.push(switchAction("autoHide"));
     items.push(switchAction("autoShow"));
     items.push(switchAction("stayTop"));
+    items.push(switchAction("smartDict"));
     items.push(switchAction("listenClipboard"));
     items.push(switchAction("dragCopy"));
     items.push(switchAction("enableNotify"));
@@ -363,6 +364,7 @@ class ActionManager {
         break;
       case "switches":
         contain = keys.filter(x => this.getAction(x).actionType === "checkbox");
+        contain.push("restoreDefault");
         break;
       case "focusContext":
         contain = ["copy", "paste", "cut", "clear"];

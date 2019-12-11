@@ -3,12 +3,11 @@
 </template>
 
 <script lang="ts">
-import { Watch, Component, Vue } from "vue-property-decorator";
-import WindowController from "./WindowController.vue";
+import { Watch, Component, Vue, Mixins } from "vue-property-decorator";
 import { Language } from "@opentranslate/languages";
 
 @Component
-export default class BaseView extends WindowController {
+export default class BaseView extends Vue {
   source: Language = "en";
   target: Language = "zh-CN";
 
@@ -16,8 +15,8 @@ export default class BaseView extends WindowController {
     return this.$store.state.sharedResult;
   }
 
-  translate() {
-    this.$proxy.tryTranslate(this.sharedResult.src, true);
+  get dictResult() {
+    return this.$store.state.dictResult;
   }
 
   mounted() {
@@ -31,20 +30,12 @@ export default class BaseView extends WindowController {
 
   @Watch("source")
   sourceChanged(newSource: Language, oldSource: Language) {
-    this.$proxy.set("sourceLanguage", newSource, true, true).then(() => {
-      if (this.routeName === "contrast") {
-        this.translate();
-      }
-    });
+    this.$proxy.set("sourceLanguage", newSource, true, true);
   }
 
   @Watch("target")
   targetChanged(newTarget: Language, oldTarget: Language) {
-    this.$proxy.set("targetLanguage", newTarget, true, true).then(() => {
-      if (this.routeName === "contrast") {
-        this.translate();
-      }
-    });
+    this.$proxy.set("targetLanguage", newTarget, true, true);
   }
 }
 </script>

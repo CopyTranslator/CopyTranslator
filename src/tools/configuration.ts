@@ -73,7 +73,14 @@ function initConfig(
     "skipTaskbar",
     new TypeRule<boolean>(false, "hide the taskbar")
   );
-  config.setRule("closeAsQuit", new TypeRule<boolean>(false, "close as quit"));
+  config.setRule(
+    "neverShow",
+    new TypeRule<boolean>(false, "never show warning")
+  );
+
+  config.setRule("smartDict", new TypeRule<boolean>(true, "enable smart dict"));
+
+  config.setRule("closeAsQuit", new TypeRule<boolean>(true, "close as quit"));
 
   config.setRule(
     "frameMode",

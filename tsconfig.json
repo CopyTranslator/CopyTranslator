@@ -9,7 +9,7 @@
     "moduleResolution": "node",
     "downlevelIteration": true,
     "experimentalDecorators": true,
-    "emitDecoratorMetadata": true ,
+    "emitDecoratorMetadata": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "sourceMap": true,

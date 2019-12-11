@@ -2,7 +2,6 @@ import { raceGet } from "./network";
 import { version, constants } from "../core/constant";
 import { dialog, nativeImage, shell, BrowserWindow } from "electron";
 import { env } from "./env";
-import { Controller } from "../core/controller";
 
 type Button = {
   label: string;

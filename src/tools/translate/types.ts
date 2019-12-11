@@ -1,13 +1,13 @@
-import {
-  Translator,
-  TranslateResult,
-  Language
-} from "@opentranslate/translator";
+import { TranslateResult, Language } from "@opentranslate/translator";
+import { DictResult } from "../dictionary/types";
 
-export type CopyTranslateResult = TranslateResult & { resultString: string };
+export type CopyTranslateResult = TranslateResult & {
+  resultString: string;
+  dict?: DictResult;
+};
+
 export { TranslateResult };
-export const translatorTypes = ["baidu", "google", "youdao"] as const;
-export type TranslatorType = (typeof translatorTypes)[number];
+export * from "./constants";
 export interface CopyTranslator {
   translate(
     text: string,

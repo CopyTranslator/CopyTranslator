@@ -44,6 +44,8 @@ export const switchActionTypes = [
   "autoCopy",
   "autoPaste",
   "autoPurify",
+  "neverShow",
+  "smartDict",
   "autoHide",
   "autoFormat",
   "autoShow",
@@ -96,18 +98,19 @@ export const menuActionTypes = [
 //路由名称
 export const routeActionTypes = [
   "focus",
+  "dict",
   "contrast",
   "settings", //设置页面
   "update",
   "menuDrag"
 ] as const;
 
-export type Role = (typeof roles)[number];
-export type SwitchActionType = (typeof switchActionTypes)[number];
-export type ConstantActionType = (typeof constantActionTypes)[number];
-export type NormalActionType = (typeof normalActionTypes)[number];
-export type MenuActionType = (typeof menuActionTypes)[number];
-export type RouteActionType = (typeof routeActionTypes)[number];
+export type Role = typeof roles[number];
+export type SwitchActionType = typeof switchActionTypes[number];
+export type ConstantActionType = typeof constantActionTypes[number];
+export type NormalActionType = typeof normalActionTypes[number];
+export type MenuActionType = typeof menuActionTypes[number];
+export type RouteActionType = typeof routeActionTypes[number];
 
 export const authorizeKey: string = "CopyTranslator";
 import flatten from "lodash.flatten";

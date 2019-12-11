@@ -5,11 +5,12 @@ export const hideDirections = [
   "None",
   "Minify"
 ] as const;
-export type HideDirection = (typeof hideDirections)[number];
+export type HideDirection = typeof hideDirections[number];
 
 enum MessageType {
   WindowOpt,
   TranslateResult,
+  DictResult,
   OpenMenu,
   Router,
   UpdateT,
@@ -56,6 +57,6 @@ const ColorStatus = mkenum({
   Fail: rgb(255, 0, 0)
 });
 
-type ColorStatus = (typeof ColorStatus)[keyof typeof ColorStatus];
+type ColorStatus = typeof ColorStatus[keyof typeof ColorStatus];
 
 export { ColorStatus, MessageType, WinOpt };

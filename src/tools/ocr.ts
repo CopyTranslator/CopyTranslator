@@ -1,5 +1,3 @@
-import { Controller } from "../core/controller";
-
 const AipOcrClient = require("baidu-aip-sdk").ocr;
 const ba64 = require("ba64");
 const fs = require("fs");

@@ -21,14 +21,13 @@
             class="focusText"
             v-bind:style="focusStyle"
             v-model="sharedResult.result"
-            v-if="sharedResult && !sharedResult.dict"
+            v-if="sharedResult && !dictResult.valid"
           ></textarea>
-
-          <DictResult
-            v-if="sharedResult && sharedResult.dict"
-            ref="dictResult"
+          <DictResultPanel
+            v-if="dictResult.valid"
+            ref="dictResultPanel"
             :size="size"
-          ></DictResult>
+          ></DictResultPanel>
         </el-col>
       </el-row>
     </div>
@@ -38,7 +37,7 @@
       style="width:100%;"
       v-model="cmd"
     ></el-input>
-    <ControlButton></ControlButton>
+    <ControlButton :valid="dictResult.valid"></ControlButton>
   </div>
 </template>
 
@@ -46,34 +45,33 @@
 import { shell } from "electron";
 import BaseView from "../components/BaseView.vue";
 import WindowController from "../components/WindowController.vue";
-import DictResult from "../components/DictResult.vue";
+import DictResultPanel from "../components/DictResult.vue";
 import ControlButton from "../components/ControlButton.vue";
 import { Mixins, Ref, Component } from "vue-property-decorator";
 import { Identifier, RouteActionType } from "../tools/types";
 
 @Component({
   components: {
-    DictResult,
+    DictResultPanel,
     ControlButton
   }
 })
 export default class FocusMode extends Mixins(BaseView, WindowController) {
-  size: number = 15;
   routeName: RouteActionType = "focus";
   cmd: string = "";
   activeEngines: any[] = ["Baidu"];
   isOpen: boolean = false;
-  @Ref("dictResult") readonly dictResult!: DictResult;
+  @Ref("dictResultPanel") readonly dictResultPanel!: DictResultPanel;
 
   mounted() {
     this.$proxy.get("focus").then(res => {
       this.size = res.fontSize;
     });
   }
-
   toggleCmdline() {
     this.isOpen = !this.isOpen;
   }
+
   log2(event: any) {
     console.log(event.dataTransfer.getData("text/plain"));
   }
@@ -91,10 +89,11 @@ export default class FocusMode extends Mixins(BaseView, WindowController) {
     };
   }
   getModifiedText() {
-    if (this.sharedResult && !this.sharedResult.dict) {
+    if (this.sharedResult && !this.dictResult.valid) {
       return this.sharedResult.result;
     } else {
-      return (this.dictResult.$el as any).innerText;
+      //@ts-ignore
+      return (this.dictResultPanel[0].$el as any).innerText;
     }
   }
   baidu() {
@@ -102,6 +101,7 @@ export default class FocusMode extends Mixins(BaseView, WindowController) {
       `https://www.baidu.com/s?ie=utf-8&wd=${this.getModifiedText()}`
     );
   }
+
   google() {
     shell.openExternal(
       `https://www.google.com/search?q=${this.getModifiedText()}`
@@ -115,11 +115,12 @@ export default class FocusMode extends Mixins(BaseView, WindowController) {
       source: "",
       target: "",
       engine: "",
-      dict: undefined,
-      phonetic: undefined,
       notify: false
     };
     this.$store.commit("setShared", arg);
+    this.$store.commit("setDictResult", {
+      valid: false
+    });
     this.$proxy.tryTranslate(text, true);
   }
 }

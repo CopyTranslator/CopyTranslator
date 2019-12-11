@@ -127,7 +127,6 @@ This software is free open source software, the developer is [Elliott Zheng](htt
 - [Software official website](https://copytranslator.github.io/) 
 - [Project homepage on Github ](https://github.com/copytranslator/CopyTranslator) 
 - [Project homepage on Gitee](https://gitee.com/ylzheng/CopyTranslator) 
-- [Offical Blogs](https://www.cnblogs.com/elliottzheng/p/9060159.html) 
 - [Official Email](mailto:copytranslator@hypercube.top)
 
 ## Acknowledgements

@@ -23,6 +23,11 @@
           ></el-option>
         </el-select>
       </div>
+      <div v-else-if="action.type === 'normal'">
+        <el-button type="primary" @click="handleAction(action.id)">
+          {{ $t(action.id) }}
+        </el-button>
+      </div>
     </el-tooltip>
   </div>
 </template>
@@ -32,6 +37,8 @@
 import { compose, decompose } from "../tools/action";
 import { ipcRenderer as ipc } from "electron";
 import { MessageType, WinOpt } from "../tools/enums";
+
+// @ts-ignore /* eslint-disable */
 import { Identifier } from "../tools/types";
 import { Prop, Component, Watch, Vue } from "vue-property-decorator";
 import { Action as ActionType } from "../tools/action";
@@ -49,12 +56,16 @@ export default class Action extends Vue {
   @Watch("command")
   commandChanged(newcommand: string, oldcommand: string) {
     if (oldcommand) {
-      this.$proxy.handleAction(newcommand);
+      this.handleAction(newcommand);
     }
   }
 
   setValue() {
-    this.$proxy.set(this.identifier, this.checked, true, false);
+    this.$proxy.set(this.identifier, this.checked, true, true);
+  }
+
+  handleAction(command: string) {
+    this.$proxy.handleAction(command);
   }
 
   async sync() {

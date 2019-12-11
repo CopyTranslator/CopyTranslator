@@ -60,10 +60,15 @@ new Vue({
         }
       }
     );
+    ipcRenderer.on(
+      MessageType.DictResult.toString(),
+      (event: any, arg: any) => {
+        store.commit("setDictResult", arg);
+      }
+    );
     ipcRenderer.on(MessageType.UpdateT.toString(), (event: any, arg: any) => {
       Vue.prototype.$t = controller.getT();
     });
-
     proxy.checkSync();
   }
 }).$mount("#app");

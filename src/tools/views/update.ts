@@ -1,6 +1,5 @@
 import { dialog, BrowserWindow, screen, nativeImage, ipcMain } from "electron";
 import { autoUpdater } from "electron-updater";
-import { Controller } from "../../core/controller";
 import { env } from "../env";
 import { checkUpdate } from "../checker";
 import { loadRoute, insertStyles } from "./index";

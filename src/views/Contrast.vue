@@ -90,6 +90,9 @@ export default class Contrast extends Mixins(BaseView, WindowController) {
   toSetting() {
     this.$proxy.handleAction("settings");
   }
+  translate() {
+    this.$proxy.tryTranslate(this.sharedResult.src, true);
+  }
 }
 </script>
 

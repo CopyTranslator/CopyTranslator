@@ -90,7 +90,12 @@ class Controller {
     this.result = "";
     this.lastAppend = "";
     this.res = undefined;
+    this.dictResult = {
+      words: "",
+      valid: false
+    };
     this.sync();
+    this.syncDict();
   }
 
   checkClipboard() {
@@ -264,6 +269,7 @@ class Controller {
     res: CopyTranslateResult,
     language: { source: Language; target: Language } | undefined = undefined
   ) {
+    console.log(res);
     if (res) {
       const resultString = normalizeAppend(
         res.resultString,
@@ -272,7 +278,9 @@ class Controller {
       this.result = resultString;
       this.postProcess(language, res);
     } else {
-      this.setCurrentColor(true);
+      console.log("???");
+      // this.setCurrentColor(true);
+      this.translateFail();
     }
   }
 
@@ -288,6 +296,8 @@ class Controller {
       //翻译无法被打断
       return;
     }
+    this.dictFail("");
+    this.syncDict();
     this.tryQueryDictionary(text);
     this.translateSentence(text);
   }
@@ -304,6 +314,13 @@ class Controller {
     if (this.res && this.res.text === text) {
       this.syncDict();
     }
+  }
+
+  translateFail() {
+    this.res = undefined;
+    this.result = "";
+    this.setCurrentColor(true);
+    this.sync();
   }
 
   async tryQueryDictionary(text: string) {
@@ -360,7 +377,7 @@ class Controller {
       })
       .catch(err => {
         this.translating = false;
-        this.setCurrentColor(true);
+        this.translateFail();
         console.error(err);
       });
   }
@@ -378,14 +395,17 @@ class Controller {
     }
     if (valid) {
       try {
-        this.postTranslate(this.translator.getBuffer(value));
+        let buffer = this.translator.getBuffer(value);
         if (this.translator.src !== this.src) {
           throw "no the same src";
         }
+        this.postTranslate(buffer);
       } catch (e) {
         this.doTranslate(this.src);
+        console.log("!!!");
       }
     } else {
+      console.log("!!!");
       this.doTranslate(this.src);
     }
   }

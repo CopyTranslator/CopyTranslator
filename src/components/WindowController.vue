@@ -5,7 +5,7 @@
 <script lang="ts">
 import { MessageType, WinOpt } from "../tools/enums";
 import { ipcRenderer as ipc, webFrame } from "electron";
-import { RouteActionType, MenuActionType } from "../tools/types";
+import { RouteActionType, MenuActionType, Identifier } from "../tools/types";
 import Vue from "vue";
 import Component, { mixins } from "vue-class-component";
 
@@ -44,6 +44,10 @@ export default class WindowController extends Vue {
   }
   openMenu(id: MenuActionType) {
     this.$proxy.popup(id);
+  }
+
+  async getValue(identifier: Identifier) {
+    return await this.$proxy.get(identifier);
   }
 
   async onResize() {

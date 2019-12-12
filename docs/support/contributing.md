@@ -23,7 +23,6 @@ yarn global add element-theme
 git clone --recursive https://github.com/copytranslator/CopyTranslator.git
 cd CopyTranslator
 yarn
-yarn rebuild
 yarn electron:build
 ```
 
@@ -39,18 +38,6 @@ If you want to add a new locale, follow the instructions below.
 
 Welcome to join the `gitter` chat room at [here](https://gitter.im/CopyTranslator/Lobby?utm_source=share-link&utm_medium=link&utm_campaign=share-link), so you can get notified before new version release. You can create a pull request at any time as **the out of date locale file won't cause any error**, the program will go back to English for the missing words.
 
-### Notification
-In `vue.config.js`
-```js
-builderOptions: {
-  appId: "com.copytranslator.copytranslator"
-}
-```
-In main process
-```ts
-app.setAppUserModelId("com.copytranslator.copytranslator");
-```
-In windows, you need to first install the application once for further develop，otherwise the app have not right to create notification.
 
 ## Documentation Development
 ```bash

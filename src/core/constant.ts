@@ -1,6 +1,6 @@
 export const constants = {
   appName: "CopyTranslator",
-  nickName: "Mimicat",
+  nickName: "寒渐",
   version: "v9.0.0",
   stage: "",
   wiki: "https://copytranslator.github.io/guide",

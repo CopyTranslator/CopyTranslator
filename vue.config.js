@@ -63,7 +63,8 @@ module.exports = {
           installerIcon: osSpec.iconName,
           oneClick: false,
           perMachine: false,
-          allowToChangeInstallationDirectory: true
+          allowToChangeInstallationDirectory: true,
+          license: "license.txt"
         }
       },
       externals: ["iohook", "shortcut-capture"],

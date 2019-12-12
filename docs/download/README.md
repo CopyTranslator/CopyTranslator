@@ -8,7 +8,6 @@ sidebarDepth: 6
 ## 在线交流与反馈
 - 加入我们的[![](https://img.shields.io/gitter/room/copytranslator/copytranslator.svg)](https://gitter.im/CopyTranslator/Lobby?utm_source=share-link&utm_medium=link&utm_campaign=share-link)聊天室。
 
-- 留言箱：[LINK](https://docs.qq.com/form/fill/DTmFmS1lMS3daZ0JB?_w_tencentdocx_form=1) 您可以在这里自由地表达您对于CopyTranslator的想法。
 ## 下载
 当前最新版本：[![](https://img.shields.io/github/release/copytranslator/copytranslator.svg)](https://github.com/copytranslator/copytranslator/releases)
 :::warning

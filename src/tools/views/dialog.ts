@@ -12,11 +12,12 @@ export function showDragCopyWarning() {
     global.controller.win.window &&
     !global.controller.get("neverShow")
   ) {
+    const t = global.controller.getT();
     dialog
       .showMessageBox(global.controller.win.window, {
-        title: "声明",
+        title: "声明/Warning",
         message: [enWarning, zhWarning].join("\n"),
-        buttons: ["不再显示", "确定"],
+        buttons: [t("neverShow"), t("ok")],
         icon: nativeImage.createFromPath(env.iconPath)
       })
       .then(res => res.response)

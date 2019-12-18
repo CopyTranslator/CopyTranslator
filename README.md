@@ -61,11 +61,6 @@ More efficient, while keeping the original segment as much as possible.
 
 ![entoch](./assets/entoch.png)
 
-### Tap to Copy(Experimental)
-
-After turning on the `listen Clipboard` option, just select the text, and hover the mouse over the selected text to release the mouse over 0.3s. That is, **after long press and  release, it can be copied.** This can prevent us from over moving the mouse (right click to choose Copy) or tired of  pressing `Ctrl+C`.
-
-![longpresscopy](./assets/longpresscopy.gif)
 
 ### Powerful Focus Mode
 

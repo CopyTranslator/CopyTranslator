@@ -18,5 +18,8 @@
         }
     ],
     "typescript.updateImportsOnFileMove.enabled": "always",
-    "editor.fontFamily": "Monaco"
+    "editor.fontFamily": "Monaco",
+    "editor.codeActionsOnSave": {
+        "source.fixAll.eslint": true
+    }
 }

@@ -23,6 +23,10 @@ const defaultStyles = `
 
 let loadedStyles: undefined | string;
 
+export function resetStyle() {
+  fs.writeFileSync(env.style, defaultStyles);
+}
+
 function loadStyles(): string {
   if (loadedStyles) {
     return loadedStyles;
@@ -31,7 +35,7 @@ function loadStyles(): string {
     loadedStyles = <string>fs.readFileSync(env.style, "utf-8").toString();
     return loadedStyles;
   } catch (e) {
-    fs.writeFileSync(env.style, defaultStyles);
+    resetStyle();
     loadedStyles = defaultStyles;
     return defaultStyles;
   }

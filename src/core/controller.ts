@@ -269,7 +269,6 @@ class Controller {
     res: CopyTranslateResult,
     language: { source: Language; target: Language } | undefined = undefined
   ) {
-    console.log(res);
     if (res) {
       const resultString = normalizeAppend(
         res.resultString,
@@ -402,10 +401,8 @@ class Controller {
         this.postTranslate(buffer);
       } catch (e) {
         this.doTranslate(this.src);
-        console.log("!!!");
       }
     } else {
-      console.log("!!!");
       this.doTranslate(this.src);
     }
   }

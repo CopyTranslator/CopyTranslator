@@ -10,6 +10,7 @@ import {
   identifiers
 } from "./types";
 import { DictionaryType, dictionaryTypes } from "../tools/dictionary/types";
+import { version } from "../core/constant";
 
 function initConfig(
   config: ConfigParser | undefined = undefined
@@ -98,6 +99,13 @@ function initConfig(
       "type of translator",
       translatorTypes
     )
+  );
+
+  config.setRule(
+    "version",
+    new TypeRule<string>(version, "current version", (ver: string) => {
+      return ver === version;
+    })
   );
 
   config.setRule(

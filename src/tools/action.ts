@@ -31,6 +31,20 @@ function decompose(id: string) {
   return id.split("|");
 }
 
+export function resetGlobalShortcuts() {
+  fs.writeFileSync(
+    env.shortcut,
+    JSON.stringify(defaultGlobalShortcuts, null, 4)
+  );
+}
+
+export function resetLocalShortcuts() {
+  fs.writeFileSync(
+    env.shortcut,
+    JSON.stringify(defaultGlobalShortcuts, null, 4)
+  );
+}
+
 type MenuItemType = "normal" | "separator" | "submenu" | "checkbox" | "radio";
 
 type ActionType = "constant";
@@ -403,10 +417,7 @@ class ActionManager {
         JSON.parse(fs.readFileSync(env.shortcut, "utf-8"))
       );
     } catch (e) {
-      fs.writeFileSync(
-        env.shortcut,
-        JSON.stringify(defaultGlobalShortcuts, null, 4)
-      );
+      resetGlobalShortcuts();
     }
   }
 
@@ -417,10 +428,7 @@ class ActionManager {
         JSON.parse(fs.readFileSync(env.localShortcut, "utf-8"))
       );
     } catch (e) {
-      fs.writeFileSync(
-        env.localShortcut,
-        JSON.stringify(defaultLocalShortcuts, null, 4)
-      );
+      resetLocalShortcuts();
     }
   }
 

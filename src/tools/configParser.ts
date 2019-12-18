@@ -49,7 +49,7 @@ class ConfigParser {
   loadValues(fileName: string): boolean {
     try {
       let values = JSON.parse(fs.readFileSync(fileName));
-      if (values.get("version") !== version) {
+      if (values["version"] !== version) {
         throw "version incompatible, configs have been reset";
       }
       for (const key of this.rules.keys()) {

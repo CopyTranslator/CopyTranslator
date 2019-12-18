@@ -32,6 +32,7 @@ export const constantActionTypes = [
   "translatorType",
   "dictionaryType",
   "frameMode",
+  "version",
   "API_KEY",
   "APP_ID",
   "SECRET_KEY"

@@ -2,7 +2,6 @@ import { BrowserWindow, Rectangle, screen, nativeImage } from "electron";
 import { ColorStatus, HideDirection, MessageType, WinOpt } from "../enums";
 import { ModeConfig } from "../rule";
 import { env } from "../env";
-import { Controller } from "../../core/controller";
 import { loadRoute, insertStyles } from ".";
 import { RouteActionType } from "../types";
 

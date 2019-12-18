@@ -64,7 +64,7 @@ module.exports = {
           oneClick: false,
           perMachine: false,
           allowToChangeInstallationDirectory: true,
-          license: "license.txt"
+          license: "readable_license.txt"
         }
       },
       externals: ["iohook", "shortcut-capture"],

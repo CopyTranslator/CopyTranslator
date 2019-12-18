@@ -126,11 +126,11 @@ function initConfig(
     "focus",
     new StructRule<ModeConfig>(
       {
-        x: 1390,
+        x: 1300,
         y: 133,
         height: 722,
-        width: 229,
-        fontSize: 33
+        width: 300,
+        fontSize: 30
       },
       "parameters of focus mode"
     )

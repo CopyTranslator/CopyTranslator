@@ -172,7 +172,6 @@ class Controller {
     } else if (this.get<boolean>("autoFormat")) {
       clipboard.writeText(this.src);
     }
-    this.setCurrentColor();
     if (this.get<boolean>("autoShow")) {
       this.win.edgeShow();
       this.win.show(
@@ -180,11 +179,6 @@ class Controller {
       );
     }
     this.res = result;
-    //同步词典结果
-    if (this.dictResult.words === result.text && !this.dictResult.valid) {
-      this.syncDict();
-    } //翻译完了，然后发现词典有问题，这个时候才发送
-
     this.sync(language);
   }
 
@@ -203,6 +197,7 @@ class Controller {
       this.win.switchColor(ColorStatus.Fail);
       return;
     }
+
     if (!this.get<boolean>("listenClipboard")) {
       this.win.switchColor(ColorStatus.None);
       return;
@@ -269,18 +264,12 @@ class Controller {
     res: CopyTranslateResult,
     language: { source: Language; target: Language } | undefined = undefined
   ) {
-    if (res) {
-      const resultString = normalizeAppend(
-        res.resultString,
-        this.get("autoPurify")
-      );
-      this.result = resultString;
-      this.postProcess(language, res);
-    } else {
-      console.log("???");
-      // this.setCurrentColor(true);
-      this.translateFail();
-    }
+    const resultString = normalizeAppend(
+      res.resultString,
+      this.get("autoPurify")
+    );
+    this.result = resultString;
+    this.postProcess(language, res);
   }
 
   setUpRecognizer(APP_ID: string, API_KEY: string, SECRET_KEY: string) {
@@ -295,10 +284,23 @@ class Controller {
       //翻译无法被打断
       return;
     }
-    this.dictFail("");
-    this.syncDict();
-    this.tryQueryDictionary(text);
-    this.translateSentence(text);
+    this.translating = true;
+
+    Promise.all([
+      this.translateSentence(text),
+      this.tryQueryDictionary(text)
+    ]).then(() => {
+      this.translating = false;
+      if (this.dictResult.words === this.src && !this.dictResult.valid) {
+        //同步词典结果
+        this.syncDict(); //翻译完了，然后发现词典有问题，这个时候才发送
+        this.setCurrentColor(true);
+      } else if (this.dictResult.words !== this.src && !this.res) {
+        this.setCurrentColor(true);
+      } else {
+        this.setCurrentColor();
+      }
+    });
   }
 
   syncDict() {
@@ -318,20 +320,21 @@ class Controller {
   translateFail() {
     this.res = undefined;
     this.result = "";
-    this.setCurrentColor(true);
     this.sync();
   }
 
   async tryQueryDictionary(text: string) {
+    this.dictFail("");
+    this.syncDict();
     if (
       !this.get("smartDict") ||
       !this.checkIsWord(text) ||
       this.get("incrementalCopy")
     ) {
-      this.dictFail(text);
+      this.dictFail("");
       return;
     }
-    this.dictionary
+    return this.dictionary
       .query(text)
       .then(res => {
         if (res.explains.length != 0) {
@@ -362,20 +365,15 @@ class Controller {
   }
 
   async translateSentence(text: string) {
-    this.translating = true;
     const language = await this.decideLanguage(text);
     if (language.source == language.target) {
       return;
     }
     this.preProcess(text);
-    this.translator
+    return this.translator
       .translate(this.src, language.source, language.target)
       .then(res => this.postTranslate(res, language))
-      .then(() => {
-        this.translating = false;
-      })
       .catch(err => {
-        this.translating = false;
         this.translateFail();
         console.error(err);
       });
@@ -395,7 +393,7 @@ class Controller {
     if (valid) {
       try {
         let buffer = this.translator.getBuffer(value);
-        if (this.translator.src !== this.src) {
+        if (!buffer || this.translator.src !== this.src) {
           throw "no the same src";
         }
         this.postTranslate(buffer);

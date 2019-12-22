@@ -1,8 +1,7 @@
 import { dialog, BrowserWindow, MenuItem, nativeImage, shell } from "electron";
 import { env } from "../tools/env";
 import { checkForUpdates } from "../tools/views/update";
-import { constants, version } from "../core/constant";
-import { Controller } from "../core/controller";
+import { constants, versionString } from "../core/constant";
 import { decompose } from "../tools/action";
 import { showSettings } from "../tools/views";
 import { Identifier, NormalActionType, RouteActionType } from "../tools/types";
@@ -74,7 +73,7 @@ function handleNormalAction(identifier: NormalActionType | RouteActionType) {
     case "helpAndUpdate":
       dialog
         .showMessageBox(<BrowserWindow>controller.win.window, {
-          title: constants.appName + " " + version,
+          title: constants.appName + " " + versionString,
           message:
             "If you found it useful, please give me a star on GitHub or introduce to your friend.\n如果您感觉本软件对您有所帮助，请在项目Github上给个star或是介绍给您的朋友，谢谢。\n本软件免费开源，如果您是以付费的方式获得本软件，那么你应该是被骗了。[○･｀Д´･ ○]",
           buttons: [t("homepage"), t("userManual"), t("checkUpdate"), "cancel"],

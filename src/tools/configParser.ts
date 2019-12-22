@@ -1,13 +1,12 @@
 import { Rule } from "./rule";
 import { Identifier, mapToObj } from "./types";
-import { version } from "../core/constant";
-import { resetLocalShortcuts, resetGlobalShortcuts } from "./action";
-import { resetStyle } from "./style";
-var fs = require("fs");
-
+const fs = require("fs");
+import { compatible } from "../core/constant";
 type Rules = Map<Identifier, Rule>; //类型别名
+import { resetStyle } from "./style";
+import { resetGlobalShortcuts, resetLocalShortcuts } from "./shortcuts";
 
-function resetAllConfig() {
+export function resetAllConfig() {
   resetLocalShortcuts();
   resetGlobalShortcuts();
   resetStyle();
@@ -49,7 +48,7 @@ class ConfigParser {
   loadValues(fileName: string): boolean {
     try {
       let values = JSON.parse(fs.readFileSync(fileName));
-      if (values["version"] !== version) {
+      if (!values["version"] || !compatible(values["version"])) {
         throw "version incompatible, configs have been reset";
       }
       for (const key of this.rules.keys()) {

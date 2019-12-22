@@ -19,7 +19,7 @@ import {
 import "normalize.css/normalize.css";
 import "../theme/index.css";
 import App from "./App.vue";
-import { constants, version } from "./core/constant";
+import { constants, versionString } from "./core/constant";
 import { IProxy } from "./core/iproxy";
 import { createService } from "./tools/create";
 import { authorizeKey } from "./tools/types";
@@ -54,7 +54,7 @@ new Vue({
       (event: any, arg: any) => {
         store.commit("setShared", arg);
         if (arg.notify && arg.result.length > 0) {
-          new Notification(constants.appName + " " + version, {
+          new Notification(constants.appName + " " + versionString, {
             body: arg.result
           });
         }

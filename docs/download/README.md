@@ -17,7 +17,7 @@ sidebarDepth: 6
 以下列方式下载最新版本安装包：
 - [Github Releases](https://github.com/copytranslator/copytranslator/releases)
 - [Bintray](https://bintray.com/elliottzheng/CopyTranslator/CopyTranslator/_latestVersion)
-- [百度云](https://pan.baidu.com/s/1mySoacl-V6tGE2xCH79wyQ)
+- [百度云](https://pan.baidu.com/s/1jqf0pwvV7Xero7dB0GkTqQ)
 - [蓝奏云](https://www.lanzous.com/b389682)
 
 ### Windows

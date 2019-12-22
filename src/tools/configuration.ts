@@ -130,7 +130,7 @@ function initConfig(
         y: 133,
         height: 722,
         width: 300,
-        fontSize: 30
+        fontSize: 20
       },
       "parameters of focus mode"
     )

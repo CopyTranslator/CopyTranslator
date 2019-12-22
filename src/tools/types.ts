@@ -1,8 +1,9 @@
+//以下是做一个特定的事的动作
 export const normalActionTypes = [
-  "translate",
-  "copySource",
-  "copyResult",
-  "clear",
+  "translate", //翻译
+  "copySource", //复制原文
+  "copyResult", //复制译文
+  "clear", //清空
   "helpAndUpdate",
   "exit",
   "viewSource",
@@ -21,6 +22,7 @@ export const normalActionTypes = [
   "notices"
 ] as const;
 
+//切换值的动作
 export const constantActionTypes = [
   "source",
   "result",
@@ -38,6 +40,7 @@ export const constantActionTypes = [
   "SECRET_KEY"
 ] as const;
 
+//切换值的动作
 export const switchActionTypes = [
   "skipTaskbar",
   "stayTop",
@@ -131,8 +134,9 @@ export const identifiers: readonly Identifier[] = flatten([
   menuActionTypes,
   routeActionTypes
 ]);
+
 export function mapToObj<T>(strMap: Map<Identifier, T>): { [key: string]: T } {
-  let obj = Object.create(null);
+  let obj = Object.create({});
   for (let [k, v] of strMap) {
     obj[k] = v;
   }

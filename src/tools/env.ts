@@ -1,6 +1,6 @@
 const os = require("os");
 const path = require("path");
-const fs = require("fs");
+import fs from "fs";
 const osType = os.type() as string;
 
 const osSpec: { [key: string]: { executableDir: string; iconName: string } } = {

@@ -12,16 +12,14 @@ import { env } from "./env";
 import { hideDirections } from "./enums";
 import { translatorTypes } from "./translate/types";
 import {
-  defaultGlobalShortcuts,
-  defaultLocalShortcuts,
-  Shortcuts
+  Shortcuts,
+  loadLocalShortcuts,
+  loadGlobalShortcuts
 } from "./shortcuts";
 import { Controller } from "../core/controller";
 import { getLanguageLocales } from "./translate/locale";
-import { Identifier, objToMap, MenuActionType, Role, roles } from "./types";
+import { Identifier, MenuActionType, Role, roles } from "./types";
 import { dictionaryTypes } from "../tools/dictionary/types";
-
-const fs = require("fs");
 
 function compose(actions: Array<string>) {
   return actions.join("|");
@@ -29,20 +27,6 @@ function compose(actions: Array<string>) {
 
 function decompose(id: string) {
   return id.split("|");
-}
-
-export function resetGlobalShortcuts() {
-  fs.writeFileSync(
-    env.shortcut,
-    JSON.stringify(defaultGlobalShortcuts, null, 4)
-  );
-}
-
-export function resetLocalShortcuts() {
-  fs.writeFileSync(
-    env.shortcut,
-    JSON.stringify(defaultGlobalShortcuts, null, 4)
-  );
 }
 
 type MenuItemType = "normal" | "separator" | "submenu" | "checkbox" | "radio";
@@ -111,9 +95,9 @@ class ActionManager {
 
   init() {
     this.actions = this.getActions(this.controller.config, this.callback);
-    this.loadGlobalShortcuts();
+    this.shortcuts = loadGlobalShortcuts();
     this.register();
-    this.loadLocalShortcuts();
+    this.localShortcuts = loadLocalShortcuts();
     this.registerLocalShortcuts();
   }
 
@@ -407,28 +391,6 @@ class ActionManager {
       menu.popup({});
     } catch (e) {
       console.log(e);
-    }
-  }
-
-  loadGlobalShortcuts() {
-    this.shortcuts = defaultGlobalShortcuts;
-    try {
-      this.shortcuts = objToMap(
-        JSON.parse(fs.readFileSync(env.shortcut, "utf-8"))
-      );
-    } catch (e) {
-      resetGlobalShortcuts();
-    }
-  }
-
-  loadLocalShortcuts() {
-    this.localShortcuts = defaultLocalShortcuts;
-    try {
-      this.localShortcuts = objToMap(
-        JSON.parse(fs.readFileSync(env.localShortcut, "utf-8"))
-      );
-    } catch (e) {
-      resetLocalShortcuts();
     }
   }
 

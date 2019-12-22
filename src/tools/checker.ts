@@ -1,5 +1,5 @@
 import { raceGet } from "./network";
-import { version, constants } from "../core/constant";
+import { versionString, constants } from "../core/constant";
 import { dialog, nativeImage, shell, BrowserWindow } from "electron";
 import { env } from "./env";
 
@@ -17,7 +17,7 @@ type Notice = {
 export function checkUpdate() {
   raceGet("/version.json")
     .then(res => {
-      if (res && res.data.version > version) {
+      if (res && res.data.version > versionString) {
         const info = res.data;
         const mirror = info.mirrors[res.key];
         const controller = global.controller;
@@ -67,7 +67,7 @@ export function checkNotice() {
         const buttons = getButtons(notice.buttons);
         dialog
           .showMessageBox(<BrowserWindow>controller.win.window, {
-            title: version,
+            title: versionString,
             message: notice.message,
             buttons: buttons,
             cancelId: buttons.length - 1,

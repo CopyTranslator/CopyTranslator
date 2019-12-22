@@ -786,7 +786,7 @@
   dependencies:
     "@opentranslate/translator" "^1.1.0"
 
-"@opentranslate/languages@^1.0.0", "@opentranslate/languages@^1.1.0":
+"@opentranslate/languages@^1.1.0":
   version "1.1.0"
   resolved "https://registry.npm.taobao.org/@opentranslate/languages/download/@opentranslate/languages-1.1.0.tgz#12e6af5e93108139cbb30f1748bc3e72ddd06c6d"
   integrity sha1-EuavXpMQgTnLsw8XSLw+ct3QbG0=

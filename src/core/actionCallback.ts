@@ -1,5 +1,6 @@
 import { dialog, BrowserWindow, MenuItem, nativeImage, shell } from "electron";
 import { env } from "../tools/env";
+import { checkForUpdates } from "../tools/views/update";
 import { constants, versionString } from "../core/constant";
 import { decompose } from "../tools/action";
 import { showSettings } from "../tools/views";
@@ -89,6 +90,7 @@ function handleNormalAction(identifier: NormalActionType | RouteActionType) {
               shell.openExternal(constants.wiki);
               break;
             case 2:
+              checkForUpdates();
               break;
           }
         });

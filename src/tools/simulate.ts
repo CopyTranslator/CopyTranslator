@@ -1,12 +1,11 @@
-// const robot = require("robotjs");
-const backup = "";
+const robot = require("robotjs");
 
 function simulateCopy() {
-  // robot.keyTap("C", "control");
+  robot.keyTap("C", "control");
 }
 
 function simulatePaste() {
-  // robot.keyTap("V", "control");
+  robot.keyTap("V", "control");
 }
 
 export default {

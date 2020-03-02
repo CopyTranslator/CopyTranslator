@@ -11,6 +11,11 @@ const routes = [
     component: Contrast
   },
   {
+    path: "/contrast",
+    name: "contrast2",
+    component: Contrast
+  },
+  {
     path: "/about",
     name: "about",
     // route level code-splitting
@@ -22,7 +27,7 @@ const routes = [
 ];
 
 const router = new VueRouter({
-  mode: "history",
+  mode: "hash",
   base: process.env.BASE_URL,
   routes
 });

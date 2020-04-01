@@ -37,7 +37,6 @@ class WindowController {
     });
     ioHook.on("keydown", (event: any) => {
       this.ctrlKey = event.ctrlKey;
-      console.log("keydown");
     });
     ioHook.on("keyup", (event: any) => {
       if (event.keycode == 29) {

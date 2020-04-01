@@ -20,6 +20,11 @@
         :width="200"
       >
         <v-switch v-model="horizontal" label="Horizontal"></v-switch>
+        <Action
+          v-for="actionId in actionKeys"
+          :identifier="actionId"
+          :key="actionId"
+        ></Action>
       </v-navigation-drawer>
       <ContrastPanel
         :style="area"
@@ -32,61 +37,72 @@
 <script lang="ts">
 import Vue from "vue";
 import ContrastPanel from "../components/ContrastPanel.vue";
+import BaseView from "../components/BaseView.vue";
+import WindowController from "../components/WindowController.vue";
+import Action from "../components/Action.vue";
+import Component from "vue-class-component";
+import { Mixins, Watch } from "vue-property-decorator";
+import { Identifier } from "../tools/types";
 
-export default Vue.extend({
-  name: "App",
-  components: { ContrastPanel },
-  data: () => ({
-    barWidth: 200,
-    windowWidth: 0
-  }),
-  methods: {
-    syncHeight() {
-      this.windowWidth = window.innerWidth;
-    }
-  },
+@Component({
+  components: {
+    Action: Action,
+    ContrastPanel: ContrastPanel
+  }
+})
+export default class Contrast extends Mixins(BaseView, WindowController) {
+  barWidth: number = 200;
+  size: number = 15;
+  readonly routeName = "contrast";
+  actionKeys: Identifier[] = [];
+
+  toSetting() {
+    this.$proxy.handleAction("settings");
+  }
+  translate() {
+    this.$proxy.tryTranslate(this.sharedResult.src, true);
+  }
+
   mounted() {
-    // @ts-ignore
+    this.$proxy.get("contrast").then(res => {
+      this.size = res.fontSize;
+    });
+    this.$proxy.getKeys("contrastPanel").then(res => {
+      this.actionKeys = res;
+    });
+  }
 
-    window.addEventListener("resize", this.syncHeight);
-  },
-  destroyed() {
-    window.removeEventListener("resize", this.syncHeight);
-  },
-  watch: {
-    drawer(val) {
-      if (val) {
-        this.barWidth = 200;
-      } else {
-        this.barWidth = 0;
-      }
-    }
-  },
-  computed: {
-    area() {
-      return {
-        "margin-top": "64px",
-        width: (this.windowWidth - this.barWidth).toString() + "px"
-      };
-    },
-    drawer: {
-      get() {
-        return this.$store.state.drawer;
-      },
-      set(val) {
-        this.$store.commit("switchDrawer", val);
-      }
-    },
-    horizontal: {
-      get() {
-        return this.$store.state.horizontal;
-      },
-      set(val) {
-        this.$store.commit("switchHorizontal", val);
-      }
+  @Watch("drawer")
+  changeDrawer(val: boolean) {
+    if (val) {
+      this.barWidth = 200;
+    } else {
+      this.barWidth = 0;
     }
   }
-});
+
+  get area() {
+    return {
+      "margin-top": "64px",
+      width: `${(this.windowWidth - this.barWidth).toString()}px`
+    };
+  }
+
+  get drawer(): boolean {
+    return this.$store.state.drawer;
+  }
+
+  set drawer(val: boolean) {
+    this.$store.commit("switchDrawer", val);
+  }
+
+  get horizontal() {
+    return this.$store.state.horizontal;
+  }
+  set horizontal(val) {
+    this.$store.commit("switchHorizontal", val);
+  }
+}
 </script>
 <style>
 .active {

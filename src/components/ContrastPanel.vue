@@ -1,19 +1,19 @@
 <template>
   <div style="height: 100%;width: 100%;">
-    <v-row v-if="horizontal" style="height: 100%;width: 100%;">
-      <v-col class="areaWarpper" style="width:50%">
-        <textarea class="hArea"></textarea>
+    <v-row v-if="horizontal" style="height: 100%;width: 100%;margin:0px;">
+      <v-col class="areaWarpper" style="width:50%;padding:0px;">
+        <textarea class="hArea" v-model="sharedResult.src"></textarea>
       </v-col>
-      <v-col class="areaWarpper" style="width:50%;">
-        <textarea class="hArea"></textarea>
+      <v-col class="areaWarpper" style="width:50%;padding:0px;">
+        <textarea class="hArea" v-model="sharedResult.result"></textarea>
       </v-col>
     </v-row>
     <v-col v-else style="height: 100%;width: 100%;">
-      <div class="areaWarpper" style="padding-left:0;height: 50%;">
-        <textarea class="hArea"></textarea>
+      <div class="areaWarpper" style="padding:0;height: 50%;">
+        <textarea class="vArea" v-model="sharedResult.src"></textarea>
       </div>
-      <div class="areaWarpper" style="padding-right:0;height: 50%;">
-        <textarea class="vArea"></textarea>
+      <div class="areaWarpper" style="padding:0;height: 50%;">
+        <textarea class="vArea" v-model="sharedResult.result"></textarea>
       </div>
     </v-col>
   </div>
@@ -21,15 +21,15 @@
 
 <script lang="ts">
 import Vue from "vue";
+import BaseView from "../components/BaseView.vue";
+import { Mixins, Watch } from "vue-property-decorator";
+import WindowController from "../components/WindowController.vue";
 
-export default Vue.extend({
-  data: () => ({}),
-  computed: {
-    horizontal() {
-      return this.$store.state.horizontal;
-    }
+export default class ContrastPanel extends Mixins(BaseView, WindowController) {
+  get horizontal() {
+    return this.$store.state.horizontal;
   }
-});
+}
 </script>
 <style scoped>
 .hArea {

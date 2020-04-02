@@ -34,9 +34,13 @@ export default class WindowController extends Vue {
   changeMode(routerName: RouteActionType) {
     this.$proxy.routeTo(routerName);
   }
+
   changeModeNoSave(routerName: RouteActionType) {
-    this.$router.push({ name: routerName });
+    this.$router.push({ name: routerName }).catch(err => {
+      err;
+    });
   }
+
   minify(event: any) {
     this.windowOpt(WinOpt.Minify);
   }

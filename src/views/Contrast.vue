@@ -51,7 +51,7 @@ import { Identifier } from "../tools/types";
   }
 })
 export default class Contrast extends Mixins(BaseView, WindowController) {
-  barWidth: number = 200;
+  barWidth: number = 0;
   size: number = 15;
   readonly routeName = "contrast";
   actionKeys: Identifier[] = [];

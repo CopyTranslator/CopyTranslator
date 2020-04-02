@@ -2,28 +2,24 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import Contrast from "../views/Contrast.vue";
 import Settings from "../views/Settings.vue";
+import Focus from "../views/Focus.vue";
 
 Vue.use(VueRouter);
 
 const routes = [
   {
     path: "/",
-    name: "Contrast",
-    component: Contrast
+    redirect: "/focus"
+  },
+  {
+    path: "/focus",
+    name: "focus",
+    component: Focus
   },
   {
     path: "/contrast",
-    name: "contrast2",
+    name: "contrast",
     component: Contrast
-  },
-  {
-    path: "/about",
-    name: "about",
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () =>
-      import(/* webpackChunkName: "about" */ "../views/About.vue")
   },
   {
     path: "/settings",

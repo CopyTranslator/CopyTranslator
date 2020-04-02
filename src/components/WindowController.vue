@@ -30,6 +30,7 @@ export default class WindowController extends Vue {
   callback(cmd: string) {
     this.$proxy.handleAction(cmd);
   }
+
   changeMode(routerName: RouteActionType) {
     this.$proxy.routeTo(routerName);
   }

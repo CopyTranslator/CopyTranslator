@@ -47,6 +47,7 @@
     "eazydict-youdao": "https://github.com/CopyTranslator/eazydict-youdao.git",
     "electron-clipboard-extended": "^1.1.1",
     "electron-updater": "^4.0.6",
+    "element-themex": "^1.0.3",
     "element-ui": "2.13.0",
     "iohook": "0.6.2",
     "lodash.compact": "^3.0.1",
@@ -56,7 +57,7 @@
     "lodash.sum": "^4.0.2",
     "md5": "^2.2.1",
     "normalize.css": "^8.0.1",
-    "robotjs": "https://github.com/octalmage/robotjs.git",
+    "robotjs": "^0.6.0",
     "sbd": "^1.0.15",
     "shortcut-capture": "^1.2.1",
     "vue": "^2.6.10",
@@ -89,6 +90,7 @@
     "babel-plugin-component": "^1.1.1",
     "babel-plugin-lodash": "^3.3.4",
     "electron": "^6.0.0",
+    "electron-chromedriver": "^8.0.0",
     "element-theme-chalk": "^2.11.1",
     "eslint": "^5.8.0",
     "eslint-config-prettier/@typescript-eslint": "^6.7.0",
@@ -115,7 +117,8 @@
       "electron-73"
     ],
     "platforms": [
-      "win32"
+      "win32",
+      "darwin"
     ],
     "arches": [
       "x64"

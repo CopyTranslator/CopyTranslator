@@ -30,12 +30,12 @@
         </v-col>
       </v-row>
     </div>
-    <el-input
+    <v-text-field
       v-if="isOpen"
       @keyup.enter.native="exectueCmd"
       style="width:100%;"
       v-model="cmd"
-    ></el-input>
+    ></v-text-field>
     <ControlButton :valid="dictResult.valid"></ControlButton>
   </div>
 </template>

@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-app>
-      <v-app-bar app color="purple" dark>
+      <v-app-bar app color="purple" dark dense>
         <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
         <v-text-field
           solo-inverted
@@ -10,6 +10,12 @@
           label="Search in text"
         ></v-text-field>
         <v-spacer></v-spacer>
+        <EngineButton
+          v-for="engine in engines"
+          :key="engine"
+          :engine="engine"
+          :valid="false"
+        ></EngineButton>
       </v-app-bar>
       <v-navigation-drawer
         v-model="drawer"
@@ -43,11 +49,14 @@ import Action from "../components/Action.vue";
 import Component from "vue-class-component";
 import { Mixins, Watch } from "vue-property-decorator";
 import { Identifier } from "../tools/types";
+import { translatorTypes, TranslatorType } from "../tools/translate/constants";
+import EngineButton from "../components/EngineButton.vue";
 
 @Component({
   components: {
     Action: Action,
-    ContrastPanel: ContrastPanel
+    ContrastPanel: ContrastPanel,
+    EngineButton: EngineButton
   }
 })
 export default class Contrast extends Mixins(BaseView, WindowController) {
@@ -55,12 +64,10 @@ export default class Contrast extends Mixins(BaseView, WindowController) {
   size: number = 15;
   readonly routeName = "contrast";
   actionKeys: Identifier[] = [];
+  readonly engines = translatorTypes;
 
   toSetting() {
     this.$proxy.handleAction("settings");
-  }
-  translate() {
-    this.$proxy.tryTranslate(this.sharedResult.src, true);
   }
 
   mounted() {
@@ -83,7 +90,7 @@ export default class Contrast extends Mixins(BaseView, WindowController) {
 
   get area() {
     return {
-      "margin-top": "64px",
+      "margin-top": "49px",
       width: `${(this.windowWidth - this.barWidth).toString()}px`
     };
   }

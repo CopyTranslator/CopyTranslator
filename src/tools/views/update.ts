@@ -1,15 +1,15 @@
 import { dialog, BrowserWindow, screen, nativeImage, ipcMain } from "electron";
 import { autoUpdater } from "electron-updater";
 import { env } from "../env";
-import { checkUpdate } from "../checker";
 import { loadRoute, insertStyles } from "./index";
+
 let window: BrowserWindow | undefined = undefined;
 let binded: boolean = false;
 autoUpdater.autoDownload = false;
 
 function bindUpdateEvents() {
   autoUpdater.on("error", (error: Error) => {
-    checkUpdate();
+    console.log(error);
   });
   autoUpdater.on("update-available", updateInfo => {
     const width = 500,
@@ -37,7 +37,7 @@ function bindUpdateEvents() {
         nodeIntegration: true
       }
     });
-    loadRoute(window, "update");
+    loadRoute(window, "update", true);
     insertStyles(window);
     window.webContents.on("did-finish-load", function() {
       (<BrowserWindow>window).webContents.send("releaseNote", updateInfo);

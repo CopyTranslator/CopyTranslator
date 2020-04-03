@@ -1,19 +1,43 @@
 <template>
   <div style="height: 100%;width: 100%;">
     <v-row v-if="horizontal" style="height: 100%;width: 100%;margin:0px;">
-      <v-col class="areaWarpper" style="width:50%;padding:0px;">
-        <textarea class="hArea" v-model="sharedResult.src"></textarea>
+      <v-col
+        class="areaWarpper"
+        style="width:50%;padding:0px;"
+        @keyup.ctrl.13="translate"
+      >
+        <textarea
+          class="hArea"
+          v-model="sharedResult.src"
+          v-on:contextmenu="openMenu('contrastContext')"
+        ></textarea>
       </v-col>
       <v-col class="areaWarpper" style="width:50%;padding:0px;">
-        <textarea class="hArea" v-model="sharedResult.result"></textarea>
+        <textarea
+          class="hArea"
+          v-model="sharedResult.result"
+          v-on:contextmenu="openMenu('contrastContext')"
+        ></textarea>
       </v-col>
     </v-row>
     <v-col v-else style="height: 100%;width: 100%;">
-      <div class="areaWarpper" style="padding:0;height: 50%;">
-        <textarea class="vArea" v-model="sharedResult.src"></textarea>
+      <div
+        class="areaWarpper"
+        style="padding:0;height: 50%;"
+        @keyup.ctrl.13="translate"
+      >
+        <textarea
+          class="vArea"
+          v-model="sharedResult.src"
+          v-on:contextmenu="openMenu('contrastContext')"
+        ></textarea>
       </div>
       <div class="areaWarpper" style="padding:0;height: 50%;">
-        <textarea class="vArea" v-model="sharedResult.result"></textarea>
+        <textarea
+          class="vArea"
+          v-model="sharedResult.result"
+          v-on:contextmenu="openMenu('contrastContext')"
+        ></textarea>
       </div>
     </v-col>
   </div>
@@ -28,6 +52,9 @@ import WindowController from "../components/WindowController.vue";
 export default class ContrastPanel extends Mixins(BaseView, WindowController) {
   get horizontal() {
     return this.$store.state.horizontal;
+  }
+  translate() {
+    this.$proxy.tryTranslate(this.sharedResult.src, true);
   }
 }
 </script>

@@ -2,7 +2,6 @@ import { BrowserWindow, ipcMain as ipc } from "electron";
 import { MessageType, WinOpt } from "./enums";
 const ioHook = require("iohook");
 import simulate from "./simulate";
-import { checkNotice } from "./checker";
 import { checkForUpdates } from "./views/update";
 
 class WindowController {
@@ -19,7 +18,6 @@ class WindowController {
   bind() {
     ipc.once(MessageType.FirstLoaded.toString(), (event: any, args: any) => {
       checkForUpdates();
-      checkNotice();
     });
 
     ipc.on(MessageType.WindowOpt.toString(), (event: any, args: any) => {

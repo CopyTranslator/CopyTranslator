@@ -368,7 +368,7 @@ class ActionManager {
         contain = ["copy", "paste", "cut", "clear"];
         break;
       case "contrastContext":
-        contain = ["copyResult", "copySource", "copy", "paste", "cut", "clear"];
+        contain = ["copy", "paste", "cut", "clear", "copyResult", "copySource"];
         break;
       case "draggableOptions":
         contain = keys.filter(x => this.getAction(x).actionType !== "constant");

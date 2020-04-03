@@ -3,6 +3,7 @@ import VueRouter from "vue-router";
 import Contrast from "../views/Contrast.vue";
 import Settings from "../views/Settings.vue";
 import Focus from "../views/Focus.vue";
+import Update from "../views/Update.vue";
 
 Vue.use(VueRouter);
 
@@ -20,6 +21,11 @@ const routes = [
     path: "/contrast",
     name: "contrast",
     component: Contrast
+  },
+  {
+    path: "/update",
+    name: "update",
+    component: Update
   },
   {
     path: "/settings",

@@ -1,6 +1,6 @@
 {
   "name": "copytranslator-proton",
-  "version": "10.0.0",
+  "version": "9.0.0",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
@@ -42,7 +42,7 @@
     "vue-class-component": "^7.0.2",
     "vue-property-decorator": "^8.3.0",
     "vue-router": "^3.1.3",
-    "vuetify": "^2.1.0",
+    "vuetify": "v2.2.20",
     "vuex": "^3.0.1"
   },
   "devDependencies": {

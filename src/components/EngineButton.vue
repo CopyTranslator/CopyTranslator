@@ -1,12 +1,11 @@
 <template>
-  <div class="engineBtn">
-    <v-btn
-      v-bind:class="[engine, 'btnBase', { inactive: inactive }]"
-      @click="switchTranslator"
-      x-small
-      fab
-    ></v-btn>
-  </div>
+  <v-btn
+    v-bind:class="[engine, 'btnBase', { inactive: inactive }]"
+    @click="switchTranslator"
+    color="white"
+    x-small
+    fab
+  ></v-btn>
 </template>
 
 <script lang="ts">
@@ -41,8 +40,8 @@ export default class App extends mixins(WindowController, AppProps) {
 
 <style scoped>
 .engineBtn {
-  width: 100%;
-  height: 100%;
+  /* width: 100%;
+  height: 100%; */
 }
 .inactive {
   filter: grayscale(90%);

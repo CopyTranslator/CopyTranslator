@@ -54,7 +54,6 @@ const AppProps = Vue.extend({
 });
 @Component
 export default class ControlButton extends Mixins(WindowController, AppProps) {
-  span: number = 2;
   colorNow: string = "white";
   components = { EngineButton };
 

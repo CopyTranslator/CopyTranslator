@@ -1,6 +1,6 @@
 {
   "name": "copytranslator",
-  "version": "9.0.1",
+  "version": "9.0.2",
   "private": true,
   "description": "Foreign language assisted reading and translation solution",
   "repository": {
@@ -115,7 +115,8 @@
       "electron-73"
     ],
     "platforms": [
-      "win32"
+      "win32",
+      "darwin"
     ],
     "arches": [
       "x64"

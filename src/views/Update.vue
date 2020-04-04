@@ -14,7 +14,9 @@
 import { ipcRenderer, shell } from "electron";
 import os from "os";
 import Vue from "vue";
+import Component from "vue-class-component";
 
+@Component
 export default class Update extends Vue {
   releaseNote: string | undefined;
   version: string | undefined;

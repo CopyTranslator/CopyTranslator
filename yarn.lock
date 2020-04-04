@@ -10113,8 +10113,8 @@ ripemd160@^2.0.0, ripemd160@^2.0.1:
     inherits "^2.0.1"
 
 "robotjs@https://github.com/octalmage/robotjs.git":
-  version "0.5.1"
-  resolved "https://github.com/octalmage/robotjs.git#7e067cf071de71a195999b2296bbb87cddc2e5f5"
+  version "0.6.0"
+  resolved "https://github.com/octalmage/robotjs.git#603de6164b82abe6306d88857036c2405db64fd2"
   dependencies:
     nan "^2.14.0"
     prebuild-install "^5.3.3"

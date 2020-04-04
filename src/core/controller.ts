@@ -25,7 +25,7 @@ import {
   DictFail
 } from "../tools/dictionary/types";
 import { showDragCopyWarning } from "../tools/views/dialog";
-const clipboard = require("electron-clipboard-extended");
+import { clipboard } from "../tools/clipboard";
 
 class Controller {
   src: string = "";
@@ -55,6 +55,7 @@ class Controller {
   }
 
   createWindow() {
+    clipboard.init();
     this.tray.init();
     this.win.createWindow(this.get("frameMode"));
     windowController.bind();

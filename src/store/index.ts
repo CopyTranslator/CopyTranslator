@@ -1,13 +1,13 @@
 import Vue from "vue";
 import Vuex from "vuex";
+import { LayoutType } from "../tools/types";
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
     drawer: false,
-    horizontal: true,
-    resultOnly: false,
+    layoutType: "horizontal",
     sharedResult: {
       src: "",
       result: "",
@@ -31,11 +31,8 @@ export default new Vuex.Store({
     switchDrawer(state, val) {
       state.drawer = val;
     },
-    switchHorizontal(state, val) {
-      state.horizontal = val;
-    },
-    switchResultOnly(state, val) {
-      state.resultOnly = val;
+    setLayoutType(state, val: LayoutType) {
+      state.layoutType = val;
     },
     setShared(state, sharedResult) {
       state.sharedResult = sharedResult;

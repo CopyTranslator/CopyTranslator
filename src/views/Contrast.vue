@@ -14,14 +14,7 @@
         <div v-on:dblclick="minify" v-on:contextmenu="openMenu('focusRight')">
           <v-btn :style="styleNow" @click="switchListen" fab x-small></v-btn>
         </div>
-        <v-btn
-          @click="resultOnly = !resultOnly"
-          v-on:contextmenu="horizontal = !horizontal"
-          fab
-          small
-          depressed
-          color="purple"
-        >
+        <v-btn @click="enumerateLayouts" fab small depressed color="purple">
           <v-icon>mdi-view-quilt</v-icon>
         </v-btn>
       </v-app-bar>
@@ -55,11 +48,12 @@ import WindowController from "../components/WindowController.vue";
 import Action from "../components/Action.vue";
 import Component from "vue-class-component";
 import { Mixins, Watch } from "vue-property-decorator";
-import { Identifier } from "../tools/types";
+import { Identifier, layoutTypes, LayoutType } from "../tools/types";
 import { ipcRenderer as ipc } from "electron";
 import EngineButton from "../components/EngineButton.vue";
 import { translatorTypes, TranslatorType } from "../tools/translate/constants";
 import { MessageType, WinOpt } from "../tools/enums";
+
 import {
   dictionaryTypes,
   DictionaryType,
@@ -81,7 +75,7 @@ export default class Contrast extends Mixins(BaseView, WindowController) {
   colorNow: string = "white";
 
   get valid() {
-    return this.dictResult.valid && this.resultOnly;
+    return this.dictResult.valid && this.layoutType === "focus";
   }
 
   get engines() {
@@ -139,24 +133,20 @@ export default class Contrast extends Mixins(BaseView, WindowController) {
   get drawer(): boolean {
     return this.$store.state.drawer;
   }
-
   set drawer(val: boolean) {
     this.$store.commit("switchDrawer", val);
   }
 
-  get horizontal() {
-    return this.$store.state.horizontal;
-  }
-  set horizontal(val) {
-    this.$store.commit("switchHorizontal", val);
-  }
-
-  get resultOnly() {
-    return this.$store.state.resultOnly;
+  enumerateLayouts() {
+    const index = layoutTypes.findIndex(
+      x => x === this.$store.state.layoutType
+    );
+    this.$store.state.layoutType =
+      layoutTypes[(index + 1) % layoutTypes.length];
   }
 
-  set resultOnly(val) {
-    this.$store.commit("switchResultOnly", val);
+  get layoutType() {
+    return this.$store.state.layoutType;
   }
 }
 </script>

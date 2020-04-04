@@ -101,9 +101,9 @@ export const menuActionTypes = [
 
 //布局名称
 export const layoutTypes = [
-  "focus",
   "horizontal", //设置页面
-  "vertical"
+  "vertical",
+  "focus"
 ] as const;
 
 //路由名称
@@ -133,13 +133,15 @@ export type Identifier =
   | SwitchActionType
   | ConstantActionType
   | Role;
+
 export const identifiers: readonly Identifier[] = flatten([
   roles,
   switchActionTypes,
   constantActionTypes,
   normalActionTypes,
   menuActionTypes,
-  routeActionTypes
+  routeActionTypes,
+  layoutTypes
 ]);
 
 export function mapToObj<T>(strMap: Map<Identifier, T>): { [key: string]: T } {

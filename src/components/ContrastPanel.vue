@@ -1,7 +1,11 @@
 <template>
   <div class="maxNoPad">
-    <Focus class="maxNoPad" v-if="resultOnly"></Focus>
-    <v-row v-else-if="horizontal" class="maxNoPad" style="margin:0px;">
+    <Focus class="maxNoPad" v-if="layoutType === 'focus'"></Focus>
+    <v-row
+      v-else-if="layoutType === 'horizontal'"
+      class="maxNoPad"
+      style="margin:0px;"
+    >
       <v-col class="areaWarpper" @keyup.ctrl.13="translate">
         <textarea
           class="hArea"
@@ -42,6 +46,7 @@ import BaseView from "../components/BaseView.vue";
 import { Mixins, Watch, Component } from "vue-property-decorator";
 import WindowController from "../components/WindowController.vue";
 import Focus from "./Focus.vue";
+import { LayoutType, layoutTypes } from "../tools/types";
 
 @Component({
   components: {
@@ -49,12 +54,8 @@ import Focus from "./Focus.vue";
   }
 })
 export default class ContrastPanel extends Mixins(BaseView, WindowController) {
-  get horizontal() {
-    return this.$store.state.horizontal;
-  }
-
-  get resultOnly() {
-    return this.$store.state.resultOnly;
+  get layoutType() {
+    return this.$store.state.layoutType;
   }
 
   translate() {

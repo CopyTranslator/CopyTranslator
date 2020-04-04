@@ -64,7 +64,6 @@ export default class WindowController extends Vue {
   }
 
   mounted() {
-    console.log("!!!");
     ipc.on(MessageType.WindowOpt.toString(), (event, arg) => {
       switch (arg.type) {
         case WinOpt.Zoom:

@@ -63,7 +63,7 @@ class WindowController {
         Math.abs(this.newX - this.lastX) + Math.abs(this.newY - this.lastY) > 10
       ) {
         simulate.copy();
-        console.log("???", "copy");
+
         this.copied = true;
       }
     });

@@ -4,18 +4,19 @@
       <v-app-bar app color="purple" dark dense>
         <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
         <v-spacer></v-spacer>
+        <EngineButton
+          v-for="engine in engines"
+          :key="engine"
+          :engine="engine"
+          :valid="valid"
+        ></EngineButton>
         <v-btn
           v-bind:class="['switchBtn', 'btnBase']"
           fab
           x-small
           @click="resultOnly = !resultOnly"
+          v-on:contextmenu="horizontal = !horizontal"
         ></v-btn>
-        <EngineButton
-          v-for="engine in engines"
-          :key="engine"
-          :engine="engine"
-          :valid="false"
-        ></EngineButton>
         <div v-on:dblclick="minify" v-on:contextmenu="openMenu('focusRight')">
           <v-btn :style="styleNow" @click="switchListen" fab x-small></v-btn>
         </div>
@@ -28,7 +29,6 @@
         hide-overlay
         :width="200"
       >
-        <v-switch v-model="horizontal" label="Horizontal"></v-switch>
         <Action
           v-for="actionId in actionKeys"
           :identifier="actionId"
@@ -76,8 +76,12 @@ export default class Contrast extends Mixins(BaseView, WindowController) {
   actionKeys: Identifier[] = [];
   colorNow: string = "white";
 
+  get valid() {
+    return this.dictResult.valid && this.resultOnly;
+  }
+
   get engines() {
-    return this.dictResult.valid ? dictionaryTypes : translatorTypes;
+    return this.valid ? dictionaryTypes : translatorTypes;
   }
   get styleNow() {
     return `background:${this.colorNow};`;

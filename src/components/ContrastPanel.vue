@@ -2,7 +2,7 @@
   <div class="maxNoPad">
     <Focus v-if="resultOnly"></Focus>
     <v-row v-else-if="horizontal" class="maxNoPad" style="margin:0px;">
-      <v-col v-if="!resultOnly" class="areaWarpper" @keyup.ctrl.13="translate">
+      <v-col class="areaWarpper" @keyup.ctrl.13="translate">
         <textarea
           class="hArea"
           v-model="sharedResult.src"
@@ -18,12 +18,7 @@
       </v-col>
     </v-row>
     <v-col v-else class="maxNoPad">
-      <div
-        class="areaWarpper"
-        style="height: 50%;"
-        @keyup.ctrl.13="translate"
-        v-if="!resultOnly"
-      >
+      <div class="areaWarpper" style="height: 50%;" @keyup.ctrl.13="translate">
         <textarea
           class="vArea"
           v-model="sharedResult.src"

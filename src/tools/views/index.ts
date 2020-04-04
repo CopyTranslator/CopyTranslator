@@ -27,7 +27,6 @@ export function loadRoute(
       createProtocol("app");
     }
     const url = `${env.publicUrl}/index.html#${routeName}`;
-    console.log("??", url);
     window.loadURL(url);
   }
 }

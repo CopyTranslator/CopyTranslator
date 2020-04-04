@@ -22,15 +22,23 @@
       "contributions": [
         "design"
       ]
-      },
-      {
+    },
+    {
       "login": "Sandural",
       "name": "黎紫珊",
       "avatar_url": "https://avatars3.githubusercontent.com/u/16163090?v=4",
       "profile": "https://github.com/Sandural",
       "contributions": [
         "platform"
-
+      ]
+    },
+    {
+      "login": "ziqiangxu",
+      "name": "Daryl.Xu",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/18530271?v=4",
+      "profile": "https://ziqiangxu.github.io/blog/",
+      "contributions": [
+        "platform"
       ]
     }
   ],
@@ -38,5 +46,6 @@
   "projectName": "CopyTranslator",
   "projectOwner": "CopyTranslator",
   "repoType": "github",
-  "repoHost": "https://github.com"
+  "repoHost": "https://github.com",
+  "skipCi": true
 }

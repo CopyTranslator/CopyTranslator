@@ -12,7 +12,7 @@ export class Proxy implements IProxy {
   }
 
   capture() {
-    (<any>global).shortcutCapture.shortcutCapture();
+    global.shortcutCapture.shortcutCapture();
   }
 
   set(

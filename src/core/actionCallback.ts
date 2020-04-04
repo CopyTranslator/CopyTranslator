@@ -5,8 +5,7 @@ import { constants, versionString } from "../core/constant";
 import { decompose } from "../tools/action";
 import { showSettings } from "../tools/views";
 import { Identifier, NormalActionType, RouteActionType } from "../tools/types";
-
-const clipboard = require("electron-clipboard-extended");
+import { clipboard } from "../tools/clipboard";
 
 function handleActions(
   id: string,
@@ -49,14 +48,11 @@ function handleNormalAction(identifier: NormalActionType | RouteActionType) {
     case "contrast":
       controller.win.routeTo("contrast");
       break;
-    case "focus":
-      controller.win.routeTo("focus");
-      break;
     case "exit":
       controller.onExit();
       break;
     case "capture":
-      (<any>global).shortcutCapture.shortcutCapture();
+      global.shortcutCapture.shortcutCapture();
       break;
     case "clear":
       controller.clear();

@@ -39,10 +39,6 @@ export default class App extends mixins(WindowController, AppProps) {
 </script>
 
 <style scoped>
-.engineBtn {
-  /* width: 100%;
-  height: 100%; */
-}
 .inactive {
   filter: grayscale(90%);
 }

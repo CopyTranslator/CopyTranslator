@@ -23,7 +23,7 @@ export class Recognizer {
     this.client
       .generalBasic(image)
       .then(function(result: any) {
-        (<any>global).controller.postProcessImage(result["words_result"]);
+        global.controller.postProcessImage(result["words_result"]);
       })
       .catch(function(err: any) {
         // 如果发生网络错误

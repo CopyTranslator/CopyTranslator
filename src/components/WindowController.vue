@@ -56,9 +56,9 @@ export default class WindowController extends Vue {
   }
 
   async onResize() {
-    if (this.routeName) {
-      this.$proxy.saveWindow(this.routeName, this.size);
-    }
+    // if (this.routeName) {
+    //   this.$proxy.saveWindow(this.routeName, this.size);
+    // }
     this.windowHeight = window.innerHeight;
     this.windowWidth = window.innerWidth;
   }

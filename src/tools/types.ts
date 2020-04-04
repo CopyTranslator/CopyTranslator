@@ -99,10 +99,15 @@ export const menuActionTypes = [
   "allActions"
 ] as const;
 
+//布局名称
+export const layoutTypes = [
+  "focus",
+  "horizontal", //设置页面
+  "vertical"
+] as const;
+
 //路由名称
 export const routeActionTypes = [
-  "focus",
-  "dict",
   "contrast",
   "settings", //设置页面
   "update",
@@ -115,12 +120,14 @@ export type ConstantActionType = typeof constantActionTypes[number];
 export type NormalActionType = typeof normalActionTypes[number];
 export type MenuActionType = typeof menuActionTypes[number];
 export type RouteActionType = typeof routeActionTypes[number];
+export type LayoutType = typeof layoutTypes[number];
 
 export const authorizeKey: string = "CopyTranslator";
 import flatten from "lodash.flatten";
 
 export type Identifier =
   | RouteActionType
+  | LayoutType
   | NormalActionType
   | MenuActionType
   | SwitchActionType

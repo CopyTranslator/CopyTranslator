@@ -1,6 +1,6 @@
 <template>
   <div class="maxNoPad">
-    <Focus v-if="resultOnly"></Focus>
+    <Focus class="maxNoPad" v-if="resultOnly"></Focus>
     <v-row v-else-if="horizontal" class="maxNoPad" style="margin:0px;">
       <v-col class="areaWarpper" @keyup.ctrl.13="translate">
         <textarea

@@ -10,16 +10,20 @@
           :engine="engine"
           :valid="valid"
         ></EngineButton>
-        <v-btn
-          v-bind:class="['switchBtn', 'btnBase']"
-          fab
-          x-small
-          @click="resultOnly = !resultOnly"
-          v-on:contextmenu="horizontal = !horizontal"
-        ></v-btn>
+
         <div v-on:dblclick="minify" v-on:contextmenu="openMenu('focusRight')">
           <v-btn :style="styleNow" @click="switchListen" fab x-small></v-btn>
         </div>
+        <v-btn
+          @click="resultOnly = !resultOnly"
+          v-on:contextmenu="horizontal = !horizontal"
+          fab
+          small
+          depressed
+          color="purple"
+        >
+          <v-icon>mdi-view-quilt</v-icon>
+        </v-btn>
       </v-app-bar>
       <v-navigation-drawer
         v-model="drawer"

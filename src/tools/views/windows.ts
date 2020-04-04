@@ -7,7 +7,7 @@ import { RouteActionType } from "../types";
 
 export class WindowWrapper {
   window: BrowserWindow | undefined = undefined;
-  stored: RouteActionType = "focus";
+  stored: RouteActionType = "contrast";
 
   sendMsg(type: string, msg: any) {
     if (this.window) this.window.webContents.send(type, msg);
@@ -32,7 +32,7 @@ export class WindowWrapper {
     }
   }
 
-  load(routerName: RouteActionType = "focus") {
+  load(routerName: RouteActionType = "contrast") {
     if (!this.window) {
       return;
     }
@@ -154,9 +154,6 @@ export class WindowWrapper {
     let param: ModeConfig | undefined;
     const controller = global.controller;
     switch (routeName) {
-      case "focus":
-        param = controller.get("focus");
-        break;
       case "contrast":
         param = controller.get("contrast");
         break;

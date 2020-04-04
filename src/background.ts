@@ -1,13 +1,14 @@
 "use strict";
 import { app, protocol } from "electron";
 import { Controller } from "./core/controller";
-
+import { recognizer } from "./tools/ocr";
 const isDevelopment = process.env.NODE_ENV !== "production";
+const ShortcutCapture = require("shortcut-capture");
 
 app.setAppUserModelId("com.copytranslator.copytranslator");
 
 let controller = new Controller();
-(<any>global).controller = controller;
+global.controller = controller;
 
 // Standard scheme must be registered before the app is ready
 protocol.registerSchemesAsPrivileged([
@@ -42,6 +43,11 @@ app.on("ready", async () => {
     // Install Vue Devtools
     // await installVueDevtools();
   }
+  const shortcutCapture = new ShortcutCapture();
+  global.shortcutCapture = shortcutCapture;
+  shortcutCapture.on("capture", (data: any) =>
+    recognizer.recognize(data["dataURL"])
+  );
   controller.createWindow();
 });
 

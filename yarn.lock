@@ -8144,6 +8144,11 @@ normalize-url@^4.1.0:
   resolved "https://registry.npm.taobao.org/normalize-url/download/normalize-url-4.5.0.tgz#453354087e6ca96957bd8f5baf753f5982142129"
   integrity sha1-RTNUCH5sqWlXvY9br3U/WYIUISk=
 
+normalize.css@^8.0.1:
+  version "8.0.1"
+  resolved "https://registry.npm.taobao.org/normalize.css/download/normalize.css-8.0.1.tgz#9b98a208738b9cc2634caacbc42d131c97487bf3"
+  integrity sha1-m5iiCHOLnMJjTKrLxC0THJdIe/M=
+
 npm-bundled@^1.0.1:
   version "1.0.6"
   resolved "https://registry.npm.taobao.org/npm-bundled/download/npm-bundled-1.0.6.tgz#e7ba9aadcef962bb61248f91721cd932b3fe6bdd"
@@ -10284,6 +10289,14 @@ shellwords@^0.1.1:
   version "0.1.1"
   resolved "https://registry.npm.taobao.org/shellwords/download/shellwords-0.1.1.tgz#d6b9181c1a48d397324c84871efbcfc73fc0654b"
   integrity sha1-1rkYHBpI05cyTISHHvvPxz/AZUs=
+
+shortcut-capture@^1.2.3:
+  version "1.2.3"
+  resolved "https://registry.npm.taobao.org/shortcut-capture/download/shortcut-capture-1.2.3.tgz#c5eca42d53dff808ecfdbd0243dce939987a6ad4"
+  integrity sha1-xeykLVPf+Ajs/b0CQ9zpOZh6atQ=
+  dependencies:
+    normalize.css "^8.0.1"
+    vue "^2.6.10"
 
 should-equal@^2.0.0:
   version "2.0.0"

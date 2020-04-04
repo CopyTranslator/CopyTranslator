@@ -1,34 +1,27 @@
 <template>
   <div>
     <div
-      style="height:100%;width:100%"
+      class="max"
       @keyup.alt.13="toggleCmdline"
-      @keyup.ctrl.13="shortcut"
+      @keyup.ctrl.13="translate"
       @keyup.ctrl.71="google"
       @keyup.ctrl.66="baidu"
       v-on:contextmenu="openMenu('focusContext')"
-      v-on:drop="log2"
+      v-on:drop="dragTranslate"
     >
-      <v-row style="width:100%;height:100%;margin:0px;">
-        <v-col
-          style="height:100%;padding:0px;"
-          v-for="engine in activeEngines"
-          :key="engine"
-        >
-          <textarea
-            ref="normalResult"
-            class="focusText"
-            v-bind:style="focusStyle"
-            v-model="sharedResult.result"
-            v-if="sharedResult && !dictResult.valid"
-          ></textarea>
-          <DictResultPanel
-            v-if="dictResult.valid"
-            ref="dictResultPanel"
-            :size="size"
-          ></DictResultPanel>
-        </v-col>
-      </v-row>
+      <textarea
+        ref="normalResult"
+        class="focusText max"
+        v-bind:style="focusStyle"
+        v-model="sharedResult.result"
+        v-if="sharedResult && !dictResult.valid"
+      ></textarea>
+      <DictResultPanel
+        v-if="dictResult.valid"
+        ref="dictResultPanel"
+        :size="size"
+        class="max"
+      ></DictResultPanel>
     </div>
   </div>
 </template>
@@ -62,7 +55,7 @@ export default class FocusMode extends Mixins(BaseView, WindowController) {
     this.isOpen = !this.isOpen;
   }
 
-  log2(event: any) {
+  dragTranslate(event: any) {
     console.log(event.dataTransfer.getData("text/plain"));
   }
 
@@ -99,7 +92,7 @@ export default class FocusMode extends Mixins(BaseView, WindowController) {
     );
   }
 
-  shortcut() {
+  translate() {
     const text = this.getModifiedText();
     const arg = {
       src: "",
@@ -118,4 +111,12 @@ export default class FocusMode extends Mixins(BaseView, WindowController) {
 }
 </script>
 
-<style scoped></style>
+<style scoped>
+.focusText {
+  border: solid 1px #bebebe;
+}
+.max {
+  height: 100%;
+  width: 100%;
+}
+</style>

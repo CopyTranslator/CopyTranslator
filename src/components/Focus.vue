@@ -1,5 +1,5 @@
 <template>
-  <div style="width:100vw;height:100vh;">
+  <div>
     <div
       style="height:100%;width:100%"
       @keyup.alt.13="toggleCmdline"
@@ -30,33 +30,23 @@
         </v-col>
       </v-row>
     </div>
-    <v-text-field
-      v-if="isOpen"
-      @keyup.enter.native="exectueCmd"
-      style="width:100%;"
-      v-model="cmd"
-    ></v-text-field>
-    <ControlButton :valid="dictResult.valid"></ControlButton>
   </div>
 </template>
 
 <script lang="ts">
 import { shell } from "electron";
-import BaseView from "../components/BaseView.vue";
-import WindowController from "../components/WindowController.vue";
-import DictResultPanel from "../components/DictResult.vue";
-import ControlButton from "../components/ControlButton.vue";
+import BaseView from "./BaseView.vue";
+import WindowController from "./WindowController.vue";
+import DictResultPanel from "./DictResult.vue";
 import { Mixins, Ref, Component } from "vue-property-decorator";
 import { Identifier, RouteActionType } from "../tools/types";
 
 @Component({
   components: {
-    DictResultPanel,
-    ControlButton
+    DictResultPanel
   }
 })
 export default class FocusMode extends Mixins(BaseView, WindowController) {
-  routeName: RouteActionType = "focus";
   cmd: string = "";
   activeEngines: any[] = ["Baidu"];
   isOpen: boolean = false;
@@ -67,6 +57,7 @@ export default class FocusMode extends Mixins(BaseView, WindowController) {
       this.size = res.fontSize;
     });
   }
+
   toggleCmdline() {
     this.isOpen = !this.isOpen;
   }
@@ -74,17 +65,18 @@ export default class FocusMode extends Mixins(BaseView, WindowController) {
   log2(event: any) {
     console.log(event.dataTransfer.getData("text/plain"));
   }
+
   exectueCmd() {
     this.callback(this.cmd);
   }
+
   capture() {
     this.$proxy.capture();
   }
+
   get focusStyle() {
     return {
-      fontSize: this.size.toString() + "px",
-      width: "100%",
-      height: "100vh"
+      fontSize: this.size.toString() + "px"
     };
   }
   getModifiedText() {
@@ -106,6 +98,7 @@ export default class FocusMode extends Mixins(BaseView, WindowController) {
       `https://www.google.com/search?q=${this.getModifiedText()}`
     );
   }
+
   shortcut() {
     const text = this.getModifiedText();
     const arg = {

@@ -33,8 +33,9 @@ export default class UpdatePanel extends Vue {
   autoDownload() {
     ipcRenderer.send("confirm-update");
   }
+
   manualDownload() {
-    shell.openExternal("https://copytranslator.github.io/guide/download.html");
+    shell.openExternal("https://copytranslator.github.io/download/");
   }
 
   mounted() {

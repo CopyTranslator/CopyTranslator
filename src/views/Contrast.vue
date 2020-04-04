@@ -3,19 +3,22 @@
     <v-app>
       <v-app-bar app color="purple" dark dense>
         <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
-        <v-text-field
-          solo-inverted
-          flat
-          hide-details
-          label="Search in text"
-        ></v-text-field>
         <v-spacer></v-spacer>
+        <v-btn
+          v-bind:class="['switchBtn', 'btnBase']"
+          fab
+          x-small
+          @click="resultOnly = !resultOnly"
+        ></v-btn>
         <EngineButton
           v-for="engine in engines"
           :key="engine"
           :engine="engine"
           :valid="false"
         ></EngineButton>
+        <div v-on:dblclick="minify" v-on:contextmenu="openMenu('focusRight')">
+          <v-btn :style="styleNow" @click="switchListen" fab x-small></v-btn>
+        </div>
       </v-app-bar>
       <v-navigation-drawer
         v-model="drawer"
@@ -49,8 +52,15 @@ import Action from "../components/Action.vue";
 import Component from "vue-class-component";
 import { Mixins, Watch } from "vue-property-decorator";
 import { Identifier } from "../tools/types";
-import { translatorTypes, TranslatorType } from "../tools/translate/constants";
+import { ipcRenderer as ipc } from "electron";
 import EngineButton from "../components/EngineButton.vue";
+import { translatorTypes, TranslatorType } from "../tools/translate/constants";
+import { MessageType, WinOpt } from "../tools/enums";
+import {
+  dictionaryTypes,
+  DictionaryType,
+  CopyDictResult
+} from "../tools/dictionary/types";
 
 @Component({
   components: {
@@ -64,13 +74,36 @@ export default class Contrast extends Mixins(BaseView, WindowController) {
   size: number = 15;
   readonly routeName = "contrast";
   actionKeys: Identifier[] = [];
-  readonly engines = translatorTypes;
+  colorNow: string = "white";
+
+  get engines() {
+    return this.dictResult.valid ? dictionaryTypes : translatorTypes;
+  }
+  get styleNow() {
+    return `background:${this.colorNow};`;
+  }
+
+  switchColor(color: string) {
+    this.colorNow = color;
+  }
+
+  switchListen() {
+    this.$proxy.handleAction("listenClipboard");
+  }
 
   toSetting() {
     this.$proxy.handleAction("settings");
   }
 
   mounted() {
+    ipc.on(MessageType.WindowOpt.toString(), (event, arg) => {
+      switch (arg.type) {
+        case WinOpt.ChangeColor:
+          this.switchColor(arg.args);
+          break;
+      }
+    });
+    this.$proxy.setCurrentColor();
     this.$proxy.get("contrast").then(res => {
       this.size = res.fontSize;
     });
@@ -109,6 +142,14 @@ export default class Contrast extends Mixins(BaseView, WindowController) {
   set horizontal(val) {
     this.$store.commit("switchHorizontal", val);
   }
+
+  get resultOnly() {
+    return this.$store.state.resultOnly;
+  }
+
+  set resultOnly(val) {
+    this.$store.commit("switchResultOnly", val);
+  }
 }
 </script>
 <style>
@@ -117,5 +158,24 @@ export default class Contrast extends Mixins(BaseView, WindowController) {
 }
 ::-webkit-scrollbar {
   display: none;
+}
+.ctrlBtn {
+  position: absolute;
+  bottom: 5px;
+  right: 5px;
+  width: 300px;
+}
+.btnBase {
+  background-position: center;
+  background-size: contain;
+}
+.noPad {
+  padding: 0px;
+}
+.copyBtn {
+  background-image: url("../images/copy.png");
+}
+.switchBtn {
+  background-image: url("../images/switch.png");
 }
 </style>

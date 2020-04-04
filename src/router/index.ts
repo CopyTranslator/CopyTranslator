@@ -2,7 +2,6 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import Contrast from "../views/Contrast.vue";
 import Settings from "../views/Settings.vue";
-import Focus from "../views/Focus.vue";
 import Update from "../views/Update.vue";
 
 Vue.use(VueRouter);
@@ -10,12 +9,7 @@ Vue.use(VueRouter);
 const routes = [
   {
     path: "/",
-    redirect: "/focus"
-  },
-  {
-    path: "/focus",
-    name: "focus",
-    component: Focus
+    redirect: "/contrast"
   },
   {
     path: "/contrast",

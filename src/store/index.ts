@@ -7,6 +7,7 @@ export default new Vuex.Store({
   state: {
     drawer: false,
     horizontal: true,
+    resultOnly: false,
     sharedResult: {
       src: "",
       result: "",
@@ -32,6 +33,9 @@ export default new Vuex.Store({
     },
     switchHorizontal(state, val) {
       state.horizontal = val;
+    },
+    switchResultOnly(state, val) {
+      state.resultOnly = val;
     },
     setShared(state, sharedResult) {
       state.sharedResult = sharedResult;

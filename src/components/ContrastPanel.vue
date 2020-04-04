@@ -1,18 +1,15 @@
 <template>
-  <div style="height: 100%;width: 100%;">
-    <v-row v-if="horizontal" style="height: 100%;width: 100%;margin:0px;">
-      <v-col
-        class="areaWarpper"
-        style="width:50%;padding:0px;"
-        @keyup.ctrl.13="translate"
-      >
+  <div class="maxNoPad">
+    <Focus v-if="resultOnly"></Focus>
+    <v-row v-else-if="horizontal" class="maxNoPad" style="margin:0px;">
+      <v-col v-if="!resultOnly" class="areaWarpper" @keyup.ctrl.13="translate">
         <textarea
           class="hArea"
           v-model="sharedResult.src"
           v-on:contextmenu="openMenu('contrastContext')"
         ></textarea>
       </v-col>
-      <v-col class="areaWarpper" style="width:50%;padding:0px;">
+      <v-col class="areaWarpper">
         <textarea
           class="hArea"
           v-model="sharedResult.result"
@@ -20,11 +17,12 @@
         ></textarea>
       </v-col>
     </v-row>
-    <v-col v-else style="height: 100%;width: 100%;">
+    <v-col v-else class="maxNoPad">
       <div
         class="areaWarpper"
-        style="padding:0;height: 50%;"
+        style="height: 50%;"
         @keyup.ctrl.13="translate"
+        v-if="!resultOnly"
       >
         <textarea
           class="vArea"
@@ -32,7 +30,7 @@
           v-on:contextmenu="openMenu('contrastContext')"
         ></textarea>
       </div>
-      <div class="areaWarpper" style="padding:0;height: 50%;">
+      <div class="areaWarpper" style="height: 50%;">
         <textarea
           class="vArea"
           v-model="sharedResult.result"
@@ -46,13 +44,24 @@
 <script lang="ts">
 import Vue from "vue";
 import BaseView from "../components/BaseView.vue";
-import { Mixins, Watch } from "vue-property-decorator";
+import { Mixins, Watch, Component } from "vue-property-decorator";
 import WindowController from "../components/WindowController.vue";
+import Focus from "./Focus.vue";
 
+@Component({
+  components: {
+    Focus: Focus
+  }
+})
 export default class ContrastPanel extends Mixins(BaseView, WindowController) {
   get horizontal() {
     return this.$store.state.horizontal;
   }
+
+  get resultOnly() {
+    return this.$store.state.resultOnly;
+  }
+
   translate() {
     this.$proxy.tryTranslate(this.sharedResult.src, true);
   }
@@ -73,10 +82,14 @@ export default class ContrastPanel extends Mixins(BaseView, WindowController) {
   resize: none;
   padding: 0;
 }
+.maxNoPad {
+  height: 100%;
+  width: 100%;
+  padding: 0px;
+}
 .areaWarpper {
   border: solid 1px #d3d3d3;
-  padding-bottom: 0;
-  padding-top: 0;
+  padding: 0px;
 }
 .myswitch >>> .v-messages {
   min-height: 0px;

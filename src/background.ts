@@ -42,7 +42,7 @@ app.commandLine.appendSwitch("--disable-http-cache");
 app.on("ready", async () => {
   if (isDevelopment && !process.env.IS_TEST) {
     // Install Vue Devtools
-    await installVueDevtools();
+    installVueDevtools();
   }
   const shortcutCapture = new ShortcutCapture();
   (<any>global).shortcutCapture = shortcutCapture;

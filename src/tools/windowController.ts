@@ -36,7 +36,7 @@ class WindowController {
           break;
       }
     });
-    if (os.platform() != "linux") {
+    if (os.platform() !== "linux") {
       this.bindHooks();
     }
   }

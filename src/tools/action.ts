@@ -305,6 +305,9 @@ class ActionManager {
     items.push(normalAction("capture"));
     items.push(normalAction("restoreDefault"));
 
+    items.push(normalAction("font+"));
+    items.push(normalAction("font-"));
+
     items.push(constantAction("APP_ID"));
     items.push(constantAction("API_KEY"));
     items.push(constantAction("SECRET_KEY"));

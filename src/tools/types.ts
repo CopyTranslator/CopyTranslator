@@ -19,7 +19,9 @@ export const normalActionTypes = [
   "ok",
   "restoreDefault",
   "capture",
-  "notices"
+  "notices",
+  "font+",
+  "font-"
 ] as const;
 
 //切换值的动作

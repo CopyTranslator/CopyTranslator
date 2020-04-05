@@ -5,7 +5,7 @@ import { constants, versionString } from "../core/constant";
 import { decompose } from "../tools/action";
 import { showSettings } from "../tools/views";
 import { Identifier, NormalActionType, RouteActionType } from "../tools/types";
-
+import { MessageType, WinOpt } from "../tools/enums";
 import { clipboard } from "../tools/clipboard";
 
 function handleActions(
@@ -42,10 +42,26 @@ function handleActions(
   }
 }
 
+function fontChange(scale: number) {
+  const window = BrowserWindow.getFocusedWindow();
+  if (window) {
+    window.webContents.send(MessageType.WindowOpt.toString(), {
+      type: WinOpt.Zoom,
+      rotation: scale
+    });
+  }
+}
+
 function handleNormalAction(identifier: NormalActionType | RouteActionType) {
   const controller = global.controller;
   const t = controller.getT();
   switch (identifier) {
+    case "font+":
+      fontChange(-1);
+      break;
+    case "font-":
+      fontChange(1);
+      break;
     case "contrast":
       controller.win.routeTo("contrast");
       break;

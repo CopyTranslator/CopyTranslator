@@ -1,9 +1,10 @@
 import { BrowserWindow, ipcMain as ipc } from "electron";
 import { MessageType, WinOpt } from "./enums";
-const ioHook = require("iohook");
 import simulate from "./simulate";
 import { checkNotice } from "./checker";
 import { checkForUpdates } from "./views/update";
+import { showSettings } from "./views";
+import os from "os";
 
 class WindowController {
   ctrlKey = false;
@@ -35,6 +36,13 @@ class WindowController {
           break;
       }
     });
+    if (os.platform() != "linux") {
+      this.bindHooks();
+    }
+  }
+
+  bindHooks() {
+    const ioHook = require("iohook");
     ioHook.on("keydown", (event: any) => {
       this.ctrlKey = event.ctrlKey;
     });

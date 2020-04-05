@@ -25,7 +25,9 @@ export const defaultLocalShortcuts: Shortcuts = new Map([
   ["selectAll", "CmdOrCtrl+A"],
   ["copyResult", "CmdOrCtrl+S"],
   ["copySource", "CmdOrCtrl+D"],
-  ["quit", "Cmd+Q"]
+  ["quit", "Cmd+Q"],
+  ["font+", "CmdOrCtrl+="],
+  ["font-", "CmdOrCtrl+-"]
 ]);
 
 export function resetFile(file: string, config: Map<Identifier, Accelerator>) {

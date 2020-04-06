@@ -55,6 +55,7 @@
     "lodash.keyby": "^4.6.0",
     "lodash.sum": "^4.0.2",
     "md5": "^2.2.1",
+    "node-mouse": "^0.0.2",
     "normalize.css": "^8.0.1",
     "robotjs": "https://github.com/octalmage/robotjs.git",
     "sbd": "^1.0.15",

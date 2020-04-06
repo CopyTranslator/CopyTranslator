@@ -41,7 +41,6 @@ class Controller {
   action: ActionManager;
   tray: TrayManager = new TrayManager();
   translating: boolean = false; //正在翻译
-  exited: boolean = false; //已经退出
   words: string = "";
 
   constructor() {
@@ -68,8 +67,7 @@ class Controller {
   onExit() {
     this.config.saveValues(env.configPath);
     this.action.unregister();
-    this.exited = true;
-    app.quit();
+    app.exit();
   }
 
   setSrc(append: string) {

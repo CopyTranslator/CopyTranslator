@@ -72,7 +72,6 @@ function handleNormalAction(identifier: NormalActionType | RouteActionType) {
     case "font-":
       fontChange(-1);
       break;
-
     case "exit":
       controller.onExit();
       break;

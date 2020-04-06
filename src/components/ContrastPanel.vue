@@ -47,6 +47,8 @@ import { Mixins, Watch, Component } from "vue-property-decorator";
 import WindowController from "../components/WindowController.vue";
 import Focus from "./Focus.vue";
 import { LayoutType, layoutTypes } from "../tools/types";
+import { MessageType, WinOpt } from "../tools/enums";
+import { ipcRenderer as ipc } from "electron";
 
 @Component({
   components: {
@@ -54,8 +56,34 @@ import { LayoutType, layoutTypes } from "../tools/types";
   }
 })
 export default class ContrastPanel extends Mixins(BaseView, WindowController) {
+  @Watch("layoutType")
+  layoutTypeChanged(newLayoutType: LayoutType, oldLayoutType: LayoutType) {
+    this.$proxy.set("layoutType", newLayoutType, false, false);
+  }
+
   get layoutType() {
     return this.$store.state.layoutType;
+  }
+
+  set layoutType(layoutType) {
+    this.$store.state.layoutType = layoutType;
+  }
+
+  syncLayoutType() {
+    this.$proxy.get("layoutType").then(layoutType => {
+      this.layoutType = layoutType;
+    });
+  }
+
+  mounted() {
+    this.syncLayoutType();
+    ipc.on(MessageType.WindowOpt.toString(), (event, arg) => {
+      if (arg.type === WinOpt.Refresh) {
+        if (!arg.args || arg.args === "layoutType") {
+          this.syncLayoutType();
+        }
+      }
+    });
   }
 
   translate() {

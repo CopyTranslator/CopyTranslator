@@ -24,6 +24,11 @@ app.on("window-all-closed", () => {
   }
 });
 
+app.on("will-quit", event => {
+  event.preventDefault();
+  controller.onExit();
+});
+
 app.on("activate", (event, hasVisibleWindows) => {
   // On macOS it's common to re-create a window in the app when the
   // dock icon is clicked and there are no other windows open.

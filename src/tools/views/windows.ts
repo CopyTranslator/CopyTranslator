@@ -172,7 +172,7 @@ export class WindowWrapper {
     this.load(routeName);
     this.window.on("close", e => {
       const closeAsQuit = global.controller.get("closeAsQuit");
-      if (!global.controller.exited && !closeAsQuit) {
+      if (!closeAsQuit) {
         e.preventDefault();
         if (this.window) {
           this.window.minimize();

@@ -86,7 +86,9 @@ class WindowController {
       if (this.selectedText != selectedText) {
         // 按下时选中的文本和释放时选中的文本不一致，则表示选中文本发生了变化
         console.debug('selected text changed:', selectedText)
-        global.controller.tryTranslate(selectedText)
+        if (this.dragCopy){
+          global.controller.tryTranslate(selectedText)
+        }
       }
 
       // 更新鼠标按钮状态

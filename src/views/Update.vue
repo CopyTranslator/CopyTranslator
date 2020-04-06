@@ -1,20 +1,26 @@
 <template>
-  <div>
-    <div v-if="version">
-      <h1 v-html="version"></h1>
-      <h2>更新日志</h2>
-      <div id="releaseNote" v-html="releaseNote"></div>
-      <v-row>
-        <v-col>
-          <v-btn v-if="!isMac" @click="autoDownload()" color="success">
-            自动下载更新
-          </v-btn>
-        </v-col>
-        <v-col>
-          <v-btn @click="manualDownload()" color="primary">手动下载更新</v-btn>
-        </v-col>
-      </v-row>
-    </div>
+  <div style="height:100vh">
+    <v-app>
+      <div v-if="version" style="height:100%">
+        <h2 style="text-align:center;" v-html="version"></h2>
+        <h3 style="text-align:center;">更新日志</h3>
+        <div style="height:50%;margin:7%">
+          <div id="releaseNote" v-html="releaseNote"></div>
+        </div>
+        <v-row>
+          <v-col v-if="!isMac">
+            <v-btn @click="autoDownload()" color="#33" style="width:100%">
+              自动下载更新
+            </v-btn>
+          </v-col>
+          <v-col>
+            <v-btn @click="manualDownload()" color="#44" style="width:100%"
+              >手动下载更新</v-btn
+            >
+          </v-col>
+        </v-row>
+      </div>
+    </v-app>
   </div>
 </template>
 

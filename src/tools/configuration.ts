@@ -7,7 +7,9 @@ import {
   Identifier,
   RouteActionType,
   routeActionTypes,
-  identifiers
+  identifiers,
+  LayoutType,
+  layoutTypes
 } from "./types";
 import { DictionaryType, dictionaryTypes } from "../tools/dictionary/types";
 import { version } from "../core/constant";
@@ -84,15 +86,6 @@ function initConfig(
   config.setRule("closeAsQuit", new TypeRule<boolean>(true, "close as quit"));
 
   config.setRule(
-    "frameMode",
-    new UnionRule<RouteActionType>(
-      "contrast",
-      "current frame mode",
-      routeActionTypes
-    )
-  );
-
-  config.setRule(
     "translatorType",
     new UnionRule<TranslatorType>(
       "google",
@@ -118,22 +111,13 @@ function initConfig(
   );
 
   config.setRule(
-    "hideDirect",
-    new UnionRule<HideDirection>("Up", "HideDirection", hideDirections)
+    "layoutType",
+    new UnionRule<LayoutType>("horizontal", "type of layout", layoutTypes)
   );
 
   config.setRule(
-    "focus",
-    new StructRule<ModeConfig>(
-      {
-        x: 1300,
-        y: 133,
-        height: 722,
-        width: 300,
-        fontSize: 20
-      },
-      "parameters of focus mode"
-    )
+    "hideDirect",
+    new UnionRule<HideDirection>("Up", "HideDirection", hideDirections)
   );
 
   config.setRule(
@@ -189,7 +173,6 @@ function initConfig(
         "autoFormat",
         "dragCopy",
         "stayTop",
-        "focus",
         "settings",
         "exit"
       ],
@@ -241,8 +224,6 @@ function initConfig(
         "stayTop",
         "listenClipboard",
         "enableNotify",
-        "contrast",
-        "focus",
         "settings",
         "helpAndUpdate",
         "exit"

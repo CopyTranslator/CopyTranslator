@@ -18,7 +18,7 @@ import {
 } from "./shortcuts";
 import { Controller } from "../core/controller";
 import { getLanguageLocales } from "./translate/locale";
-import { Identifier, MenuActionType, Role, roles } from "./types";
+import { Identifier, MenuActionType, Role, roles, layoutTypes } from "./types";
 import { dictionaryTypes } from "../tools/dictionary/types";
 
 function compose(actions: Array<string>) {
@@ -278,6 +278,7 @@ class ActionManager {
     items.push(listAction("hideDirect", hideDirections));
     items.push(listAction("translatorType", translatorTypes));
     items.push(listAction("dictionaryType", dictionaryTypes));
+    items.push(listAction("layoutType", layoutTypes));
 
     items.push(normalAction("copySource"));
     items.push(normalAction("copyResult"));
@@ -299,11 +300,13 @@ class ActionManager {
     items.push(switchAction("enableNotify"));
     items.push(switchAction("skipTaskbar"));
     items.push(switchAction("closeAsQuit"));
-
     items.push(normalAction("focus"));
     items.push(normalAction("contrast"));
     items.push(normalAction("capture"));
     items.push(normalAction("restoreDefault"));
+
+    items.push(normalAction("font+"));
+    items.push(normalAction("font-"));
 
     items.push(constantAction("APP_ID"));
     items.push(constantAction("API_KEY"));
@@ -365,7 +368,7 @@ class ActionManager {
         contain.push("restoreDefault");
         break;
       case "focusContext":
-        contain = ["copy", "paste", "cut", "clear"];
+        contain = ["copy", "paste", "cut", "clear", "focus"];
         break;
       case "contrastContext":
         contain = ["copy", "paste", "cut", "clear", "copyResult", "copySource"];

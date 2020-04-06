@@ -27,6 +27,7 @@ export class Proxy implements IProxy {
   get(identifier: Identifier) {
     return this.controller.get<any>(identifier);
   }
+
   handleAction(cmd: string) {
     handleActions(cmd);
   }
@@ -34,9 +35,11 @@ export class Proxy implements IProxy {
   getSupportLanguages() {
     this.controller.translator.getSupportLanguages();
   }
+
   getAction(identifier: Identifier): Action {
     return this.controller.action.getAction(identifier);
   }
+
   setCurrentColor() {
     this.controller.setCurrentColor();
   }
@@ -50,9 +53,7 @@ export class Proxy implements IProxy {
   tryTranslate(text: string, clear = false): void {
     this.controller.tryTranslate(text, clear);
   }
-  routeTo(routerName: RouteActionType): void {
-    this.controller.win.routeTo(routerName);
-  }
+
   popup(id: MenuActionType): void {
     this.controller.action.popup(id);
   }

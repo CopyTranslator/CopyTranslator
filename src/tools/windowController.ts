@@ -1,7 +1,5 @@
 import { BrowserWindow, ipcMain as ipc } from "electron";
 import { MessageType, WinOpt } from "./enums";
-const ioHook = require("iohook");
-import simulate from "./simulate";
 import { checkForUpdates } from "./views/update";
 
 class WindowController {
@@ -33,56 +31,6 @@ class WindowController {
           break;
       }
     });
-    ioHook.on("keydown", (event: any) => {
-      this.ctrlKey = event.ctrlKey;
-    });
-    ioHook.on("keyup", (event: any) => {
-      if (event.keycode == 29) {
-        this.ctrlKey = false;
-      } else {
-        this.ctrlKey = event.ctrlKey;
-      }
-    });
-
-    //字体缩放
-    ioHook.on("mousewheel", (event: any) => {
-      if (!this.ctrlKey) return;
-      const window = BrowserWindow.getFocusedWindow();
-      if (window)
-        window.webContents.send(MessageType.WindowOpt.toString(), {
-          type: WinOpt.Zoom,
-          rotation: event.rotation
-        });
-    });
-    ioHook.on("mouseup", (event: MouseEvent) => {
-      //模拟复制
-      if (
-        this.dragCopy &&
-        !this.copied &&
-        Date.now() - this.lastDown > 100 &&
-        Math.abs(this.newX - this.lastX) + Math.abs(this.newY - this.lastY) > 10
-      ) {
-        simulate.copy();
-
-        this.copied = true;
-      }
-    });
-
-    ioHook.on("mousedown", (event: MouseEvent) => {
-      this.lastDown = Date.now();
-      this.lastX = event.x;
-      this.lastY = event.y;
-      this.copied = false;
-    });
-
-    ioHook.on("mousedrag", (event: MouseEvent) => {
-      this.drag = true;
-      this.newX = event.x;
-      this.newY = event.y;
-    });
-    //注册的指令。send到主进程main.js中。
-    // Register and start hook
-    ioHook.start(false);
   }
 }
 

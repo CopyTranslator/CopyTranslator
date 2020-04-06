@@ -72,5 +72,8 @@ module.exports = {
       // 这一步还蛮重要的，不然就会报错
       nodeModulesPath: ["./node_modules"]
     }
+  },
+  configureWebpack: {
+    devtool: "source-map"
   }
 };

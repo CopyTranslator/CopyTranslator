@@ -5,7 +5,14 @@ import { constants, versionString } from "../core/constant";
 import { decompose } from "../tools/action";
 import { showSettings } from "../tools/views";
 import { Identifier, NormalActionType, RouteActionType } from "../tools/types";
+
 import { clipboard } from "../tools/clipboard";
+import { MessageType, WinOpt } from "../tools/enums";
+
+const alias: Map<string, string> = new Map<Identifier, any>([
+  ["focus", "layoutType|focus"],
+  ["contrast", "layoutType|horizontal"]
+]);
 
 function handleActions(
   id: string,
@@ -13,6 +20,10 @@ function handleActions(
   browserWindow: BrowserWindow | undefined = undefined,
   event: Event | undefined = undefined
 ) {
+  if (alias.get(id) != undefined) {
+    handleActions(<string>alias.get(id));
+    return;
+  }
   const params = decompose(id);
   const identifier = <Identifier>params[0];
   const param = params[1];
@@ -41,13 +52,27 @@ function handleActions(
   }
 }
 
+function fontChange(scale: number) {
+  const window = BrowserWindow.getFocusedWindow();
+  if (window) {
+    window.webContents.send(MessageType.WindowOpt.toString(), {
+      type: WinOpt.Zoom,
+      rotation: scale
+    });
+  }
+}
+
 function handleNormalAction(identifier: NormalActionType | RouteActionType) {
   const controller = global.controller;
   const t = controller.getT();
   switch (identifier) {
-    case "contrast":
-      controller.win.routeTo("contrast");
+    case "font+":
+      fontChange(1);
       break;
+    case "font-":
+      fontChange(-1);
+      break;
+
     case "exit":
       controller.onExit();
       break;

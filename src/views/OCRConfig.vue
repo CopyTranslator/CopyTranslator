@@ -16,12 +16,11 @@
 </template>
 
 <script lang="ts">
-import WindowController from "../components/WindowController.vue";
 import { shell } from "electron";
-import { Component } from "vue-property-decorator";
+import { Component, Vue } from "vue-property-decorator";
 
 @Component
-export default class OCRConfig extends WindowController {
+export default class OCRConfig extends Vue {
   APP_ID: string = "";
   API_KEY: string = "";
   SECRET_KEY: string = "";
@@ -39,11 +38,8 @@ export default class OCRConfig extends WindowController {
   }
   confirm() {
     this.$proxy.setUpRecognizer(this.APP_ID, this.API_KEY, this.SECRET_KEY);
-    this.closeMe();
   }
-  close() {
-    this.closeMe();
-  }
+  close() {}
   tutorial() {
     shell.openExternal("https://www.bilibili.com/video/av53888416/");
   }

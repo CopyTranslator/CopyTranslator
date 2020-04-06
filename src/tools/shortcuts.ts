@@ -11,10 +11,7 @@ export interface Shortcut {
 
 export type Shortcuts = Map<Identifier, Accelerator>;
 
-export const defaultGlobalShortcuts: Shortcuts = new Map([
-  ["focus", "Shift+F1"],
-  ["contrast", "Shift+F2"]
-]);
+export const defaultGlobalShortcuts: Shortcuts = new Map([]);
 
 export const defaultLocalShortcuts: Shortcuts = new Map([
   ["undo", "CmdOrCtrl+Z"],

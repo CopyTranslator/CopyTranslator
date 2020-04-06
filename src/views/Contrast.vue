@@ -10,7 +10,6 @@
           :engine="engine"
           :valid="valid"
         ></EngineButton>
-
         <div v-on:dblclick="minify" v-on:contextmenu="openMenu('focusRight')">
           <v-btn :style="styleNow" @click="switchListen" fab x-small></v-btn>
         </div>
@@ -69,7 +68,6 @@ import {
 })
 export default class Contrast extends Mixins(BaseView, WindowController) {
   barWidth: number = 0;
-  size: number = 15;
   readonly routeName = "contrast";
   actionKeys: Identifier[] = [];
   colorNow: string = "white";
@@ -81,6 +79,7 @@ export default class Contrast extends Mixins(BaseView, WindowController) {
   get engines() {
     return this.valid ? dictionaryTypes : translatorTypes;
   }
+
   get styleNow() {
     return `background:${this.colorNow};`;
   }
@@ -106,9 +105,7 @@ export default class Contrast extends Mixins(BaseView, WindowController) {
       }
     });
     this.$proxy.setCurrentColor();
-    this.$proxy.get("contrast").then(res => {
-      this.size = res.fontSize;
-    });
+
     this.$proxy.getKeys("contrastPanel").then(res => {
       this.actionKeys = res;
     });

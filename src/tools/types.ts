@@ -19,7 +19,9 @@ export const normalActionTypes = [
   "ok",
   "restoreDefault",
   "capture",
-  "notices"
+  "notices",
+  "font+",
+  "font-"
 ] as const;
 
 //切换值的动作
@@ -33,6 +35,7 @@ export const constantActionTypes = [
   "hideDirect",
   "translatorType",
   "dictionaryType",
+  "layoutType",
   "frameMode",
   "version",
   "API_KEY",
@@ -100,11 +103,7 @@ export const menuActionTypes = [
 ] as const;
 
 //布局名称
-export const layoutTypes = [
-  "horizontal", //设置页面
-  "vertical",
-  "focus"
-] as const;
+export const layoutTypes = ["horizontal", "vertical", "focus"] as const;
 
 //路由名称
 export const routeActionTypes = [

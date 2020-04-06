@@ -12,9 +12,6 @@ export default Vue.extend({
 });
 </script>
 <style>
-.active {
-  margin-left: 200px;
-}
 ::-webkit-scrollbar {
   display: none;
 }

@@ -24,19 +24,10 @@ export class WindowWrapper {
     this.winOpt(WinOpt.ChangeColor, color);
   }
 
-  routeTo(routeName: RouteActionType) {
-    if (this.window) {
-      this.window.focus();
-      this.window.webContents.send(MessageType.Router.toString(), routeName);
-      global.controller.set("frameMode", routeName);
-    }
-  }
-
   load(routerName: RouteActionType = "contrast") {
     if (!this.window) {
       return;
     }
-    this.winOpt(WinOpt.SaveMode);
     loadRoute(this.window, routerName, true);
     insertStyles(this.window);
     this.window.on("blur", () => {

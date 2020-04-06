@@ -17,7 +17,7 @@ export default class WindowController extends Vue {
   windowWidth: number = window.innerWidth;
 
   setZoomFactor(value: number) {
-    this.size -= value;
+    this.size += value;
   }
 
   windowOpt(type: WinOpt, args: any = null) {
@@ -31,22 +31,14 @@ export default class WindowController extends Vue {
     this.$proxy.handleAction(cmd);
   }
 
-  changeMode(routerName: RouteActionType) {
-    this.$proxy.routeTo(routerName);
-  }
-
-  changeModeNoSave(routerName: RouteActionType) {
-    this.$router.push({ name: routerName }).catch(err => {
-      err;
-    });
-  }
-
   minify(event: any) {
     this.windowOpt(WinOpt.Minify);
   }
+
   closeMe() {
     this.windowOpt(WinOpt.CloseMe);
   }
+
   openMenu(id: MenuActionType) {
     this.$proxy.popup(id);
   }
@@ -70,17 +62,6 @@ export default class WindowController extends Vue {
     });
     window.addEventListener("resize", this.onResize);
 
-    ipc.on(MessageType.Router.toString(), (event, arg) => {
-      this.changeModeNoSave(arg);
-    });
-    ipc.on(MessageType.WindowOpt.toString(), (event, arg) => {
-      if (arg.type == WinOpt.SaveMode) {
-        this.onResize();
-      }
-    });
-    this.$nextTick(() => {
-      ipc.send(MessageType.FirstLoaded.toString());
-    });
     if (this.routeName) this.$proxy.restoreWindow(this.routeName);
   }
 

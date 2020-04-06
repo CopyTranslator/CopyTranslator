@@ -19,7 +19,7 @@
       </v-select>
     </div>
     <div v-else-if="action.type === 'normal'">
-      <v-btn color="primary" @click="handleAction(action.id)">
+      <v-btn @click="handleAction(action.id)">
         {{ $t(action.id) }}
       </v-btn>
     </div>
@@ -27,12 +27,9 @@
 </template>
 
 <script lang="ts">
-/* eslint-disable */
 import { compose, decompose } from "../tools/action";
 import { ipcRenderer as ipc } from "electron";
 import { MessageType, WinOpt } from "../tools/enums";
-
-// @ts-ignore /* eslint-disable */
 import { Identifier } from "../tools/types";
 import { Prop, Component, Watch, Vue } from "vue-property-decorator";
 import { Action as ActionType } from "../tools/action";
@@ -96,14 +93,13 @@ export default class Action extends Vue {
 </script>
 
 <style scoped>
-.myswitch{
-  margin:0px;
+.myswitch {
+  margin: 0px;
 }
 .myswitch >>> .v-messages {
   min-height: 0px;
 }
 .myswitch >>> .v-input__slot {
-  margin-bottom:0px !important;
+  margin-bottom: 0px !important;
 }
-
 </style>

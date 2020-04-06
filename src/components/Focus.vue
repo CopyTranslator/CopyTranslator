@@ -45,11 +45,7 @@ export default class FocusMode extends Mixins(BaseView, WindowController) {
   isOpen: boolean = false;
   @Ref("dictResultPanel") readonly dictResultPanel!: DictResultPanel;
 
-  mounted() {
-    this.$proxy.get("focus").then(res => {
-      this.size = res.fontSize;
-    });
-  }
+  mounted() {}
 
   toggleCmdline() {
     this.isOpen = !this.isOpen;

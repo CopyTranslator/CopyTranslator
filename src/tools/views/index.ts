@@ -60,6 +60,6 @@ export function showSettings() {
       nodeIntegration: true
     }
   });
-  loadRoute(window, "settings");
+  loadRoute(window, "settings", true);
   insertStyles(window);
 }

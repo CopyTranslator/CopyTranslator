@@ -57,7 +57,7 @@ class Controller {
   createWindow() {
     clipboard.init();
     this.tray.init();
-    this.win.createWindow(this.get("frameMode"));
+    this.win.createWindow("contrast");
 
     windowController.bind();
     this.action.init();

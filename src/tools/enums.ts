@@ -28,7 +28,6 @@ enum WinOpt {
   OpenExternal,
   ChangeColor,
   Refresh,
-  SaveMode,
   CloseMe
 }
 

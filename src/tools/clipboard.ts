@@ -43,8 +43,11 @@ class ClipboardWarpper {
   @delay
   static writeText(text: string) {}
 
+  /**
+   * @param text selection(仅支持Linux X11桌面环境，获取鼠标选中的文本)
+   */
   @delay
-  static readText(): any {}
+  static readText(text?: string): any {}
 
   @delay
   static startWatching() {}

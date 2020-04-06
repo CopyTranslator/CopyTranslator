@@ -8195,6 +8195,11 @@ node-libs-browser@^2.2.1:
     util "^0.11.0"
     vm-browserify "^1.0.1"
 
+node-mouse@^0.0.2:
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/node-mouse/-/node-mouse-0.0.2.tgz#9297431cd3019da67d878077c054cbf03019528a"
+  integrity sha1-kpdDHNMBnaZ9h4B3wFTL8DAZUoo=
+
 node-notifier@^5.2.1:
   version "5.4.3"
   resolved "https://registry.npm.taobao.org/node-notifier/download/node-notifier-5.4.3.tgz#cb72daf94c93904098e28b9c590fd866e464bd50"

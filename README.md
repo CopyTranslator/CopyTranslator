@@ -109,7 +109,7 @@ Link: [User Manual](https://copytranslator.github.io/guide/)
 
 ## Download/Install
 
-Link: [Install Guide](https://copytranslator.github.io/guide/download.html)
+Link: [Install Guide](https://copytranslator.github.io/download/)
 
 **After several iterations, `CopyTranslator` has became more and more powerful as well as user-friendly. It is recommended to read the full  [User Manual](https://copytranslator.github.io/guide/) to make best use of it**.
 

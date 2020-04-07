@@ -122,9 +122,23 @@
 
 ### 赞助
 
-CopyTranslator是采用 GPL v2 协议许可的开源项目，使用完全免费。但是它的维护也是需要较大的精力的，您可以通过捐赠的形式来帮助该项目发展。
+CopyTranslator是采用 GPL v2 协议许可的开源项目，使用完全免费。
 
-- [爱发电](https://afdian.net/@elliottzheng/plan)
+但是它的维护也是需要较大的精力的，这些工作目前主要由作者一人花费大量私人时间与精力完成😫。
+
+如果你希望支持这个项目长久持续开发下去并不断加入新功能，可以选择打赏❤️让我买杯咖啡☕恢复元气，更好地投入到开发当中。
+
+感谢所有支持CopyTranslator的小伙伴们。
+
+<div align="center;">
+   <div style="display:inline-block;"><img height="300" src="https://s1.ax1x.com/2020/04/07/G2gSw4.jpg" alt="微信赞赏">
+   <p style="text-align:center;">微信赞赏</p>
+   </div>
+  <div style="display:inline-block;" ><a href="https://afdian.net/@elliottzheng"><img height="300" src="https://s2.ax1x.com/2019/03/05/kjASMV.png" alt="爱发电">
+   <p style="text-align:center;">爱发电（支持微信与支付宝）</p></a>
+   </div>
+</div>
+
 
 ## 开源协议
 

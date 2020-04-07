@@ -18,7 +18,6 @@ sidebarDepth: 6
 - [Github Releases](https://github.com/copytranslator/copytranslator/releases)
 - [Bintray](https://bintray.com/elliottzheng/CopyTranslator/CopyTranslator/_latestVersion)
 - [百度云](https://pan.baidu.com/s/1jqf0pwvV7Xero7dB0GkTqQ)
-- [蓝奏云](https://www.lanzous.com/b389682)
 
 ### Windows
 下载exe文件，安装即用
@@ -33,9 +32,7 @@ sidebarDepth: 6
 :::
 
 ### Linux 
-暂时不支持Linux, 虽然Electron是天生跨平台的，但是我主要是在windows上开发的，对Linux上的Electron不太熟悉。在经过简单的尝试后，因为平台之间存在些许差异，我发现很难自己维护所有平台。
-
-**如果您熟悉Linux中npm、node和electron的开发**，并且愿意帮助维护Linux的CopyTranslator，可以直接回复这个[issue](https://github.com/CopyTranslator/CopyTranslator/issues/48)。也可以给我发邮件[copytranslator@hypercube.top](mailto:copytranslator@hypercube.top)
+下载AppImage或deb安装即可，推荐使用AppImage安装，可获得后续自动更新。
 
 ## 订阅更新
 - 在[Github](https://github.com/CopyTranslator/CopyTranslator)上`watch`本项目

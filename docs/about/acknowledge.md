@@ -8,6 +8,7 @@
 
 ## 代码贡献者
 - Mac 维护者 [黎紫珊](https://github.com/Sandural)
+- Linux 维护者 [Daryl.Xu](https://github.com/ziqiangxu)
 
 ## 开源库
 所基于的开源库太多，难以罗列，在这里仅列出主要的几项，同时也感谢其他默默无闻为开源事业做出贡献的人们：
@@ -18,6 +19,7 @@
 - [iohook](https://github.com/wilix-team/iohook): 捕获全局鼠标和键盘事件
 - [robotjs](https://github.com/octalmage/robotjs): Node.js Desktop Automation.
 - [eazydict](https://github.com/keenwon/eazydict) 简单易用的命令行词典-核心查词引擎
+- [node-mouse](https://github.com/irontec/node-mouse): Linux下捕获全局鼠标事件
 
 ## 界面语言维护
 

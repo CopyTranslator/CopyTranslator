@@ -85,5 +85,6 @@
     "zoomOut": "縮小",
     "closeAsQuit": "關閉即退出",
     "dictionaryType": "Dictionary Type",
-    "neverShow": "Never Show"
+    "neverShow": "Never Show",
+    "layoutType": "Layout"
 }

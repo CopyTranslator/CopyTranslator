@@ -4,12 +4,26 @@ import { env } from "./env";
 import { Identifier, objToMap } from "./types";
 import { en, Locale } from "./locales";
 import { Language } from "@opentranslate/languages";
+import { app } from "electron";
 
 type Resouces = Map<Language, Locale>;
+
+function getDefaultLocale(): Language {
+  let locale = app.getLocale();
+  if (locale === "zh") {
+    locale = "zh-CN";
+  }
+  if (["zh-CN", "en", "zh-TW"].indexOf(locale) == -1) {
+    locale = "en";
+  }
+  return <Language>locale;
+}
 
 class L10N {
   resources: Resouces = new Map<Language, Locale>();
   locales: { lang: Language; localeName: string }[] = [];
+  defaultLocale: Language = "auto";
+
   constructor(localeDirs: string[]) {
     localeDirs.forEach((localeDir: string) => {
       fs.readdirSync(localeDir).forEach((fileName: string) => {
@@ -32,11 +46,21 @@ class L10N {
   }
 
   getT(key: Language = "en") {
+    if (key === "auto") {
+      key = this.getDefaultLocale();
+    }
     let locale: Locale = this.resources.get(key) || en;
     function T(key: Identifier): string {
       return locale.get(key) || <string>en.get(key);
     }
     return T;
+  }
+
+  getDefaultLocale() {
+    if (this.defaultLocale === "auto") {
+      this.defaultLocale = getDefaultLocale();
+    }
+    return this.defaultLocale;
   }
 }
 

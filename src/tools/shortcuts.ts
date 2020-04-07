@@ -11,7 +11,10 @@ export interface Shortcut {
 
 export type Shortcuts = Map<Identifier, Accelerator>;
 
-export const defaultGlobalShortcuts: Shortcuts = new Map([]);
+export const defaultGlobalShortcuts: Shortcuts = new Map([
+  ["focus", "Shift+F1"],
+  ["contrast", "Shift+F2"]
+]);
 
 export const defaultLocalShortcuts: Shortcuts = new Map([
   ["undo", "CmdOrCtrl+Z"],
@@ -22,7 +25,9 @@ export const defaultLocalShortcuts: Shortcuts = new Map([
   ["selectAll", "CmdOrCtrl+A"],
   ["copyResult", "CmdOrCtrl+S"],
   ["copySource", "CmdOrCtrl+D"],
-  ["quit", "Cmd+Q"]
+  ["quit", "Cmd+Q"],
+  ["font+", "CmdOrCtrl+="],
+  ["font-", "CmdOrCtrl+-"]
 ]);
 
 export function resetFile(file: string, config: Map<Identifier, Accelerator>) {

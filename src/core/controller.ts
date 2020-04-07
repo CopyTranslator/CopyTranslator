@@ -119,7 +119,11 @@ class Controller {
   }
 
   getT() {
-    return this.l10n.getT(this.get<Language>("localeSetting"));
+    let locale = this.get<Language>("localeSetting");
+    if (locale === "auto") {
+      locale = <Language>app.getLocale();
+    }
+    return this.l10n.getT(locale);
   }
 
   sync(

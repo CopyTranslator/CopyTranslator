@@ -159,7 +159,7 @@ function initConfig(
 
   config.setRule(
     "localeSetting",
-    new UnionRule<Language>("zh-CN", "localeSetting setting", languages)
+    new UnionRule<Language>("auto", "localeSetting setting", languages)
   );
 
   config.setRule(

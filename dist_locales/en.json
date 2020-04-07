@@ -71,5 +71,6 @@
     "switches": "Switches",
     "options": "Options",
     "skipTaskbar": "Skip Taskbar",
-    "closeAsQuit": "Close As Quit"
+    "closeAsQuit": "Close As Quit",
+    "layoutType": "Layout"
 }

@@ -2,7 +2,7 @@ import Vue from "vue";
 import App from "./App.vue";
 import router from "./router";
 import store from "./store";
-import vuetify from "@/plugins/vuetify"; // path to vuetify export
+import vuetify from "./vuetify"; // path to vuetify export
 import { ipcRenderer } from "electron";
 import { MessageType } from "./tools/enums";
 import { constants, versionString } from "./core/constant";

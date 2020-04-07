@@ -1,7 +1,7 @@
 <template>
-  <div style="height:100%; margin: 10px">
+  <div style="height:100%; ">
     <v-app>
-      <div style="height:80%">
+      <div style="height:80%;margin:2%;">
         <v-tabs v-model="activeName">
           <v-tab>{{ $t("options") }} </v-tab>
           <v-tab>{{ $t("switches") }} </v-tab>

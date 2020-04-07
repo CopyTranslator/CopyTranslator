@@ -1,5 +1,8 @@
 import { env } from "./env";
 import fs from "fs";
+import { systemPreferences } from "electron";
+console.log("isDarkMode", systemPreferences.isInvertedColorScheme());
+console.log("isDarkMode2", systemPreferences.isHighContrastColorScheme());
 
 const defaultStyles = `
 .application{ /*在这里设置整个应用的字体*/

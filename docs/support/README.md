@@ -2,17 +2,30 @@
 
 您可以通过很多种方式来支持 `CopyTranslator`的开发
 
-## 分享
-
-点下star，并分享给您的朋友，社交网络就是对CopyTranslator的极大支持。
-
-## 捐赠
+## 打赏
 
 CopyTranslator是采用 GPL v2 协议许可的开源项目，**使用完全免费**。
 
-但是它的维护也是需要较大的精力的，如果您觉得软件对您有帮助，可以请作者喝杯奶茶。
+但是它的维护工作量很大，这些工作目前主要由作者一人花费大量私人时间与精力完成😫。
 
-   ![aifadian](https://s2.ax1x.com/2019/03/05/kjASMV.png)
+如果你希望支持这个项目长久持续开发下去并保持维护不断加入新功能，可以选择打赏我买杯咖啡☕恢复元气，更好地投入到开发当中。😊
+
+感谢所有支持CopyTranslator的小伙伴们。
+
+<div align="center;">
+   <div style="display:inline-block;"><img height="300" src="https://s1.ax1x.com/2020/04/07/G2gSw4.jpg" alt="微信赞赏">
+   <p style="text-align:center;">微信赞赏</p>
+   </div>
+  <div style="display:inline-block;" ><a href="https://afdian.net/@elliottzheng"><img height="300" src="https://s2.ax1x.com/2019/03/05/kjASMV.png" alt="爱发电">
+   <p style="text-align:center;">爱发电（支持微信与支付宝）</p></a>
+   </div>
+</div>
+
+   
+
+## 分享
+
+点下star，并分享给您的朋友，社交网络就是对CopyTranslator的极大支持。
 
 
 ## 平台维护者

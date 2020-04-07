@@ -21,7 +21,9 @@ class WindowController {
 
   bind() {
     ipc.once(MessageType.FirstLoaded.toString(), (event: any, args: any) => {
-      checkForUpdates();
+      if (global.controller.get("autoCheckUpdate")) {
+        checkForUpdates();
+      }
     });
 
     ipc.on(MessageType.WindowOpt.toString(), (event: any, args: any) => {

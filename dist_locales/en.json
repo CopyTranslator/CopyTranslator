@@ -72,5 +72,6 @@
     "options": "Options",
     "skipTaskbar": "Skip Taskbar",
     "closeAsQuit": "Close As Quit",
-    "layoutType": "Layout"
+    "layoutType": "Layout",
+    "autoCheckUpdate": "Auto Check Update"
 }

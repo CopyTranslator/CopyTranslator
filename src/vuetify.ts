@@ -13,8 +13,6 @@ function isDarkMode() {
   }
 }
 
-console.log(isDarkMode());
-
 export default new Vuetify({
   theme: {
     dark: isDarkMode()

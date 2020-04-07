@@ -300,6 +300,7 @@ class ActionManager {
     items.push(switchAction("enableNotify"));
     items.push(switchAction("skipTaskbar"));
     items.push(switchAction("closeAsQuit"));
+    items.push(switchAction("autoCheckUpdate"));
     items.push(normalAction("focus"));
     items.push(normalAction("contrast"));
     items.push(normalAction("capture"));

@@ -86,6 +86,11 @@ function initConfig(
   config.setRule("closeAsQuit", new TypeRule<boolean>(true, "close as quit"));
 
   config.setRule(
+    "autoCheckUpdate",
+    new TypeRule<boolean>(true, "auto check update after startup")
+  );
+
+  config.setRule(
     "translatorType",
     new UnionRule<TranslatorType>(
       "google",

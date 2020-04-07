@@ -75,7 +75,8 @@ export const zh_cn = new Map<Identifier, string>([
   ["zoomIn", "放大"],
   ["zoomOut", "缩小"],
   ["closeAsQuit", "关闭即退出"],
-  ["layoutType", "布局"]
+  ["layoutType", "布局"],
+  ["autoCheckUpdate", "自动检查更新"]
 ]);
 
 export const en = new Map<Identifier, string>([
@@ -153,6 +154,7 @@ export const en = new Map<Identifier, string>([
   ["options", "Options"],
   ["skipTaskbar", "Skip Taskbar"],
   ["closeAsQuit", "Close As Quit"],
-  ["layoutType", "Layout"]
+  ["layoutType", "Layout"],
+  ["autoCheckUpdate", "Auto Check Update"]
 ]);
 export type Locale = typeof en;

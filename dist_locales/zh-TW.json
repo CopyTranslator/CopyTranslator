@@ -86,5 +86,6 @@
     "closeAsQuit": "關閉即退出",
     "dictionaryType": "Dictionary Type",
     "neverShow": "Never Show",
-    "layoutType": "Layout"
+    "layoutType": "Layout",
+    "autoCheckUpdate": "Auto Check Update"
 }

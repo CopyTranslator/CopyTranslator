@@ -37,6 +37,7 @@ export const constantActionTypes = [
   "dictionaryType",
   "layoutType",
   "frameMode",
+  "autoCheckUpdate",
   "version",
   "API_KEY",
   "APP_ID",

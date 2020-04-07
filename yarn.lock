@@ -1139,6 +1139,13 @@
   dependencies:
     "@types/lodash" "*"
 
+"@types/lodash.trimend@^4.5.6":
+  version "4.5.6"
+  resolved "https://registry.npm.taobao.org/@types/lodash.trimend/download/@types/lodash.trimend-4.5.6.tgz#aba6dccde869458e7076f4cee67ee1b22166b7f1"
+  integrity sha1-q6bczehpRY5wdvTO5n7hsiFmt/E=
+  dependencies:
+    "@types/lodash" "*"
+
 "@types/lodash@*":
   version "4.14.149"
   resolved "https://registry.npm.taobao.org/@types/lodash/download/@types/lodash-4.14.149.tgz#1342d63d948c6062838fbf961012f74d4e638440"
@@ -7399,6 +7406,11 @@ lodash.transform@^4.6.0:
   version "4.6.0"
   resolved "https://registry.npm.taobao.org/lodash.transform/download/lodash.transform-4.6.0.tgz#12306422f63324aed8483d3f38332b5f670547a0"
   integrity sha1-EjBkIvYzJK7YSD0/ODMrX2cFR6A=
+
+lodash.trimend@^4.5.1:
+  version "4.5.1"
+  resolved "https://registry.npm.taobao.org/lodash.trimend/download/lodash.trimend-4.5.1.tgz#12804437286b98cad8996b79414e11300114082f"
+  integrity sha1-EoBENyhrmMrYmWt5QU4RMAEUCC8=
 
 lodash.unescape@4.0.1:
   version "4.0.1"

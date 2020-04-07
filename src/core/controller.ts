@@ -19,6 +19,7 @@ import { recognizer } from "../tools/ocr";
 import { Identifier, authorizeKey } from "../tools/types";
 import { startService } from "./service";
 import { Polymer } from "../tools/dictionary/polymer";
+import trimEnd from "lodash.trimend";
 import {
   DictionaryType,
   DictSuccess,
@@ -330,6 +331,7 @@ class Controller {
   async tryQueryDictionary(text: string) {
     this.dictFail("");
     this.syncDict();
+    text = trimEnd(text.trim(), ",.!?. \n\r");
     if (
       !this.get("smartDict") ||
       !this.checkIsWord(text) ||

@@ -169,6 +169,7 @@ export class WindowWrapper {
       throw Error("not implement window type");
     }
 
+    console.debug('icon path(window):', env.iconPath)
     // Create the browser window.
     this.window = new BrowserWindow({
       x: param.x,

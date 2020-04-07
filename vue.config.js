@@ -2,7 +2,7 @@ const osType = require("os").type();
 const osSpec = {
   Windows_NT: { iconName: "icon.ico" },
   Darwin: { iconName: "icon.png" },
-  Linux: { iconName: "icon.png" }
+  Linux: { iconName: "linux-icon" }
 }[osType];
 
 const trayIconName = "tray@2x.png";
@@ -56,7 +56,12 @@ module.exports = {
               arch: ["x64"]
             }
           ],
-          icon: osSpec.iconName
+          icon: osSpec.iconName,
+          category: 'Education',
+          // https://www.electron.build/configuration/linux#debian-package-options
+          desktop: {
+            Icon: '/opt/copytranslator/resources/linux-icon/icon.png'
+          }
         },
         mac: {
           target: [

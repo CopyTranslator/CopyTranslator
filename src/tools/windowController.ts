@@ -1,4 +1,4 @@
-import { BrowserWindow, ipcMain as ipc } from "electron";
+import { BrowserWindow, ipcMain as ipc, dialog } from "electron";
 import { MessageType, WinOpt } from "./enums";
 import simulate from "./simulate";
 import { checkNotice } from "./checker";
@@ -18,8 +18,8 @@ class WindowController {
   newX = 0;
   copied: boolean = false;
   // Just for linux x11
-  selectedText: string = clipboard.readText('selection')
-  preLeftBtn: string = 'mouseup'
+  selectedText: string = clipboard.readText("selection");
+  preLeftBtn: string = "mouseup";
 
   bind() {
     ipc.once(MessageType.FirstLoaded.toString(), (event: any, args: any) => {
@@ -62,38 +62,53 @@ class WindowController {
    */
   bindLinuxHooks() {
     let Mouse = require("node-mouse");
-    let m = new Mouse()
+    let m;
+    try {
+      m = new Mouse();
+    } catch (e) {
+      // console.error('failed to open /dev/input/mice')
+      // const zhWarning =
+      //   "请在终端执行sudo groupmens -g input $USER，然后重新登录桌面环境，以便全局监听鼠标事件。";
+      // const enWarning =
+      //   'Perform "sudo groupmens -g input $USER" at the terminal, then logout and log back into the desktop environment, to listen for mouse events globally.';
+      // dialog.showErrorBox(
+      //   "无法全局监听鼠标事件",
+      //   [enWarning, zhWarning].join("\n")
+      // );
+      // // todo do not open the switch
+      return false;
+    }
 
     m.on("mousedown", (event: any) => {
       // 按住鼠标拖动的时候也会触发此事件
       // 如果原本按钮就是pressed状态，则直接返回，不做处理
       if (this.preLeftBtn) {
-        return
+        return;
       }
 
-      this.selectedText = clipboard.readText('selection')  
+      this.selectedText = clipboard.readText("selection");
       // console.debug(event)
-      console.debug('mousedown: ', this.selectedText)
-      
-      // 更新鼠标按钮状态       
-      this.preLeftBtn = event.leftBtn
-    })
+      console.debug("mousedown: ", this.selectedText);
 
-    m.on("mouseup", (event: any) => {    
-      // console.debug(event)   
-      console.debug("mouseup", clipboard.readText('selection'))
-      let selectedText = clipboard.readText('selection')
+      // 更新鼠标按钮状态
+      this.preLeftBtn = event.leftBtn;
+    });
+
+    m.on("mouseup", (event: any) => {
+      // console.debug(event)
+      console.debug("mouseup", clipboard.readText("selection"));
+      let selectedText = clipboard.readText("selection");
       if (this.selectedText != selectedText) {
         // 按下时选中的文本和释放时选中的文本不一致，则表示选中文本发生了变化
-        console.debug('selected text changed:', selectedText)
-        if (this.dragCopy){
-          global.controller.tryTranslate(selectedText)
+        console.debug("selected text changed:", selectedText);
+        if (this.dragCopy) {
+          global.controller.tryTranslate(selectedText);
         }
       }
 
       // 更新鼠标按钮状态
-      this.preLeftBtn = event.leftBtn
-    })
+      this.preLeftBtn = event.leftBtn;
+    });
   }
 
   bindHooks() {

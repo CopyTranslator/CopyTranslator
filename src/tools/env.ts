@@ -9,7 +9,7 @@ const osSpec: { [key: string]: { executableDir: string; iconName: string } } = {
     iconName: "icon.ico"
   },
   Darwin: { executableDir: "scripts", iconName: "icon.png" },
-  Linux: { executableDir: "scripts", iconName: "icon.png" }
+  Linux: { executableDir: "scripts", iconName: "linux-icon/icon.png" }
 };
 
 const currentSpec = osSpec[osType];

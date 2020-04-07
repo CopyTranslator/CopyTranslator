@@ -44,7 +44,15 @@ module.exports = {
         linux: {
           target: [
             {
+              target: "AppImage",
+              arch: ["x64"]
+            },
+            {
               target: "deb",
+              arch: ["x64"]
+            },
+            {
+              target: "rpm",
               arch: ["x64"]
             }
           ],

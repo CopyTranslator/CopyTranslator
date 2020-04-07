@@ -21,7 +21,7 @@ export default class Update extends Vue {
   releaseNote: string | undefined;
   version: string | undefined;
   updateTitle: string | undefined;
-  isMac: boolean = os.platform() !== "win32";
+  isMac: boolean = os.platform() === "darwin";
 
   autoDownload() {
     ipcRenderer.send("confirm-update");

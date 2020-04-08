@@ -106,6 +106,9 @@ export const menuActionTypes = [
 //布局名称
 export const layoutTypes = ["horizontal", "vertical", "focus"] as const;
 
+// 百度垂直领域翻译
+export const domains = ["medicine", "electronics", "mechanics"];
+
 //路由名称
 export const routeActionTypes = [
   "contrast",
@@ -121,6 +124,7 @@ export type NormalActionType = typeof normalActionTypes[number];
 export type MenuActionType = typeof menuActionTypes[number];
 export type RouteActionType = typeof routeActionTypes[number];
 export type LayoutType = typeof layoutTypes[number];
+export type Domain = typeof domains[number];
 
 export const authorizeKey: string = "CopyTranslator";
 import flatten from "lodash.flatten";

@@ -11,10 +11,10 @@ import { configs } from "./token";
 export const translatorMap: [TranslatorType, Translator][] = [
   ["baidu", new Baidu({ config: configs.get("baidu") })],
   ["google", new Google({ config: configs.get("google") })],
-  ["youdao", new (<any>Youdao)({ config: configs.get("youdao") })],
+  ["youdao", new Youdao({ config: configs.get("youdao") })],
   ["sogou", new Sogou({ config: configs.get("sogou") })],
   ["caiyun", new Caiyun({ config: configs.get("caiyun") })],
-  ["tencent", new (<any>Tencent)({ config: configs.get("tencent") })]
+  ["tencent", new Tencent({ config: configs.get("tencent") })]
 ];
 export const translators = new Map(translatorMap);
 

@@ -8,18 +8,30 @@ CopyTranslator是采用 GPL v2 协议许可的开源项目，**使用完全免�
 
 但是它的维护工作量很大，这些工作目前主要由作者一人花费大量私人时间与精力完成😫。
 
-如果你希望支持这个项目长久持续开发下去并保持维护不断加入新功能，可以选择打赏我买杯咖啡☕恢复元气，更好地投入到开发当中。😊
+如果你希望支持这个项目长久持续开发下去并保持维护不断加入新功能，可以选择打赏我喝瓶冰阔落🥤恢复元气，更好地投入到开发当中。😊
 
 感谢所有支持CopyTranslator的小伙伴们。
 
-<div align="center;">
-   <div style="display:inline-block;"><img height="300" src="https://s1.ax1x.com/2020/04/07/G2gSw4.jpg" alt="微信赞赏">
+<h4 style="text-align:center;">通过微信或支付宝扫码打赏</h4>
+<div style="text-align:center;">
+<div style="display:inline-block;">
+   <img width="300" src="https://s1.ax1x.com/2020/04/11/G7a8VU.jpg" alt="微信赞赏">
    <p style="text-align:center;">微信赞赏</p>
-   </div>
-  <div style="display:inline-block;" ><a href="https://afdian.net/@elliottzheng"><img height="300" src="https://s2.ax1x.com/2019/03/05/kjASMV.png" alt="爱发电">
-   <p style="text-align:center;">爱发电（支持微信与支付宝）</p></a>
-   </div>
 </div>
+   
+   <div style="display:inline-block;">
+   <img width="300" src="https://s1.ax1x.com/2020/04/11/G7UVpR.jpg" alt="支付宝"> 
+   <p style="text-align:center;">支付宝</p>
+</div>
+</div>
+<div style="text-align:center;">
+<h4 style="text-align:center;">或通过<a href="https://afdian.net/@elliottzheng">爱发电</a>定期请我喝咖啡</h4>
+<a href="https://afdian.net/@elliottzheng"><img width="300" src="https://s2.ax1x.com/2019/03/05/kjASMV.png"></img>
+<p style="text-align:center;">爱发电</p>
+</a>
+
+</div>
+
 
    
 

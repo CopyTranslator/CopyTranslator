@@ -130,13 +130,17 @@ CopyTranslator是采用 GPL v2 协议许可的开源项目，使用完全免费�
 
 感谢所有支持CopyTranslator的小伙伴们。
 
-<div align="center;">
-   <div style="display:inline-block;"><img height="200" src="images/wechat.jpg" alt="微信赞赏">
+<h4 style="text-align:center;">通过微信或支付宝扫码打赏</h4>
+<div style="text-align:center;">
+<div style="display:inline-block;">
+   <img width="300" src="images/wechat.jpg" alt="微信赞赏">
    <p style="text-align:center;">微信赞赏</p>
-   </div>
-  <div style="display:inline-block;" ><a href="https://afdian.net/@elliottzheng"><img height="200" src="images/afdian.png" alt="爱发电">
-   <p style="text-align:center;">爱发电（支持微信与支付宝）</p></a>
-   </div>
+</div>
+   
+   <div style="display:inline-block;">
+   <img width="300" src="images/alipay.jpg" alt="支付宝"> 
+   <p style="text-align:center;">支付宝</p>
+</div>
 </div>
 
 

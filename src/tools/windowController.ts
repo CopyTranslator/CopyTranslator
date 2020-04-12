@@ -6,7 +6,6 @@ import os from "os";
 import { clipboard } from "../tools/clipboard";
 
 class WindowController {
-  ctrlKey = false;
   drag = false;
   dragCopy = false;
   lastDown = Date.now();

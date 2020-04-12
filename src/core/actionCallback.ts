@@ -116,6 +116,7 @@ function handleNormalAction(identifier: NormalActionType | RouteActionType) {
         });
       break;
     case "retryTranslate":
+      console.log("retry");
       controller.doTranslate(controller.src);
       break;
     case "restoreDefault":

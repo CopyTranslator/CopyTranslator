@@ -1,102 +1,68 @@
-import { Compound, TranslatorType } from "../tools/translate";
+import { Compound, TranslatorType } from "./translate";
 import { Language } from "@opentranslate/translator";
-import { CopyTranslateResult } from "../tools/translate/types";
-import { initConfig } from "../tools/configuration";
-import { ConfigParser } from "../tools/configParser";
-import { ColorStatus, MessageType, WinOpt } from "../tools/enums";
-import { WindowWrapper } from "../tools/views/windows";
-import { windowController } from "../tools/windowController";
-import simulate from "../tools/simulate";
-import { env } from "../tools/env";
-import { l10n, L10N } from "../tools/l10n";
-import { colorRules, getColorRule } from "../tools/rule";
-import { normalizeAppend, checkIsWord } from "../tools/translate/helper";
-import { app, BrowserWindow } from "electron";
-import { ActionManager } from "../tools/action";
-import { TrayManager } from "../tools/tray";
-import { handleActions } from "./actionCallback";
-import { recognizer } from "../tools/ocr";
-import { Identifier, authorizeKey } from "../tools/types";
-import { startService } from "./service";
-import { Polymer } from "../tools/dictionary/polymer";
+import { CopyTranslateResult } from "./translate/types";
+import { ColorStatus, MessageType, WinOpt } from "./enums";
+import simulate from "./simulate";
+import { colorRules, getColorRule } from "./rule";
+import { normalizeAppend, checkIsWord } from "./translate/helper";
+import { recognizer } from "./ocr";
+import { Identifier } from "./types";
+import { Polymer } from "./dictionary/polymer";
 import trimEnd from "lodash.trimend";
-import {
-  DictionaryType,
-  DictSuccess,
-  DictFail
-} from "../tools/dictionary/types";
-import { showDragCopyWarning } from "../tools/views/dialog";
-import { clipboard } from "../tools/clipboard";
+import { DictionaryType, DictSuccess, DictFail } from "./dictionary/types";
+import { clipboard } from "./clipboard";
+import { Controller } from "../core/controller";
 
-class Controller {
+function constructStore(data: object) {
+  var dataCopy = new Proxy(data, {
+    get(target, key, receiver) {
+      return Reflect.get(target, key, receiver);
+    },
+    set(target, key, value, receiver) {
+      return Reflect.set(target, key, value, receiver);
+    }
+  });
+}
+
+class TranslateController {
   src: string = "";
-  result: string = "";
-  res: CopyTranslateResult | undefined;
+  resultString: string = "";
+  translateResult: CopyTranslateResult | undefined;
   dictResult: DictSuccess | DictFail = { words: "", valid: false };
   lastAppend: string = "";
-  win: WindowWrapper = new WindowWrapper();
   translator: Compound = new Compound("google", {});
   dictionary: Polymer = new Polymer("google");
-  config: ConfigParser = initConfig();
-  l10n: L10N = l10n;
-  action: ActionManager;
-  tray: TrayManager = new TrayManager();
   translating: boolean = false; //正在翻译
+  controller: Controller;
   words: string = "";
+  store = constructStore({
+    translateResult: undefined,
+    dictResult: undefined
+  });
 
-  constructor() {
-    this.config.loadValues(env.configPath);
-    this.action = new ActionManager(handleActions, this);
-    this.restoreFromConfig();
+  constructor(controller: Controller) {
+    this.controller = controller;
   }
 
-  createWindow() {
-    clipboard.init();
-    this.tray.init();
-    this.win.createWindow("contrast");
-
-    windowController.bind();
-    this.action.init();
-    recognizer.setUp();
-    startService(this, authorizeKey);
+  get<T>(identifier: Identifier) {
+    return this.controller.get<T>(identifier);
   }
 
-  onExit() {
-    this.config.saveValues(env.configPath);
-    this.action.unregister();
-    app.exit();
-  }
-
-  setUpRecognizer(APP_ID: string, API_KEY: string, SECRET_KEY: string) {
-    this.set("APP_ID", APP_ID, true, false);
-    this.set("API_KEY", API_KEY, true, false);
-    this.set("SECRET_KEY", SECRET_KEY, true, false);
-    recognizer.setUp(true);
+  set(
+    identifier: Identifier,
+    value: any,
+    save: boolean = true,
+    refresh: boolean = true
+  ): boolean {
+    return this.controller.set(identifier, value, save, refresh);
   }
 
   setSrc(append: string) {
-    if (this.get("incrementalCopy") && this.src != "")
+    if (this.get<boolean>("incrementalCopy") && this.src != "")
       this.src = this.src + " " + append;
     else {
       this.src = append;
     }
-  }
-
-  get<T>(identifier: Identifier) {
-    return this.config.get(identifier) as T;
-  }
-
-  resotreDefaultSetting() {
-    this.config.restoreDefault(env.configPath);
-    this.restoreFromConfig(true);
-  }
-
-  getT() {
-    let locale = this.get<Language>("localeSetting");
-    if (locale === "auto") {
-      locale = <Language>app.getLocale();
-    }
-    return this.l10n.getT(locale);
   }
 
   source() {
@@ -109,9 +75,9 @@ class Controller {
 
   clear() {
     this.src = "";
-    this.result = "";
+    this.resultString = "";
     this.lastAppend = "";
-    this.res = undefined;
+    this.translateResult = undefined;
     this.dictResult = {
       words: "",
       valid: false
@@ -120,19 +86,41 @@ class Controller {
     this.syncDict();
   }
 
+  checkLength(text: string) {
+    const threshold = 3000;
+    if (text.length > threshold || text.length == 0) {
+      return false;
+    } else {
+      return true;
+    }
+  }
+
+  checkValid(text: string) {
+    if (
+      this.resultString == text ||
+      this.src == text ||
+      this.lastAppend == text ||
+      text == ""
+    ) {
+      return false;
+    } else {
+      return true;
+    }
+  }
+
   checkClipboard() {
     let originalText = clipboard.readText();
     if (!this.checkLength(originalText)) {
+      this.setCurrentColor(true);
       return;
     }
-    let text = this.normalize(originalText);
+    let text = this.normalizeText(originalText);
     if (this.checkValid(text)) {
-      console.log("clipboard", text);
       this.doTranslate(text);
     }
   }
 
-  normalize(text: string) {
+  normalizeText(text: string) {
     text = normalizeAppend(text, this.get<boolean>("autoPurify"));
     if (this.isWord(text)) {
       text = trimEnd(text.trim(), ",.!?. \n\r");
@@ -145,9 +133,24 @@ class Controller {
       if (clear) {
         this.clear();
       }
-      console.log("try");
-      this.doTranslate(this.normalize(text));
+      this.doTranslate(this.normalizeText(text));
     }
+  }
+
+  dictFail(text: string) {
+    this.dictResult = {
+      words: text,
+      valid: false
+    };
+    if (this.translateResult && this.translateResult.text === text) {
+      this.syncDict();
+    }
+  }
+
+  translateFail() {
+    this.translateResult = undefined;
+    this.resultString = "";
+    this.sync();
   }
 
   sync(language?: { source: Language; target: Language }) {
@@ -158,9 +161,9 @@ class Controller {
       };
     }
 
-    this.win.sendMsg(MessageType.TranslateResult.toString(), {
+    this.sendMsg(MessageType.TranslateResult, {
       src: this.src,
-      result: this.result,
+      result: this.resultString,
       source: language.source,
       target: language.target,
       engine: this.get<TranslatorType>("translatorType"),
@@ -168,30 +171,13 @@ class Controller {
     });
   }
 
-  checkLength(text: string) {
-    const threshold = 3000;
-    if (text.length > threshold || text.length == 0) {
-      this.setCurrentColor(true);
-      return false;
-    } else return true;
-  }
-
-  checkValid(text: string) {
-    if (
-      this.result == text ||
-      this.src == text ||
-      this.lastAppend == text ||
-      text == ""
-    ) {
-      return false;
-    } else {
-      return true;
-    }
+  sendMsg(type: MessageType, extra: any) {
+    return this.controller.win.sendMsg(type.toString(), extra);
   }
 
   postProcess(language: any, result: CopyTranslateResult) {
     if (this.get<boolean>("autoCopy")) {
-      clipboard.writeText(this.result);
+      clipboard.writeText(this.resultString);
       if (this.get<boolean>("autoPaste")) {
         simulate.paste();
       }
@@ -199,12 +185,12 @@ class Controller {
       clipboard.writeText(this.src);
     }
     if (this.get<boolean>("autoShow")) {
-      this.win.edgeShow();
-      this.win.show(
+      this.controller.win.edgeShow();
+      this.controller.win.show(
         !(this.get<boolean>("autoCopy") && this.get<boolean>("autoPaste"))
       );
     }
-    this.res = result;
+    this.translateResult = result;
     this.sync(language);
   }
 
@@ -220,12 +206,12 @@ class Controller {
 
   setCurrentColor(fail = false) {
     if (fail) {
-      this.win.switchColor(ColorStatus.Fail);
+      this.switchColor(ColorStatus.Fail);
       return;
     }
 
     if (!this.get<boolean>("listenClipboard")) {
-      this.win.switchColor(ColorStatus.None);
+      this.switchColor(ColorStatus.None);
       return;
     }
     const options = this.getOptions();
@@ -234,22 +220,26 @@ class Controller {
     const autoPaste = getColorRule("autoPaste");
     switch (options) {
       case incrementalCopy | autoCopy | autoPaste:
-        this.win.switchColor(ColorStatus.IncrementalCopyPaste);
+        this.switchColor(ColorStatus.IncrementalCopyPaste);
         return;
       case incrementalCopy | autoCopy:
-        this.win.switchColor(ColorStatus.IncrementalCopy);
+        this.switchColor(ColorStatus.IncrementalCopy);
         return;
       case incrementalCopy:
-        this.win.switchColor(ColorStatus.Incremental);
+        this.switchColor(ColorStatus.Incremental);
         return;
       case autoCopy | autoPaste:
-        this.win.switchColor(ColorStatus.AutoPaste);
+        this.switchColor(ColorStatus.AutoPaste);
         return;
       case autoCopy:
-        this.win.switchColor(ColorStatus.AutoCopy);
+        this.switchColor(ColorStatus.AutoCopy);
         return;
     }
-    this.win.switchColor(ColorStatus.Listen);
+    this.switchColor(ColorStatus.Listen);
+  }
+
+  switchColor(color: ColorStatus) {
+    this.controller.win.switchColor(color);
   }
 
   async decideLanguage(text: string) {
@@ -284,7 +274,7 @@ class Controller {
   preProcess(text: string) {
     this.lastAppend = text;
     this.setSrc(text);
-    this.win.switchColor(ColorStatus.Translating);
+    this.switchColor(ColorStatus.Translating);
   }
 
   postTranslate(
@@ -296,7 +286,7 @@ class Controller {
       this.get("autoPurify")
     );
 
-    this.result = resultString;
+    this.resultString = resultString;
     this.postProcess(language, res);
   }
 
@@ -317,7 +307,7 @@ class Controller {
         //同步词典结果
         this.syncDict(); //翻译完了，然后发现词典有问题，这个时候才发送
         this.setCurrentColor(true);
-      } else if (this.dictResult.words !== this.src && !this.res) {
+      } else if (this.dictResult.words !== this.src && !this.translateResult) {
         this.setCurrentColor(true);
       } else {
         this.setCurrentColor();
@@ -326,23 +316,7 @@ class Controller {
   }
 
   syncDict() {
-    this.win.sendMsg(MessageType.DictResult.toString(), this.dictResult);
-  }
-
-  dictFail(text: string) {
-    this.dictResult = {
-      words: text,
-      valid: false
-    };
-    if (this.res && this.res.text === text) {
-      this.syncDict();
-    }
-  }
-
-  translateFail() {
-    this.res = undefined;
-    this.result = "";
-    this.sync();
+    this.sendMsg(MessageType.DictResult, this.dictResult);
   }
 
   isWord(text: string) {
@@ -389,7 +363,6 @@ class Controller {
       return;
     }
     this.preProcess(text);
-
     return this.translator
       .translate(this.src, language.source, language.target)
       .then(res => this.postTranslate(res, language))
@@ -403,7 +376,6 @@ class Controller {
     let valid = true;
     this.translator.setMainEngine(value);
     if (!this.translator.isValid(this.source())) {
-      console.log(this.source());
       this.set("sourceLanguage", "en", true, true);
       valid = false;
     }
@@ -465,107 +437,6 @@ class Controller {
       clipboard.startWatching();
     } else {
       clipboard.stopWatching();
-    }
-  }
-
-  restoreWindow(routeName: Identifier | undefined) {
-    if (routeName) this.win.restore(this.get(routeName));
-  }
-
-  restoreFromConfig(fresh: boolean = false) {
-    for (let key of this.config.values.keys()) {
-      this.set(key, this.get(key), false, fresh);
-    }
-  }
-
-  switchValue(identifier: Identifier) {
-    this.set(identifier, !this.get(identifier));
-  }
-
-  refresh(identifier: Identifier | null = null) {
-    for (const window of BrowserWindow.getAllWindows()) {
-      window.webContents.send(MessageType.WindowOpt.toString(), {
-        type: WinOpt.Refresh,
-        args: identifier
-      });
-    }
-  }
-
-  set(
-    identifier: Identifier,
-    value: any,
-    save: boolean = true,
-    refresh: boolean = true
-  ): boolean {
-    if (this.config.set(identifier, value)) {
-      this.postSet(identifier, value, save, refresh);
-      return true;
-    }
-    return false;
-  }
-
-  postSet(identifier: Identifier, value: any, save = true, refresh = true) {
-    switch (identifier) {
-      case "listenClipboard":
-        this.setWatch(value);
-        break;
-      case "targetLanguage":
-        console.log("setT");
-        this.doTranslate(this.src);
-        break;
-      case "sourceLanguage":
-        console.log("setS");
-        this.doTranslate(this.src);
-        break;
-      case "stayTop":
-        if (this.win.window) {
-          this.win.window.focus();
-          this.win.window.setAlwaysOnTop(value);
-        }
-        break;
-      case "skipTaskbar":
-        this.win.setSkipTaskbar(value);
-        break;
-      case "incrementalCopy":
-        this.clear();
-        break;
-      case "autoFormat":
-        if (value) {
-          this.set("autoCopy", false, save, refresh);
-        }
-        break;
-      case "autoCopy":
-        if (value) {
-          this.set("autoFormat", false, save, refresh);
-        }
-        break;
-      case "dragCopy":
-        if (value) {
-          showDragCopyWarning();
-        }
-        windowController.dragCopy = value;
-        break;
-      case "translatorType":
-        this.switchTranslator(value as TranslatorType);
-        break;
-      case "dictionaryType":
-        this.switchDictionary(value as DictionaryType);
-        break;
-      case "localeSetting":
-        this.win.sendMsg(MessageType.UpdateT.toString(), null);
-        break;
-    }
-    this.setCurrentColor();
-
-    if (save) {
-      this.config.saveValues(env.configPath);
-    }
-    if (refresh) {
-      this.refresh(identifier);
-    } else if (identifier == "autoFormat") {
-      this.refresh("autoCopy");
-    } else if (identifier == "autoCopy") {
-      this.refresh("autoPurify");
     }
   }
 }

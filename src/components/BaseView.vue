@@ -30,6 +30,7 @@ export default class BaseView extends Vue {
 
   @Watch("source")
   sourceChanged(newSource: Language, oldSource: Language) {
+    console.log("???,change");
     this.$proxy.set("sourceLanguage", newSource, true, true);
   }
 

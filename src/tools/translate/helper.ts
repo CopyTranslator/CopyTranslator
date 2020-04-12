@@ -138,3 +138,14 @@ export function normalizeAppend(src: string, purify = true) {
   src = src.replace(sentenceEnds, "$1\n");
   return src;
 }
+
+export function checkIsWord(text: string) {
+  if (text.length > 100) {
+    return false;
+  }
+  if (/^[a-zA-Z0-9 ]+$/.test(text) && text.split(" ").length <= 3) {
+    return true;
+  } else {
+    return false;
+  }
+}

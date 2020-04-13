@@ -5,6 +5,7 @@ import { compatible } from "../core/constant";
 type Rules = Map<Identifier, Rule>; //类型别名
 import { resetStyle } from "./style";
 import { resetGlobalShortcuts, resetLocalShortcuts } from "./shortcuts";
+import store from "../store";
 
 export function resetAllConfig() {
   resetLocalShortcuts();
@@ -14,13 +15,15 @@ export function resetAllConfig() {
 
 class ConfigParser {
   rules: Rules = new Map<Identifier, Rule>();
-  values: Map<Identifier, any> = new Map<Identifier, any>();
-
+  file: string | undefined;
   constructor() {}
+
+  keys() {
+    return store.getters.keys;
+  }
 
   setRule(key: Identifier, rule: Rule) {
     this.rules.set(key, rule);
-    this.values.set(key, rule.predefined);
   }
 
   getRule(key: Identifier): Rule {
@@ -28,7 +31,7 @@ class ConfigParser {
   }
 
   get(key: Identifier) {
-    return this.values.get(key);
+    return (store.state.config as any)[key];
   }
 
   set(key: Identifier, value: any) {
@@ -36,7 +39,8 @@ class ConfigParser {
     if (check && !check(value)) {
       return false;
     } else {
-      this.values.set(key, value);
+      let config = { [key]: value };
+      store.dispatch("updateConfig", config);
       return true;
     }
   }
@@ -45,7 +49,8 @@ class ConfigParser {
     return this.getRule(key).msg;
   }
 
-  loadValues(fileName: string): boolean {
+  load(fileName: string): boolean {
+    let status = true;
     try {
       let values = JSON.parse(fs.readFileSync(fileName));
       if (!values["version"] || !compatible(values["version"])) {
@@ -53,27 +58,29 @@ class ConfigParser {
       }
       for (const key of this.rules.keys()) {
         if (values[key] != undefined) {
-          this.set(key, values[key]);
+          if (!this.set(key, values[key])) {
+            //设置失败的话，就置为默认值
+            this.set(key, this.getRule(key).predefined);
+          }
         }
       }
-      this.saveValues(fileName);
-      return true;
     } catch (e) {
       resetAllConfig();
-      this.saveValues(fileName);
-      return false;
+      status = false;
     }
+    this.save(fileName);
+    return status;
   }
 
   restoreDefault(fileName: string) {
     for (const [key, rule] of this.rules) {
       this.set(key, rule.predefined);
     }
-    this.saveValues(fileName);
+    this.save(fileName);
   }
 
-  saveValues(fileName: string) {
-    fs.writeFileSync(fileName, JSON.stringify(mapToObj(this.values), null, 4));
+  save(fileName: string) {
+    fs.writeFileSync(fileName, JSON.stringify(store.state.config, null, 4));
   }
 }
 

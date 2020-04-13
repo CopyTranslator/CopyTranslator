@@ -32,6 +32,7 @@
     "@opentranslate/youdao": "^1.0.0",
     "@types/lodash.flatten": "^4.4.6",
     "@types/lodash.trimend": "^4.5.6",
+    "vuex-electron":"https://github.com/MaverickMartyn/vuex-electron.git",
     "axios": "^0.19.2",
     "ba64": "^3.0.9",
     "baidu-aip-sdk": "^2.4.5",

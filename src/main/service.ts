@@ -1,5 +1,5 @@
 import { app as ElectronApp, BrowserWindow, ipcMain, session } from "electron";
-import { Proxy } from "./proxy";
+import { Proxy } from "../core/proxy";
 import { Controller } from "./controller";
 
 function isPromise(obj: any) {

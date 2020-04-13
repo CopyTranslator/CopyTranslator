@@ -26,18 +26,18 @@ export default class OCRConfig extends Vue {
   SECRET_KEY: string = "";
 
   mounted() {
-    this.$proxy.get("APP_ID").then(res => {
-      this.APP_ID = res;
-    });
-    this.$proxy.get("API_KEY").then(res => {
-      this.API_KEY = res;
-    });
-    this.$proxy.get("SECRET_KEY").then(res => {
-      this.SECRET_KEY = res;
-    });
+    // this.$proxy.get("APP_ID").then(res => {
+    //   this.APP_ID = res;
+    // });
+    // this.$proxy.get("API_KEY").then(res => {
+    //   this.API_KEY = res;
+    // });
+    // this.$proxy.get("SECRET_KEY").then(res => {
+    //   this.SECRET_KEY = res;
+    // });
   }
   confirm() {
-    this.$proxy.setUpRecognizer(this.APP_ID, this.API_KEY, this.SECRET_KEY);
+    // this.$proxy.setUpRecognizer(this.APP_ID, this.API_KEY, this.SECRET_KEY);
   }
   close() {}
   tutorial() {

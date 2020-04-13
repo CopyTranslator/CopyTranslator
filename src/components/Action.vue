@@ -2,16 +2,15 @@
   <div v-if="action">
     <v-switch
       v-if="action.type === 'checkbox'"
-      v-model="checked"
+      v-model="value"
       class="myswitch"
       :label="$t(action.id)"
-      @change="setValue()"
     ></v-switch>
     <div v-else-if="action.type === 'submenu'">
       <p style="margin:0px;">{{ $t(identifier) }}</p>
       <v-select
         v-model="command"
-        :items="options"
+        :items="action.submenu"
         item-text="label"
         item-value="id"
         style="margin:0px;padding:0px;"
@@ -27,67 +26,35 @@
 </template>
 
 <script lang="ts">
-import { compose, decompose } from "../tools/action";
 import { ipcRenderer as ipc } from "electron";
 import { MessageType, WinOpt } from "../tools/enums";
 import { Identifier } from "../tools/types";
 import { Prop, Component, Watch, Vue } from "vue-property-decorator";
-import { Action as ActionType } from "../tools/action";
+import { Action as ActionType, compose } from "../renderer/action";
 
 @Component
 export default class Action extends Vue {
   @Prop({ default: undefined }) readonly identifier!: Identifier;
-
-  action: ActionType | null = null;
-  checked: boolean = false;
-  value: any = null;
-  command: string | null = null;
-  options: any = null;
-
-  @Watch("command")
-  commandChanged(newcommand: string, oldcommand: string) {
-    if (oldcommand) {
-      this.handleAction(newcommand);
-    }
-  }
-
-  setValue() {
-    this.$proxy.set(this.identifier, this.checked, true, true);
-  }
+  action: ActionType = this.$controller.action.getAction(this.identifier);
 
   handleAction(command: string) {
-    this.$proxy.handleAction(command);
+    this.$controller.action.callback(command);
   }
 
-  async sync() {
-    this.action = await this.$proxy.getAction(this.identifier);
-    const value = await this.$proxy.get(this.identifier);
-    switch (this.action.actionType) {
-      case "checkbox":
-        this.checked = value;
-        break;
-      case "submenu":
-        this.options = this.action.submenu;
-        this.command = compose([
-          this.identifier,
-          typeof value == "string" ? value : value.toString()
-        ]);
-        break;
-      case "constant":
-        this.value = value;
-        break;
-    }
+  get command() {
+    return compose([this.identifier, this.value.toString()]);
   }
 
-  mounted() {
-    ipc.on(MessageType.WindowOpt.toString(), (event, arg) => {
-      if (arg.type === WinOpt.Refresh) {
-        if (!arg.args || arg.args === this.identifier) {
-          this.sync();
-        }
-      }
-    });
-    this.sync();
+  set command(cmd) {
+    this.handleAction(cmd);
+  }
+
+  get value() {
+    return this.$store.state.config[this.identifier];
+  }
+
+  set value(val) {
+    this.$controller.set(this.identifier, val);
   }
 }
 </script>

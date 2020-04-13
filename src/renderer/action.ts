@@ -1,25 +1,27 @@
-import {
-  Accelerator,
-  BrowserWindow,
-  globalShortcut,
-  Menu,
-  MenuItem
-} from "electron";
+import { BrowserWindow, Menu, MenuItem } from "electron";
 
-import { ConfigParser } from "./configParser";
+import { ConfigParser } from "../tools/configParser";
 import { Language } from "@opentranslate/languages";
-import { env } from "./env";
-import { hideDirections } from "./enums";
-import { translatorTypes } from "./translate/types";
+import { hideDirections } from "../tools/enums";
+import { translatorTypes } from "../tools/translate/types";
+
+import { getLanguageLocales } from "../tools/translate/locale";
 import {
-  Shortcuts,
-  loadLocalShortcuts,
-  loadGlobalShortcuts
-} from "./shortcuts";
-import { Controller } from "../core/controller";
-import { getLanguageLocales } from "./translate/locale";
-import { Identifier, MenuActionType, Role, roles, layoutTypes } from "./types";
+  Identifier,
+  MenuActionType,
+  Role,
+  roles,
+  layoutTypes
+} from "../tools/types";
 import { dictionaryTypes } from "../tools/dictionary/types";
+import { RendererController } from "./controller";
+
+type CallBack = (
+  key: string,
+  menuItem?: MenuItem,
+  browserWindow?: BrowserWindow,
+  event?: KeyboardEvent
+) => void;
 
 function compose(actions: Array<string>) {
   return actions.join("|");
@@ -83,22 +85,17 @@ type Actions = Map<Identifier, TopAction>;
 
 class ActionManager {
   actions = new Map<Identifier, TopAction>();
-  shortcuts: Shortcuts = new Map<Identifier, Accelerator>();
-  localShortcuts = new Map<Identifier, Accelerator>();
-  callback: Function;
-  controller: Controller;
 
-  constructor(callback: Function, controller: Controller) {
+  callback: CallBack;
+  controller: RendererController;
+
+  constructor(callback: CallBack, controller: RendererController) {
     this.callback = callback;
     this.controller = controller;
   }
 
   init() {
     this.actions = this.getActions(this.controller.config, this.callback);
-    this.shortcuts = loadGlobalShortcuts();
-    this.register();
-    this.localShortcuts = loadLocalShortcuts();
-    this.registerLocalShortcuts();
   }
 
   update() {
@@ -238,8 +235,8 @@ class ActionManager {
     ) => {
       return () => {
         const l = getLanguageLocales(<Language>config.get("localeSetting"));
-        return this.controller.translator
-          .getSupportLanguages()
+        return RendererController.getInstance()
+          .transCon.translator.getSupportLanguages() //??????
           .filter(x => {
             if (!allowAuto && x == "auto") {
               return false;
@@ -324,6 +321,7 @@ class ActionManager {
         createLanguageGenerator("sourceLanguage", true)
       )
     );
+
     items.push(
       selectAction(
         "targetLanguage",
@@ -381,7 +379,7 @@ class ActionManager {
   }
 
   popup(id: MenuActionType) {
-    global.controller.win.show(true);
+    // RendererController.getInstance().win.show(true);
     const contain = this.getKeys(id);
     const refresh = this.getRefreshFunc();
     const all_keys = this.getKeys("allActions");
@@ -396,38 +394,6 @@ class ActionManager {
     } catch (e) {
       console.log(e);
     }
-  }
-
-  register() {
-    for (const [key, accelerator] of this.shortcuts) {
-      const action = this.getAction(key);
-      if (action) {
-        globalShortcut.register(accelerator, <Function>action.click);
-      }
-    }
-  }
-
-  unregister() {
-    Object.values(this.shortcuts).forEach(accelerator => {
-      globalShortcut.unregister(accelerator);
-    });
-  }
-
-  registerLocalShortcuts() {
-    let menu = new Menu();
-    const refresh = this.getRefreshFunc();
-    for (const [key, accelerator] of this.localShortcuts.entries()) {
-      let action = this.getAction(key);
-      if (action) {
-        menu.append(
-          new MenuItem({
-            accelerator,
-            ...refresh(key, action)
-          })
-        );
-      }
-    }
-    Menu.setApplicationMenu(menu);
   }
 }
 

@@ -25,9 +25,9 @@ export default class Switches extends Vue {
   actionKeys: Identifier[] = [];
 
   mounted() {
-    this.$proxy.getKeys("switches").then((keys: Identifier[]) => {
-      this.actionKeys = keys;
-    });
+    // this.$proxy.getKeys("switches").then((keys: Identifier[]) => {
+    //   this.actionKeys = keys;
+    // });
   }
 }
 </script>

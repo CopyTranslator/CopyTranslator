@@ -1,17 +1,20 @@
-import { Compound, TranslatorType } from "./translate";
+import { Compound, TranslatorType } from "../tools/translate";
 import { Language } from "@opentranslate/translator";
-import { CopyTranslateResult } from "./translate/types";
-import { ColorStatus, MessageType, WinOpt } from "./enums";
-import simulate from "./simulate";
-import { colorRules, getColorRule } from "./rule";
-import { normalizeAppend, checkIsWord } from "./translate/helper";
-import { recognizer } from "./ocr";
-import { Identifier } from "./types";
-import { Polymer } from "./dictionary/polymer";
+import { CopyTranslateResult } from "../tools/translate/types";
+import { ColorStatus, MessageType, WinOpt } from "../tools/enums";
+import { colorRules, getColorRule } from "../tools/rule";
+import { normalizeAppend, checkIsWord } from "../tools/translate/helper";
+import { Identifier } from "../tools/types";
+import { Polymer } from "../tools/dictionary/polymer";
 import trimEnd from "lodash.trimend";
-import { DictionaryType, DictSuccess, DictFail } from "./dictionary/types";
-import { clipboard } from "./clipboard";
-import { Controller } from "../core/controller";
+import { Controller } from "./types";
+
+import {
+  DictionaryType,
+  DictSuccess,
+  DictFail
+} from "../tools/dictionary/types";
+import { clipboard } from "../tools/clipboard";
 
 function constructStore(data: object) {
   var dataCopy = new Proxy(data, {
@@ -33,28 +36,17 @@ class TranslateController {
   translator: Compound = new Compound("google", {});
   dictionary: Polymer = new Polymer("google");
   translating: boolean = false; //正在翻译
-  controller: Controller;
   words: string = "";
-  store = constructStore({
-    translateResult: undefined,
-    dictResult: undefined
-  });
+  store: any;
+  controller: Controller;
 
-  constructor(controller: Controller) {
+  constructor(controller: Controller, store: any) {
     this.controller = controller;
+    this.store = store;
   }
 
   get<T>(identifier: Identifier) {
-    return this.controller.get<T>(identifier);
-  }
-
-  set(
-    identifier: Identifier,
-    value: any,
-    save: boolean = true,
-    refresh: boolean = true
-  ): boolean {
-    return this.controller.set(identifier, value, save, refresh);
+    return this.controller.get(identifier) as T;
   }
 
   setSrc(append: string) {
@@ -172,23 +164,24 @@ class TranslateController {
   }
 
   sendMsg(type: MessageType, extra: any) {
-    return this.controller.win.sendMsg(type.toString(), extra);
+    console.log("send msg", type);
   }
 
   postProcess(language: any, result: CopyTranslateResult) {
     if (this.get<boolean>("autoCopy")) {
       clipboard.writeText(this.resultString);
       if (this.get<boolean>("autoPaste")) {
-        simulate.paste();
+        //simulate.paste();
       }
     } else if (this.get<boolean>("autoFormat")) {
       clipboard.writeText(this.src);
     }
     if (this.get<boolean>("autoShow")) {
-      this.controller.win.edgeShow();
-      this.controller.win.show(
-        !(this.get<boolean>("autoCopy") && this.get<boolean>("autoPaste"))
-      );
+      // this.proxy.win.edgeShow();
+      // this.proxy.win.show(
+      //   !(this.get<boolean>("autoCopy") && this.get<boolean>("autoPaste"))
+      // );
+      console.log("auto show");
     }
     this.translateResult = result;
     this.sync(language);
@@ -239,7 +232,7 @@ class TranslateController {
   }
 
   switchColor(color: ColorStatus) {
-    this.controller.win.switchColor(color);
+    console.log("switch color", color);
   }
 
   async decideLanguage(text: string) {
@@ -376,11 +369,11 @@ class TranslateController {
     let valid = true;
     this.translator.setMainEngine(value);
     if (!this.translator.isValid(this.source())) {
-      this.set("sourceLanguage", "en", true, true);
+      this.controller.set("sourceLanguage", "en");
       valid = false;
     }
     if (!this.translator.isValid(this.target())) {
-      this.set("targetLanguage", "zh-CN", true, true);
+      this.controller.set("targetLanguage", "zh-CN");
       valid = false;
     }
     if (valid) {
@@ -432,13 +425,46 @@ class TranslateController {
       });
       clipboard.on("image-changed", () => {
         // OCR 相关TranslateResult
-        recognizer.recognize(clipboard.readImage().toDataURL());
+        //recognizer.recognize(clipboard.readImage().toDataURL());
       });
       clipboard.startWatching();
     } else {
       clipboard.stopWatching();
     }
   }
+
+  postSet(identifier: Identifier, value: any) {
+    switch (identifier) {
+      case "listenClipboard":
+        this.setWatch(value);
+        break;
+      case "targetLanguage":
+        this.doTranslate(this.src);
+        break;
+      case "sourceLanguage":
+        this.doTranslate(this.src);
+        break;
+      case "incrementalCopy":
+        this.clear();
+        break;
+      case "autoFormat":
+        if (value) {
+          this.controller.set("autoCopy", false);
+        }
+        break;
+      case "autoCopy":
+        if (value) {
+          this.controller.set("autoFormat", false);
+        }
+        break;
+      case "translatorType":
+        this.switchTranslator(value as TranslatorType);
+        break;
+      case "dictionaryType":
+        this.switchDictionary(value as DictionaryType);
+        break;
+    }
+  }
 }
 
-export { Controller };
+export { TranslateController };

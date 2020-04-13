@@ -1,6 +1,6 @@
 "use strict";
 import { app, protocol } from "electron";
-import { Controller } from "./core/controller";
+import { Controller } from "./main/controller";
 import { recognizer } from "./tools/ocr";
 const isDevelopment = process.env.NODE_ENV !== "production";
 const ShortcutCapture = require("shortcut-capture");

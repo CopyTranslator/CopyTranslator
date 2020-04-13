@@ -3,16 +3,10 @@ import { GroupRule, StructRule, UnionRule, ModeConfig, TypeRule } from "./rule";
 import { HideDirection, hideDirections } from "./enums";
 import { languages, Language } from "@opentranslate/languages";
 import { translatorTypes, TranslatorType } from "./translate/types";
-import {
-  Identifier,
-  RouteActionType,
-  routeActionTypes,
-  identifiers,
-  LayoutType,
-  layoutTypes
-} from "./types";
+import { Identifier, identifiers, LayoutType, layoutTypes } from "./types";
 import { DictionaryType, dictionaryTypes } from "../tools/dictionary/types";
 import { version } from "../core/constant";
+import { env } from "./env";
 
 function initConfig(
   config: ConfigParser | undefined = undefined

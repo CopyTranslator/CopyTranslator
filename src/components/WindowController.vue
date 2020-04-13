@@ -28,7 +28,7 @@ export default class WindowController extends Vue {
   }
 
   callback(cmd: string) {
-    this.$proxy.handleAction(cmd);
+    // this.$proxy.handleAction(cmd);
   }
 
   minify(event: any) {
@@ -40,11 +40,11 @@ export default class WindowController extends Vue {
   }
 
   openMenu(id: MenuActionType) {
-    this.$proxy.popup(id);
+    // this.$proxy.popup(id);
   }
 
   async getValue(identifier: Identifier) {
-    return await this.$proxy.get(identifier);
+    // return await this.$proxy.get(identifier);
   }
 
   async onResize() {
@@ -62,7 +62,7 @@ export default class WindowController extends Vue {
     });
     window.addEventListener("resize", this.onResize);
 
-    if (this.routeName) this.$proxy.restoreWindow(this.routeName);
+    // if (this.routeName) this.$proxy.restoreWindow(this.routeName);
   }
 
   destroyed() {

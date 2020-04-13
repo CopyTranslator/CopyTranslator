@@ -1,15 +1,14 @@
 import { Accelerator } from "electron";
-import { Identifier } from "./types";
 import { env } from "./env";
 import { mapToObj, objToMap } from "./types";
 import fs from "fs";
 import { version, compatible } from "../core/constant";
 export interface Shortcut {
   accelerator: Accelerator;
-  id: Identifier;
+  id: string;
 }
 
-export type Shortcuts = Map<Identifier, Accelerator>;
+export type Shortcuts = Map<string, Accelerator>;
 
 export const defaultGlobalShortcuts: Shortcuts = new Map([
   ["focus", "Shift+F1"],
@@ -30,7 +29,7 @@ export const defaultLocalShortcuts: Shortcuts = new Map([
   ["font-", "CmdOrCtrl+-"]
 ]);
 
-export function resetFile(file: string, config: Map<Identifier, Accelerator>) {
+export function resetFile(file: string, config: Map<string, Accelerator>) {
   let res = mapToObj(config);
   res["version"] = version;
   fs.writeFileSync(file, JSON.stringify(res, null, 4));
@@ -45,8 +44,8 @@ export function resetLocalShortcuts() {
 
 export function loadFile(
   file: string,
-  defaultConfig: Map<Identifier, Accelerator>
-): Map<Identifier, Accelerator> {
+  defaultConfig: Map<string, Accelerator>
+): Map<string, Accelerator> {
   try {
     let config = JSON.parse(fs.readFileSync(file, "utf-8"));
     if (!compatible(config.version)) {
@@ -61,10 +60,10 @@ export function loadFile(
   }
 }
 
-export function loadGlobalShortcuts(): Map<Identifier, Accelerator> {
+export function loadGlobalShortcuts(): Map<string, Accelerator> {
   return loadFile(env.shortcut, defaultGlobalShortcuts);
 }
 
-export function loadLocalShortcuts(): Map<Identifier, Accelerator> {
+export function loadLocalShortcuts(): Map<string, Accelerator> {
   return loadFile(env.localShortcut, defaultLocalShortcuts);
 }

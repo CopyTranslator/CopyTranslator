@@ -58,7 +58,7 @@ import { ipcRenderer as ipc } from "electron";
 export default class ContrastPanel extends Mixins(BaseView, WindowController) {
   @Watch("layoutType")
   layoutTypeChanged(newLayoutType: LayoutType, oldLayoutType: LayoutType) {
-    this.$proxy.set("layoutType", newLayoutType, false, false);
+    // this.$proxy.set("layoutType", newLayoutType, false, false);
   }
 
   get layoutType() {
@@ -70,9 +70,9 @@ export default class ContrastPanel extends Mixins(BaseView, WindowController) {
   }
 
   syncLayoutType() {
-    this.$proxy.get("layoutType").then(layoutType => {
-      this.layoutType = layoutType;
-    });
+    // this.$proxy.get("layoutType").then(layoutType => {
+    //   this.layoutType = layoutType;
+    // });
   }
 
   mounted() {
@@ -87,7 +87,7 @@ export default class ContrastPanel extends Mixins(BaseView, WindowController) {
   }
 
   translate() {
-    this.$proxy.tryTranslate(this.sharedResult.src, true);
+    // this.$proxy.tryTranslate(this.sharedResult.src, true);
   }
 }
 </script>

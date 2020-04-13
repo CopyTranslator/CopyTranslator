@@ -68,7 +68,7 @@ export default class ControlButton extends Mixins(WindowController, AppProps) {
   }
 
   switchListen() {
-    this.$proxy.handleAction("listenClipboard");
+    // this.$proxy.handleAction("listenClipboard");
   }
 
   mounted() {
@@ -79,7 +79,7 @@ export default class ControlButton extends Mixins(WindowController, AppProps) {
           break;
       }
     });
-    this.$proxy.setCurrentColor();
+    // this.$proxy.setCurrentColor();
   }
 }
 </script>

@@ -60,7 +60,7 @@ export default class FocusMode extends Mixins(BaseView, WindowController) {
   }
 
   capture() {
-    this.$proxy.capture();
+    // this.$proxy.capture();
   }
 
   get focusStyle() {
@@ -98,11 +98,11 @@ export default class FocusMode extends Mixins(BaseView, WindowController) {
       engine: "",
       notify: false
     };
-    this.$store.commit("setShared", arg);
-    this.$store.commit("setDictResult", {
+    this.$store.dispatch("setShared", arg);
+    this.$store.dispatch("setDictResult", {
       valid: false
     });
-    this.$proxy.tryTranslate(text, true);
+    // this.$proxy.tryTranslate(text, true);
   }
 }
 </script>

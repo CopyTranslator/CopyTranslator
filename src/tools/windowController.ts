@@ -5,7 +5,7 @@ import { checkForUpdates } from "./views/update";
 import os from "os";
 import { clipboard } from "../tools/clipboard";
 
-class WindowController {
+class EventListener {
   drag = false;
   dragCopy = false;
   lastDown = Date.now();
@@ -20,9 +20,7 @@ class WindowController {
 
   bind() {
     ipc.once(MessageType.FirstLoaded.toString(), (event: any, args: any) => {
-      if (global.controller.get("autoCheckUpdate")) {
-        checkForUpdates();
-      }
+      checkForUpdates();
     });
 
     ipc.on(MessageType.WindowOpt.toString(), (event: any, args: any) => {
@@ -34,7 +32,7 @@ class WindowController {
           currentWindow.close();
           break;
         case WinOpt.Minify:
-          controller.win.edgeHide(controller.get("hideDirect"));
+          // controller.win.edgeHide(controller.get("hideDirect"));
           break;
       }
     });
@@ -44,16 +42,6 @@ class WindowController {
       this.bindLinuxHooks();
     }
   }
-
-  // bindLinuxHooksTesting() {
-  //   const InputEvent = require("input-event")
-  //   // linux系统下的所有指针设备的事件都会发送到这个文件
-  //   const input = new InputEvent('/dev/input/mice')
-  //   const mouse = new InputEvent.Mouse(input)
-  //   mouse.on('keydown', ()=> {
-  //     console.debug('key down')
-  //   })
-  // }
 
   /**
    * 只监听了鼠标事件
@@ -85,7 +73,7 @@ class WindowController {
         // 按下时选中的文本和释放时选中的文本不一致，则表示选中文本发生了变化
         console.debug("selected text changed:", selectedText);
         if (this.dragCopy) {
-          global.controller.tryTranslate(selectedText);
+          // global.controller.tryTranslate(selectedText);
         }
       }
 
@@ -127,4 +115,4 @@ class WindowController {
   }
 }
 
-export const windowController = new WindowController();
+export const windowController = new EventListener();

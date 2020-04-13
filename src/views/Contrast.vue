@@ -31,6 +31,7 @@
           :key="actionId"
         ></Action>
       </v-navigation-drawer>
+
       <ContrastPanel
         :style="area"
         v-bind:class="{ active: drawer }"
@@ -69,7 +70,7 @@ import {
 export default class Contrast extends Mixins(BaseView, WindowController) {
   barWidth: number = 0;
   readonly routeName = "contrast";
-  actionKeys: Identifier[] = [];
+  actionKeys: Identifier[] = ["dragCopy"];
   colorNow: string = "white";
 
   get valid() {
@@ -89,26 +90,16 @@ export default class Contrast extends Mixins(BaseView, WindowController) {
   }
 
   switchListen() {
-    this.$proxy.handleAction("listenClipboard");
+    // this.$proxy.handleAction("listenClipboard");
   }
 
   toSetting() {
-    this.$proxy.handleAction("settings");
+    // this.$proxy.handleAction("settings");
   }
 
   mounted() {
-    ipc.on(MessageType.WindowOpt.toString(), (event, arg) => {
-      switch (arg.type) {
-        case WinOpt.ChangeColor:
-          this.switchColor(arg.args);
-          break;
-      }
-    });
-    this.$proxy.setCurrentColor();
-
-    this.$proxy.getKeys("contrastPanel").then(res => {
-      this.actionKeys = res;
-    });
+    this.actionKeys = this.$controller.action.getKeys("contrastPanel");
+    console.log(this.actionKeys);
   }
 
   @Watch("drawer")
@@ -130,8 +121,9 @@ export default class Contrast extends Mixins(BaseView, WindowController) {
   get drawer(): boolean {
     return this.$store.state.drawer;
   }
+
   set drawer(val: boolean) {
-    this.$store.commit("switchDrawer", val);
+    this.$store.dispatch("switchDrawer", val);
   }
 
   enumerateLayouts() {

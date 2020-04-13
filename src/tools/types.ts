@@ -148,7 +148,7 @@ export const identifiers: readonly Identifier[] = flatten([
   layoutTypes
 ]);
 
-export function mapToObj<T>(strMap: Map<Identifier, T>): { [key: string]: T } {
+export function mapToObj<T>(strMap: Map<string, T>): { [key: string]: T } {
   let obj = Object.create({});
   for (let [k, v] of strMap) {
     obj[k] = v;

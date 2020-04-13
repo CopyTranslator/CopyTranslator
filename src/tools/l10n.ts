@@ -9,7 +9,8 @@ import { app } from "electron";
 type Resouces = Map<Language, Locale>;
 
 function getDefaultLocale(): Language {
-  let locale = app.getLocale();
+  // let locale = app.getLocale();
+  let locale = "zh";
   if (locale === "zh") {
     locale = "zh-CN";
   }

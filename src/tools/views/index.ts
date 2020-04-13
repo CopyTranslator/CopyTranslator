@@ -32,34 +32,34 @@ export function loadRoute(
 }
 
 export function showSettings() {
-  const width = 320,
-    height = 680;
-  const controller = global.controller;
-  const current_win = controller.win;
-  const bound = current_win.getBound();
-  const {
-    x: xBound,
-    x: yBound,
-    width: screenWidth,
-    height: screenHeight
-  } = screen.getDisplayMatching(bound).bounds;
-  const t = controller.getT();
-  const window = new BrowserWindow({
-    x: xBound + (screenWidth - width) / 2,
-    y: yBound + (screenHeight - height) / 2,
-    width: width,
-    height: height,
-    autoHideMenuBar: true,
-    maximizable: false,
-    minimizable: false,
-    title: t("settings"),
-    parent: current_win.window,
-    show: true,
-    icon: nativeImage.createFromPath(env.iconPath),
-    webPreferences: {
-      nodeIntegration: true
-    }
-  });
-  loadRoute(window, "settings", true);
-  insertStyles(window);
+  // const width = 320,
+  //   height = 680;
+  // const controller = global.controller;
+  // const current_win = controller.win;
+  // const bound = current_win.getBound();
+  // const {
+  //   x: xBound,
+  //   x: yBound,
+  //   width: screenWidth,
+  //   height: screenHeight
+  // } = screen.getDisplayMatching(bound).bounds;
+  // const t = controller.getT();
+  // const window = new BrowserWindow({
+  //   x: xBound + (screenWidth - width) / 2,
+  //   y: yBound + (screenHeight - height) / 2,
+  //   width: width,
+  //   height: height,
+  //   autoHideMenuBar: true,
+  //   maximizable: false,
+  //   minimizable: false,
+  //   title: t("settings"),
+  //   parent: current_win.window,
+  //   show: true,
+  //   icon: nativeImage.createFromPath(env.iconPath),
+  //   webPreferences: {
+  //     nodeIntegration: true
+  //   }
+  // });
+  // loadRoute(window, "settings", true);
+  // insertStyles(window);
 }

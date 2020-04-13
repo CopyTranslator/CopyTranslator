@@ -12,36 +12,36 @@ function bindUpdateEvents() {
     console.log(error);
   });
   autoUpdater.on("update-available", updateInfo => {
-    const width = 500,
-      height = 500;
-    const current_win = global.controller.win;
-    const bound = current_win.getBound();
-    const {
-      x: xBound,
-      x: yBound,
-      width: screenWidth,
-      height: screenHeight
-    } = screen.getDisplayMatching(bound).bounds;
-    window = new BrowserWindow({
-      x: xBound + (screenWidth - width) / 2,
-      y: yBound + (screenHeight - height) / 2,
-      width: width,
-      height: height,
-      autoHideMenuBar: true,
-      maximizable: false,
-      minimizable: false,
-      title: "软件更新",
-      parent: current_win.window,
-      icon: nativeImage.createFromPath(env.iconPath),
-      webPreferences: {
-        nodeIntegration: true
-      }
-    });
-    loadRoute(window, "update", true);
-    insertStyles(window);
-    window.webContents.on("did-finish-load", function() {
-      (<BrowserWindow>window).webContents.send("releaseNote", updateInfo);
-    });
+    // const width = 500,
+    //   height = 500;
+    // const current_win = global.controller.win;
+    // const bound = current_win.getBound();
+    // const {
+    //   x: xBound,
+    //   x: yBound,
+    //   width: screenWidth,
+    //   height: screenHeight
+    // } = screen.getDisplayMatching(bound).bounds;
+    // window = new BrowserWindow({
+    //   x: xBound + (screenWidth - width) / 2,
+    //   y: yBound + (screenHeight - height) / 2,
+    //   width: width,
+    //   height: height,
+    //   autoHideMenuBar: true,
+    //   maximizable: false,
+    //   minimizable: false,
+    //   title: "软件更新",
+    //   parent: current_win.window,
+    //   icon: nativeImage.createFromPath(env.iconPath),
+    //   webPreferences: {
+    //     nodeIntegration: true
+    //   }
+    // });
+    // loadRoute(window, "update", true);
+    // insertStyles(window);
+    // window.webContents.on("did-finish-load", function() {
+    //   (<BrowserWindow>window).webContents.send("releaseNote", updateInfo);
+    // });
   });
 
   autoUpdater.on("update-downloaded", () => {

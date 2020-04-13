@@ -23,9 +23,9 @@ import { Identifier } from "../tools/types";
 export default class Options extends Vue {
   actionKeys: Identifier[] = [];
   mounted() {
-    this.$proxy.getKeys("options").then(res => {
-      this.actionKeys = res;
-    });
+    // this.$proxy.getKeys("options").then(res => {
+    //   this.actionKeys = res;
+    // });
   }
 }
 </script>

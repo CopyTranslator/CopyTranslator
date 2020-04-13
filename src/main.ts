@@ -2,7 +2,7 @@ import Vue from "vue";
 import store from "./store";
 import App from "./App.vue";
 import router from "./router";
-import vuetify from "./vuetify"; // path to vuetify export
+import vuetify from "./plugins/vuetify"; // path to vuetify export
 import { RendererController } from "./renderer";
 import { IProxy } from "./core/iproxy";
 import { createService } from "./tools/create";

@@ -5,11 +5,14 @@ const {
   createPersistedState,
   createSharedMutations
 } = require("vuex-electron");
+import { app } from "electron";
+import { Identifier } from "../tools/types";
 
 Vue.use(Vuex);
 
-export default new Vuex.Store({
+const store = new Vuex.Store({
   state: {
+    defaultLocale: app ? app.getLocale() : "en",
     drawer: true,
     layoutType: "horizontal",
     sharedResult: {
@@ -82,3 +85,9 @@ export default new Vuex.Store({
   },
   plugins: [createPersistedState(), createSharedMutations()]
 });
+
+export default store;
+
+export function getConfigByKey(key: Identifier) {
+  return (store.state.config as any)[key];
+}

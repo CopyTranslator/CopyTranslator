@@ -38,6 +38,7 @@ export const constantActionTypes = [
   "layoutType",
   "frameMode",
   "autoCheckUpdate",
+  "colorMode",
   "version",
   "API_KEY",
   "APP_ID",
@@ -117,6 +118,13 @@ export const routeActionTypes = [
   "menuDrag"
 ] as const;
 
+//路由名称
+export const colorModes = [
+  "dark",
+  "light", //设置页面
+  "auto"
+] as const;
+
 export type Role = typeof roles[number];
 export type SwitchActionType = typeof switchActionTypes[number];
 export type ConstantActionType = typeof constantActionTypes[number];
@@ -125,6 +133,7 @@ export type MenuActionType = typeof menuActionTypes[number];
 export type RouteActionType = typeof routeActionTypes[number];
 export type LayoutType = typeof layoutTypes[number];
 export type Domain = typeof domains[number];
+export type ColorMode = typeof colorModes[number];
 
 export const authorizeKey: string = "CopyTranslator";
 import flatten from "lodash.flatten";

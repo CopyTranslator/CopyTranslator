@@ -70,7 +70,7 @@ import {
 export default class Contrast extends Mixins(BaseView, WindowController) {
   barWidth: number = 0;
   readonly routeName = "contrast";
-  actionKeys: Identifier[] = ["dragCopy"];
+  actionKeys: Identifier[] = this.$controller.action.getKeys("contrastPanel");
   colorNow: string = "white";
 
   get valid() {
@@ -95,11 +95,6 @@ export default class Contrast extends Mixins(BaseView, WindowController) {
 
   toSetting() {
     // this.$proxy.handleAction("settings");
-  }
-
-  mounted() {
-    this.actionKeys = this.$controller.action.getKeys("contrastPanel");
-    console.log(this.actionKeys);
   }
 
   @Watch("drawer")

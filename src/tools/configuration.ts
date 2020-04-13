@@ -3,7 +3,14 @@ import { GroupRule, StructRule, UnionRule, ModeConfig, TypeRule } from "./rule";
 import { HideDirection, hideDirections } from "./enums";
 import { languages, Language } from "@opentranslate/languages";
 import { translatorTypes, TranslatorType } from "./translate/types";
-import { Identifier, identifiers, LayoutType, layoutTypes } from "./types";
+import {
+  Identifier,
+  identifiers,
+  LayoutType,
+  layoutTypes,
+  ColorMode,
+  colorModes
+} from "./types";
 import { DictionaryType, dictionaryTypes } from "../tools/dictionary/types";
 import { version } from "../core/constant";
 import { env } from "./env";
@@ -117,6 +124,11 @@ function initConfig(
   config.setRule(
     "hideDirect",
     new UnionRule<HideDirection>("Up", "HideDirection", hideDirections)
+  );
+
+  config.setRule(
+    "colorMode",
+    new UnionRule<ColorMode>("auto", "color mode", colorModes)
   );
 
   config.setRule(

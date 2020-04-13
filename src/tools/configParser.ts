@@ -5,7 +5,7 @@ import { compatible } from "../core/constant";
 type Rules = Map<Identifier, Rule>; //类型别名
 import { resetStyle } from "./style";
 import { resetGlobalShortcuts, resetLocalShortcuts } from "./shortcuts";
-import store from "../store";
+import store, { getConfigByKey } from "../store";
 
 export function resetAllConfig() {
   resetLocalShortcuts();
@@ -31,7 +31,7 @@ class ConfigParser {
   }
 
   get(key: Identifier) {
-    return (store.state.config as any)[key];
+    return getConfigByKey(key);
   }
 
   set(key: Identifier, value: any) {
@@ -64,11 +64,12 @@ class ConfigParser {
           }
         }
       }
+      this.save(fileName);
     } catch (e) {
       resetAllConfig();
+      this.restoreDefault(fileName);
       status = false;
     }
-    this.save(fileName);
     return status;
   }
 

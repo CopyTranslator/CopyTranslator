@@ -2,14 +2,24 @@
 
 import Vue from "vue";
 import Vuetify from "vuetify/lib";
+import { getConfigByKey } from "./store";
+import { ColorMode } from "./tools/types";
 
 Vue.use(Vuetify);
 
 function isDarkMode() {
-  if (window.matchMedia("(prefers-color-scheme:dark)").matches) {
-    return true;
-  } else {
-    return false;
+  const colorMode: ColorMode = getConfigByKey("colorMode");
+  switch (colorMode) {
+    case "light":
+      return false;
+    case "dark":
+      return true;
+    case "auto":
+      if (window.matchMedia("(prefers-color-scheme:dark)").matches) {
+        return true;
+      } else {
+        return false;
+      }
   }
 }
 

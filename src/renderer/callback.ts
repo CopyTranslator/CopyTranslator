@@ -4,7 +4,6 @@ import { showSettings } from "../common/views";
 import { Identifier, NormalActionType, RouteActionType } from "../common/types";
 import { RendererController } from "./controller";
 import { clipboard } from "../common/clipboard";
-import { MessageType, WinOpt } from "../common/enums";
 
 const alias = new Map<string, string>([
   ["focus", "layoutType|focus"],
@@ -50,13 +49,9 @@ function handleActions(
 }
 
 function fontChange(scale: number) {
-  const window = BrowserWindow.getFocusedWindow();
-  if (window) {
-    window.webContents.send(MessageType.WindowOpt.toString(), {
-      type: WinOpt.Zoom,
-      rotation: scale
-    });
-  }
+  const config = global.controller.config;
+  console.log("font not implement");
+  // config.set("", config.get());
 }
 
 function handleNormalAction(identifier: NormalActionType | RouteActionType) {

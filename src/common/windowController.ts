@@ -1,10 +1,8 @@
-import { BrowserWindow, ipcMain as ipc } from "electron";
-import { MessageType, WinOpt } from "./enums";
 import simulate from "./simulate";
 import { checkForUpdates } from "./views/update";
 import os from "os";
 import { clipboard } from "./clipboard";
-
+import bus from "./event-bus";
 class EventListener {
   drag = false;
   dragCopy = false;
@@ -19,23 +17,13 @@ class EventListener {
   preLeftBtn: string = "mouseup";
 
   bind() {
-    ipc.once(MessageType.FirstLoaded.toString(), (event: any, args: any) => {
+    bus.gonce("firstLoad", (event: any, args: any) => {
+      checkForUpdates();
+    });
+    bus.gon("checkUpdate", (event: any, args: any) => {
       checkForUpdates();
     });
 
-    ipc.on(MessageType.WindowOpt.toString(), (event: any, args: any) => {
-      var arg = args.args;
-      var currentWindow = BrowserWindow.fromWebContents(event.sender);
-      const controller = global.controller;
-      switch (args.type) {
-        case WinOpt.CloseMe:
-          // currentWindow.close();
-          break;
-        case WinOpt.Minify:
-          // controller.win.edgeHide(controller.get("hideDirect"));
-          break;
-      }
-    });
     if (os.platform() !== "linux") {
       this.bindHooks();
     } else {
@@ -58,9 +46,7 @@ class EventListener {
       }
 
       this.selectedText = clipboard.readText("selection");
-      // console.debug(event)
-      console.debug("mousedown: ", this.selectedText);
-
+      // console.debug("mousedown: ", this.selectedText);
       // 更新鼠标按钮状态
       this.preLeftBtn = event.leftBtn;
     });

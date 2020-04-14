@@ -4,7 +4,7 @@ import App from "./App.vue";
 import router from "./router";
 import vuetify from "./plugins/vuetify"; // path to vuetify export
 import { RendererController } from "./renderer";
-
+import bus from "./common/event-bus";
 const rendererController = RendererController.getInstance();
 Vue.prototype.$t = rendererController.getT();
 Vue.prototype.$controller = rendererController;
@@ -16,3 +16,7 @@ const app = new Vue({
   vuetify,
   render: h => h(App)
 }).$mount("#app");
+
+(window as any).requestIdleCallback(() => {
+  bus.gat("firstLoad");
+});

@@ -126,6 +126,14 @@ export const colorModes = [
   "auto"
 ] as const;
 
+export const eventTypes = [
+  "showWindow",
+  "firstLoad",
+  "closeWindow",
+  "openMenu",
+  "minify"
+] as const;
+
 export type Role = typeof roles[number];
 export type SwitchActionType = typeof switchActionTypes[number];
 export type ConstantActionType = typeof constantActionTypes[number];
@@ -135,6 +143,7 @@ export type RouteActionType = typeof routeActionTypes[number];
 export type LayoutType = typeof layoutTypes[number];
 export type Domain = typeof domains[number];
 export type ColorMode = typeof colorModes[number];
+export type EventType = typeof eventTypes[number];
 
 export const authorizeKey: string = "CopyTranslator";
 import flatten from "lodash.flatten";

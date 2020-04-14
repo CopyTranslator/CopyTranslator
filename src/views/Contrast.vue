@@ -57,7 +57,6 @@ import { Identifier, layoutTypes, LayoutType } from "../common/types";
 import { ipcRenderer as ipc } from "electron";
 import EngineButton from "../components/EngineButton.vue";
 import { translatorTypes, TranslatorType } from "../common/translate/constants";
-import { MessageType, WinOpt } from "../common/enums";
 
 import {
   dictionaryTypes,

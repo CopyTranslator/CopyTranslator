@@ -3,11 +3,11 @@
 </template>
 
 <script lang="ts">
-import { MessageType, WinOpt } from "../common/enums";
 import { ipcRenderer as ipc, webFrame } from "electron";
 import { RouteActionType, MenuActionType, Identifier } from "../common/types";
 import Vue from "vue";
 import Component, { mixins } from "vue-class-component";
+import bus from "../common/event-bus";
 
 @Component
 export default class WindowController extends Vue {
@@ -15,23 +15,15 @@ export default class WindowController extends Vue {
   windowHeight: number = window.innerHeight;
   windowWidth: number = window.innerWidth;
 
-  windowOpt(type: WinOpt, args: any = null) {
-    ipc.send(MessageType.WindowOpt.toString(), {
-      type: type,
-      args: args
-    });
-  }
-
   callback(cmd: string) {
     this.$controller.action.callback(cmd);
   }
 
-  minify(event: any) {
-    this.windowOpt(WinOpt.Minify);
+  close() {
+    bus.gat("closeWindow");
   }
-
-  closeMe() {
-    this.windowOpt(WinOpt.CloseMe);
+  minify() {
+    bus.gat("minify");
   }
 
   openMenu(id: MenuActionType) {

@@ -7,30 +7,6 @@ export const hideDirections = [
 ] as const;
 export type HideDirection = typeof hideDirections[number];
 
-export enum MessageType {
-  WindowOpt,
-  TranslateResult,
-  DictResult,
-  OpenMenu,
-  Router,
-  UpdateT,
-  FirstLoaded
-}
-
-export enum WinOpt {
-  Minify,
-  Drag,
-  StartDrag,
-  Dragging,
-  EndDrag,
-  Resize,
-  Zoom,
-  OpenExternal,
-  ChangeColor,
-  Refresh,
-  CloseMe
-}
-
 export const colorStatuses = [
   "None",
   "Listen",

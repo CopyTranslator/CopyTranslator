@@ -16,7 +16,12 @@ export function resetAllConfig() {
 class ConfigParser {
   rules: Rules = new Map<Identifier, Rule>();
   file: string | undefined;
+
   constructor() {}
+
+  config(): Config {
+    return store.state.config;
+  }
 
   keys() {
     return store.getters.keys;

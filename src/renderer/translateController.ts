@@ -2,16 +2,10 @@ import { Compound, TranslatorType } from "../common/translate";
 import { Polymer } from "../common/dictionary/polymer";
 import { Language } from "@opentranslate/translator";
 import { CopyTranslateResult } from "../common/translate/types";
-import {
-  ColorStatus,
-  MessageType,
-  WinOpt,
-  colorStatusMap
-} from "../common/enums";
+import { ColorStatus, colorStatusMap } from "../common/enums";
 import { colorRules, getColorRule } from "../common/rule";
 import { normalizeAppend, checkIsWord } from "../common/translate/helper";
 import { Identifier } from "../common/types";
-import { Promisified } from "../proxy/create";
 import trimEnd from "lodash.trimend";
 import { Controller } from "./types";
 import { createService } from "../proxy/create";
@@ -59,6 +53,7 @@ class TranslateController {
 
   constructor(controller: Controller) {
     this.controller = controller;
+    clipboard.init();
   }
 
   get<T>(identifier: Identifier) {
@@ -118,6 +113,7 @@ class TranslateController {
 
   checkClipboard() {
     let originalText = clipboard.readText();
+    console.log(originalText);
     if (!this.checkLength(originalText)) {
       this.setCurrentColor(true);
       return;
@@ -168,19 +164,6 @@ class TranslateController {
         target: this.target()
       };
     }
-
-    this.sendMsg(MessageType.TranslateResult, {
-      src: this.src,
-      result: this.resultString,
-      source: language.source,
-      target: language.target,
-      engine: this.get<TranslatorType>("translatorType"),
-      notify: this.get<boolean>("enableNotify")
-    });
-  }
-
-  sendMsg(type: MessageType, extra: any) {
-    console.log("send msg", type);
   }
 
   postProcess(language: any, result: CopyTranslateResult) {
@@ -193,10 +176,6 @@ class TranslateController {
       clipboard.writeText(this.src);
     }
     if (this.get<boolean>("autoShow")) {
-      // this.proxy.win.edgeShow();
-      // this.proxy.win.show(
-      //   !(this.get<boolean>("autoCopy") && this.get<boolean>("autoPaste"))
-      // );
       console.log("auto show");
     }
     this.translateResult = result;
@@ -323,9 +302,7 @@ class TranslateController {
     });
   }
 
-  syncDict() {
-    this.sendMsg(MessageType.DictResult, this.dictResult);
-  }
+  syncDict() {}
 
   isWord(text: string) {
     text = trimEnd(text.trim(), ",.!?. ");

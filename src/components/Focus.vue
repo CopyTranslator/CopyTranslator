@@ -40,23 +40,10 @@ import { Identifier, RouteActionType } from "../tools/types";
   }
 })
 export default class FocusMode extends Mixins(BaseView, WindowController) {
-  cmd: string = "";
-  activeEngines: any[] = ["Baidu"];
-  isOpen: boolean = false;
   @Ref("dictResultPanel") readonly dictResultPanel!: DictResultPanel;
-
-  mounted() {}
-
-  toggleCmdline() {
-    this.isOpen = !this.isOpen;
-  }
 
   dragTranslate(event: any) {
     console.log(event.dataTransfer.getData("text/plain"));
-  }
-
-  exectueCmd() {
-    this.callback(this.cmd);
   }
 
   capture() {
@@ -68,6 +55,7 @@ export default class FocusMode extends Mixins(BaseView, WindowController) {
       fontSize: this.size.toString() + "px"
     };
   }
+
   getModifiedText() {
     if (this.sharedResult && !this.dictResult.valid) {
       return this.sharedResult.result;
@@ -102,7 +90,6 @@ export default class FocusMode extends Mixins(BaseView, WindowController) {
     this.$store.dispatch("setDictResult", {
       valid: false
     });
-    // this.$proxy.tryTranslate(text, true);
   }
 }
 </script>

@@ -1,17 +1,7 @@
 import { app as ElectronApp, BrowserWindow, ipcMain, session } from "electron";
-import { Proxy } from "../core/proxy";
-import { Controller } from "./controller";
+import { isPromise } from "./helper";
 
-function isPromise(obj: any) {
-  return (
-    !!obj &&
-    (typeof obj === "object" || typeof obj === "function") &&
-    typeof obj.then === "function"
-  );
-}
-
-export function startService(controller: Controller, key: string) {
-  const proxy = new Proxy(controller);
+export function startService<T>(proxy: T, key: string) {
   ipcMain.on("proxy-service", (event: any, arg: any) => {
     if (arg.type === key) {
       const res = (proxy as any)[arg.method](...arg.args);

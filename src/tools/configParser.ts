@@ -7,6 +7,8 @@ import { resetStyle } from "./style";
 import { resetGlobalShortcuts, resetLocalShortcuts } from "./shortcuts";
 import store, { getConfigByKey } from "../store";
 
+type Config = { [key: string]: any };
+
 export function resetAllConfig() {
   resetLocalShortcuts();
   resetGlobalShortcuts();
@@ -34,15 +36,20 @@ class ConfigParser {
     return getConfigByKey(key);
   }
 
-  set(key: Identifier, value: any) {
-    let check = this.getRule(key).check;
-    if (check && !check(value)) {
+  set(key: Identifier, value: any, needCheck: boolean = true) {
+    if (needCheck && !this.checkValid(key, value)) {
       return false;
-    } else {
-      let config = { [key]: value };
-      store.dispatch("updateConfig", config);
-      return true;
     }
+    store.dispatch("updateConfig", { [key]: value });
+    return true;
+  }
+
+  checkValid(key: Identifier, value: any): boolean {
+    let check = this.getRule(key).check;
+    if ((check && !check(value)) || value == undefined) {
+      return false;
+    }
+    return true;
   }
 
   getTooltip(key: Identifier) {
@@ -56,14 +63,16 @@ class ConfigParser {
       if (!values["version"] || !compatible(values["version"])) {
         throw "version incompatible, configs have been reset";
       }
+      let config: Config = {};
       for (const key of this.rules.keys()) {
-        if (values[key] != undefined) {
-          if (!this.set(key, values[key])) {
-            //设置失败的话，就置为默认值
-            this.set(key, this.getRule(key).predefined);
-          }
+        let val = values[key];
+        if (!this.checkValid(key, val)) {
+          //无效的话，就置为默认值
+          val = this.getRule(key).predefined;
         }
+        config[key] = val;
       }
+      store.dispatch("setConfig", config);
       this.save(fileName);
     } catch (e) {
       resetAllConfig();

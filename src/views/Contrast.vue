@@ -11,7 +11,12 @@
           :valid="valid"
         ></EngineButton>
         <div v-on:dblclick="minify" v-on:contextmenu="openMenu('focusRight')">
-          <v-btn :style="styleNow" @click="switchListen" fab x-small></v-btn>
+          <v-btn
+            :style="styleNow"
+            @click="callback('listenClipboard')"
+            fab
+            x-small
+          ></v-btn>
         </div>
         <v-btn @click="enumerateLayouts" fab small depressed color="purple">
           <v-icon>mdi-view-quilt</v-icon>
@@ -89,14 +94,6 @@ export default class Contrast extends Mixins(BaseView, WindowController) {
     this.colorNow = color;
   }
 
-  switchListen() {
-    // this.$proxy.handleAction("listenClipboard");
-  }
-
-  toSetting() {
-    // this.$proxy.handleAction("settings");
-  }
-
   @Watch("drawer")
   changeDrawer(val: boolean) {
     if (val) {
@@ -114,23 +111,20 @@ export default class Contrast extends Mixins(BaseView, WindowController) {
   }
 
   get drawer(): boolean {
-    return this.$store.state.drawer;
+    return this.config.drawer;
   }
 
   set drawer(val: boolean) {
-    this.$store.dispatch("switchDrawer", val);
+    this.set("drawer", val);
   }
 
   enumerateLayouts() {
-    const index = layoutTypes.findIndex(
-      x => x === this.$store.state.layoutType
-    );
-    this.$store.state.layoutType =
-      layoutTypes[(index + 1) % layoutTypes.length];
+    const index = layoutTypes.findIndex(x => x === this.layoutType);
+    this.set("layoutType", layoutTypes[(index + 1) % layoutTypes.length]);
   }
 
   get layoutType() {
-    return this.$store.state.layoutType;
+    return this.config.layoutType;
   }
 }
 </script>

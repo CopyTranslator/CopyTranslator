@@ -7,6 +7,7 @@ import {
   Translator
 } from "@opentranslate/translator";
 import { autoReSegment } from "./helper";
+import { translatorTypes } from "./constants";
 
 export class Compound implements CopyTranslator {
   mainEngine: Translator;
@@ -64,6 +65,7 @@ export class Compound implements CopyTranslator {
 
   setMainEngine(engineType: TranslatorType) {
     this.mainEngine = getTranslator(engineType);
+    return engineType;
   }
 
   getSupportLanguages(): Language[] {

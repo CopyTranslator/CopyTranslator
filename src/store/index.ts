@@ -7,14 +7,49 @@ const {
 } = require("vuex-electron");
 import { app } from "electron";
 import { Identifier } from "../tools/types";
+import { EventBus } from "../renderer/event-bus";
 
 Vue.use(Vuex);
+
+interface Mutation {
+  type: string;
+  payload: any;
+}
+
+interface Observer {
+  postSet(key: Identifier, value: any): boolean; //返回值用来指示是否处理完毕
+}
+
+export let observers: Observer[] = [];
+
+const observePlugin = (store: any) => {
+  // 当 store 初始化后调用
+  store.subscribe((mutation: Mutation, state: any) => {
+    // 每次 mutation 之后调用
+    // mutation 的格式为 { type, payload }
+    if (["setConfig", "updateConfig"].indexOf(mutation.type) == -1) {
+      return;
+    }
+    for (let key of Object.keys(mutation.payload)) {
+      const val = mutation.payload[key];
+      for (const observer of observers) {
+        const resolved = observer.postSet(key as Identifier, val);
+        if (resolved) {
+          break;
+        }
+      }
+    }
+  });
+};
+
+//协同响应
+const connections: Map<Identifier, Identifier[]> = new Map([
+  ["translatorType", ["sourceLanguage", "targetLanguage"]]
+]);
 
 const store = new Vuex.Store({
   state: {
     defaultLocale: app ? app.getLocale() : "en",
-    drawer: true,
-    layoutType: "horizontal",
     sharedResult: {
       src: "",
       result: "",
@@ -36,12 +71,6 @@ const store = new Vuex.Store({
     config: {}
   },
   mutations: {
-    switchDrawer(state, val) {
-      state.drawer = val;
-    },
-    setLayoutType(state, val: LayoutType) {
-      state.layoutType = val;
-    },
     setShared(state, sharedResult) {
       state.sharedResult = sharedResult;
     },
@@ -54,16 +83,14 @@ const store = new Vuex.Store({
     updateConfig(state, config) {
       for (let key of Object.keys(config)) {
         Vue.set(state.config, key, config[key]);
+        const links = connections.get(key as Identifier);
+        if (links && process.type == "renderer") {
+          links.forEach(link => EventBus.$emit(link));
+        }
       }
     }
   },
   actions: {
-    switchDrawer(context, val) {
-      context.commit("switchDrawer", val);
-    },
-    setLayoutType(context, val: LayoutType) {
-      context.commit("setLayoutType", val);
-    },
     setShared(context, sharedResult) {
       context.commit("setShared", sharedResult);
     },
@@ -83,8 +110,14 @@ const store = new Vuex.Store({
       return Object.keys(state.config);
     }
   },
-  plugins: [createPersistedState(), createSharedMutations()]
+  plugins: [createPersistedState(), createSharedMutations(), observePlugin]
 });
+
+const t = store.dispatch;
+store.dispatch = async (type: any, payload: any) => {
+  console.log(type, payload);
+  return t(type, payload);
+};
 
 export default store;
 

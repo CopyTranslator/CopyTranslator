@@ -18,7 +18,7 @@
       </v-select>
     </div>
     <div v-else-if="action.type === 'normal'">
-      <v-btn @click="handleAction(action.id)">
+      <v-btn @click="callback(action.id)">
         {{ $t(action.id) }}
       </v-btn>
     </div>
@@ -31,13 +31,13 @@ import { MessageType, WinOpt } from "../tools/enums";
 import { Identifier } from "../tools/types";
 import { Prop, Component, Watch, Vue } from "vue-property-decorator";
 import { Action as ActionType, compose } from "../renderer/action";
-
+import { EventBus } from "../renderer/event-bus";
 @Component
 export default class Action extends Vue {
   @Prop({ default: undefined }) readonly identifier!: Identifier;
   action: ActionType = this.$controller.action.getAction(this.identifier);
 
-  handleAction(command: string) {
+  callback(command: string) {
     this.$controller.action.callback(command);
   }
 
@@ -46,7 +46,7 @@ export default class Action extends Vue {
   }
 
   set command(cmd) {
-    this.handleAction(cmd);
+    this.callback(cmd);
   }
 
   get value() {
@@ -55,6 +55,16 @@ export default class Action extends Vue {
 
   set value(val) {
     this.$controller.set(this.identifier, val);
+  }
+
+  sync() {
+    this.action = this.$controller.action.getAction(this.identifier);
+  }
+
+  mounted() {
+    if (this.action.actionType == "submenu") {
+      EventBus.$on(this.identifier, this.sync);
+    }
   }
 }
 </script>

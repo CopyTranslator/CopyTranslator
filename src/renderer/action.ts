@@ -4,6 +4,7 @@ import { ConfigParser } from "../tools/configParser";
 import { Language } from "@opentranslate/languages";
 import { hideDirections } from "../tools/enums";
 import { translatorTypes } from "../tools/translate/types";
+import { isPromise } from "../proxy/helper";
 
 import { getLanguageLocales } from "../tools/translate/locale";
 import {
@@ -236,7 +237,7 @@ class ActionManager {
       return () => {
         const l = getLanguageLocales(<Language>config.get("localeSetting"));
         return RendererController.getInstance()
-          .transCon.translator.getSupportLanguages() //??????
+          .transCon.getSupportLanguages()
           .filter(x => {
             if (!allowAuto && x == "auto") {
               return false;
@@ -277,11 +278,6 @@ class ActionManager {
     items.push(listAction("dictionaryType", dictionaryTypes));
     items.push(listAction("layoutType", layoutTypes));
 
-    items.push(normalAction("copySource"));
-    items.push(normalAction("copyResult"));
-    items.push(normalAction("clear"));
-    items.push(normalAction("retryTranslate"));
-
     items.push(switchAction("autoCopy"));
     items.push(switchAction("autoPaste"));
     items.push(switchAction("autoFormat"));
@@ -292,17 +288,22 @@ class ActionManager {
     items.push(switchAction("autoShow"));
     items.push(switchAction("stayTop"));
     items.push(switchAction("smartDict"));
+    items.push(switchAction("drawer"));
     items.push(switchAction("listenClipboard"));
     items.push(switchAction("dragCopy"));
     items.push(switchAction("enableNotify"));
     items.push(switchAction("skipTaskbar"));
     items.push(switchAction("closeAsQuit"));
     items.push(switchAction("autoCheckUpdate"));
+
+    items.push(normalAction("copySource"));
+    items.push(normalAction("copyResult"));
+    items.push(normalAction("clear"));
+    items.push(normalAction("retryTranslate"));
     items.push(normalAction("focus"));
     items.push(normalAction("contrast"));
     items.push(normalAction("capture"));
     items.push(normalAction("restoreDefault"));
-
     items.push(normalAction("font+"));
     items.push(normalAction("font-"));
 

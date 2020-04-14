@@ -6,7 +6,7 @@ import { RendererController } from "./controller";
 import { clipboard } from "../tools/clipboard";
 import { MessageType, WinOpt } from "../tools/enums";
 
-const alias: Map<string, string> = new Map<Identifier, any>([
+const alias = new Map<string, string>([
   ["focus", "layoutType|focus"],
   ["contrast", "layoutType|horizontal"]
 ]);
@@ -18,7 +18,7 @@ function handleActions(
   event: Event | undefined = undefined
 ) {
   if (alias.get(id) != undefined) {
-    handleActions(<string>alias.get(id));
+    handleActions(alias.get(id) as string);
     return;
   }
   const params = decompose(id);
@@ -68,9 +68,6 @@ function handleNormalAction(identifier: NormalActionType | RouteActionType) {
       break;
     case "font-":
       fontChange(-1);
-      break;
-    case "exit":
-      controller.onExit();
       break;
     case "capture":
       global.shortcutCapture.shortcutCapture();

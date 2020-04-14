@@ -1,5 +1,3 @@
-import { IProxy } from "./core/iproxy";
-import { Promisified } from "./tools/create";
 import { RendererController } from "./renderer/controller";
 // 1. 确保在声明补充的类型之前导入 'vue'
 import Vue from "vue";
@@ -9,7 +7,6 @@ import Vue from "vue";
 declare module "vue/types/vue" {
   // 3. 声明为 Vue 补充的东西
   export interface Vue {
-    $proxy: Promisified<IProxy>;
     $controller: RendererController;
   }
 }

@@ -1,13 +1,17 @@
 import { Compound, TranslatorType } from "../tools/translate";
+import { Polymer } from "../tools/dictionary/polymer";
 import { Language } from "@opentranslate/translator";
 import { CopyTranslateResult } from "../tools/translate/types";
 import { ColorStatus, MessageType, WinOpt } from "../tools/enums";
 import { colorRules, getColorRule } from "../tools/rule";
 import { normalizeAppend, checkIsWord } from "../tools/translate/helper";
 import { Identifier } from "../tools/types";
-import { Polymer } from "../tools/dictionary/polymer";
+import { Promisified } from "../proxy/create";
 import trimEnd from "lodash.trimend";
 import { Controller } from "./types";
+import { createService } from "../proxy/create";
+import { authorizeKey } from "../tools/types";
+import { getSupportLanguages } from "../tools/translate";
 
 import {
   DictionaryType,
@@ -15,6 +19,7 @@ import {
   DictFail
 } from "../tools/dictionary/types";
 import { clipboard } from "../tools/clipboard";
+import { RendererController } from "./controller";
 
 function constructStore(data: object) {
   var dataCopy = new Proxy(data, {
@@ -33,16 +38,21 @@ class TranslateController {
   translateResult: CopyTranslateResult | undefined;
   dictResult: DictSuccess | DictFail = { words: "", valid: false };
   lastAppend: string = "";
-  translator: Compound = new Compound("google", {});
-  dictionary: Polymer = new Polymer("google");
+  translator = createService<Compound>(`${authorizeKey}-translator`);
+  dictionary = createService<Polymer>(`${authorizeKey}-dictionary`);
   translating: boolean = false; //正在翻译
   words: string = "";
-  store: any;
+
   controller: Controller;
 
-  constructor(controller: Controller, store: any) {
+  getSupportLanguages() {
+    return getSupportLanguages(
+      RendererController.getInstance().get("translatorType")
+    );
+  }
+
+  constructor(controller: Controller) {
     this.controller = controller;
-    this.store = store;
   }
 
   get<T>(identifier: Identifier) {
@@ -365,9 +375,11 @@ class TranslateController {
       });
   }
 
-  switchTranslator(value: TranslatorType) {
+  async switchTranslator(value: TranslatorType) {
     let valid = true;
-    this.translator.setMainEngine(value);
+    const newEngine = await this.translator.setMainEngine(value);
+
+    console.log(newEngine);
     if (!this.translator.isValid(this.source())) {
       this.controller.set("sourceLanguage", "en");
       valid = false;
@@ -378,7 +390,7 @@ class TranslateController {
     }
     if (valid) {
       try {
-        let buffer = this.translator.getBuffer(value);
+        let buffer = await this.translator.getBuffer(value);
         if (!buffer || this.translator.src !== this.src) {
           throw "no the same src";
         }
@@ -393,11 +405,11 @@ class TranslateController {
     }
   }
 
-  switchDictionary(value: DictionaryType) {
+  async switchDictionary(value: DictionaryType) {
     this.dictionary.setMainEngine(value);
     if (this.src === this.dictionary.words) {
       try {
-        const res = this.dictionary.getBuffer(value);
+        const res = await this.dictionary.getBuffer(value);
         if (res.explains.length != 0) {
           this.dictResult = {
             ...res,
@@ -433,7 +445,7 @@ class TranslateController {
     }
   }
 
-  postSet(identifier: Identifier, value: any) {
+  postSet(identifier: Identifier, value: any): boolean {
     switch (identifier) {
       case "listenClipboard":
         this.setWatch(value);
@@ -463,7 +475,10 @@ class TranslateController {
       case "dictionaryType":
         this.switchDictionary(value as DictionaryType);
         break;
+      default:
+        return false;
     }
+    return true;
   }
 }
 

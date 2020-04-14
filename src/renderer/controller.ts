@@ -5,43 +5,37 @@ import { Identifier } from "../tools/types";
 import { TranslateController } from "./translateController";
 import { Controller } from "./types";
 import { showDragCopyWarning } from "../tools/views/dialog";
-import { IProxy } from "../core/iproxy";
-import { Promisified } from "../tools/create";
 import Vue from "vue";
 import { Language } from "@opentranslate/translator";
 import { app } from "electron";
 import { colorRules, getColorRule } from "../tools/rule";
 import { ActionManager } from "./action";
 import { handleActions } from "./callback";
-import currentStore from "../store";
+import currentStore, { observers } from "../store";
 
 export class RendererController implements Controller {
   config = initConfig();
   l10n: L10N = l10n;
-  transCon: TranslateController = new TranslateController(this, null);
-  proxy: Promisified<IProxy>;
+  transCon: TranslateController = new TranslateController(this);
   action = new ActionManager(handleActions, this);
 
   private static _instance: RendererController;
 
-  public static getInstance(proxy?: Promisified<IProxy>): RendererController {
-    if (this._instance == null && proxy != undefined) {
-      this._instance = new RendererController(proxy);
+  public static getInstance(): RendererController {
+    if (this._instance == null) {
+      this._instance = new RendererController();
     }
     return this._instance;
   }
 
-  private constructor(proxy: Promisified<IProxy>) {
-    this.proxy = proxy;
+  private constructor() {
     this.action.init();
+    observers.push(this);
+    observers.push(this.transCon);
   }
 
   switchValue(identifier: Identifier) {
     this.set(identifier, !this.get(identifier));
-  }
-
-  onExit() {
-    app.exit();
   }
 
   resotreDefaultSetting() {
@@ -60,11 +54,7 @@ export class RendererController implements Controller {
   }
 
   set(identifier: Identifier, value: any): boolean {
-    if (this.config.set(identifier, value)) {
-      this.postSet(identifier, value);
-      return true;
-    }
-    return false;
+    return this.config.set(identifier, value);
   }
 
   getT() {
@@ -89,26 +79,15 @@ export class RendererController implements Controller {
     // recognizer.setUp(true);
   }
 
-  postSet(identifier: Identifier, value: any) {
+  postSet(identifier: Identifier, value: any): boolean {
+    console.log("renderer", identifier, value);
     switch (identifier) {
-      case "stayTop":
-        // if (this.win.window) {
-        //   this.win.window.focus();
-        //   this.win.window.setAlwaysOnTop(value);
-        // }
-        break;
-      case "skipTaskbar":
-        // this.win.setSkipTaskbar(value);
-        break;
-      case "dragCopy":
-        if (value) {
-          showDragCopyWarning();
-        }
-        // windowController.dragCopy = value;
-        break;
       case "localeSetting":
         Vue.prototype.$t = this.getT();
         break;
+      default:
+        return false;
     }
+    return true;
   }
 }

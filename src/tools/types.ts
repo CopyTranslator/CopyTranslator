@@ -39,6 +39,7 @@ export const constantActionTypes = [
   "frameMode",
   "autoCheckUpdate",
   "colorMode",
+  "drawer",
   "version",
   "API_KEY",
   "APP_ID",

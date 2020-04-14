@@ -56,34 +56,12 @@ import { ipcRenderer as ipc } from "electron";
   }
 })
 export default class ContrastPanel extends Mixins(BaseView, WindowController) {
-  @Watch("layoutType")
-  layoutTypeChanged(newLayoutType: LayoutType, oldLayoutType: LayoutType) {
-    // this.$proxy.set("layoutType", newLayoutType, false, false);
-  }
-
   get layoutType() {
-    return this.$store.state.layoutType;
+    return this.config.layoutType;
   }
 
   set layoutType(layoutType) {
-    this.$store.state.layoutType = layoutType;
-  }
-
-  syncLayoutType() {
-    // this.$proxy.get("layoutType").then(layoutType => {
-    //   this.layoutType = layoutType;
-    // });
-  }
-
-  mounted() {
-    this.syncLayoutType();
-    ipc.on(MessageType.WindowOpt.toString(), (event, arg) => {
-      if (arg.type === WinOpt.Refresh) {
-        if (!arg.args || arg.args === "layoutType") {
-          this.syncLayoutType();
-        }
-      }
-    });
+    this.set("layoutType", layoutType);
   }
 
   translate() {

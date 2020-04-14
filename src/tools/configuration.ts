@@ -82,6 +82,8 @@ function initConfig(
     new TypeRule<boolean>(false, "never show warning")
   );
 
+  config.setRule("drawer", new TypeRule<boolean>(false, "never show warning"));
+
   config.setRule("smartDict", new TypeRule<boolean>(true, "enable smart dict"));
 
   config.setRule("closeAsQuit", new TypeRule<boolean>(true, "close as quit"));

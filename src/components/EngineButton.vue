@@ -23,11 +23,14 @@ const AppProps = Vue.extend({
 @Component
 export default class App extends mixins(WindowController, AppProps) {
   engineClass: string = this.engine;
-  get inactive() {
-    return this.valid
-      ? this.$store.state.dictResult.engine != this.engine
-      : this.$store.state.sharedResult.engine != this.engine;
+  get inactive(): boolean {
+    if (!this.valid) {
+      return this.$store.state.config.translatorType != this.engine;
+    } else {
+      return this.$store.state.config.dictionaryType != this.engine;
+    }
   }
+
   switchTranslator() {
     if (this.valid) {
       this.callback("dictionaryType|" + this.engine);

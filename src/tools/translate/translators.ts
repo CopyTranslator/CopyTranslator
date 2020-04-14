@@ -1,4 +1,4 @@
-import { Translator } from "@opentranslate/translator";
+import { Translator, Language } from "@opentranslate/translator";
 import { Baidu } from "@opentranslate/baidu";
 import { Google } from "@opentranslate/google";
 import { Youdao } from "@opentranslate/youdao";
@@ -20,4 +20,7 @@ export const translators = new Map(translatorMap);
 
 export function getTranslator(transType: TranslatorType): Translator {
   return translators.get(transType) as Translator;
+}
+export function getSupportLanguages(type: TranslatorType): Language[] {
+  return getTranslator(type).getSupportLanguages();
 }

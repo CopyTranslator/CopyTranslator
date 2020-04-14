@@ -42,7 +42,6 @@ class Controller {
   }
 
   postSet(identifier: Identifier, value: any): boolean {
-    console.log("main", identifier, value);
     return true;
   }
 }

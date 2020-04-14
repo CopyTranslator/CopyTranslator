@@ -383,8 +383,6 @@ class TranslateController {
   async switchTranslator(value: TranslatorType) {
     let valid = true;
     const newEngine = await this.translator.setMainEngine(value);
-
-    console.log(newEngine);
     if (!this.translator.isValid(this.source())) {
       this.controller.set("sourceLanguage", "en");
       valid = false;

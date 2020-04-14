@@ -80,7 +80,6 @@ export class RendererController implements Controller {
   }
 
   postSet(identifier: Identifier, value: any): boolean {
-    console.log("renderer", identifier, value);
     switch (identifier) {
       case "localeSetting":
         Vue.prototype.$t = this.getT();

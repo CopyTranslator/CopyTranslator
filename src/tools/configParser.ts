@@ -5,9 +5,7 @@ import { compatible } from "../core/constant";
 type Rules = Map<Identifier, Rule>; //类型别名
 import { resetStyle } from "./style";
 import { resetGlobalShortcuts, resetLocalShortcuts } from "./shortcuts";
-import store, { getConfigByKey } from "../store";
-
-type Config = { [key: string]: any };
+import store, { getConfigByKey, Config } from "../store";
 
 export function resetAllConfig() {
   resetLocalShortcuts();

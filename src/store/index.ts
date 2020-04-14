@@ -4,7 +4,7 @@ const { createSharedMutations } = require("vuex-electron");
 import { app } from "electron";
 import { Identifier, Mutation } from "./plugins/types";
 import { updateViewPlugin, observePlugin, initState } from "./plugins";
-export { observers } from "./plugins";
+export * from "./plugins";
 
 Vue.use(Vuex);
 

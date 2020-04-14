@@ -4,14 +4,12 @@ import { l10n, L10N } from "../tools/l10n";
 import { Identifier } from "../tools/types";
 import { TranslateController } from "./translateController";
 import { Controller } from "./types";
-import { showDragCopyWarning } from "../tools/views/dialog";
 import Vue from "vue";
 import { Language } from "@opentranslate/translator";
-import { app } from "electron";
 import { colorRules, getColorRule } from "../tools/rule";
 import { ActionManager } from "./action";
 import { handleActions } from "./callback";
-import currentStore, { observers } from "../store";
+import store, { observers, restoreFromConfig } from "../store";
 
 export class RendererController implements Controller {
   config = initConfig();
@@ -29,9 +27,10 @@ export class RendererController implements Controller {
   }
 
   private constructor() {
-    this.action.init();
     observers.push(this);
     observers.push(this.transCon);
+    this.restoreFromConfig();
+    this.action.init();
   }
 
   switchValue(identifier: Identifier) {
@@ -40,13 +39,11 @@ export class RendererController implements Controller {
 
   resotreDefaultSetting() {
     this.config.restoreDefault(env.configPath);
-    this.restoreFromConfig(true);
+    this.restoreFromConfig();
   }
 
-  restoreFromConfig(fresh: boolean = false) {
-    for (let key of this.config.keys()) {
-      this.set(key, this.get(key));
-    }
+  restoreFromConfig() {
+    restoreFromConfig(observers, store.state.config);
   }
 
   get<T>(identifier: Identifier) {

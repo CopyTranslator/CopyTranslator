@@ -10,21 +10,17 @@ export function capture(x: number, y: number, width: number, height: number) {
   // 但由于thumbnailSize不一样所以就采用了每个桌面尺寸都捕获一张
   const getDesktopCapturer = displays.map((display, i) => {
     return new Promise((resolve, reject) => {
-      desktopCapturer.getSources(
-        {
+      desktopCapturer
+        .getSources({
           types: ["screen"],
           thumbnailSize: display.size
-        },
-        (error, sources) => {
-          if (!error) {
-            return resolve({
-              display,
-              thumbnail: sources[i].thumbnail
-            });
-          }
-          return reject(error);
-        }
-      );
+        })
+        .then(sources => {
+          return resolve({
+            display,
+            thumbnail: sources[i].thumbnail
+          });
+        });
     });
   });
   Promise.all(getDesktopCapturer)

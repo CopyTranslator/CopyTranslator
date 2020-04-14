@@ -8,7 +8,7 @@ import { initConfig } from "../tools/configuration";
 import { ShortcutManager } from "./shortcut";
 import { app } from "electron";
 import { env } from "../tools/env";
-import { observers } from "../store";
+import store, { observers, restoreFromConfig } from "../store";
 import { Compound, TranslatorType } from "../tools/translate";
 import { Polymer } from "../tools/dictionary/polymer";
 
@@ -21,8 +21,9 @@ class Controller {
   dictionary: Polymer = new Polymer("google");
 
   constructor() {
-    observers.push(this);
     this.config.load(env.configPath);
+    restoreFromConfig([this], store.state.config);
+    observers.push(this);
   }
 
   createWindow() {

@@ -27,7 +27,6 @@
 
 <script lang="ts">
 import { ipcRenderer as ipc } from "electron";
-import { MessageType, WinOpt } from "../tools/enums";
 import { Identifier } from "../tools/types";
 import { Prop, Component, Watch, Vue } from "vue-property-decorator";
 import { Action as ActionType, compose } from "../renderer/action";

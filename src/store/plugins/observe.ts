@@ -1,4 +1,4 @@
-import { Identifier, Mutation } from "./types";
+import { Identifier, Mutation, Config } from "./types";
 
 interface Observer {
   postSet(key: Identifier, value: any): boolean; //返回值用来指示是否处理完毕
@@ -22,3 +22,11 @@ export const observePlugin = (store: any) => {
     }
   });
 };
+
+export function restoreFromConfig(observers: Observer[], config: Config) {
+  for (let key of Object.keys(config)) {
+    observers.forEach(observer => {
+      observer.postSet(key as Identifier, config[key]);
+    });
+  }
+}

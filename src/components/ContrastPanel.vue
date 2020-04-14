@@ -47,7 +47,6 @@ import { Mixins, Watch, Component } from "vue-property-decorator";
 import WindowController from "../components/WindowController.vue";
 import Focus from "./Focus.vue";
 import { LayoutType, layoutTypes } from "../tools/types";
-import { MessageType, WinOpt } from "../tools/enums";
 import { ipcRenderer as ipc } from "electron";
 
 @Component({

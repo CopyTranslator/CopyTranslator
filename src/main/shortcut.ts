@@ -8,13 +8,13 @@ import {
   KeyboardEvent,
   MenuItemConstructorOptions
 } from "electron";
-import { roles, Role } from "../tools/types";
+import { roles, Role } from "../common/types";
 
 import {
   Shortcuts,
   loadLocalShortcuts,
   loadGlobalShortcuts
-} from "../tools/shortcuts";
+} from "../common/shortcuts";
 
 type CallBack = (
   key: string,

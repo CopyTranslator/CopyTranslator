@@ -1,29 +1,29 @@
-import { Compound, TranslatorType } from "../tools/translate";
-import { Polymer } from "../tools/dictionary/polymer";
+import { Compound, TranslatorType } from "../common/translate";
+import { Polymer } from "../common/dictionary/polymer";
 import { Language } from "@opentranslate/translator";
-import { CopyTranslateResult } from "../tools/translate/types";
+import { CopyTranslateResult } from "../common/translate/types";
 import {
   ColorStatus,
   MessageType,
   WinOpt,
   colorStatusMap
-} from "../tools/enums";
-import { colorRules, getColorRule } from "../tools/rule";
-import { normalizeAppend, checkIsWord } from "../tools/translate/helper";
-import { Identifier } from "../tools/types";
+} from "../common/enums";
+import { colorRules, getColorRule } from "../common/rule";
+import { normalizeAppend, checkIsWord } from "../common/translate/helper";
+import { Identifier } from "../common/types";
 import { Promisified } from "../proxy/create";
 import trimEnd from "lodash.trimend";
 import { Controller } from "./types";
 import { createService } from "../proxy/create";
-import { authorizeKey } from "../tools/types";
-import { getSupportLanguages } from "../tools/translate";
+import { authorizeKey } from "../common/types";
+import { getSupportLanguages } from "../common/translate";
 
 import {
   DictionaryType,
   DictSuccess,
   DictFail
-} from "../tools/dictionary/types";
-import { clipboard } from "../tools/clipboard";
+} from "../common/dictionary/types";
+import { clipboard } from "../common/clipboard";
 import { RendererController } from "./controller";
 import store from "@/store";
 

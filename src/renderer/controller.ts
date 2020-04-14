@@ -1,12 +1,12 @@
-import { env } from "../tools/env";
-import { initConfig } from "../tools/configuration";
-import { l10n, L10N } from "../tools/l10n";
-import { Identifier } from "../tools/types";
+import { env } from "../common/env";
+import { initConfig } from "../common/configuration";
+import { l10n, L10N } from "../common/l10n";
+import { Identifier } from "../common/types";
 import { TranslateController } from "./translateController";
 import { Controller } from "./types";
 import Vue from "vue";
 import { Language } from "@opentranslate/translator";
-import { colorRules, getColorRule } from "../tools/rule";
+import { colorRules, getColorRule } from "../common/rule";
 import { ActionManager } from "./action";
 import { handleActions } from "./callback";
 import store, { observers, restoreFromConfig } from "../store";

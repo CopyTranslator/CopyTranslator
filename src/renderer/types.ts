@@ -1,6 +1,6 @@
-import { Identifier, MenuActionType, RouteActionType } from "../tools/types";
+import { Identifier, MenuActionType, RouteActionType } from "../common/types";
 import { Action } from "./action";
-import { ConfigParser } from "../tools/configuration";
+import { ConfigParser } from "../common/configuration";
 
 export interface Controller {
   set(identifier: Identifier, value: any): void;

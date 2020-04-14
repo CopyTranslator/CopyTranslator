@@ -1,16 +1,16 @@
-import { Window } from "../tools/views/windows";
-import { windowController } from "../tools/windowController";
-import { TrayManager } from "../tools/tray";
-import { recognizer } from "../tools/ocr";
-import { Identifier, authorizeKey } from "../tools/types";
+import { Window } from "../common/views/windows";
+import { windowController } from "../common/windowController";
+import { TrayManager } from "../common/tray";
+import { recognizer } from "../common/ocr";
+import { Identifier, authorizeKey } from "../common/types";
 import { startService } from "../proxy/service";
-import { initConfig } from "../tools/configuration";
+import { initConfig } from "../common/configuration";
 import { ShortcutManager } from "./shortcut";
 import { app } from "electron";
-import { env } from "../tools/env";
+import { env } from "../common/env";
 import store, { observers, restoreFromConfig } from "../store";
-import { Compound, TranslatorType } from "../tools/translate";
-import { Polymer } from "../tools/dictionary/polymer";
+import { Compound, TranslatorType } from "../common/translate";
+import { Polymer } from "../common/dictionary/polymer";
 
 class Controller {
   win: Window = new Window();

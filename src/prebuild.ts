@@ -1,7 +1,7 @@
 const fs = require("fs");
 const path = require("path");
-import { en, zh_cn, Locale } from "./tools/locales";
-import { mapToObj, objToMap } from "./tools/types";
+import { en, zh_cn, Locale } from "./common/locales";
+import { mapToObj, objToMap } from "./common/types";
 import { Language } from "@opentranslate/languages";
 
 const localeDir = path.join(process.cwd(), "dist_locales");

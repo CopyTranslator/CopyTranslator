@@ -1,10 +1,10 @@
 import { dialog, BrowserWindow, MenuItem, nativeImage, shell } from "electron";
 import { decompose } from "./action";
-import { showSettings } from "../tools/views";
-import { Identifier, NormalActionType, RouteActionType } from "../tools/types";
+import { showSettings } from "../common/views";
+import { Identifier, NormalActionType, RouteActionType } from "../common/types";
 import { RendererController } from "./controller";
-import { clipboard } from "../tools/clipboard";
-import { MessageType, WinOpt } from "../tools/enums";
+import { clipboard } from "../common/clipboard";
+import { MessageType, WinOpt } from "../common/enums";
 
 const alias = new Map<string, string>([
   ["focus", "layoutType|focus"],

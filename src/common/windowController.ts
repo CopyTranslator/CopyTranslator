@@ -3,7 +3,7 @@ import { MessageType, WinOpt } from "./enums";
 import simulate from "./simulate";
 import { checkForUpdates } from "./views/update";
 import os from "os";
-import { clipboard } from "../tools/clipboard";
+import { clipboard } from "./clipboard";
 
 class EventListener {
   drag = false;

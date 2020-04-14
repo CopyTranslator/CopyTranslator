@@ -11,7 +11,7 @@ import {
   ColorMode,
   colorModes
 } from "./types";
-import { DictionaryType, dictionaryTypes } from "../tools/dictionary/types";
+import { DictionaryType, dictionaryTypes } from "./dictionary/types";
 import { version } from "../core/constant";
 
 function initConfig(

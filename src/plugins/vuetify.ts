@@ -1,7 +1,7 @@
 import Vue from "vue";
 import Vuetify from "vuetify/lib";
 import { getConfigByKey } from "../store";
-import { ColorMode } from "../tools/types";
+import { ColorMode } from "../common/types";
 
 Vue.use(Vuetify);
 

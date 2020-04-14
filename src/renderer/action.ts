@@ -1,20 +1,20 @@
 import { BrowserWindow, Menu, MenuItem } from "electron";
 
-import { ConfigParser } from "../tools/configParser";
+import { ConfigParser } from "../common/configParser";
 import { Language } from "@opentranslate/languages";
-import { hideDirections } from "../tools/enums";
-import { translatorTypes } from "../tools/translate/types";
+import { hideDirections } from "../common/enums";
+import { translatorTypes } from "../common/translate/types";
 import { isPromise } from "../proxy/helper";
 
-import { getLanguageLocales } from "../tools/translate/locale";
+import { getLanguageLocales } from "../common/translate/locale";
 import {
   Identifier,
   MenuActionType,
   Role,
   roles,
   layoutTypes
-} from "../tools/types";
-import { dictionaryTypes } from "../tools/dictionary/types";
+} from "../common/types";
+import { dictionaryTypes } from "../common/dictionary/types";
 import { RendererController } from "./controller";
 
 type CallBack = (

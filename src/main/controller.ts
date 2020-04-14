@@ -22,8 +22,8 @@ class Controller {
 
   constructor() {
     this.config.load(env.configPath);
-    restoreFromConfig([this], store.state.config);
     observers.push(this);
+    restoreFromConfig(observers, store.state.config);
   }
 
   createWindow() {

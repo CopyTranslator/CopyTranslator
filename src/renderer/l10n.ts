@@ -1,8 +1,8 @@
 const fs = require("fs");
 const path = require("path");
-import { env } from "./env";
-import { Identifier, objToMap } from "./types";
-import { en, Locale } from "./locales";
+import { env } from "../common/env";
+import { Identifier, objToMap } from "../common/types";
+import { en, Locale } from "../common/locales";
 import { Language } from "@opentranslate/languages";
 import store from "../store";
 

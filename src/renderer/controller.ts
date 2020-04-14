@@ -1,6 +1,6 @@
 import { env } from "../common/env";
 import { initConfig } from "../common/configuration";
-import { l10n, L10N } from "../common/l10n";
+import { l10n, L10N } from "./l10n";
 import { Identifier } from "../common/types";
 import { TranslateController } from "./translateController";
 import { Controller } from "./types";

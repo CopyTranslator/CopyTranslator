@@ -19,7 +19,6 @@
       <DictResultPanel
         v-if="dictResult.valid"
         ref="dictResultPanel"
-        :size="size"
         class="max"
       ></DictResultPanel>
     </div>

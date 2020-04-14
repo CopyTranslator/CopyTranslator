@@ -76,7 +76,6 @@ export default class Contrast extends Mixins(BaseView, WindowController) {
   barWidth: number = 0;
   readonly routeName = "contrast";
   actionKeys: Identifier[] = this.$controller.action.getKeys("contrastPanel");
-  colorNow: string = "white";
 
   get valid() {
     return this.dictResult.valid && this.layoutType === "focus";
@@ -87,11 +86,11 @@ export default class Contrast extends Mixins(BaseView, WindowController) {
   }
 
   get styleNow() {
-    return `background:${this.colorNow};`;
+    return `background:${this.color};`;
   }
 
-  switchColor(color: string) {
-    this.colorNow = color;
+  get color() {
+    return this.$store.state.color;
   }
 
   @Watch("drawer")

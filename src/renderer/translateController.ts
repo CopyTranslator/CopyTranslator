@@ -2,7 +2,12 @@ import { Compound, TranslatorType } from "../tools/translate";
 import { Polymer } from "../tools/dictionary/polymer";
 import { Language } from "@opentranslate/translator";
 import { CopyTranslateResult } from "../tools/translate/types";
-import { ColorStatus, MessageType, WinOpt } from "../tools/enums";
+import {
+  ColorStatus,
+  MessageType,
+  WinOpt,
+  colorStatusMap
+} from "../tools/enums";
 import { colorRules, getColorRule } from "../tools/rule";
 import { normalizeAppend, checkIsWord } from "../tools/translate/helper";
 import { Identifier } from "../tools/types";
@@ -20,6 +25,7 @@ import {
 } from "../tools/dictionary/types";
 import { clipboard } from "../tools/clipboard";
 import { RendererController } from "./controller";
+import store from "@/store";
 
 function constructStore(data: object) {
   var dataCopy = new Proxy(data, {
@@ -209,12 +215,11 @@ class TranslateController {
 
   setCurrentColor(fail = false) {
     if (fail) {
-      this.switchColor(ColorStatus.Fail);
+      this.switchColor("Fail");
       return;
     }
-
     if (!this.get<boolean>("listenClipboard")) {
-      this.switchColor(ColorStatus.None);
+      this.switchColor("None");
       return;
     }
     const options = this.getOptions();
@@ -223,26 +228,26 @@ class TranslateController {
     const autoPaste = getColorRule("autoPaste");
     switch (options) {
       case incrementalCopy | autoCopy | autoPaste:
-        this.switchColor(ColorStatus.IncrementalCopyPaste);
+        this.switchColor("IncrementalCopyPaste");
         return;
       case incrementalCopy | autoCopy:
-        this.switchColor(ColorStatus.IncrementalCopy);
+        this.switchColor("IncrementalCopy");
         return;
       case incrementalCopy:
-        this.switchColor(ColorStatus.Incremental);
+        this.switchColor("Incremental");
         return;
       case autoCopy | autoPaste:
-        this.switchColor(ColorStatus.AutoPaste);
+        this.switchColor("AutoPaste");
         return;
       case autoCopy:
-        this.switchColor(ColorStatus.AutoCopy);
+        this.switchColor("AutoCopy");
         return;
     }
-    this.switchColor(ColorStatus.Listen);
+    this.switchColor("Listen");
   }
 
   switchColor(color: ColorStatus) {
-    console.log("switch color", color);
+    store.dispatch("setColor", colorStatusMap.get(color));
   }
 
   async decideLanguage(text: string) {
@@ -277,7 +282,7 @@ class TranslateController {
   preProcess(text: string) {
     this.lastAppend = text;
     this.setSrc(text);
-    this.switchColor(ColorStatus.Translating);
+    this.switchColor("Translating");
   }
 
   postTranslate(
@@ -478,6 +483,7 @@ class TranslateController {
       default:
         return false;
     }
+    this.setCurrentColor();
     return true;
   }
 }

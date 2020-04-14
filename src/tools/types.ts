@@ -21,7 +21,8 @@ export const normalActionTypes = [
   "capture",
   "notices",
   "font+",
-  "font-"
+  "font-",
+  "drawer"
 ] as const;
 
 //切换值的动作
@@ -39,7 +40,6 @@ export const constantActionTypes = [
   "frameMode",
   "autoCheckUpdate",
   "colorMode",
-  "drawer",
   "version",
   "API_KEY",
   "APP_ID",

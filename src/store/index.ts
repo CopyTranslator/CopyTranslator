@@ -50,6 +50,7 @@ const connections: Map<Identifier, Identifier[]> = new Map([
 const store = new Vuex.Store({
   state: {
     defaultLocale: app ? app.getLocale() : "en",
+    color: "white",
     sharedResult: {
       src: "",
       result: "",
@@ -77,6 +78,9 @@ const store = new Vuex.Store({
     setDictResult(state, dictResult) {
       state.dictResult = dictResult;
     },
+    setColor(state, color) {
+      state.color = color;
+    },
     setConfig(state, config) {
       Vue.set(state, "config", config);
     },
@@ -97,6 +101,9 @@ const store = new Vuex.Store({
     setDictResult(context, dictResult) {
       context.commit("setDictResult", dictResult);
     },
+    setColor(context, color) {
+      context.commit("setColor", color);
+    },
     setConfig(context, config) {
       context.commit("setConfig", config);
     },
@@ -112,12 +119,6 @@ const store = new Vuex.Store({
   },
   plugins: [createPersistedState(), createSharedMutations(), observePlugin]
 });
-
-const t = store.dispatch;
-store.dispatch = async (type: any, payload: any) => {
-  console.log(type, payload);
-  return t(type, payload);
-};
 
 export default store;
 

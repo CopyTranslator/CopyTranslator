@@ -13,7 +13,6 @@ import {
 } from "./types";
 import { DictionaryType, dictionaryTypes } from "../tools/dictionary/types";
 import { version } from "../core/constant";
-import { env } from "./env";
 
 function initConfig(
   config: ConfigParser | undefined = undefined

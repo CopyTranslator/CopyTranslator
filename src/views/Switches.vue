@@ -22,13 +22,7 @@ import { Identifier } from "../tools/types";
   }
 })
 export default class Switches extends Vue {
-  actionKeys: Identifier[] = [];
-
-  mounted() {
-    // this.$proxy.getKeys("switches").then((keys: Identifier[]) => {
-    //   this.actionKeys = keys;
-    // });
-  }
+  actionKeys: Identifier[] = this.$controller.action.getKeys("switches");
 }
 </script>
 

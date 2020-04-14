@@ -1,5 +1,4 @@
 import { BrowserWindow, Rectangle, screen, nativeImage } from "electron";
-import { ColorStatus, HideDirection, MessageType, WinOpt } from "../enums";
 import { ModeConfig } from "../rule";
 import { env } from "../env";
 import { loadRoute, insertStyles } from ".";

@@ -33,12 +33,8 @@
 import BaseView from "./BaseView.vue";
 import { Mixins, Component, Vue } from "vue-property-decorator";
 
-const AppProps = Vue.extend({
-  props: { size: Number }
-});
-
 @Component
-export default class DictResult extends Mixins(BaseView, AppProps) {
+export default class DictResult extends Mixins(BaseView) {
   get dictStyle() {
     return {
       fontSize: this.size.toString() + "px",

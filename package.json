@@ -10,7 +10,7 @@
     "electron:build": "npm run prebuild && vue-cli-service electron:build && npm run postbuild",
     "electron:serve": "npm run prebuild && vue-cli-service electron:serve",
     "postinstall": "electron-builder install-app-deps",
-    "rebuild": "npm rebuild --runtime=electron --target=6.0.0 --disturl=https://atom.io/download/atom-shell --abi=73",
+    "rebuild": "npm rebuild --runtime=electron --target=8.0.0 --disturl=https://atom.io/download/atom-shell --abi=76",
     "prebuild": "tsc ./src/prebuild.ts --downlevelIteration --esModuleInterop && node ./src/prebuild.js && npm run clean",
     "postbuild": "node postbuild.js",
     "clean": "node clean.js",
@@ -40,7 +40,7 @@
     "eazydict-youdao": "https://github.com/CopyTranslator/eazydict-youdao.git",
     "electron-clipboard-extended": "^1.1.1",
     "electron-updater": "4.2.0",
-    "iohook": "^0.6.5",
+    "iohook": "https://github.com/wilix-team/iohook.git",
     "lodash.compact": "^3.0.1",
     "lodash.flatten": "^4.4.0",
     "lodash.sum": "^4.0.2",
@@ -72,7 +72,7 @@
     "@vue/eslint-config-prettier": "^5.0.0",
     "@vue/eslint-config-typescript": "^4.0.0",
     "@vue/test-utils": "1.0.0-beta.29",
-    "electron": "^6.0.0",
+    "electron": "^8.2.2",
     "eslint": "^5.16.0",
     "eslint-plugin-prettier": "^3.1.1",
     "eslint-plugin-vue": "^5.0.0",
@@ -87,12 +87,12 @@
   },
   "cmake-js": {
     "runtime": "electron",
-    "runtimeVersion": "^6.0.0"
+    "runtimeVersion": "^8.2.2"
   },
   "iohook": {
     "targets": [
-      "node-64",
-      "electron-73"
+      "node-72",
+      "electron-76"
     ],
     "platforms": [
       "win32"

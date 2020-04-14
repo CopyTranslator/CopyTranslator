@@ -5,6 +5,7 @@ import { recognizer } from "./tools/ocr";
 const isDevelopment = process.env.NODE_ENV !== "production";
 const ShortcutCapture = require("shortcut-capture");
 
+app.allowRendererProcessReuse = false;
 app.setAppUserModelId("com.copytranslator.copytranslator");
 
 let controller = new Controller();

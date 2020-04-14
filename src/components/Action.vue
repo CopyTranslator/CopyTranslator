@@ -27,10 +27,10 @@
 
 <script lang="ts">
 import { ipcRenderer as ipc } from "electron";
-import { Identifier } from "../tools/types";
+import { Identifier } from "../common/types";
 import { Prop, Component, Watch, Vue } from "vue-property-decorator";
 import { Action as ActionType, compose } from "../renderer/action";
-import { EventBus } from "../renderer/event-bus";
+import bus from "../common/event-bus";
 @Component
 export default class Action extends Vue {
   @Prop({ default: undefined }) readonly identifier!: Identifier;
@@ -62,7 +62,7 @@ export default class Action extends Vue {
 
   mounted() {
     if (this.action.actionType == "submenu") {
-      EventBus.$on(this.identifier, this.sync);
+      bus.on(this.identifier, this.sync);
     }
   }
 }

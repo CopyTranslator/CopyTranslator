@@ -13,7 +13,7 @@
 <script lang="ts">
 import Action from "../components/Action.vue";
 import { Component, Mixins, Vue } from "vue-property-decorator";
-import { Identifier } from "../tools/types";
+import { Identifier } from "../common/types";
 
 @Component({
   components: {

@@ -53,17 +53,17 @@ import WindowController from "../components/WindowController.vue";
 import Action from "../components/Action.vue";
 import Component from "vue-class-component";
 import { Mixins, Watch } from "vue-property-decorator";
-import { Identifier, layoutTypes, LayoutType } from "../tools/types";
+import { Identifier, layoutTypes, LayoutType } from "../common/types";
 import { ipcRenderer as ipc } from "electron";
 import EngineButton from "../components/EngineButton.vue";
-import { translatorTypes, TranslatorType } from "../tools/translate/constants";
-import { MessageType, WinOpt } from "../tools/enums";
+import { translatorTypes, TranslatorType } from "../common/translate/constants";
+import { MessageType, WinOpt } from "../common/enums";
 
 import {
   dictionaryTypes,
   DictionaryType,
   CopyDictResult
-} from "../tools/dictionary/types";
+} from "../common/dictionary/types";
 
 @Component({
   components: {

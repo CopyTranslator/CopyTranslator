@@ -22,6 +22,7 @@
   },
   "main": "background.js",
   "dependencies": {
+    "@gotoeasy/bus": "^1.0.0",
     "@opentranslate/baidu": "^1.0.0",
     "@opentranslate/caiyun": "^1.0.0",
     "@opentranslate/google": "^1.0.0",

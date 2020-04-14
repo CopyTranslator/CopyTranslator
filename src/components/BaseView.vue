@@ -4,7 +4,7 @@
 
 <script lang="ts">
 import { Watch, Component, Vue, Mixins } from "vue-property-decorator";
-import { Identifier } from "../tools/types";
+import { Identifier } from "../common/types";
 
 @Component
 export default class BaseView extends Vue {

@@ -29,7 +29,7 @@ class EventListener {
       const controller = global.controller;
       switch (args.type) {
         case WinOpt.CloseMe:
-          currentWindow.close();
+          // currentWindow.close();
           break;
         case WinOpt.Minify:
           // controller.win.edgeHide(controller.get("hideDirect"));

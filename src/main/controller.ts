@@ -11,6 +11,7 @@ import { env } from "../common/env";
 import store, { observers, restoreFromConfig } from "../store";
 import { Compound, TranslatorType } from "../common/translate";
 import { Polymer } from "../common/dictionary/polymer";
+import bus from "../common/event-bus";
 
 class Controller {
   win: Window = new Window();

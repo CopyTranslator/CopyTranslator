@@ -3,9 +3,9 @@
 </template>
 
 <script lang="ts">
-import { MessageType, WinOpt } from "../tools/enums";
+import { MessageType, WinOpt } from "../common/enums";
 import { ipcRenderer as ipc, webFrame } from "electron";
-import { RouteActionType, MenuActionType, Identifier } from "../tools/types";
+import { RouteActionType, MenuActionType, Identifier } from "../common/types";
 import Vue from "vue";
 import Component, { mixins } from "vue-class-component";
 

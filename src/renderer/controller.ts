@@ -10,6 +10,7 @@ import { colorRules, getColorRule } from "../common/rule";
 import { ActionManager } from "./action";
 import { handleActions } from "./callback";
 import store, { observers, restoreFromConfig } from "../store";
+import bus from "../common/event-bus";
 
 export class RendererController implements Controller {
   config = initConfig();

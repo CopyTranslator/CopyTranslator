@@ -46,7 +46,7 @@ import BaseView from "../components/BaseView.vue";
 import { Mixins, Watch, Component } from "vue-property-decorator";
 import WindowController from "../components/WindowController.vue";
 import Focus from "./Focus.vue";
-import { LayoutType, layoutTypes } from "../tools/types";
+import { LayoutType, layoutTypes } from "../common/types";
 import { ipcRenderer as ipc } from "electron";
 
 @Component({

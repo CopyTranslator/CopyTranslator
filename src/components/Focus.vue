@@ -31,7 +31,7 @@ import BaseView from "./BaseView.vue";
 import WindowController from "./WindowController.vue";
 import DictResultPanel from "./DictResult.vue";
 import { Mixins, Ref, Component } from "vue-property-decorator";
-import { Identifier, RouteActionType } from "../tools/types";
+import { Identifier, RouteActionType } from "../common/types";
 
 @Component({
   components: {

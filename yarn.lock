@@ -742,6 +742,11 @@
     global-agent "^2.0.2"
     global-tunnel-ng "^2.7.1"
 
+"@gotoeasy/bus@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.npm.taobao.org/@gotoeasy/bus/download/@gotoeasy/bus-1.0.0.tgz#49fda4653f148bd118b296f6a48dd3b926da0486"
+  integrity sha1-Sf2kZT8Ui9EYspb2pI3TuSbaBIY=
+
 "@hapi/address@2.x.x":
   version "2.1.2"
   resolved "https://registry.npm.taobao.org/@hapi/address/download/@hapi/address-2.1.2.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40hapi%2Faddress%2Fdownload%2F%40hapi%2Faddress-2.1.2.tgz#1c794cd6dbf2354d1eb1ef10e0303f573e1c7222"

@@ -1,5 +1,5 @@
 import { Identifier, Mutation } from "./types";
-import { EventBus } from "../../renderer/event-bus";
+import bus from "../../common/event-bus";
 
 //协同响应,更新视图
 export const connections: Map<Identifier, Identifier[]> = new Map([
@@ -18,7 +18,7 @@ export const updateViewPlugin = (store: any) => {
     for (let key of Object.keys(mutation.payload)) {
       const links = connections.get(key as Identifier);
       if (links) {
-        links.forEach(link => EventBus.$emit(link));
+        links.forEach(link => bus.at(link));
       }
     }
   });

@@ -14,7 +14,7 @@
 import Action from "../components/Action.vue";
 import Component from "vue-class-component";
 import Vue from "vue";
-import { Identifier } from "../tools/types";
+import { Identifier } from "../common/types";
 
 @Component({
   components: {

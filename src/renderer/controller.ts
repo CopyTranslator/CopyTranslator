@@ -3,7 +3,6 @@ import { initConfig } from "../common/configuration";
 import { l10n, L10N } from "./l10n";
 import { Identifier } from "../common/types";
 import { TranslateController } from "./translateController";
-import { Controller } from "./types";
 import Vue from "vue";
 import { Language } from "@opentranslate/translator";
 import { colorRules, getColorRule } from "../common/rule";
@@ -15,8 +14,9 @@ import bus from "../common/event-bus";
 import App from "../App.vue";
 import router from "../router";
 import vuetify from "../plugins/vuetify"; // path to vuetify export
+import { ipcRenderer } from "electron";
 
-export class RendererController implements Controller {
+export class RendererController {
   config = initConfig();
   l10n: L10N = l10n;
   transCon: TranslateController = new TranslateController(this);
@@ -34,6 +34,7 @@ export class RendererController implements Controller {
 
   private constructor() {
     bus.once("initialized", () => {
+      ipcRenderer.send("what are");
       this.app = new Vue({
         router,
         store,

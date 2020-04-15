@@ -52,6 +52,7 @@
     "robotjs": "^0.6.0",
     "sbd": "^1.0.16",
     "shortcut-capture": "^1.2.3",
+    "v8-compile-cache": "^2.1.0",
     "vue": "^2.6.10",
     "vue-class-component": "^7.0.2",
     "vue-property-decorator": "^8.3.0",

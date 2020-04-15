@@ -1,17 +1,8 @@
 import { Rule } from "./rule";
-import { Identifier, mapToObj } from "./types";
-const fs = require("fs");
+import { Identifier } from "./types";
 import { compatible } from "../core/constant";
-type Rules = Map<Identifier, Rule>; //类型别名
-import { resetStyle } from "./style";
-import { resetGlobalShortcuts, resetLocalShortcuts } from "./shortcuts";
 import store, { getConfigByKey, Config } from "../store";
-
-export function resetAllConfig() {
-  resetLocalShortcuts();
-  resetGlobalShortcuts();
-  resetStyle();
-}
+type Rules = Map<Identifier, Rule>; //类型别名
 
 class ConfigParser {
   rules: Rules = new Map<Identifier, Rule>();
@@ -60,6 +51,7 @@ class ConfigParser {
   }
 
   load(fileName: string): boolean {
+    const fs = require("fs");
     let status = true;
     try {
       let values = JSON.parse(fs.readFileSync(fileName));
@@ -76,12 +68,12 @@ class ConfigParser {
         config[key] = val;
       }
       store.dispatch("setConfig", config);
-      this.save(fileName);
     } catch (e) {
-      resetAllConfig();
       this.restoreDefault(fileName);
+
       status = false;
     }
+    this.save(fileName);
     return status;
   }
 
@@ -93,6 +85,7 @@ class ConfigParser {
   }
 
   save(fileName: string) {
+    const fs = require("fs");
     fs.writeFileSync(fileName, JSON.stringify(store.state.config, null, 4));
   }
 }

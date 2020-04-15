@@ -7,7 +7,6 @@ import { colorRules, getColorRule } from "../common/rule";
 import { normalizeAppend, checkIsWord } from "../common/translate/helper";
 import { Identifier } from "../common/types";
 import trimEnd from "lodash.trimend";
-import { Controller } from "./types";
 import { createService } from "../proxy/create";
 import { authorizeKey } from "../common/types";
 import { getSupportLanguages } from "../common/translate";
@@ -43,7 +42,7 @@ class TranslateController {
   translating: boolean = false; //正在翻译
   words: string = "";
 
-  controller: Controller;
+  controller: any;
 
   getSupportLanguages() {
     return getSupportLanguages(
@@ -51,7 +50,7 @@ class TranslateController {
     );
   }
 
-  constructor(controller: Controller) {
+  constructor(controller: any) {
     this.controller = controller;
     clipboard.init();
   }

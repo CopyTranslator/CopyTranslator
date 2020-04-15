@@ -1,9 +1,15 @@
-import { BrowserWindow, Rectangle, screen, nativeImage } from "electron";
+import {
+  BrowserWindow,
+  Rectangle,
+  screen,
+  nativeImage,
+  ipcMain
+} from "electron";
 import { ModeConfig } from "../rule";
 import { env } from "../env";
 import { loadRoute, insertStyles } from ".";
 import { RouteActionType } from "../types";
-
+import dayjs from "dayjs";
 export class Window {
   window: BrowserWindow | undefined = undefined;
   stored: RouteActionType = "contrast";
@@ -41,7 +47,15 @@ export class Window {
         nodeIntegration: true
       }
     });
+    const now = dayjs();
+    ipcMain.on("what are", () => {
+      console.log("START", dayjs().diff(now, "ms"));
+    });
+    this.window.webContents.on("did-finish-load", function() {
+      console.log(dayjs().diff(now, "ms"));
+    });
     this.load(routeName);
+    console.log("START2", dayjs().diff(now, "ms"));
     this.window.on("close", e => {
       const closeAsQuit = true;
       if (!closeAsQuit) {

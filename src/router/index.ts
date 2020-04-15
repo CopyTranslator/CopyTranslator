@@ -1,8 +1,9 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import Contrast from "../views/Contrast.vue";
-import Settings from "../views/Settings.vue";
-import Update from "../views/Update.vue";
+
+const Contrast = () => import("@/views/Contrast.vue");
+const Settings = () => import("@/views/Settings.vue");
+const Update = () => import("@/views/Update.vue");
 
 Vue.use(VueRouter);
 

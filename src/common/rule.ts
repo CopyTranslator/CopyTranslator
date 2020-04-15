@@ -76,14 +76,13 @@ class StructRule<T extends { [key: string]: any }> implements Rule {
   predefined: T;
   msg: string;
   check: CheckFuction;
-
   constructor(predefined: T, msg: string) {
     this.predefined = predefined;
     this.msg = msg;
     this.check = function(value: T) {
       for (const key of Object.keys(predefined)) {
         if (
-          !value.hasOwnProperty(key) ||
+          value[key] == undefined ||
           typeof value[key] !== typeof predefined[key]
         ) {
           return false;

@@ -74,6 +74,8 @@ module.exports = {
     }
   },
   configureWebpack: {
-    devtool: "source-map"
+    optimization: {
+      usedExports: true
+    }
   }
 };

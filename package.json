@@ -37,6 +37,7 @@
     "axios": "^0.19.2",
     "ba64": "^3.0.9",
     "baidu-aip-sdk": "^2.4.5",
+    "dayjs": "^1.8.24",
     "eazydict-bing": "https://github.com/CopyTranslator/eazydict-bing.git",
     "eazydict-google": "https://github.com/CopyTranslator/eazydict-google.git",
     "eazydict-youdao": "https://github.com/CopyTranslator/eazydict-youdao.git",

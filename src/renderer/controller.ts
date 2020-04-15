@@ -10,13 +10,18 @@ import { colorRules, getColorRule } from "../common/rule";
 import { ActionManager } from "./action";
 import { handleActions } from "./callback";
 import store, { observers, restoreFromConfig } from "../store";
-import { ElectronBus } from "../store/plugins/shared-bus";
+// import { ElectronBus } from "../store/plugins/shared-bus";
+import bus from "../common/event-bus";
+import App from "../App.vue";
+import router from "../router";
+import vuetify from "../plugins/vuetify"; // path to vuetify export
 
 export class RendererController implements Controller {
   config = initConfig();
   l10n: L10N = l10n;
   transCon: TranslateController = new TranslateController(this);
   action = new ActionManager(handleActions, this);
+  app: Vue | undefined;
 
   private static _instance: RendererController;
 
@@ -28,21 +33,29 @@ export class RendererController implements Controller {
   }
 
   private constructor() {
+    bus.once("initialized", () => {
+      this.app = new Vue({
+        router,
+        store,
+        vuetify,
+        render: h => h(App)
+      }).$mount("#app");
+    });
+
     observers.push(this);
     observers.push(this.transCon);
     this.restoreFromConfig();
+
     this.action.init();
 
-    const bus = new ElectronBus<"hello">(store);
-    bus.on("hello", () => {
-      console.log("!!!!!");
-    });
-
-    bus.on("hello", () => {
-      console.log("????????");
-    });
-    // bus.off("hello");
-    bus.at("hello");
+    // bus.on("hello", () => {
+    //   console.log("????????");
+    // });
+    // // bus.off("hello");
+    // bus.at("hello");
+    // bus.clear();
+    // bus.at("hello");
+    // store.dispatch("clearEvents");
   }
 
   switchValue(identifier: Identifier) {

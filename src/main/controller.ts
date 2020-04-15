@@ -25,15 +25,15 @@ class Controller {
     this.config.load(env.configPath);
     observers.push(this);
     restoreFromConfig(observers, store.state.config);
-    const bus = new ElectronBus<"hello">(store);
-    bus.on("hello", () => {
-      console.log("!!!!!");
-    });
+    // const bus = new ElectronBus<"hello">(store);
+    // bus.on("hello", () => {
+    //   console.log("!!!!!");
+    // });
 
-    bus.on("hello", () => {
-      console.log("????????");
-    });
-    bus.at("hello");
+    // bus.on("hello", () => {
+    //   console.log("????????");
+    // });
+    // bus.at("hello");
   }
 
   createWindow() {

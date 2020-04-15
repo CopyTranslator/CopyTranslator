@@ -131,7 +131,8 @@ export const eventTypes = [
   "firstLoad",
   "closeWindow",
   "openMenu",
-  "minify"
+  "minify",
+  "initialized"
 ] as const;
 
 export type Role = typeof roles[number];

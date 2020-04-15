@@ -5,6 +5,7 @@ import { app } from "electron";
 import { Identifier, Mutation } from "./plugins/types";
 import { updateViewPlugin, observePlugin, initState } from "./plugins";
 export * from "./plugins";
+import eleBus from "./plugins/shared-bus";
 
 Vue.use(Vuex);
 
@@ -74,7 +75,13 @@ const store = new Vuex.Store({
       return Object.keys(state.config);
     }
   },
-  plugins: [initState, createSharedMutations(), observePlugin, updateViewPlugin]
+  plugins: [
+    eleBus,
+    initState,
+    createSharedMutations(),
+    observePlugin,
+    updateViewPlugin
+  ]
 });
 
 export default store;

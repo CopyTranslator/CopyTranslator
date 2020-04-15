@@ -1,5 +1,5 @@
 import { Window } from "../common/views/windows";
-import { windowController } from "../common/windowController";
+import { eventListener } from "../common/event-listener";
 import { TrayManager } from "../common/tray";
 import { recognizer } from "../common/ocr";
 import { Identifier, authorizeKey } from "../common/types";
@@ -11,6 +11,7 @@ import { env } from "../common/env";
 import store, { observers, restoreFromConfig } from "../store";
 import { Compound, TranslatorType } from "../common/translate";
 import { Polymer } from "../common/dictionary/polymer";
+import { ElectronBus } from "../store/plugins/shared-bus";
 
 class Controller {
   win: Window = new Window();
@@ -24,13 +25,22 @@ class Controller {
     this.config.load(env.configPath);
     observers.push(this);
     restoreFromConfig(observers, store.state.config);
+    const bus = new ElectronBus<"hello">(store);
+    bus.on("hello", () => {
+      console.log("!!!!!");
+    });
+
+    bus.on("hello", () => {
+      console.log("????????");
+    });
+    bus.at("hello");
   }
 
   createWindow() {
     this.shortcut.init();
     this.tray.init();
     this.win.createWindow("contrast");
-    windowController.bind();
+    eventListener.bind();
     recognizer.setUp();
     startService(this.translator, `${authorizeKey}-translator`);
     startService(this.dictionary, `${authorizeKey}-dictionary`);

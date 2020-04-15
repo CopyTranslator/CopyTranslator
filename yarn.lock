@@ -1728,6 +1728,13 @@
     "@webassemblyjs/wast-parser" "1.8.5"
     "@xtuc/long" "4.2.2"
 
+"@wtfcode/vue-merge@^2.0.3":
+  version "2.0.3"
+  resolved "https://registry.npm.taobao.org/@wtfcode/vue-merge/download/@wtfcode/vue-merge-2.0.3.tgz#2ccfd907a180a8b6462f5be5e98d201cd5864c93"
+  integrity sha1-LM/ZB6GAqLZGL1vl6Y0gHNWGTJM=
+  dependencies:
+    lodash.clonedeep "^4.5.0"
+
 "@xtuc/ieee754@^1.2.0":
   version "1.2.0"
   resolved "https://registry.npm.taobao.org/@xtuc/ieee754/download/@xtuc/ieee754-1.2.0.tgz#eef014a3145ae477a1cbc00cd1e552336dceb790"

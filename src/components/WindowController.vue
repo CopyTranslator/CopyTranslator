@@ -20,14 +20,16 @@ export default class WindowController extends Vue {
   }
 
   close() {
-    bus.gat("closeWindow");
+    bus.iat("closeWindow");
   }
+
   minify() {
-    bus.gat("minify");
+    bus.iat("minify");
   }
 
   openMenu(id: MenuActionType) {
-    // this.$proxy.popup(id);
+    bus.at("openMenu", id);
+    console.log(id);
   }
 
   async onResize() {

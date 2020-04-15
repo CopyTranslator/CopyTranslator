@@ -101,4 +101,4 @@ class EventListener {
   }
 }
 
-export const windowController = new EventListener();
+export const eventListener = new EventListener();

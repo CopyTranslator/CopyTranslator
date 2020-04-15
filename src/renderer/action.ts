@@ -1,11 +1,8 @@
 import { BrowserWindow, Menu, MenuItem } from "electron";
-
 import { ConfigParser } from "../common/configParser";
 import { Language } from "@opentranslate/languages";
 import { hideDirections } from "../common/enums";
 import { translatorTypes } from "../common/translate/types";
-import { isPromise } from "../proxy/helper";
-
 import { getLanguageLocales } from "../common/translate/locale";
 import {
   Identifier,
@@ -16,6 +13,7 @@ import {
 } from "../common/types";
 import { dictionaryTypes } from "../common/dictionary/types";
 import { RendererController } from "./controller";
+import bus from "../common/event-bus";
 
 type CallBack = (
   key: string,
@@ -86,7 +84,6 @@ type Actions = Map<Identifier, TopAction>;
 
 class ActionManager {
   actions = new Map<Identifier, TopAction>();
-
   callback: CallBack;
   controller: RendererController;
 
@@ -96,7 +93,11 @@ class ActionManager {
   }
 
   init() {
-    this.actions = this.getActions(this.controller.config, this.callback);
+    this.initActions(this.controller.config, this.callback);
+    bus.gon("openMenu", (event, args) => {
+      console.log(args);
+      this.popup(args);
+    });
   }
 
   update() {
@@ -112,6 +113,10 @@ class ActionManager {
       action.submenu = action.subMenuGenerator();
     }
     return action;
+  }
+
+  append(action: TopAction) {
+    this.actions.set(action.id, action);
   }
 
   getRefreshFunc() {
@@ -144,9 +149,7 @@ class ActionManager {
     return refreshFunc;
   }
 
-  getActions(config: ConfigParser, callback: Function): Actions {
-    let items: Array<TopAction> = [];
-
+  initActions(config: ConfigParser, callback: Function) {
     //普通的按钮，执行一项操作
     function normalAction(id: Identifier) {
       return ActionWrapper(
@@ -273,74 +276,69 @@ class ActionManager {
       };
     };
 
-    items.push(listAction("hideDirect", hideDirections));
-    items.push(listAction("translatorType", translatorTypes));
-    items.push(listAction("dictionaryType", dictionaryTypes));
-    items.push(listAction("layoutType", layoutTypes));
+    this.append(listAction("hideDirect", hideDirections));
+    this.append(listAction("translatorType", translatorTypes));
+    this.append(listAction("dictionaryType", dictionaryTypes));
+    this.append(listAction("layoutType", layoutTypes));
 
-    items.push(switchAction("autoCopy"));
-    items.push(switchAction("autoPaste"));
-    items.push(switchAction("autoFormat"));
-    items.push(switchAction("autoPurify"));
-    items.push(switchAction("incrementalCopy"));
-    items.push(switchAction("smartTranslate"));
-    items.push(switchAction("autoHide"));
-    items.push(switchAction("autoShow"));
-    items.push(switchAction("stayTop"));
-    items.push(switchAction("smartDict"));
-    items.push(switchAction("drawer"));
-    items.push(switchAction("listenClipboard"));
-    items.push(switchAction("dragCopy"));
-    items.push(switchAction("enableNotify"));
-    items.push(switchAction("skipTaskbar"));
-    items.push(switchAction("closeAsQuit"));
-    items.push(switchAction("autoCheckUpdate"));
+    this.append(switchAction("autoCopy"));
+    this.append(switchAction("autoPaste"));
+    this.append(switchAction("autoFormat"));
+    this.append(switchAction("autoPurify"));
+    this.append(switchAction("incrementalCopy"));
+    this.append(switchAction("smartTranslate"));
+    this.append(switchAction("autoHide"));
+    this.append(switchAction("autoShow"));
+    this.append(switchAction("stayTop"));
+    this.append(switchAction("smartDict"));
+    this.append(switchAction("drawer"));
+    this.append(switchAction("listenClipboard"));
+    this.append(switchAction("dragCopy"));
+    this.append(switchAction("enableNotify"));
+    this.append(switchAction("skipTaskbar"));
+    this.append(switchAction("closeAsQuit"));
+    this.append(switchAction("autoCheckUpdate"));
 
-    items.push(normalAction("copySource"));
-    items.push(normalAction("copyResult"));
-    items.push(normalAction("clear"));
-    items.push(normalAction("retryTranslate"));
-    items.push(normalAction("focus"));
-    items.push(normalAction("contrast"));
-    items.push(normalAction("capture"));
-    items.push(normalAction("restoreDefault"));
-    items.push(normalAction("font+"));
-    items.push(normalAction("font-"));
+    this.append(normalAction("copySource"));
+    this.append(normalAction("copyResult"));
+    this.append(normalAction("clear"));
+    this.append(normalAction("retryTranslate"));
+    this.append(normalAction("focus"));
+    this.append(normalAction("contrast"));
+    this.append(normalAction("capture"));
+    this.append(normalAction("restoreDefault"));
+    this.append(normalAction("font+"));
+    this.append(normalAction("font-"));
 
-    items.push(constantAction("APP_ID"));
-    items.push(constantAction("API_KEY"));
-    items.push(constantAction("SECRET_KEY"));
+    this.append(constantAction("APP_ID"));
+    this.append(constantAction("API_KEY"));
+    this.append(constantAction("SECRET_KEY"));
 
     //role action
     roles.forEach(role => {
-      items.push(roleAction(role));
+      this.append(roleAction(role));
     });
 
-    items.push(
+    this.append(
       selectAction(
         "sourceLanguage",
         createLanguageGenerator("sourceLanguage", true)
       )
     );
 
-    items.push(
+    this.append(
       selectAction(
         "targetLanguage",
         createLanguageGenerator("targetLanguage", false)
       )
     );
-    items.push(selectAction("localeSetting", localeGenerator("localeSetting")));
+    this.append(
+      selectAction("localeSetting", localeGenerator("localeSetting"))
+    );
 
-    items.push(normalAction("settings"));
-    items.push(normalAction("helpAndUpdate"));
-    items.push(normalAction("exit"));
-
-    //下面将数组变为字典
-    let itemGroup: Actions = new Map<Identifier, TopAction>();
-    items.forEach(action => {
-      itemGroup.set(action.id, action);
-    });
-    return itemGroup;
+    this.append(normalAction("settings"));
+    this.append(normalAction("helpAndUpdate"));
+    this.append(normalAction("exit"));
   }
 
   getKeys(optionType: MenuActionType): Array<Identifier> {
@@ -380,7 +378,6 @@ class ActionManager {
   }
 
   popup(id: MenuActionType) {
-    // RendererController.getInstance().win.show(true);
     const contain = this.getKeys(id);
     const refresh = this.getRefreshFunc();
     const all_keys = this.getKeys("allActions");

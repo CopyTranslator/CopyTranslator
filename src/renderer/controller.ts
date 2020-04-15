@@ -10,6 +10,7 @@ import { colorRules, getColorRule } from "../common/rule";
 import { ActionManager } from "./action";
 import { handleActions } from "./callback";
 import store, { observers, restoreFromConfig } from "../store";
+import { ElectronBus } from "../store/plugins/shared-bus";
 
 export class RendererController implements Controller {
   config = initConfig();
@@ -31,6 +32,17 @@ export class RendererController implements Controller {
     observers.push(this.transCon);
     this.restoreFromConfig();
     this.action.init();
+
+    const bus = new ElectronBus<"hello">(store);
+    bus.on("hello", () => {
+      console.log("!!!!!");
+    });
+
+    bus.on("hello", () => {
+      console.log("????????");
+    });
+    // bus.off("hello");
+    bus.at("hello");
   }
 
   switchValue(identifier: Identifier) {

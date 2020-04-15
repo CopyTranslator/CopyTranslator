@@ -3,7 +3,7 @@ import { Identifier } from "./types";
 import { compatible } from "../core/constant";
 import store, { getConfigByKey, Config } from "../store";
 type Rules = Map<Identifier, Rule>; //类型别名
-
+import { readFileSync, writeFileSync } from "fs";
 class ConfigParser {
   rules: Rules = new Map<Identifier, Rule>();
   file: string | undefined;
@@ -51,10 +51,9 @@ class ConfigParser {
   }
 
   load(fileName: string): boolean {
-    const fs = require("fs");
     let status = true;
     try {
-      let values = JSON.parse(fs.readFileSync(fileName));
+      let values = JSON.parse(readFileSync(fileName) as any);
       if (!values["version"] || !compatible(values["version"])) {
         throw "version incompatible, configs have been reset";
       }
@@ -85,8 +84,7 @@ class ConfigParser {
   }
 
   save(fileName: string) {
-    const fs = require("fs");
-    fs.writeFileSync(fileName, JSON.stringify(store.state.config, null, 4));
+    writeFileSync(fileName, JSON.stringify(store.state.config, null, 4));
   }
 }
 

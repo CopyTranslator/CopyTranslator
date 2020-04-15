@@ -1,5 +1,5 @@
-const fs = require("fs");
-const path = require("path");
+import { readdirSync, readFileSync } from "fs";
+import { join } from "path";
 import { env } from "../common/env";
 import { Identifier, objToMap } from "../common/types";
 import { en, Locale } from "../common/locales";
@@ -26,11 +26,11 @@ class L10N {
 
   constructor(localeDirs: string[]) {
     localeDirs.forEach((localeDir: string) => {
-      fs.readdirSync(localeDir).forEach((fileName: string) => {
-        const filePath = path.join(localeDir, fileName);
+      readdirSync(localeDir).forEach((fileName: string) => {
+        const filePath = join(localeDir, fileName);
         try {
           const locale = objToMap<string>(
-            JSON.parse(fs.readFileSync(filePath))
+            JSON.parse(readFileSync(filePath) as any)
           );
           const lang = fileName.replace(".json", "") as Language;
           this.resources.set(lang, locale);

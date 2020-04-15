@@ -1,7 +1,7 @@
-const os = require("os");
-const path = require("path");
-import fs from "fs";
-const osType = os.type() as string;
+import { homedir, type as osTypeFunc } from "os";
+import { join } from "path";
+import { existsSync, mkdirSync } from "fs";
+const osType = osTypeFunc() as string;
 
 const osSpec: { [key: string]: { executableDir: string; iconName: string } } = {
   Windows_NT: {
@@ -17,10 +17,10 @@ const currentSpec = osSpec[osType];
 const trayName = "tray@2x.png";
 
 function mkdir(path: string) {
-  if (fs.existsSync(path)) {
+  if (existsSync(path)) {
     return;
   } else {
-    fs.mkdirSync(path);
+    mkdirSync(path);
   }
 }
 
@@ -45,37 +45,30 @@ interface DiffConfig {
 type EnvConfig = DiffConfig & SharedConfig;
 
 const sharedConfig: SharedConfig = {
-  configDir: path.join(os.homedir(), "copytranslator"),
-  userLocaleDir: path.join(os.homedir(), "copytranslator", "locales"),
-  configPath: path.join(os.homedir(), "copytranslator", "copytranslator.json"),
-  style: path.join(os.homedir(), "copytranslator", "styles.css"),
-  shortcut: path.join(os.homedir(), "copytranslator", "shortcuts.json"),
-  localShortcut: path.join(
-    os.homedir(),
-    "copytranslator",
-    "localShortcuts.json"
-  )
+  configDir: join(homedir(), "copytranslator"),
+  userLocaleDir: join(homedir(), "copytranslator", "locales"),
+  configPath: join(homedir(), "copytranslator", "copytranslator.json"),
+  style: join(homedir(), "copytranslator", "styles.css"),
+  shortcut: join(homedir(), "copytranslator", "shortcuts.json"),
+  localShortcut: join(homedir(), "copytranslator", "localShortcuts.json")
 };
 
 const diffConfig: DiffConfig =
   process.env.NODE_ENV == "production"
     ? {
-        systemLocaleDir: path.join(process.resourcesPath, "locales"),
-        executableDir: path.join(
-          process.resourcesPath,
-          currentSpec.executableDir
-        ),
-        iconPath: path.join(process.resourcesPath, currentSpec.iconName),
-        trayIconPath: path.join(process.resourcesPath, trayName),
-        styleTemplate: path.join(process.resourcesPath, "styles.css"),
+        systemLocaleDir: join(process.resourcesPath, "locales"),
+        executableDir: join(process.resourcesPath, currentSpec.executableDir),
+        iconPath: join(process.resourcesPath, currentSpec.iconName),
+        trayIconPath: join(process.resourcesPath, trayName),
+        styleTemplate: join(process.resourcesPath, "styles.css"),
         publicUrl: `file://${__dirname}`
       }
     : {
-        systemLocaleDir: path.join(process.cwd(), "dist_locales"),
-        executableDir: path.join(process.cwd(), currentSpec.executableDir),
-        iconPath: path.join(process.cwd(), currentSpec.iconName),
-        trayIconPath: path.join(process.cwd(), trayName),
-        styleTemplate: path.join(process.cwd(), "src", "styles.css"),
+        systemLocaleDir: join(process.cwd(), "dist_locales"),
+        executableDir: join(process.cwd(), currentSpec.executableDir),
+        iconPath: join(process.cwd(), currentSpec.iconName),
+        trayIconPath: join(process.cwd(), trayName),
+        styleTemplate: join(process.cwd(), "src", "styles.css"),
         publicUrl: <string>process.env.WEBPACK_DEV_SERVER_URL
       };
 

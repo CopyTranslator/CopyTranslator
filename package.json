@@ -104,5 +104,6 @@
     "arches": [
       "x64"
     ]
-  }
+  },
+  "sideEffects": false
 }

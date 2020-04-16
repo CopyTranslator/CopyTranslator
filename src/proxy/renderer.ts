@@ -21,7 +21,7 @@ interface IFunctionCollection {
 let promiseCounter = 0;
 const pendingPromiseCallbacks: IFunctionCollection = {};
 
-export function createService<T>(name: string): Promisified<T> {
+export function createProxy<T>(name: string): Promisified<T> {
   const proxy = new Proxy(
     {},
     {

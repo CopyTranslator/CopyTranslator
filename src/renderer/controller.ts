@@ -1,29 +1,18 @@
-import { env } from "../common/env";
-import { initConfig } from "../common/configuration";
-import { l10n, L10N } from "./l10n";
-import { Identifier } from "../common/types";
-import { TranslateController } from "./translateController";
+import { Identifier, authorizeKey, MenuActionType } from "../common/types";
 import Vue from "vue";
-import { Language } from "@opentranslate/translator";
-import { colorRules, getColorRule } from "../common/rule";
-import { ActionManager } from "./action";
-import { handleActions } from "./callback";
 import store, { observers, restoreFromConfig } from "../store";
-// import { ElectronBus } from "../store/plugins/shared-bus";
 import bus from "../common/event-bus";
 import App from "../App.vue";
 import router from "../router";
 import vuetify from "../plugins/vuetify"; // path to vuetify export
-import { ipcRenderer } from "electron";
+import { RenController, MainController } from "../common/controller";
+import { createProxy } from "../proxy/renderer";
 
-export class RendererController {
-  config = initConfig();
-  l10n: L10N = l10n;
-  transCon: TranslateController = new TranslateController(this);
-  action = new ActionManager(handleActions, this);
-  app: Vue | undefined;
-
+export class RendererController extends RenController {
   private static _instance: RendererController;
+  proxy = createProxy<MainController>(authorizeKey);
+  app: Vue | undefined;
+  keys: Identifier[] = [];
 
   public static getInstance(): RendererController {
     if (this._instance == null) {
@@ -33,8 +22,12 @@ export class RendererController {
   }
 
   private constructor() {
+    super();
+    this.syncKeys();
+    observers.push(this);
     bus.once("initialized", () => {
-      ipcRenderer.send("what are");
+      restoreFromConfig(observers, store.state.config);
+
       this.app = new Vue({
         router,
         store,
@@ -42,74 +35,55 @@ export class RendererController {
         render: h => h(App)
       }).$mount("#app");
     });
-
-    observers.push(this);
-    observers.push(this.transCon);
-    this.restoreFromConfig();
-
-    this.action.init();
-
-    // bus.on("hello", () => {
-    //   console.log("????????");
-    // });
-    // // bus.off("hello");
-    // bus.at("hello");
-    // bus.clear();
-    // bus.at("hello");
-    // store.dispatch("clearEvents");
   }
 
-  switchValue(identifier: Identifier) {
-    this.set(identifier, !this.get(identifier));
-  }
-
-  resotreDefaultSetting() {
-    this.config.restoreDefault(env.configPath);
-    this.restoreFromConfig();
-  }
-
-  restoreFromConfig() {
-    restoreFromConfig(observers, store.state.config);
-  }
-
-  get<T>(identifier: Identifier) {
-    return this.config.get(identifier) as T;
-  }
-
-  set(identifier: Identifier, value: any): boolean {
-    return this.config.set(identifier, value);
-  }
-
-  getT() {
-    let locale = this.get<Language>("localeSetting");
-    return this.l10n.getT(locale);
-  }
-
-  getOptions() {
-    let realOptions = 0;
-    for (const [key, value] of colorRules) {
-      if (this.get<boolean>(key)) {
-        realOptions |= value;
-      }
-    }
-    return realOptions;
-  }
-
-  setUpRecognizer(APP_ID: string, API_KEY: string, SECRET_KEY: string) {
-    this.set("APP_ID", APP_ID);
-    this.set("API_KEY", API_KEY);
-    this.set("SECRET_KEY", SECRET_KEY);
-    // recognizer.setUp(true);
+  async syncKeys() {
+    this.keys = await this.proxy.keys();
   }
 
   postSet(identifier: Identifier, value: any): boolean {
     switch (identifier) {
       case "localeSetting":
-        Vue.prototype.$t = this.getT();
+        this.proxy.getT().then(t => {
+          // Vue.prototype.$t = t;
+        });
         break;
       default:
         return false;
     }
-    return true;
+    return false;
+  }
+
+  getKeys(optionType: MenuActionType): Array<Identifier> {
+    let contain: Array<Identifier> = [];
+    let keys = this.keys;
+    switch (optionType) {
+      case "allActions":
+        contain = keys;
+        break;
+      case "focusRight":
+        contain = this.get("focusRight");
+        break;
+      case "contrastPanel":
+        contain = this.get("contrastPanel");
+        break;
+      case "tray":
+        contain = this.get("tray");
+        break;
+      case "options":
+        contain = [];
+        break;
+      case "switches":
+        contain = [];
+        contain.push("restoreDefault");
+        break;
+      case "focusContext":
+        contain = ["copy", "paste", "cut", "clear", "focus"];
+        break;
+      case "contrastContext":
+        contain = ["copy", "paste", "cut", "clear", "copyResult", "copySource"];
+        break;
+    }
+    return contain;
   }
 }

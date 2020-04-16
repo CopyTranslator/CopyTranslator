@@ -1,7 +1,6 @@
 import { BrowserWindow, Menu, MenuItem } from "electron";
 import { ConfigParser } from "../common/configParser";
 import { Language } from "@opentranslate/languages";
-import { hideDirections } from "../common/enums";
 import { translatorTypes } from "../common/translate/types";
 import { getLanguageLocales } from "../common/translate/locale";
 import {
@@ -9,11 +8,17 @@ import {
   MenuActionType,
   Role,
   roles,
-  layoutTypes
+  layoutTypes,
+  ActionView,
+  MenuItemType,
+  ActionType,
+  decompose,
+  compose,
+  hideDirections
 } from "../common/types";
 import { dictionaryTypes } from "../common/dictionary/types";
-import { RendererController } from "./controller";
 import bus from "../common/event-bus";
+import { MainController } from "../common/controller";
 
 type CallBack = (
   key: string,
@@ -22,19 +27,7 @@ type CallBack = (
   event?: KeyboardEvent
 ) => void;
 
-function compose(actions: Array<string>) {
-  return actions.join("|");
-}
-
-function decompose(id: string) {
-  return id.split("|");
-}
-
-type MenuItemType = "normal" | "separator" | "submenu" | "checkbox" | "radio";
-
-type ActionType = "constant";
-
-export interface Action {
+export interface Action extends ActionView {
   label?: string;
   type?: MenuItemType;
   checked?: boolean;
@@ -83,11 +76,11 @@ function ActionWrapper(
 type Actions = Map<Identifier, TopAction>;
 
 class ActionManager {
-  actions = new Map<Identifier, TopAction>();
+  actions: Actions = new Map<Identifier, TopAction>();
   callback: CallBack;
-  controller: RendererController;
+  controller: MainController;
 
-  constructor(callback: CallBack, controller: RendererController) {
+  constructor(callback: CallBack, controller: MainController) {
     this.callback = callback;
     this.controller = controller;
   }
@@ -120,7 +113,7 @@ class ActionManager {
   }
 
   getRefreshFunc() {
-    const controller = this.controller;
+    const controller = global.controller;
     let config = controller.config;
     const t = controller.getT();
 
@@ -239,8 +232,8 @@ class ActionManager {
     ) => {
       return () => {
         const l = getLanguageLocales(<Language>config.get("localeSetting"));
-        return RendererController.getInstance()
-          .transCon.getSupportLanguages()
+        return global.controller.transCon
+          .getSupportLanguages()
           .filter(x => {
             if (!allowAuto && x == "auto") {
               return false;
@@ -261,7 +254,7 @@ class ActionManager {
     };
 
     const localeGenerator = (id: Identifier) => {
-      const locales = this.controller.l10n.locales.map(locale => {
+      const locales = global.controller.l10n.locales.map((locale: any) => {
         return ActionWrapper(
           {
             id: compose([id, locale.lang]),
@@ -395,4 +388,4 @@ class ActionManager {
   }
 }
 
-export { ActionManager, MenuItemType, compose, decompose, roles };
+export { ActionManager };

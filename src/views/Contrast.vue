@@ -74,7 +74,11 @@ import {
 export default class Contrast extends Mixins(BaseView, WindowController) {
   barWidth: number = 0;
   readonly routeName = "contrast";
-  actionKeys: Identifier[] = this.$controller.action.getKeys("contrastPanel");
+  actionKeys: Identifier[] = this.$controller.getKeys("contrastPanel");
+
+  mounted() {
+    console.log(this.actionKeys);
+  }
 
   get valid() {
     return this.dictResult.valid && this.layoutType === "focus";

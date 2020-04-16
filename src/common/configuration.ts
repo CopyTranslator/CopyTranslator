@@ -1,6 +1,6 @@
 import { ConfigParser } from "./configParser";
 import { GroupRule, StructRule, UnionRule, ModeConfig, TypeRule } from "./rule";
-import { HideDirection, hideDirections } from "./enums";
+
 import { languages, Language } from "@opentranslate/languages";
 import { translatorTypes, TranslatorType } from "./translate/types";
 import {
@@ -9,7 +9,9 @@ import {
   LayoutType,
   layoutTypes,
   ColorMode,
-  colorModes
+  colorModes,
+  HideDirection,
+  hideDirections
 } from "./types";
 import { DictionaryType, dictionaryTypes } from "./dictionary/types";
 import { version } from "../core/constant";

@@ -1,10 +1,13 @@
 import { ipcRenderer } from "electron";
 ipcRenderer.send("what are");
 import Vue from "vue";
+function t(key: string) {
+  return "hello";
+}
+Vue.prototype.$t = t;
 import { RendererController } from "./renderer";
 import bus from "./common/event-bus";
 const rendererController = RendererController.getInstance();
-Vue.prototype.$t = rendererController.getT();
 Vue.prototype.$controller = rendererController;
 Vue.config.productionTip = false;
 

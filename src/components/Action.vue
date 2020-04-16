@@ -26,18 +26,18 @@
 </template>
 
 <script lang="ts">
-import { ipcRenderer as ipc } from "electron";
-import { Identifier } from "../common/types";
+import { Identifier,compose,ActionView } from "../common/types";
 import { Prop, Component, Watch, Vue } from "vue-property-decorator";
-import { Action as ActionType, compose } from "../renderer/action";
 import bus from "../common/event-bus";
+
 @Component
 export default class Action extends Vue {
   @Prop({ default: undefined }) readonly identifier!: Identifier;
-  action: ActionType = this.$controller.action.getAction(this.identifier);
+  action: ActionView | false=false;
 
   callback(command: string) {
-    this.$controller.action.callback(command);
+    console.log(command)
+    // bus.gat(command as any);
   }
 
   get command() {
@@ -56,14 +56,19 @@ export default class Action extends Vue {
     this.$controller.set(this.identifier, val);
   }
 
-  sync() {
-    this.action = this.$controller.action.getAction(this.identifier);
+  async sync() {
+    this.action = await this.$controller.proxy.getAction(
+      this.identifier
+    );
+    console.log(this.action)
   }
 
   mounted() {
-    if (this.action.actionType == "submenu") {
-      bus.on(this.identifier, this.sync);
-    }
+    this.sync().then(()=>{
+      if (this.action?.actionType == "submenu") {
+        bus.on(this.identifier, this.sync);
+      }
+    });
   }
 }
 </script>

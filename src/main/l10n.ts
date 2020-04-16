@@ -4,12 +4,12 @@ import { env } from "../common/env";
 import { Identifier, objToMap } from "../common/types";
 import { en, Locale } from "../common/locales";
 import { Language } from "@opentranslate/languages";
-import store from "../store";
+import { app } from "electron";
 
 type Resouces = Map<Language, Locale>;
 
 function getDefaultLocale(): Language {
-  let locale = store.state.defaultLocale;
+  let locale = app.getLocale();
   if (locale === "zh") {
     locale = "zh-CN";
   }
@@ -45,7 +45,7 @@ class L10N {
     });
   }
 
-  getT(key: Language = "en") {
+  getT(key: Language = "en"): (key: Identifier) => string {
     if (key === "auto") {
       key = this.getDefaultLocale();
     }

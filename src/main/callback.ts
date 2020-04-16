@@ -1,8 +1,11 @@
-import { dialog, BrowserWindow, MenuItem, nativeImage, shell } from "electron";
-import { decompose } from "./action";
+import { BrowserWindow, MenuItem } from "electron";
 import { showSettings } from "../common/views";
-import { Identifier, NormalActionType, RouteActionType } from "../common/types";
-import { RendererController } from "./controller";
+import {
+  Identifier,
+  NormalActionType,
+  RouteActionType,
+  decompose
+} from "../common/types";
 import { clipboard } from "../common/clipboard";
 
 const alias = new Map<string, string>([
@@ -23,7 +26,7 @@ function handleActions(
   const params = decompose(id);
   const identifier = <Identifier>params[0];
   const param = params[1];
-  const controller = RendererController.getInstance();
+  const controller = global.controller;
   const action = controller.action.getAction(identifier);
   const intVal = parseInt(param);
   switch (action.actionType) {
@@ -50,12 +53,12 @@ function handleActions(
 
 function fontChange(scale: number) {
   const config = global.controller.config;
-  console.log("font not implement");
+
   // config.set("", config.get());
 }
 
 function handleNormalAction(identifier: NormalActionType | RouteActionType) {
-  const controller = RendererController.getInstance();
+  const controller = global.controller;
   const t = controller.getT();
   switch (identifier) {
     case "font+":

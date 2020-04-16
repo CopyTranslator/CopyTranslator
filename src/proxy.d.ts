@@ -1,4 +1,4 @@
-import { RendererController } from "./renderer/controller";
+import { RenController } from "./common/controller";
 // 1. 确保在声明补充的类型之前导入 'vue'
 import Vue from "vue";
 
@@ -7,7 +7,7 @@ import Vue from "vue";
 declare module "vue/types/vue" {
   // 3. 声明为 Vue 补充的东西
   export interface Vue {
-    $controller: RendererController;
+    $controller: RenController;
     merge: Function;
   }
 }

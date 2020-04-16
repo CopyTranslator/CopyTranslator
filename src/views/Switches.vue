@@ -22,7 +22,7 @@ import { Identifier } from "../common/types";
   }
 })
 export default class Switches extends Vue {
-  actionKeys: Identifier[] = this.$controller.action.getKeys("switches");
+  actionKeys: Identifier[] = this.$controller.getKeys("switches");
 }
 </script>
 

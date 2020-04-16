@@ -2,13 +2,11 @@ import { Compound, TranslatorType } from "../common/translate";
 import { Polymer } from "../common/dictionary/polymer";
 import { Language } from "@opentranslate/translator";
 import { CopyTranslateResult } from "../common/translate/types";
-import { ColorStatus, colorStatusMap } from "../common/enums";
+
 import { colorRules, getColorRule } from "../common/rule";
 import { normalizeAppend, checkIsWord } from "../common/translate/helper";
-import { Identifier } from "../common/types";
+import { Identifier, ColorStatus, colorStatusMap } from "../common/types";
 import trimEnd from "lodash.trimend";
-import { createService } from "../proxy/create";
-import { authorizeKey } from "../common/types";
 import { getSupportLanguages } from "../common/translate";
 
 import {
@@ -17,7 +15,7 @@ import {
   DictFail
 } from "../common/dictionary/types";
 import { clipboard } from "../common/clipboard";
-import { RendererController } from "./controller";
+import { MainController } from "../common/controller";
 import store from "@/store";
 
 function constructStore(data: object) {
@@ -37,20 +35,18 @@ class TranslateController {
   translateResult: CopyTranslateResult | undefined;
   dictResult: DictSuccess | DictFail = { words: "", valid: false };
   lastAppend: string = "";
-  translator = createService<Compound>(`${authorizeKey}-translator`);
-  dictionary = createService<Polymer>(`${authorizeKey}-dictionary`);
+  translator: Compound = new Compound("google", {});
+  dictionary: Polymer = new Polymer("google");
   translating: boolean = false; //正在翻译
   words: string = "";
 
-  controller: any;
+  controller: MainController;
 
   getSupportLanguages() {
-    return getSupportLanguages(
-      RendererController.getInstance().get("translatorType")
-    );
+    return getSupportLanguages(this.controller.get("translatorType"));
   }
 
-  constructor(controller: any) {
+  constructor(controller: MainController) {
     this.controller = controller;
     clipboard.init();
   }

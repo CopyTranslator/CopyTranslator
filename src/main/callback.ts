@@ -7,7 +7,6 @@ import {
   decompose
 } from "../common/types";
 import { clipboard } from "../common/clipboard";
-
 const alias = new Map<string, string>([
   ["focus", "layoutType|focus"],
   ["contrast", "layoutType|horizontal"]
@@ -59,7 +58,6 @@ function fontChange(scale: number) {
 
 function handleNormalAction(identifier: NormalActionType | RouteActionType) {
   const controller = global.controller;
-  const t = controller.getT();
   switch (identifier) {
     case "font+":
       fontChange(1);

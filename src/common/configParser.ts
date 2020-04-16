@@ -30,6 +30,8 @@ class ConfigParser {
     return getConfigByKey(key);
   }
 
+  query() {}
+
   set(key: Identifier, value: any, needCheck: boolean = true) {
     if (needCheck && !this.checkValid(key, value)) {
       return false;

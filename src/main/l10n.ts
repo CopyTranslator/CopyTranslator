@@ -1,10 +1,11 @@
 import { readdirSync, readFileSync } from "fs";
 import { join } from "path";
 import { env } from "../common/env";
-import { Identifier, objToMap } from "../common/types";
-import { en, Locale } from "../common/locales";
+import { Identifier, objToMap, mapToObj, Locale } from "../common/types";
+import { en } from "../common/locales";
 import { Language } from "@opentranslate/languages";
 import { app } from "electron";
+import { registerLocale } from "../store/plugins/l10n";
 
 type Resouces = Map<Language, Locale>;
 
@@ -29,14 +30,17 @@ class L10N {
       readdirSync(localeDir).forEach((fileName: string) => {
         const filePath = join(localeDir, fileName);
         try {
-          const locale = objToMap<string>(
-            JSON.parse(readFileSync(filePath) as any)
-          );
+          let locale: Locale = JSON.parse(readFileSync(filePath) as any);
+          for (const key of en.keys()) {
+            if (!locale[key]) {
+              locale[key] = en.get(key) as string;
+            }
+          }
           const lang = fileName.replace(".json", "") as Language;
           this.resources.set(lang, locale);
           this.locales.push({
             lang,
-            localeName: locale.get("localeName") as string
+            localeName: locale["localeName"]
           });
         } catch (e) {
           console.log(`load ${filePath} fail`);
@@ -45,15 +49,12 @@ class L10N {
     });
   }
 
-  getT(key: Language = "en"): (key: Identifier) => string {
+  getT(key: Language = "en"): Locale {
     if (key === "auto") {
       key = this.getDefaultLocale();
     }
-    let locale: Locale = this.resources.get(key) || en;
-    function T(key: Identifier): string {
-      return locale.get(key) || <string>en.get(key);
-    }
-    return T;
+    let locale: Locale = this.resources.get(key) || mapToObj(en);
+    return locale;
   }
 
   getDefaultLocale() {
@@ -61,6 +62,14 @@ class L10N {
       this.defaultLocale = getDefaultLocale();
     }
     return this.defaultLocale;
+  }
+
+  install(store: any, key: Language) {
+    const state = {
+      locales: this.locales,
+      locale: this.getT(key)
+    };
+    registerLocale(store, state);
   }
 }
 

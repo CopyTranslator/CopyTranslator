@@ -4,17 +4,14 @@ import { TrayManager } from "../common/tray";
 import { recognizer } from "../common/ocr";
 import { Identifier, authorizeKey, ActionView } from "../common/types";
 import { startService } from "../proxy/main";
-import { initConfig } from "../common/configuration";
 import { ShortcutManager } from "./shortcut";
 import { app } from "electron";
 import { env } from "../common/env";
 import store, { observers, restoreFromConfig } from "../store";
-import { Language } from "@opentranslate/languages";
 import { TranslateController } from "./translateController";
 import { l10n, L10N } from "./l10n";
-import { ActionManager } from "./action";
-import { handleActions } from "./callback";
-import { CommonController, MainController } from "../common/controller";
+import { ActionManager } from "../common/action";
+import { MainController } from "../common/controller";
 
 class Controller extends MainController {
   win: Window = new Window();
@@ -23,15 +20,12 @@ class Controller extends MainController {
   l10n: L10N = l10n;
 
   transCon = new TranslateController(this);
-  action: ActionManager = new ActionManager(handleActions, this);
-
-  getAction(id: Identifier) {
-    return this.action.getAction("autoCopy") as ActionView;
-  }
+  action: ActionManager = new ActionManager(this.config);
 
   constructor() {
     super();
     this.config.load(env.configPath);
+    this.l10n.install(store, this.config.get("localeSetting"));
     observers.push(this);
     observers.push(this.transCon);
   }
@@ -48,7 +42,7 @@ class Controller extends MainController {
   }
 
   keys() {
-    return Array.from(this.action.actions.keys());
+    return [];
   }
 
   onExit() {
@@ -58,12 +52,7 @@ class Controller extends MainController {
   }
 
   postSet(identifier: Identifier, value: any): boolean {
-    return true;
-  }
-
-  getT() {
-    let locale = this.get<Language>("localeSetting");
-    return this.l10n.getT(locale);
+    return false;
   }
 
   resotreDefaultSetting() {

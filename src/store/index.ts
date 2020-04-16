@@ -1,17 +1,25 @@
 import Vue from "vue";
 import Vuex from "vuex";
 const { createSharedMutations } = require("vuex-electron");
-import { app } from "electron";
-import { Identifier, Mutation } from "./plugins/types";
+import { Identifier } from "./plugins/types";
 import { updateViewPlugin, observePlugin, initState } from "./plugins";
 export * from "./plugins";
-import eleBus from "./plugins/shared-bus";
+import shareBus from "./plugins/shared-bus";
+import { registerLocale } from "./plugins/l10n";
 
 Vue.use(Vuex);
 
+let plugins = [
+  registerLocale,
+  shareBus,
+  initState,
+  createSharedMutations(),
+  observePlugin,
+  updateViewPlugin
+];
+
 const store = new Vuex.Store({
   state: {
-    defaultLocale: app ? app.getLocale() : "en",
     color: "white",
     sharedResult: {
       src: "",
@@ -75,13 +83,7 @@ const store = new Vuex.Store({
       return Object.keys(state.config);
     }
   },
-  plugins: [
-    eleBus,
-    initState,
-    createSharedMutations(),
-    observePlugin,
-    updateViewPlugin
-  ]
+  plugins: plugins
 });
 
 export default store;

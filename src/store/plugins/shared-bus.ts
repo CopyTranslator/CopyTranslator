@@ -27,7 +27,6 @@ function setTypeSet(state: any, args: [string, boolean, boolean]) {
   }
   typeSet[index] = !del;
   Vue.set(busEvents, channel, typeSet);
-  console.log(channel, typeSet);
 }
 
 const sharedModule = {

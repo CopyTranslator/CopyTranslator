@@ -33,7 +33,9 @@ import bus from "../common/event-bus";
 @Component
 export default class Action extends Vue {
   @Prop({ default: undefined }) readonly identifier!: Identifier;
-  action: ActionView | false=false;
+  action: ActionView =this.$controller.action.getAction(
+      this.identifier
+    );
 
   callback(command: string) {
     console.log(command)
@@ -57,18 +59,15 @@ export default class Action extends Vue {
   }
 
   async sync() {
-    this.action = await this.$controller.proxy.getAction(
+    this.action = this.$controller.action.getAction(
       this.identifier
     );
-    console.log(this.action)
   }
 
   mounted() {
-    this.sync().then(()=>{
-      if (this.action?.actionType == "submenu") {
-        bus.on(this.identifier, this.sync);
-      }
-    });
+    if (this.action?.actionType == "submenu") {
+      bus.on(this.identifier, this.sync);
+    }
   }
 }
 </script>

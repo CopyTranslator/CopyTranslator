@@ -1,8 +1,10 @@
 import { Identifier, ActionView, MenuActionType } from "./types";
 import { initConfig, ConfigParser } from "./configuration";
 import { Promisified } from "@/proxy/renderer";
+import { ActionManager } from "./action";
 
 export abstract class CommonController {
+  abstract action: ActionManager;
   get<T>(identifier: Identifier): T {
     return this.config.get(identifier) as T;
   }
@@ -16,13 +18,8 @@ export abstract class CommonController {
   config: ConfigParser = initConfig();
 }
 
-export abstract class MainController extends CommonController {
-  abstract getAction(identifier: Identifier): ActionView;
-  abstract getT(): (key: Identifier) => string;
-  abstract keys(): Identifier[];
-}
+export abstract class MainController extends CommonController {}
 
 export abstract class RenController extends CommonController {
   abstract proxy: Promisified<MainController>;
-  abstract getKeys(optionType: MenuActionType): Identifier[];
 }

@@ -21,7 +21,7 @@ import { Identifier } from "../common/types";
   }
 })
 export default class Options extends Vue {
-  actionKeys: Identifier[] = this.$controller.getKeys("options");
+  actionKeys: Identifier[] = this.$controller.action.getKeys("options");
 }
 </script>
 

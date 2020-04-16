@@ -176,12 +176,23 @@ export type MenuItemType =
   | "radio";
 
 export type ActionType = "constant";
-
-export interface ActionView {
+interface AbstractAction {
   actionType?: ActionType | MenuItemType;
   id: string;
-  submenu?: Array<ActionView>;
+  submenu?: Array<SubActionView>;
+  subMenuGenerator?: () => SubActionView[];
   type?: MenuItemType;
+  tooltip?: string;
+  role?: Role;
+  label?: string;
+}
+
+export interface SubActionView extends AbstractAction {
+  label: string;
+  id: string;
+}
+export interface ActionView extends AbstractAction {
+  id: Identifier;
 }
 
 export const hideDirections = [
@@ -224,6 +235,8 @@ export const colorStatusMap = new Map<ColorStatus, string>([
   ["IncrementalCopyPaste", rgb(0, 0, 128)],
   ["Fail", rgb(255, 0, 0)]
 ]);
+
+export type Locale = { [key: string]: string };
 
 export function compose(actions: Array<string>) {
   return actions.join("|");

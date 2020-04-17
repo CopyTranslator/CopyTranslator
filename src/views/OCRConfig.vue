@@ -10,7 +10,7 @@
     <p>SECRET_KEY</p>
     <v-text-field v-model="SECRET_KEY"></v-text-field>
     <v-btn color="primary" style="width:100%;" @click="confirm">{{
-      $t("ok")
+      trans["ok"]
     }}</v-btn>
   </div>
 </template>
@@ -42,6 +42,9 @@ export default class OCRConfig extends Vue {
   close() {}
   tutorial() {
     shell.openExternal("https://www.bilibili.com/video/av53888416/");
+  }
+  get trans() {
+    return this.$store.getters.locale;
   }
 }
 </script>

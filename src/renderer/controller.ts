@@ -1,4 +1,4 @@
-import { Identifier, authorizeKey, MenuActionType } from "../common/types";
+import { Identifier, authorizeKey } from "../common/types";
 import Vue from "vue";
 import store, { observers, restoreFromConfig } from "../store";
 import bus from "../common/event-bus";
@@ -7,7 +7,6 @@ import router from "../router";
 import vuetify from "../plugins/vuetify"; // path to vuetify export
 import { RenController, MainController } from "../common/controller";
 import { createProxy } from "../proxy/renderer";
-import { ActionManager } from "../common/action";
 
 export class RendererController extends RenController {
   private static _instance: RendererController;
@@ -34,9 +33,6 @@ export class RendererController extends RenController {
         render: h => h(App)
       }).$mount("#app");
     });
-    Vue.prototype.$t = (text: string) => {
-      return store.getters.locale[text];
-    };
   }
 
   handle(identifier: Identifier) {

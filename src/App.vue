@@ -12,6 +12,10 @@ export default Vue.extend({
 });
 </script>
 <style>
+#app {
+  -webkit-font-smoothing: antialiased;
+  font-family: "Microsoft YaHei", Arial, Helvetica, sans-serif, "宋体";
+}
 ::-webkit-scrollbar {
   display: none;
 }

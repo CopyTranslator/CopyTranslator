@@ -1,6 +1,6 @@
 import { Window } from "../common/views/windows";
 import { eventListener } from "./event-listener";
-import { TrayManager } from "../common/tray";
+import { MenuManager } from "./menu-manager";
 import { recognizer } from "../common/ocr";
 import { Identifier, authorizeKey } from "../common/types";
 import { startService } from "../proxy/main";
@@ -10,12 +10,12 @@ import { env } from "../common/env";
 import store, { observers, restoreFromConfig } from "../store";
 import { TranslateController } from "./translate-controller";
 import { l10n, L10N } from "./l10n";
-import { ActionManager } from "../common/action";
+import { showSettings, showDragCopyWarning } from "../common/views";
 import { MainController } from "../common/controller";
 
 class Controller extends MainController {
   win: Window = new Window();
-  tray: TrayManager = new TrayManager();
+  menu: MenuManager = new MenuManager(this);
   shortcut: ShortcutManager = new ShortcutManager();
   l10n: L10N = l10n;
   transCon = new TranslateController(this);
@@ -30,10 +30,24 @@ class Controller extends MainController {
 
   handle(identifier: Identifier): boolean {
     console.log("main handle", identifier);
-    if (identifier == "font+") {
-      return true;
+    switch (identifier) {
+      case "font+":
+        break;
+      case "font-":
+        break;
+      case "exit":
+        this.onExit();
+        break;
+      case "settings":
+        showSettings();
+        break;
+      case "helpAndUpdate":
+        break;
+      default:
+        return this.transCon.handle(identifier);
     }
-    return false;
+    console.log(identifier);
+    return true;
   }
 
   createWindow() {
@@ -42,7 +56,7 @@ class Controller extends MainController {
     startService(this, authorizeKey);
     this.win.createWindow("contrast");
     this.shortcut.init();
-    this.tray.init();
+    this.menu.init();
     recognizer.setUp();
   }
 
@@ -53,7 +67,19 @@ class Controller extends MainController {
   }
 
   postSet(identifier: Identifier, value: any): boolean {
-    return false;
+    switch (identifier) {
+      case "localeSetting":
+        this.l10n.updateLocale(this.get("localeSetting"));
+        break;
+      case "dragCopy":
+        if (value == true && !this.get("neverShow")) {
+          showDragCopyWarning();
+        }
+        break;
+      default:
+        return false;
+    }
+    return true;
   }
 
   resotreDefaultSetting() {

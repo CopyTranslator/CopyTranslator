@@ -28,8 +28,7 @@ export default class WindowController extends Vue {
   }
 
   openMenu(id: MenuActionType) {
-    bus.at("openMenu", id);
-    console.log(id);
+    bus.iat("openMenu", id);
   }
 
   async onResize() {

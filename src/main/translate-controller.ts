@@ -47,6 +47,23 @@ class TranslateController {
     this.syncLanguages();
   }
 
+  handle(identifier: Identifier): boolean {
+    switch (identifier) {
+      case "clear":
+        this.clear();
+        break;
+      case "copySource":
+        clipboard.writeText(this.src);
+        break;
+      case "copyResult":
+        clipboard.writeText(this.resultString);
+        break;
+      default:
+        return false;
+    }
+    return true;
+  }
+
   syncLanguages() {
     store.dispatch("setLanguages", this.translator.getSupportLanguages());
   }

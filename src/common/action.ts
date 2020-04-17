@@ -25,11 +25,11 @@ function subMenuGenerator(
   list: Array<string>
 ): SubActionView[] {
   return list.map(e => {
-    const id = compose([identifier, e.toString()]);
+    const id = compose([identifier, e]);
     return {
       id,
-      type: "normal",
-      label: id
+      type: "checkbox",
+      label: e
     };
   });
 }
@@ -38,6 +38,7 @@ const alias = new Map<string, string>([
   ["focus", "layoutType|focus"],
   ["contrast", "layoutType|horizontal"]
 ]);
+
 //兼容旧版本的
 const isMain = process.type == "browser";
 
@@ -276,7 +277,7 @@ class ActionManager {
       case "draggableOptions":
         contain = keys.filter(x => this.getAction(x).actionType !== "constant");
     }
-    return contain;
+    return contain.filter(key => keys.includes(key));
   }
 }
 

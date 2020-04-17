@@ -4,10 +4,10 @@
       v-if="action.type === 'checkbox'"
       v-model="value"
       class="myswitch"
-      :label="$t(action.id)"
+      :label="trans[action.id]"
     ></v-switch>
     <div v-else-if="action.type === 'submenu'">
-      <p style="margin:0px;">{{ $t(identifier) }}</p>
+      <p style="margin:0px;">{{ trans[identifier] }}</p>
       <v-select
         v-model="command"
         :items="action.submenu"
@@ -19,7 +19,7 @@
     </div>
     <div v-else-if="action.type === 'normal'">
       <v-btn @click="callback(action.id)">
-        {{ $t(action.id) }}
+        {{ trans[action.id] }}
       </v-btn>
     </div>
   </div>
@@ -61,6 +61,10 @@ export default class Action extends Vue {
     this.action = this.$controller.action.getAction(
       this.identifier
     );
+  }
+
+  get trans(){
+    return this.$store.getters.locale;
   }
 
   mounted() {

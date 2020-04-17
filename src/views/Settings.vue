@@ -3,9 +3,9 @@
     <v-app>
       <div style="height:80%;margin:2%;">
         <v-tabs v-model="activeName">
-          <v-tab>{{ $t("options") }} </v-tab>
-          <v-tab>{{ $t("switches") }} </v-tab>
-          <v-tab>{{ $t("ocrConfig") }} </v-tab>
+          <v-tab>{{ trans["options"] }} </v-tab>
+          <v-tab>{{ trans["switches"] }} </v-tab>
+          <v-tab>{{ trans["ocrConfig"] }} </v-tab>
           <v-tab-item>
             <Options></Options>
           </v-tab-item>
@@ -37,6 +37,9 @@ import { Mixins, Component, Vue } from "vue-property-decorator";
 })
 export default class Focus extends Vue {
   activeName: string = "first";
+  get trans() {
+    return this.$store.getters.locale;
+  }
 }
 </script>
 

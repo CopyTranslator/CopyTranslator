@@ -11,7 +11,8 @@ import {
   hideDirections,
   SubActionView,
   decompose,
-  ActionInitOpt
+  ActionInitOpt,
+  colorModes
 } from "./types";
 import { dictionaryTypes } from "./dictionary/types";
 import { getLanguageLocales, Language } from "./translate/locale";
@@ -184,6 +185,7 @@ class ActionManager {
     this.append(listAction("translatorType", translatorTypes));
     this.append(listAction("dictionaryType", dictionaryTypes));
     this.append(listAction("layoutType", layoutTypes));
+    this.append(listAction("colorMode", colorModes));
 
     this.append(switchAction("autoCopy"));
     this.append(switchAction("autoPaste"));
@@ -269,7 +271,7 @@ class ActionManager {
         contain.push("restoreDefault");
         break;
       case "focusContext":
-        contain = ["copy", "paste", "cut", "clear", "focus"];
+        contain = ["copy", "paste", "cut", "clear"];
         break;
       case "contrastContext":
         contain = ["copy", "paste", "cut", "clear", "copyResult", "copySource"];

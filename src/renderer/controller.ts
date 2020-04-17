@@ -1,10 +1,8 @@
 import { Identifier, authorizeKey } from "../common/types";
-import Vue from "vue";
 import store, { observers, restoreFromConfig } from "../store";
 import bus from "../common/event-bus";
-import App from "../App.vue";
-import router from "../router";
-import vuetify from "../plugins/vuetify"; // path to vuetify export
+import createApp from "./createApp";
+
 import { RenController, MainController } from "../common/controller";
 import { createProxy } from "../proxy/renderer";
 
@@ -26,13 +24,12 @@ export class RendererController extends RenController {
     observers.push(this);
     bus.once("initialized", () => {
       restoreFromConfig(observers, store.state.config);
-      this.app = new Vue({
-        router,
-        store,
-        vuetify,
-        render: h => h(App)
-      }).$mount("#app");
+      this.initApp();
     });
+  }
+
+  initApp() {
+    this.app = createApp();
   }
 
   handle(identifier: Identifier) {

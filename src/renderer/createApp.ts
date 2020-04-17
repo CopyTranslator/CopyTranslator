@@ -1,3 +1,6 @@
+import store from "../store";
+import App from "../App.vue";
+import router from "../router";
 import Vue from "vue";
 import Vuetify from "vuetify/lib";
 import { getConfigByKey } from "../store";
@@ -21,11 +24,18 @@ function isDarkMode() {
   }
 }
 
-export default new Vuetify({
-  theme: {
-    dark: isDarkMode()
-  },
-  icons: {
-    iconfont: "mdi"
-  }
-});
+export default () => {
+  return new Vue({
+    router,
+    store,
+    vuetify: new Vuetify({
+      theme: {
+        dark: isDarkMode()
+      },
+      icons: {
+        iconfont: "mdi"
+      }
+    }),
+    render: h => h(App)
+  }).$mount("#app");
+};

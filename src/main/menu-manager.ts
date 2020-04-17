@@ -65,14 +65,14 @@ export class MenuManager {
   }
 
   actionToMenuItem(action: ActionView): MenuAction {
-    if (action.role) {
-      return action;
-    }
+    const t = store.getters.locale;
     let menuItem: MenuAction = {
       ...action
     };
-    const t = store.getters.locale;
     menuItem.label = t[menuItem.id];
+    if (menuItem.role) {
+      return menuItem;
+    }
     if (menuItem.type == "checkbox") {
       menuItem.checked = this.config.get(menuItem.id as Identifier);
     }

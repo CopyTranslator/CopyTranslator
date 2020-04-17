@@ -5,13 +5,14 @@ import { recognizer } from "../common/ocr";
 import { Identifier, authorizeKey } from "../common/types";
 import { startService } from "../proxy/main";
 import { ShortcutManager } from "./shortcut";
-import { app } from "electron";
+import { app, BrowserWindow } from "electron";
 import { env } from "../common/env";
 import store, { observers, restoreFromConfig } from "../store";
 import { TranslateController } from "./translate-controller";
 import { l10n, L10N } from "./l10n";
 import { showSettings, showDragCopyWarning } from "../common/views";
 import { MainController } from "../common/controller";
+import bus from "@/common/event-bus";
 
 class Controller extends MainController {
   win: Window = new Window();
@@ -75,6 +76,11 @@ class Controller extends MainController {
         if (value == true && !this.get("neverShow")) {
           showDragCopyWarning();
         }
+        break;
+      case "colorMode":
+        BrowserWindow.getAllWindows().forEach(window => {
+          window.reload();
+        });
         break;
       default:
         return false;

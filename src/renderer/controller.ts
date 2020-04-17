@@ -2,6 +2,7 @@ import { Identifier, authorizeKey } from "../common/types";
 import store, { observers, restoreFromConfig } from "../store";
 import bus from "../common/event-bus";
 import createApp from "./createApp";
+import Vue from "vue";
 
 import { RenController, MainController } from "../common/controller";
 import { createProxy } from "../proxy/renderer";

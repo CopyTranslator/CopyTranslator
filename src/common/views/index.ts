@@ -1,5 +1,5 @@
 import { BrowserWindow, screen, nativeImage } from "electron";
-import { createProtocol } from "vue-cli-plugin-electron-builder/lib";
+import createProtocol from "./create-protocol";
 import { env } from "../env";
 import { loadStyles } from "../style";
 import { RouteActionType } from "../types";

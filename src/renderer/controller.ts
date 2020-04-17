@@ -14,7 +14,6 @@ export class RendererController extends RenController {
   proxy = createProxy<MainController>(authorizeKey);
   app: Vue | undefined;
   keys: Identifier[] = [];
-  action: ActionManager = new ActionManager(this.config);
 
   public static getInstance(): RendererController {
     if (this._instance == null) {
@@ -26,7 +25,6 @@ export class RendererController extends RenController {
   private constructor() {
     super();
     observers.push(this);
-    this.action.init();
     bus.once("initialized", () => {
       restoreFromConfig(observers, store.state.config);
       this.app = new Vue({
@@ -39,6 +37,11 @@ export class RendererController extends RenController {
     Vue.prototype.$t = (text: string) => {
       return store.getters.locale[text];
     };
+  }
+
+  handle(identifier: Identifier) {
+    console.log("renderer handle", identifier);
+    return false;
   }
 
   postSet(identifier: Identifier, value: any): boolean {

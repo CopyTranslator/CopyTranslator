@@ -9,11 +9,14 @@ import {
   ActionView,
   compose,
   hideDirections,
-  SubActionView
+  SubActionView,
+  decompose,
+  ActionInitOpt
 } from "./types";
 import { dictionaryTypes } from "./dictionary/types";
-
+import { getLanguageLocales, Language } from "./translate/locale";
 import store from "../store";
+import bus from "../common/event-bus";
 
 type Actions = Map<Identifier, ActionView>;
 
@@ -31,11 +34,36 @@ function subMenuGenerator(
   });
 }
 
+const alias = new Map<string, string>([
+  ["focus", "layoutType|focus"],
+  ["contrast", "layoutType|horizontal"]
+]);
+//兼容旧版本的
+const isMain = process.type == "browser";
+
 class ActionManager {
   actions = new Map<Identifier, ActionView>();
   config: ConfigParser;
   constructor(config: ConfigParser) {
     this.config = config;
+    bus.on("dispatch", (...args: any[]) => {
+      this.dispatch(...args);
+    });
+  }
+
+  dispatch(...args: any[]) {
+    const { identifier, param } = decompose(...args);
+    if (alias.get(identifier) != undefined) {
+      this.dispatch(alias.get(identifier) as string);
+      return;
+    }
+    const action = this.actions.get(identifier) as ActionView;
+    bus.at("callback", {
+      identifier,
+      param,
+      type: action.actionType,
+      isMain
+    });
   }
 
   getAction(identifier: Identifier): ActionView {
@@ -46,14 +74,17 @@ class ActionManager {
     return action;
   }
 
-  append(action: ActionView) {
-    this.actions.set(action.id, action);
+  append(action: ActionInitOpt) {
+    if (!action.actionType) {
+      action.actionType = action.type;
+    }
+    this.actions.set(action.id, action as ActionView);
   }
 
   init() {
     const config = this.config;
     //普通的按钮，执行一项操作
-    function normalAction(id: Identifier): ActionView {
+    function normalAction(id: Identifier): ActionInitOpt {
       return {
         type: "normal",
         id,
@@ -61,7 +92,7 @@ class ActionManager {
       };
     }
     //原生角色
-    function roleAction(role: Role): ActionView {
+    function roleAction(role: Role): ActionInitOpt {
       return {
         role: role,
         id: role,
@@ -70,7 +101,7 @@ class ActionManager {
       };
     }
     //设置常量
-    function constantAction(identifier: Identifier): ActionView {
+    function constantAction(identifier: Identifier): ActionInitOpt {
       return {
         actionType: "constant",
         id: identifier,
@@ -79,7 +110,7 @@ class ActionManager {
     }
 
     //切换状态的动作
-    function switchAction(identifier: Identifier): ActionView {
+    function switchAction(identifier: Identifier): ActionInitOpt {
       return {
         type: "checkbox",
         id: identifier,
@@ -88,7 +119,7 @@ class ActionManager {
     }
 
     //列表类型，是select的一种特化
-    function listAction(identifier: Identifier, list: any): ActionView {
+    function listAction(identifier: Identifier, list: any): ActionInitOpt {
       return {
         type: "submenu",
         id: identifier,
@@ -101,7 +132,7 @@ class ActionManager {
     function selectAction(
       identifier: Identifier,
       subMenuGenerator: () => Array<SubActionView>
-    ): ActionView {
+    ): ActionInitOpt {
       return {
         type: "submenu",
         id: identifier,
@@ -110,11 +141,29 @@ class ActionManager {
       };
     }
 
+    function getLanguages(allowAuto: boolean = true): Language[] {
+      return store.state.languages.filter(x => {
+        if (!allowAuto && x == "auto") {
+          return false;
+        }
+        return true;
+      });
+    }
+
     function createLanguageGenerator(
       identifier: Identifier,
       allowAuto: boolean = true
     ): () => Array<SubActionView> {
-      return () => [];
+      return () => {
+        const l = getLanguageLocales(config.get("localeSetting"));
+        return getLanguages(allowAuto).map(e => {
+          return {
+            id: compose([identifier, e]),
+            label: l[e],
+            type: "checkbox"
+          };
+        });
+      };
     }
 
     const localeGenerator = (id: Identifier) => {

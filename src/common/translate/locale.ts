@@ -13,3 +13,4 @@ export const languageLocales = new Map<Language, typeof en>([
 export function getLanguageLocales(lang: Language): Locale {
   return languageLocales.get(lang) || en;
 }
+export { Language };

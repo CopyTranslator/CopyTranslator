@@ -1,11 +1,10 @@
 import { readdirSync, readFileSync } from "fs";
 import { join } from "path";
 import { env } from "../common/env";
-import { Identifier, objToMap, mapToObj, Locale } from "../common/types";
+import { mapToObj, Locale } from "../common/types";
 import { en } from "../common/locales";
 import { Language } from "@opentranslate/languages";
 import { app } from "electron";
-import { registerLocale } from "../store/plugins/l10n";
 
 type Resouces = Map<Language, Locale>;
 
@@ -24,6 +23,7 @@ class L10N {
   resources: Resouces = new Map<Language, Locale>();
   locales: { lang: Language; localeName: string }[] = [];
   defaultLocale: Language = "auto";
+  store: any;
 
   constructor(localeDirs: string[]) {
     localeDirs.forEach((localeDir: string) => {
@@ -65,11 +65,13 @@ class L10N {
   }
 
   install(store: any, key: Language) {
-    const state = {
-      locales: this.locales,
-      locale: this.getT(key)
-    };
-    registerLocale(store, state);
+    this.store = store;
+    store.dispatch("updateLocales", this.locales);
+    this.updateLocale(key);
+  }
+
+  updateLocale(key: Language) {
+    this.store.dispatch("updateLocale", this.getT(key));
   }
 }
 

@@ -15,9 +15,8 @@ export default class WindowController extends Vue {
   windowHeight: number = window.innerHeight;
   windowWidth: number = window.innerWidth;
 
-  callback(cmd: string) {
-    // bus.gat(cmd as any);
-    console.log(cmd);
+  callback(...args: any[]) {
+    bus.at("dispatch", ...args);
   }
 
   close() {

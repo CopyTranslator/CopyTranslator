@@ -2,7 +2,6 @@ import { Compound, TranslatorType } from "../common/translate";
 import { Polymer } from "../common/dictionary/polymer";
 import { Language } from "@opentranslate/translator";
 import { CopyTranslateResult } from "../common/translate/types";
-
 import { colorRules, getColorRule } from "../common/rule";
 import { normalizeAppend, checkIsWord } from "../common/translate/helper";
 import { Identifier, ColorStatus, colorStatusMap } from "../common/types";
@@ -42,13 +41,14 @@ class TranslateController {
 
   controller: MainController;
 
-  getSupportLanguages() {
-    return getSupportLanguages(this.controller.get("translatorType"));
-  }
-
   constructor(controller: MainController) {
     this.controller = controller;
     clipboard.init();
+    this.syncLanguages();
+  }
+
+  syncLanguages() {
+    store.dispatch("setLanguages", this.translator.getSupportLanguages());
   }
 
   get<T>(identifier: Identifier) {
@@ -354,7 +354,8 @@ class TranslateController {
 
   async switchTranslator(value: TranslatorType) {
     let valid = true;
-    const newEngine = await this.translator.setMainEngine(value);
+    this.translator.setMainEngine(value);
+    this.syncLanguages();
     if (!this.translator.isValid(this.source())) {
       this.controller.set("sourceLanguage", "en");
       valid = false;

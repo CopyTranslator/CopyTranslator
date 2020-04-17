@@ -1,14 +1,14 @@
 import { Window } from "../common/views/windows";
-import { eventListener } from "../common/event-listener";
+import { eventListener } from "./event-listener";
 import { TrayManager } from "../common/tray";
 import { recognizer } from "../common/ocr";
-import { Identifier, authorizeKey, ActionView } from "../common/types";
+import { Identifier, authorizeKey } from "../common/types";
 import { startService } from "../proxy/main";
 import { ShortcutManager } from "./shortcut";
 import { app } from "electron";
 import { env } from "../common/env";
 import store, { observers, restoreFromConfig } from "../store";
-import { TranslateController } from "./translateController";
+import { TranslateController } from "./translate-controller";
 import { l10n, L10N } from "./l10n";
 import { ActionManager } from "../common/action";
 import { MainController } from "../common/controller";
@@ -18,9 +18,7 @@ class Controller extends MainController {
   tray: TrayManager = new TrayManager();
   shortcut: ShortcutManager = new ShortcutManager();
   l10n: L10N = l10n;
-
   transCon = new TranslateController(this);
-  action: ActionManager = new ActionManager(this.config);
 
   constructor() {
     super();
@@ -30,19 +28,22 @@ class Controller extends MainController {
     observers.push(this.transCon);
   }
 
+  handle(identifier: Identifier): boolean {
+    console.log("main handle", identifier);
+    if (identifier == "font+") {
+      return true;
+    }
+    return false;
+  }
+
   createWindow() {
     restoreFromConfig(observers, store.state.config);
-    this.action.init();
     eventListener.bind();
     startService(this, authorizeKey);
     this.win.createWindow("contrast");
     this.shortcut.init();
     this.tray.init();
     recognizer.setUp();
-  }
-
-  keys() {
-    return [];
   }
 
   onExit() {

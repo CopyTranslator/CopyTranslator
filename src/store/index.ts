@@ -4,14 +4,13 @@ const { createSharedMutations } = require("vuex-electron");
 import { Identifier } from "./plugins/types";
 import { updateViewPlugin, observePlugin, initState } from "./plugins";
 export * from "./plugins";
-import shareBus from "./plugins/shared-bus";
 import { registerLocale } from "./plugins/l10n";
+import bus from "../common/event-bus";
 
 Vue.use(Vuex);
 
 let plugins = [
   registerLocale,
-  shareBus,
   initState,
   createSharedMutations(),
   observePlugin,
@@ -20,6 +19,7 @@ let plugins = [
 
 const store = new Vuex.Store({
   state: {
+    languages: [],
     color: "white",
     sharedResult: {
       src: "",
@@ -54,6 +54,9 @@ const store = new Vuex.Store({
     setConfig(state, config) {
       Vue.set(state, "config", config);
     },
+    setLanguages(state: any, languages: any) {
+      Vue.set(state, "languages", languages);
+    },
     updateConfig(state, config) {
       for (let key of Object.keys(config)) {
         Vue.set(state.config, key, config[key]);
@@ -69,6 +72,9 @@ const store = new Vuex.Store({
     },
     setColor(context, color) {
       context.commit("setColor", color);
+    },
+    setLanguages(context: any, languages: any) {
+      context.commit("setLanguages", languages);
     },
     setConfig(context, config) {
       context.commit("setConfig", config);

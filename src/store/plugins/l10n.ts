@@ -1,7 +1,19 @@
 import { Locale } from "../../common/types";
 import Vue from "vue";
+import { Language } from "@opentranslate/languages";
 
-export function registerLocale(store: any, state = {}) {
+type Locales = { lang: Language; localeName: string }[];
+
+export function registerLocale(
+  store: any,
+  state: {
+    locales: Locales;
+    locale: Locale;
+  } = {
+    locales: [],
+    locale: {}
+  }
+) {
   const l10nModule = {
     state: state,
     getters: {
@@ -15,11 +27,17 @@ export function registerLocale(store: any, state = {}) {
     mutations: {
       updateLocale(state: any, locale: Locale) {
         Vue.set(state, "locale", locale);
+      },
+      updateLocales(state: any, locales: Locale) {
+        Vue.set(state, "locales", locales);
       }
     },
     actions: {
       updateLocale(context: any, locale: Locale) {
         context.commit("updateLocale", locale);
+      },
+      updateLocales(context: any, locales: Locale) {
+        context.commit("updateLocales", locales);
       }
     }
   };

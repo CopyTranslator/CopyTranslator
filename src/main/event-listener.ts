@@ -1,8 +1,8 @@
-import simulate from "./simulate";
-import { checkForUpdates } from "./views/update";
+import simulate from "../common/simulate";
+import { checkForUpdates } from "../common/views/update";
 import os from "os";
-import { clipboard } from "./clipboard";
-import bus from "./event-bus";
+import { clipboard } from "../common/clipboard";
+import bus from "../common/event-bus";
 class EventListener {
   drag = false;
   dragCopy = false;

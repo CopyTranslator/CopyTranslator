@@ -13,7 +13,12 @@ const id = "gbus";
 const isMain = process.type == "browser";
 const ipc = isMain ? ipcMain : ipcRenderer;
 type Event = IpcMainEvent | IpcRendererEvent | null;
-type Listener = (event: Event, ...args: any[]) => void;
+
+function listenWrapper(listener: Function) {
+  return (event: Event, ...args: any[]) => {
+    listener(...args);
+  };
+}
 
 const getChannel = (key: string) => `${id}-${key}`;
 
@@ -25,44 +30,14 @@ for (const methodName of ["on", "once", "at", "off"]) {
   };
 }
 
-bus.gon = (key: string, listener: Listener) => {
+bus.ion = (key: string, listener: Function) => {
   const channel = getChannel(key);
-  bus.on(key, listener);
-  ipc.on(channel, listener);
+  ipc.on(channel, listenWrapper(listener));
 };
 
-bus.gonce = (key: string, listener: Listener) => {
+bus.ionce = (key: string, listener: Function) => {
   const channel = getChannel(key);
-  ipc.once(channel, listener);
-  bus.once(key, listener);
-};
-
-bus.gat = (key: string, ...args: any[]) => {
-  const channel = getChannel(key);
-  if (!isMain) {
-    ipcRenderer.send(channel, ...args);
-  } else {
-    BrowserWindow.getAllWindows().forEach(e => {
-      e.webContents.send(channel, ...args);
-    });
-  }
-  bus.at(key, null, ...args);
-};
-
-bus.goff = (key: string, listener: Listener) => {
-  const channel = getChannel(key);
-  ipc.removeListener(channel, listener);
-  bus.off(key, listener);
-};
-
-bus.ion = (key: string, listener: Listener) => {
-  const channel = getChannel(key);
-  ipc.on(channel, listener);
-};
-
-bus.ionce = (key: string, listener: Listener) => {
-  const channel = getChannel(key);
-  ipc.once(channel, listener);
+  ipc.once(channel, listenWrapper(listenWrapper));
 };
 
 bus.iat = (key: string, ...args: any[]) => {
@@ -76,9 +51,26 @@ bus.iat = (key: string, ...args: any[]) => {
   }
 };
 
-bus.ioff = (key: string, listener: Listener) => {
+bus.gon = (key: string, listener: Function) => {
+  bus.on(key, listener);
+  bus.ion(key, listener);
+};
+
+bus.gonce = (key: string, listener: Function) => {
+  bus.once(key, listener);
+  bus.ionce(key, listener);
+};
+
+bus.gat = (key: string, ...args: any[]) => {
   const channel = getChannel(key);
-  ipc.removeListener(channel, listener);
+  if (!isMain) {
+    ipcRenderer.send(channel, ...args);
+  } else {
+    BrowserWindow.getAllWindows().forEach(e => {
+      e.webContents.send(channel, ...args);
+    });
+  }
+  bus.at(key, ...args);
 };
 
 interface GBus {
@@ -86,14 +78,12 @@ interface GBus {
   once: (key: SimpleType, listener: Function) => void;
   at: (key: SimpleType, ...args: any[]) => void;
   off: (key: SimpleType, listener: Function) => void;
-  gon: (key: SimpleType, listener: Listener) => void;
-  gonce: (key: SimpleType, listener: Listener) => void;
+  gon: (key: SimpleType, listener: Function) => void;
+  gonce: (key: SimpleType, listener: Function) => void;
   gat: (key: SimpleType, ...args: any[]) => void;
-  goff: (key: SimpleType, listener: Listener) => void;
-  ion: (key: SimpleType, listener: Listener) => void;
-  ionce: (key: SimpleType, listener: Listener) => void;
+  ion: (key: SimpleType, listener: Function) => void;
+  ionce: (key: SimpleType, listener: Function) => void;
   iat: (key: SimpleType, ...args: any[]) => void;
-  ioff: (key: SimpleType, listener: Listener) => void;
 }
 
 export default bus as GBus;

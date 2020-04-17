@@ -4,11 +4,11 @@ import {
   globalShortcut,
   Menu,
   MenuItem,
-  ipcMain,
   KeyboardEvent,
   MenuItemConstructorOptions
 } from "electron";
 import { roles, Role } from "../common/types";
+import bus from "../common/event-bus";
 
 import {
   Shortcuts,
@@ -29,7 +29,7 @@ function defaultCallback(
   browserWindow?: BrowserWindow,
   event?: KeyboardEvent
 ) {
-  console.log(key);
+  bus.at("dispatch", key);
 }
 
 class ShortcutManager {

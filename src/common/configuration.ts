@@ -281,3 +281,5 @@ function initConfig(
 }
 
 export { initConfig, ConfigParser };
+const config = initConfig();
+export default config;

@@ -37,9 +37,8 @@ export default class Action extends Vue {
       this.identifier
     );
 
-  callback(command: string) {
-    console.log(command)
-    // bus.gat(command as any);
+  callback(...args: any[]) {
+    bus.at("dispatch",...args);
   }
 
   get command() {
@@ -55,7 +54,7 @@ export default class Action extends Vue {
   }
 
   set value(val) {
-    this.$controller.set(this.identifier, val);
+    this.callback(this.identifier, val);
   }
 
   async sync() {

@@ -132,7 +132,9 @@ export const eventTypes = [
   "closeWindow",
   "openMenu",
   "minify",
-  "initialized"
+  "initialized",
+  "callback",
+  "dispatch"
 ] as const;
 
 export type Role = typeof roles[number];
@@ -193,6 +195,11 @@ export interface SubActionView extends AbstractAction {
 }
 export interface ActionView extends AbstractAction {
   id: Identifier;
+  actionType: ActionType | MenuItemType;
+}
+
+export interface ActionInitOpt extends AbstractAction {
+  id: Identifier;
 }
 
 export const hideDirections = [
@@ -242,8 +249,34 @@ export function compose(actions: Array<string>) {
   return actions.join("|");
 }
 
-export function decompose(id: string) {
-  return id.split("|");
+export function recoverType(
+  param: string | undefined
+): boolean | string | number | undefined {
+  if (!param) {
+    return undefined;
+  }
+  const num = new Number(param);
+  if (!Number.isNaN(num.valueOf())) {
+    return num.valueOf();
+  }
+  switch (param) {
+    case "true":
+      return true;
+    case "false":
+      return false;
+    default:
+      return param;
+  }
+}
+
+export function decompose(...args: any[]) {
+  const params = args.length == 1 ? args[0].split("|") : args;
+  const param = args.length == 1 ? recoverType(params[1]) : params[1];
+  const identifier = <Identifier>params[0];
+  return {
+    identifier,
+    param
+  };
 }
 
 export function mapToObj<T>(strMap: Map<string, T>): { [key: string]: T } {

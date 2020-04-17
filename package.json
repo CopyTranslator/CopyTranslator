@@ -86,7 +86,8 @@
     "vue-cli-plugin-electron-builder": "^1.4.6",
     "vue-cli-plugin-vuetify": "^2.0.5",
     "vue-template-compiler": "^2.6.11",
-    "vuetify-loader": "^1.4.3"
+    "vuetify-loader": "^1.4.3",
+    "webpack-bundle-analyzer": "^3.7.0"
   },
   "cmake-js": {
     "runtime": "electron",

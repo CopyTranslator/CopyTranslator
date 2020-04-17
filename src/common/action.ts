@@ -1,5 +1,5 @@
 import { ConfigParser } from "./configParser";
-import { translatorTypes } from "./translate/types";
+import { translatorTypes } from "./translate/constants";
 import {
   Identifier,
   MenuActionType,

@@ -45,13 +45,15 @@ export class Window {
       icon: nativeImage.createFromPath(env.iconPath),
       webPreferences: {
         nodeIntegration: true
-      }
+      },
+      show: false
     });
     const now = dayjs();
     ipcMain.on("what are", () => {
       console.log("START", dayjs().diff(now, "ms"));
     });
-    this.window.webContents.on("did-finish-load", function() {
+    this.window.webContents.on("did-finish-load", () => {
+      (this.window as any).show();
       console.log(dayjs().diff(now, "ms"));
     });
     this.load(routeName);

@@ -5,7 +5,7 @@ import { Youdao } from "@opentranslate/youdao";
 import { Caiyun } from "@opentranslate/caiyun";
 import { Tencent } from "@opentranslate/tencent";
 import { Sogou } from "@opentranslate/sogou";
-import { TranslatorType } from "./types";
+import { TranslatorType } from "./constants";
 import { configs } from "./token";
 
 export const translatorMap: [TranslatorType, Translator][] = [

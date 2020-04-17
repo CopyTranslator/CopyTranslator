@@ -1,4 +1,5 @@
-import { Compound, TranslatorType } from "../common/translate";
+import { Compound } from "../common/translate/compound";
+import { TranslatorType } from "../common/translate/constants";
 import { Polymer } from "../common/dictionary/polymer";
 import { Language } from "@opentranslate/translator";
 import { CopyTranslateResult } from "../common/translate/types";
@@ -6,7 +7,7 @@ import { colorRules, getColorRule } from "../common/rule";
 import { normalizeAppend, checkIsWord } from "../common/translate/helper";
 import { Identifier, ColorStatus, colorStatusMap } from "../common/types";
 import trimEnd from "lodash.trimend";
-import { getSupportLanguages } from "../common/translate";
+// import { getSupportLanguages } from "../common/translate/translators";
 
 import {
   DictionaryType,

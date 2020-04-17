@@ -1,5 +1,6 @@
 import { getTranslator, translators } from "./translators";
-import { TranslatorType, CopyTranslator, CopyTranslateResult } from "./types";
+import { CopyTranslator, CopyTranslateResult } from "./types";
+import { TranslatorType } from "./constants";
 import { AxiosRequestConfig } from "axios";
 import {
   Language,

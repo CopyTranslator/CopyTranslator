@@ -1,5 +1,11 @@
 "use strict";
-import { app, protocol } from "electron";
+import { app, protocol, ipcMain } from "electron";
+import dayjs from "dayjs";
+const t = dayjs();
+ipcMain.on("what are", () => {
+  console.log("Total", dayjs().diff(t, "ms"));
+});
+
 import { Controller } from "./main/controller";
 import { recognizer } from "./common/ocr";
 const isDevelopment = process.env.NODE_ENV !== "production";

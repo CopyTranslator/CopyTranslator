@@ -1,8 +1,7 @@
 import { ConfigParser } from "./configParser";
 import { GroupRule, StructRule, UnionRule, ModeConfig, TypeRule } from "./rule";
-
 import { languages, Language } from "@opentranslate/languages";
-import { translatorTypes, TranslatorType } from "./translate/types";
+import { translatorTypes, TranslatorType } from "./translate/constants";
 import {
   Identifier,
   identifiers,

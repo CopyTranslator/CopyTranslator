@@ -4,6 +4,8 @@ const osSpec = {
   Darwin: { iconName: "icon.png" },
   Linux: { iconName: "icon.png" }
 }[osType];
+const BundleAnalyzerPlugin = require("webpack-bundle-analyzer")
+  .BundleAnalyzerPlugin;
 
 const trayIconName = "tray@2x.png";
 
@@ -12,6 +14,9 @@ module.exports = {
   pluginOptions: {
     electronBuilder: {
       mainProcessTypeChecking: false,
+      chainWebpackMainProcess: config => {
+        config.plugin("analysis").use(new BundleAnalyzerPlugin());
+      },
       builderOptions: {
         appId: "com.copytranslator.copytranslator",
         asar: true,

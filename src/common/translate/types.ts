@@ -7,7 +7,6 @@ export type CopyTranslateResult = TranslateResult & {
 };
 
 export { TranslateResult };
-export * from "./constants";
 export interface CopyTranslator {
   translate(
     text: string,

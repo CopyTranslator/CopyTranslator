@@ -1,4 +1,4 @@
-import { TranslatorType } from "./types";
+import { TranslatorType } from "./constants";
 
 export const configs = new Map<TranslatorType, any>([
   [

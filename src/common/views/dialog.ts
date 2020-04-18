@@ -1,6 +1,9 @@
-import { dialog, nativeImage, BrowserWindow } from "electron";
+import { dialog, nativeImage, BrowserWindow, shell } from "electron";
 import { env } from "../env";
 import store from "../../store";
+import { constants, versionString } from "../../core/constant";
+import eventBus from "../event-bus";
+
 const enWarning =
   "Ctrl + C is simulated when the drag copy is triggered. In most scenes, this means safe text copying, but in some scenes it may cause some unexpected problems, such as clipboard data being overwritten.  Triggering Ctrl + C in the shell will interrupt the running program and so on.  When you enable it, please be aware that after you enable the drag and drop option, you will be responsible for any possible losses.";
 const zhWarning =
@@ -24,6 +27,33 @@ export function showDragCopyWarning() {
           });
           break;
         case 1:
+          break;
+      }
+    });
+}
+
+export function showHelpAndUpdate() {
+  const t = store.getters.locale;
+  dialog
+    .showMessageBox({
+      title: constants.appName + " " + versionString,
+      message:
+        "If you found it useful, please give me a star on GitHub or introduce to your friend.\n如果您感觉本软件对您有所帮助，请在项目Github上给个star或是介绍给您的朋友，谢谢。\n本软件免费开源，如果您是以付费的方式获得本软件，那么你应该是被骗了。[○･｀Д´･ ○]",
+      buttons: [t["homepage"], t["userManual"], t["checkUpdate"], "cancel"],
+      cancelId: 3,
+      icon: nativeImage.createFromPath(env.iconPath)
+    })
+    .then(res => res.response)
+    .then(response => {
+      switch (response) {
+        case 0:
+          shell.openExternal(constants.homepage);
+          break;
+        case 1:
+          shell.openExternal(constants.wiki);
+          break;
+        case 2:
+          eventBus.at("dispatch", "checkUpdate");
           break;
       }
     });

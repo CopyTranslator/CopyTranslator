@@ -15,7 +15,9 @@ module.exports = {
     electronBuilder: {
       mainProcessTypeChecking: false,
       chainWebpackMainProcess: config => {
-        config.plugin("analysis").use(new BundleAnalyzerPlugin());
+        config.when(process.env.NODE_ENV === "production", config => {
+          config.plugin("analysis").use(new BundleAnalyzerPlugin());
+        });
       },
       builderOptions: {
         appId: "com.copytranslator.copytranslator",

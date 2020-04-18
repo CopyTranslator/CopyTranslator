@@ -215,6 +215,7 @@ class ActionManager {
     this.append(normalAction("restoreDefault"));
     this.append(normalAction("font+"));
     this.append(normalAction("font-"));
+    this.append(normalAction("checkUpdate"));
 
     this.append(constantAction("APP_ID"));
     this.append(constantAction("API_KEY"));

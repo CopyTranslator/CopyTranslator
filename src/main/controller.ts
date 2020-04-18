@@ -10,9 +10,13 @@ import { env } from "../common/env";
 import store, { observers, restoreFromConfig } from "../store";
 import { TranslateController } from "./translate-controller";
 import { l10n, L10N } from "./l10n";
-import { showSettings, showDragCopyWarning } from "../common/views";
+import {
+  showSettings,
+  showDragCopyWarning,
+  showHelpAndUpdate
+} from "../common/views";
+import { resetAllConfig } from "./file-related";
 import { MainController } from "../common/controller";
-import bus from "@/common/event-bus";
 
 class Controller extends MainController {
   win: Window = new Window();
@@ -33,8 +37,10 @@ class Controller extends MainController {
     console.log("main handle", identifier);
     switch (identifier) {
       case "font+":
+        console.log("font+");
         break;
       case "font-":
+        console.log("font-");
         break;
       case "exit":
         this.onExit();
@@ -43,6 +49,10 @@ class Controller extends MainController {
         showSettings();
         break;
       case "helpAndUpdate":
+        showHelpAndUpdate();
+        break;
+      case "restoreDefault":
+        this.resotreDefaultSetting();
         break;
       default:
         return this.transCon.handle(identifier);
@@ -89,6 +99,7 @@ class Controller extends MainController {
   }
 
   resotreDefaultSetting() {
+    resetAllConfig();
     this.config.restoreDefault(env.configPath);
     this.restoreFromConfig();
   }

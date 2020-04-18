@@ -59,6 +59,9 @@ class TranslateController {
       case "copyResult":
         clipboard.writeText(this.resultString);
         break;
+      case "retryTranslate":
+        this.doTranslate(this.src);
+        break;
       default:
         return false;
     }

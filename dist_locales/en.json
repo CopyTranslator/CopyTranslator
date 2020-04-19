@@ -73,5 +73,9 @@
     "skipTaskbar": "Skip Taskbar",
     "closeAsQuit": "Close As Quit",
     "layoutType": "Layout",
-    "autoCheckUpdate": "Auto Check Update"
+    "autoCheckUpdate": "Auto Check Update",
+    "showConfigFolder": "Show Config Folder",
+    "editConfigFile": "Edit Config File",
+    "colorMode": "Color Mode",
+    "drawer": "Drawer"
 }

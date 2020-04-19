@@ -59,7 +59,6 @@ export class MenuManager {
       browserWindow?: BrowserWindow,
       event?: Event
     ) => {
-      console.log("clicked", args);
       this.act.dispatch(...args);
     };
   }
@@ -112,6 +111,5 @@ export class MenuManager {
     this.tray.on("right-click", event => {
       (this.tray as any).popUpContextMenu(this.getMenu("tray"));
     });
-    // this.tray.setContextMenu(this.getMenu("tray"));
   }
 }

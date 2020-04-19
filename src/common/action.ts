@@ -246,6 +246,8 @@ class ActionManager {
     this.append(normalAction("settings"));
     this.append(normalAction("helpAndUpdate"));
     this.append(normalAction("exit"));
+    this.append(normalAction("editConfigFile"));
+    this.append(normalAction("showConfigFolder"));
   }
 
   getKeys(optionType: MenuActionType): Array<Identifier> {

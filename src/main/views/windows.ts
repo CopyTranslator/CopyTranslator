@@ -5,10 +5,10 @@ import {
   nativeImage,
   ipcMain
 } from "electron";
-import { ModeConfig } from "../rule";
-import { env } from "../env";
+import { ModeConfig } from "../../common/rule";
+import { env } from "../../common/env";
 import { loadRoute, insertStyles } from ".";
-import { RouteActionType } from "../types";
+import { RouteActionType } from "../../common/types";
 import dayjs from "dayjs";
 export class Window {
   window: BrowserWindow | undefined = undefined;

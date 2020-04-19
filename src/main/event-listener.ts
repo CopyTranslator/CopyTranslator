@@ -1,5 +1,5 @@
 import simulate from "../common/simulate";
-import { checkForUpdates } from "../common/views/update";
+import { checkForUpdates } from "./views/update";
 import os from "os";
 import { clipboard } from "../common/clipboard";
 import bus from "../common/event-bus";

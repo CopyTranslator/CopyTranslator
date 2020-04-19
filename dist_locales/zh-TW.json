@@ -87,5 +87,10 @@
     "dictionaryType": "Dictionary Type",
     "neverShow": "Never Show",
     "layoutType": "Layout",
-    "autoCheckUpdate": "Auto Check Update"
+    "autoCheckUpdate": "Auto Check Update",
+    "showConfigFolder": "Show Config Folder",
+    "showConfigFile": "Open Config File",
+    "colorMode": "Color Mode",
+    "drawer": "Drawer",
+    "editConfigFile": "Edit Config File"
 }

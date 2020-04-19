@@ -1,4 +1,4 @@
-import { Window } from "../common/views/windows";
+import { Window } from "./views/windows";
 import { eventListener } from "./event-listener";
 import { MenuManager } from "./menu-manager";
 import { recognizer } from "../common/ocr";
@@ -10,11 +10,8 @@ import { env } from "../common/env";
 import store, { observers, restoreFromConfig } from "../store";
 import { TranslateController } from "./translate-controller";
 import { l10n, L10N } from "./l10n";
-import {
-  showSettings,
-  showDragCopyWarning,
-  showHelpAndUpdate
-} from "../common/views";
+import actionLinks, { showDragCopyWarning } from "./views/dialog";
+import { showSettings } from "./views";
 import { resetAllConfig } from "./file-related";
 import { MainController } from "../common/controller";
 
@@ -31,10 +28,10 @@ class Controller extends MainController {
     this.l10n.install(store, this.config.get("localeSetting"));
     observers.push(this);
     observers.push(this.transCon);
+    this.bindLinks(actionLinks);
   }
 
   handle(identifier: Identifier): boolean {
-    console.log("main handle", identifier);
     switch (identifier) {
       case "font+":
         console.log("font+");
@@ -48,15 +45,13 @@ class Controller extends MainController {
       case "settings":
         showSettings();
         break;
-      case "helpAndUpdate":
-        showHelpAndUpdate();
-        break;
       case "restoreDefault":
         this.resotreDefaultSetting();
         break;
       default:
         return this.transCon.handle(identifier);
     }
+
     console.log(identifier);
     return true;
   }
@@ -84,7 +79,7 @@ class Controller extends MainController {
         break;
       case "dragCopy":
         if (value == true && !this.get("neverShow")) {
-          showDragCopyWarning();
+          showDragCopyWarning(this);
         }
         break;
       case "colorMode":

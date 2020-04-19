@@ -1,4 +1,4 @@
-import { env } from "./env";
+import { env } from "../common/env";
 import fs from "fs";
 
 const defaultStyles = `

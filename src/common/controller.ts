@@ -5,9 +5,15 @@ import { ActionManager } from "./action";
 import bus from "./event-bus";
 const isMain = process.type == "browser";
 
+type Handler1 = () => void;
+type Handler2 = (controller: MainController | RenController) => void;
+export type Handler = Handler1 | Handler2;
+
 export abstract class CommonController {
   config: ConfigParser = config;
   action: ActionManager = new ActionManager(config);
+
+  links: Map<Identifier, Handler>[] = [];
   abstract handle(command: string): boolean;
 
   constructor() {
@@ -23,12 +29,29 @@ export abstract class CommonController {
     return this.config.set(identifier, value);
   }
 
+  bindLinks(handlers: Map<Identifier, Handler>) {
+    this.links.push(handlers);
+  }
+
+  handleWithLinks(identifier: Identifier): boolean {
+    for (const handlers of this.links) {
+      if (handlers.has(identifier)) {
+        (handlers.get(identifier) as Handler)(this);
+        return true;
+      }
+    }
+    return false;
+  }
+
   bind() {
     bus.gon("callback", (args: any) => {
       const { identifier, param, type, isMain: main } = args;
       switch (type) {
         case "normal":
-          if (!this.handle(identifier) && main == isMain) {
+          if (
+            !(this.handleWithLinks(identifier) || this.handle(identifier)) &&
+            main == isMain
+          ) {
             //跨进程动作，防止出现回声
             bus.iat("callback", args);
           }

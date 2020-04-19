@@ -22,7 +22,9 @@ export const normalActionTypes = [
   "notices",
   "font+",
   "font-",
-  "drawer"
+  "drawer",
+  "editConfigFile",
+  "showConfigFolder"
 ] as const;
 
 //切换值的动作

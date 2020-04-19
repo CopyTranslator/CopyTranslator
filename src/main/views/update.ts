@@ -1,6 +1,6 @@
 import { dialog, BrowserWindow, screen, nativeImage, ipcMain } from "electron";
 import { autoUpdater } from "electron-updater";
-import { env } from "../env";
+import { env } from "../../common/env";
 import { loadRoute, insertStyles } from "./index";
 
 let window: BrowserWindow | undefined = undefined;

@@ -1,10 +1,9 @@
 import { BrowserWindow, screen, nativeImage } from "electron";
 import createProtocol from "./create-protocol";
-import { env } from "../env";
+import { env } from "../../common/env";
 import { loadStyles } from "../style";
-import { RouteActionType } from "../types";
+import { RouteActionType } from "../../common/types";
 import store from "../../store";
-export * from "./dialog";
 
 export function insertStyles(window: BrowserWindow) {
   window.webContents.on("did-finish-load", function() {

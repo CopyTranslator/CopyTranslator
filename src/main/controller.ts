@@ -1,7 +1,6 @@
 import { Window } from "./views/windows";
 import { eventListener } from "./event-listener";
 import { MenuManager } from "./menu-manager";
-import { recognizer } from "../common/ocr";
 import { Identifier, authorizeKey } from "../common/types";
 import { startService } from "../proxy/main";
 import { ShortcutManager } from "./shortcut";
@@ -56,13 +55,13 @@ class Controller extends MainController {
   }
 
   createWindow() {
-    restoreFromConfig(observers, store.state.config);
+    this.transCon.init();
+    this.restoreFromConfig();
     eventListener.bind();
     startService(this, authorizeKey);
     this.win.createWindow("contrast");
     this.shortcut.init();
     this.menu.init();
-    recognizer.setUp();
   }
 
   onExit() {

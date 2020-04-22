@@ -6,9 +6,13 @@
       class="maxNoPad"
       style="margin:0px;"
     >
-      <v-col class="areaWarpper" @keyup.ctrl.13="translate">
+      <v-col class="areaWarpper">
         <textarea
           class="hArea"
+          @keyup.ctrl.13="translate"
+          @keyup.ctrl.71="google"
+          @keyup.ctrl.66="baidu"
+          @select="onSelect"
           v-model="sharedResult.text"
           v-on:contextmenu="openMenu('contrastContext')"
         ></textarea>
@@ -24,6 +28,9 @@
     <v-col v-else class="maxNoPad">
       <div class="areaWarpper" style="height: 50%;" @keyup.ctrl.13="translate">
         <textarea
+          @keyup.ctrl.13="translate"
+          @keyup.ctrl.71="google"
+          @keyup.ctrl.66="baidu"
           class="vArea"
           v-model="sharedResult.text"
           v-on:contextmenu="openMenu('contrastContext')"
@@ -47,7 +54,7 @@ import { Mixins, Watch, Component } from "vue-property-decorator";
 import WindowController from "../components/WindowController.vue";
 import Focus from "./Focus.vue";
 import { LayoutType, layoutTypes } from "../common/types";
-import { ipcRenderer as ipc } from "electron";
+import eventBus from "@/common/event-bus";
 
 @Component({
   components: {
@@ -63,8 +70,15 @@ export default class ContrastPanel extends Mixins(BaseView, WindowController) {
     this.set("layoutType", layoutType);
   }
 
-  translate() {
-    // this.$proxy.tryTranslate(this.sharedResult.text, true);
+  getModifiedText() {
+    return this.sharedResult.text;
+  }
+
+  onSelect(event: Event) {
+    const target = event.target as any;
+    console.log(
+      target.value.substring(target.selectionStart, target.selectionEnd)
+    );
   }
 }
 </script>

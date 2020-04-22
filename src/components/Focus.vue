@@ -64,27 +64,6 @@ export default class FocusMode extends Mixins(BaseView, WindowController) {
       return (this.dictResultPanel[0].$el as any).innerText;
     }
   }
-
-  baidu() {
-    shell.openExternal(
-      `https://www.baidu.com/s?ie=utf-8&wd=${this.getModifiedText()}`
-    );
-  }
-
-  google() {
-    shell.openExternal(
-      `https://www.google.com/search?q=${this.getModifiedText()}`
-    );
-  }
-
-  translate() {
-    const text = this.getModifiedText();
-    eventBus.at("dispatch", "translate", text);
-    this.$store.dispatch("clearShared");
-    this.$store.dispatch("setDictResult", {
-      valid: false
-    });
-  }
 }
 </script>
 

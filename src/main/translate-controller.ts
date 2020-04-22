@@ -17,9 +17,10 @@ import {
   SharedDictResult,
   emptyDictResult
 } from "../common/dictionary/types";
-import { clipboard } from "../common/clipboard";
+import { clipboard } from "./clipboard";
 import { MainController } from "../common/controller";
 import store from "@/store";
+import { recognizer } from "../common/ocr";
 
 class TranslateController {
   src: string = "";
@@ -37,8 +38,12 @@ class TranslateController {
 
   constructor(controller: MainController) {
     this.controller = controller;
-    clipboard.init();
     this.syncSupportLanguages();
+  }
+
+  init() {
+    clipboard.init();
+    recognizer.setUp();
   }
 
   handle(identifier: Identifier, param: any): boolean {

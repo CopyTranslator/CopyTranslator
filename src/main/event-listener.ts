@@ -1,7 +1,7 @@
 import simulate from "./simulate";
 import { checkForUpdates } from "./views/update";
 import os from "os";
-import { clipboard } from "../common/clipboard";
+import { clipboard } from "./clipboard";
 import bus from "../common/event-bus";
 class EventListener {
   drag = false;

@@ -1,4 +1,4 @@
-import { WordEngine, DictResult, DictionaryType } from "./types";
+import { WordEngine, QueryDictResult, DictionaryType } from "./types";
 const youdao = require("eazydict-youdao");
 const google = require("eazydict-google");
 const bing = require("eazydict-bing");
@@ -18,7 +18,7 @@ export class EasyEngine extends WordEngine {
     this.name = engine;
   }
 
-  async query(words: string): Promise<DictResult> {
+  async query(words: string): Promise<QueryDictResult> {
     return this.engine_func(words, {}).then(
       (res: any) => {
         return Promise.resolve({

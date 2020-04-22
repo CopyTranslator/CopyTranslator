@@ -13,7 +13,7 @@
         ref="normalResult"
         class="focusText max"
         v-bind:style="focusStyle"
-        v-model="sharedResult.result"
+        v-model="sharedResult.translation"
         v-if="sharedResult && !dictResult.valid"
       ></textarea>
       <DictResultPanel
@@ -32,6 +32,7 @@ import WindowController from "./WindowController.vue";
 import DictResultPanel from "./DictResult.vue";
 import { Mixins, Ref, Component } from "vue-property-decorator";
 import { Identifier, RouteActionType } from "../common/types";
+import eventBus from "../common/event-bus";
 
 @Component({
   components: {
@@ -57,12 +58,13 @@ export default class FocusMode extends Mixins(BaseView, WindowController) {
 
   getModifiedText() {
     if (this.sharedResult && !this.dictResult.valid) {
-      return this.sharedResult.result;
+      return this.sharedResult.translation;
     } else {
       //@ts-ignore
       return (this.dictResultPanel[0].$el as any).innerText;
     }
   }
+
   baidu() {
     shell.openExternal(
       `https://www.baidu.com/s?ie=utf-8&wd=${this.getModifiedText()}`
@@ -77,15 +79,8 @@ export default class FocusMode extends Mixins(BaseView, WindowController) {
 
   translate() {
     const text = this.getModifiedText();
-    const arg = {
-      src: "",
-      result: "",
-      source: "",
-      target: "",
-      engine: "",
-      notify: false
-    };
-    this.$store.dispatch("setShared", arg);
+    eventBus.at("dispatch", "translate", text);
+    this.$store.dispatch("clearShared");
     this.$store.dispatch("setDictResult", {
       valid: false
     });

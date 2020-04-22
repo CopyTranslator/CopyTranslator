@@ -61,7 +61,7 @@ import { translatorTypes, TranslatorType } from "../common/translate/constants";
 import {
   dictionaryTypes,
   DictionaryType,
-  CopyDictResult
+  emptyDictResult
 } from "../common/dictionary/types";
 
 @Component({

@@ -1,5 +1,9 @@
 import { Compound } from "../common/translate/compound";
-import { TranslatorType } from "../common/translate/constants";
+import {
+  TranslatorType,
+  emptySharedResult,
+  SharedResult
+} from "../common/translate/constants";
 import { Polymer } from "../common/dictionary/polymer";
 import { Language } from "@opentranslate/translator";
 import { CopyTranslateResult } from "../common/translate/types";
@@ -7,49 +11,41 @@ import { colorRules, getColorRule } from "../common/rule";
 import { normalizeAppend, checkIsWord } from "../common/translate/helper";
 import { Identifier, ColorStatus, colorStatusMap } from "../common/types";
 import trimEnd from "lodash.trimend";
-// import { getSupportLanguages } from "../common/translate/translators";
-
+import simulate from "./simulate";
 import {
   DictionaryType,
-  DictSuccess,
-  DictFail
+  SharedDictResult,
+  emptyDictResult
 } from "../common/dictionary/types";
 import { clipboard } from "../common/clipboard";
 import { MainController } from "../common/controller";
 import store from "@/store";
 
-function constructStore(data: object) {
-  var dataCopy = new Proxy(data, {
-    get(target, key, receiver) {
-      return Reflect.get(target, key, receiver);
-    },
-    set(target, key, value, receiver) {
-      return Reflect.set(target, key, value, receiver);
-    }
-  });
-}
-
 class TranslateController {
   src: string = "";
   resultString: string = "";
   translateResult: CopyTranslateResult | undefined;
-  dictResult: DictSuccess | DictFail = { words: "", valid: false };
+  dictResult: SharedDictResult = emptyDictResult();
   lastAppend: string = "";
-  translator: Compound = new Compound("google", {});
-  dictionary: Polymer = new Polymer("google");
   translating: boolean = false; //正在翻译
   words: string = "";
+
+  translator: Compound = new Compound(["google"], "google", {});
+  dictionary: Polymer = new Polymer("google");
 
   controller: MainController;
 
   constructor(controller: MainController) {
     this.controller = controller;
     clipboard.init();
-    this.syncLanguages();
+    this.syncSupportLanguages();
   }
 
-  handle(identifier: Identifier): boolean {
+  handle(identifier: Identifier, param: any): boolean {
     switch (identifier) {
+      case "translate":
+        this.tryTranslate(param as string);
+        break;
       case "clear":
         this.clear();
         break;
@@ -60,7 +56,7 @@ class TranslateController {
         clipboard.writeText(this.resultString);
         break;
       case "retryTranslate":
-        this.doTranslate(this.src);
+        this.translate(this.src);
         break;
       default:
         return false;
@@ -68,7 +64,7 @@ class TranslateController {
     return true;
   }
 
-  syncLanguages() {
+  syncSupportLanguages() {
     store.dispatch("setLanguages", this.translator.getSupportLanguages());
   }
 
@@ -97,10 +93,7 @@ class TranslateController {
     this.resultString = "";
     this.lastAppend = "";
     this.translateResult = undefined;
-    this.dictResult = {
-      words: "",
-      valid: false
-    };
+    this.dictResult = emptyDictResult();
     this.sync();
     this.syncDict();
   }
@@ -136,7 +129,7 @@ class TranslateController {
     }
     let text = this.normalizeText(originalText);
     if (this.checkValid(text)) {
-      this.doTranslate(text);
+      this.translate(text);
     }
   }
 
@@ -149,19 +142,16 @@ class TranslateController {
   }
 
   tryTranslate(text: string, clear = false) {
-    if (text != "") {
+    if (text != undefined && text != "") {
       if (clear) {
         this.clear();
       }
-      this.doTranslate(this.normalizeText(text));
+      this.translate(this.normalizeText(text));
     }
   }
 
   dictFail(text: string) {
-    this.dictResult = {
-      words: text,
-      valid: false
-    };
+    this.dictResult = emptyDictResult();
     if (this.translateResult && this.translateResult.text === text) {
       this.syncDict();
     }
@@ -180,13 +170,25 @@ class TranslateController {
         target: this.target()
       };
     }
+    let sharedResult: SharedResult = emptySharedResult();
+    if (this.translateResult != undefined) {
+      sharedResult = {
+        text: this.translateResult.text,
+        translation: this.translateResult.resultString,
+        from: this.translateResult.from,
+        to: this.translateResult.to,
+        engine: this.translateResult.engine,
+        notify: this.get<boolean>("enableNotify")
+      };
+    }
+    store.dispatch("setShared", sharedResult);
   }
 
   postProcess(language: any, result: CopyTranslateResult) {
     if (this.get<boolean>("autoCopy")) {
       clipboard.writeText(this.resultString);
       if (this.get<boolean>("autoPaste")) {
-        //simulate.paste();
+        simulate.paste();
       }
     } else if (this.get<boolean>("autoFormat")) {
       clipboard.writeText(this.src);
@@ -210,11 +212,11 @@ class TranslateController {
 
   setCurrentColor(fail = false) {
     if (fail) {
-      this.switchColor("Fail");
+      this.setColor("Fail");
       return;
     }
     if (!this.get<boolean>("listenClipboard")) {
-      this.switchColor("None");
+      this.setColor("None");
       return;
     }
     const options = this.getOptions();
@@ -223,25 +225,25 @@ class TranslateController {
     const autoPaste = getColorRule("autoPaste");
     switch (options) {
       case incrementalCopy | autoCopy | autoPaste:
-        this.switchColor("IncrementalCopyPaste");
+        this.setColor("IncrementalCopyPaste");
         return;
       case incrementalCopy | autoCopy:
-        this.switchColor("IncrementalCopy");
+        this.setColor("IncrementalCopy");
         return;
       case incrementalCopy:
-        this.switchColor("Incremental");
+        this.setColor("Incremental");
         return;
       case autoCopy | autoPaste:
-        this.switchColor("AutoPaste");
+        this.setColor("AutoPaste");
         return;
       case autoCopy:
-        this.switchColor("AutoCopy");
+        this.setColor("AutoCopy");
         return;
     }
-    this.switchColor("Listen");
+    this.setColor("Listen");
   }
 
-  switchColor(color: ColorStatus) {
+  setColor(color: ColorStatus) {
     store.dispatch("setColor", colorStatusMap.get(color));
   }
 
@@ -277,7 +279,7 @@ class TranslateController {
   preProcess(text: string) {
     this.lastAppend = text;
     this.setSrc(text);
-    this.switchColor("Translating");
+    this.setColor("Translating");
   }
 
   postTranslate(
@@ -293,7 +295,7 @@ class TranslateController {
     this.postProcess(language, res);
   }
 
-  async doTranslate(text: string) {
+  private async translate(text: string) {
     if (this.translating || !this.checkLength(text)) {
       //保证翻译时不被打断
       return;
@@ -301,7 +303,7 @@ class TranslateController {
     this.translating = true;
     console.log("translate", text);
 
-    Promise.all([
+    Promise.allSettled([
       this.translateSentence(text),
       this.queryDictionary(text)
     ]).then(() => {
@@ -318,7 +320,9 @@ class TranslateController {
     });
   }
 
-  syncDict() {}
+  syncDict() {
+    store.dispatch("setDictResult", this.dictResult);
+  }
 
   isWord(text: string) {
     text = trimEnd(text.trim(), ",.!?. ");
@@ -376,7 +380,7 @@ class TranslateController {
   async switchTranslator(value: TranslatorType) {
     let valid = true;
     this.translator.setMainEngine(value);
-    this.syncLanguages();
+    this.syncSupportLanguages();
     if (!this.translator.isValid(this.source())) {
       this.controller.set("sourceLanguage", "en");
       valid = false;
@@ -394,11 +398,11 @@ class TranslateController {
         this.postTranslate(buffer);
       } catch (e) {
         console.log("invalid");
-        this.doTranslate(this.src);
+        this.translate(this.src);
       }
     } else {
       console.log("valid");
-      this.doTranslate(this.src);
+      this.translate(this.src);
     }
   }
 
@@ -448,10 +452,10 @@ class TranslateController {
         this.setWatch(value);
         break;
       case "targetLanguage":
-        this.doTranslate(this.src);
+        this.translate(this.src);
         break;
       case "sourceLanguage":
-        this.doTranslate(this.src);
+        this.translate(this.src);
         break;
       case "incrementalCopy":
         this.clear();

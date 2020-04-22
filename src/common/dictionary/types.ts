@@ -20,26 +20,37 @@ export interface Suggest {
 
 export const dictionaryTypes = ["google", "youdao", "bing"] as const;
 export type DictionaryType = typeof dictionaryTypes[number];
-export interface DictResult {
+interface DictResult {
   words: string;
   explains: Array<Explain>;
   phonetics?: Array<Phonetic>;
   examples?: Array<Example>;
   suggests?: Array<Suggest>;
-  engine: DictionaryType;
   url?: string;
 }
 
+export type QueryDictResult = DictResult & {
+  engine: DictionaryType;
+};
+
 export abstract class WordEngine {
   abstract name: DictionaryType;
-  abstract query(words: string): Promise<DictResult>;
+  abstract query(words: string): Promise<QueryDictResult>;
 }
 
-export interface DictFail {
-  words: string;
+export type SharedDictResult = DictResult & {
+  engine: DictionaryType | "";
   valid: boolean;
+};
+
+export function emptyDictResult(): SharedDictResult {
+  return {
+    valid: false,
+    phonetics: [],
+    explains: [],
+    examples: [],
+    engine: "",
+    url: "",
+    words: ""
+  };
 }
-
-export type DictSuccess = DictResult & { valid: boolean };
-
-export type CopyDictResult = DictSuccess | DictFail;

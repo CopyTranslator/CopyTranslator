@@ -7,6 +7,7 @@ const isMain = process.type == "browser";
 
 type Handler1 = () => void;
 type Handler2 = (controller: MainController | RenController) => void;
+
 export type Handler = Handler1 | Handler2;
 
 export abstract class CommonController {
@@ -14,7 +15,7 @@ export abstract class CommonController {
   action: ActionManager = new ActionManager(config);
 
   links: Map<Identifier, Handler>[] = [];
-  abstract handle(command: string): boolean;
+  abstract handle(identifier: Identifier, param: any[]): boolean;
 
   constructor() {
     this.action.init();
@@ -33,7 +34,10 @@ export abstract class CommonController {
     this.links.push(handlers);
   }
 
-  handleWithLinks(identifier: Identifier): boolean {
+  handleWithLinks(identifier: Identifier, param: any): boolean {
+    if (param != undefined) {
+      return false;
+    }
     for (const handlers of this.links) {
       if (handlers.has(identifier)) {
         (handlers.get(identifier) as Handler)(this);
@@ -49,7 +53,10 @@ export abstract class CommonController {
       switch (type) {
         case "normal":
           if (
-            !(this.handleWithLinks(identifier) || this.handle(identifier)) &&
+            !(
+              this.handleWithLinks(identifier, param) ||
+              this.handle(identifier, param)
+            ) &&
             main == isMain
           ) {
             //跨进程动作，防止出现回声

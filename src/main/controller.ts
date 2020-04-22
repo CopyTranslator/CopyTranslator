@@ -31,7 +31,7 @@ class Controller extends MainController {
     this.bindLinks(actionLinks);
   }
 
-  handle(identifier: Identifier): boolean {
+  handle(identifier: Identifier, param: any): boolean {
     switch (identifier) {
       case "font+":
         console.log("font+");
@@ -49,9 +49,8 @@ class Controller extends MainController {
         this.resotreDefaultSetting();
         break;
       default:
-        return this.transCon.handle(identifier);
+        return this.transCon.handle(identifier, param);
     }
-
     console.log(identifier);
     return true;
   }

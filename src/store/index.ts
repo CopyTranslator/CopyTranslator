@@ -5,7 +5,8 @@ import { Identifier } from "./plugins/types";
 import { updateViewPlugin, observePlugin, initState } from "./plugins";
 export * from "./plugins";
 import { registerLocale } from "./plugins/l10n";
-import bus from "../common/event-bus";
+import { emptySharedResult } from "@/common/translate/constants";
+import { emptyDictResult } from "@/common/dictionary/types";
 
 Vue.use(Vuex);
 
@@ -21,29 +22,16 @@ const store = new Vuex.Store({
   state: {
     languages: [],
     color: "white",
-    sharedResult: {
-      src: "",
-      result: "",
-      source: "",
-      target: "",
-      engine: "",
-      notify: false
-    },
-    dictResult: {
-      valid: false,
-      phonetics: [],
-      explains: [],
-      examples: [],
-      code: 0,
-      engine: "",
-      url: "",
-      words: ""
-    },
+    sharedResult: emptySharedResult(),
+    dictResult: emptyDictResult(),
     config: {}
   },
   mutations: {
     setShared(state, sharedResult) {
       state.sharedResult = sharedResult;
+    },
+    clearShared(state) {
+      state.sharedResult = emptySharedResult();
     },
     setDictResult(state, dictResult) {
       state.dictResult = dictResult;
@@ -81,6 +69,9 @@ const store = new Vuex.Store({
     },
     updateConfig(context, config) {
       context.commit("updateConfig", config);
+    },
+    clearShared(context) {
+      context.commit("clearShared");
     }
   },
   modules: {},

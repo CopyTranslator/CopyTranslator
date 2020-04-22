@@ -19,10 +19,11 @@ export class Compound implements CopyTranslator {
   src: string | undefined;
 
   constructor(
-    engineType: TranslatorType = "google",
+    engines: TranslatorType[],
+    mainEngine: TranslatorType = "google",
     config: AxiosRequestConfig = {}
   ) {
-    this.mainEngine = getTranslator(engineType);
+    this.mainEngine = getTranslator(mainEngine);
     this.languages = this.mainEngine.getSupportLanguages();
     this.config = config;
   }

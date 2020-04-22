@@ -9,14 +9,14 @@
       <v-col class="areaWarpper" @keyup.ctrl.13="translate">
         <textarea
           class="hArea"
-          v-model="sharedResult.src"
+          v-model="sharedResult.text"
           v-on:contextmenu="openMenu('contrastContext')"
         ></textarea>
       </v-col>
       <v-col class="areaWarpper">
         <textarea
           class="hArea"
-          v-model="sharedResult.result"
+          v-model="sharedResult.translation"
           v-on:contextmenu="openMenu('contrastContext')"
         ></textarea>
       </v-col>
@@ -25,14 +25,14 @@
       <div class="areaWarpper" style="height: 50%;" @keyup.ctrl.13="translate">
         <textarea
           class="vArea"
-          v-model="sharedResult.src"
+          v-model="sharedResult.text"
           v-on:contextmenu="openMenu('contrastContext')"
         ></textarea>
       </div>
       <div class="areaWarpper" style="height: 50%;">
         <textarea
           class="vArea"
-          v-model="sharedResult.result"
+          v-model="sharedResult.translation"
           v-on:contextmenu="openMenu('contrastContext')"
         ></textarea>
       </div>
@@ -64,7 +64,7 @@ export default class ContrastPanel extends Mixins(BaseView, WindowController) {
   }
 
   translate() {
-    // this.$proxy.tryTranslate(this.sharedResult.src, true);
+    // this.$proxy.tryTranslate(this.sharedResult.text, true);
   }
 }
 </script>

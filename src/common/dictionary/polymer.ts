@@ -1,16 +1,16 @@
-import { WordEngine, DictResult, DictionaryType } from "./types";
+import { WordEngine, QueryDictResult, DictionaryType } from "./types";
 import { getDictionary, dictionaries } from "./engines";
 
 export class Polymer {
   mainEngine: WordEngine;
-  resultBuffer = new Map<DictionaryType, DictResult | undefined>();
+  resultBuffer = new Map<DictionaryType, QueryDictResult | undefined>();
   words: string | undefined;
 
   constructor(engineType: DictionaryType = "google") {
     this.mainEngine = getDictionary(engineType);
   }
 
-  query(words: string): Promise<DictResult> {
+  query(words: string): Promise<QueryDictResult> {
     this.words = words;
     for (const [name, engine] of dictionaries.entries()) {
       if (name === this.mainEngine.name) {
@@ -32,7 +32,7 @@ export class Polymer {
     });
   }
   getBuffer(engine: DictionaryType) {
-    return this.resultBuffer.get(engine) as DictResult;
+    return this.resultBuffer.get(engine) as QueryDictResult;
   }
 
   setMainEngine(engineType: DictionaryType) {

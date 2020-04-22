@@ -1,4 +1,4 @@
-import simulate from "../common/simulate";
+import simulate from "./simulate";
 import { checkForUpdates } from "./views/update";
 import os from "os";
 import { clipboard } from "../common/clipboard";

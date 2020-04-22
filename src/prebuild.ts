@@ -5,11 +5,8 @@ import { mapToObj, objToMap } from "./common/types";
 import { Language } from "@opentranslate/languages";
 
 const localeDir = path.join(process.cwd(), "dist_locales");
-// prettier-ignore
-let resources=new Map<Language,Locale>([
-  ['en', en],
-  ['zh-CN',zh_cn]
-]);
+
+let resources = new Map<Language, Locale>([["en", en], ["zh-CN", zh_cn]]);
 
 function mkdir(dir: string) {
   if (!fs.existsSync(dir)) {
@@ -26,6 +23,7 @@ function generateLocales(resources: Map<Language, Locale>, localeDir: string) {
     );
   }
 }
+
 const keys = Array.from(resources.keys());
 fs.readdirSync(localeDir)
   .filter((e: string) => !keys.includes(<Language>e.replace(".json", "")))

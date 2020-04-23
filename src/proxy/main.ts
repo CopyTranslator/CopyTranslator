@@ -10,14 +10,14 @@ export function startService<T>(proxy: T, key: string) {
           event.sender.send(`proxy-service-res-${arg.promiseCounter}`, {
             succeed: true,
             result,
-            promiseCounter: arg.promiseCounter
+            promiseCounter: arg.promiseCounter,
           });
         });
       } else {
         event.sender.send(`proxy-service-res-${arg.promiseCounter}`, {
           succeed: true,
           result: res,
-          promiseCounter: arg.promiseCounter
+          promiseCounter: arg.promiseCounter,
         });
       }
     }

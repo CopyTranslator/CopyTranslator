@@ -16,8 +16,8 @@ import Component, { mixins } from "vue-class-component";
 const AppProps = Vue.extend({
   props: {
     engine: String,
-    valid: Boolean
-  }
+    valid: Boolean,
+  },
 });
 
 @Component

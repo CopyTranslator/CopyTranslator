@@ -11,7 +11,7 @@ export function registerLocale(
     locale: Locale;
   } = {
     locales: [],
-    locale: {}
+    locale: {},
   }
 ) {
   const l10nModule = {
@@ -22,7 +22,7 @@ export function registerLocale(
       },
       locale(state: any) {
         return state.locale;
-      }
+      },
     },
     mutations: {
       updateLocale(state: any, locale: Locale) {
@@ -30,7 +30,7 @@ export function registerLocale(
       },
       updateLocales(state: any, locales: Locale) {
         Vue.set(state, "locales", locales);
-      }
+      },
     },
     actions: {
       updateLocale(context: any, locale: Locale) {
@@ -38,8 +38,8 @@ export function registerLocale(
       },
       updateLocales(context: any, locales: Locale) {
         context.commit("updateLocales", locales);
-      }
-    }
+      },
+    },
   };
   store.registerModule("l10n", l10nModule);
 }

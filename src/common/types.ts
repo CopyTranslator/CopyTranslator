@@ -24,7 +24,8 @@ export const normalActionTypes = [
   "font-",
   "drawer",
   "editConfigFile",
-  "showConfigFolder"
+  "showConfigFolder",
+  "hideWindow",
 ] as const;
 
 //切换值的动作
@@ -45,7 +46,7 @@ export const constantActionTypes = [
   "version",
   "API_KEY",
   "APP_ID",
-  "SECRET_KEY"
+  "SECRET_KEY",
 ] as const;
 
 //切换值的动作
@@ -66,7 +67,7 @@ export const switchActionTypes = [
   "smartTranslate",
   "smartDict",
   "dragCopy",
-  "closeAsQuit"
+  "closeAsQuit",
 ] as const;
 
 //Electron 原生 角色
@@ -90,7 +91,7 @@ export const roles = [
   "zoomIn",
   "zoomOut",
   "editMenu",
-  "windowMenu"
+  "windowMenu",
 ] as const;
 
 //不同位置动作列表
@@ -104,7 +105,7 @@ export const menuActionTypes = [
   "ocrConfig", //设置的配置面板
   "tray", //任务栏托盘右键菜单
   "draggableOptions", //
-  "allActions"
+  "allActions",
 ] as const;
 
 //布局名称
@@ -117,14 +118,14 @@ export const domains = ["medicine", "electronics", "mechanics"];
 export const routeActionTypes = [
   "contrast",
   "settings", //设置页面
-  "update"
+  "update",
 ] as const;
 
 //路由名称
 export const colorModes = [
   "dark",
   "light", //设置页面
-  "auto"
+  "auto",
 ] as const;
 
 export const eventTypes = [
@@ -135,7 +136,7 @@ export const eventTypes = [
   "minify",
   "initialized",
   "callback",
-  "dispatch"
+  "dispatch",
 ] as const;
 
 export type Role = typeof roles[number];
@@ -168,7 +169,7 @@ export const identifiers: readonly Identifier[] = flatten([
   normalActionTypes,
   menuActionTypes,
   routeActionTypes,
-  layoutTypes
+  layoutTypes,
 ]);
 
 export type MenuItemType =
@@ -208,7 +209,7 @@ export const hideDirections = [
   "Right",
   "Left",
   "None",
-  "Minify"
+  "Minify",
 ] as const;
 export type HideDirection = typeof hideDirections[number];
 
@@ -221,7 +222,7 @@ export const colorStatuses = [
   "IncrementalCopy",
   "AutoPaste",
   "IncrementalCopyPaste",
-  "Fail"
+  "Fail",
 ] as const;
 export type ColorStatus = typeof colorStatuses[number];
 
@@ -241,7 +242,7 @@ export const colorStatusMap = new Map<ColorStatus, string>([
   ["IncrementalCopy", rgb(199, 21, 133)],
   ["AutoPaste", rgb(0, 0, 139)],
   ["IncrementalCopyPaste", rgb(0, 0, 128)],
-  ["Fail", rgb(255, 0, 0)]
+  ["Fail", rgb(255, 0, 0)],
 ]);
 
 export type Locale = { [key: string]: string };
@@ -276,7 +277,7 @@ export function decompose(...args: any[]) {
   const identifier = <Identifier>params[0];
   return {
     identifier,
-    param
+    param,
   };
 }
 

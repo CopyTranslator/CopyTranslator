@@ -1,7 +1,7 @@
 import {
   Translator,
   Language,
-  TranslateResult
+  TranslateResult,
 } from "@opentranslate/translator";
 import compact from "lodash.compact";
 import sum from "lodash.sum";
@@ -50,14 +50,16 @@ export function reSegmentGoogle(
     return resultString;
   }
 
-  const counts = sentences.map(sentence => countSentences(sentence, splitFunc));
+  const counts = sentences.map((sentence) =>
+    countSentences(sentence, splitFunc)
+  );
   if (sum(counts) != result.length) {
     return result.join("\n");
   }
 
   let resultString = "";
   let index = 0;
-  counts.forEach(count => {
+  counts.forEach((count) => {
     for (let i = 0; i < count; i++) {
       resultString += seprator + result[index];
       index++;
@@ -81,7 +83,9 @@ export function reSegment(
     const resultString = result.join(seprator);
     return resultString;
   }
-  const counts = sentences.map(sentence => countSentences(sentence, splitFunc));
+  const counts = sentences.map((sentence) =>
+    countSentences(sentence, splitFunc)
+  );
 
   if (sum(counts) != result.length) {
     return result.join("\n");
@@ -89,7 +93,7 @@ export function reSegment(
 
   let resultString = "";
   let index = 0;
-  counts.forEach(count => {
+  counts.forEach((count) => {
     for (let i = 0; i < count; i++) {
       resultString += seprator + result[index];
       index++;
@@ -131,7 +135,7 @@ export function normalizeAppend(src: string, purify = true) {
   src = src.replace(/\r\n/g, "\n");
   src = src.replace(/\r/g, "\n");
   src = src.replace(/-\n/g, "");
-  patterns.forEach(function(e) {
+  patterns.forEach(function (e) {
     src = src.replace(e, "#$1#");
   });
   src = src.replace(/\n/g, " ");

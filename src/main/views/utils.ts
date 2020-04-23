@@ -5,7 +5,7 @@ import { BrowserWindow } from "electron";
 import { env, icon } from "../../common/env";
 
 export function insertStyles(window: BrowserWindow) {
-  window.webContents.on("did-finish-load", function() {
+  window.webContents.on("did-finish-load", function () {
     window.webContents.insertCSS(loadStyles());
   });
 }
@@ -46,8 +46,8 @@ export const defaultConfig = {
   show: false,
   icon: icon,
   webPreferences: {
-    nodeIntegration: true
-  }
+    nodeIntegration: true,
+  },
 };
 
 const windows = new Map<RouteActionType, BrowserWindow>();
@@ -59,7 +59,7 @@ export function createWindow(
 ): BrowserWindow {
   const config = {
     ...defaultConfig,
-    ...param
+    ...param,
   };
   const window = new BrowserWindow(config);
   if (!config.show) {

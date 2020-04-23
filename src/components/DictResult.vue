@@ -38,7 +38,7 @@ export default class DictResult extends Mixins(BaseView) {
   get dictStyle() {
     return {
       fontSize: this.size.toString() + "px",
-      height: "100%;"
+      height: "100%;",
     };
   }
 }

@@ -61,15 +61,15 @@ import { translatorTypes, TranslatorType } from "../common/translate/constants";
 import {
   dictionaryTypes,
   DictionaryType,
-  emptyDictResult
+  emptyDictResult,
 } from "../common/dictionary/types";
 
 @Component({
   components: {
     Action: Action,
     ContrastPanel: ContrastPanel,
-    EngineButton: EngineButton
-  }
+    EngineButton: EngineButton,
+  },
 })
 export default class Contrast extends Mixins(BaseView, WindowController) {
   barWidth: number = 0;
@@ -104,7 +104,7 @@ export default class Contrast extends Mixins(BaseView, WindowController) {
   get area() {
     return {
       "margin-top": "49px",
-      width: `${(this.windowWidth - this.barWidth).toString()}px`
+      width: `${(this.windowWidth - this.barWidth).toString()}px`,
     };
   }
 
@@ -117,7 +117,7 @@ export default class Contrast extends Mixins(BaseView, WindowController) {
   }
 
   enumerateLayouts() {
-    const index = layoutTypes.findIndex(x => x === this.layoutType);
+    const index = layoutTypes.findIndex((x) => x === this.layoutType);
     this.set("layoutType", layoutTypes[(index + 1) % layoutTypes.length]);
   }
 

@@ -41,7 +41,7 @@ export class WindowMangaer {
   ): BrowserWindow {
     const config = {
       ...defaultConfig,
-      ...param
+      ...param,
     };
     const window = new BrowserWindow(config);
     if (!config.show) {
@@ -74,7 +74,7 @@ export class WindowMangaer {
       height: 600,
       width: 1094,
       show: false,
-      title: "CopyTranslator"
+      title: "CopyTranslator",
     };
     return this.createWindow("contrast", config, true);
   }
@@ -86,7 +86,7 @@ export class WindowMangaer {
       x: xBound,
       x: yBound,
       width: screenWidth,
-      height: screenHeight
+      height: screenHeight,
     } = screen.getPrimaryDisplay().bounds; //TODO 这里需要对双屏做优化
     const t = store.getters.locale;
     const config = {
@@ -96,7 +96,7 @@ export class WindowMangaer {
       height: height,
       maximizable: false,
       minimizable: false,
-      title: t["settings"]
+      title: t["settings"],
     };
     return this.createWindow("settings", config);
   }
@@ -109,7 +109,7 @@ export class WindowMangaer {
       x: xBound,
       x: yBound,
       width: screenWidth,
-      height: screenHeight
+      height: screenHeight,
     } = screen.getPrimaryDisplay().bounds; //TODO 这里需要对双屏做优化
 
     const config = {
@@ -120,7 +120,7 @@ export class WindowMangaer {
       maximizable: false,
       minimizable: false,
       parent: this.get("contrast"),
-      title: "Update"
+      title: "Update",
     };
     return this.createWindow("update", config);
   }

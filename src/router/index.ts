@@ -10,29 +10,29 @@ Vue.use(VueRouter);
 const routes = [
   {
     path: "/",
-    redirect: "/contrast"
+    redirect: "/contrast",
   },
   {
     path: "/contrast",
     name: "contrast",
-    component: Contrast
+    component: Contrast,
   },
   {
     path: "/update",
     name: "update",
-    component: Update
+    component: Update,
   },
   {
     path: "/settings",
     name: "settings",
-    component: Settings
-  }
+    component: Settings,
+  },
 ];
 
 const router = new VueRouter({
   mode: "hash",
   base: process.env.BASE_URL,
-  routes
+  routes,
 });
 
 export default router;

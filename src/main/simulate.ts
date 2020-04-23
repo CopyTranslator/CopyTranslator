@@ -10,5 +10,5 @@ function simulatePaste() {
 
 export default {
   copy: simulateCopy,
-  paste: simulatePaste
+  paste: simulatePaste,
 };

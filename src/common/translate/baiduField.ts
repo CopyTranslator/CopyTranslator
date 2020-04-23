@@ -2,7 +2,7 @@ import {
   Language,
   Translator,
   TranslateError,
-  TranslateQueryResult
+  TranslateQueryResult,
 } from "@opentranslate/translator";
 import md5 from "md5";
 import qs from "qs";
@@ -11,7 +11,7 @@ import { Domain } from "../types";
 const langMap: [Language, string][] = [
   ["auto", "auto"],
   ["zh-CN", "zh"],
-  ["en", "en"]
+  ["en", "en"],
 ];
 
 export interface BaiduFieldConfig {
@@ -61,8 +61,8 @@ export class BaiduField extends Translator<BaiduFieldConfig> {
         salt,
         appid,
         domain,
-        sign: md5(appid + text + salt + domain + key)
-      }
+        sign: md5(appid + text + salt + domain + key),
+      },
     }).catch(() => {
       throw new TranslateError("NETWORK_ERROR");
     });
@@ -80,7 +80,7 @@ export class BaiduField extends Translator<BaiduFieldConfig> {
 
     const {
       trans_result: transResult,
-      from: langDetected
+      from: langDetected,
     } = data as BaiduFieldTranslateResult;
 
     return {
@@ -89,12 +89,12 @@ export class BaiduField extends Translator<BaiduFieldConfig> {
       to,
       origin: {
         paragraphs: transResult.map(({ src }) => src),
-        tts: await this.textToSpeech(text, langDetected)
+        tts: await this.textToSpeech(text, langDetected),
       },
       trans: {
         paragraphs: transResult.map(({ dst }) => dst),
-        tts: await this.textToSpeech(transResult[0].dst, to)
-      }
+        tts: await this.textToSpeech(transResult[0].dst, to),
+      },
     };
   }
 
@@ -115,7 +115,7 @@ export class BaiduField extends Translator<BaiduFieldConfig> {
       lan: BaiduField.langMap.get(lang !== "auto" ? lang : "zh-CN") || "zh",
       ie: "UTF-8",
       spd: 5,
-      text
+      text,
     })}`;
   }
 }

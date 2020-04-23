@@ -51,6 +51,8 @@ class Controller extends MainController {
       case "checkUpdate":
         this.updater.check();
         break;
+      case "hideWindow":
+        this.win.get("contrast").hide();
       default:
         return this.transCon.handle(identifier, param);
     }
@@ -85,7 +87,7 @@ class Controller extends MainController {
         }
         break;
       case "colorMode":
-        BrowserWindow.getAllWindows().forEach(window => {
+        BrowserWindow.getAllWindows().forEach((window) => {
           window.reload();
         });
         break;

@@ -7,13 +7,13 @@
       :label="trans[action.id]"
     ></v-switch>
     <div v-else-if="action.type === 'submenu'">
-      <p style="margin:0px;">{{ trans[identifier] }}</p>
+      <p style="margin: 0px;">{{ trans[identifier] }}</p>
       <v-select
         v-model="command"
         :items="action.submenu"
         item-text="label"
         item-value="id"
-        style="margin:0px;padding:0px;"
+        style="margin: 0px; padding: 0px;"
       >
       </v-select>
     </div>
@@ -26,19 +26,17 @@
 </template>
 
 <script lang="ts">
-import { Identifier,compose,ActionView } from "../common/types";
+import { Identifier, compose, ActionView } from "../common/types";
 import { Prop, Component, Watch, Vue } from "vue-property-decorator";
 import bus from "../common/event-bus";
 
 @Component
 export default class Action extends Vue {
   @Prop({ default: undefined }) readonly identifier!: Identifier;
-  action: ActionView =this.$controller.action.getAction(
-      this.identifier
-    );
+  action: ActionView = this.$controller.action.getAction(this.identifier);
 
   callback(...args: any[]) {
-    bus.at("dispatch",...args);
+    bus.at("dispatch", ...args);
   }
 
   get command() {
@@ -58,12 +56,10 @@ export default class Action extends Vue {
   }
 
   async sync() {
-    this.action = this.$controller.action.getAction(
-      this.identifier
-    );
+    this.action = this.$controller.action.getAction(this.identifier);
   }
 
-  get trans(){
+  get trans() {
     return this.$store.getters.locale;
   }
 

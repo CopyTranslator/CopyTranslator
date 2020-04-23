@@ -5,7 +5,7 @@ const ignores = [];
 function walk(dir) {
   var results = [];
   var list = fs.readdirSync(dir);
-  list.forEach(function(file) {
+  list.forEach(function (file) {
     file = path.join(dir, file);
     var stat = fs.statSync(file);
     if (stat && stat.isDirectory()) {
@@ -24,4 +24,4 @@ function walk(dir) {
   return results;
 }
 
-walk(path.join(__dirname, "src")).forEach(file => fs.unlinkSync(file));
+walk(path.join(__dirname, "src")).forEach((file) => fs.unlinkSync(file));

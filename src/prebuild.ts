@@ -6,7 +6,10 @@ import { Language } from "@opentranslate/languages";
 
 const localeDir = path.join(process.cwd(), "dist_locales");
 
-const resources = new Map<Language, Locale>([["en", en], ["zh-CN", zh_cn]]);
+const resources = new Map<Language, Locale>([
+  ["en", en],
+  ["zh-CN", zh_cn],
+]);
 
 function mkdir(dir: string) {
   if (!fs.existsSync(dir)) {

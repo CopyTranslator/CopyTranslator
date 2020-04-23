@@ -24,7 +24,7 @@ export class UpdateChecker {
       console.log(error);
     });
 
-    autoUpdater.on("update-available", updateInfo => {
+    autoUpdater.on("update-available", (updateInfo) => {
       const window = this.getWindow();
       window.webContents.on("did-finish-load", () => {
         window.webContents.send("releaseNote", updateInfo);
@@ -39,10 +39,10 @@ export class UpdateChecker {
           icon: icon,
           message: "更新已下载",
           buttons: ["现在退出并安装", "退出后自动安装", "cancel"],
-          cancelId: 2
+          cancelId: 2,
         })
-        .then(res => res.response)
-        .then(response => {
+        .then((res) => res.response)
+        .then((response) => {
           if (response == 0) {
             setImmediate(() => autoUpdater.quitAndInstall());
           }

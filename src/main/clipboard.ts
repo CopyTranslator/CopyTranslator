@@ -8,11 +8,11 @@ function delay(
   propertyKey: string,
   descriptor: PropertyDescriptor
 ) {
-  const newMethod = function(...args: any[]) {
+  const newMethod = function (...args: any[]) {
     if (target["clipboard"] == undefined) {
       target["operations"].push({
         key: propertyKey,
-        args
+        args,
       });
       return;
     } else {
@@ -28,7 +28,7 @@ class ClipboardWarpper {
   static operations: Array<Operation> = [];
   static init() {
     ClipboardWarpper.clipboard = require("electron-clipboard-extended");
-    ClipboardWarpper.operations.forEach(operation => {
+    ClipboardWarpper.operations.forEach((operation) => {
       return ClipboardWarpper.clipboard[operation["key"]].call(
         ClipboardWarpper.clipboard,
         ...operation["args"]

@@ -4,7 +4,7 @@ export const translatorTypes = [
   "sogou",
   "caiyun",
   "tencent",
-  "youdao"
+  "youdao",
 ] as const;
 export type TranslatorType = typeof translatorTypes[number];
 
@@ -24,6 +24,6 @@ export function emptySharedResult(): SharedResult {
     from: "",
     to: "",
     engine: "",
-    notify: false
+    notify: false,
   };
 }

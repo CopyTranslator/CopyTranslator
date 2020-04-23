@@ -4,12 +4,12 @@ import {
   Role,
   ActionView,
   MenuItemType,
-  decompose
+  decompose,
 } from "../common/types";
 import store from "../store";
 
 import { env } from "../common/env";
-import { constants } from "../core/constant";
+import { constants } from "../common/constant";
 import { BrowserWindow, Menu, MenuItem, Tray } from "electron";
 import bus from "../common/event-bus";
 import { ActionManager } from "@/common/action";
@@ -60,7 +60,7 @@ export class MenuManager {
   actionToMenuItem(action: ActionView): MenuAction {
     const t = store.getters.locale;
     const menuItem: MenuAction = {
-      ...action
+      ...action,
     };
     menuItem.label = t[menuItem.id];
     if (menuItem.role) {
@@ -86,7 +86,7 @@ export class MenuManager {
   getMenu(name: MenuActionType) {
     const contain = this.act.getKeys(name);
     const menu = new Menu();
-    contain.forEach(id => {
+    contain.forEach((id) => {
       const action = this.act.getAction(id);
       const menuItem = this.actionToMenuItem(action);
       menu.append(new MenuItem(menuItem));
@@ -101,7 +101,7 @@ export class MenuManager {
   init() {
     this.tray = this.tray ? this.tray : new Tray(env.trayIconPath);
     this.tray.setToolTip(constants.appName);
-    this.tray.on("right-click", event => {
+    this.tray.on("right-click", (event) => {
       (this.tray as any).popUpContextMenu(this.getMenu("tray"));
     });
   }

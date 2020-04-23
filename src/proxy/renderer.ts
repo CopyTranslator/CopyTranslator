@@ -27,14 +27,14 @@ export function createProxy<T>(name: string): Promisified<T> {
     {
       get(target, key) {
         return (...args: any[]) => {
-          return new Promise(resolve => {
+          return new Promise((resolve) => {
             promiseCounter += 1;
             pendingPromiseCallbacks[promiseCounter] = resolve;
             ipcRenderer.send("proxy-service", {
               type: name,
               method: key,
               args,
-              promiseCounter
+              promiseCounter,
             });
 
             ipcRenderer.once(
@@ -47,7 +47,7 @@ export function createProxy<T>(name: string): Promisified<T> {
             );
           });
         };
-      }
+      },
     }
   );
   return proxy as Promisified<T>;

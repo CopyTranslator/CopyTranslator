@@ -15,7 +15,7 @@ const plugins = [
   initState,
   createSharedMutations(),
   observePlugin,
-  updateViewPlugin
+  updateViewPlugin,
 ];
 
 const store = new Vuex.Store({
@@ -24,7 +24,7 @@ const store = new Vuex.Store({
     color: "white",
     sharedResult: emptySharedResult(),
     dictResult: emptyDictResult(),
-    config: {}
+    config: {},
   },
   mutations: {
     setShared(state, sharedResult) {
@@ -49,7 +49,7 @@ const store = new Vuex.Store({
       for (const key of Object.keys(config)) {
         Vue.set(state.config, key, config[key]);
       }
-    }
+    },
   },
   actions: {
     setShared(context, sharedResult) {
@@ -72,15 +72,15 @@ const store = new Vuex.Store({
     },
     clearShared(context) {
       context.commit("clearShared");
-    }
+    },
   },
   modules: {},
   getters: {
-    keys: state => {
+    keys: (state) => {
       return Object.keys(state.config);
-    }
+    },
   },
-  plugins: plugins
+  plugins: plugins,
 });
 
 export default store;

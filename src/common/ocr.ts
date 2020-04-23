@@ -22,10 +22,10 @@ export class Recognizer {
     image = fs.readFileSync("temp.png").toString("base64");
     this.client
       .generalBasic(image)
-      .then(function(result: any) {
+      .then(function (result: any) {
         // global.controller.postProcessImage(result["words_result"]);
       })
-      .catch(function(err: any) {
+      .catch(function (err: any) {
         // 如果发生网络错误
         console.log(err);
       });

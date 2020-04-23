@@ -6,12 +6,12 @@ export const constants = {
   wiki: "https://copytranslator.github.io/guide",
   homepage: "https://copytranslator.github.io",
   downloadPage:
-    "https://copytranslator.github.io/guide/download.html#%E4%B8%8B%E8%BD%BD"
+    "https://copytranslator.github.io/guide/download.html#%E4%B8%8B%E8%BD%BD",
 };
 export const versionString = [
   "v" + constants.version,
   constants.nickName,
-  constants.stage
+  constants.stage,
 ].join(" ");
 
 export const version = constants.version;

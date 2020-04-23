@@ -10,10 +10,10 @@ import {
   ColorMode,
   colorModes,
   HideDirection,
-  hideDirections
+  hideDirections,
 } from "./types";
 import { DictionaryType, dictionaryTypes } from "./dictionary/types";
-import { version } from "../core/constant";
+import { version } from "./constant";
 
 function initConfig(
   config: ConfigParser | undefined = undefined
@@ -141,7 +141,7 @@ function initConfig(
         y: 186,
         height: 600,
         width: 1094,
-        fontSize: 15
+        fontSize: 15,
       },
       "parameters of contrast mode"
     )
@@ -154,7 +154,7 @@ function initConfig(
         x: 1390,
         y: 133,
         height: 787,
-        width: 362
+        width: 362,
       },
       "parameters of setting panel"
     )
@@ -187,7 +187,7 @@ function initConfig(
         "dragCopy",
         "stayTop",
         "settings",
-        "exit"
+        "exit",
       ],
       "the context menu of contrast mode",
       identifiers
@@ -209,7 +209,7 @@ function initConfig(
         "stayTop",
         "listenClipboard",
         "settings",
-        "exit"
+        "exit",
       ],
       "the context menu of focus mode",
       identifiers
@@ -239,7 +239,7 @@ function initConfig(
         "enableNotify",
         "settings",
         "helpAndUpdate",
-        "exit"
+        "exit",
       ],
       "the menu of tray",
       identifiers
@@ -261,7 +261,7 @@ function initConfig(
         "stayTop",
         "listenClipboard",
         "sourceLanguage",
-        "targetLanguage"
+        "targetLanguage",
       ],
       "the options of contrast mode",
       identifiers
@@ -269,7 +269,7 @@ function initConfig(
   );
   config.setRule("notices", {
     predefined: [""],
-    msg: "id of notices that have been read"
+    msg: "id of notices that have been read",
   });
 
   config.setRule("APP_ID", new TypeRule<string>("", "APP_ID"));

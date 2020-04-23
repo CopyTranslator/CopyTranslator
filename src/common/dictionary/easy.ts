@@ -6,7 +6,7 @@ const bing = require("eazydict-bing");
 const engine_funcs = {
   bing: bing,
   google: google,
-  youdao: youdao
+  youdao: youdao,
 };
 
 export class EasyEngine extends WordEngine {
@@ -28,7 +28,7 @@ export class EasyEngine extends WordEngine {
           code: res.error.code,
           engine: this.name,
           url: res.url,
-          words: words
+          words: words,
         });
       },
       (res: any) => {

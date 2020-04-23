@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-btn type="text" style="width:100%;" @click="tutorial">
+    <v-btn type="text" style="width: 100%;" @click="tutorial">
       Baidu文字识别API申请教程
     </v-btn>
     <p>APP_ID</p>
@@ -9,7 +9,7 @@
     <v-text-field v-model="API_KEY"></v-text-field>
     <p>SECRET_KEY</p>
     <v-text-field v-model="SECRET_KEY"></v-text-field>
-    <v-btn color="primary" style="width:100%;" @click="confirm">{{
+    <v-btn color="primary" style="width: 100%;" @click="confirm">{{
       trans["ok"]
     }}</v-btn>
   </div>

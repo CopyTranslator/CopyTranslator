@@ -40,7 +40,7 @@ class L10N {
           this.resources.set(lang, locale);
           this.locales.push({
             lang,
-            localeName: locale["localeName"]
+            localeName: locale["localeName"],
           });
         } catch (e) {
           console.log(`load ${filePath} fail`);

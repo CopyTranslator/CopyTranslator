@@ -13,12 +13,12 @@ export function capture(x: number, y: number, width: number, height: number) {
       desktopCapturer
         .getSources({
           types: ["screen"],
-          thumbnailSize: display.size
+          thumbnailSize: display.size,
         })
-        .then(sources => {
+        .then((sources) => {
           return resolve({
             display,
-            thumbnail: sources[i].thumbnail
+            thumbnail: sources[i].thumbnail,
           });
         });
     });
@@ -41,5 +41,5 @@ export function capture(x: number, y: number, width: number, height: number) {
       });
       ipcRenderer.send("shortcut-capture", sources);
     })
-    .catch(error => console.log(error));
+    .catch((error) => console.log(error));
 }

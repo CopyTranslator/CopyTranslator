@@ -3,7 +3,7 @@ import { Identifier } from "./types";
 export const colorRules = new Map<Identifier, number>([
   ["autoCopy", 1],
   ["incrementalCopy", 2],
-  ["autoPaste", 4]
+  ["autoPaste", 4],
 ]);
 
 export function getColorRule(key: Identifier) {
@@ -32,7 +32,7 @@ class GroupRule<T> implements Rule {
     this.predefined = predefined;
     this.msg = msg;
     this.check = (value: Array<T>) => {
-      value.forEach(item => {
+      value.forEach((item) => {
         if (!options.includes(item)) {
           return false;
         }
@@ -50,7 +50,7 @@ export class UnionRule<T> implements Rule {
   constructor(predefined: T, msg: string, options: readonly T[]) {
     this.predefined = predefined;
     this.msg = msg;
-    this.check = function(value: T) {
+    this.check = function (value: T) {
       return options.includes(value);
     };
   }
@@ -63,7 +63,7 @@ class TypeRule<T> implements Rule {
   constructor(predefined: T, msg: string, check?: CheckFuction) {
     this.predefined = predefined;
     this.msg = msg;
-    this.check = function(value) {
+    this.check = function (value) {
       let result: boolean = typeof value === typeof predefined;
       if (result && check) {
         result = result && check(value);
@@ -79,7 +79,7 @@ class StructRule<T extends { [key: string]: any }> implements Rule {
   constructor(predefined: T, msg: string) {
     this.predefined = predefined;
     this.msg = msg;
-    this.check = function(value: T) {
+    this.check = function (value: T) {
       for (const key of Object.keys(predefined)) {
         if (
           value[key] == undefined ||

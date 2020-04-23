@@ -18,8 +18,8 @@ import { Identifier } from "../common/types";
 
 @Component({
   components: {
-    Action
-  }
+    Action,
+  },
 })
 export default class Switches extends Vue {
   actionKeys: Identifier[] = this.$controller.action.getKeys("switches");

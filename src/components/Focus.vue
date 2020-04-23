@@ -36,8 +36,8 @@ import eventBus from "../common/event-bus";
 
 @Component({
   components: {
-    DictResultPanel
-  }
+    DictResultPanel,
+  },
 })
 export default class FocusMode extends Mixins(BaseView, WindowController) {
   @Ref("dictResultPanel") readonly dictResultPanel!: DictResultPanel;
@@ -52,7 +52,7 @@ export default class FocusMode extends Mixins(BaseView, WindowController) {
 
   get focusStyle() {
     return {
-      fontSize: this.size.toString() + "px"
+      fontSize: this.size.toString() + "px",
     };
   }
 

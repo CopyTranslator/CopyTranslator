@@ -2,7 +2,7 @@ import { Accelerator } from "electron";
 import { env } from "./env";
 import { mapToObj, objToMap } from "./types";
 import fs from "fs";
-import { version, compatible } from "../core/constant";
+import { version, compatible } from "./constant";
 export interface Shortcut {
   accelerator: Accelerator;
   id: string;
@@ -12,7 +12,8 @@ export type Shortcuts = Map<string, Accelerator>;
 
 export const defaultGlobalShortcuts: Shortcuts = new Map([
   ["focus", "Shift+F1"],
-  ["contrast", "Shift+F2"]
+  ["contrast", "Shift+F2"],
+  ["hideWindow", "Escape"],
 ]);
 
 export const defaultLocalShortcuts: Shortcuts = new Map([
@@ -26,7 +27,7 @@ export const defaultLocalShortcuts: Shortcuts = new Map([
   ["copySource", "CmdOrCtrl+D"],
   ["quit", "Cmd+Q"],
   ["font+", "CmdOrCtrl+="],
-  ["font-", "CmdOrCtrl+-"]
+  ["font-", "CmdOrCtrl+-"],
 ]);
 
 export function resetFile(file: string, config: Map<string, Accelerator>) {

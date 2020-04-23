@@ -5,7 +5,7 @@ import { AxiosRequestConfig } from "axios";
 import {
   Language,
   TranslateResult,
-  Translator
+  Translator,
 } from "@opentranslate/translator";
 import { autoReSegment } from "./helper";
 import { translatorTypes } from "./constants";
@@ -41,7 +41,7 @@ export class Compound implements CopyTranslator {
       translator
         .translate(text, from, to, this.config)
         .then(autoReSegment)
-        .then(res => {
+        .then((res) => {
           this.resultBuffer.set(res.engine as TranslatorType, res);
         })
         .catch(() => {
@@ -52,7 +52,7 @@ export class Compound implements CopyTranslator {
     return this.mainEngine
       .translate(text, from, to, this.config)
       .then(autoReSegment)
-      .then(res => {
+      .then((res) => {
         this.resultBuffer.set(res.engine as TranslatorType, res);
         return res;
       });

@@ -14,7 +14,7 @@ export const translatorMap: [TranslatorType, Translator][] = [
   ["youdao", new Youdao({ config: configs.get("youdao") })],
   ["sogou", new Sogou({ config: configs.get("sogou") })],
   ["caiyun", new Caiyun({ config: configs.get("caiyun") })],
-  ["tencent", new Tencent({ config: configs.get("tencent") })]
+  ["tencent", new Tencent({ config: configs.get("tencent") })],
 ];
 export const translators = new Map(translatorMap);
 

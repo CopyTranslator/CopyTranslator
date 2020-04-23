@@ -13,13 +13,13 @@ const connections = new Map<string, Response>([
   [
     "updateConfig",
     {
-      check: payload => {
+      check: (payload) => {
         return payload["localeSetting"] != undefined;
       },
-      actions: subMenus
-    }
+      actions: subMenus,
+    },
   ],
-  ["setLanguages", { actions: subMenus }]
+  ["setLanguages", { actions: subMenus }],
 ]);
 
 //协同响应,更新视图
@@ -32,7 +32,7 @@ export const updateViewPlugin = (store: any) => {
     const response = connections.get(mutation.type);
     if (response != undefined) {
       if (response.check == undefined || response.check(mutation.payload)) {
-        response.actions.forEach(e => {
+        response.actions.forEach((e) => {
           bus.at(e);
         });
       }

@@ -2,7 +2,7 @@ import { Compound } from "../common/translate/compound";
 import {
   TranslatorType,
   emptySharedResult,
-  SharedResult
+  SharedResult,
 } from "../common/translate/constants";
 import { Polymer } from "../common/dictionary/polymer";
 import { Language } from "@opentranslate/translator";
@@ -15,7 +15,7 @@ import simulate from "./simulate";
 import {
   DictionaryType,
   SharedDictResult,
-  emptyDictResult
+  emptyDictResult,
 } from "../common/dictionary/types";
 import { clipboard } from "./clipboard";
 import { MainController } from "../common/controller";
@@ -172,7 +172,7 @@ class TranslateController {
     if (!language) {
       language = {
         source: this.source(),
-        target: this.target()
+        target: this.target(),
       };
     }
     let sharedResult: SharedResult = emptySharedResult();
@@ -183,7 +183,7 @@ class TranslateController {
         from: this.translateResult.from,
         to: this.translateResult.to,
         engine: this.translateResult.engine,
-        notify: this.get<boolean>("enableNotify")
+        notify: this.get<boolean>("enableNotify"),
       };
     }
     store.dispatch("setShared", sharedResult);
@@ -277,7 +277,7 @@ class TranslateController {
 
     return {
       source: srcLang,
-      target: destLang
+      target: destLang,
     };
   }
 
@@ -310,7 +310,7 @@ class TranslateController {
 
     Promise.allSettled([
       this.translateSentence(text),
-      this.queryDictionary(text)
+      this.queryDictionary(text),
     ]).then(() => {
       this.translating = false;
       if (this.dictResult.words === this.src && !this.dictResult.valid) {
@@ -350,18 +350,18 @@ class TranslateController {
     }
     return this.dictionary
       .query(text)
-      .then(res => {
+      .then((res) => {
         if (res.explains.length != 0) {
           this.dictResult = {
             ...res,
-            valid: true
+            valid: true,
           };
           this.syncDict();
         } else {
           throw Error("query dict fail");
         }
       })
-      .catch(e => {
+      .catch((e) => {
         console.log("query dict fail");
         this.dictFail(text);
       });
@@ -375,8 +375,8 @@ class TranslateController {
     this.preProcess(text);
     return this.translator
       .translate(this.src, language.source, language.target)
-      .then(res => this.postTranslate(res, language))
-      .catch(err => {
+      .then((res) => this.postTranslate(res, language))
+      .catch((err) => {
         this.translateFail();
         console.error(err);
       });
@@ -419,7 +419,7 @@ class TranslateController {
         if (res.explains.length != 0) {
           this.dictResult = {
             ...res,
-            valid: true
+            valid: true,
           };
         } else {
           throw Error("query dict fail");
@@ -432,7 +432,7 @@ class TranslateController {
   }
 
   postProcessImage(words_result: Array<{ words: string }>) {
-    const src = words_result.map(item => item["words"]).join("\n");
+    const src = words_result.map((item) => item["words"]).join("\n");
     this.tryTranslate(src);
   }
 

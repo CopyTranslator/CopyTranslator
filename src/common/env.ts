@@ -7,10 +7,10 @@ const osType = osTypeFunc() as string;
 const osSpec: { [key: string]: { executableDir: string; iconName: string } } = {
   Windows_NT: {
     executableDir: "exe",
-    iconName: "icon.ico"
+    iconName: "icon.ico",
   },
   Darwin: { executableDir: "scripts", iconName: "icon.png" },
-  Linux: { executableDir: "scripts", iconName: "icon.png" }
+  Linux: { executableDir: "scripts", iconName: "icon.png" },
 };
 
 const currentSpec = osSpec[osType];
@@ -51,7 +51,7 @@ const sharedConfig: SharedConfig = {
   configPath: join(homedir(), "copytranslator", "copytranslator.json"),
   style: join(homedir(), "copytranslator", "styles.css"),
   shortcut: join(homedir(), "copytranslator", "shortcuts.json"),
-  localShortcut: join(homedir(), "copytranslator", "localShortcuts.json")
+  localShortcut: join(homedir(), "copytranslator", "localShortcuts.json"),
 };
 
 const diffConfig: DiffConfig =
@@ -62,7 +62,7 @@ const diffConfig: DiffConfig =
         iconPath: join(process.resourcesPath, currentSpec.iconName),
         trayIconPath: join(process.resourcesPath, trayName),
         styleTemplate: join(process.resourcesPath, "styles.css"),
-        publicUrl: `file://${__dirname}`
+        publicUrl: `file://${__dirname}`,
       }
     : {
         systemLocaleDir: join(process.cwd(), "dist_locales"),
@@ -70,7 +70,7 @@ const diffConfig: DiffConfig =
         iconPath: join(process.cwd(), currentSpec.iconName),
         trayIconPath: join(process.cwd(), trayName),
         styleTemplate: join(process.cwd(), "src", "styles.css"),
-        publicUrl: <string>process.env.WEBPACK_DEV_SERVER_URL
+        publicUrl: <string>process.env.WEBPACK_DEV_SERVER_URL,
       };
 
 const env: EnvConfig = { ...sharedConfig, ...diffConfig };

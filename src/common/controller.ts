@@ -7,7 +7,6 @@ import bus from "./event-bus";
 import type { WindowMangaer } from "@/main/views/manager";
 const isMain = process.type == "browser";
 
-
 type Handler1 = () => void;
 type Handler2 = (controller: MainController | RenController) => void;
 

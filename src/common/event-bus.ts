@@ -3,7 +3,7 @@ import {
   IpcRendererEvent,
   ipcMain,
   IpcMainEvent,
-  BrowserWindow
+  BrowserWindow,
 } from "electron";
 import { EventType, Identifier } from "./types";
 
@@ -45,7 +45,7 @@ bus.iat = (key: string, ...args: any[]) => {
   if (!isMain) {
     ipcRenderer.send(channel, ...args);
   } else {
-    BrowserWindow.getAllWindows().forEach(e => {
+    BrowserWindow.getAllWindows().forEach((e) => {
       e.webContents.send(channel, ...args);
     });
   }
@@ -66,7 +66,7 @@ bus.gat = (key: string, ...args: any[]) => {
   if (!isMain) {
     ipcRenderer.send(channel, ...args);
   } else {
-    BrowserWindow.getAllWindows().forEach(e => {
+    BrowserWindow.getAllWindows().forEach((e) => {
       e.webContents.send(channel, ...args);
     });
   }

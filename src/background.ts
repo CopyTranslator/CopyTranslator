@@ -19,7 +19,7 @@ global.controller = controller;
 
 // Standard scheme must be registered before the app is ready
 protocol.registerSchemesAsPrivileged([
-  { scheme: "app", privileges: { standard: true, secure: true } }
+  { scheme: "app", privileges: { standard: true, secure: true } },
 ]);
 
 // Quit when all windows are closed.
@@ -31,7 +31,7 @@ app.on("window-all-closed", () => {
   }
 });
 
-app.on("will-quit", event => {
+app.on("will-quit", (event) => {
   event.preventDefault();
   controller.onExit();
 });
@@ -66,7 +66,7 @@ app.on("ready", async () => {
 // Exit cleanly on request from parent process in development mode.
 if (isDevelopment) {
   if (process.platform === "win32") {
-    process.on("message", data => {
+    process.on("message", (data) => {
       if (data === "graceful-exit") {
         app.quit();
       }

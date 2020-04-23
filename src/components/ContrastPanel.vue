@@ -4,7 +4,7 @@
     <v-row
       v-else-if="layoutType === 'horizontal'"
       class="maxNoPad"
-      style="margin:0px;"
+      style="margin: 0px;"
     >
       <v-col class="areaWarpper">
         <textarea
@@ -58,8 +58,8 @@ import eventBus from "@/common/event-bus";
 
 @Component({
   components: {
-    Focus: Focus
-  }
+    Focus: Focus,
+  },
 })
 export default class ContrastPanel extends Mixins(BaseView, WindowController) {
   get layoutType() {

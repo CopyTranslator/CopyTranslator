@@ -12,7 +12,7 @@ import {
   SubActionView,
   decompose,
   ActionInitOpt,
-  colorModes
+  colorModes,
 } from "./types";
 import { dictionaryTypes } from "./dictionary/types";
 import { getLanguageLocales, Language } from "./translate/locale";
@@ -25,19 +25,19 @@ function subMenuGenerator(
   identifier: Identifier,
   list: Array<string>
 ): SubActionView[] {
-  return list.map(e => {
+  return list.map((e) => {
     const id = compose([identifier, e]);
     return {
       id,
       type: "checkbox",
-      label: e
+      label: e,
     };
   });
 }
 
 const alias = new Map<string, string>([
   ["focus", "layoutType|focus"],
-  ["contrast", "layoutType|horizontal"]
+  ["contrast", "layoutType|horizontal"],
 ]);
 
 //兼容旧版本的
@@ -64,7 +64,7 @@ class ActionManager {
       identifier,
       param,
       type: action.actionType,
-      isMain
+      isMain,
     });
   }
 
@@ -90,7 +90,7 @@ class ActionManager {
       return {
         type: "normal",
         id,
-        tooltip: id
+        tooltip: id,
       };
     }
     //原生角色
@@ -99,7 +99,7 @@ class ActionManager {
         role: role,
         id: role,
         type: "normal",
-        tooltip: role
+        tooltip: role,
       };
     }
     //设置常量
@@ -107,7 +107,7 @@ class ActionManager {
       return {
         actionType: "constant",
         id: identifier,
-        tooltip: identifier
+        tooltip: identifier,
       };
     }
 
@@ -116,7 +116,7 @@ class ActionManager {
       return {
         type: "checkbox",
         id: identifier,
-        tooltip: config.getTooltip(identifier)
+        tooltip: config.getTooltip(identifier),
       };
     }
 
@@ -126,7 +126,7 @@ class ActionManager {
         type: "submenu",
         id: identifier,
         tooltip: config.getTooltip(identifier),
-        submenu: subMenuGenerator(identifier, list)
+        submenu: subMenuGenerator(identifier, list),
       };
     }
 
@@ -139,12 +139,12 @@ class ActionManager {
         type: "submenu",
         id: identifier,
         subMenuGenerator: subMenuGenerator,
-        tooltip: config.getTooltip(identifier)
+        tooltip: config.getTooltip(identifier),
       };
     }
 
     function getLanguages(allowAuto: boolean = true): Language[] {
-      return store.state.languages.filter(x => {
+      return store.state.languages.filter((x) => {
         if (!allowAuto && x == "auto") {
           return false;
         }
@@ -158,11 +158,11 @@ class ActionManager {
     ): () => Array<SubActionView> {
       return () => {
         const l = getLanguageLocales(config.get("localeSetting"));
-        return getLanguages(allowAuto).map(e => {
+        return getLanguages(allowAuto).map((e) => {
           return {
             id: compose([identifier, e]),
             label: l[e],
-            type: "checkbox"
+            type: "checkbox",
           };
         });
       };
@@ -174,7 +174,7 @@ class ActionManager {
           return {
             id: compose([id, locale.lang]),
             label: locale.localeName,
-            type: "checkbox"
+            type: "checkbox",
           };
         });
         return locales;
@@ -217,13 +217,14 @@ class ActionManager {
     this.append(normalAction("font-"));
     this.append(normalAction("checkUpdate"));
     this.append(normalAction("translate"));
+    this.append(normalAction("hideWindow"));
 
     this.append(constantAction("APP_ID"));
     this.append(constantAction("API_KEY"));
     this.append(constantAction("SECRET_KEY"));
 
     //role action
-    roles.forEach(role => {
+    roles.forEach((role) => {
       this.append(roleAction(role));
     });
 
@@ -268,10 +269,14 @@ class ActionManager {
         contain = this.config.get("tray");
         break;
       case "options":
-        contain = keys.filter(x => this.getAction(x).actionType === "submenu");
+        contain = keys.filter(
+          (x) => this.getAction(x).actionType === "submenu"
+        );
         break;
       case "switches":
-        contain = keys.filter(x => this.getAction(x).actionType === "checkbox");
+        contain = keys.filter(
+          (x) => this.getAction(x).actionType === "checkbox"
+        );
         contain.push("restoreDefault");
         break;
       case "focusContext":
@@ -281,9 +286,11 @@ class ActionManager {
         contain = ["copy", "paste", "cut", "clear", "copyResult", "copySource"];
         break;
       case "draggableOptions":
-        contain = keys.filter(x => this.getAction(x).actionType !== "constant");
+        contain = keys.filter(
+          (x) => this.getAction(x).actionType !== "constant"
+        );
     }
-    return contain.filter(key => keys.includes(key));
+    return contain.filter((key) => keys.includes(key));
   }
 }
 

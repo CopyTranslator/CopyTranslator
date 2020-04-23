@@ -1,7 +1,7 @@
 <template>
-  <div style="height:100%; ">
+  <div style="height: 100%;">
     <v-app>
-      <div style="height:80%;margin:2%;">
+      <div style="height: 80%; margin: 2%;">
         <v-tabs v-model="activeName">
           <v-tab>{{ trans["options"] }} </v-tab>
           <v-tab>{{ trans["switches"] }} </v-tab>
@@ -32,8 +32,8 @@ import { Mixins, Component, Vue } from "vue-property-decorator";
   components: {
     Options,
     OCRConfig,
-    Switches
-  }
+    Switches,
+  },
 })
 export default class Focus extends Vue {
   activeName: string = "first";

@@ -25,7 +25,7 @@ export const observePlugin = (store: any) => {
 
 export function restoreFromConfig(observers: Observer[], config: Config) {
   for (const key of Object.keys(config)) {
-    observers.forEach(observer => {
+    observers.forEach((observer) => {
       observer.postSet(key as Identifier, config[key]);
     });
   }

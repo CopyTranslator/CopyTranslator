@@ -18,7 +18,7 @@ export class Polymer {
       }
       engine
         .query(words)
-        .then(res => {
+        .then((res) => {
           this.resultBuffer.set(res.engine, res);
         })
         .catch(() => {
@@ -26,7 +26,7 @@ export class Polymer {
         });
     }
     this.resultBuffer.set(this.mainEngine.name, undefined);
-    return this.mainEngine.query(words).then(res => {
+    return this.mainEngine.query(words).then((res) => {
       this.resultBuffer.set(res.engine, res);
       return res;
     });

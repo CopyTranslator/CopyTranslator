@@ -30,12 +30,12 @@ export default () => {
     store,
     vuetify: new Vuetify({
       theme: {
-        dark: isDarkMode()
+        dark: isDarkMode(),
       },
       icons: {
-        iconfont: "mdi"
-      }
+        iconfont: "mdi",
+      },
     }),
-    render: h => h(App)
+    render: (h) => h(App),
   }).$mount("#app");
 };

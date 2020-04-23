@@ -5,7 +5,7 @@ import {
   Menu,
   MenuItem,
   KeyboardEvent,
-  MenuItemConstructorOptions
+  MenuItemConstructorOptions,
 } from "electron";
 import { roles, Role } from "../common/types";
 import bus from "../common/event-bus";
@@ -13,7 +13,7 @@ import bus from "../common/event-bus";
 import {
   Shortcuts,
   loadLocalShortcuts,
-  loadGlobalShortcuts
+  loadGlobalShortcuts,
 } from "../common/shortcuts";
 
 type CallBack = (
@@ -57,7 +57,7 @@ class ShortcutManager {
   }
 
   unregister() {
-    Object.values(this.shortcuts).forEach(accelerator => {
+    Object.values(this.shortcuts).forEach((accelerator) => {
       globalShortcut.unregister(accelerator);
     });
   }
@@ -68,19 +68,19 @@ class ShortcutManager {
       accelerator,
       id: key,
       type: "normal",
-      click: function(
+      click: function (
         menuItem: MenuItem,
         browserWindow: BrowserWindow,
         event: KeyboardEvent
       ) {
         callback(key, menuItem, browserWindow, event);
-      }
+      },
     };
     if (roles.indexOf(key as Role) != -1) {
       options = {
         ...options,
         role: key as Role,
-        click: undefined
+        click: undefined,
       };
     }
     return options;

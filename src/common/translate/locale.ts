@@ -7,7 +7,7 @@ import { Language } from "@opentranslate/languages";
 export const languageLocales = new Map<Language, typeof en>([
   ["en", en],
   ["zh-CN", zhCN],
-  ["zh-TW", zhTW]
+  ["zh-TW", zhTW],
 ]);
 
 export function getLanguageLocales(lang: Language): Locale {

@@ -1,6 +1,6 @@
 import { Rule } from "./rule";
 import { Identifier } from "./types";
-import { compatible } from "../core/constant";
+import { compatible } from "./constant";
 import store, { getConfigByKey, Config } from "../store";
 type Rules = Map<Identifier, Rule>; //类型别名
 import { readFileSync, writeFileSync } from "fs";

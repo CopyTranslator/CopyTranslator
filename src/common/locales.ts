@@ -80,7 +80,7 @@ export const zh_cn = new Map<Identifier, string>([
   ["showConfigFolder", "打开配置文件夹"],
   ["editConfigFile", "编辑配置文件"],
   ["colorMode", "配色模式"],
-  ["drawer", "侧边抽屉"]
+  ["drawer", "侧边抽屉"],
 ]);
 
 export const en = new Map<Identifier, string>([
@@ -163,6 +163,6 @@ export const en = new Map<Identifier, string>([
   ["showConfigFolder", "Show Config Folder"],
   ["editConfigFile", "Edit Config File"],
   ["colorMode", "Color Mode"],
-  ["drawer", "Drawer"]
+  ["drawer", "Drawer"],
 ]);
 export type Locale = typeof en;

@@ -51,6 +51,6 @@ export function emptyDictResult(): SharedDictResult {
     examples: [],
     engine: "",
     url: "",
-    words: ""
+    words: "",
   };
 }

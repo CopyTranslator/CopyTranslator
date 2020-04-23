@@ -51,7 +51,7 @@ export default class BaseView extends Vue {
     eventBus.at("dispatch", "translate", text);
     this.$store.dispatch("clearShared");
     this.$store.dispatch("setDictResult", {
-      valid: false
+      valid: false,
     });
   }
 }

@@ -117,8 +117,7 @@ export const domains = ["medicine", "electronics", "mechanics"];
 export const routeActionTypes = [
   "contrast",
   "settings", //设置页面
-  "update",
-  "menuDrag"
+  "update"
 ] as const;
 
 //路由名称
@@ -282,16 +281,16 @@ export function decompose(...args: any[]) {
 }
 
 export function mapToObj<T>(strMap: Map<string, T>): { [key: string]: T } {
-  let obj = Object.create({});
-  for (let [k, v] of strMap) {
+  const obj = Object.create({});
+  for (const [k, v] of strMap) {
     obj[k] = v;
   }
   return obj;
 }
 
 export function objToMap<T>(obj: { [key: string]: T }): Map<Identifier, T> {
-  let strMap = new Map();
-  for (let k of Object.keys(obj)) {
+  const strMap = new Map();
+  for (const k of Object.keys(obj)) {
     strMap.set(k, obj[k]);
   }
   return strMap;

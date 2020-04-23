@@ -1,6 +1,7 @@
 import { homedir, type as osTypeFunc } from "os";
 import { join } from "path";
 import { existsSync, mkdirSync } from "fs";
+import { nativeImage } from "electron";
 const osType = osTypeFunc() as string;
 
 const osSpec: { [key: string]: { executableDir: string; iconName: string } } = {
@@ -76,5 +77,6 @@ const env: EnvConfig = { ...sharedConfig, ...diffConfig };
 
 mkdir(env.configDir);
 mkdir(env.userLocaleDir);
+const icon = nativeImage.createFromPath(env.iconPath);
 
-export { env };
+export { env, icon };

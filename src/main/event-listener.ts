@@ -1,8 +1,8 @@
 import simulate from "./simulate";
-import { checkForUpdates } from "./views/update";
 import os from "os";
 import { clipboard } from "./clipboard";
 import bus from "../common/event-bus";
+import eventBus from "../common/event-bus";
 class EventListener {
   drag = false;
   dragCopy = false;
@@ -18,10 +18,7 @@ class EventListener {
 
   bind() {
     bus.gonce("firstLoad", (event: any, args: any) => {
-      checkForUpdates();
-    });
-    bus.gon("checkUpdate", (event: any, args: any) => {
-      checkForUpdates();
+      eventBus.at("dispatch", "checkUpdate");
     });
 
     if (os.platform() !== "linux") {
@@ -35,8 +32,8 @@ class EventListener {
    * 只监听了鼠标事件
    */
   bindLinuxHooks() {
-    let Mouse = require("node-mouse");
-    let m = new Mouse();
+    const Mouse = require("node-mouse");
+    const m = new Mouse();
 
     m.on("mousedown", (event: any) => {
       // 按住鼠标拖动的时候也会触发此事件
@@ -54,7 +51,7 @@ class EventListener {
     m.on("mouseup", (event: any) => {
       // console.debug(event)
       console.debug("mouseup", clipboard.readText("selection"));
-      let selectedText = clipboard.readText("selection");
+      const selectedText = clipboard.readText("selection");
       if (this.selectedText != selectedText) {
         // 按下时选中的文本和释放时选中的文本不一致，则表示选中文本发生了变化
         console.debug("selected text changed:", selectedText);

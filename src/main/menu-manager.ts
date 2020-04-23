@@ -2,16 +2,9 @@ import {
   Identifier,
   MenuActionType,
   Role,
-  roles,
-  layoutTypes,
   ActionView,
   MenuItemType,
-  ActionType,
-  decompose,
-  compose,
-  hideDirections,
-  SubActionView,
-  RouteActionType
+  decompose
 } from "../common/types";
 import store from "../store";
 
@@ -22,6 +15,7 @@ import bus from "../common/event-bus";
 import { ActionManager } from "@/common/action";
 import { CommonController } from "@/common/controller";
 import { ConfigParser } from "@/common/configParser";
+
 type CallBack = (
   menuItem?: MenuItem,
   browserWindow?: BrowserWindow,
@@ -65,7 +59,7 @@ export class MenuManager {
 
   actionToMenuItem(action: ActionView): MenuAction {
     const t = store.getters.locale;
-    let menuItem: MenuAction = {
+    const menuItem: MenuAction = {
       ...action
     };
     menuItem.label = t[menuItem.id];
@@ -80,19 +74,18 @@ export class MenuManager {
     }
     if (menuItem.submenu) {
       const value = this.config.get(menuItem.id as Identifier);
-      for (let subMenuItem of menuItem.submenu) {
+      for (const subMenuItem of menuItem.submenu) {
         const { identifier, param } = decompose(subMenuItem.id);
         subMenuItem.checked = param == value;
         subMenuItem.click = this.getCallback(subMenuItem.id);
       }
     }
-
     return menuItem;
   }
 
   getMenu(name: MenuActionType) {
     const contain = this.act.getKeys(name);
-    let menu = new Menu();
+    const menu = new Menu();
     contain.forEach(id => {
       const action = this.act.getAction(id);
       const menuItem = this.actionToMenuItem(action);

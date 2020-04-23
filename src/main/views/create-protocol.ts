@@ -12,7 +12,7 @@ export default (scheme: any) => {
       if (error) {
         console.error(`Failed to register ${scheme} protocol`, error);
       }
-      let extension = path.extname(pathName).toLowerCase();
+      const extension = path.extname(pathName).toLowerCase();
       let mimeType = "";
 
       if (extension === ".js") {

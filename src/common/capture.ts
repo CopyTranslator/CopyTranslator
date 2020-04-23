@@ -27,9 +27,9 @@ export function capture(x: number, y: number, width: number, height: number) {
     .then((sources: any) => {
       // 把数据传递到主进程
       const thumbnail = sources[0].thumbnail;
-      let img = new Image();
-      let canvas = document.createElement("canvas");
-      let ctx: CanvasRenderingContext2D = <CanvasRenderingContext2D>(
+      const img = new Image();
+      const canvas = document.createElement("canvas");
+      const ctx: CanvasRenderingContext2D = <CanvasRenderingContext2D>(
         canvas.getContext("2d")
       );
       img.src = thumbnail.toDataURL();

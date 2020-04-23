@@ -87,7 +87,7 @@ class ShortcutManager {
   }
 
   registerLocalShortcuts() {
-    let menu = new Menu();
+    const menu = new Menu();
     for (const [key, accelerator] of this.localShortcuts.entries()) {
       menu.append(new MenuItem(this.getMenuItemOptions(key, accelerator)));
     }

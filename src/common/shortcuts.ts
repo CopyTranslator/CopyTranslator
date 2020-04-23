@@ -30,7 +30,7 @@ export const defaultLocalShortcuts: Shortcuts = new Map([
 ]);
 
 export function resetFile(file: string, config: Map<string, Accelerator>) {
-  let res = mapToObj(config);
+  const res = mapToObj(config);
   res["version"] = version;
   fs.writeFileSync(file, JSON.stringify(res, null, 4));
 }
@@ -47,7 +47,7 @@ export function loadFile(
   defaultConfig: Map<string, Accelerator>
 ): Map<string, Accelerator> {
   try {
-    let config = JSON.parse(fs.readFileSync(file, "utf-8"));
+    const config = JSON.parse(fs.readFileSync(file, "utf-8"));
     if (!compatible(config.version)) {
       throw "config incompatible";
     } else {

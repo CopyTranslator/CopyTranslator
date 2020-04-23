@@ -14,7 +14,7 @@ const ShortcutCapture = require("shortcut-capture");
 app.allowRendererProcessReuse = false;
 app.setAppUserModelId("com.copytranslator.copytranslator");
 
-let controller = new Controller();
+const controller = new Controller();
 global.controller = controller;
 
 // Standard scheme must be registered before the app is ready

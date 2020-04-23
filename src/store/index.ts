@@ -10,7 +10,7 @@ import { emptyDictResult } from "@/common/dictionary/types";
 
 Vue.use(Vuex);
 
-let plugins = [
+const plugins = [
   registerLocale,
   initState,
   createSharedMutations(),
@@ -46,7 +46,7 @@ const store = new Vuex.Store({
       Vue.set(state, "languages", languages);
     },
     updateConfig(state, config) {
-      for (let key of Object.keys(config)) {
+      for (const key of Object.keys(config)) {
         Vue.set(state.config, key, config[key]);
       }
     }

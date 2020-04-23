@@ -41,7 +41,7 @@ class ConfigParser {
   }
 
   checkValid(key: Identifier, value: any): boolean {
-    let check = this.getRule(key).check;
+    const check = this.getRule(key).check;
     if ((check && !check(value)) || value == undefined) {
       return false;
     }
@@ -55,11 +55,11 @@ class ConfigParser {
   load(fileName: string): boolean {
     let status = true;
     try {
-      let values = JSON.parse(readFileSync(fileName) as any);
+      const values = JSON.parse(readFileSync(fileName) as any);
       if (!values["version"] || !compatible(values["version"])) {
         throw "version incompatible, configs have been reset";
       }
-      let config: Config = {};
+      const config: Config = {};
       for (const key of this.rules.keys()) {
         let val = values[key];
         if (!this.checkValid(key, val)) {

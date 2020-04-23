@@ -30,7 +30,7 @@ class L10N {
       readdirSync(localeDir).forEach((fileName: string) => {
         const filePath = join(localeDir, fileName);
         try {
-          let locale: Locale = JSON.parse(readFileSync(filePath) as any);
+          const locale: Locale = JSON.parse(readFileSync(filePath) as any);
           for (const key of en.keys()) {
             if (!locale[key]) {
               locale[key] = en.get(key) as string;
@@ -53,7 +53,7 @@ class L10N {
     if (key === "auto") {
       key = this.getDefaultLocale();
     }
-    let locale: Locale = this.resources.get(key) || mapToObj(en);
+    const locale: Locale = this.resources.get(key) || mapToObj(en);
     return locale;
   }
 
@@ -76,5 +76,5 @@ class L10N {
 }
 
 const localeDirs = [env.systemLocaleDir, env.userLocaleDir];
-let l10n = new L10N(localeDirs);
+const l10n = new L10N(localeDirs);
 export { l10n, L10N };

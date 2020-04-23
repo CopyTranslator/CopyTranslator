@@ -8,7 +8,7 @@ import {
 import { EventType, Identifier } from "./types";
 
 type SimpleType = EventType | Identifier;
-let bus = require("@gotoeasy/bus");
+const bus = require("@gotoeasy/bus");
 const id = "gbus";
 const isMain = process.type == "browser";
 const ipc = isMain ? ipcMain : ipcRenderer;

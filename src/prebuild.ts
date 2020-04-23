@@ -6,7 +6,7 @@ import { Language } from "@opentranslate/languages";
 
 const localeDir = path.join(process.cwd(), "dist_locales");
 
-let resources = new Map<Language, Locale>([["en", en], ["zh-CN", zh_cn]]);
+const resources = new Map<Language, Locale>([["en", en], ["zh-CN", zh_cn]]);
 
 function mkdir(dir: string) {
   if (!fs.existsSync(dir)) {
@@ -16,7 +16,7 @@ function mkdir(dir: string) {
 
 function generateLocales(resources: Map<Language, Locale>, localeDir: string) {
   mkdir(localeDir);
-  for (let key of resources.keys()) {
+  for (const key of resources.keys()) {
     fs.writeFileSync(
       path.join(localeDir, key + ".json"),
       JSON.stringify(mapToObj(<Locale>resources.get(key)), null, 4)
@@ -29,7 +29,7 @@ fs.readdirSync(localeDir)
   .filter((e: string) => !keys.includes(<Language>e.replace(".json", "")))
   .forEach((fileName: string) => {
     const name = fileName.replace(".json", "");
-    let locale = objToMap<string>(
+    const locale = objToMap<string>(
       JSON.parse(fs.readFileSync(path.join(localeDir, fileName)))
     );
     for (const [key, value] of en) {

@@ -126,13 +126,13 @@ class TranslateController {
   }
 
   checkClipboard() {
-    let originalText = clipboard.readText();
+    const originalText = clipboard.readText();
     console.log(originalText);
     if (!this.checkLength(originalText)) {
       this.setCurrentColor(true);
       return;
     }
-    let text = this.normalizeText(originalText);
+    const text = this.normalizeText(originalText);
     if (this.checkValid(text)) {
       this.translate(text);
     }
@@ -253,14 +253,14 @@ class TranslateController {
   }
 
   async decideLanguage(text: string) {
-    let shouldSrc = this.source();
+    const shouldSrc = this.source();
     let destLang = this.target();
     let srcLang = shouldSrc;
 
     if (shouldSrc !== "auto") {
       //不是自动，那么就尝试检测语言
       try {
-        let detectedLang = await this.translator.detect(text);
+        const detectedLang = await this.translator.detect(text);
         if (detectedLang) {
           srcLang = detectedLang;
         }
@@ -396,7 +396,7 @@ class TranslateController {
     }
     if (valid) {
       try {
-        let buffer = await this.translator.getBuffer(value);
+        const buffer = await this.translator.getBuffer(value);
         if (!buffer || this.translator.src !== this.src) {
           throw "no the same src";
         }
@@ -432,7 +432,7 @@ class TranslateController {
   }
 
   postProcessImage(words_result: Array<{ words: string }>) {
-    let src = words_result.map(item => item["words"]).join("\n");
+    const src = words_result.map(item => item["words"]).join("\n");
     this.tryTranslate(src);
   }
 

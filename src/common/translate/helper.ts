@@ -29,7 +29,7 @@ export function splitChn(text: string): string[] {
 }
 
 function countSentences(str: string, splitFunc: (text: string) => string[]) {
-  let t = splitFunc(str);
+  const t = splitFunc(str);
 
   return t.length;
 }
@@ -46,7 +46,7 @@ export function reSegmentGoogle(
   const ends: RegExp = notEnglish(srcCode) ? chnEnds : engEnds;
   const splitFunc = notEnglish(srcCode) ? splitChn : splitEng;
   if (sentences.length == 1) {
-    let resultString = result.join(seprator);
+    const resultString = result.join(seprator);
     return resultString;
   }
 
@@ -78,7 +78,7 @@ export function reSegment(
   const ends: RegExp = notEnglish(srcCode) ? chnEnds : engEnds;
   const splitFunc = notEnglish(srcCode) ? splitChn : splitEng;
   if (sentences.length == 1) {
-    let resultString = result.join(seprator);
+    const resultString = result.join(seprator);
     return resultString;
   }
   const counts = sentences.map(sentence => countSentences(sentence, splitFunc));
@@ -122,7 +122,7 @@ export const sentenceEnds = /#([?？！!.。])#/g;
 
 export function isChinese(src: string) {
   /*校验是否中文名称组成 */
-  var reg = /^[\u4E00-\u9FA5]{2,4}$/; /*定义验证表达式*/
+  const reg = /^[\u4E00-\u9FA5]{2,4}$/; /*定义验证表达式*/
   return reg.test(src); /*进行验证*/
 }
 

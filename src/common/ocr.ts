@@ -32,4 +32,4 @@ export class Recognizer {
     fs.unlink("temp.png", () => {});
   }
 }
-export let recognizer = new Recognizer();
+export const recognizer = new Recognizer();

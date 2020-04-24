@@ -1,5 +1,12 @@
 import { ConfigParser } from "./configParser";
-import { GroupRule, StructRule, UnionRule, ModeConfig, TypeRule } from "./rule";
+import {
+  GroupRule,
+  StructRule,
+  UnionRule,
+  ModeConfig,
+  TypeRule,
+  KeyConfig,
+} from "./rule";
 import { languages, Language } from "@opentranslate/languages";
 import { translatorTypes, TranslatorType } from "./translate/constants";
 import {
@@ -266,9 +273,53 @@ function initConfig(
     )
   );
 
-  config.setRule("APP_ID", new TypeRule<string>("", "APP_ID"));
-  config.setRule("API_KEY", new TypeRule<string>("", "API_KEY"));
-  config.setRule("SECRET_KEY", new TypeRule<string>("", "SECRET_KEY"));
+  config.setRule(
+    "baidu",
+    new StructRule<KeyConfig>({ appid: "", key: "" }, "parameters of baidu")
+  );
+
+  config.setRule(
+    "baidu-ocr",
+    new StructRule<KeyConfig>(
+      { app_id: "", api_key: "", secret_key: "" },
+      "parameters of baidu-ocr"
+    )
+  );
+
+  config.setRule(
+    "baidu-domain",
+    new StructRule<KeyConfig>(
+      { appid: "", key: "" },
+      "parameters of baidu-domain"
+    )
+  );
+
+  config.setRule(
+    "caiyun",
+    new StructRule<KeyConfig>({ token: "" }, "parameters of caiyun")
+  );
+
+  config.setRule(
+    "google",
+    new StructRule<KeyConfig>({ token: "" }, "parameters of google")
+  );
+
+  config.setRule(
+    "sogou",
+    new StructRule<KeyConfig>({ pid: "", key: "" }, "parameters of sogou")
+  );
+
+  config.setRule(
+    "tencent",
+    new StructRule<KeyConfig>(
+      { secretId: "", secretKey: "" },
+      "parameters of tencent"
+    )
+  );
+  config.setRule(
+    "youdao",
+    new StructRule<KeyConfig>({ appKey: "", key: "" }, "parameters of youdao")
+  );
 
   return config;
 }

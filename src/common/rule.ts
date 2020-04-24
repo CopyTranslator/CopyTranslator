@@ -18,6 +18,9 @@ interface ModeConfig {
   width: number;
   fontSize?: number;
 }
+
+export type KeyConfig = { [key: string]: string };
+
 interface Rule {
   predefined: any;
   msg: string;

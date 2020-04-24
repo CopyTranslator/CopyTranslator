@@ -19,7 +19,6 @@ export const normalActionTypes = [
   "ok",
   "restoreDefault",
   "capture",
-  "notices",
   "font+",
   "font-",
   "drawer",
@@ -45,9 +44,18 @@ export const constantActionTypes = [
   "autoCheckUpdate",
   "colorMode",
   "version",
-  "API_KEY",
-  "APP_ID",
-  "SECRET_KEY",
+] as const;
+
+//结构体的动作
+export const structActionTypes = [
+  "baidu",
+  "google",
+  "sogou",
+  "tencent",
+  "youdao",
+  "caiyun",
+  "baidu-ocr",
+  "baidu-domain",
 ] as const;
 
 //切换值的动作
@@ -148,6 +156,7 @@ export const eventTypes = [
 export type Role = typeof roles[number];
 export type SwitchActionType = typeof switchActionTypes[number];
 export type ConstantActionType = typeof constantActionTypes[number];
+export type StructActionType = typeof structActionTypes[number];
 export type NormalActionType = typeof normalActionTypes[number];
 export type TranslatorGroup = typeof translatorGroups[number];
 export type MenuActionType = typeof menuActionTypes[number];
@@ -167,6 +176,7 @@ export type Identifier =
   | MenuActionType
   | SwitchActionType
   | ConstantActionType
+  | StructActionType
   | Role
   | TranslatorGroup;
 
@@ -179,6 +189,7 @@ export const identifiers: readonly Identifier[] = flatten([
   routeActionTypes,
   layoutTypes,
   translatorGroups,
+  structActionTypes,
 ]);
 
 export type MenuItemType =

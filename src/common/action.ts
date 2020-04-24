@@ -223,10 +223,6 @@ class ActionManager {
     this.append(normalAction("hideWindow"));
     this.append(normalAction("translateClipboard"));
 
-    this.append(constantAction("APP_ID"));
-    this.append(constantAction("API_KEY"));
-    this.append(constantAction("SECRET_KEY"));
-
     //role action
     roles.forEach((role) => {
       this.append(roleAction(role));

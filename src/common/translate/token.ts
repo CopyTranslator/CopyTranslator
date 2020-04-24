@@ -1,6 +1,7 @@
 import { TranslatorType } from "./constants";
+import { KeyConfig } from "@/common/rule";
 
-export const configs = new Map<TranslatorType, any>([
+export const defaultTokens = new Map<TranslatorType, any>([
   [
     "baidu",
     {
@@ -42,3 +43,12 @@ export const configs = new Map<TranslatorType, any>([
     },
   ],
 ]);
+
+export function examToken(config: KeyConfig): boolean {
+  for (const value of Object.values(config)) {
+    if (value.length == 0) {
+      return false;
+    }
+  }
+  return true;
+}

@@ -1,15 +1,24 @@
 "use strict";
-import { app, protocol, ipcMain } from "electron";
-import dayjs from "dayjs";
-const t = dayjs();
-ipcMain.on("what are", () => {
-  console.log("Total", dayjs().diff(t, "ms"));
-});
+import { app, protocol } from "electron";
+const gotTheLock = app.requestSingleInstanceLock();
+
+//确保全局单例
+if (!gotTheLock) {
+  app.exit();
+} else {
+  app.on("second-instance", (event, commandLine, workingDirectory) => {
+    // 当运行第二个实例时,将会聚焦到window这个窗口
+    const window = global.controller.win.get("contrast");
+    if (window.isMinimized()) {
+      window.restore();
+    }
+    window.focus();
+  });
+}
 
 import { Controller } from "./main/controller";
-import { recognizer } from "./common/ocr";
+
 const isDevelopment = process.env.NODE_ENV !== "production";
-const ShortcutCapture = require("shortcut-capture");
 
 app.allowRendererProcessReuse = false;
 app.setAppUserModelId("com.copytranslator.copytranslator");
@@ -55,11 +64,6 @@ app.on("ready", async () => {
     // Install Vue Devtools
     // await installVueDevtools();
   }
-  const shortcutCapture = new ShortcutCapture();
-  global.shortcutCapture = shortcutCapture;
-  shortcutCapture.on("capture", (data: any) =>
-    recognizer.recognize(data["dataURL"])
-  );
   controller.createWindow();
 });
 

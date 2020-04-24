@@ -7,22 +7,22 @@ import { Tencent } from "@opentranslate/tencent";
 import { Sogou } from "@opentranslate/sogou";
 import { BaiduDomain } from "@opentranslate/baidu-domain";
 import { TranslatorType } from "./constants";
-import { configs } from "./token";
+import { defaultTokens } from "./token";
 import { axios } from "./proxy";
 
 export const translatorMap: [TranslatorType, Translator][] = [
-  ["baidu", new Baidu({ axios, config: configs.get("baidu") })],
-  ["google", new Google({ axios, config: configs.get("google") })],
-  ["youdao", new Youdao({ axios, config: configs.get("youdao") })],
-  ["sogou", new Sogou({ axios, config: configs.get("sogou") })],
-  ["caiyun", new Caiyun({ axios, config: configs.get("caiyun") })],
-  ["tencent", new Tencent({ axios, config: configs.get("tencent") })],
+  ["baidu", new Baidu({ axios, config: defaultTokens.get("baidu") })],
+  ["google", new Google({ axios, config: defaultTokens.get("google") })],
+  ["youdao", new Youdao({ axios, config: defaultTokens.get("youdao") })],
+  ["sogou", new Sogou({ axios, config: defaultTokens.get("sogou") })],
+  ["caiyun", new Caiyun({ axios, config: defaultTokens.get("caiyun") })],
+  ["tencent", new Tencent({ axios, config: defaultTokens.get("tencent") })],
   [
     "baidu-domain",
     new BaiduDomain({
       axios,
       config: {
-        ...configs.get("baidu"),
+        ...defaultTokens.get("baidu"),
         domain: "medicine",
       },
     }) as any,

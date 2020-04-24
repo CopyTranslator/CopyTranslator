@@ -21,7 +21,7 @@ import {
 import { clipboard } from "./clipboard";
 import { MainController } from "../common/controller";
 import store from "@/store";
-import { recognizer } from "../common/ocr";
+import { recognizer } from "./ocr";
 
 class TranslateController {
   text: string = "";
@@ -44,11 +44,13 @@ class TranslateController {
 
   init() {
     clipboard.init();
-    recognizer.setUp();
   }
 
   handle(identifier: Identifier, param: any): boolean {
     switch (identifier) {
+      case "capture":
+        recognizer.capture();
+        break;
       case "translate":
         this.tryTranslate(param as string);
         break;
@@ -434,11 +436,6 @@ class TranslateController {
     }
   }
 
-  postProcessImage(words_result: Array<{ words: string }>) {
-    const src = words_result.map((item) => item["words"]).join("\n");
-    this.tryTranslate(src);
-  }
-
   setWatch(watch: boolean) {
     if (watch) {
       clipboard.on("text-changed", () => {
@@ -489,6 +486,9 @@ class TranslateController {
         break;
       case "dictionaryType":
         this.switchDictionary(value as DictionaryType);
+        break;
+      case "baidu-ocr":
+        recognizer.setUp(this.get("baidu-ocr"));
         break;
       default:
         return false;

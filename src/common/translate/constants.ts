@@ -5,6 +5,7 @@ export const translatorTypes = [
   "caiyun",
   "tencent",
   "youdao",
+  "baidu-domain",
 ] as const;
 export type TranslatorType = typeof translatorTypes[number];
 

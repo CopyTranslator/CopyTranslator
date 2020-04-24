@@ -117,10 +117,6 @@ export function autoReSegment(result: TranslateResult): CopyTranslateResult {
   return { ...result, resultString };
 }
 
-export function isValid(translator: Translator, lang: Language): boolean {
-  return translator.getSupportLanguages().includes(lang);
-}
-
 const patterns: Array<RegExp> = [/([?!.])[ ]?\n/g, /([？！。])[ ]?\n/g]; //The first one is English like, the second is for Chinese like.
 export const sentenceEnds = /#([?？！!.。])#/g;
 

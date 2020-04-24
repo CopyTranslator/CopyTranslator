@@ -80,6 +80,9 @@ class ActionManager {
     if (!action.actionType) {
       action.actionType = action.type;
     }
+    if (this.actions.has(action.id)) {
+      throw "duplicated action id";
+    }
     this.actions.set(action.id, action as ActionView);
   }
 
@@ -218,6 +221,7 @@ class ActionManager {
     this.append(normalAction("checkUpdate"));
     this.append(normalAction("translate"));
     this.append(normalAction("hideWindow"));
+    this.append(normalAction("translateClipboard"));
 
     this.append(constantAction("APP_ID"));
     this.append(constantAction("API_KEY"));

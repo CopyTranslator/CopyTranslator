@@ -1,7 +1,6 @@
 import simulate from "./simulate";
 import os from "os";
 import { clipboard } from "./clipboard";
-import bus from "../common/event-bus";
 import eventBus from "../common/event-bus";
 class EventListener {
   drag = false;
@@ -16,8 +15,10 @@ class EventListener {
   selectedText: string = clipboard.readText("selection");
   preLeftBtn: string = "mouseup";
 
+  lastCopy = Date.now();
+
   bind() {
-    bus.gonce("firstLoad", (event: any, args: any) => {
+    eventBus.gonce("firstLoad", (event: any, args: any) => {
       eventBus.at("dispatch", "checkUpdate");
     });
 
@@ -67,6 +68,18 @@ class EventListener {
 
   bindHooks() {
     const ioHook = require("iohook");
+
+    ioHook.on("keydown", (event: any) => {
+      if (event.keycode == 46 && event.ctrlKey) {
+        const now = Date.now();
+        if (now - this.lastCopy < 1000) {
+          console.log("triggered", clipboard.readText());
+          eventBus.at("dispatch", "translateClipboard");
+        }
+        this.lastCopy = now;
+      }
+    });
+
     ioHook.on("mouseup", (event: MouseEvent) => {
       //模拟点按复制
       if (

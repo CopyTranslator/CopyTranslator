@@ -19,6 +19,9 @@ class ConfigParser {
   }
 
   setRule(key: Identifier, rule: Rule) {
+    if (this.rules.has(key)) {
+      throw `duplicate rule ${key}`;
+    }
     this.rules.set(key, rule);
   }
 

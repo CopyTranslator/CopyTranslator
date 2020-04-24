@@ -1,80 +1,88 @@
-import { getTranslator, translators } from "./translators";
+import { getTranslator } from "./translators";
 import { CopyTranslator, CopyTranslateResult } from "./types";
 import { TranslatorType } from "./constants";
 import { AxiosRequestConfig } from "axios";
-import {
-  Language,
-  TranslateResult,
-  Translator,
-} from "@opentranslate/translator";
+import { Language } from "@opentranslate/translator";
 import { autoReSegment } from "./helper";
-import { translatorTypes } from "./constants";
+import { setProxy } from "./proxy";
 
 export class Compound implements CopyTranslator {
-  mainEngine: Translator;
-  axios = null;
+  mainEngine: TranslatorType;
   config: AxiosRequestConfig;
-  languages: Language[];
-  resultBuffer = new Map<TranslatorType, TranslateResult | undefined>();
-  src: string | undefined;
+  resultBuffer = new Map<TranslatorType, CopyTranslateResult | undefined>();
+  text: string | undefined;
+  engines: TranslatorType[];
+  detectEngine: TranslatorType = "google";
+  axios = setProxy();
 
   constructor(
     engines: TranslatorType[],
     mainEngine: TranslatorType = "google",
     config: AxiosRequestConfig = {}
   ) {
-    this.mainEngine = getTranslator(mainEngine);
-    this.languages = this.mainEngine.getSupportLanguages();
+    this.engines = engines;
+    this.mainEngine = mainEngine;
     this.config = config;
   }
 
-  translate(
+  setEngines(engines: TranslatorType[]) {
+    this.engines = engines;
+  }
+
+  getMainEngine() {
+    return getTranslator(this.mainEngine);
+  }
+
+  async translate(
     text: string,
     from: Language,
     to: Language
   ): Promise<CopyTranslateResult> {
-    this.src = text;
-    for (const [name, translator] of translators.entries()) {
-      if (name === this.mainEngine.name) {
+    this.text = text;
+    for (const name of this.engines) {
+      if (name === this.mainEngine) {
         continue;
       }
-      translator
-        .translate(text, from, to, this.config)
-        .then(autoReSegment)
-        .then((res) => {
-          this.resultBuffer.set(res.engine as TranslatorType, res);
-        })
-        .catch(() => {
-          this.resultBuffer.set(translator.name as TranslatorType, undefined);
-        });
+      this.translateWith(name, text, from, to).catch((e) => {
+        console.log(name, "translate error", e);
+      });
     }
-    this.resultBuffer.set(this.mainEngine.name as TranslatorType, undefined);
-    return this.mainEngine
+    return this.translateWith(this.mainEngine, text, from, to);
+  }
+
+  async translateWith(
+    engine: TranslatorType,
+    text: string,
+    from: Language,
+    to: Language
+  ): Promise<CopyTranslateResult> {
+    this.resultBuffer.delete(engine);
+    return getTranslator(engine)
       .translate(text, from, to, this.config)
       .then(autoReSegment)
       .then((res) => {
-        this.resultBuffer.set(res.engine as TranslatorType, res);
+        this.resultBuffer.set(engine, res);
         return res;
       });
   }
 
   detect(text: string) {
-    return this.mainEngine.detect(text);
+    return getTranslator(this.detectEngine).detect(text);
   }
 
   getBuffer(engine: TranslatorType) {
-    return this.resultBuffer.get(engine) as CopyTranslateResult;
+    return this.resultBuffer.get(engine);
   }
 
   setMainEngine(engineType: TranslatorType) {
-    this.mainEngine = getTranslator(engineType);
+    this.mainEngine = engineType;
   }
 
   getSupportLanguages(): Language[] {
-    return this.mainEngine.getSupportLanguages();
+    return this.getMainEngine().getSupportLanguages();
   }
 
   isValid(lang: Language): boolean {
-    return this.languages.includes(lang);
+    return this.getMainEngine().getSupportLanguages().includes(lang);
   }
 }

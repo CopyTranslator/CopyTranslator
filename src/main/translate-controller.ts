@@ -3,6 +3,7 @@ import {
   TranslatorType,
   emptySharedResult,
   SharedResult,
+  translatorTypes,
 } from "../common/translate/constants";
 import { Polymer } from "../common/dictionary/polymer";
 import { Language } from "@opentranslate/translator";
@@ -23,7 +24,7 @@ import store from "@/store";
 import { recognizer } from "../common/ocr";
 
 class TranslateController {
-  src: string = "";
+  text: string = "";
   resultString: string = "";
   translateResult: CopyTranslateResult | undefined;
   dictResult: SharedDictResult = emptyDictResult();
@@ -31,7 +32,7 @@ class TranslateController {
   translating: boolean = false; //正在翻译
   words: string = "";
 
-  translator: Compound = new Compound(["google"], "google", {});
+  translator: Compound = new Compound([...translatorTypes], "google", {});
   dictionary: Polymer = new Polymer("google");
 
   controller: MainController;
@@ -51,17 +52,20 @@ class TranslateController {
       case "translate":
         this.tryTranslate(param as string);
         break;
+      case "translateClipboard":
+        this.checkClipboard();
+        break;
       case "clear":
         this.clear();
         break;
       case "copySource":
-        clipboard.writeText(this.src);
+        clipboard.writeText(this.text);
         break;
       case "copyResult":
         clipboard.writeText(this.resultString);
         break;
       case "retryTranslate":
-        this.translate(this.src);
+        this.translate(this.text);
         break;
       default:
         return false;
@@ -78,10 +82,10 @@ class TranslateController {
   }
 
   setSrc(append: string) {
-    if (this.get<boolean>("incrementalCopy") && this.src != "")
-      this.src = this.src + " " + append;
+    if (this.get<boolean>("incrementalCopy") && this.text != "")
+      this.text = this.text + " " + append;
     else {
-      this.src = append;
+      this.text = append;
     }
   }
 
@@ -94,7 +98,7 @@ class TranslateController {
   }
 
   clear() {
-    this.src = "";
+    this.text = "";
     this.resultString = "";
     this.lastAppend = "";
     this.translateResult = undefined;
@@ -115,7 +119,7 @@ class TranslateController {
   checkValid(text: string) {
     if (
       this.resultString == text ||
-      this.src == text ||
+      this.text == text ||
       this.lastAppend == text ||
       text == ""
     ) {
@@ -127,7 +131,6 @@ class TranslateController {
 
   checkClipboard() {
     const originalText = clipboard.readText();
-    console.log(originalText);
     if (!this.checkLength(originalText)) {
       this.setCurrentColor(true);
       return;
@@ -196,7 +199,7 @@ class TranslateController {
         simulate.paste();
       }
     } else if (this.get<boolean>("autoFormat")) {
-      clipboard.writeText(this.src);
+      clipboard.writeText(this.text);
     }
     if (this.get<boolean>("autoShow")) {
       console.log("auto show");
@@ -313,11 +316,11 @@ class TranslateController {
       this.queryDictionary(text),
     ]).then(() => {
       this.translating = false;
-      if (this.dictResult.words === this.src && !this.dictResult.valid) {
+      if (this.dictResult.words === this.text && !this.dictResult.valid) {
         //同步词典结果
         this.syncDict(); //翻译完了，然后发现词典有问题，这个时候才发送
         this.setCurrentColor(true);
-      } else if (this.dictResult.words !== this.src && !this.translateResult) {
+      } else if (this.dictResult.words !== this.text && !this.translateResult) {
         this.setCurrentColor(true);
       } else {
         this.setCurrentColor();
@@ -374,7 +377,7 @@ class TranslateController {
     }
     this.preProcess(text);
     return this.translator
-      .translate(this.src, language.source, language.target)
+      .translate(this.text, language.source, language.target)
       .then((res) => this.postTranslate(res, language))
       .catch((err) => {
         this.translateFail();
@@ -396,24 +399,24 @@ class TranslateController {
     }
     if (valid) {
       try {
-        const buffer = await this.translator.getBuffer(value);
-        if (!buffer || this.translator.src !== this.src) {
+        const buffer = this.translator.getBuffer(value);
+        if (!buffer || this.translator.text !== this.text) {
           throw "no the same src";
         }
         this.postTranslate(buffer);
       } catch (e) {
         console.log("invalid");
-        this.translate(this.src);
+        this.translate(this.text);
       }
     } else {
       console.log("valid");
-      this.translate(this.src);
+      this.translate(this.text);
     }
   }
 
   async switchDictionary(value: DictionaryType) {
     this.dictionary.setMainEngine(value);
-    if (this.src === this.dictionary.words) {
+    if (this.text === this.dictionary.words) {
       try {
         const res = await this.dictionary.getBuffer(value);
         if (res.explains.length != 0) {
@@ -425,7 +428,7 @@ class TranslateController {
           throw Error("query dict fail");
         }
       } catch (e) {
-        this.dictFail(this.src);
+        this.dictFail(this.text);
       }
       this.syncDict();
     }
@@ -453,14 +456,20 @@ class TranslateController {
 
   postSet(identifier: Identifier, value: any): boolean {
     switch (identifier) {
+      case "translator-auto":
+        this.translator.setEngines(value);
+        break;
+      case "translator-double":
+        console.log("translator-double", value);
+        break;
       case "listenClipboard":
         this.setWatch(value);
         break;
       case "targetLanguage":
-        this.translate(this.src);
+        this.translate(this.text);
         break;
       case "sourceLanguage":
-        this.translate(this.src);
+        this.translate(this.text);
         break;
       case "incrementalCopy":
         this.clear();

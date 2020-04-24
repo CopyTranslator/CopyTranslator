@@ -56,6 +56,11 @@ function initConfig(
   );
 
   config.setRule(
+    "autoShow",
+    new TypeRule<boolean>(false, "auto show after translate")
+  );
+
+  config.setRule(
     "autoFormat",
     new TypeRule<boolean>(false, "auto replace the contene in clipboard")
   );
@@ -65,10 +70,6 @@ function initConfig(
     new TypeRule<boolean>(true, "remove extra linebreak when translate")
   );
 
-  config.setRule(
-    "autoShow",
-    new TypeRule<boolean>(false, "auto show after translate")
-  );
   config.setRule(
     "enableNotify",
     new TypeRule<boolean>(false, "notify after translate")
@@ -83,8 +84,6 @@ function initConfig(
   );
 
   config.setRule("drawer", new TypeRule<boolean>(false, "never show warning"));
-
-  config.setRule("smartDict", new TypeRule<boolean>(true, "enable smart dict"));
 
   config.setRule("closeAsQuit", new TypeRule<boolean>(true, "close as quit"));
 
@@ -176,21 +175,20 @@ function initConfig(
   );
 
   config.setRule(
-    "contrastPanel",
-    new GroupRule<Identifier>(
-      [
-        "retryTranslate",
-        "autoCopy",
-        "autoPaste",
-        "incrementalCopy",
-        "autoFormat",
-        "dragCopy",
-        "stayTop",
-        "settings",
-        "exit",
-      ],
-      "the context menu of contrast mode",
-      identifiers
+    "translator-auto",
+    new GroupRule<TranslatorType>(
+      ["google", "baidu", "youdao", "caiyun", "tencent", "sogou"],
+      "auto call",
+      translatorTypes
+    )
+  );
+
+  config.setRule(
+    "translator-double",
+    new GroupRule<TranslatorType>(
+      ["baidu-domain"],
+      "manually call",
+      translatorTypes
     )
   );
 
@@ -267,10 +265,6 @@ function initConfig(
       identifiers
     )
   );
-  config.setRule("notices", {
-    predefined: [""],
-    msg: "id of notices that have been read",
-  });
 
   config.setRule("APP_ID", new TypeRule<string>("", "APP_ID"));
   config.setRule("API_KEY", new TypeRule<string>("", "API_KEY"));

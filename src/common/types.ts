@@ -26,6 +26,7 @@ export const normalActionTypes = [
   "editConfigFile",
   "showConfigFolder",
   "hideWindow",
+  "translateClipboard",
 ] as const;
 
 //切换值的动作
@@ -108,6 +109,11 @@ export const menuActionTypes = [
   "allActions",
 ] as const;
 
+export const translatorGroups = [
+  "translator-auto",
+  "translator-double",
+] as const;
+
 //布局名称
 export const layoutTypes = ["horizontal", "vertical", "focus"] as const;
 
@@ -143,6 +149,7 @@ export type Role = typeof roles[number];
 export type SwitchActionType = typeof switchActionTypes[number];
 export type ConstantActionType = typeof constantActionTypes[number];
 export type NormalActionType = typeof normalActionTypes[number];
+export type TranslatorGroup = typeof translatorGroups[number];
 export type MenuActionType = typeof menuActionTypes[number];
 export type RouteActionType = typeof routeActionTypes[number];
 export type LayoutType = typeof layoutTypes[number];
@@ -160,7 +167,8 @@ export type Identifier =
   | MenuActionType
   | SwitchActionType
   | ConstantActionType
-  | Role;
+  | Role
+  | TranslatorGroup;
 
 export const identifiers: readonly Identifier[] = flatten([
   roles,
@@ -170,6 +178,7 @@ export const identifiers: readonly Identifier[] = flatten([
   menuActionTypes,
   routeActionTypes,
   layoutTypes,
+  translatorGroups,
 ]);
 
 export type MenuItemType =

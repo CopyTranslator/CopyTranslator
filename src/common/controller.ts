@@ -52,6 +52,7 @@ export abstract class CommonController {
   bind() {
     bus.gon("callback", (args: any) => {
       const { identifier, param, type, isMain: main } = args;
+      console.log(identifier, param, type, isMain);
       switch (type) {
         case "normal":
           if (
@@ -67,6 +68,7 @@ export abstract class CommonController {
           break;
         case "submenu":
         case "constant":
+        case "config":
           this.set(identifier, param);
           break;
         case "checkbox":

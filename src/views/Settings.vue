@@ -6,6 +6,7 @@
           <v-tab>{{ trans["options"] }} </v-tab>
           <v-tab>{{ trans["switches"] }} </v-tab>
           <v-tab>{{ trans["ocrConfig"] }} </v-tab>
+          <v-tab>{{ trans["ocrConfig"] }} </v-tab>
           <v-tab-item>
             <Options></Options>
           </v-tab-item>
@@ -13,7 +14,10 @@
             <Switches></Switches>
           </v-tab-item>
           <v-tab-item>
-            <OCRConfig></OCRConfig>
+            <Config></Config>
+          </v-tab-item>
+          <v-tab-item>
+            <EngineManage></EngineManage>
           </v-tab-item>
         </v-tabs>
       </div>
@@ -24,15 +28,17 @@
 <script lang="ts">
 import { shell } from "electron";
 import Options from "./Options.vue";
-import OCRConfig from "./OCRConfig.vue";
+import Config from "./Config.vue";
 import Switches from "./Switches.vue";
+import EngineManage from "./EngineManage.vue";
 import { Mixins, Component, Vue } from "vue-property-decorator";
 
 @Component({
   components: {
     Options,
-    OCRConfig,
+    Config,
     Switches,
+    EngineManage,
   },
 })
 export default class Focus extends Vue {

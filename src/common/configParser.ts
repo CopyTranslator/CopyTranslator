@@ -33,13 +33,12 @@ class ConfigParser {
     return getConfigByKey(key);
   }
 
-  query() {}
-
   set(key: Identifier, value: any, needCheck: boolean = true) {
     if (needCheck && !this.checkValid(key, value)) {
       return false;
     }
-    store.dispatch("updateConfig", { [key]: value });
+    const config = { [key]: value };
+    store.dispatch("updateConfig", config);
     return true;
   }
 
@@ -52,7 +51,7 @@ class ConfigParser {
   }
 
   getTooltip(key: Identifier) {
-    return this.getRule(key).msg;
+    return this.getRule(key).tooltip;
   }
 
   load(fileName: string): boolean {

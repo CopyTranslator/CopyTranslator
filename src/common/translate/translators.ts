@@ -6,7 +6,7 @@ import { Caiyun } from "@opentranslate/caiyun";
 import { Tencent } from "@opentranslate/tencent";
 import { Sogou } from "@opentranslate/sogou";
 import { BaiduDomain } from "@opentranslate/baidu-domain";
-import { TranslatorType } from "./constants";
+import { TranslatorType } from "@/common/types";
 import { defaultTokens } from "./token";
 import { axios } from "./proxy";
 

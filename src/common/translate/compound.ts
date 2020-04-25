@@ -1,6 +1,6 @@
 import { getTranslator } from "./translators";
 import { CopyTranslator, CopyTranslateResult } from "./types";
-import { TranslatorType } from "./constants";
+import { TranslatorType } from "@/common/types";
 import { AxiosRequestConfig } from "axios";
 import { Language } from "@opentranslate/translator";
 import { autoReSegment } from "./helper";

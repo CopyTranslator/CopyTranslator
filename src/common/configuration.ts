@@ -8,8 +8,10 @@ import {
   KeyConfig,
 } from "./rule";
 import { languages, Language } from "@opentranslate/languages";
-import { translatorTypes, TranslatorType } from "./translate/constants";
+
 import {
+  translatorTypes,
+  TranslatorType,
   Identifier,
   identifiers,
   LayoutType,
@@ -289,7 +291,7 @@ function initConfig(
   config.setRule(
     "baidu-domain",
     new StructRule<KeyConfig>(
-      { appid: "", key: "" },
+      { appid: "", key: "", domain: "" },
       "parameters of baidu-domain"
     )
   );

@@ -1,4 +1,4 @@
-import { TranslatorType } from "./constants";
+import { TranslatorType } from "@/common/types";
 import { KeyConfig } from "@/common/rule";
 
 export const defaultTokens = new Map<TranslatorType, any>([

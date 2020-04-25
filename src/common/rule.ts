@@ -23,17 +23,17 @@ export type KeyConfig = { [key: string]: string };
 
 interface Rule {
   predefined: any;
-  msg: string;
+  tooltip: string;
   check?: CheckFuction; // 检查是否有效的函数
 }
 
 class GroupRule<T> implements Rule {
   predefined: Array<T>;
-  msg: string;
+  tooltip: string;
   check: CheckFuction;
   constructor(predefined: Array<T>, msg: string, options: readonly T[]) {
     this.predefined = predefined;
-    this.msg = msg;
+    this.tooltip = msg;
     this.check = (value: Array<T>) => {
       value.forEach((item) => {
         if (!options.includes(item)) {
@@ -48,11 +48,11 @@ class GroupRule<T> implements Rule {
 
 export class UnionRule<T> implements Rule {
   predefined: any;
-  msg: string;
+  tooltip: string;
   check: CheckFuction;
   constructor(predefined: T, msg: string, options: readonly T[]) {
     this.predefined = predefined;
-    this.msg = msg;
+    this.tooltip = msg;
     this.check = function (value: T) {
       return options.includes(value);
     };
@@ -60,12 +60,12 @@ export class UnionRule<T> implements Rule {
 }
 class TypeRule<T> implements Rule {
   predefined: T;
-  msg: string;
+  tooltip: string;
   check?: CheckFuction;
 
   constructor(predefined: T, msg: string, check?: CheckFuction) {
     this.predefined = predefined;
-    this.msg = msg;
+    this.tooltip = msg;
     this.check = function (value) {
       let result: boolean = typeof value === typeof predefined;
       if (result && check) {
@@ -77,11 +77,11 @@ class TypeRule<T> implements Rule {
 }
 class StructRule<T extends { [key: string]: any }> implements Rule {
   predefined: T;
-  msg: string;
+  tooltip: string;
   check: CheckFuction;
   constructor(predefined: T, msg: string) {
     this.predefined = predefined;
-    this.msg = msg;
+    this.tooltip = msg;
     this.check = function (value: T) {
       for (const key of Object.keys(predefined)) {
         if (

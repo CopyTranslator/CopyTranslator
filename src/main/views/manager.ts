@@ -49,7 +49,7 @@ export class WindowMangaer {
         window.show();
       });
     }
-    loadRoute(window, routeName, false);
+    loadRoute(window, routeName, true);
     insertStyles(window);
     if (main) {
       window.on("close", (e: any) => {

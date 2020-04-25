@@ -1,14 +1,3 @@
-export const translatorTypes = [
-  "baidu",
-  "google",
-  "sogou",
-  "caiyun",
-  "tencent",
-  "youdao",
-  "baidu-domain",
-] as const;
-export type TranslatorType = typeof translatorTypes[number];
-
 export interface SharedResult {
   text: string;
   translation: string;

@@ -21,6 +21,7 @@ export class Recognizer {
     secret_key: string;
   }): boolean {
     if (!examToken(config)) {
+      this.client = undefined;
       return false;
     }
     const { app_id, api_key, secret_key } = config;

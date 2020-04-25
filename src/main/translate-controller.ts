@@ -1,16 +1,17 @@
 import { Compound } from "../common/translate/compound";
-import {
-  TranslatorType,
-  emptySharedResult,
-  SharedResult,
-  translatorTypes,
-} from "../common/translate/constants";
+import { emptySharedResult, SharedResult } from "../common/translate/constants";
 import { Polymer } from "../common/dictionary/polymer";
 import { Language } from "@opentranslate/translator";
 import { CopyTranslateResult } from "../common/translate/types";
 import { colorRules, getColorRule } from "../common/rule";
 import { normalizeAppend, checkIsWord } from "../common/translate/helper";
-import { Identifier, ColorStatus, colorStatusMap } from "../common/types";
+import {
+  Identifier,
+  ColorStatus,
+  colorStatusMap,
+  TranslatorType,
+  translatorTypes,
+} from "../common/types";
 import trimEnd from "lodash.trimend";
 import simulate from "./simulate";
 import {
@@ -443,7 +444,7 @@ class TranslateController {
       });
       clipboard.on("image-changed", () => {
         // OCR 相关TranslateResult
-        //recognizer.recognize(clipboard.readImage().toDataURL());
+        recognizer.recognize(clipboard.readImage().toDataURL());
       });
       clipboard.startWatching();
     } else {

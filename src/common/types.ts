@@ -1,3 +1,5 @@
+export const authorizeKey: string = "CopyTranslator";
+import flatten from "lodash.flatten";
 //以下是做一个特定的事的动作
 export const normalActionTypes = [
   "translate", //翻译
@@ -46,17 +48,27 @@ export const constantActionTypes = [
   "version",
 ] as const;
 
-//结构体的动作
-export const structActionTypes = [
+export const translatorTypes = [
   "baidu",
   "google",
   "sogou",
+  "caiyun",
   "tencent",
   "youdao",
-  "caiyun",
-  "baidu-ocr",
   "baidu-domain",
 ] as const;
+
+export const recognizerTypes = ["baidu-ocr"] as const;
+
+export type TranslatorType = typeof translatorTypes[number];
+export type RecognizerType = typeof recognizerTypes[number];
+
+//结构体的动作
+export type StructActionType = TranslatorType | RecognizerType;
+export const structActionTypes: readonly StructActionType[] = flatten([
+  recognizerTypes,
+  translatorTypes,
+]);
 
 //切换值的动作
 export const switchActionTypes = [
@@ -156,7 +168,6 @@ export const eventTypes = [
 export type Role = typeof roles[number];
 export type SwitchActionType = typeof switchActionTypes[number];
 export type ConstantActionType = typeof constantActionTypes[number];
-export type StructActionType = typeof structActionTypes[number];
 export type NormalActionType = typeof normalActionTypes[number];
 export type TranslatorGroup = typeof translatorGroups[number];
 export type MenuActionType = typeof menuActionTypes[number];
@@ -166,9 +177,6 @@ export type Domain = typeof domains[number];
 export type ColorMode = typeof colorModes[number];
 export type EventType = typeof eventTypes[number];
 
-export const authorizeKey: string = "CopyTranslator";
-import flatten from "lodash.flatten";
-
 export type Identifier =
   | RouteActionType
   | LayoutType
@@ -176,7 +184,8 @@ export type Identifier =
   | MenuActionType
   | SwitchActionType
   | ConstantActionType
-  | StructActionType
+  | TranslatorType
+  | RecognizerType
   | Role
   | TranslatorGroup;
 
@@ -189,7 +198,8 @@ export const identifiers: readonly Identifier[] = flatten([
   routeActionTypes,
   layoutTypes,
   translatorGroups,
-  structActionTypes,
+  translatorTypes,
+  recognizerTypes,
 ]);
 
 export type MenuItemType =
@@ -199,7 +209,7 @@ export type MenuItemType =
   | "checkbox"
   | "radio";
 
-export type ActionType = "constant";
+export type ActionType = "constant" | "config";
 interface AbstractAction {
   actionType?: ActionType | MenuItemType;
   id: string;

@@ -1,5 +1,4 @@
 import { ConfigParser } from "./configParser";
-import { translatorTypes } from "./translate/constants";
 import {
   Identifier,
   MenuActionType,
@@ -13,6 +12,9 @@ import {
   decompose,
   ActionInitOpt,
   colorModes,
+  structActionTypes,
+  translatorTypes,
+  translatorGroups,
 } from "./types";
 import { dictionaryTypes } from "./dictionary/types";
 import { getLanguageLocales, Language } from "./translate/locale";
@@ -146,6 +148,13 @@ class ActionManager {
       };
     }
 
+    function configAction(identifier: Identifier): ActionInitOpt {
+      return {
+        actionType: "config",
+        id: identifier,
+      };
+    }
+
     function getLanguages(allowAuto: boolean = true): Language[] {
       return store.state.languages.filter((x) => {
         if (!allowAuto && x == "auto") {
@@ -222,6 +231,15 @@ class ActionManager {
     this.append(normalAction("translate"));
     this.append(normalAction("hideWindow"));
     this.append(normalAction("translateClipboard"));
+
+    //引擎配置
+    structActionTypes.forEach((id) => {
+      this.append(configAction(id));
+    });
+
+    translatorGroups.forEach((id) => {
+      this.append(configAction(id));
+    });
 
     //role action
     roles.forEach((role) => {

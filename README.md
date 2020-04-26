@@ -23,8 +23,6 @@
 
 **This software is free and open source. If you find someone selling this software , please report it in the Issue.**
 
-<div align="center">:heart: Like this project? Support me on <a href="https://afdian.net/@elliottzheng/plan" target="_blank">Afdian</a></div>
-
 ## Introduction
 
 ### Foreword

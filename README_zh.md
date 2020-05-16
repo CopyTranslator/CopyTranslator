@@ -96,7 +96,7 @@
 
 ## 下载/安装
 
-传送门：[安装指南](https://copytranslator.github.io/guide/download.html)
+传送门：[安装指南](https://copytranslator.github.io/download/)
 
 `CopyTranslator`经过多次迭代，功能越来越丰富，越来越人性化，请一定阅读完整[使用指南](https://copytranslator.github.io/guide/)，才能最大限度发挥其功能。
 

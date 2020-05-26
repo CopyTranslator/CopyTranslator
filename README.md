@@ -1,4 +1,4 @@
-# copytranslator-proton
+# copytranslator
 
 ## Project setup
 ```

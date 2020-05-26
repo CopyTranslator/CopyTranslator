@@ -2,9 +2,10 @@ import simulate from "./simulate";
 import os from "os";
 import { clipboard } from "./clipboard";
 import eventBus from "../common/event-bus";
+import config from "../common/configuration";
+
 class EventListener {
   drag = false;
-  dragCopy = false;
   lastDown = Date.now();
   lastX = 0;
   lastY = 0;
@@ -56,7 +57,7 @@ class EventListener {
       if (this.selectedText != selectedText) {
         // 按下时选中的文本和释放时选中的文本不一致，则表示选中文本发生了变化
         console.debug("selected text changed:", selectedText);
-        if (this.dragCopy) {
+        if (config.get("dragCopy")) {
           // global.controller.tryTranslate(selectedText);
         }
       }
@@ -83,7 +84,8 @@ class EventListener {
     ioHook.on("mouseup", (event: MouseEvent) => {
       //模拟点按复制
       if (
-        this.dragCopy &&
+        config.get("dragCopy") &&
+        config.get("listenClipboard") &&
         !this.copied &&
         Date.now() - this.lastDown > 100 &&
         Math.abs(this.newX - this.lastX) + Math.abs(this.newY - this.lastY) > 10

@@ -5,8 +5,8 @@
         <v-tabs v-model="activeName">
           <v-tab>{{ trans["options"] }} </v-tab>
           <v-tab>{{ trans["switches"] }} </v-tab>
-          <v-tab>{{ trans["ocrConfig"] }} </v-tab>
-          <v-tab>{{ trans["ocrConfig"] }} </v-tab>
+          <v-tab>{{ trans["apiConfig"] }} </v-tab>
+          <v-tab>{{ trans["translatorConfig"] }} </v-tab>
           <v-tab-item>
             <Options></Options>
           </v-tab-item>

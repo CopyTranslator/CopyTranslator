@@ -20,7 +20,7 @@ import { Identifier } from "../common/types";
     KeyConfig,
   },
 })
-export default class OCRConfig extends Vue {
+export default class apiConfig extends Vue {
   actionKeys: Identifier[] = [
     "baidu-ocr",
     "baidu-domain",

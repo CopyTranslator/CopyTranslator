@@ -23,9 +23,7 @@ const AppProps = Vue.extend({
 
 @Component
 export default class EngineButton extends mixins(WindowController, AppProps) {
-  engineClass: string = this.getEngineClass();
-
-  getEngineClass() {
+  get engineClass() {
     if (this.engine == "baidu-domain") {
       return `${this.engine}-${config.get("baidu-domain").domain}`;
     } else {

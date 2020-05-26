@@ -104,5 +104,8 @@ export class MenuManager {
     this.tray.on("right-click", (event) => {
       (this.tray as any).popUpContextMenu(this.getMenu("tray"));
     });
+    this.tray.on("click", (event) => {
+      global.controller.win.get("contrast").show();
+    });
   }
 }

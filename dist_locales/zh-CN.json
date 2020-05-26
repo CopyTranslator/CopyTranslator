@@ -44,7 +44,7 @@
     "enableNotify": "启用通知",
     "smartTranslate": "智能互译",
     "capture": "截图翻译",
-    "ocrConfig": "OCR 设置",
+    "apiConfig": "API设置",
     "undo": "撤销",
     "redo": "重做",
     "cut": "剪切",
@@ -74,5 +74,6 @@
     "showConfigFolder": "打开配置文件夹",
     "editConfigFile": "编辑配置文件",
     "colorMode": "配色模式",
-    "drawer": "侧边抽屉"
+    "drawer": "侧边抽屉",
+    "translatorConfig": "翻译器设置"
 }

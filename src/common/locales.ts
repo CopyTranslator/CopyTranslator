@@ -47,7 +47,7 @@ export const zh_cn = new Map<Identifier, string>([
   ["enableNotify", "启用通知"],
   ["smartTranslate", "智能互译"],
   ["capture", "截图翻译"],
-  ["ocrConfig", "OCR 设置"],
+  ["apiConfig", "API设置"],
   ["undo", "撤销"],
   ["redo", "重做"],
   ["cut", "剪切"],
@@ -78,6 +78,7 @@ export const zh_cn = new Map<Identifier, string>([
   ["editConfigFile", "编辑配置文件"],
   ["colorMode", "配色模式"],
   ["drawer", "侧边抽屉"],
+  ["translatorConfig", "翻译器设置"],
 ]);
 
 export const en = new Map<Identifier, string>([
@@ -127,7 +128,7 @@ export const en = new Map<Identifier, string>([
   ["enableNotify", "Enable Notify"],
   ["smartTranslate", "Smart Translate"],
   ["capture", "Screenshot Translate"],
-  ["ocrConfig", "OCR Config"],
+  ["apiConfig", "API Config"],
   ["undo", "undo"],
   ["redo", "redo"],
   ["cut", "cut"],
@@ -158,5 +159,6 @@ export const en = new Map<Identifier, string>([
   ["editConfigFile", "Edit Config File"],
   ["colorMode", "Color Mode"],
   ["drawer", "Drawer"],
+  ["translatorConfig", "Translator Config"],
 ]);
 export type Locale = typeof en;

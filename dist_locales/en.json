@@ -44,7 +44,7 @@
     "enableNotify": "Enable Notify",
     "smartTranslate": "Smart Translate",
     "capture": "Screenshot Translate",
-    "ocrConfig": "OCR Config",
+    "apiConfig": "API Config",
     "undo": "undo",
     "redo": "redo",
     "cut": "cut",
@@ -74,5 +74,6 @@
     "showConfigFolder": "Show Config Folder",
     "editConfigFile": "Edit Config File",
     "colorMode": "Color Mode",
-    "drawer": "Drawer"
+    "drawer": "Drawer",
+    "translatorConfig": "Translator Config"
 }

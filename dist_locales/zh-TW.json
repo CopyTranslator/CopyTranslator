@@ -50,7 +50,7 @@
     "API_KEY": "API_KEY",
     "SECRET_KEY": "SECRET_KEY",
     "capture": "截圖翻譯",
-    "OCRConfig": "OCR 設定",
+    "apiConfig": "API設定",
     "undo": "復原",
     "redo": "重做",
     "cut": "剪下",
@@ -76,7 +76,6 @@
     "skipTaskbar": "略過工作列",
     "contrast": "對比模式",
     "focus": "焦點模式",
-    "ocrConfig": "OCR 設定",
     "forceReload": "強制重新整理",
     "toggleDevTools": "開發者工具開關",
     "togglefullscreen": "全螢幕開關",
@@ -92,5 +91,6 @@
     "showConfigFile": "Open Config File",
     "colorMode": "Color Mode",
     "drawer": "Drawer",
-    "editConfigFile": "Edit Config File"
+    "editConfigFile": "Edit Config File",
+    "translatorConfig": "Translator Config"
 }

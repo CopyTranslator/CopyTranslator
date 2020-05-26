@@ -123,7 +123,8 @@ export const menuActionTypes = [
   "focusRight", // 按钮右键
   "switches", //设置的开关面板
   "options", //设置的选项面板
-  "ocrConfig", //设置的配置面板
+  "apiConfig", //设置的配置面板
+  "translatorConfig",
   "tray", //任务栏托盘右键菜单
   "draggableOptions", //
   "allActions",

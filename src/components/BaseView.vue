@@ -10,6 +10,14 @@ import eventBus from "@/common/event-bus";
 
 @Component
 export default class BaseView extends Vue {
+  get layoutType() {
+    return this.config.layoutType;
+  }
+
+  set layoutType(layoutType) {
+    this.set("layoutType", layoutType);
+  }
+
   get sharedResult() {
     return this.$store.state.sharedResult;
   }
@@ -27,7 +35,7 @@ export default class BaseView extends Vue {
   }
 
   get size() {
-    return this.config.contrast.fontSize;
+    return this.config[this.layoutType].fontSize;
   }
 
   baidu() {

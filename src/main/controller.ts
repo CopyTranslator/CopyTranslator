@@ -13,6 +13,7 @@ import actionLinks, { showDragCopyWarning } from "./views/dialog";
 import { resetAllConfig } from "./file-related";
 import { MainController } from "../common/controller";
 import { UpdateChecker } from "./views/update";
+import config from "@/common/configuration";
 
 class Controller extends MainController {
   win: WindowMangaer = new WindowMangaer(this);
@@ -31,13 +32,20 @@ class Controller extends MainController {
     this.bindLinks(actionLinks);
   }
 
+  changeFontSize(increase: boolean) {
+    const layoutType = config.get("layoutType");
+    const layoutConfig = config.get(layoutType);
+    layoutConfig.fontSize += increase ? 1 : -1;
+    config.set(layoutType, layoutConfig);
+  }
+
   handle(identifier: Identifier, param: any): boolean {
     switch (identifier) {
       case "font+":
-        console.log("font+");
+        this.changeFontSize(true);
         break;
       case "font-":
-        console.log("font-");
+        this.changeFontSize(false);
         break;
       case "exit":
         this.onExit();
@@ -56,7 +64,6 @@ class Controller extends MainController {
       default:
         return this.transCon.handle(identifier, param);
     }
-    console.log(identifier);
     return true;
   }
 

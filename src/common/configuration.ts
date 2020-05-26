@@ -6,6 +6,7 @@ import {
   ModeConfig,
   TypeRule,
   KeyConfig,
+  LayoutConfig,
 } from "./rule";
 import { languages, Language } from "@opentranslate/languages";
 
@@ -149,7 +150,6 @@ function initConfig(
         y: 186,
         height: 600,
         width: 1094,
-        fontSize: 15,
       },
       "parameters of contrast mode"
     )
@@ -275,6 +275,7 @@ function initConfig(
     )
   );
 
+  //下面是N种翻译引擎
   config.setRule(
     "baidu",
     new StructRule<KeyConfig>({ appid: "", key: "" }, "parameters of baidu")
@@ -318,9 +319,26 @@ function initConfig(
       "parameters of tencent"
     )
   );
+
   config.setRule(
     "youdao",
     new StructRule<KeyConfig>({ appKey: "", key: "" }, "parameters of youdao")
+  );
+
+  //下面是三种布局
+  config.setRule(
+    "horizontal",
+    new StructRule<LayoutConfig>({ fontSize: 15 }, "parameters of youdao")
+  );
+
+  config.setRule(
+    "vertical",
+    new StructRule<LayoutConfig>({ fontSize: 15 }, "parameters of youdao")
+  );
+
+  config.setRule(
+    "focus",
+    new StructRule<LayoutConfig>({ fontSize: 15 }, "parameters of youdao")
   );
 
   return config;

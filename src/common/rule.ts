@@ -1,4 +1,4 @@
-import { Identifier } from "./types";
+import { Identifier, LayoutType } from "./types";
 
 export const colorRules = new Map<Identifier, number>([
   ["autoCopy", 1],
@@ -18,6 +18,10 @@ interface ModeConfig {
   width: number;
   fontSize?: number;
 }
+
+export type LayoutConfig = {
+  fontSize: number;
+};
 
 export type KeyConfig = { [key: string]: string };
 

@@ -8,6 +8,7 @@
     >
       <v-col class="areaWarpper">
         <textarea
+          v-bind:style="fontStyle"
           class="hArea"
           @keyup.ctrl.13="translate"
           @keyup.ctrl.71="google"
@@ -20,6 +21,7 @@
       <v-col class="areaWarpper">
         <textarea
           class="hArea"
+          v-bind:style="fontStyle"
           v-model="sharedResult.translation"
           v-on:contextmenu="openMenu('contrastContext')"
         ></textarea>
@@ -28,6 +30,7 @@
     <v-col v-else class="maxNoPad">
       <div class="areaWarpper" style="height: 50%;" @keyup.ctrl.13="translate">
         <textarea
+          v-bind:style="fontStyle"
           @keyup.ctrl.13="translate"
           @keyup.ctrl.71="google"
           @keyup.ctrl.66="baidu"
@@ -39,6 +42,7 @@
       <div class="areaWarpper" style="height: 50%;">
         <textarea
           class="vArea"
+          v-bind:style="fontStyle"
           v-model="sharedResult.translation"
           v-on:contextmenu="openMenu('contrastContext')"
         ></textarea>
@@ -62,14 +66,6 @@ import eventBus from "@/common/event-bus";
   },
 })
 export default class ContrastPanel extends Mixins(BaseView, WindowController) {
-  get layoutType() {
-    return this.config.layoutType;
-  }
-
-  set layoutType(layoutType) {
-    this.set("layoutType", layoutType);
-  }
-
   getModifiedText() {
     return this.sharedResult.text;
   }
@@ -79,6 +75,12 @@ export default class ContrastPanel extends Mixins(BaseView, WindowController) {
     console.log(
       target.value.substring(target.selectionStart, target.selectionEnd)
     );
+  }
+
+  get fontStyle() {
+    return {
+      fontSize: this.size.toString() + "px",
+    };
   }
 }
 </script>

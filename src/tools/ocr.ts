@@ -18,8 +18,7 @@ export class Recognizer {
     if (!this.client) {
       return;
     }
-    ba64.writeImageSync("temp", image);
-    image = fs.readFileSync("temp.png").toString("base64");
+    image = image.substring(image.indexOf(",") + 1);
     this.client
       .generalBasic(image)
       .then(function(result: any) {

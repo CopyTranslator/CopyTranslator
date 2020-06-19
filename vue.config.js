@@ -57,10 +57,10 @@ module.exports = {
             }
           ],
           icon: osSpec.iconName,
-          category: 'Education',
+          category: "Education",
           // https://www.electron.build/configuration/linux#debian-package-options
           desktop: {
-            Icon: '/opt/copytranslator/resources/linux-icon/icon.png'
+            Icon: "/opt/copytranslator/resources/linux-icon/icon.png"
           }
         },
         mac: {
@@ -85,7 +85,7 @@ module.exports = {
       nodeModulesPath: ["./node_modules"]
     }
   },
-  configureWebpack: { 
-    devtool: 'source-map'
+  configureWebpack: {
+    devtool: "source-map"
   }
 };

@@ -42,6 +42,8 @@ class WindowController {
     });
     if (os.platform() === "linux") {
       this.bindLinuxHooks();
+    } else {
+      this.bindHooks();
     }
   }
 

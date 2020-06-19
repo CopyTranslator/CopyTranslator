@@ -5,8 +5,7 @@ export const constants = {
   stage: "",
   wiki: "https://copytranslator.github.io/guide",
   homepage: "https://copytranslator.github.io",
-  downloadPage:
-    "https://copytranslator.github.io/guide/download.html#%E4%B8%8B%E8%BD%BD"
+  downloadPage: "https://copytranslator.github.io/download/"
 };
 export const versionString = [
   "v" + constants.version,

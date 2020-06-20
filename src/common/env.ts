@@ -4,18 +4,26 @@ import { existsSync, mkdirSync } from "fs";
 import { nativeImage } from "electron";
 const osType = osTypeFunc() as string;
 
-const osSpec: { [key: string]: { executableDir: string; iconName: string } } = {
+const osSpec: {
+  [key: string]: { iconName: string; trayName: string };
+} = {
   Windows_NT: {
-    executableDir: "exe",
     iconName: "icon.ico",
+    trayName: "icon.ico",
   },
-  Darwin: { executableDir: "scripts", iconName: "icon.png" },
-  Linux: { executableDir: "scripts", iconName: "icon.png" },
+  Darwin: {
+    iconName: "icon.png",
+    trayName: "tray@2x.png",
+  },
+  Linux: {
+    iconName: "icon.png",
+    trayName: "tray@2x.png",
+  },
 };
 
 const currentSpec = osSpec[osType];
 
-const trayName = "tray@2x.png";
+const trayName = currentSpec.trayName;
 
 function mkdir(path: string) {
   if (existsSync(path)) {
@@ -36,7 +44,7 @@ interface SharedConfig {
 
 interface DiffConfig {
   systemLocaleDir: string;
-  executableDir: string;
+
   iconPath: string;
   trayIconPath: string;
   styleTemplate: string;
@@ -58,7 +66,6 @@ const diffConfig: DiffConfig =
   process.env.NODE_ENV == "production"
     ? {
         systemLocaleDir: join(process.resourcesPath, "locales"),
-        executableDir: join(process.resourcesPath, currentSpec.executableDir),
         iconPath: join(process.resourcesPath, currentSpec.iconName),
         trayIconPath: join(process.resourcesPath, trayName),
         styleTemplate: join(process.resourcesPath, "styles.css"),
@@ -66,7 +73,6 @@ const diffConfig: DiffConfig =
       }
     : {
         systemLocaleDir: join(process.cwd(), "dist_locales"),
-        executableDir: join(process.cwd(), currentSpec.executableDir),
         iconPath: join(process.cwd(), currentSpec.iconName),
         trayIconPath: join(process.cwd(), trayName),
         styleTemplate: join(process.cwd(), "src", "styles.css"),

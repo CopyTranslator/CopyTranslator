@@ -23,3 +23,6 @@ yarn-error.log*
 #Electron-builder output
 /dist_electron
 .token
+
+docs/.vuepress/dist
+docs/.vuepress/release

@@ -29,6 +29,7 @@ export const normalActionTypes = [
   "hideWindow",
   "showWindow",
   "translateClipboard",
+  "notify",
 ] as const;
 
 //切换值的动作

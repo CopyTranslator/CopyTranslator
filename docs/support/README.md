@@ -2,17 +2,42 @@
 
 您可以通过很多种方式来支持 `CopyTranslator`的开发
 
-## 分享
-
-点下star，并分享给您的朋友，社交网络就是对CopyTranslator的极大支持。
-
-## 捐赠
+## 打赏
 
 CopyTranslator是采用 GPL v2 协议许可的开源项目，**使用完全免费**。
 
-但是它的维护也是需要较大的精力的，如果您觉得软件对您有帮助，可以请作者喝杯奶茶。
+但是它的维护工作量很大，这些工作目前主要由作者一人花费大量私人时间与精力完成😫。
 
-   ![aifadian](https://s2.ax1x.com/2019/03/05/kjASMV.png)
+如果你希望支持这个项目长久持续开发下去并保持维护不断加入新功能，可以选择打赏我喝瓶冰阔落🥤恢复元气，更好地投入到开发当中。😊
+
+感谢所有支持CopyTranslator的小伙伴们。
+
+<h4 style="text-align:center;">通过微信或支付宝扫码打赏</h4>
+<div style="text-align:center;">
+<div style="display:inline-block;">
+   <img width="300" src="https://s1.ax1x.com/2020/04/11/G7a8VU.jpg" alt="微信赞赏">
+   <p style="text-align:center;">微信赞赏</p>
+</div>
+   
+   <div style="display:inline-block;">
+   <img width="300" src="https://s1.ax1x.com/2020/04/11/G7UVpR.jpg" alt="支付宝"> 
+   <p style="text-align:center;">支付宝</p>
+</div>
+</div>
+<div style="text-align:center;">
+<h4 style="text-align:center;">或通过<a href="https://afdian.net/@elliottzheng">爱发电</a>定期请我喝咖啡</h4>
+<a href="https://afdian.net/@elliottzheng"><img width="300" src="https://s2.ax1x.com/2019/03/05/kjASMV.png"></img>
+<p style="text-align:center;">爱发电</p>
+</a>
+
+</div>
+
+
+   
+
+## 分享
+
+点下star，并分享给您的朋友，社交网络就是对CopyTranslator的极大支持。
 
 
 ## 平台维护者

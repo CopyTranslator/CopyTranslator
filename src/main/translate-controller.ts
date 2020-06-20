@@ -88,6 +88,7 @@ class TranslateController {
   setSrc(append: string) {
     if (this.get<boolean>("incrementalCopy") && this.text != "")
       this.text = this.text + " " + append;
+    //TODO 这里需要做特殊处理，中文不需要加空格
     else {
       this.text = append;
     }
@@ -190,10 +191,12 @@ class TranslateController {
         from: this.translateResult.from,
         to: this.translateResult.to,
         engine: this.translateResult.engine,
-        notify: this.get<boolean>("enableNotify"),
       };
     }
     store.dispatch("setShared", sharedResult);
+    if (this.get<boolean>("enableNotify")) {
+      eventBus.at("dispatch", "notify", sharedResult.translation);
+    }
   }
 
   postProcess(language: any, result: CopyTranslateResult) {

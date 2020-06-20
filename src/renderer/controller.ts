@@ -3,6 +3,7 @@ import store, { observers, restoreFromConfig } from "../store";
 import bus from "../common/event-bus";
 import createApp from "./createApp";
 import Vue from "vue";
+import { constants, versionString } from "../common/constant";
 
 import { RenController, MainController } from "../common/controller";
 import { createProxy } from "../proxy/renderer";
@@ -33,9 +34,23 @@ export class RendererController extends RenController {
     this.app = createApp();
   }
 
-  handle(identifier: Identifier) {
-    console.log("renderer handle", identifier);
-    return false;
+  notify(text: string) {
+    if (text.length > 0) {
+      new Notification(constants.appName + " " + versionString, {
+        body: text,
+      });
+    }
+  }
+
+  handle(identifier: Identifier, param: any) {
+    switch (identifier) {
+      case "notify":
+        this.notify(param);
+        break;
+      default:
+        return false;
+    }
+    return true;
   }
 
   postSet(identifier: Identifier, value: any): boolean {

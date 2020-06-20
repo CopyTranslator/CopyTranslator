@@ -4,7 +4,6 @@ export interface SharedResult {
   from: string;
   to: string;
   engine: string;
-  notify: boolean;
 }
 
 export function emptySharedResult(): SharedResult {
@@ -14,6 +13,5 @@ export function emptySharedResult(): SharedResult {
     from: "",
     to: "",
     engine: "",
-    notify: false,
   };
 }

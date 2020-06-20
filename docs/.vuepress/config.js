@@ -27,11 +27,15 @@ module.exports = {
         link: '/'
       },
       {
-        text: '下载',
+        text: '下载安装',
         link: '/download/'
       },
       {
-        text: '指南',
+        text: '❤️支持项目',
+        link: '/support/'
+      },
+      {
+        text: '使用指南',
         link: '/guide/'
       },
       {
@@ -41,10 +45,6 @@ module.exports = {
       {
         text: '用户生态',
         link: '/userland/'
-      },
-      {
-        text: '支持',
-        link: '/support/'
       },
       {
         text: '关于',
@@ -80,7 +80,6 @@ module.exports = {
         title: "更新日志",
         collapsable: false,
         children: [
-          'v10',
           'v9',
           'v8',
           'v7',

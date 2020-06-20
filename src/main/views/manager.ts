@@ -194,15 +194,20 @@ export class WindowMangaer {
     return window;
   }
 
+  getDisplay() {
+    return screen.getDisplayNearestPoint(screen.getCursorScreenPoint());
+  }
+
   createSetting() {
     const width = 320;
     const height = 680;
     const {
       x: xBound,
-      x: yBound,
+      y: yBound,
       width: screenWidth,
       height: screenHeight,
-    } = screen.getPrimaryDisplay().bounds; //TODO 这里需要对双屏做优化
+    } = this.getDisplay().bounds;
+
     const t = store.getters.locale;
     const config = {
       x: xBound + (screenWidth - width) / 2,
@@ -222,10 +227,10 @@ export class WindowMangaer {
 
     const {
       x: xBound,
-      x: yBound,
+      y: yBound,
       width: screenWidth,
       height: screenHeight,
-    } = screen.getPrimaryDisplay().bounds; //TODO 这里需要对双屏做优化
+    } = this.getDisplay().bounds;
 
     const config = {
       x: xBound + (screenWidth - width) / 2,

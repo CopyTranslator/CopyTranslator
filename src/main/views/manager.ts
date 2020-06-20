@@ -5,11 +5,12 @@ import {
   HideDirection,
 } from "../../common/types";
 import createProtocol from "./create-protocol";
-import { BrowserWindow, screen, nativeImage } from "electron";
+import { BrowserWindow, screen, nativeImage, app } from "electron";
 import { env, icon } from "../../common/env";
 import store from "../../store";
 import { MainController } from "@/common/controller";
 import { defaultConfig, MinimalParam, loadRoute, insertStyles } from "./utils";
+const forceFocus = require("@adeperio/forcefocus");
 
 export class WindowMangaer {
   windows = new Map<RouteActionType, BrowserWindow>();
@@ -114,14 +115,15 @@ export class WindowMangaer {
 
   showWindow() {
     const window = this.get("contrast");
-    if (!window.isVisible()) {
-      window.show();
-    }
     if (window.isMinimized()) {
       window.restore();
     }
+    window.show();
     window.moveTop();
-    window.focus();
+    //https://github.com/electron/electron/issues/2867
+    //https://www.npmjs.com/package/@adeperio/forcefocus
+
+    forceFocus.focusWindow(window);
   }
 
   hideWindow() {

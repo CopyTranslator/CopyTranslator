@@ -2,6 +2,8 @@
 import { app, protocol } from "electron";
 const gotTheLock = app.requestSingleInstanceLock();
 
+console.time("before-ready");
+
 //确保全局单例
 if (!gotTheLock) {
   app.exit();
@@ -64,6 +66,7 @@ app.on("ready", async () => {
     // Install Vue Devtools
     // await installVueDevtools();
   }
+  console.timeEnd("before-ready");
   controller.createWindow();
 });
 

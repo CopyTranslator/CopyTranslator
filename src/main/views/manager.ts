@@ -154,8 +154,11 @@ export class WindowMangaer {
       ...param,
     };
     const window = new BrowserWindow(config);
+
     if (!config.show) {
+      console.time("create-window");
       window.webContents.once("did-finish-load", () => {
+        console.timeEnd("create-window");
         window.show();
       });
     }

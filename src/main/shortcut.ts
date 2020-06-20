@@ -70,7 +70,7 @@ class ShortcutManager {
       type: "normal",
       click: function (
         menuItem: MenuItem,
-        browserWindow: BrowserWindow,
+        browserWindow: BrowserWindow | undefined,
         event: KeyboardEvent
       ) {
         callback(key, menuItem, browserWindow, event);

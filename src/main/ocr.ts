@@ -1,6 +1,4 @@
 const AipOcrClient = require("baidu-aip-sdk").ocr;
-const ba64 = require("ba64");
-import fs from "fs";
 import { examToken } from "@/common/translate/token";
 import eventBus from "@/common/event-bus";
 const ShortcutCapture = require("shortcut-capture");

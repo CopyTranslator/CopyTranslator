@@ -2469,11 +2469,6 @@ axios@0.19.2, axios@^0.19.0:
   dependencies:
     follow-redirects "1.5.10"
 
-ba64@^3.0.9:
-  version "3.0.9"
-  resolved "https://registry.npm.taobao.org/ba64/download/ba64-3.0.9.tgz#b9d212a4ad5da4dc5526fddc88cc5650575d0b40"
-  integrity sha1-udISpK1dpNxVJv3ciMxWUFddC0A=
-
 babel-code-frame@^6.22.0, babel-code-frame@^6.26.0:
   version "6.26.0"
   resolved "https://registry.npm.taobao.org/babel-code-frame/download/babel-code-frame-6.26.0.tgz#63fd43f7dc1e3bb7ce35947db8fe369a3f58c74b"
@@ -4191,11 +4186,6 @@ data-urls@^1.0.0, data-urls@^1.1.0:
     whatwg-mimetype "^2.2.0"
     whatwg-url "^7.0.0"
 
-dayjs@^1.8.24:
-  version "1.8.24"
-  resolved "https://registry.npm.taobao.org/dayjs/download/dayjs-1.8.24.tgz#2ef8a2ab9425eaf3318fe78825be1c571027488d"
-  integrity sha1-Lviiq5Ql6vMxj+eIJb4cVxAnSI0=
-
 de-indent@^1.0.2:
   version "1.0.2"
   resolved "https://registry.npm.taobao.org/de-indent/download/de-indent-1.0.2.tgz#b2038e846dc33baa5796128d0804b455b8c1e21d"
@@ -4794,9 +4784,9 @@ electron-updater@4.2.5:
     semver "^7.1.3"
 
 electron@^8.2.3:
-  version "8.2.3"
-  resolved "https://registry.npm.taobao.org/electron/download/electron-8.2.3.tgz#b7d6a43bd9f3a2428c660dcd055a20034520e1ea"
-  integrity sha1-t9akO9nzokKMZg3NBVogA0Ug4eo=
+  version "8.3.3"
+  resolved "https://registry.npm.taobao.org/electron/download/electron-8.3.3.tgz#8ce07dcbafa097d00b94d1dd58a2a3b30fe6f803"
+  integrity sha1-jOB9y6+gl9ALlNHdWKKjsw/m+AM=
   dependencies:
     "@electron/get" "^1.0.1"
     "@types/node" "^12.0.12"

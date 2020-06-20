@@ -114,6 +114,9 @@ export class WindowMangaer {
 
   showWindow() {
     const window = this.get("contrast");
+    if (!window.isVisible()) {
+      window.show();
+    }
     if (window.isMinimized()) {
       window.restore();
     }
@@ -124,7 +127,6 @@ export class WindowMangaer {
   hideWindow() {
     const window = this.get("contrast");
     window.hide();
-    // window.moveTop();
   }
 
   setStayTop(val: boolean) {

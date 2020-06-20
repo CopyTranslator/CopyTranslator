@@ -5,6 +5,7 @@ import { AxiosRequestConfig } from "axios";
 import { Language } from "@opentranslate/translator";
 import { autoReSegment } from "./helper";
 import { setProxy } from "./proxy";
+import eventBus from "../event-bus";
 
 export class Compound implements CopyTranslator {
   mainEngine: TranslatorType;
@@ -27,6 +28,9 @@ export class Compound implements CopyTranslator {
 
   setEngines(engines: TranslatorType[]) {
     this.engines = engines;
+    if (!this.engines.includes(this.mainEngine)) {
+      eventBus.at("dispatch", "translatorType", this.engines[0]);
+    }
   }
 
   getMainEngine() {
@@ -36,10 +40,14 @@ export class Compound implements CopyTranslator {
   async translate(
     text: string,
     from: Language,
-    to: Language
+    to: Language,
+    engines?: TranslatorType[]
   ): Promise<CopyTranslateResult> {
     this.text = text;
-    for (const name of this.engines) {
+    if (!engines) {
+      engines = this.engines;
+    }
+    for (const name of engines) {
       if (name === this.mainEngine) {
         continue;
       }

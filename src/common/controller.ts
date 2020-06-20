@@ -3,8 +3,7 @@ import config, { ConfigParser } from "./configuration";
 import { Promisified } from "@/proxy/renderer";
 import { ActionManager } from "./action";
 import bus from "./event-bus";
-// eslint-disable-next-line prettier/prettier
-import type { WindowMangaer } from "@/main/views/manager";
+
 const isMain = process.type == "browser";
 
 type Handler1 = () => void;

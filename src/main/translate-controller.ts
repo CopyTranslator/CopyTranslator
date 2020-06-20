@@ -384,8 +384,9 @@ class TranslateController {
       return;
     }
     this.preProcess(text);
+    const engines = this.get<TranslatorType[]>("translator-auto");
     return this.translator
-      .translate(this.text, language.source, language.target)
+      .translate(this.text, language.source, language.target, engines)
       .then((res) => this.postTranslate(res, language))
       .catch((err) => {
         this.translateFail();

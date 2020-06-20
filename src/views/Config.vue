@@ -1,9 +1,9 @@
 <template>
   <v-expansion-panels>
-    <v-expansion-panel v-for="actionId in actionKeys" :key="actionId">
-      <v-expansion-panel-header>{{ actionId }}</v-expansion-panel-header>
+    <v-expansion-panel v-for="translator in translators" :key="translator">
+      <v-expansion-panel-header>{{ translator }}</v-expansion-panel-header>
       <v-expansion-panel-content>
-        <KeyConfig :identifier="actionId"></KeyConfig>
+        <KeyConfig :identifier="translator"></KeyConfig>
       </v-expansion-panel-content>
     </v-expansion-panel>
   </v-expansion-panels>
@@ -13,7 +13,7 @@
 import { shell } from "electron";
 import { Component, Vue } from "vue-property-decorator";
 import KeyConfig from "@/components/KeyConfig.vue";
-import { Identifier } from "../common/types";
+import { structActionTypes } from "../common/types";
 
 @Component({
   components: {
@@ -21,25 +21,9 @@ import { Identifier } from "../common/types";
   },
 })
 export default class apiConfig extends Vue {
-  actionKeys: Identifier[] = [
-    "baidu-ocr",
-    "baidu-domain",
-    "baidu",
-    "google",
-    "youdao",
-    "sogou",
-    "caiyun",
-    "tencent",
-  ];
-  confirm() {
-    // this.$proxy.setUpRecognizer(this.APP_ID, this.API_KEY, this.SECRET_KEY);
-  }
-  close() {}
+  translators = structActionTypes;
   tutorial() {
     shell.openExternal("https://www.bilibili.com/video/av53888416/");
-  }
-  get trans() {
-    return this.$store.getters.locale;
   }
 }
 </script>

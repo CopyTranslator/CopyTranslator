@@ -105,6 +105,9 @@ class Controller extends MainController {
       case "stayTop":
         this.win.setStayTop(value);
         break;
+      case "skipTaskbar":
+        this.win.get("contrast").setSkipTaskbar(value);
+        break;
       default:
         return false;
     }

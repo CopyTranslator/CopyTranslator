@@ -166,7 +166,7 @@ export class WindowMangaer {
         const closeAsQuit = this.controller.get("closeAsQuit");
         if (!closeAsQuit) {
           e.preventDefault();
-          window.minimize();
+          window.hide();
         }
       });
     }
@@ -219,6 +219,7 @@ export class WindowMangaer {
       maximizable: false,
       minimizable: false,
       title: t["settings"],
+      parent: this.get("contrast"),
     };
     return this.createWindow("settings", config);
   }

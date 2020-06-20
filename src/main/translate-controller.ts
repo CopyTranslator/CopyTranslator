@@ -23,6 +23,7 @@ import { clipboard } from "./clipboard";
 import { MainController } from "../common/controller";
 import store from "@/store";
 import { recognizer } from "./ocr";
+import eventBus from "@/common/event-bus";
 
 class TranslateController {
   text: string = "";
@@ -205,7 +206,8 @@ class TranslateController {
       clipboard.writeText(this.text);
     }
     if (this.get<boolean>("autoShow")) {
-      console.log("auto show");
+      console.log("autoshow");
+      eventBus.at("dispatch", "showWindow");
     }
     this.translateResult = result;
     this.sync(language);

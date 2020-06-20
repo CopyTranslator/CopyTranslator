@@ -1,5 +1,9 @@
 import { loadStyles } from "../style";
-import { RouteActionType, routeActionTypes } from "../../common/types";
+import {
+  RouteActionType,
+  routeActionTypes,
+  HideDirection,
+} from "../../common/types";
 import createProtocol from "./create-protocol";
 import { BrowserWindow, screen, nativeImage } from "electron";
 import { env, icon } from "../../common/env";
@@ -21,6 +25,110 @@ export class WindowMangaer {
     } else {
       return this.create(routeName);
     }
+  }
+
+  edgeHide(hideDirection: HideDirection) {
+    const window = this.get("contrast");
+    const bounds = window.getBounds();
+    let { x, y, width, height } = bounds;
+    const { x: xBound, width: screenWidth } = screen.getDisplayMatching(
+      bounds
+    ).bounds;
+    let xEnd = x + width;
+    let yEnd = y + height;
+    switch (hideDirection) {
+      case "Up":
+        if (yEnd > 10) {
+          y -= yEnd - 10;
+          yEnd -= yEnd - 10;
+          window.setBounds({ x: x, y: y, width: width, height: height });
+        }
+        break;
+      case "Left":
+        if (xEnd > xBound + 10) {
+          x -= xEnd - (xBound + 10);
+          xEnd -= xEnd - (xBound + 10);
+          window.setBounds({ x: x, y: y, width: width, height: height });
+        }
+        break;
+      case "Right":
+        if (x < xBound + screenWidth - 10) {
+          x += xBound + screenWidth - 10 - x;
+          window.setBounds({ x: x, y: y, width: width, height: height });
+        }
+        break;
+      case "Minify":
+        window.minimize();
+        break;
+    }
+  }
+
+  edgeShow() {
+    const window = this.get("contrast");
+    const bounds = window.getBounds();
+    let { x, y, width, height } = bounds;
+    const { x: xBound, width: screenWidth } = screen.getDisplayMatching(
+      bounds
+    ).bounds;
+    let xEnd = x + width;
+    let yEnd = y + height;
+    if (x < xBound) {
+      const val = xBound - x;
+      x += val;
+      xEnd += val;
+    }
+
+    if (xEnd > xBound + screenWidth) {
+      const val = xEnd - (xBound + screenWidth);
+      x -= val;
+      xEnd -= val;
+    }
+
+    if (y < 0) {
+      yEnd = y;
+      y = 0;
+    }
+    window.setBounds({ x: x, y: y, width: width, height: height });
+  }
+
+  onEdge(): HideDirection {
+    const window = this.get("contrast");
+    if (!this.controller.get("autoHide")) {
+      return "None";
+    }
+    let bound = window.getBounds();
+    let { x, y, width } = bound;
+    const { x: xBound, width: screenWidth } = screen.getDisplayMatching(
+      bound
+    ).bounds;
+    x -= xBound;
+    let xEnd = x + width;
+
+    if (x <= 0) return "Left";
+    if (xEnd >= screenWidth) {
+      return "Right";
+    }
+    if (y <= 0) return "Up";
+    return "None";
+  }
+
+  showWindow() {
+    const window = this.get("contrast");
+    if (window.isMinimized()) {
+      window.restore();
+    }
+    window.moveTop();
+    window.focus();
+  }
+
+  hideWindow() {
+    const window = this.get("contrast");
+    window.hide();
+    // window.moveTop();
+  }
+
+  setStayTop(val: boolean) {
+    this.get("contrast").setAlwaysOnTop(val);
   }
 
   create(routeName: RouteActionType): BrowserWindow {
@@ -76,7 +184,14 @@ export class WindowMangaer {
       show: false,
       title: "CopyTranslator",
     };
-    return this.createWindow("contrast", config, true);
+    const window = this.createWindow("contrast", config, true);
+    window.on("blur", () => {
+      this.edgeHide(this.onEdge());
+    });
+    window.on("focus", () => {
+      this.edgeShow();
+    });
+    return window;
   }
 
   createSetting() {

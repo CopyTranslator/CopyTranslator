@@ -38,8 +38,7 @@ export class Recognizer {
     if (!this.client) {
       return;
     }
-    ba64.writeImageSync("temp", image);
-    image = fs.readFileSync("temp.png").toString("base64");
+    image = image.substring(image.indexOf(",") + 1);
     this.client
       .generalBasic(image)
       .then(function (result: { words_result: Array<{ words: string }> }) {
@@ -52,7 +51,6 @@ export class Recognizer {
         // 如果发生网络错误
         console.log(err);
       });
-    fs.unlink("temp.png", () => {});
   }
 }
 export const recognizer = new Recognizer();

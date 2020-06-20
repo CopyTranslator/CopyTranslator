@@ -86,7 +86,7 @@ export default class Contrast extends Mixins(BaseView, WindowController) {
   }
 
   get engines() {
-    return this.valid ? dictionaryTypes : translatorTypes;
+    return this.valid ? dictionaryTypes : this.config["translator-auto"];
   }
 
   get styleNow() {

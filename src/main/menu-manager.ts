@@ -15,6 +15,7 @@ import bus from "../common/event-bus";
 import { ActionManager } from "@/common/action";
 import { CommonController } from "@/common/controller";
 import { ConfigParser } from "@/common/configParser";
+import eventBus from "../common/event-bus";
 
 type CallBack = (
   menuItem?: MenuItem,
@@ -105,7 +106,7 @@ export class MenuManager {
       (this.tray as any).popUpContextMenu(this.getMenu("tray"));
     });
     this.tray.on("click", (event) => {
-      global.controller.win.get("contrast").show();
+      eventBus.at("dispatch", "showWindow");
     });
   }
 }

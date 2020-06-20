@@ -27,6 +27,7 @@ export const normalActionTypes = [
   "editConfigFile",
   "showConfigFolder",
   "hideWindow",
+  "showWindow",
   "translateClipboard",
 ] as const;
 
@@ -156,7 +157,6 @@ export const colorModes = [
 ] as const;
 
 export const eventTypes = [
-  "showWindow",
   "firstLoad",
   "closeWindow",
   "openMenu",

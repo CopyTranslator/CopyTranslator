@@ -60,7 +60,11 @@ class Controller extends MainController {
         this.updater.check();
         break;
       case "hideWindow":
-        this.win.get("contrast").hide();
+        this.win.hideWindow();
+        break;
+      case "showWindow":
+        this.win.showWindow();
+        break;
       default:
         return this.transCon.handle(identifier, param);
     }
@@ -97,6 +101,9 @@ class Controller extends MainController {
         BrowserWindow.getAllWindows().forEach((window) => {
           window.reload();
         });
+        break;
+      case "stayTop":
+        this.win.setStayTop(value);
         break;
       default:
         return false;

@@ -13,7 +13,6 @@ export type Shortcuts = Map<string, Accelerator>;
 export const defaultGlobalShortcuts: Shortcuts = new Map([
   ["focus", "Shift+F1"],
   ["contrast", "Shift+F2"],
-  ["hideWindow", "Escape"],
 ]);
 
 export const defaultLocalShortcuts: Shortcuts = new Map([
@@ -28,6 +27,7 @@ export const defaultLocalShortcuts: Shortcuts = new Map([
   ["quit", "Cmd+Q"],
   ["font+", "CmdOrCtrl+="],
   ["font-", "CmdOrCtrl+-"],
+  ["hideWindow", "Escape"],
 ]);
 
 export function resetFile(file: string, config: Map<string, Accelerator>) {

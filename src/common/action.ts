@@ -230,6 +230,7 @@ class ActionManager {
     this.append(normalAction("checkUpdate"));
     this.append(normalAction("translate"));
     this.append(normalAction("hideWindow"));
+    this.append(normalAction("showWindow"));
     this.append(normalAction("translateClipboard"));
 
     //引擎配置

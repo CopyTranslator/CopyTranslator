@@ -28,7 +28,6 @@ export class Recognizer {
         // 如果发生网络错误
         console.log(err);
       });
-    fs.unlink("temp.png", () => {});
   }
 }
 export let recognizer = new Recognizer();

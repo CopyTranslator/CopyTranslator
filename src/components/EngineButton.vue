@@ -1,33 +1,44 @@
 <template>
-  <div class="engineBtn">
-    <el-button
-      v-bind:class="[engine, 'btnBase', { inactive: inactive }]"
-      @click="switchTranslator"
-      circle
-    ></el-button>
-  </div>
+  <v-btn
+    v-bind:class="[engineClass, 'btnBase', { inactive: inactive }]"
+    @click="switchTranslator"
+    color="white"
+    x-small
+    fab
+  ></v-btn>
 </template>
 
 <script lang="ts">
 import WindowController from "./WindowController.vue";
 import Vue from "vue";
 import Component, { mixins } from "vue-class-component";
+import config from "@/common/configuration";
 
 const AppProps = Vue.extend({
   props: {
     engine: String,
-    valid: Boolean
-  }
+    valid: Boolean,
+  },
 });
 
 @Component
-export default class App extends mixins(WindowController, AppProps) {
-  engineClass: string = this.engine;
-  get inactive() {
-    return this.valid
-      ? this.$store.state.dictResult.engine != this.engine
-      : this.$store.state.sharedResult.engine != this.engine;
+export default class EngineButton extends mixins(WindowController, AppProps) {
+  get engineClass() {
+    if (this.engine == "baidu-domain") {
+      return `${this.engine}-${config.get("baidu-domain").domain}`;
+    } else {
+      return this.engine;
+    }
   }
+
+  get inactive(): boolean {
+    if (!this.valid) {
+      return this.$store.state.config.translatorType != this.engine;
+    } else {
+      return this.$store.state.config.dictionaryType != this.engine;
+    }
+  }
+
   switchTranslator() {
     if (this.valid) {
       this.callback("dictionaryType|" + this.engine);
@@ -39,10 +50,6 @@ export default class App extends mixins(WindowController, AppProps) {
 </script>
 
 <style scoped>
-.engineBtn {
-  width: 100%;
-  height: 100%;
-}
 .inactive {
   filter: grayscale(90%);
 }
@@ -67,6 +74,18 @@ export default class App extends mixins(WindowController, AppProps) {
 .tencent {
   background-image: url("../images/tencent.png");
 }
+.baidu-domain-electronics {
+  background-image: url("../images/electronics.svg");
+}
+
+.baidu-domain-mechanics {
+  background-image: url("../images/mechanics.svg");
+}
+
+.baidu-domain-medicine {
+  background-image: url("../images/medicine.svg");
+}
+
 .btnBase {
   background-position: center;
   background-size: contain;

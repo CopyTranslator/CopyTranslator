@@ -43,11 +43,8 @@
     "restoreDefault": "恢复默认设置",
     "enableNotify": "启用通知",
     "smartTranslate": "智能互译",
-    "APP_ID": "APP_ID",
-    "API_KEY": "API_KEY",
-    "SECRET_KEY": "SECRET_KEY",
     "capture": "截图翻译",
-    "ocrConfig": "OCR 设置",
+    "apiConfig": "API设置",
     "undo": "撤销",
     "redo": "重做",
     "cut": "剪切",
@@ -71,5 +68,12 @@
     "resetZoom": "重置缩放",
     "zoomIn": "放大",
     "zoomOut": "缩小",
-    "closeAsQuit": "关闭即退出"
+    "closeAsQuit": "关闭即退出",
+    "layoutType": "布局",
+    "autoCheckUpdate": "自动检查更新",
+    "showConfigFolder": "打开配置文件夹",
+    "editConfigFile": "编辑配置文件",
+    "colorMode": "配色模式",
+    "drawer": "侧边抽屉",
+    "translatorConfig": "翻译器设置"
 }

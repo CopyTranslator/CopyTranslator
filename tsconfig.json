@@ -1,22 +1,21 @@
 {
   "compilerOptions": {
-    "target": "es2015",
-    "module": "es2015",
-    "resolveJsonModule": true,
+    "target": "esnext",
+    "module": "esnext",
     "strict": true,
     "jsx": "preserve",
     "importHelpers": true,
     "moduleResolution": "node",
-    "downlevelIteration": true,
     "experimentalDecorators": true,
-    "emitDecoratorMetadata": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
+    "resolveJsonModule": true,
     "sourceMap": true,
-    "noEmitOnError": true,
     "baseUrl": ".",
     "types": [
-      "webpack-env", "jest"
+      "webpack-env",
+      "jest",
+      "vuetify"
     ],
     "paths": {
       "@/*": [
@@ -34,11 +33,10 @@
     "src/**/*.ts",
     "src/**/*.tsx",
     "src/**/*.vue",
-    "test/**/*.ts",
-    "test/**/*.tsx"
+    "tests/**/*.ts",
+    "tests/**/*.tsx"
   ],
   "exclude": [
-    "node_modules",
-    "src/background.ts"
+    "node_modules"
   ]
 }

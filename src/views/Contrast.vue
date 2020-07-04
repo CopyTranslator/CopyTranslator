@@ -1,127 +1,180 @@
 <template>
   <div>
-    <div>
-      <div :style="area2">
-        <textarea
-          class="contrastText div-inline"
-          v-if="sharedResult"
-          :style="area"
-          v-model="sharedResult.src"
-          v-on:contextmenu="openMenu('contrastContext')"
-        ></textarea>
-
-        <textarea
-          class="contrastText div-inline"
-          :style="area"
-          v-if="sharedResult"
-          v-model="sharedResult.result"
-          v-on:contextmenu="openMenu('contrastContext')"
-        ></textarea>
-      </div>
-
-      <div
-        class="controlPanel div-inline"
-        style="text-align: left;float:right; padding: 5px;"
+    <v-app>
+      <v-app-bar app color="purple" dark dense>
+        <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
+        <v-spacer>
+          <div
+            style="
+              -webkit-app-region: drag;
+              height: 100%;
+              width: 100%;
+              font-family: 'Encode Sans', sans-serif;
+            "
+          >
+            CopyTranslator
+          </div>
+        </v-spacer>
+        <EngineButton
+          v-for="engine in engines"
+          :key="engine"
+          :engine="engine"
+          :valid="valid"
+        ></EngineButton>
+        <div v-on:contextmenu="openMenu('focusRight')">
+          <v-btn
+            :style="styleNow"
+            @click="callback('listenClipboard')"
+            fab
+            x-small
+          ></v-btn>
+        </div>
+        <v-btn @click="enumerateLayouts" fab small depressed color="purple">
+          <v-icon>mdi-view-quilt</v-icon>
+        </v-btn>
+        <v-btn
+          color="purple"
+          small
+          depressed
+          fab
+          @click="minify"
+          v-on:contextmenu="close"
+          ><v-icon>mdi-close</v-icon></v-btn
+        >
+      </v-app-bar>
+      <v-navigation-drawer
+        v-model="drawer"
+        app
+        disable-resize-watcher
+        :permanent="drawer"
+        hide-overlay
+        :width="200"
       >
         <Action
           v-for="actionId in actionKeys"
           :identifier="actionId"
           :key="actionId"
         ></Action>
-        <el-button
-          type="primary"
-          class="noMargin"
-          @click="changeMode('focus')"
-          >{{ $t("focus") }}</el-button
-        >
-        <el-button type="primary" class="noMargin" @click="translate">{{
-          $t("translate")
-        }}</el-button>
-        <el-button type="primary" class="noMargin" @click="toSetting">
-          {{ $t("settings") }}
-        </el-button>
-      </div>
-    </div>
+      </v-navigation-drawer>
+
+      <ContrastPanel
+        :style="area"
+        v-bind:class="{ active: drawer }"
+      ></ContrastPanel>
+    </v-app>
   </div>
 </template>
 
 <script lang="ts">
+import Vue from "vue";
+import ContrastPanel from "../components/ContrastPanel.vue";
 import BaseView from "../components/BaseView.vue";
 import WindowController from "../components/WindowController.vue";
 import Action from "../components/Action.vue";
 import Component from "vue-class-component";
-import { Mixins } from "vue-property-decorator";
-import { Identifier } from "../tools/types";
+import { Mixins, Watch } from "vue-property-decorator";
+import {
+  Identifier,
+  layoutTypes,
+  LayoutType,
+  translatorTypes,
+  TranslatorType,
+} from "../common/types";
+import { ipcRenderer as ipc } from "electron";
+import EngineButton from "../components/EngineButton.vue";
+
+import {
+  dictionaryTypes,
+  DictionaryType,
+  emptyDictResult,
+} from "../common/dictionary/types";
 
 @Component({
   components: {
-    Action: Action
-  }
+    Action: Action,
+    ContrastPanel: ContrastPanel,
+    EngineButton: EngineButton,
+  },
 })
 export default class Contrast extends Mixins(BaseView, WindowController) {
-  size: number = 15;
+  barWidth: number = 0;
   readonly routeName = "contrast";
-  actionKeys: Identifier[] = [];
+  actionKeys: Identifier[] = this.$controller.action.getKeys("contrastPanel");
 
-  mounted() {
-    this.$proxy.get("contrast").then(res => {
-      this.size = res.fontSize;
-    });
-    this.$proxy.getKeys("contrastPanel").then(res => {
-      this.actionKeys = res;
-    });
+  get valid() {
+    return this.dictResult.valid && this.layoutType === "focus";
+  }
+
+  get engines() {
+    return this.valid ? dictionaryTypes : this.config["translator-auto"];
+  }
+
+  get styleNow() {
+    return `background:${this.color};`;
+  }
+
+  get color() {
+    return this.$store.state.color;
+  }
+
+  @Watch("drawer")
+  changeDrawer(val: boolean) {
+    if (val) {
+      this.barWidth = 200;
+    } else {
+      this.barWidth = 0;
+    }
   }
 
   get area() {
     return {
-      fontSize: `${this.size.toString()}px`,
-      height: `${this.windowHeight / 2 - 5}px`,
-      margin: `0`,
-      padding: `0`
-    };
-  }
-  get area2() {
-    return {
-      width: `${this.windowWidth - 165}px`,
-      float: "left"
+      "margin-top": "49px",
+      width: `${(this.windowWidth - this.barWidth).toString()}px`,
     };
   }
 
-  toSetting() {
-    this.$proxy.handleAction("settings");
+  get drawer(): boolean {
+    return this.config.drawer;
   }
-  translate() {
-    this.$proxy.tryTranslate(this.sharedResult.src, true);
+
+  set drawer(val: boolean) {
+    this.set("drawer", val);
+  }
+
+  enumerateLayouts() {
+    const index = layoutTypes.findIndex((x) => x === this.layoutType);
+    this.set("layoutType", layoutTypes[(index + 1) % layoutTypes.length]);
+  }
+
+  get layoutType() {
+    return this.config.layoutType;
   }
 }
 </script>
-
-<style scoped>
-p {
-  font-size: 14px;
+<style>
+.active {
+  margin-left: 200px;
 }
-
-.controlPanel {
-  width: 150px;
+::-webkit-scrollbar {
+  display: none;
 }
-
-.contrastText {
-  width: 100%;
-  padding: 0;
+.ctrlBtn {
+  position: absolute;
+  bottom: 5px;
+  right: 5px;
+  width: 300px;
 }
-
-.contrast {
-  /* 不能取名container，不要忘记之前的教训，因为有的contain class 是有width 限制的 */
-  width: 100%;
+.btnBase {
+  background-position: center;
+  background-size: contain;
 }
-
-.noMargin {
-  margin-left: 0 !important;
-  margin-top: 2px;
-  width: 100%;
+.noPad {
+  padding: 0px;
 }
-
-.div-inline {
-  display: inline;
+.copyBtn {
+  background-image: url("../images/copy.png");
+}
+.switchBtn {
+  background-image: url("../images/switch.png");
 }
 </style>

@@ -1,12 +1,11 @@
 .DS_Store
 node_modules
-
+/dist
 
 # local env files
 .env.local
 .env.*.local
 
-copytranslator-db.json
 # Log files
 npm-debug.log*
 yarn-debug.log*
@@ -14,23 +13,16 @@ yarn-error.log*
 
 # Editor directories and files
 .idea
+.vscode
 *.suo
 *.ntvs*
 *.njsproj
 *.sln
-*.sw*
-*.spec
+*.sw?
 
 #Electron-builder output
-dist_electron
-build
-
-# tsc build output, because I'm using ts, so js is the build result
-src/*/*.js
-src/*.js
-dist
-/package-lock.json
-theme
-.VSCodeCounter
+/dist_electron
 .token
-publish.sh
+
+docs/.vuepress/dist
+docs/.vuepress/release

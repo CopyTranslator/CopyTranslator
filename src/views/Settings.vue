@@ -1,39 +1,51 @@
 <template>
-  <div style="height:100%; margin: 10px">
-    <div style="height:80%">
-      <el-tabs v-model="activeName">
-        <el-tab-pane :label="$t('options')" name="first">
-          <Options></Options>
-        </el-tab-pane>
-        <el-tab-pane :label="$t('switches')" name="second">
-          <Switches></Switches>
-        </el-tab-pane>
-        <el-tab-pane :label="$t('ocrConfig')" name="third">
-          <OCRConfig></OCRConfig>
-        </el-tab-pane>
-      </el-tabs>
-    </div>
+  <div style="height: 100%;">
+    <v-app>
+      <div style="height: 80%; margin: 2%;">
+        <v-tabs v-model="activeName">
+          <v-tab>{{ trans["options"] }} </v-tab>
+          <v-tab>{{ trans["switches"] }} </v-tab>
+          <v-tab>{{ trans["apiConfig"] }} </v-tab>
+          <v-tab>{{ trans["translatorConfig"] }} </v-tab>
+          <v-tab-item>
+            <Options></Options>
+          </v-tab-item>
+          <v-tab-item>
+            <Switches></Switches>
+          </v-tab-item>
+          <v-tab-item>
+            <Config></Config>
+          </v-tab-item>
+          <v-tab-item>
+            <EngineManage></EngineManage>
+          </v-tab-item>
+        </v-tabs>
+      </div>
+    </v-app>
   </div>
 </template>
 
 <script lang="ts">
-import WindowController from "../components/WindowController.vue";
 import { shell } from "electron";
 import Options from "./Options.vue";
-import OCRConfig from "./OCRConfig.vue";
+import Config from "./Config.vue";
 import Switches from "./Switches.vue";
-import Component from "vue-class-component";
-import { Mixins } from "vue-property-decorator";
+import EngineManage from "./EngineManage.vue";
+import { Mixins, Component, Vue } from "vue-property-decorator";
 
 @Component({
   components: {
     Options,
-    OCRConfig,
-    Switches
-  }
+    Config,
+    Switches,
+    EngineManage,
+  },
 })
-export default class Focus extends WindowController {
+export default class Focus extends Vue {
   activeName: string = "first";
+  get trans() {
+    return this.$store.getters.locale;
+  }
 }
 </script>
 

@@ -43,11 +43,8 @@
     "restoreDefault": "Restore default settings",
     "enableNotify": "Enable Notify",
     "smartTranslate": "Smart Translate",
-    "APP_ID": "APP_ID",
-    "API_KEY": "API_KEY",
-    "SECRET_KEY": "SECRET_KEY",
     "capture": "Screenshot Translate",
-    "ocrConfig": "OCR Config",
+    "apiConfig": "API Config",
     "undo": "undo",
     "redo": "redo",
     "cut": "cut",
@@ -71,5 +68,12 @@
     "switches": "Switches",
     "options": "Options",
     "skipTaskbar": "Skip Taskbar",
-    "closeAsQuit": "Close As Quit"
+    "closeAsQuit": "Close As Quit",
+    "layoutType": "Layout",
+    "autoCheckUpdate": "Auto Check Update",
+    "showConfigFolder": "Show Config Folder",
+    "editConfigFile": "Edit Config File",
+    "colorMode": "Color Mode",
+    "drawer": "Drawer",
+    "translatorConfig": "Translator Config"
 }

@@ -1,19 +1,36 @@
 "use strict";
 import { app, protocol } from "electron";
-import { installVueDevtools } from "vue-cli-plugin-electron-builder/lib";
-import { Controller } from "./core/controller";
-import { recognizer } from "./tools/ocr";
-const isDevelopment = process.env.NODE_ENV !== "production";
-import ShortcutCapture from "shortcut-capture";
+const gotTheLock = app.requestSingleInstanceLock();
 
+console.time("before-ready");
+
+//确保全局单例
+if (!gotTheLock) {
+  app.exit();
+} else {
+  app.on("second-instance", (event, commandLine, workingDirectory) => {
+    // 当运行第二个实例时,将会聚焦到window这个窗口
+    const window = global.controller.win.get("contrast");
+    if (window.isMinimized()) {
+      window.restore();
+    }
+    window.focus();
+  });
+}
+
+import { Controller } from "./main/controller";
+
+const isDevelopment = process.env.NODE_ENV !== "production";
+
+app.allowRendererProcessReuse = false;
 app.setAppUserModelId("com.copytranslator.copytranslator");
 
-let controller = new Controller();
-(<any>global).controller = controller;
+const controller = new Controller();
+global.controller = controller;
 
 // Standard scheme must be registered before the app is ready
 protocol.registerSchemesAsPrivileged([
-  { scheme: "app", privileges: { standard: true, secure: true } }
+  { scheme: "app", privileges: { standard: true, secure: true } },
 ]);
 
 // Quit when all windows are closed.
@@ -25,6 +42,11 @@ app.on("window-all-closed", () => {
   }
 });
 
+app.on("will-quit", (event) => {
+  event.preventDefault();
+  controller.onExit();
+});
+
 app.on("activate", (event, hasVisibleWindows) => {
   // On macOS it's common to re-create a window in the app when the
   // dock icon is clicked and there are no other windows open.
@@ -34,7 +56,7 @@ app.on("activate", (event, hasVisibleWindows) => {
 });
 
 // 禁用本地缓存
-app.commandLine.appendSwitch("--disable-http-cache");
+// app.commandLine.appendSwitch("--disable-http-cache");
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
@@ -42,20 +64,16 @@ app.commandLine.appendSwitch("--disable-http-cache");
 app.on("ready", async () => {
   if (isDevelopment && !process.env.IS_TEST) {
     // Install Vue Devtools
-    installVueDevtools();
+    // await installVueDevtools();
   }
-  const shortcutCapture = new ShortcutCapture();
-  (<any>global).shortcutCapture = shortcutCapture;
-  shortcutCapture.on("capture", ({ dataURL, bounds }) =>
-    recognizer.recognize(dataURL)
-  );
+  console.timeEnd("before-ready");
   controller.createWindow();
 });
 
 // Exit cleanly on request from parent process in development mode.
 if (isDevelopment) {
   if (process.platform === "win32") {
-    process.on("message", data => {
+    process.on("message", (data) => {
       if (data === "graceful-exit") {
         app.quit();
       }

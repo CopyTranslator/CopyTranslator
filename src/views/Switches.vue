@@ -1,36 +1,28 @@
 <template>
   <div>
-    <div v-on:dblclick="minify" style="text-align: left;">
-      <div style="text-align: left;">
-        <Action
-          v-for="actionId in actionKeys"
-          :identifier="actionId"
-          :key="actionId"
-        ></Action>
-      </div>
+    <div style="text-align: left;">
+      <Action
+        v-for="actionId in actionKeys"
+        :identifier="actionId"
+        :key="actionId"
+      ></Action>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import WindowController from "../components/WindowController.vue";
 import Action from "../components/Action.vue";
 import Component from "vue-class-component";
-import { Identifier } from "../tools/types";
+import Vue from "vue";
+import { Identifier } from "../common/types";
 
 @Component({
   components: {
-    Action
-  }
+    Action,
+  },
 })
-export default class Switches extends WindowController {
-  actionKeys: Identifier[] = [];
-
-  mounted() {
-    this.$proxy.getKeys("switches").then((keys: Identifier[]) => {
-      this.actionKeys = keys;
-    });
-  }
+export default class Switches extends Vue {
+  actionKeys: Identifier[] = this.$controller.action.getKeys("switches");
 }
 </script>
 

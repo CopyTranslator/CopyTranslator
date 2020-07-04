@@ -4,12 +4,19 @@
 
 <script lang="ts">
 import { Watch, Component, Vue, Mixins } from "vue-property-decorator";
-import { Language } from "@opentranslate/languages";
+import { Identifier } from "../common/types";
+import { shell } from "electron";
+import eventBus from "@/common/event-bus";
 
 @Component
 export default class BaseView extends Vue {
-  source: Language = "en";
-  target: Language = "zh-CN";
+  get layoutType() {
+    return this.config.layoutType;
+  }
+
+  set layoutType(layoutType) {
+    this.set("layoutType", layoutType);
+  }
 
   get sharedResult() {
     return this.$store.state.sharedResult;
@@ -19,23 +26,41 @@ export default class BaseView extends Vue {
     return this.$store.state.dictResult;
   }
 
-  mounted() {
-    this.$proxy.get("sourceLanguage").then((source: Language) => {
-      this.source = source;
-    });
-    this.$proxy.get("targetLanguage").then((target: Language) => {
-      this.target = target;
-    });
+  get config() {
+    return this.$store.state.config;
   }
 
-  @Watch("source")
-  sourceChanged(newSource: Language, oldSource: Language) {
-    this.$proxy.set("sourceLanguage", newSource, true, true);
+  set(key: Identifier, val: any) {
+    this.$controller.set(key, val);
   }
 
-  @Watch("target")
-  targetChanged(newTarget: Language, oldTarget: Language) {
-    this.$proxy.set("targetLanguage", newTarget, true, true);
+  get size() {
+    return this.config[this.layoutType].fontSize;
+  }
+
+  baidu() {
+    shell.openExternal(
+      `https://www.baidu.com/s?ie=utf-8&wd=${this.getModifiedText()}`
+    );
+  }
+
+  google() {
+    shell.openExternal(
+      `https://www.google.com/search?q=${this.getModifiedText()}`
+    );
+  }
+
+  getModifiedText(): string {
+    return "";
+  }
+
+  translate() {
+    const text = this.getModifiedText();
+    eventBus.at("dispatch", "translate", text);
+    this.$store.dispatch("clearShared");
+    this.$store.dispatch("setDictResult", {
+      valid: false,
+    });
   }
 }
 </script>

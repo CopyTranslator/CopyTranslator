@@ -189,6 +189,7 @@ export class WindowMangaer {
       height: 600,
       width: 1094,
       show: false,
+      frame: false,
       title: "CopyTranslator",
     };
     const window = this.createWindow("contrast", config, true);

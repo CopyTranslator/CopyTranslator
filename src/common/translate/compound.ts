@@ -52,7 +52,7 @@ export class Compound implements CopyTranslator {
         continue;
       }
       this.translateWith(name, text, from, to).catch((e) => {
-        console.log(name, "translate error", e);
+        console.debug(name, "translate error", e);
       });
     }
     return this.translateWith(this.mainEngine, text, from, to);

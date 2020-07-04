@@ -24,7 +24,7 @@ export default class WindowController extends Vue {
   }
 
   minify() {
-    bus.iat("minify");
+    this.callback("hideWindow");
   }
 
   openMenu(id: MenuActionType) {

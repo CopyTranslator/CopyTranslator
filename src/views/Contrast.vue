@@ -3,14 +3,16 @@
     <v-app>
       <v-app-bar app color="purple" dark dense>
         <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
-        <v-spacer></v-spacer>
+        <v-spacer
+          style="-webkit-app-region: drag; height: 100%; width: 100%;"
+        ></v-spacer>
         <EngineButton
           v-for="engine in engines"
           :key="engine"
           :engine="engine"
           :valid="valid"
         ></EngineButton>
-        <div v-on:dblclick="minify" v-on:contextmenu="openMenu('focusRight')">
+        <div v-on:contextmenu="openMenu('focusRight')">
           <v-btn
             :style="styleNow"
             @click="callback('listenClipboard')"
@@ -21,6 +23,9 @@
         <v-btn @click="enumerateLayouts" fab small depressed color="purple">
           <v-icon>mdi-view-quilt</v-icon>
         </v-btn>
+        <v-btn color="purple" small depressed @click="minify"
+          ><v-icon>mdi-close</v-icon></v-btn
+        >
       </v-app-bar>
       <v-navigation-drawer
         v-model="drawer"

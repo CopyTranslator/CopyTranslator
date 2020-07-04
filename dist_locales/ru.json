@@ -71,5 +71,13 @@
     "switches": "Переключатели",
     "options": "Параметры",
     "skipTaskbar": "Пропустить панель задач",
-    "closeAsQuit": "Закрыть и выйти"
+    "closeAsQuit": "Закрыть и выйти",
+    "apiConfig": "API Config",
+    "layoutType": "Layout",
+    "autoCheckUpdate": "Auto Check Update",
+    "showConfigFolder": "Show Config Folder",
+    "editConfigFile": "Edit Config File",
+    "colorMode": "Color Mode",
+    "drawer": "Drawer",
+    "translatorConfig": "Translator Config"
 }

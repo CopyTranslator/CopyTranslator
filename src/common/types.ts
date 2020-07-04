@@ -27,6 +27,7 @@ export const normalActionTypes = [
   "editConfigFile",
   "showConfigFolder",
   "hideWindow",
+  "closeWindow",
   "showWindow",
   "translateClipboard",
   "notify",

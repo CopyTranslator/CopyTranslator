@@ -131,6 +131,11 @@ export class WindowMangaer {
     window.hide();
   }
 
+  closeWindow() {
+    const window = this.get("contrast");
+    window.close();
+  }
+
   setStayTop(val: boolean) {
     this.get("contrast").setAlwaysOnTop(val);
   }

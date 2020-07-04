@@ -231,6 +231,7 @@ class ActionManager {
     this.append(normalAction("checkUpdate"));
     this.append(normalAction("translate"));
     this.append(normalAction("hideWindow"));
+    this.append(normalAction("closeWindow"));
     this.append(normalAction("showWindow"));
     this.append(normalAction("translateClipboard"));
 

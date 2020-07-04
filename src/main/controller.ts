@@ -62,6 +62,9 @@ class Controller extends MainController {
       case "hideWindow":
         this.win.hideWindow();
         break;
+      case "closeWindow":
+        this.win.closeWindow();
+        break;
       case "showWindow":
         this.win.showWindow();
         break;

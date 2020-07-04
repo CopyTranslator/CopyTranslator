@@ -20,7 +20,7 @@ export default class WindowController extends Vue {
   }
 
   close() {
-    bus.iat("closeWindow");
+    this.callback("closeWindow");
   }
 
   minify() {

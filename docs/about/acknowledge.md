@@ -24,6 +24,7 @@
 ## 界面语言维护
 
 - 繁体中文: [Jeff Huang](https://github.com/s8321414)
+- 俄罗斯文: [DEN5](https://www.facebook.com/profile.php?id=100028728105222)
 
 ## 友情软件
 CopyTranslator从这些软件中学到了很多，以下均为非常优秀的软件，推荐大家尝试。

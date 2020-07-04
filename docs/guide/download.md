@@ -16,6 +16,8 @@ sidebarDepth: 6
 软件二次分发存在巨大风险，因此请尽量通过本文档提供的下载方式下载。
 :::
 
+v9.0.2以后，软件支持Mac、Windows、Linux三大主流桌面系统
+
 以下列方式下载最新版本安装包：
 - [Github Releases](https://github.com/copytranslator/copytranslator/releases)
 - [Bintray](https://bintray.com/elliottzheng/CopyTranslator/CopyTranslator/_latestVersion)

@@ -3,7 +3,7 @@
     <v-app>
       <v-app-bar app color="purple" dark dense>
         <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
-        <v-spacer>
+        <v-spacer style="height: 100%; width: 100%;">
           <div
             style="
               -webkit-app-region: drag;
@@ -11,9 +11,7 @@
               width: 100%;
               font-family: 'Encode Sans', sans-serif;
             "
-          >
-            CopyTranslator
-          </div>
+          ></div>
         </v-spacer>
         <EngineButton
           v-for="engine in engines"
@@ -32,13 +30,10 @@
         <v-btn @click="enumerateLayouts" fab small depressed color="purple">
           <v-icon>mdi-view-quilt</v-icon>
         </v-btn>
-        <v-btn
-          color="purple"
-          small
-          depressed
-          fab
-          @click="minify"
-          v-on:contextmenu="close"
+        <v-btn color="purple" small depressed fab @click="callback('minimize')"
+          ><v-icon>mdi-window-minimize</v-icon></v-btn
+        >
+        <v-btn color="purple" small depressed fab @click="close"
           ><v-icon>mdi-close</v-icon></v-btn
         >
       </v-app-bar>

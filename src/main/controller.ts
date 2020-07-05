@@ -68,6 +68,8 @@ class Controller extends MainController {
       case "showWindow":
         this.win.showWindow();
         break;
+      case "minimize":
+        this.win.get("contrast").minimize();
       default:
         return this.transCon.handle(identifier, param);
     }

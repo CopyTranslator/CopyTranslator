@@ -20,7 +20,7 @@ For windows users, you need to `yarn global add windows-build-tools` first.
 yarn global add element-theme
 ```
 ```bash
-git clone --recursive https://github.com/copytranslator/CopyTranslator.git
+git clone https://github.com/copytranslator/CopyTranslator.git
 cd CopyTranslator
 yarn
 yarn electron:build

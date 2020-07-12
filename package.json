@@ -25,6 +25,7 @@
     "@adeperio/forcefocus": "^1.0.3",
     "@gotoeasy/bus": "^1.0.0",
     "@opentranslate/baidu": "^1.2.0",
+    "@opentranslate/baidu-domain": "^1.4.1",
     "@opentranslate/caiyun": "^1.2.0",
     "@opentranslate/google": "^1.2.0",
     "@opentranslate/languages": "^1.2.0",

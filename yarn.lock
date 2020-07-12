@@ -1190,6 +1190,13 @@
   resolved "https://registry.npm.taobao.org/@nodelib/fs.stat/download/@nodelib/fs.stat-1.1.3.tgz#2b5a3ab3f918cca48a8c754c08168e3f03eba61b"
   integrity sha1-K1o6s/kYzKSKjHVMCBaOPwPrphs=
 
+"@opentranslate/baidu-domain@^1.4.1":
+  version "1.4.1"
+  resolved "https://registry.npm.taobao.org/@opentranslate/baidu-domain/download/@opentranslate/baidu-domain-1.4.1.tgz#0e534cbaa6982ddf9854132cea6f8199acb60f5f"
+  integrity sha1-DlNMuqaYLd+YVBMs6m+Bmay2D18=
+  dependencies:
+    "@opentranslate/translator" "^1.4.1"
+
 "@opentranslate/baidu@^1.2.0":
   version "1.2.0"
   resolved "https://registry.npm.taobao.org/@opentranslate/baidu/download/@opentranslate/baidu-1.2.0.tgz#55c13ef2ae336f257943236c61520a0a87f89ec4"
@@ -1223,6 +1230,11 @@
   resolved "https://registry.npm.taobao.org/@opentranslate/languages/download/@opentranslate/languages-1.2.0.tgz#43d42e9d678d12313932079bf206afe4526123d7"
   integrity sha1-Q9QunWeNEjE5Mgeb8gav5FJhI9c=
 
+"@opentranslate/languages@^1.4.1":
+  version "1.4.1"
+  resolved "https://registry.npm.taobao.org/@opentranslate/languages/download/@opentranslate/languages-1.4.1.tgz#83c3c99ee5b257f64a7dfc263a204f1c58fe6556"
+  integrity sha1-g8PJnuWyV/ZKffwmOiBPHFj+ZVY=
+
 "@opentranslate/sogou@^1.2.0":
   version "1.2.0"
   resolved "https://registry.npm.taobao.org/@opentranslate/sogou/download/@opentranslate/sogou-1.2.0.tgz#093fc8aab0889bcc952769333e63ec69174c9644"
@@ -1249,6 +1261,15 @@
   integrity sha1-7L6T6Ga4ChQwLAGXztbv1P8BMeg=
   dependencies:
     "@opentranslate/languages" "^1.2.0"
+    axios "^0.19.0"
+    franc-min "^4.1.0"
+
+"@opentranslate/translator@^1.4.1":
+  version "1.4.1"
+  resolved "https://registry.npm.taobao.org/@opentranslate/translator/download/@opentranslate/translator-1.4.1.tgz#f9133c397661f193358be6e7951c77382d92560d"
+  integrity sha1-+RM8OXZh8ZM1i+bnlRx3OC2SVg0=
+  dependencies:
+    "@opentranslate/languages" "^1.4.1"
     axios "^0.19.0"
     franc-min "^4.1.0"
 

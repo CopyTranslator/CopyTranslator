@@ -126,16 +126,6 @@ export class WindowMangaer {
     forceFocus.focusWindow(window);
   }
 
-  hideWindow() {
-    const window = this.get("contrast");
-    window.hide();
-  }
-
-  closeWindow() {
-    const window = this.get("contrast");
-    window.close();
-  }
-
   setStayTop(val: boolean) {
     this.get("contrast").setAlwaysOnTop(val);
   }

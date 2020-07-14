@@ -60,10 +60,10 @@ class Controller extends MainController {
         this.updater.check();
         break;
       case "hideWindow":
-        this.win.hideWindow();
+        this.win.get("contrast").hide();
         break;
       case "closeWindow":
-        this.win.closeWindow();
+        this.win.get("contrast").close();
         break;
       case "showWindow":
         this.win.showWindow();

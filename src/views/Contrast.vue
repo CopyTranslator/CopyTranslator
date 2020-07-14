@@ -27,9 +27,19 @@
             x-small
           ></v-btn>
         </div>
+
         <v-btn @click="enumerateLayouts" fab small depressed color="purple">
           <v-icon>mdi-view-quilt</v-icon>
         </v-btn>
+        <v-btn
+          color="purple"
+          small
+          depressed
+          fab
+          @click="callback('copyResult')"
+          v-on:contextmenu="callback('copySource')"
+          ><v-icon>mdi-content-copy</v-icon></v-btn
+        >
         <v-btn color="purple" small depressed fab @click="callback('minimize')"
           ><v-icon>mdi-window-minimize</v-icon></v-btn
         >

@@ -19,12 +19,14 @@
         ></textarea>
       </v-col>
       <v-col class="areaWarpper">
-        <textarea
+        <CoTextArea
           class="hArea"
           v-bind:style="fontStyle"
-          v-model="sharedResult.translation"
+          :value="sharedResult.translation"
           v-on:contextmenu="openMenu('contrastContext')"
-        ></textarea>
+          ref="myhead"
+        ></CoTextArea>
+        <p>{{ idx }}</p>
       </v-col>
     </v-row>
     <v-col v-else class="maxNoPad">
@@ -59,10 +61,12 @@ import WindowController from "../components/WindowController.vue";
 import Focus from "./Focus.vue";
 import { LayoutType, layoutTypes } from "../common/types";
 import eventBus from "@/common/event-bus";
+import CoTextArea from "./CoTextArea.vue";
 
 @Component({
   components: {
     Focus: Focus,
+    CoTextArea: CoTextArea,
   },
 })
 export default class ContrastPanel extends Mixins(BaseView, WindowController) {
@@ -81,6 +85,12 @@ export default class ContrastPanel extends Mixins(BaseView, WindowController) {
     return {
       fontSize: this.size.toString() + "px",
     };
+  }
+
+  get idx() {
+    const idx = this.$refs.myhead;
+    console.log(idx);
+    return idx;
   }
 }
 </script>

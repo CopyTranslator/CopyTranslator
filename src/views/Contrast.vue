@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-app>
-      <v-app-bar app color="purple" dark dense>
+      <v-app-bar app color="#8E24AA" dark dense>
         <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
         <v-spacer style="height: 100%; width: 100%;">
           <div
@@ -28,11 +28,11 @@
           ></v-btn>
         </div>
 
-        <v-btn @click="enumerateLayouts" fab small depressed color="purple">
+        <v-btn @click="enumerateLayouts" fab small depressed color="#8E24AA">
           <v-icon>mdi-view-quilt</v-icon>
         </v-btn>
         <v-btn
-          color="purple"
+          color="#8E24AA"
           small
           depressed
           fab
@@ -40,10 +40,10 @@
           v-on:contextmenu="callback('copySource')"
           ><v-icon>mdi-content-copy</v-icon></v-btn
         >
-        <v-btn color="purple" small depressed fab @click="callback('minimize')"
+        <v-btn color="#8E24AA" small depressed fab @click="callback('minimize')"
           ><v-icon>mdi-window-minimize</v-icon></v-btn
         >
-        <v-btn color="purple" small depressed fab @click="close"
+        <v-btn color="#8E24AA" small depressed fab @click="close"
           ><v-icon>mdi-close</v-icon></v-btn
         >
       </v-app-bar>

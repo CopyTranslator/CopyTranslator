@@ -88,6 +88,7 @@ export function reSegment(
   );
 
   if (sum(counts) != result.length) {
+    console.debug("reseg fail");
     return result.join("\n");
   }
 

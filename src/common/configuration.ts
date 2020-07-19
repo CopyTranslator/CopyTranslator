@@ -51,6 +51,10 @@ function initConfig(
   config.setRule("stayTop", new TypeRule<boolean>(false, "always stay on top"));
   config.setRule("smartDict", new TypeRule<boolean>(true, "smart dict"));
   config.setRule(
+    "contrastDict",
+    new TypeRule<boolean>(true, "dict on contrast")
+  );
+  config.setRule(
     "smartTranslate",
     new TypeRule<boolean>(true, "smart translate")
   );

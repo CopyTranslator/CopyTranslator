@@ -209,6 +209,7 @@ class ActionManager {
     this.append(switchAction("autoShow"));
     this.append(switchAction("stayTop"));
     this.append(switchAction("smartDict"));
+    this.append(switchAction("contrastDict"));
     this.append(switchAction("drawer"));
     this.append(switchAction("listenClipboard"));
     this.append(switchAction("dragCopy"));

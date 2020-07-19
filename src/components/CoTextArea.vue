@@ -1,31 +1,38 @@
 <template>
   <div>
-    <span
-      v-for="(val, key) in sentences"
-      :key="key"
-      @mouseover="mouseOver(key)"
-    >
-      {{ val }}
-    </span>
+    <div v-if="!config['contrastDict']">
+      <span
+        v-for="(val, key) in sentences"
+        :key="key"
+        @mouseover="mouseOver(key)"
+      >
+        {{ val }}
+      </span>
+    </div>
+    <DictResultPanel
+      v-if="config['contrastDict'] & dictResult.valid"
+    ></DictResultPanel>
   </div>
 </template>
 
 <script lang="ts">
 import { splitChn } from "@/common/translate/helper";
 import { Mixins, Component, Vue, Watch } from "vue-property-decorator";
+import DictResultPanel from "./DictResult.vue";
+import BaseView from "./BaseView.vue";
 
 const AppProps = Vue.extend({
   props: {
-    value: String,
+    sentences: Array,
   },
 });
 
-@Component
-export default class CoTextArea extends Mixins(Vue, AppProps) {
-  get sentences() {
-    return splitChn(this.value);
-  }
-
+@Component({
+  components: {
+    DictResultPanel,
+  },
+})
+export default class CoTextArea extends Mixins(Vue, AppProps, BaseView) {
   mouseOver(idx: number) {
     console.log(idx);
     this.targetIdx = idx;

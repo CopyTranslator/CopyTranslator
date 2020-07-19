@@ -4,6 +4,8 @@ export interface SharedResult {
   from: string;
   to: string;
   engine: string;
+  transPara: string[];
+  textPara: string[];
 }
 
 export function emptySharedResult(): SharedResult {
@@ -13,5 +15,7 @@ export function emptySharedResult(): SharedResult {
     from: "",
     to: "",
     engine: "",
+    transPara: [],
+    textPara: [],
   };
 }

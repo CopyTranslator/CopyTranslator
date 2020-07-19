@@ -92,5 +92,6 @@
     "colorMode": "色彩模式",
     "drawer": "抽屜",
     "editConfigFile": "編輯設定檔",
-    "translatorConfig": "Translator設定"
+    "translatorConfig": "Translator設定",
+    "contrastDict": "Contrast Dict"
 }

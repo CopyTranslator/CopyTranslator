@@ -191,6 +191,8 @@ class TranslateController {
         from: this.translateResult.from,
         to: this.translateResult.to,
         engine: this.translateResult.engine,
+        transPara: this.translateResult.trans.paragraphs,
+        textPara: this.translateResult.origin.paragraphs,
       };
     }
     store.dispatch("setShared", sharedResult);

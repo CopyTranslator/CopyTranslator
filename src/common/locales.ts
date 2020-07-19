@@ -35,6 +35,7 @@ export const zh_cn = new Map<Identifier, string>([
   ["dictionaryType", "查词引擎"],
   ["neverShow", "不再显示"],
   ["smartDict", "智能词典"],
+  ["contrastDict", "对照词典"],
   ["evaluate", "评估"],
   ["homepage", "官网"],
   ["userManual", "用户手册"],
@@ -90,6 +91,7 @@ export const en = new Map<Identifier, string>([
   ["autoPurify", "Auto Purify"],
   ["incrementalCopy", "Incremental Copy"],
   ["smartDict", "Smart Dict"],
+  ["contrastDict", "Contrast Dict"],
   ["translate", "Translate"],
   ["copySource", "Copy Source"],
   ["copyResult", "Copy Result"], //复制结果

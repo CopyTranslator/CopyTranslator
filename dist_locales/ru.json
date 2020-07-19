@@ -79,5 +79,6 @@
     "editConfigFile": "Edit Config File",
     "colorMode": "Color Mode",
     "drawer": "Drawer",
-    "translatorConfig": "Translator Config"
+    "translatorConfig": "Translator Config",
+    "contrastDict": "Contrast Dict"
 }

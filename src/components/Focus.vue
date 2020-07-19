@@ -14,10 +14,10 @@
         class="focusText max"
         v-bind:style="focusStyle"
         v-model="sharedResult.translation"
-        v-if="sharedResult && !dictResult.valid"
+        v-if="sharedResult && !config['smartDict']"
       ></textarea>
       <DictResultPanel
-        v-if="dictResult.valid"
+        v-if="dictResult.valid && config['smartDict']"
         ref="dictResultPanel"
         class="max"
       ></DictResultPanel>

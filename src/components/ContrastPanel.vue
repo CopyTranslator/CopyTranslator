@@ -18,12 +18,11 @@
           v-on:contextmenu="openMenu('contrastContext')"
         ></textarea>
       </v-col>
-      <v-col class="areaWarpper">
+      <v-col class="areaWarpper" v-on:contextmenu="openMenu('contrastContext')">
         <CoTextArea
           class="hArea"
           v-bind:style="fontStyle"
-          :value="sharedResult.translation"
-          v-on:contextmenu="openMenu('contrastContext')"
+          :sentences="sharedResult.transPara"
           ref="myhead"
         ></CoTextArea>
         <p>{{ idx }}</p>

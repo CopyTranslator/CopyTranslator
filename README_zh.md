@@ -44,6 +44,7 @@
 ![](https://s1.ax1x.com/2018/09/13/iEiIRx.png)
 
 ### 多段同时翻译
+
 效率更高，同时尽可能保持原有分段。
 
 ![](https://s1.ax1x.com/2018/09/13/iEi7QK.png)
@@ -85,6 +86,7 @@
 - 支持语言丰富，Google翻译支持啥我们就支持啥。
 - 跨平台，当前支持Mac及Window。
 - 更多自动化的自定义选项可供选择，如`自动复制`，`设置记忆`，`贴边隐藏`,`自动显示`
+- 配合外部脚本实现类似`OneNote`的停靠桌面功能
 - `CopyTranslator`还将继续加入更多新特性，敬请期待。
 
 请查阅[软件文档](https://copytranslator.github.io)了解更多
@@ -136,7 +138,7 @@ CopyTranslator是采用 GPL v2 协议许可的开源项目，使用完全免费�
    <img width="300" src="images/wechat.jpg" alt="微信赞赏">
    <p style="text-align:center;">微信赞赏</p>
 </div>
-   
+
    <div style="display:inline-block;">
    <img width="300" src="images/alipay.jpg" alt="支付宝"> 
    <p style="text-align:center;">支付宝</p>

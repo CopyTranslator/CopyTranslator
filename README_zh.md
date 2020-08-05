@@ -38,12 +38,19 @@
 ### 复制即翻译
 **大大简化翻译所需步骤**，只需复制文本到剪贴板，下一秒即可查看翻译结果，让你享受所见即所得的快感，更有[点按复制](#点按复制)机制，让你复制文本更轻松。
 
+### 停靠桌面
+
+让翻译窗口永远停靠在桌面右侧，**其他窗口自动避让，翻译如行云流水般自然**。
+
+灵感来自`OneNote`的停靠桌面功能，[点击了解更多](https://github.com/Andy-AO/CopytranslatorAppBar)。
+
 ###  解决PDF复制翻译换行问题
 **`CopyTranslator`专门针对英文及中文pdf的换行和句尾做了优化，基本解决断句和换行的问题。** 以下为使用`CopyTranslator`直接复制翻译后的结果，可以看出翻译效果相比于直接复制黏贴到网页有了巨大的改善。同时，借助于常用的在线翻译API，翻译质量有保证，连接速度也较快，无需担心网络问题。
 
 ![](https://s1.ax1x.com/2018/09/13/iEiIRx.png)
 
 ### 多段同时翻译
+
 效率更高，同时尽可能保持原有分段。
 
 ![](https://s1.ax1x.com/2018/09/13/iEi7QK.png)
@@ -136,7 +143,7 @@ CopyTranslator是采用 GPL v2 协议许可的开源项目，使用完全免费�
    <img width="300" src="images/wechat.jpg" alt="微信赞赏">
    <p style="text-align:center;">微信赞赏</p>
 </div>
-   
+
    <div style="display:inline-block;">
    <img width="300" src="images/alipay.jpg" alt="支付宝"> 
    <p style="text-align:center;">支付宝</p>

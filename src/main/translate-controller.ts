@@ -69,6 +69,7 @@ class TranslateController {
         clipboard.writeText(this.resultString);
         break;
       case "pasteResult":
+        this.handle("copyResult","");
         simulate.paste();
         break;
       case "retryTranslate":

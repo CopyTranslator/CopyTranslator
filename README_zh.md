@@ -86,7 +86,7 @@
 - 支持语言丰富，Google翻译支持啥我们就支持啥。
 - 跨平台，当前支持Mac及Window。
 - 更多自动化的自定义选项可供选择，如`自动复制`，`设置记忆`，`贴边隐藏`,`自动显示`
-- 配合外部脚本实现类似`OneNote`的停靠桌面功能
+- 配合外部脚本实现类似`OneNote`的停靠桌面功能，[点击了解更多](https://github.com/Andy-AO/CopytranslatorAppBar)。
 - `CopyTranslator`还将继续加入更多新特性，敬请期待。
 
 请查阅[软件文档](https://copytranslator.github.io)了解更多

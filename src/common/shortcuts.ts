@@ -23,7 +23,6 @@ export const defaultLocalShortcuts: Shortcuts = new Map([
   ["paste", "CmdOrCtrl+V"],
   ["selectAll", "CmdOrCtrl+A"],
   ["copyResult", "CmdOrCtrl+S"],
-  ["pasteResult", "CmdOrCtrl+Shift+S"],
   ["copySource", "CmdOrCtrl+D"],
   ["quit", "Cmd+Q"],
   ["font+", "CmdOrCtrl+="],

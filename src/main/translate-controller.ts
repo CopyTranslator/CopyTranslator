@@ -68,6 +68,9 @@ class TranslateController {
       case "copyResult":
         clipboard.writeText(this.resultString);
         break;
+      case "pasteResult":
+        simulate.paste();
+        break;
       case "retryTranslate":
         this.translate(this.text);
         break;

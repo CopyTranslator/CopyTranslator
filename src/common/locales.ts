@@ -95,6 +95,7 @@ export const en = new Map<Identifier, string>([
   ["translate", "Translate"],
   ["copySource", "Copy Source"],
   ["copyResult", "Copy Result"], //复制结果
+  ["pasteResult", "Paste Result"], //粘贴结果
   ["source", "Source"], // 原文
   ["result", "Result"], //译文
   ["sourceLanguage", "Source Language"],

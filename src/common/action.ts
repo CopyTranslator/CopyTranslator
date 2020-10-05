@@ -236,6 +236,7 @@ class ActionManager {
     this.append(normalAction("closeWindow"));
     this.append(normalAction("showWindow"));
     this.append(normalAction("translateClipboard"));
+    this.append(normalAction("doubleCopyTranslate"));
 
     //引擎配置
     structActionTypes.forEach((id) => {

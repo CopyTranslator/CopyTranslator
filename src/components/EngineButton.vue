@@ -1,6 +1,6 @@
 <template>
   <v-btn
-    v-bind:class="[engineClass, 'btnBase', { inactive: inactive }]"
+    v-bind:class="[engineClass, 'btnBase']"
     @click="switchTranslator"
     color="white"
     x-small
@@ -13,11 +13,16 @@ import WindowController from "./WindowController.vue";
 import Vue from "vue";
 import Component, { mixins } from "vue-class-component";
 import config from "@/common/configuration";
+import eventBus from "@/common/event-bus";
 
 const AppProps = Vue.extend({
   props: {
     engine: String,
     valid: Boolean,
+    enable: {
+      type: Boolean,
+      default: true,
+    },
   },
 });
 
@@ -31,15 +36,10 @@ export default class EngineButton extends mixins(WindowController, AppProps) {
     }
   }
 
-  get inactive(): boolean {
-    if (!this.valid) {
-      return this.$store.state.config.translatorType != this.engine;
-    } else {
-      return this.$store.state.config.dictionaryType != this.engine;
-    }
-  }
-
   switchTranslator() {
+    if (!this.enable) {
+      return;
+    }
     if (this.valid) {
       this.callback("dictionaryType|" + this.engine);
     } else {

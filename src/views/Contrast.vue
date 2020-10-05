@@ -13,12 +13,24 @@
             "
           ></div>
         </v-spacer>
-        <EngineButton
-          v-for="engine in engines"
-          :key="engine"
-          :engine="engine"
-          :valid="valid"
-        ></EngineButton>
+        <v-menu top>
+          <template v-slot:activator="{ on }">
+            <div v-on="on">
+              <EngineButton
+                :engine="currentEngine"
+                :valid="valid"
+                :enable="Boolean(false)"
+              ></EngineButton>
+            </div>
+          </template>
+
+          <v-list>
+            <v-list-item v-for="engine in rest_engines" :key="engine">
+              <EngineButton :engine="engine" :valid="valid"></EngineButton>
+            </v-list-item>
+          </v-list>
+        </v-menu>
+
         <div v-on:contextmenu="openMenu('focusRight')">
           <v-btn
             :style="styleNow"
@@ -112,6 +124,20 @@ export default class Contrast extends Mixins(BaseView, WindowController) {
 
   get engines() {
     return this.valid ? dictionaryTypes : this.config["translator-auto"];
+  }
+
+  get rest_engines() {
+    return this.engines.filter(
+      (engine: string) => engine != this.currentEngine
+    );
+  }
+
+  get currentEngine() {
+    if (!this.valid) {
+      return this.$store.state.config.translatorType;
+    } else {
+      return this.$store.state.config.dictionaryType;
+    }
   }
 
   get styleNow() {

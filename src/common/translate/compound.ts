@@ -47,12 +47,13 @@ export class Compound implements CopyTranslator {
     if (!engines) {
       engines = this.engines;
     }
+    //遍历所有引擎
     for (const name of engines) {
       if (name === this.mainEngine) {
         continue;
       }
       this.translateWith(name, text, from, to).catch((e) => {
-        console.debug(name, "translate error", e);
+        console.log(name, "translate error", e);
       });
     }
     return this.translateWith(this.mainEngine, text, from, to);

@@ -2,6 +2,7 @@ export const authorizeKey: string = "CopyTranslator";
 import flatten from "lodash.flatten";
 //以下是做一个特定的事的动作
 export const normalActionTypes = [
+  "doubleCopyTranslate", //双击ctrl c 触发
   "translate", //翻译
   "selectionQuery", //翻译
   "copySource", //复制原文

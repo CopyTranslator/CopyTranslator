@@ -4,7 +4,6 @@ import bus from "../common/event-bus";
 import createApp from "./createApp";
 import Vue from "vue";
 import { constants, versionString } from "../common/constant";
-
 import { RenController, MainController } from "../common/controller";
 import { createProxy } from "../proxy/renderer";
 

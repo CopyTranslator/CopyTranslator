@@ -59,6 +59,9 @@ class TranslateController {
       case "translateClipboard":
         this.checkClipboard();
         break;
+      case "doubleCopyTranslate":
+        this.doubleCopyTranslate();
+        break;
       case "clear":
         this.clear();
         break;
@@ -330,6 +333,7 @@ class TranslateController {
       this.translating = false;
       if (this.dictResult.words === this.text && !this.dictResult.valid) {
         //同步词典结果
+        console.debug("word fail");
         this.syncDict(); //翻译完了，然后发现词典有问题，这个时候才发送
         this.setCurrentColor(true);
       } else if (this.dictResult.words !== this.text && !this.translateResult) {
@@ -402,31 +406,44 @@ class TranslateController {
       });
   }
 
+  async doubleCopyTranslate() {
+    return this.checkClipboard();
+  }
+
   async switchTranslator(value: TranslatorType) {
     let valid = true;
     this.translator.setMainEngine(value);
+
+    //更新支持的语言
     this.syncSupportLanguages();
+
+    //检查源语言是否支持
     if (!this.translator.isValid(this.source())) {
       this.controller.set("sourceLanguage", "en");
       valid = false;
     }
+
+    //检查目标语言是否支持
     if (!this.translator.isValid(this.target())) {
       this.controller.set("targetLanguage", "zh-CN");
       valid = false;
     }
+
     if (valid) {
+      //如果两种语言都支持的话
       try {
         const buffer = this.translator.getBuffer(value);
         if (!buffer || this.translator.text !== this.text) {
-          throw "no the same src";
+          throw "no cache";
         }
+        console.debug("cache hit");
         this.postTranslate(buffer);
       } catch (e) {
-        console.log("invalid");
+        console.debug(e);
         this.translate(this.text);
       }
     } else {
-      console.log("valid");
+      console.debug("fallback lang");
       this.translate(this.text);
     }
   }
@@ -461,6 +478,7 @@ class TranslateController {
         recognizer.recognize(clipboard.readImage().toDataURL());
       });
       clipboard.startWatching();
+      this.checkClipboard(); //第一次检查剪贴板
     } else {
       clipboard.stopWatching();
     }
@@ -502,6 +520,7 @@ class TranslateController {
       case "dictionaryType":
         this.switchDictionary(value as DictionaryType);
         break;
+
       case "baidu-ocr":
         recognizer.setUp(this.get("baidu-ocr"));
         break;

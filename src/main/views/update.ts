@@ -21,7 +21,7 @@ export class UpdateChecker {
 
   bindUpdateEvents() {
     autoUpdater.on("error", (error: Error) => {
-      console.log(error);
+      console.log("update error", error);
     });
 
     autoUpdater.on("update-available", (updateInfo) => {

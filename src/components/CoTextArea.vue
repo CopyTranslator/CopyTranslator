@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-if="!config['contrastDict'] & !dictResult.valid">
+    <div v-if="!config['contrastDict'] || !dictResult.valid">
       <span
         v-for="(val, key) in sentences"
         :key="key"
@@ -10,7 +10,7 @@
       </span>
     </div>
     <DictResultPanel
-      v-if="config['contrastDict'] & dictResult.valid"
+      v-if="config['contrastDict'] && dictResult.valid"
     ></DictResultPanel>
   </div>
 </template>

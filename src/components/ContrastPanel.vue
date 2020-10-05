@@ -133,7 +133,8 @@ export default class ContrastPanel extends Mixins(BaseView, WindowController) {
     return {
       left: this.left.toString() + "px",
       top: this.top.toString() + "px",
-      display: this.visible ? "block" : "none",
+      display: "none",
+      //display: this.visible ? "block" : "none", //这里先
     };
   }
 

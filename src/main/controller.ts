@@ -14,6 +14,7 @@ import { resetAllConfig } from "./file-related";
 import { MainController } from "../common/controller";
 import { UpdateChecker } from "./views/update";
 import config from "@/common/configuration";
+import eventBus from "@/common/event-bus";
 
 class Controller extends MainController {
   win: WindowMangaer = new WindowMangaer(this);
@@ -77,11 +78,11 @@ class Controller extends MainController {
   }
 
   createWindow() {
-    this.transCon.init();
-    this.restoreFromConfig();
-    eventListener.bind();
-    startService(this, authorizeKey);
-    this.win.get("contrast");
+    this.transCon.init(); //初始化翻译控制器
+    this.restoreFromConfig(); //恢复设置
+    eventListener.bind(); //绑定事件
+    startService(this, authorizeKey); // 创建代理服务
+    this.win.get("contrast"); //创建主窗口
     this.shortcut.init();
     this.menu.init();
   }

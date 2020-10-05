@@ -75,8 +75,8 @@ class EventListener {
         //双击ctrl c
         const now = Date.now();
         if (now - this.lastCopy < 1000) {
-          console.log("triggered", clipboard.readText());
-          eventBus.at("dispatch", "translateClipboard");
+          console.debug("triggered double ctrl c", clipboard.readText());
+          eventBus.at("dispatch", "doubleCopyTranslate");
         }
         this.lastCopy = now;
       }

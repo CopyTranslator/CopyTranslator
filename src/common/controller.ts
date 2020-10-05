@@ -51,7 +51,7 @@ export abstract class CommonController {
   bind() {
     bus.gon("callback", (args: any) => {
       const { identifier, param, type, isMain: main } = args;
-      console.debug(identifier, param, type, isMain);
+      console.debug("action triggered", identifier, param, type, isMain);
       switch (type) {
         case "normal":
           if (

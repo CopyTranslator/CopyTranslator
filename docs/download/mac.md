@@ -1,17 +1,30 @@
 # Mac
+
+
 ::: warning 提示
 
 **无法下载？尝试** [国内如何下载 GitHub release 中的内容？ - Leoy的回答 - 知乎](https://www.zhihu.com/question/48480151/answer/1085258807)
 :::
 
 :::tip 注意事项
+
 **初次打开后请手动允许copytranslator使用辅助功能，否则copytranslator将无法移动**
 
 ![](https://s2.ax1x.com/2019/03/10/ApT0YT.png)
 ![](https://s2.ax1x.com/2019/03/10/ApT6X9.png)
 
 - mac 版本如果无法启动，请尝试下载dmg版本，安装完成后，打开安全性与隐私，通用，允许打开这个app
+
+
 :::
+
+## Homebrew Cask
+
+可以使用 [Homebrew Cask](https://github.com/Homebrew/homebrew-cask) 安装
+
+```bash
+brew cask install copytranslator
+```
 
 ## v9 寒渐
 

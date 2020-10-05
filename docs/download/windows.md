@@ -10,7 +10,6 @@
 - 点击版本标题可查看更新日志
 
 :::
-## v10 破晓
 
 ## v9 寒渐
 ### [v9.1.0 常规修复](https://github.com/CopyTranslator/CopyTranslator/releases/tag/v9.1.0)

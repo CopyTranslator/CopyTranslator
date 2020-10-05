@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-if="!config['contrastDict']">
+    <div v-if="!config['contrastDict'] & !dictResult.valid">
       <span
         v-for="(val, key) in sentences"
         :key="key"
@@ -34,7 +34,6 @@ const AppProps = Vue.extend({
 })
 export default class CoTextArea extends Mixins(Vue, AppProps, BaseView) {
   mouseOver(idx: number) {
-    console.log(idx);
     this.targetIdx = idx;
   }
 

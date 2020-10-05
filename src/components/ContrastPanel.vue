@@ -14,6 +14,10 @@
           @keyup.ctrl.71="google"
           @keyup.ctrl.66="baidu"
           @select="onSelect"
+          @blur="deSelect"
+          @click="deSelect"
+          @keydown="deSelect"
+          @mousemove="mouseMove"
           v-model="sharedResult.text"
           v-on:contextmenu="openMenu('contrastContext')"
         ></textarea>
@@ -25,7 +29,6 @@
           :sentences="sharedResult.transPara"
           ref="myhead"
         ></CoTextArea>
-        <p>{{ idx }}</p>
       </v-col>
     </v-row>
     <v-col v-else class="maxNoPad">
@@ -41,14 +44,24 @@
         ></textarea>
       </div>
       <div class="areaWarpper" style="height: 50%;">
-        <textarea
+        <CoTextArea
           class="vArea"
           v-bind:style="fontStyle"
-          v-model="sharedResult.translation"
-          v-on:contextmenu="openMenu('contrastContext')"
-        ></textarea>
+          :sentences="sharedResult.transPara"
+          ref="myhead"
+        ></CoTextArea>
       </div>
     </v-col>
+
+    <v-btn
+      class="floating-div"
+      v-bind:style="floatingStyle"
+      small
+      fab
+      @mouseenter="mouseEnter"
+      @mouseleave="mouseLeave"
+      ><v-icon>mdi-magnify</v-icon></v-btn
+    >
   </div>
 </template>
 
@@ -69,15 +82,59 @@ import CoTextArea from "./CoTextArea.vue";
   },
 })
 export default class ContrastPanel extends Mixins(BaseView, WindowController) {
+  left: number = 0;
+  top: number = 0;
+  visible: boolean = false;
+  funcID: any = null;
+  selectedText: string = "";
+
   getModifiedText() {
     return this.sharedResult.text;
   }
 
   onSelect(event: Event) {
     const target = event.target as any;
-    console.log(
-      target.value.substring(target.selectionStart, target.selectionEnd)
+    const selectedText = target.value.substring(
+      target.selectionStart,
+      target.selectionEnd
     );
+    this.selectedText = selectedText;
+    this.visible = true;
+  }
+
+  deSelect(event: Event) {
+    this.visible = false;
+  }
+
+  mouseMove(event: MouseEvent) {
+    if (!this.visible) {
+      this.left = event.clientX + 10;
+      this.top = event.clientY - 50;
+    }
+  }
+
+  mouseEnter(event: MouseEvent) {
+    this.funcID = setTimeout(this.onSearch, 500);
+  }
+
+  mouseLeave(event: MouseEvent) {
+    if (this.funcID != null) {
+      clearTimeout(this.funcID);
+      this.funcID = null;
+    }
+  }
+
+  onSearch() {
+    this.callback("selectionQuery", this.selectedText);
+    this.funcID = null;
+  }
+
+  get floatingStyle() {
+    return {
+      left: this.left.toString() + "px",
+      top: this.top.toString() + "px",
+      display: this.visible ? "block" : "none",
+    };
   }
 
   get fontStyle() {
@@ -119,5 +176,10 @@ export default class ContrastPanel extends Mixins(BaseView, WindowController) {
 }
 .myswitch >>> .v-messages {
   min-height: 0px;
+}
+
+.floating-div {
+  position: absolute;
+  z-index: 100000;
 }
 </style>

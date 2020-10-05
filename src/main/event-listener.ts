@@ -72,6 +72,7 @@ class EventListener {
 
     ioHook.on("keydown", (event: any) => {
       if (event.keycode == 46 && event.ctrlKey) {
+        //双击ctrl c
         const now = Date.now();
         if (now - this.lastCopy < 1000) {
           console.log("triggered", clipboard.readText());

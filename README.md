@@ -31,7 +31,7 @@ Researchers always have to read a lot of literature, and understanding the conte
 
 Just open the `CopyTranslator` and copy the PDF text to clipboard,  `CopyTranslator` will watch the clipboard changes, then it will process the clipboard contents (such as removing extra line breaks, etc.) and display the translation results. The translation effect is greatly improved compared to the direct copy and paste to the web version of the translation, and the time required for translation is greatly reduced. With the powerful Google translation API, the translation quality is guaranteed. There are also a wealth of options you can set, such as automatically copy translation results to the clipboard, [Incremental Copy](#Incremental-Copy), [Smart Translation](#Smart-Translation), etc., it effectively improve people's reading and translation efficiency of foreign literature.
 
-**After several iterations, `CopyTranslator` has became more and more powerful as well as user-friendly. It is recommended to read the full [User Manual](https://copytranslator.github.io/guide/) to make best use of it**.
+**After several iterations, `CopyTranslator` has became more and more powerful as well as user-friendly. It is recommended to read the full [User Manual](https://copytranslator.gitee.io/guide/) to make best use of it**.
 
 ### Core usage
 
@@ -99,17 +99,17 @@ Append the copied text to the source other than replace it, **especially useful 
 - Many automated customization options are available, such as `Auto Copy`, `Config Memorization`, `Auto Hide`, `Auto Display`.
 - There will be more new features in`CopyTranslator` , so stay tuned.
 
-Please refer to the [Documentation](https://copytranslator.github.io) to learn more about `CopyTranslator`
+Please refer to the [Documentation](https://copytranslator.gitee.io) to learn more about `CopyTranslator`
 
 ## User Manual/Documentation/Homepage
 
-Link: [User Manual](https://copytranslator.github.io/guide/)
+Link: [User Manual](https://copytranslator.gitee.io/guide/)
 
 ## Download/Install
 
-Link: [Install Guide](https://copytranslator.github.io/download/)
+Link: [Install Guide](https://copytranslator.gitee.io/download/)
 
-**After several iterations, `CopyTranslator` has became more and more powerful as well as user-friendly. It is recommended to read the full  [User Manual](https://copytranslator.github.io/guide/) to make best use of it**.
+**After several iterations, `CopyTranslator` has became more and more powerful as well as user-friendly. It is recommended to read the full  [User Manual](https://copytranslator.gitee.io/guide/) to make best use of it**.
 
 ## Reprint statement
 
@@ -117,14 +117,14 @@ This software is free open source software, the developer is [Elliott Zheng](htt
 
 ## Related Links
 
-- [Software official website](https://copytranslator.github.io/) 
+- [Software official website](https://copytranslator.gitee.io/) 
 - [Project homepage on Github ](https://github.com/copytranslator/CopyTranslator) 
 - [Project homepage on Gitee](https://gitee.com/ylzheng/CopyTranslator) 
 - [Official Email](mailto:copytranslator@hypercube.top)
 
 ## Acknowledgements
 
-`CopyTranslator`'s rebirth depends on the contributions of many devoted people. As the limited space, there is a detailed list here: [Acknowledgements](https://copytranslator.github.io/about/acknowledge.html).
+`CopyTranslator`'s rebirth depends on the contributions of many devoted people. As the limited space, there is a detailed list here: [Acknowledgements](https://copytranslator.gitee.io/about/acknowledge.html).
 
 ## License
 
@@ -143,7 +143,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="https://www.facebook.com/profile.php?id=100028728105222"><img src="https://s1.ax1x.com/2020/04/24/JrcsBT.png" height="100px;" alt=""/><br /><sub><b>DEN5</b></sub></a><br /><a href="#translation-s8321414" title="Translation">🌍</a></td>
     <td align="center"><a href="http://mzemlickis.lv"><img src="https://avatars0.githubusercontent.com/u/4556944?v=4" width="100px;" alt=""/><br /><sub><b>Mārtiņš Zemlickis</b></sub></a><br /><a href="#design-mzemlickis" title="Design">🎨</a></td>
     <td align="center"><a href="https://github.com/Sandural"><img src="https://avatars3.githubusercontent.com/u/16163090?v=4" width="100px;" alt=""/><br /><sub><b>黎紫珊</b></sub></a><br /><a href="#platform-Sandural" title="Packaging/porting to new platform">📦</a></td>
-    <td align="center"><a href="https://ziqiangxu.github.io/blog/"><img src="https://avatars2.githubusercontent.com/u/18530271?v=4" width="100px;" alt=""/><br /><sub><b>Daryl.Xu</b></sub></a><br /><a href="#platform-ziqiangxu" title="Packaging/porting to new platform">📦</a></td>
+    <td align="center"><a href="https://ziqiangxu.gitee.io/blog/"><img src="https://avatars2.githubusercontent.com/u/18530271?v=4" width="100px;" alt=""/><br /><sub><b>Daryl.Xu</b></sub></a><br /><a href="#platform-ziqiangxu" title="Packaging/porting to new platform">📦</a></td>
   </tr>
 </table>
 

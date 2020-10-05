@@ -41,7 +41,7 @@ export default class UpdatePanel extends Vue {
   }
 
   manualDownload() {
-    shell.openExternal("https://copytranslator.github.io/download/");
+    shell.openExternal("https://copytranslator.gitee.io/download/");
   }
 
   mounted() {

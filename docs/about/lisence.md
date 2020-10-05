@@ -6,7 +6,7 @@
 
 Github项目地址：[https://github.com/copytranslator/CopyTranslator](https://github.com/copytranslator/CopyTranslator)
 
-软件官网及文档地址：[https://copytranslator.github.io](https://copytranslator.github.io)
+软件官网及文档地址：[https://copytranslator.gitee.io](https://copytranslator.gitee.io)
 
 **软件不保证可用性，只能靠相互之间的信任，作者会尽量说明使用本软件可能产生的风险，而由于使用软件而产生的任何损失均由用户自行承担。**
 

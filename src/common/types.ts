@@ -3,6 +3,7 @@ import flatten from "lodash.flatten";
 //以下是做一个特定的事的动作
 export const normalActionTypes = [
   "translate", //翻译
+  "selectionQuery", //翻译
   "copySource", //复制原文
   "copyResult", //复制译文
   "clear", //清空

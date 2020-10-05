@@ -52,7 +52,7 @@ function initConfig(
   config.setRule("smartDict", new TypeRule<boolean>(true, "smart dict"));
   config.setRule(
     "contrastDict",
-    new TypeRule<boolean>(true, "dict on contrast")
+    new TypeRule<boolean>(false, "dict on contrast")
   );
   config.setRule(
     "smartTranslate",

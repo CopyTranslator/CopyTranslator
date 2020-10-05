@@ -1,7 +1,7 @@
 本软件基于GPL v2协议开源，开发者为Elliott Zheng，软件无任何收费,同时禁止任何人出售本软件。
 如果您觉得软件对您有所帮助，在Github给一个star就是对项目极大的支持，欢迎介绍给朋友使用。
 Github项目地址：https://github.com/copytranslator/CopyTranslator
-软件官网及文档地址：https://copytranslator.github.io
+软件官网及文档地址：copytranslator.gitee.ioithub.io
 软件不保证可用性，只能靠相互之间的信任，作者会尽量说明使用本软件可能产生的风险，而由于使用软件而产生的任何损失均由用户自行承担。
 在线翻译资源来自互联网，版权属于相关网站，软件仅供交流使用。
 欢迎转载本软件，转载无需告知作者，但请一定附上项目地址,未附上项目地址的软件转载行为均未经过授权。
@@ -11,7 +11,7 @@ English version:
 The software is open source under the GPL v2 license and is developed by Elliott Zheng. The software is free of charge and no one is allowed to sell the software.
 If you found it helpful to you, no need to follow or fork, just give me a star and recommend it to your friends around you.
 Github: https://github.com/copytranslator/CopyTranslator 
-Offical website: https://copytranslator.github.io/ 
+Offical website: https://copytranslator.gitee.io/ 
 Online translation resources come from the Internet, copyright belongs to related websites, and this software is only for academic usage.
 Please attach the project address when forwarding, and the reprinting CopyTranslator without project homepage/software official website is infringement.
 The usability of the software is not guaranteed. The author will try his best to explain the possible risks arising from the use of the software, and any loss arising from the use of the software shall be borne by the user.

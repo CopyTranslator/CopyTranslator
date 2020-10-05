@@ -82,9 +82,7 @@ export abstract class CommonController {
   }
 }
 
-export abstract class MainController extends CommonController {
-  // abstract win: WindowMangaer;
-}
+export abstract class MainController extends CommonController {}
 
 export abstract class RenController extends CommonController {
   abstract proxy: Promisified<MainController>;

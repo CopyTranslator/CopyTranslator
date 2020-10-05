@@ -71,6 +71,9 @@ class TranslateController {
       case "retryTranslate":
         this.translate(this.text);
         break;
+      case "selectionQuery":
+        this.selectionQuary(param);
+        break;
       default:
         return false;
     }
@@ -211,7 +214,6 @@ class TranslateController {
       clipboard.writeText(this.text);
     }
     if (this.get<boolean>("autoShow")) {
-      console.log("autoshow");
       eventBus.at("dispatch", "showWindow");
     }
     this.translateResult = result;
@@ -319,7 +321,7 @@ class TranslateController {
       return;
     }
     this.translating = true;
-    console.log("translate", text);
+    console.debug("translate", text);
 
     Promise.allSettled([
       this.translateSentence(text),
@@ -352,6 +354,10 @@ class TranslateController {
       return false;
     }
     return true;
+  }
+
+  async selectionQuary(text: string) {
+    console.debug(text);
   }
 
   async queryDictionary(text: string) {

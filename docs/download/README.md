@@ -21,7 +21,7 @@ v9.0.2以后，软件支持Mac、Windows、Linux三大主流桌面系统
 以下列方式下载最新版本安装包：
 - [Github Releases](https://github.com/copytranslator/copytranslator/releases)
 - [Bintray](https://bintray.com/elliottzheng/CopyTranslator/CopyTranslator/_latestVersion)
-- [百度云](https://pan.baidu.com/s/1JXQz6gqumS7mpCLBAt-PDg)：提取码：5gkd
+- [蓝奏云](https://www.lanzoux.com/b0betz4wb)
 
 ### Windows
 下载exe文件，安装即用

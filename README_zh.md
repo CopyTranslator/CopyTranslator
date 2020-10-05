@@ -27,7 +27,7 @@
 科研人员总少不了阅读大量文献，理解文献内容就成了科研生活常态，而我们平时复制PDF内容黏贴到网页翻译的时候可能会出现多余换行而导致翻译乱码，译文与中文阅读习惯不符的情况，翻译结果很差，需要手动删除换行，而`CopyTranslator`可以帮我们快速且完美地解决这个问题。
 
 只需打开`CopyTranslator`，直接复制PDF文本，`CopyTranslator`监听到剪贴板变化，会将剪贴板内容进行处理（如去除多余换行等），并显示翻译结果，翻译效果相比于直接复制黏贴到网页版翻译有了巨大的改善，同时翻译所需时间也大大减少，借助于强大的在线翻译API(当前支持Youdao,Google,Baidu,Sogou,Caiyun,Tencent)，翻译质量有保证。另外还有丰富的选项可以设置，如自动复制翻译结果到剪贴板，[增量复制](#增量复制)，[智能互译](#智能互译)等等，有效提高人们阅读及翻译外文文献的效率。
-`CopyTranslator`经过多次迭代，功能越来越丰富，越来越人性化，**建议阅读完整[使用指南](https://copytranslator.github.io/guide/)，最大限度发挥其功能。**
+`CopyTranslator`经过多次迭代，功能越来越丰富，越来越人性化，**建议阅读完整[使用指南](https://copytranslator.gitee.io/guide/)，最大限度发挥其功能。**
 
 ### 核心用法
 **打开网页/PDF，选中要翻译的段落文字，按Ctrl+C/右键复制文本，CopyTranslator监听到剪贴板变化，会将剪贴板内容进行处理（如去除多余换行等），翻译，并显示**。只要这边鼠标一复制，不用粘贴，`CopyTranslator`立刻给出翻译结果，有效提高工作效率。
@@ -89,32 +89,32 @@
 - 配合外部脚本实现类似`OneNote`的停靠桌面功能
 - `CopyTranslator`还将继续加入更多新特性，敬请期待。
 
-请查阅[软件文档](https://copytranslator.github.io)了解更多
+请查阅[软件文档](https://copytranslator.gitee.io)了解更多
 
 
 ## 使用指南/文档/官网
 
-传送门：[使用指南](https://copytranslator.github.io/guide/)
+传送门：[使用指南](https://copytranslator.gitee.io/guide/)
 
 ## 下载/安装
 
-传送门：[安装指南](https://copytranslator.github.io/download/)
+传送门：[安装指南](https://copytranslator.gitee.io/download/)
 
-`CopyTranslator`经过多次迭代，功能越来越丰富，越来越人性化，请一定阅读完整[使用指南](https://copytranslator.github.io/guide/)，才能最大限度发挥其功能。
+`CopyTranslator`经过多次迭代，功能越来越丰富，越来越人性化，请一定阅读完整[使用指南](https://copytranslator.gitee.io/guide/)，才能最大限度发挥其功能。
 
 
 ## 转载声明
 本软件为免费的开源软件，开发者为[Elliott Zheng](https://github.com/elliottzheng)，欢迎STAR，PR。**转发时请一定附上项目地址，未附上项目地址/软件官网的转载行为均构成侵权**。 
 
 ## 相关链接
-- [软件官网](https://copytranslator.github.io/)
+- [软件官网](https://copytranslator.gitee.io/)
 - [Github项目主页](https://github.com/copytranslator/CopyTranslator)
 - [码云项目主页](https://gitee.com/ylzheng/CopyTranslator)
 - [官方邮箱](mailto:copytranslator@hypercube.top)
 
 ## 致谢
 
-`CopyTranslator`的重生离不开大家的无私贡献，感激不尽。篇幅所限，在这里详细列出 [致谢](https://copytranslator.github.io/about/acknowledge.html#%E7%95%8C%E9%9D%A2%E4%B8%8E%E4%BA%A4%E4%BA%92%E8%AE%BE%E8%AE%A1)。
+`CopyTranslator`的重生离不开大家的无私贡献，感激不尽。篇幅所限，在这里详细列出 [致谢](https://copytranslator.gitee.io/about/acknowledge.html#%E7%95%8C%E9%9D%A2%E4%B8%8E%E4%BA%A4%E4%BA%92%E8%AE%BE%E8%AE%A1)。
 
 ## 支持CopyTranslator
 

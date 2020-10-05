@@ -231,6 +231,7 @@ class ActionManager {
     this.append(normalAction("font-"));
     this.append(normalAction("checkUpdate"));
     this.append(normalAction("translate"));
+    this.append(normalAction("selectionQuery"));
     this.append(normalAction("hideWindow"));
     this.append(normalAction("closeWindow"));
     this.append(normalAction("showWindow"));

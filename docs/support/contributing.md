@@ -7,7 +7,7 @@ sidebarDepth: 6
 ## Project structure
 - dist_electron: the output of `npm run electron:build`
 - dist_locales: the locale files
-- docs: source of documentation [copytranslator.github.io](https://copytranslator.github.io/)
+- docs: source of documentation [copytranslator.gitee.io](https://copytranslator.gitee.io/)
 - src
     - core: anything about translation and string process
     - tools: anything

@@ -56,6 +56,16 @@ module.exports = {
       },
     ],
     sidebar: {
+      '/download/': [{
+        title: "下载安装",
+        collapsable: false,
+        children: [
+          '',
+          'windows',
+          'mac',
+          'linux'
+        ]
+      }],
       '/userland/': [{
         title: "用户生态",
         collapsable: false,

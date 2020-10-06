@@ -27,7 +27,6 @@ class Controller extends MainController {
   constructor() {
     super();
     this.config.load(env.configPath);
-    this.l10n.install(store, this.config.get("localeSetting"));
     observers.push(this);
     observers.push(this.transCon);
     this.bindLinks(actionLinks);
@@ -78,6 +77,7 @@ class Controller extends MainController {
   }
 
   createWindow() {
+    this.l10n.install(store, this.config.get("localeSetting")); //修复无法检测系统语言的问题
     this.transCon.init(); //初始化翻译控制器
     this.restoreFromConfig(); //恢复设置
     eventListener.bind(); //绑定事件

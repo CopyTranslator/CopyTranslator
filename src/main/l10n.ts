@@ -10,6 +10,7 @@ type Resouces = Map<Language, Locale>;
 
 function getDefaultLocale(): Language {
   let locale = app.getLocale();
+  console.log("locale=", locale);
   if (locale === "zh") {
     locale = "zh-CN";
   }

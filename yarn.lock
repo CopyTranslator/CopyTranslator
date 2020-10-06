@@ -6659,9 +6659,10 @@ invert-kv@^2.0.0:
   resolved "https://registry.npm.taobao.org/invert-kv/download/invert-kv-2.0.0.tgz#7393f5afa59ec9ff5f67a27620d11c226e3eec02"
   integrity sha1-c5P1r6Weyf9fZ6J2INEcIm4+7AI=
 
-"iohook@https://github.com/wilix-team/iohook.git":
-  version "0.6.5"
-  resolved "https://github.com/wilix-team/iohook.git#b6a4aec82ae67bc6d17837221b50cf138175d6e8"
+iohook@0.6.6:
+  version "0.6.6"
+  resolved "https://registry.npm.taobao.org/iohook/download/iohook-0.6.6.tgz#aeeb8c0e3c053fef890719a077b4e32d755cfac4"
+  integrity sha1-ruuMDjwFP++JBxmgd7TjLXVc+sQ=
   dependencies:
     bindings "^1.3.0"
     node-abi "^2.4.0"

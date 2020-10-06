@@ -2,11 +2,10 @@ export const constants = {
   appName: "CopyTranslator",
   nickName: "破晓",
   version: "10.0.0",
-  stage: "pre-alpha",
+  stage: "beta.1",
   wiki: "https://copytranslator.gitee.io/guide",
   homepage: "https://copytranslator.gitee.io",
-  downloadPage:
-    "https://copytranslator.gitee.io/guide/download.html#%E4%B8%8B%E8%BD%BD",
+  downloadPage: "https://copytranslator.gitee.io/guide/download.html",
 };
 export const versionString = [
   "v" + constants.version,

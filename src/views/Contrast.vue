@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-app>
-      <v-app-bar app color="#8E24AA" dark dense>
+      <v-app-bar app color="#8E24AA" dark dense height="40px">
         <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
         <v-spacer style="height: 100%; width: 100%;">
           <div
@@ -15,12 +15,14 @@
         </v-spacer>
         <v-menu top>
           <template v-slot:activator="{ on }">
-            <div v-on="on">
-              <EngineButton
-                :engine="currentEngine"
-                :valid="valid"
-                :enable="Boolean(false)"
-              ></EngineButton>
+            <div v-on="on" v-on:contextmenu="callback('listenClipboard')">
+              <v-badge dot :color="color" offset-y="pl/ml-5" offset-x="pl/ml-1">
+                <EngineButton
+                  :engine="currentEngine"
+                  :valid="valid"
+                  :enable="Boolean(false)"
+                ></EngineButton>
+              </v-badge>
             </div>
           </template>
 
@@ -30,15 +32,6 @@
             </v-list-item>
           </v-list>
         </v-menu>
-
-        <div v-on:contextmenu="openMenu('focusRight')">
-          <v-btn
-            :style="styleNow"
-            @click="callback('listenClipboard')"
-            fab
-            x-small
-          ></v-btn>
-        </div>
 
         <v-btn @click="enumerateLayouts" fab small depressed color="#8E24AA">
           <v-icon>mdi-view-quilt</v-icon>
@@ -52,12 +45,18 @@
           v-on:contextmenu="callback('copySource')"
           ><v-icon>mdi-content-copy</v-icon></v-btn
         >
-        <v-btn color="#8E24AA" small depressed fab @click="callback('minimize')"
+        <v-btn
+          color="#8E24AA"
+          small
+          depressed
+          fab
+          @click="callback('minimize')"
+          @contextmenu="close"
           ><v-icon>mdi-window-minimize</v-icon></v-btn
         >
-        <v-btn color="#8E24AA" small depressed fab @click="close"
+        <!-- <v-btn color="#8E24AA" small depressed fab @click="close"
           ><v-icon>mdi-close</v-icon></v-btn
-        >
+        > -->
       </v-app-bar>
       <v-navigation-drawer
         v-model="drawer"
@@ -159,7 +158,7 @@ export default class Contrast extends Mixins(BaseView, WindowController) {
 
   get area() {
     return {
-      "margin-top": "49px",
+      "margin-top": "40px",
       width: `${(this.windowWidth - this.barWidth).toString()}px`,
     };
   }

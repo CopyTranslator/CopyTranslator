@@ -15,13 +15,13 @@ export const defaultTokens = new Map<TranslatorType, any>([
       token: process.env.VUE_APP_GOOGLE_TOKEN as string,
     },
   ],
-  [
-    "youdao",
-    {
-      appKey: process.env.VUE_APP_YOUDAO_APP_KEY as string,
-      key: process.env.VUE_APP_YOUDAO_APP_SECRET as string,
-    },
-  ],
+  // [
+  //   "youdao",
+  //   {
+  //     appKey: process.env.VUE_APP_YOUDAO_APP_KEY as string,
+  //     key: process.env.VUE_APP_YOUDAO_APP_SECRET as string,
+  //   },
+  // ],
   [
     "caiyun",
     {
@@ -35,13 +35,13 @@ export const defaultTokens = new Map<TranslatorType, any>([
       secretKey: process.env.VUE_APP_TENCENT_APP_SECRET as string,
     },
   ],
-  [
-    "sogou",
-    {
-      pid: process.env.VUE_APP_SOGOU_PID as string,
-      key: process.env.VUE_APP_SOGOU_KEY as string,
-    },
-  ],
+  // [
+  //   "sogou",
+  //   {
+  //     pid: process.env.VUE_APP_SOGOU_PID as string,
+  //     key: process.env.VUE_APP_SOGOU_KEY as string,
+  //   },
+  // ],
 ]);
 
 export function examToken(config: KeyConfig): boolean {

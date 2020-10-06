@@ -475,6 +475,9 @@ class TranslateController {
       });
       clipboard.on("image-changed", () => {
         // OCR 相关TranslateResult
+        if (!recognizer.client) {
+          return;
+        }
         recognizer.recognize(clipboard.readImage().toDataURL());
       });
       clipboard.startWatching();

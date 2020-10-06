@@ -18,7 +18,7 @@
       </v-select>
     </div>
     <div v-else-if="action.type === 'normal'">
-      <v-btn @click="callback(action.id)">
+      <v-btn @click="callback(action.id)" width="100%" style="margin-top: 4px;">
         {{ trans[action.id] }}
       </v-btn>
     </div>

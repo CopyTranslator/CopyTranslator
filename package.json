@@ -41,7 +41,7 @@
     "eazydict-youdao": "https://github.com/CopyTranslator/eazydict-youdao.git",
     "electron-clipboard-extended": "^1.1.1",
     "electron-updater": "4.2.5",
-    "iohook": "https://github.com/wilix-team/iohook.git",
+    "iohook": "0.6.6",
     "lodash.compact": "^3.0.1",
     "lodash.flatten": "^4.4.0",
     "lodash.sum": "^4.0.2",

@@ -52,7 +52,7 @@ function initConfig(
   config.setRule("smartDict", new TypeRule<boolean>(true, "smart dict"));
   config.setRule(
     "contrastDict",
-    new TypeRule<boolean>(false, "dict on contrast")
+    new TypeRule<boolean>(true, "dict on contrast")
   );
   config.setRule(
     "smartTranslate",
@@ -190,7 +190,7 @@ function initConfig(
   config.setRule(
     "translator-auto",
     new GroupRule<TranslatorType>(
-      ["google", "baidu", "youdao", "caiyun", "tencent", "sogou"],
+      ["google", "baidu", "caiyun", "tencent"],
       "auto call",
       translatorTypes
     )
@@ -273,6 +273,7 @@ function initConfig(
         "listenClipboard",
         "sourceLanguage",
         "targetLanguage",
+        "settings",
       ],
       "the options of contrast mode",
       identifiers
@@ -311,10 +312,10 @@ function initConfig(
     new StructRule<KeyConfig>({ token: "" }, "parameters of google")
   );
 
-  config.setRule(
-    "sogou",
-    new StructRule<KeyConfig>({ pid: "", key: "" }, "parameters of sogou")
-  );
+  // config.setRule(
+  //   "sogou",
+  //   new StructRule<KeyConfig>({ pid: "", key: "" }, "parameters of sogou")
+  // );
 
   config.setRule(
     "tencent",
@@ -324,10 +325,10 @@ function initConfig(
     )
   );
 
-  config.setRule(
-    "youdao",
-    new StructRule<KeyConfig>({ appKey: "", key: "" }, "parameters of youdao")
-  );
+  // config.setRule(
+  //   "youdao",
+  //   new StructRule<KeyConfig>({ appKey: "", key: "" }, "parameters of youdao")
+  // );
 
   //下面是三种布局
   config.setRule(

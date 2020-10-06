@@ -56,10 +56,10 @@ export const constantActionTypes = [
 export const translatorTypes = [
   "baidu",
   "google",
-  "sogou",
+  // "sogou",
   "caiyun",
   "tencent",
-  "youdao",
+  // "youdao",
   "baidu-domain",
 ] as const;
 

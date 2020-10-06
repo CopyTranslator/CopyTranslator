@@ -93,7 +93,7 @@ export class Recognizer {
         eventBus.at("dispatch", "translate", text);
       })
       .catch(function (err: any) {
-        // 如果发生网络错误
+        // 如果发生网络错误Z
         console.log(err);
       });
   }

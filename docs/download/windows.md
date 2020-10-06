@@ -10,6 +10,10 @@
 - 点击版本标题可查看更新日志
 
 :::
+## v10 破晓
+### [v10.0.0-beta.1 抢先体验](https://github.com/CopyTranslator/CopyTranslator/releases/tag/v10.0.0-beta.1)
+- [copytranslator-10.0.0-beta.1-win.zip](https://github.com/CopyTranslator/CopyTranslator/releases/download/v10.0.0-beta.1/copytranslator-10.0.0-beta.1-win.zip)
+- [copytranslator.Setup.10.0.0-beta.1.exe](https://github.com/CopyTranslator/CopyTranslator/releases/download/v10.0.0-beta.1/copytranslator.Setup.10.0.0-beta.1.exe)
 
 ## v9 寒渐
 ### [v9.1.0 常规修复](https://github.com/CopyTranslator/CopyTranslator/releases/tag/v9.1.0)

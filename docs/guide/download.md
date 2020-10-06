@@ -1,7 +1,7 @@
 ---
 sidebarDepth: 6
 ---
-# 安装
+# 前言
 
 如果您觉得软件对您有所帮助，在[Github](https://github.com/CopyTranslator/CopyTranslator)给我一个star就是对我极大的支持，欢迎介绍给朋友使用。本软件免费开源，严禁出售，欢迎转载，但请注明出处，否则构成侵权。
 
@@ -16,27 +16,10 @@ sidebarDepth: 6
 软件二次分发存在巨大风险，因此请尽量通过本文档提供的下载方式下载。
 :::
 
-v9.0.2以后，软件支持Mac、Windows、Linux三大主流桌面系统
-
-以下列方式下载最新版本安装包：
-- [Github Releases](https://github.com/copytranslator/copytranslator/releases)
-- [Bintray](https://bintray.com/elliottzheng/CopyTranslator/CopyTranslator/_latestVersion)
-- [百度云](https://pan.baidu.com/s/1JXQz6gqumS7mpCLBAt-PDg)：提取码：5gkd
-
-### Windows
-下载exe文件，安装即用
-
-### Mac
-下载dmg文件
-:::warning
-**初次打开后请手动允许copytranslator使用辅助功能，否则copytranslator将无法移动**
-:::
-![](https://s2.ax1x.com/2019/03/10/ApT0YT.png)
-![](https://s2.ax1x.com/2019/03/10/ApT6X9.png)
-:::
-
-### Linux 
-下载AppImage或deb安装即可，推荐使用AppImage安装，可获得后续自动更新。
+v9.0.2以后，软件支持Mac、Windows、Linux三大主流桌面系统，请根据您的系统选择下载页面
+- [Windows](/download/windows)
+- [Mac](/download/mac)
+- [Linux](/download/linux)
 
 ## 订阅更新
 - 在[Github](https://github.com/CopyTranslator/CopyTranslator)上`watch`本项目

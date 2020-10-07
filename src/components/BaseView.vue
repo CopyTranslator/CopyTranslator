@@ -7,6 +7,7 @@ import { Watch, Component, Vue, Mixins } from "vue-property-decorator";
 import { Identifier } from "../common/types";
 import { shell } from "electron";
 import eventBus from "@/common/event-bus";
+import logger from "@/common/logger";
 
 @Component
 export default class BaseView extends Vue {
@@ -61,6 +62,12 @@ export default class BaseView extends Vue {
     this.$store.dispatch("setDictResult", {
       valid: false,
     });
+  }
+
+  command() {
+    const text = this.getModifiedText();
+    eventBus.at("dispatch", text);
+    logger.toast(`执行命令 ${text}`);
   }
 }
 </script>

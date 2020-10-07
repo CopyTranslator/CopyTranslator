@@ -26,7 +26,7 @@ import { recognizer } from "./ocr";
 import eventBus from "@/common/event-bus";
 import logger from "@/common/logger";
 import { getLanguageLocales } from "@/common/translate/locale";
-import config from "@/common/configuration";
+import isTrad from "@/common/translate/detect-trad";
 
 class TranslateController {
   text: string = "";
@@ -77,7 +77,7 @@ class TranslateController {
         logger.toast("已复制译文");
         break;
       case "pasteResult":
-        this.handle("copyResult","");
+        this.handle("copyResult", null);
         simulate.paste();
         break;
       case "retryTranslate":
@@ -214,7 +214,7 @@ class TranslateController {
     if (this.get<boolean>("enableNotify")) {
       eventBus.at("dispatch", "notify", sharedResult.translation);
     }
-    logger.toast("翻译完成");
+    logger.toast(`翻译完成 ${sharedResult.from} to ${sharedResult.to}`);
   }
 
   postProcess(language: any, result: CopyTranslateResult) {
@@ -280,22 +280,39 @@ class TranslateController {
     store.dispatch("setColor", colorStatusMap.get(color));
   }
 
+  getL(lang: Language) {
+    const l = getLanguageLocales(store.getters.localeSetting);
+    return l[lang];
+  }
+
   async decideLanguage(text: string) {
     const shouldSrc = this.source();
     let destLang = this.target();
     let srcLang = shouldSrc;
 
+    let end = 50;
+    if (text.length < 10) {
+      end = text.length;
+    }
+    const textForDetect = text.substring(0, end);
     if (shouldSrc !== "auto") {
       //不是自动，那么就尝试检测语言
       try {
-        const detectedLang = await this.translator.detect(text);
+        let detectedLang = await this.translator.detect(textForDetect);
         if (detectedLang) {
+          if (["zh-CN", "zh-TW"].includes(detectedLang)) {
+            //因为繁简的检测似乎不太灵
+            if (!isTrad(textForDetect)) {
+              detectedLang = "zh-CN";
+            } else {
+              detectedLang = "zh-TW";
+            }
+          }
           srcLang = detectedLang;
-          const l = getLanguageLocales(store.getters.localeSetting);
-          logger.toast("检测到 " + l[srcLang]);
         }
       } catch (e) {
-        console.log("detect lang fail");
+        logger.log(e);
+        logger.log("detect lang fail");
         logger.toast("检测语言失败");
       }
     }
@@ -337,7 +354,7 @@ class TranslateController {
       return;
     }
     this.translating = true;
-    console.debug("translate", text);
+    logger.debug("translate", text);
 
     Promise.allSettled([
       this.translateSentence(text),
@@ -346,7 +363,7 @@ class TranslateController {
       this.translating = false;
       if (this.dictResult.words === this.text && !this.dictResult.valid) {
         //同步词典结果
-        console.debug("word fail");
+        logger.debug("word fail");
         this.syncDict(); //翻译完了，然后发现词典有问题，这个时候才发送
         this.setCurrentColor(true);
       } else if (this.dictResult.words !== this.text && !this.translateResult) {
@@ -374,7 +391,7 @@ class TranslateController {
   }
 
   async selectionQuary(text: string) {
-    console.debug(text);
+    logger.debug(text);
   }
 
   async queryDictionary(text: string) {
@@ -398,7 +415,7 @@ class TranslateController {
         }
       })
       .catch((e) => {
-        console.log("query dict fail");
+        logger.log("query dict fail");
         this.dictFail(text);
       });
   }
@@ -415,7 +432,7 @@ class TranslateController {
       .then((res) => this.postTranslate(res, language))
       .catch((err) => {
         this.translateFail();
-        console.error(err);
+        logger.error(err);
       });
   }
 
@@ -449,14 +466,14 @@ class TranslateController {
         if (!buffer || this.translator.text !== this.text) {
           throw "no cache";
         }
-        console.debug("cache hit");
+        logger.debug("cache hit");
         this.postTranslate(buffer);
       } catch (e) {
-        console.debug(e);
+        logger.debug(e);
         this.translate(this.text);
       }
     } else {
-      console.debug("fallback lang");
+      logger.debug("fallback lang");
       this.translate(this.text);
     }
   }
@@ -507,7 +524,7 @@ class TranslateController {
         this.translator.setEngines(value);
         break;
       case "translator-double":
-        console.log("translator-double", value);
+        logger.log("translator-double", value);
         break;
       case "listenClipboard":
         this.setWatch(value);

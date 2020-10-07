@@ -54,9 +54,6 @@
           @contextmenu="close"
           ><v-icon>mdi-window-minimize</v-icon></v-btn
         >
-        <!-- <v-btn color="#8E24AA" small depressed fab @click="close"
-          ><v-icon>mdi-close</v-icon></v-btn
-        > -->
       </v-app-bar>
       <v-navigation-drawer
         v-model="drawer"

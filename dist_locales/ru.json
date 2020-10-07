@@ -80,5 +80,6 @@
     "colorMode": "Color Mode",
     "drawer": "Drawer",
     "translatorConfig": "Translator Config",
-    "contrastDict": "Contrast Dict"
+    "contrastDict": "Contrast Dict",
+    "pasteResult": "Paste Result"
 }

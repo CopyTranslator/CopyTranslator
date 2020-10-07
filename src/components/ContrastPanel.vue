@@ -13,6 +13,7 @@
           @keyup.ctrl.13="translate"
           @keyup.ctrl.71="google"
           @keyup.ctrl.66="baidu"
+          @keyup.ctrl.80="command"
           @select="onSelect"
           @blur="deSelect"
           @click="deSelect"

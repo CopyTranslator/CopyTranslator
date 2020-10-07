@@ -73,6 +73,7 @@ export const zh_cn = new Map<Identifier, string>([
   ["zoomIn", "放大"],
   ["zoomOut", "缩小"],
   ["closeAsQuit", "关闭即退出"],
+  ["pasteResult", "粘贴译文"],
   ["layoutType", "布局"],
   ["autoCheckUpdate", "自动检查更新"],
   ["showConfigFolder", "打开配置文件夹"],
@@ -80,6 +81,7 @@ export const zh_cn = new Map<Identifier, string>([
   ["colorMode", "配色模式"],
   ["drawer", "侧边抽屉"],
   ["translatorConfig", "翻译器设置"],
+  ["openAtLogin", "开机启动"],
 ]);
 
 export const en = new Map<Identifier, string>([
@@ -163,5 +165,6 @@ export const en = new Map<Identifier, string>([
   ["colorMode", "Color Mode"],
   ["drawer", "Drawer"],
   ["translatorConfig", "Translator Config"],
+  ["openAtLogin", "Open at login"],
 ]);
 export type Locale = typeof en;

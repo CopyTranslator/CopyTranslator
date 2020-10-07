@@ -81,5 +81,6 @@
     "drawer": "Drawer",
     "translatorConfig": "Translator Config",
     "contrastDict": "Contrast Dict",
-    "pasteResult": "Paste Result"
+    "pasteResult": "Paste Result",
+    "openAtLogin": "Open at login"
 }

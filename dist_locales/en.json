@@ -77,5 +77,6 @@
     "editConfigFile": "Edit Config File",
     "colorMode": "Color Mode",
     "drawer": "Drawer",
-    "translatorConfig": "Translator Config"
+    "translatorConfig": "Translator Config",
+    "openAtLogin": "Open at login"
 }

@@ -217,6 +217,7 @@ class ActionManager {
     this.append(switchAction("skipTaskbar"));
     this.append(switchAction("closeAsQuit"));
     this.append(switchAction("autoCheckUpdate"));
+    this.append(switchAction("openAtLogin"));
 
     this.append(normalAction("copySource"));
     this.append(normalAction("copyResult"));

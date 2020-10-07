@@ -114,6 +114,11 @@ class Controller extends MainController {
       case "skipTaskbar":
         this.win.get("contrast").setSkipTaskbar(value);
         break;
+      case "openAtLogin":
+        app.setLoginItemSettings({
+          openAtLogin: value,
+        });
+        break;
       default:
         return false;
     }

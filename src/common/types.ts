@@ -97,6 +97,7 @@ export const switchActionTypes = [
   "dragCopy",
   "closeAsQuit",
   "contrastDict",
+  "openAtLogin",
 ] as const;
 
 //Electron 原生 角色

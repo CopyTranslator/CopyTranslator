@@ -107,6 +107,11 @@ function initConfig(
   );
 
   config.setRule(
+    "openAtLogin",
+    new TypeRule<boolean>(false, "auto start at login")
+  );
+
+  config.setRule(
     "translatorType",
     new UnionRule<TranslatorType>(
       "google",

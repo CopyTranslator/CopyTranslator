@@ -7,6 +7,7 @@ export const normalActionTypes = [
   "selectionQuery", //翻译
   "copySource", //复制原文
   "copyResult", //复制译文
+  "pasteResult", //粘贴译文
   "clear", //清空
   "helpAndUpdate",
   "exit",

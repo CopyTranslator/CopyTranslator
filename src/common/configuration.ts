@@ -236,6 +236,7 @@ function initConfig(
         "hideDirect",
         "copySource",
         "copyResult",
+        "pasteResult",
         "clear",
         "retryTranslate",
         "autoCopy",

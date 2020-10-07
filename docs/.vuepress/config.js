@@ -91,6 +91,7 @@ module.exports = {
         title: "更新日志",
         collapsable: false,
         children: [
+          'v10',
           'v9',
           'v8',
           'v7',

@@ -13,7 +13,7 @@
 :::
 ## v10 破晓
 ### [v10.0.0-beta.2 抢先体验](https://github.com/CopyTranslator/CopyTranslator/releases/tag/v10.0.0-beta.2)
-- [copytranslator-10.0.0-beta.1-win.zip](https://github.com/CopyTranslator/CopyTranslator/releases/download/v10.0.0-beta.2/copytranslator-10.0.0-beta.2-win.zip)
+- [copytranslator-10.0.0-beta.2-win.zip](https://github.com/CopyTranslator/CopyTranslator/releases/download/v10.0.0-beta.2/copytranslator-10.0.0-beta.2-win.zip)
 - [copytranslator.Setup.10.0.0-beta.2.exe](https://github.com/CopyTranslator/CopyTranslator/releases/download/v10.0.0-beta.2/copytranslator.Setup.10.0.0-beta.2.exe)
 
 ### [v10.0.0-beta.1 抢先体验](https://github.com/CopyTranslator/CopyTranslator/releases/tag/v10.0.0-beta.1)

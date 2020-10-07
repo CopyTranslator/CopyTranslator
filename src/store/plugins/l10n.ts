@@ -9,9 +9,11 @@ export function registerLocale(
   state: {
     locales: Locales;
     locale: Locale;
+    localeSetting: Language;
   } = {
     locales: [],
     locale: {},
+    localeSetting: "auto",
   }
 ) {
   const l10nModule = {
@@ -23,6 +25,9 @@ export function registerLocale(
       locale(state: any) {
         return state.locale;
       },
+      localeSetting(state: any) {
+        return state.localeSetting;
+      },
     },
     mutations: {
       updateLocale(state: any, locale: Locale) {
@@ -31,6 +36,9 @@ export function registerLocale(
       updateLocales(state: any, locales: Locale) {
         Vue.set(state, "locales", locales);
       },
+      updateLocaleSetting(state: any, localeSetting: Language) {
+        Vue.set(state, "localeSetting", localeSetting);
+      },
     },
     actions: {
       updateLocale(context: any, locale: Locale) {
@@ -38,6 +46,9 @@ export function registerLocale(
       },
       updateLocales(context: any, locales: Locale) {
         context.commit("updateLocales", locales);
+      },
+      updateLocaleSetting(context: any, localeSetting: Language) {
+        context.commit("updateLocaleSetting", localeSetting);
       },
     },
   };

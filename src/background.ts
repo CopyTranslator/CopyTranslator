@@ -17,7 +17,8 @@ if (!gotTheLock) {
     window.focus();
   });
 }
-
+import { initLog } from "./common/logger";
+initLog();
 import { Controller } from "./main/controller";
 
 const isDevelopment = process.env.NODE_ENV !== "production";

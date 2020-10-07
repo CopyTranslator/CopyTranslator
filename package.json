@@ -40,6 +40,7 @@
     "eazydict-google": "https://github.com/CopyTranslator/eazydict-google.git",
     "eazydict-youdao": "https://github.com/CopyTranslator/eazydict-youdao.git",
     "electron-clipboard-extended": "^1.1.1",
+    "electron-log": "^4.2.4",
     "electron-updater": "4.2.5",
     "iohook": "0.6.6",
     "lodash.compact": "^3.0.1",
@@ -56,6 +57,7 @@
     "vue-class-component": "^7.2.3",
     "vue-property-decorator": "^8.4.1",
     "vue-router": "^3.1.6",
+    "vue-toasted": "^1.1.28",
     "vuetify": "v2.2.23",
     "vuex": "^3.2.0",
     "vuex-electron": "https://github.com/MaverickMartyn/vuex-electron.git"

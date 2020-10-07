@@ -24,6 +24,9 @@ import { MainController } from "../common/controller";
 import store from "@/store";
 import { recognizer } from "./ocr";
 import eventBus from "@/common/event-bus";
+import logger from "@/common/logger";
+import { getLanguageLocales } from "@/common/translate/locale";
+import config from "@/common/configuration";
 
 class TranslateController {
   text: string = "";
@@ -67,9 +70,11 @@ class TranslateController {
         break;
       case "copySource":
         clipboard.writeText(this.text);
+        logger.toast("已复制原文");
         break;
       case "copyResult":
         clipboard.writeText(this.resultString);
+        logger.toast("已复制译文");
         break;
       case "retryTranslate":
         this.translate(this.text);
@@ -205,6 +210,7 @@ class TranslateController {
     if (this.get<boolean>("enableNotify")) {
       eventBus.at("dispatch", "notify", sharedResult.translation);
     }
+    logger.toast("翻译完成");
   }
 
   postProcess(language: any, result: CopyTranslateResult) {
@@ -281,9 +287,12 @@ class TranslateController {
         const detectedLang = await this.translator.detect(text);
         if (detectedLang) {
           srcLang = detectedLang;
+          const l = getLanguageLocales(store.getters.localeSetting);
+          logger.toast("检测到 " + l[srcLang]);
         }
       } catch (e) {
         console.log("detect lang fail");
+        logger.toast("检测语言失败");
       }
     }
 
@@ -478,6 +487,7 @@ class TranslateController {
         if (!recognizer.client) {
           return;
         }
+        logger.toast("检测到剪贴板图片");
         recognizer.recognize(clipboard.readImage().toDataURL());
       });
       clipboard.startWatching();

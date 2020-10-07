@@ -4768,6 +4768,11 @@ electron-download@^4.1.1:
     semver "^5.4.1"
     sumchecker "^2.0.2"
 
+electron-log@^4.2.4:
+  version "4.2.4"
+  resolved "https://registry.npm.taobao.org/electron-log/download/electron-log-4.2.4.tgz#a13e42a9fc42ca2cc7d2603c3746352efa82112e"
+  integrity sha1-oT5CqfxCyizH0mA8N0Y1LvqCES4=
+
 electron-publish@21.2.0:
   version "21.2.0"
   resolved "https://registry.npm.taobao.org/electron-publish/download/electron-publish-21.2.0.tgz?cache=0&sync_timestamp=1571815937929&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Felectron-publish%2Fdownload%2Felectron-publish-21.2.0.tgz#cc225cb46aa62e74b899f2f7299b396c9802387d"
@@ -12750,6 +12755,11 @@ vue-template-es2015-compiler@^1.6.0, vue-template-es2015-compiler@^1.9.0:
   version "1.9.1"
   resolved "https://registry.npm.taobao.org/vue-template-es2015-compiler/download/vue-template-es2015-compiler-1.9.1.tgz#1ee3bc9a16ecbf5118be334bb15f9c46f82f5825"
   integrity sha1-HuO8mhbsv1EYvjNLsV+cRvgvWCU=
+
+vue-toasted@^1.1.28:
+  version "1.1.28"
+  resolved "https://registry.npm.taobao.org/vue-toasted/download/vue-toasted-1.1.28.tgz#dbabb83acc89f7a9e8765815e491d79f0dc65c26"
+  integrity sha1-26u4OsyJ96nodlgV5JHXnw3GXCY=
 
 vue@^2.6.10:
   version "2.6.10"

@@ -169,7 +169,7 @@ class ActionManager {
       allowAuto: boolean = true
     ): () => Array<SubActionView> {
       return () => {
-        const l = getLanguageLocales(config.get("localeSetting"));
+        const l = getLanguageLocales(store.getters.localeSetting);
         return getLanguages(allowAuto).map((e) => {
           return {
             id: compose([identifier, e]),
@@ -222,6 +222,7 @@ class ActionManager {
     this.append(normalAction("copyResult"));
     this.append(normalAction("clear"));
     this.append(normalAction("notify"));
+    this.append(normalAction("toast"));
     this.append(normalAction("retryTranslate"));
     this.append(normalAction("focus"));
     this.append(normalAction("contrast"));

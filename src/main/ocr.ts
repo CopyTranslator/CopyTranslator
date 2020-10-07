@@ -4,6 +4,7 @@ import eventBus from "@/common/event-bus";
 import conf from "@/common/configuration";
 import { defaultConfig } from "./views/utils";
 import { Language } from "@opentranslate/languages";
+import logger from "@/common/logger";
 const ShortcutCapture = require("shortcut-capture");
 export const shortcutCapture = new ShortcutCapture();
 
@@ -90,11 +91,13 @@ export class Recognizer {
         const text = result.words_result
           .map((item) => item["words"])
           .join("\n");
+        logger.toast("OCR完成，正在翻译");
         eventBus.at("dispatch", "translate", text);
       })
       .catch(function (err: any) {
         // 如果发生网络错误Z
         console.log(err);
+        logger.toast("OCR失败");
       });
   }
 }

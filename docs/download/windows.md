@@ -51,7 +51,7 @@
 ### [v0.0.8-Zouwu-RC1  released!](https://github.com/CopyTranslator/CopyTranslator/releases/tag/v0.0.8-Zouwu-RC1)
 - [copytranslator.Setup.v0.0.8-Zouwu-RC1.exe](https://github.com/CopyTranslator/CopyTranslator/releases/download/v0.0.8-Zouwu-RC1/copytranslator.Setup.v0.0.8-Zouwu-RC1.exe)
 
-## v7
+## v7 麒麟
 ### [v7.2.0-Kylin-Ultimate v7.2.0-Kylin-Ultimate](https://github.com/CopyTranslator/CopyTranslator/releases/tag/v7.2.0-Kylin-Ultimate)
 - [CopyTranslator_v7.2.0_Kylin_Ultimate.zip](https://github.com/CopyTranslator/CopyTranslator/releases/download/v7.2.0-Kylin-Ultimate/CopyTranslator_v7.2.0_Kylin_Ultimate.zip)
 

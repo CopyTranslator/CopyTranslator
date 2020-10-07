@@ -8,7 +8,7 @@ import { app } from "electron";
 
 type Resouces = Map<Language, Locale>;
 
-function getDefaultLocale(): Language {
+export function getDefaultLocale(): Language {
   let locale = app.getLocale();
   console.log("locale=", locale);
   if (locale === "zh") {
@@ -67,11 +67,16 @@ class L10N {
 
   install(store: any, key: Language) {
     this.store = store;
+
     store.dispatch("updateLocales", this.locales);
     this.updateLocale(key);
   }
 
   updateLocale(key: Language) {
+    this.store.dispatch(
+      "updateLocaleSetting",
+      key === "auto" ? this.getDefaultLocale() : key
+    );
     this.store.dispatch("updateLocale", this.getT(key));
   }
 }

@@ -76,6 +76,10 @@ class TranslateController {
         clipboard.writeText(this.resultString);
         logger.toast("已复制译文");
         break;
+      case "pasteResult":
+        this.handle("copyResult","");
+        simulate.paste();
+        break;
       case "retryTranslate":
         this.translate(this.text);
         break;

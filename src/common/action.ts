@@ -220,6 +220,7 @@ class ActionManager {
 
     this.append(normalAction("copySource"));
     this.append(normalAction("copyResult"));
+    this.append(normalAction("pasteResult"));
     this.append(normalAction("clear"));
     this.append(normalAction("notify"));
     this.append(normalAction("toast"));

@@ -20,6 +20,7 @@ import { dictionaryTypes } from "./dictionary/types";
 import { getLanguageLocales, Language } from "./translate/locale";
 import store from "../store";
 import bus from "../common/event-bus";
+import logger from "./logger";
 
 type Actions = Map<Identifier, ActionView>;
 
@@ -61,7 +62,7 @@ class ActionManager {
       this.dispatch(alias.get(identifier) as string);
       return;
     }
-    const action = this.actions.get(identifier) as ActionView;
+    const action = this.getAction(identifier);
     bus.at("callback", {
       identifier,
       param,
@@ -71,6 +72,9 @@ class ActionManager {
   }
 
   getAction(identifier: Identifier): ActionView {
+    if (!this.actions.has(identifier)) {
+      logger.toast(`动作 ${identifier} 不存在`);
+    }
     const action = this.actions.get(identifier) as ActionView;
     if (action.subMenuGenerator) {
       action.submenu = action.subMenuGenerator();

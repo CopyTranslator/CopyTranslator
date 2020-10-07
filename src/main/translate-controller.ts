@@ -214,7 +214,11 @@ class TranslateController {
     if (this.get<boolean>("enableNotify")) {
       eventBus.at("dispatch", "notify", sharedResult.translation);
     }
-    logger.toast(`翻译完成 ${sharedResult.from} to ${sharedResult.to}`);
+    logger.toast(
+      `翻译完成 ${this.getL(<Language>sharedResult.from)} -> ${this.getL(
+        <Language>sharedResult.to
+      )}`
+    );
   }
 
   postProcess(language: any, result: CopyTranslateResult) {

@@ -39,6 +39,7 @@
           @keyup.ctrl.13="translate"
           @keyup.ctrl.71="google"
           @keyup.ctrl.66="baidu"
+          @keyup.ctrl.80="command"
           class="vArea"
           v-model="sharedResult.text"
           v-on:contextmenu="openMenu('contrastContext')"

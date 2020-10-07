@@ -2,10 +2,10 @@
   <div>
     <div
       class="max"
-      @keyup.alt.13="toggleCmdline"
       @keyup.ctrl.13="translate"
       @keyup.ctrl.71="google"
       @keyup.ctrl.66="baidu"
+      @keyup.ctrl.80="command"
       v-on:contextmenu="openMenu('focusContext')"
       v-on:drop="dragTranslate"
     >

@@ -8,6 +8,7 @@
 - [v7.2.0](#v7)为最后一个支持32位windows的版本。
 - 如果您出现兼容性问题，可以下载`compatible`版本
 - 点击版本标题可查看更新日志
+- 通过[winget](https://github.com/microsoft/winget-cli)安装：`winget install copytranslator`
 
 :::
 ## v10 破晓

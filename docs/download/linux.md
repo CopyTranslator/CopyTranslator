@@ -7,6 +7,7 @@
 
 ::: tip 注意事项
 - 推荐使用AppImage安装，可获得后续自动更新。
+- Deepin用户可以在商店中找到
 - 如果无法启动，尝试在启动的时候添加参数`--no-sandbox`，如：`copytranslator --no-sandbox`，同时请保证`libpng`版本不低于`1.6`
 - 如果出现问题，请在终端下执行 `/opt/copytranslator/copytranslator`，查看问题所在
 - 启动应用时出现如图错误

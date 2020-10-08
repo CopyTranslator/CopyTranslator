@@ -40,6 +40,15 @@
       "contributions": [
         "platform"
       ]
+    },
+    {
+      "login": "Andy-AO",
+      "name": "Andy AO",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/38101170?v=4",
+      "profile": "https://segmentfault.com/u/xinruzhishui_zen",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7,

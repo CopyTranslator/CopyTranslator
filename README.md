@@ -25,7 +25,7 @@
 
 ## Introduction
 
-### Foreword
+### Preface
 
 Researchers always have to read a lot of literature, and understanding the content of the literature has become the norm in scientific research life. However, when we copy the PDF content and paste it into the webpage translation, there may be extra line breaks that lead to garbled translation, and the translation does not match the Chinese reading habits. The translation results are very poor and  you need to manually delete the line break, and `CopyTranslator` can help us solve this problem quickly and perfectly.
 
@@ -139,11 +139,11 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
 <!-- markdownlint-disable -->
 <table>
   <tr>
-    <td align="center"><a href="https://about.me/s8321414"><img src="https://avatars2.githubusercontent.com/u/9457283?v=4" width="100px;" alt=""/><br /><sub><b>Jeff Huang</b></sub></a><br /><a href="#translation-s8321414" title="Translation">🌍</a></td>
-    <td align="center"><a href="https://www.facebook.com/profile.php?id=100028728105222"><img src="https://s1.ax1x.com/2020/04/24/JrcsBT.png" height="100px;" alt=""/><br /><sub><b>DEN5</b></sub></a><br /><a href="#translation-s8321414" title="Translation">🌍</a></td>
     <td align="center"><a href="http://mzemlickis.lv"><img src="https://avatars0.githubusercontent.com/u/4556944?v=4" width="100px;" alt=""/><br /><sub><b>Mārtiņš Zemlickis</b></sub></a><br /><a href="#design-mzemlickis" title="Design">🎨</a></td>
     <td align="center"><a href="https://github.com/Sandural"><img src="https://avatars3.githubusercontent.com/u/16163090?v=4" width="100px;" alt=""/><br /><sub><b>黎紫珊</b></sub></a><br /><a href="#platform-Sandural" title="Packaging/porting to new platform">📦</a></td>
     <td align="center"><a href="https://ziqiangxu.gitee.io/blog/"><img src="https://avatars2.githubusercontent.com/u/18530271?v=4" width="100px;" alt=""/><br /><sub><b>Daryl.Xu</b></sub></a><br /><a href="#platform-ziqiangxu" title="Packaging/porting to new platform">📦</a></td>
+    <td align="center"><a href="https://about.me/s8321414"><img src="https://avatars2.githubusercontent.com/u/9457283?v=4" width="100px;" alt=""/><br /><sub><b>Jeff Huang</b></sub></a><br /><a href="#translation-s8321414" title="Translation">🌍</a></td>
+    <td align="center"><a href="https://www.facebook.com/profile.php?id=100028728105222"><img src="https://s1.ax1x.com/2020/04/24/JrcsBT.png" height="100px;" alt=""/><br /><sub><b>DEN5</b></sub></a><br /><a href="#translation-s8321414" title="Translation">🌍</a></td>
   </tr>
 </table>
 

@@ -49,6 +49,15 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "dEN5-tech",
+      "name": "dEN5",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/54153548?v=4",
+      "profile": "https://github.com/dEN5-tech",
+      "contributions": [
+        "translation"
+      ]
     }
   ],
   "contributorsPerLine": 7,

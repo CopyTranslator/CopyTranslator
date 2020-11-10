@@ -61,9 +61,6 @@ module.exports = {
         collapsable: false,
         children: [
           '',
-          'windows',
-          'mac',
-          'linux'
         ]
       }],
       '/userland/': [{

@@ -17,9 +17,9 @@ sidebarDepth: 6
 :::
 
 v9.0.2以后，软件支持Mac、Windows、Linux三大主流桌面系统，请根据您的系统选择下载页面
-- [Windows](./windows)
-- [Mac](./mac)
-- [Linux](./linux)
+- [Windows](https://gitee.com/ylzheng/CopyTranslator/wikis/windows)
+- [Mac](https://gitee.com/ylzheng/CopyTranslator/wikis/mac)
+- [Linux](https://gitee.com/ylzheng/CopyTranslator/wikis/linux)
 
 ## 订阅更新
 - 在[Github](https://github.com/CopyTranslator/CopyTranslator)上`watch`本项目

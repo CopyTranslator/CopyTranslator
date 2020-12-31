@@ -2,7 +2,7 @@
     "explorer.confirmDelete": false,
     "git.autofetch": true,
     "terminal.integrated.rendererType": "dom",
-    "window.zoomLevel": -1,
+    "window.zoomLevel": 0,
     "eslint.alwaysShowStatus": true,
     "eslint.autoFixOnSave": true,
     "eslint.validate": [

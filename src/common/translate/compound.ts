@@ -14,7 +14,7 @@ export class Compound implements CopyTranslator {
   text: string | undefined;
   engines: TranslatorType[];
   detectEngine: TranslatorType = "google";
-  axios = setProxy();
+  axios = setProxy(true);
 
   constructor(
     engines: TranslatorType[],

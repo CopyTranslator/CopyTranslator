@@ -94,6 +94,6 @@
     "editConfigFile": "編輯設定檔",
     "translatorConfig": "Translator設定",
     "contrastDict": "對照字典",
-    "pasteResult": "Paste Result",
-    "openAtLogin": "Open at login"
+    "pasteResult": "貼上結果",
+    "openAtLogin": "登入時開啟"
 }

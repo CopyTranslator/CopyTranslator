@@ -139,11 +139,12 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
 <!-- markdownlint-disable -->
 <table>
   <tr>
+    <td align="center"><a href="https://about.me/s8321414"><img src="https://avatars2.githubusercontent.com/u/9457283?v=4" width="100px;" alt=""/><br /><sub><b>Jeff Huang</b></sub></a><br /><a href="#translation-s8321414" title="Translation">🌍</a></td>
     <td align="center"><a href="http://mzemlickis.lv"><img src="https://avatars0.githubusercontent.com/u/4556944?v=4" width="100px;" alt=""/><br /><sub><b>Mārtiņš Zemlickis</b></sub></a><br /><a href="#design-mzemlickis" title="Design">🎨</a></td>
     <td align="center"><a href="https://github.com/Sandural"><img src="https://avatars3.githubusercontent.com/u/16163090?v=4" width="100px;" alt=""/><br /><sub><b>黎紫珊</b></sub></a><br /><a href="#platform-Sandural" title="Packaging/porting to new platform">📦</a></td>
-    <td align="center"><a href="https://ziqiangxu.gitee.io/blog/"><img src="https://avatars2.githubusercontent.com/u/18530271?v=4" width="100px;" alt=""/><br /><sub><b>Daryl.Xu</b></sub></a><br /><a href="#platform-ziqiangxu" title="Packaging/porting to new platform">📦</a></td>
-    <td align="center"><a href="https://about.me/s8321414"><img src="https://avatars2.githubusercontent.com/u/9457283?v=4" width="100px;" alt=""/><br /><sub><b>Jeff Huang</b></sub></a><br /><a href="#translation-s8321414" title="Translation">🌍</a></td>
-    <td align="center"><a href="https://www.facebook.com/profile.php?id=100028728105222"><img src="https://s1.ax1x.com/2020/04/24/JrcsBT.png" height="100px;" alt=""/><br /><sub><b>DEN5</b></sub></a><br /><a href="#translation-s8321414" title="Translation">🌍</a></td>
+    <td align="center"><a href="https://ziqiangxu.github.io/blog/"><img src="https://avatars2.githubusercontent.com/u/18530271?v=4" width="100px;" alt=""/><br /><sub><b>Daryl.Xu</b></sub></a><br /><a href="#platform-ziqiangxu" title="Packaging/porting to new platform">📦</a></td>
+    <td align="center"><a href="https://segmentfault.com/u/xinruzhishui_zen"><img src="https://avatars1.githubusercontent.com/u/38101170?v=4" width="100px;" alt=""/><br /><sub><b>Andy AO</b></sub></a><br /><a href="https://github.com/CopyTranslator/CopyTranslator/commits?author=Andy-AO" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/dEN5-tech"><img src="https://avatars0.githubusercontent.com/u/54153548?v=4" width="100px;" alt=""/><br /><sub><b>dEN5</b></sub></a><br /><a href="#translation-dEN5-tech" title="Translation">🌍</a></td>
   </tr>
 </table>
 

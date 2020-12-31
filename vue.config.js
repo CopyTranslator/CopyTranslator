@@ -52,11 +52,31 @@ module.exports = {
         linux: {
           target: [
             {
-              target: "deb",
-              arch: ["x64"],
+              target: "AppImage",
+              arch: ["x64"]
             },
+            {
+              target: "deb",
+              arch: ["x64"]
+            },
+            {
+              target: "rpm",
+              arch: ["x64"]
+            }
           ],
+          maintainer: "ziqiang_xu@qq.com",
           icon: osSpec.iconName,
+          category: "Education",
+          // https://www.electron.build/configuration/linux#debian-package-options
+          desktop: {
+            Icon: "/opt/copytranslator/resources/linux-icon/icon.png"
+          }
+        },
+        deb: {
+          depends: ["libpng16-16"]
+        },
+        rpm: {
+          depends: ["libpng"]
         },
         mac: {
           target: [

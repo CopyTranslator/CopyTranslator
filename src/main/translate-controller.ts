@@ -36,6 +36,7 @@ class TranslateController {
   lastAppend: string = "";
   translating: boolean = false; //正在翻译
   words: string = "";
+  incrementSelect: boolean = false;
 
   translator: Compound = new Compound([...translatorTypes], "google", {});
   dictionary: Polymer = new Polymer("google");
@@ -80,6 +81,9 @@ class TranslateController {
         this.handle("copyResult", null);
         simulate.paste();
         break;
+      case "incrementSelect":
+        this.incrementSelect = true; //下一次监听剪贴板是增量选中
+        break;
       case "retryTranslate":
         this.translate(this.text);
         break;
@@ -101,12 +105,17 @@ class TranslateController {
   }
 
   setSrc(append: string) {
-    if (this.get<boolean>("incrementalCopy") && this.text != "")
-      this.text = this.text + " " + append;
+    const incremental =
+      this.get<boolean>("incrementalCopy") || this.incrementSelect;
+    if (incremental) {
+      eventBus.at("dispatch", "toast", "增量复制");
+    }
+    if (incremental && this.text != "") this.text = this.text + " " + append;
     //TODO 这里需要做特殊处理，中文不需要加空格
     else {
       this.text = append;
     }
+    this.incrementSelect = false;
   }
 
   source() {

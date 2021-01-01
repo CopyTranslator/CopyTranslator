@@ -68,11 +68,12 @@ class EventListener {
   }
 
   bindHooks() {
+    // windows和mac上的监听
     const ioHook = require("iohook");
 
     ioHook.on("keydown", (event: any) => {
       if (event.keycode == 46 && event.ctrlKey) {
-        //双击ctrl c
+        //双击ctrl c 可以在没有开监听剪贴板的情况下 翻译
         const now = Date.now();
         if (now - this.lastCopy < 1000) {
           console.debug("triggered double ctrl c", clipboard.readText());
@@ -92,6 +93,9 @@ class EventListener {
         Math.abs(this.newX - this.lastX) + Math.abs(this.newY - this.lastY) > 10
       ) {
         simulate.copy();
+        if (event.ctrlKey) {
+          eventBus.at("dispatch", "incrementSelect");
+        }
         this.copied = true;
       }
     });
@@ -108,6 +112,7 @@ class EventListener {
       this.newX = event.x;
       this.newY = event.y;
     });
+
     //注册的指令。send到主进程main.js中。
     // Register and start hook
     ioHook.start(false);

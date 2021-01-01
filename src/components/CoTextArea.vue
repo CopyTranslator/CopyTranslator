@@ -42,7 +42,7 @@ export default class CoTextArea extends Mixins(Vue, AppProps, BaseView) {
 </script>
 
 <style scoped>
-span:hover {
+/* span:hover {
   background: #fee972;
-}
+} */
 </style>

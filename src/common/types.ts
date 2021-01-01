@@ -35,6 +35,7 @@ export const normalActionTypes = [
   "translateClipboard",
   "notify",
   "toast",
+  "incrementSelect",
 ] as const;
 
 //切换值的动作

@@ -130,7 +130,7 @@ function initConfig(
   config.setRule(
     "dictionaryType",
     new UnionRule<DictionaryType>(
-      "google",
+      "youdao",
       "type of dictionary",
       dictionaryTypes
     )

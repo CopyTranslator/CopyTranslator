@@ -217,6 +217,7 @@ class ActionManager {
     this.append(switchAction("drawer"));
     this.append(switchAction("listenClipboard"));
     this.append(switchAction("dragCopy"));
+    this.append(switchAction("doubleClickCopy"));
     this.append(switchAction("enableNotify"));
     this.append(switchAction("skipTaskbar"));
     this.append(switchAction("closeAsQuit"));

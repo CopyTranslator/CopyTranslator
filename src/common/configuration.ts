@@ -39,9 +39,15 @@ function initConfig(
     "listenClipboard",
     new TypeRule<boolean>(true, "Listen to Clipboard")
   );
+
   config.setRule(
     "dragCopy",
     new TypeRule<boolean>(false, "catch simulate copy")
+  );
+
+  config.setRule(
+    "doubleClickCopy",
+    new TypeRule<boolean>(false, "double click copy")
   );
 
   config.setRule(

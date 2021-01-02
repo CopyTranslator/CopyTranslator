@@ -96,6 +96,7 @@ export const switchActionTypes = [
   "smartTranslate",
   "smartDict",
   "dragCopy",
+  "doubleClickCopy", //鼠标双击复制
   "closeAsQuit",
   "contrastDict",
   "openAtLogin",

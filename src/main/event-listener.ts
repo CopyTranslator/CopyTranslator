@@ -3,6 +3,7 @@ import os from "os";
 import { clipboard } from "./clipboard";
 import eventBus from "../common/event-bus";
 import config from "../common/configuration";
+import iohook from "iohook";
 
 class EventListener {
   drag = false;
@@ -15,6 +16,9 @@ class EventListener {
   // Just for linux x11
   selectedText: string = clipboard.readText("selection");
   preLeftBtn: string = "mouseup";
+  lastClick = Date.now();
+  lastClickX = 0;
+  lastClickY = 0;
 
   lastCopy = Date.now();
 
@@ -67,6 +71,11 @@ class EventListener {
     });
   }
 
+  simulateCopy() {
+    simulate.copy();
+    eventBus.at("dispatch", "toast", "模拟复制");
+  }
+
   bindHooks() {
     // windows和mac上的监听
     const ioHook = require("iohook");
@@ -92,7 +101,7 @@ class EventListener {
         Date.now() - this.lastDown > 100 &&
         Math.abs(this.newX - this.lastX) + Math.abs(this.newY - this.lastY) > 10
       ) {
-        simulate.copy();
+        this.simulateCopy();
         if (event.ctrlKey) {
           eventBus.at("dispatch", "incrementSelect");
         }
@@ -111,6 +120,25 @@ class EventListener {
       this.drag = true;
       this.newX = event.x;
       this.newY = event.y;
+    });
+
+    iohook.on("mouseclick", (event: MouseEvent) => {
+      const now = Date.now();
+      const newY = event.y;
+      const newX = event.x;
+      if (
+        config.get("listenClipboard") &&
+        config.get("dragCopy") &&
+        config.get("doubleClickCopy") &&
+        now - this.lastDown < 500 &&
+        Math.abs(newX - this.lastClickX) < 4 &&
+        Math.abs(newY - this.lastClickY) < 4
+      ) {
+        this.simulateCopy();
+      }
+      this.lastClick = now;
+      this.lastClickX = event.x;
+      this.lastClickY = event.y;
     });
 
     //注册的指令。send到主进程main.js中。

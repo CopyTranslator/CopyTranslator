@@ -20,6 +20,10 @@ interface ModeConfig {
 }
 
 export type LayoutConfig = {
+  x: number;
+  y: number;
+  height: number;
+  width: number;
   fontSize: number;
 };
 

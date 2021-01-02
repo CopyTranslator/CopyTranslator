@@ -3,6 +3,8 @@ import {
   RouteActionType,
   routeActionTypes,
   HideDirection,
+  Identifier,
+  LayoutType,
 } from "../../common/types";
 import createProtocol from "./create-protocol";
 import { BrowserWindow, screen, nativeImage, app } from "electron";
@@ -10,6 +12,8 @@ import { env, icon } from "../../common/env";
 import store from "../../store";
 import { MainController } from "@/common/controller";
 import { defaultConfig, MinimalParam, loadRoute, insertStyles } from "./utils";
+import config from "@/common/configuration";
+import eventBus from "@/common/event-bus";
 const forceFocus = require("@adeperio/forcefocus");
 
 export class WindowMangaer {
@@ -18,6 +22,25 @@ export class WindowMangaer {
 
   constructor(controller: MainController) {
     this.controller = controller;
+    eventBus.gon("preSet", (identifier: Identifier, newLayoutType: any) => {
+      if (identifier == "layoutType") {
+        this.updateBounds(newLayoutType);
+      }
+    });
+  }
+
+  updateBounds(newLayoutType: LayoutType | null = null) {
+    const oldLayoutType = config.get("layoutType");
+
+    let windowConfig = config.get(oldLayoutType);
+    const window = this.get("contrast");
+    config.set(oldLayoutType, {
+      ...windowConfig,
+      ...window.getBounds(),
+    });
+    if (newLayoutType != null) {
+      window.setBounds(config.get(newLayoutType));
+    }
   }
 
   get(routeName: RouteActionType): BrowserWindow {
@@ -26,6 +49,11 @@ export class WindowMangaer {
     } else {
       return this.create(routeName);
     }
+  }
+
+  close() {
+    this.updateBounds();
+    this.get("contrast").close();
   }
 
   edgeHide(hideDirection: HideDirection) {
@@ -178,7 +206,7 @@ export class WindowMangaer {
   }
 
   createMain() {
-    const config = {
+    let window_config = {
       x: 535,
       y: 186,
       height: 600,
@@ -187,7 +215,9 @@ export class WindowMangaer {
       frame: false,
       title: "CopyTranslator",
     };
-    const window = this.createWindow("contrast", config, true);
+    const previous_config = config.get(config.get("layoutType"));
+    window_config = { ...window_config, ...previous_config };
+    const window = this.createWindow("contrast", window_config, true);
     window.on("blur", () => {
       this.edgeHide(this.onEdge());
     });

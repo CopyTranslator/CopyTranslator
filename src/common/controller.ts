@@ -28,6 +28,7 @@ export abstract class CommonController {
   }
 
   set(identifier: Identifier, value: any): boolean {
+    bus.gat("preSet", identifier, value);
     return this.config.set(identifier, value);
   }
 

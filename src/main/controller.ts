@@ -63,7 +63,7 @@ class Controller extends MainController {
         this.win.get("contrast").hide();
         break;
       case "closeWindow":
-        this.win.get("contrast").close();
+        this.win.close();
         break;
       case "showWindow":
         this.win.showWindow();

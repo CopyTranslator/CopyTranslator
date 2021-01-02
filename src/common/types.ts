@@ -173,6 +173,7 @@ export const eventTypes = [
   "initialized",
   "callback",
   "dispatch",
+  "preSet",
 ] as const;
 
 export type Role = typeof roles[number];

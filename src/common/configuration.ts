@@ -339,17 +339,26 @@ function initConfig(
   //下面是三种布局
   config.setRule(
     "horizontal",
-    new StructRule<LayoutConfig>({ fontSize: 15 }, "parameters of youdao")
+    new StructRule<LayoutConfig>(
+      { fontSize: 15, x: 535, y: 186, height: 600, width: 1094 },
+      "layout config"
+    )
   );
 
   config.setRule(
     "vertical",
-    new StructRule<LayoutConfig>({ fontSize: 15 }, "parameters of youdao")
+    new StructRule<LayoutConfig>(
+      { fontSize: 15, x: 535, y: 186, height: 600, width: 1094 },
+      "layout config"
+    )
   );
 
   config.setRule(
     "focus",
-    new StructRule<LayoutConfig>({ fontSize: 15 }, "parameters of youdao")
+    new StructRule<LayoutConfig>(
+      { fontSize: 15, x: 535, y: 186, height: 600, width: 1094 },
+      "layout config"
+    )
   );
 
   return config;

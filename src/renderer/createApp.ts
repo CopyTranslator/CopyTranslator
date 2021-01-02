@@ -31,6 +31,7 @@ export default () => {
     vuetify: new Vuetify({
       theme: {
         dark: isDarkMode(),
+        options: { customProperties: true },
       },
       icons: {
         iconfont: "mdi",

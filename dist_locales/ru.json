@@ -82,5 +82,6 @@
     "translatorConfig": "Translator Config",
     "contrastDict": "Contrast Dict",
     "pasteResult": "Paste Result",
-    "openAtLogin": "Open at login"
+    "openAtLogin": "Open at login",
+    "doubleClickCopy": "Double Click Copy"
 }

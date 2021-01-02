@@ -95,5 +95,6 @@
     "translatorConfig": "Translator設定",
     "contrastDict": "對照字典",
     "pasteResult": "貼上結果",
-    "openAtLogin": "登入時開啟"
+    "openAtLogin": "登入時開啟",
+    "doubleClickCopy": "Double Click Copy"
 }

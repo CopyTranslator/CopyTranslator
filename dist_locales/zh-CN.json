@@ -78,5 +78,6 @@
     "colorMode": "配色模式",
     "drawer": "侧边抽屉",
     "translatorConfig": "翻译器设置",
-    "openAtLogin": "开机启动"
+    "openAtLogin": "开机启动",
+    "doubleClickCopy": "双击复制"
 }

@@ -78,5 +78,6 @@
     "colorMode": "Color Mode",
     "drawer": "Drawer",
     "translatorConfig": "Translator Config",
-    "openAtLogin": "Open at login"
+    "openAtLogin": "Open at login",
+    "doubleClickCopy": "Double Click Copy"
 }

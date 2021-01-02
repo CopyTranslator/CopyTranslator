@@ -34,7 +34,7 @@
       </v-col>
     </v-row>
     <v-col v-else class="maxNoPad">
-      <div class="areaWarpper" style="height: 50%;" @keyup.ctrl.13="translate">
+      <div :style="area" class="areaWarpper" @keyup.ctrl.13="translate">
         <textarea
           v-bind:style="fontStyle"
           @keyup.ctrl.13="translate"
@@ -46,7 +46,7 @@
           v-on:contextmenu="openMenu('contrastContext')"
         ></textarea>
       </div>
-      <div class="areaWarpper" style="height: 50%;">
+      <div :style="area" class="areaWarpper">
         <CoTextArea
           class="vArea"
           v-bind:style="fontStyle"
@@ -119,6 +119,15 @@ export default class ContrastPanel extends Mixins(BaseView, WindowController) {
 
   mouseEnter(event: MouseEvent) {
     this.funcID = setTimeout(this.onSearch, 500);
+  }
+
+  get area() {
+    return {
+      height: `${(this.windowHeight - 45) / 2}px`,
+      margin: `0`,
+      padding: `0`,
+      overflow: "auto",
+    };
   }
 
   mouseLeave(event: MouseEvent) {

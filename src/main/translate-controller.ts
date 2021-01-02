@@ -4,7 +4,12 @@ import { Polymer } from "../common/dictionary/polymer";
 import { Language } from "@opentranslate/translator";
 import { CopyTranslateResult } from "../common/translate/types";
 import { colorRules, getColorRule } from "../common/rule";
-import { normalizeAppend, checkIsWord } from "../common/translate/helper";
+import {
+  normalizeAppend,
+  checkIsWord,
+  isChinese,
+  notEnglish,
+} from "../common/translate/helper";
 import {
   Identifier,
   ColorStatus,
@@ -110,9 +115,14 @@ class TranslateController {
     if (incremental) {
       eventBus.at("dispatch", "toast", "增量复制");
     }
-    if (incremental && this.text != "") this.text = this.text + " " + append;
-    //TODO 这里需要做特殊处理，中文不需要加空格
-    else {
+    if (incremental && this.text != "") {
+      //TODO 这里需要做特殊处理，中文不需要加空格
+      if (isChinese(append)) {
+        this.text = this.text + append;
+      } else {
+        this.text = this.text + " " + append;
+      }
+    } else {
       this.text = append;
     }
     this.incrementSelect = false;
@@ -217,6 +227,7 @@ class TranslateController {
         engine: this.translateResult.engine,
         transPara: this.translateResult.trans.paragraphs,
         textPara: this.translateResult.origin.paragraphs,
+        chineseStyle: notEnglish(this.translateResult.to),
       };
     }
     store.dispatch("setShared", sharedResult);
@@ -358,6 +369,7 @@ class TranslateController {
     );
 
     this.resultString = resultString;
+    res.resultString = resultString;
     this.postProcess(language, res);
   }
 
@@ -549,7 +561,7 @@ class TranslateController {
         this.translate(this.text);
         break;
       case "incrementalCopy":
-        this.clear();
+        // this.clear();
         break;
       case "autoFormat":
         if (value) {

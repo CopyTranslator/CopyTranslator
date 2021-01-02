@@ -1,13 +1,28 @@
 <template>
   <div>
     <div v-if="!config['contrastDict'] || !dictResult.valid">
-      <span
-        v-for="(val, key) in sentences"
-        :key="key"
-        @mouseover="mouseOver(key)"
-      >
-        {{ val }}
-      </span>
+      <div v-if="chineseStyle">
+        <span
+          v-for="(val, key) in sentences"
+          :key="key"
+          @mouseover="mouseOver(key)"
+          style="display: block; text-indent: 2em;"
+        >
+          {{ val }}
+        </span>
+      </div>
+      <div v-else>
+        <div
+          v-for="(val, key) in sentences"
+          :key="key"
+          @mouseover="mouseOver(key)"
+        >
+          <span style="display: block;">
+            {{ val }}
+          </span>
+          <br />
+        </div>
+      </div>
     </div>
     <DictResultPanel
       v-if="config['contrastDict'] && dictResult.valid"
@@ -16,7 +31,6 @@
 </template>
 
 <script lang="ts">
-import { splitChn } from "@/common/translate/helper";
 import { Mixins, Component, Vue, Watch } from "vue-property-decorator";
 import DictResultPanel from "./DictResult.vue";
 import BaseView from "./BaseView.vue";
@@ -24,6 +38,7 @@ import BaseView from "./BaseView.vue";
 const AppProps = Vue.extend({
   props: {
     sentences: Array,
+    chineseStyle: Boolean,
   },
 });
 

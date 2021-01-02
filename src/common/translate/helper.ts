@@ -5,6 +5,8 @@ import {
 } from "@opentranslate/translator";
 import compact from "lodash.compact";
 import sum from "lodash.sum";
+import trim from "lodash.trim";
+import trimstart from "lodash.trimstart";
 import { CopyTranslateResult } from "./types";
 
 export const chnEnds = /[？。！]/g;
@@ -24,8 +26,21 @@ export function splitEng(text: string): string[] {
   return compact(tokenizer.sentences(text.trim(), optional_options));
 }
 
+// split with seprator
 export function splitChn(text: string): string[] {
-  return compact(text.trim().split(chnEnds));
+  let sentences = compact(text.trim().split(chnEnds));
+  let ends = [];
+  for (let c of text) {
+    if ("？。！".includes(c)) {
+      ends.push(c);
+    }
+  }
+  if (ends.length == sentences.length || ends.length == sentences.length - 1) {
+    for (let i = 0; i < ends.length; i++) {
+      sentences[i] += ends[i];
+    }
+  }
+  return sentences;
 }
 
 function countSentences(str: string, splitFunc: (text: string) => string[]) {
@@ -39,7 +54,7 @@ export function reSegmentGoogle(
   result: string[],
   srcCode: string,
   destCode: string
-) {
+): { resultString: string; paragraphs: string[] } {
   const sentences = text.split("\n");
 
   const seprator = notEnglish(destCode) ? "" : " ";
@@ -47,26 +62,30 @@ export function reSegmentGoogle(
   const splitFunc = notEnglish(srcCode) ? splitChn : splitEng;
   if (sentences.length == 1) {
     const resultString = result.join(seprator);
-    return resultString;
+    return { resultString, paragraphs: [resultString] };
   }
 
   const counts = sentences.map((sentence) =>
     countSentences(sentence, splitFunc)
   );
   if (sum(counts) != result.length) {
-    return result.join("\n");
+    return { resultString: result.join("\n"), paragraphs: result };
   }
 
   let resultString = "";
   let index = 0;
+  let paragraphs: string[] = [];
   counts.forEach((count) => {
+    let para = "";
     for (let i = 0; i < count; i++) {
-      resultString += seprator + result[index];
+      para += seprator + result[index].trim();
       index++;
     }
+    paragraphs.push(para);
+    resultString += para;
     resultString += "\n";
   });
-  return resultString;
+  return { resultString, paragraphs };
 }
 
 export function reSegment(
@@ -74,34 +93,53 @@ export function reSegment(
   result: string[],
   srcCode: string,
   destCode: string
-) {
-  const sentences = text.split("\n");
+): { resultString: string; paragraphs: string[] } {
+  const splitFunc = notEnglish(srcCode) ? splitChn : splitEng;
+  const splitDstFunc = notEnglish(destCode) ? splitChn : splitEng;
+  const src_sentences = text
+    .split("\n")
+    .filter((sentence) => sentence.length > 0);
+  const dst_sentences = splitDstFunc(result.join("")).filter(
+    (sentence) => trim(sentence, "？。！?.! ").length > 0
+  );
   const seprator = notEnglish(destCode) ? "" : " ";
   const ends: RegExp = notEnglish(srcCode) ? chnEnds : engEnds;
-  const splitFunc = notEnglish(srcCode) ? splitChn : splitEng;
-  if (sentences.length == 1) {
+
+  if (src_sentences.length == 1) {
     const resultString = result.join(seprator);
-    return resultString;
+    return { resultString, paragraphs: [resultString] };
   }
-  const counts = sentences.map((sentence) =>
+
+  const src_counts = src_sentences.map((sentence) =>
     countSentences(sentence, splitFunc)
   );
 
-  if (sum(counts) != result.length) {
-    console.debug("reseg fail");
-    return result.join("\n");
+  const dest_counts = result.map((sentence) =>
+    countSentences(sentence, splitDstFunc)
+  );
+
+  if (sum(src_counts) != sum(dest_counts)) {
+    return { resultString: result.join("\n"), paragraphs: result };
   }
 
   let resultString = "";
   let index = 0;
-  counts.forEach((count) => {
+  let paragraphs: string[] = [];
+  src_counts.forEach((count) => {
+    let para = "";
     for (let i = 0; i < count; i++) {
-      resultString += seprator + result[index];
+      para += seprator + dst_sentences[index].trim();
       index++;
     }
+    paragraphs.push(para);
+    resultString += para;
     resultString += "\n";
   });
-  return resultString;
+
+  return {
+    resultString,
+    paragraphs,
+  };
 }
 
 export function autoReSegment(result: TranslateResult): CopyTranslateResult {
@@ -109,13 +147,22 @@ export function autoReSegment(result: TranslateResult): CopyTranslateResult {
   if (result.engine == "google") {
     segmentFunc = reSegmentGoogle;
   }
-  const resultString = segmentFunc(
+  let { resultString, paragraphs } = segmentFunc(
     result.text,
     result.trans.paragraphs,
     result.from,
     result.to
   );
-  return { ...result, resultString };
+  paragraphs = paragraphs.filter(
+    (sentence) => trim(sentence, "？。！?.! \n").length > 0
+  );
+  paragraphs = paragraphs.map((sentence) =>
+    trimstart(sentence.trim(), "？。！?.!")
+  );
+  resultString = paragraphs.join("\n");
+  let new_result = { ...result, resultString };
+  new_result.trans.paragraphs = paragraphs;
+  return new_result;
 }
 
 const patterns: Array<RegExp> = [/([?!.])[ ]?\n/g, /([？！。])[ ]?\n/g]; //The first one is English like, the second is for Chinese like.

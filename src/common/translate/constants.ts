@@ -6,6 +6,7 @@ export interface SharedResult {
   engine: string;
   transPara: string[];
   textPara: string[];
+  chineseStyle: boolean;
 }
 
 export function emptySharedResult(): SharedResult {
@@ -17,5 +18,6 @@ export function emptySharedResult(): SharedResult {
     engine: "",
     transPara: [],
     textPara: [],
+    chineseStyle: false,
   };
 }

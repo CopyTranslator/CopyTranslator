@@ -28,6 +28,7 @@
           class="hArea"
           v-bind:style="fontStyle"
           :sentences="sharedResult.transPara"
+          :chineseStyle="sharedResult.chineseStyle"
           ref="myhead"
         ></CoTextArea>
       </v-col>
@@ -50,6 +51,7 @@
           class="vArea"
           v-bind:style="fontStyle"
           :sentences="sharedResult.transPara"
+          :chineseStyle="sharedResult.chineseStyle"
           ref="myhead"
         ></CoTextArea>
       </div>

@@ -35,6 +35,13 @@ export const defaultTokens = new Map<TranslatorType, any>([
       secretKey: process.env.VUE_APP_TENCENT_APP_SECRET as string,
     },
   ],
+  [
+    "baidu-domain",
+    {
+      key: "",
+      appid: "",
+    },
+  ],
   // [
   //   "sogou",
   //   {

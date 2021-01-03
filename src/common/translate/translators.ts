@@ -22,7 +22,7 @@ export const translatorMap: [TranslatorType, Translator][] = [
     new BaiduDomain({
       axios,
       config: {
-        ...defaultTokens.get("baidu"),
+        ...defaultTokens.get("baidu-domain"),
         domain: "medicine",
       },
     }) as any,

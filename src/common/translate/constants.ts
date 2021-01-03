@@ -1,3 +1,5 @@
+import { TranslatorType } from "../types";
+
 export interface SharedResult {
   text: string;
   translation: string;
@@ -19,5 +21,27 @@ export function emptySharedResult(): SharedResult {
     transPara: [],
     textPara: [],
     chineseStyle: false,
+  };
+}
+
+export interface DiffPart {
+  value: string;
+  added: boolean;
+  removed: boolean;
+}
+export interface DiffParts {
+  parts: Array<Array<DiffPart>>;
+  engine: TranslatorType;
+}
+
+export interface SharedDiff {
+  text: string;
+  allParts: DiffParts[];
+}
+
+export function emptySharedDiff(): SharedDiff {
+  return {
+    text: "",
+    allParts: [],
   };
 }

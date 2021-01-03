@@ -367,6 +367,14 @@ function initConfig(
     )
   );
 
+  config.setRule(
+    "compare",
+    new StructRule<LayoutConfig>(
+      { fontSize: 15, x: 535, y: 186, height: 600, width: 1094 },
+      "layout config"
+    )
+  );
+
   return config;
 }
 

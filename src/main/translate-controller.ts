@@ -3,7 +3,7 @@ import { emptySharedResult, SharedResult } from "../common/translate/constants";
 import { Polymer } from "../common/dictionary/polymer";
 import { Language } from "@opentranslate/translator";
 import { CopyTranslateResult } from "../common/translate/types";
-import { colorRules, getColorRule } from "../common/rule";
+import { colorRules, getColorRule, KeyConfig } from "../common/rule";
 import {
   normalizeAppend,
   checkIsWord,
@@ -32,6 +32,14 @@ import eventBus from "@/common/event-bus";
 import logger from "@/common/logger";
 import { getLanguageLocales } from "@/common/translate/locale";
 import isTrad from "@/common/translate/detect-trad";
+import { Comparator } from "@/common/translate/comparator";
+import { examToken } from "@/common/translate/token";
+import {
+  getTranslator,
+  translatorMap,
+  translators,
+} from "@/common/translate/translators";
+import { axios } from "@/common/translate/proxy";
 
 class TranslateController {
   text: string = "";
@@ -48,9 +56,12 @@ class TranslateController {
 
   controller: MainController;
 
+  comparator: Comparator;
+
   constructor(controller: MainController) {
     this.controller = controller;
     this.syncSupportLanguages();
+    this.comparator = new Comparator(this.translator);
   }
 
   init() {
@@ -542,8 +553,28 @@ class TranslateController {
       clipboard.stopWatching();
     }
   }
+  updateTranslatorSetting(engine: TranslatorType) {
+    const config = this.get(engine) as KeyConfig;
+    if (!examToken(config)) {
+      return;
+    }
+
+    const oldTranslator = getTranslator(engine);
+    const TranslatorClass: any = oldTranslator.constructor;
+
+    const newTranslator = new TranslatorClass({
+      axios,
+      config: this.get(engine),
+    });
+    translators.set(engine, newTranslator);
+    eventBus.at("dispatch", "toast", "update " + engine);
+  }
 
   postSet(identifier: Identifier, value: any): boolean {
+    if (translatorTypes.includes(identifier as TranslatorType)) {
+      this.updateTranslatorSetting(identifier as TranslatorType);
+      return true;
+    }
     switch (identifier) {
       case "translator-auto":
         this.translator.setEngines(value);
@@ -561,7 +592,6 @@ class TranslateController {
         this.translate(this.text);
         break;
       case "incrementalCopy":
-        // this.clear();
         break;
       case "autoFormat":
         if (value) {
@@ -579,7 +609,6 @@ class TranslateController {
       case "dictionaryType":
         this.switchDictionary(value as DictionaryType);
         break;
-
       case "baidu-ocr":
         recognizer.setUp(this.get("baidu-ocr"));
         break;

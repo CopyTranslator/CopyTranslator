@@ -22,6 +22,9 @@ export default class BaseView extends Vue {
   get sharedResult() {
     return this.$store.state.sharedResult;
   }
+  get sharedDiff() {
+    return this.$store.state.sharedDiff;
+  }
 
   get dictResult() {
     return this.$store.state.dictResult;

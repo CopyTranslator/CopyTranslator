@@ -147,7 +147,12 @@ export const translatorGroups = [
 ] as const;
 
 //布局名称
-export const layoutTypes = ["horizontal", "vertical", "focus"] as const;
+export const layoutTypes = [
+  "horizontal",
+  "vertical",
+  "focus",
+  "compare",
+] as const;
 
 // 百度垂直领域翻译
 export const domains = ["medicine", "electronics", "mechanics"];
@@ -175,6 +180,7 @@ export const eventTypes = [
   "callback",
   "dispatch",
   "preSet",
+  "allTranslated",
 ] as const;
 
 export type Role = typeof roles[number];

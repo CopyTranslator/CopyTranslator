@@ -5,7 +5,10 @@ import { Identifier } from "./plugins/types";
 import { updateViewPlugin, observePlugin, initState } from "./plugins";
 export * from "./plugins";
 import { registerLocale } from "./plugins/l10n";
-import { emptySharedResult } from "@/common/translate/constants";
+import {
+  emptySharedResult,
+  emptySharedDiff,
+} from "@/common/translate/constants";
 import { emptyDictResult } from "@/common/dictionary/types";
 
 Vue.use(Vuex);
@@ -23,6 +26,7 @@ const store = new Vuex.Store({
     languages: [],
     color: "white",
     sharedResult: emptySharedResult(),
+    sharedDiff: emptySharedDiff(),
     dictResult: emptyDictResult(),
     config: {},
   },
@@ -32,6 +36,12 @@ const store = new Vuex.Store({
     },
     clearShared(state) {
       state.sharedResult = emptySharedResult();
+    },
+    setDiff(state, sharedDiff) {
+      state.sharedDiff = sharedDiff;
+    },
+    clearDiff(state) {
+      state.sharedDiff = emptySharedDiff();
     },
     setDictResult(state, dictResult) {
       state.dictResult = dictResult;
@@ -55,6 +65,9 @@ const store = new Vuex.Store({
     setShared(context, sharedResult) {
       context.commit("setShared", sharedResult);
     },
+    setDiff(context, sharedDiff) {
+      context.commit("setDiff", sharedDiff);
+    },
     setDictResult(context, dictResult) {
       context.commit("setDictResult", dictResult);
     },
@@ -72,6 +85,9 @@ const store = new Vuex.Store({
     },
     clearShared(context) {
       context.commit("clearShared");
+    },
+    clearDiff(context) {
+      context.commit("clearDiff");
     },
   },
   modules: {},

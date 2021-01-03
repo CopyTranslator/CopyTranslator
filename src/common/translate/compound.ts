@@ -10,11 +10,12 @@ import eventBus from "../event-bus";
 export class Compound implements CopyTranslator {
   mainEngine: TranslatorType;
   config: AxiosRequestConfig;
+  running: number = 0;
   resultBuffer = new Map<TranslatorType, CopyTranslateResult | undefined>();
   text: string | undefined;
   engines: TranslatorType[];
   detectEngine: TranslatorType = "google";
-  axios = setProxy(true);
+  axios = setProxy(false);
 
   constructor(
     engines: TranslatorType[],
@@ -52,11 +53,13 @@ export class Compound implements CopyTranslator {
       if (name === this.mainEngine) {
         continue;
       }
-      this.translateWith(name, text, from, to).catch((e) => {
-        console.log(name, "translate error", e);
-      });
+      this.translateWith(name, text, from, to);
     }
     return this.translateWith(this.mainEngine, text, from, to);
+  }
+
+  async onAllTranslateFinish() {
+    eventBus.at("allTranslated", this.resultBuffer);
   }
 
   async translateWith(
@@ -66,12 +69,29 @@ export class Compound implements CopyTranslator {
     to: Language
   ): Promise<CopyTranslateResult> {
     this.resultBuffer.delete(engine);
+    this.running++;
     return getTranslator(engine)
       .translate(text, from, to, this.config)
       .then(autoReSegment)
       .then((res) => {
         this.resultBuffer.set(engine, res);
         return res;
+      })
+      .catch((err) => {
+        console.log(engine, "translate error", err);
+        return null;
+      })
+      .then((res: any) => {
+        if (--this.running == 0) {
+          this.onAllTranslateFinish();
+        }
+        if (res == null) {
+          if (engine == this.mainEngine) {
+            throw "TRANSLATE ERROR";
+          }
+        } else {
+          return res;
+        }
       });
   }
 

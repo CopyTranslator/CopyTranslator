@@ -12,7 +12,7 @@ const Options = {
   singleton: true,
 };
 Vue.use(Toasted, Options);
-import { initLog } from "../common/logger";
+import logger, { initLog } from "../common/logger";
 
 import { constants, versionString } from "../common/constant";
 import { RenController, MainController } from "../common/controller";
@@ -74,6 +74,9 @@ export class RendererController extends RenController {
   postSet(identifier: Identifier, value: any): boolean {
     switch (identifier) {
       case "localeSetting":
+        break;
+      case "layoutType":
+        bus.at("dispatch", "toast", value);
         break;
       default:
         return false;

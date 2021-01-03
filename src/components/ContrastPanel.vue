@@ -2,6 +2,37 @@
   <div class="maxNoPad">
     <Focus class="maxNoPad areaWarpper" v-if="layoutType === 'focus'"></Focus>
     <v-row
+      v-else-if="layoutType === 'compare'"
+      class="maxNoPad"
+      style="margin: 0px;"
+    >
+      <v-col class="areaWarpper">
+        <textarea
+          v-bind:style="fontStyle"
+          class="hArea"
+          @keyup.ctrl.13="translate"
+          @keyup.ctrl.71="google"
+          @keyup.ctrl.66="baidu"
+          @keyup.ctrl.80="command"
+          @select="onSelect"
+          @blur="deSelect"
+          @click="deSelect"
+          @keydown="deSelect"
+          @mousemove="mouseMove"
+          v-model="sharedDiff.text"
+          v-on:contextmenu="openMenu('contrastContext')"
+        ></textarea>
+      </v-col>
+      <v-col class="areaWarpper" v-on:contextmenu="openMenu('contrastContext')">
+        <DiffTextArea
+          class="hArea"
+          v-bind:style="fontStyle"
+          :allParts="sharedDiff.allParts"
+          ref="myhead"
+        ></DiffTextArea>
+      </v-col>
+    </v-row>
+    <v-row
       v-else-if="layoutType === 'horizontal'"
       class="maxNoPad"
       style="margin: 0px;"
@@ -78,11 +109,13 @@ import Focus from "./Focus.vue";
 import { LayoutType, layoutTypes } from "../common/types";
 import eventBus from "@/common/event-bus";
 import CoTextArea from "./CoTextArea.vue";
+import DiffTextArea from "./DiffTextArea.vue";
 
 @Component({
   components: {
     Focus: Focus,
     CoTextArea: CoTextArea,
+    DiffTextArea: DiffTextArea,
   },
 })
 export default class ContrastPanel extends Mixins(BaseView, WindowController) {

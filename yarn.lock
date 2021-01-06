@@ -1482,20 +1482,10 @@
   resolved "https://registry.npm.taobao.org/@types/minimatch/download/@types/minimatch-3.0.3.tgz?cache=0&sync_timestamp=1572463171410&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40types%2Fminimatch%2Fdownload%2F%40types%2Fminimatch-3.0.3.tgz#3dca0e3f33b200fc7d1139c0cd96c1268cadfd9d"
   integrity sha1-PcoOPzOyAPx9ETnAzZbBJoyt/Z0=
 
-"@types/node@*":
-  version "12.12.5"
-  resolved "https://registry.npm.taobao.org/@types/node/download/@types/node-12.12.5.tgz?cache=0&sync_timestamp=1572630736151&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40types%2Fnode%2Fdownload%2F%40types%2Fnode-12.12.5.tgz#66103d2eddc543d44a04394abb7be52506d7f290"
-  integrity sha1-ZhA9Lt3FQ9RKBDlKu3vlJQbX8pA=
-
-"@types/node@^12.0.12":
+"@types/node@*", "@types/node@^12.0.12", "@types/node@^12.11.7":
   version "12.12.35"
   resolved "https://registry.npm.taobao.org/@types/node/download/@types/node-12.12.35.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40types%2Fnode%2Fdownload%2F%40types%2Fnode-12.12.35.tgz#1e61b226c14380f4384f70cfe49a65c2c553ad2b"
   integrity sha1-HmGyJsFDgPQ4T3DP5JplwsVTrSs=
-
-"@types/node@^12.11.7":
-  version "12.12.29"
-  resolved "https://registry.npm.taobao.org/@types/node/download/@types/node-12.12.29.tgz?cache=0&sync_timestamp=1582916592836&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40types%2Fnode%2Fdownload%2F%40types%2Fnode-12.12.29.tgz#46275f028b4e463b9ac5fefc1d08bc66cc193f25"
-  integrity sha1-RidfAotORjuaxf78HQi8ZswZPyU=
 
 "@types/normalize-package-data@^2.4.0":
   version "2.4.0"
@@ -4884,10 +4874,10 @@ electron-updater@4.2.5:
     pako "^1.0.11"
     semver "^7.1.3"
 
-electron@8.2.3:
-  version "8.2.3"
-  resolved "https://registry.yarnpkg.com/electron/-/electron-8.2.3.tgz#b7d6a43bd9f3a2428c660dcd055a20034520e1ea"
-  integrity sha512-FJUp103c8yJBoAaj/QM/OBde57iJh95u1yGJBytMUXmLFSsx78LmNE03QN4XCODyzi76IEcasvUcK6scogRLbQ==
+electron@8.5.2:
+  version "8.5.2"
+  resolved "https://registry.yarnpkg.com/electron/-/electron-8.5.2.tgz#7b0246c6676a39df0e5e384b11cfe854fe5917f0"
+  integrity sha512-VU+zZnmCzxoZ5UfBg2UGVm+nyxlNlQOQkotMLfk7FCtnkIOhX+sosl618OCxUWjOvPc+Mpg5MEkEmxPU5ziW4Q==
   dependencies:
     "@electron/get" "^1.0.1"
     "@types/node" "^12.0.12"

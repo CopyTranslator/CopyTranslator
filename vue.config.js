@@ -41,11 +41,11 @@ module.exports = {
           target: [
             {
               target: "nsis",
-              arch: ["x64"],
+              arch: ["ia32"],
             },
             {
               target: "zip",
-              arch: ["x64"],
+              arch: ["ia32"],
             },
           ],
         },
@@ -53,30 +53,30 @@ module.exports = {
           target: [
             {
               target: "AppImage",
-              arch: ["x64"]
+              arch: ["x64"],
             },
             {
               target: "deb",
-              arch: ["x64"]
+              arch: ["x64"],
             },
             {
               target: "rpm",
-              arch: ["x64"]
-            }
+              arch: ["x64"],
+            },
           ],
           maintainer: "ziqiang_xu@qq.com",
           icon: osSpec.iconName,
           category: "Education",
           // https://www.electron.build/configuration/linux#debian-package-options
           desktop: {
-            Icon: "/opt/copytranslator/resources/linux-icon/icon.png"
-          }
+            Icon: "/opt/copytranslator/resources/linux-icon/icon.png",
+          },
         },
         deb: {
-          depends: ["libpng16-16"]
+          depends: ["libpng16-16"],
         },
         rpm: {
-          depends: ["libpng"]
+          depends: ["libpng"],
         },
         mac: {
           target: [
@@ -95,7 +95,7 @@ module.exports = {
           license: "readable_license.txt",
         },
       },
-      externals: ["iohook", "shortcut-capture"],
+      externals: ["iohook", "robotjs", "shortcut-capture"],
       // 这一步还蛮重要的，不然就会报错
       nodeModulesPath: ["./node_modules"],
     },

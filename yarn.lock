@@ -3669,11 +3669,6 @@ color@^3.0.0:
     color-convert "^1.9.1"
     color-string "^1.5.2"
 
-colors@^1.4.0:
-  version "1.4.0"
-  resolved "https://registry.npm.taobao.org/colors/download/colors-1.4.0.tgz#c50491479d4c1bdaed2c9ced32cf7c7dc2360f78"
-  integrity sha1-xQSRR51MG9rtLJztMs98fcI2D3g=
-
 combined-stream@^1.0.6, combined-stream@~1.0.6:
   version "1.0.8"
   resolved "https://registry.npm.taobao.org/combined-stream/download/combined-stream-1.0.8.tgz#c3d45a8b34fd730631a110a8a2520682b31d5a7f"
@@ -4889,10 +4884,10 @@ electron-updater@4.2.5:
     pako "^1.0.11"
     semver "^7.1.3"
 
-electron@^8.2.3:
-  version "8.3.3"
-  resolved "https://registry.npm.taobao.org/electron/download/electron-8.3.3.tgz#8ce07dcbafa097d00b94d1dd58a2a3b30fe6f803"
-  integrity sha1-jOB9y6+gl9ALlNHdWKKjsw/m+AM=
+electron@8.2.3:
+  version "8.2.3"
+  resolved "https://registry.yarnpkg.com/electron/-/electron-8.2.3.tgz#b7d6a43bd9f3a2428c660dcd055a20034520e1ea"
+  integrity sha512-FJUp103c8yJBoAaj/QM/OBde57iJh95u1yGJBytMUXmLFSsx78LmNE03QN4XCODyzi76IEcasvUcK6scogRLbQ==
   dependencies:
     "@electron/get" "^1.0.1"
     "@types/node" "^12.0.12"
@@ -8786,7 +8781,7 @@ no-case@^2.2.0:
   dependencies:
     lower-case "^1.1.1"
 
-node-abi@^2.13.0, node-abi@^2.4.0, node-abi@^2.7.0:
+node-abi@^2.4.0, node-abi@^2.7.0:
   version "2.19.3"
   resolved "https://registry.npm.taobao.org/node-abi/download/node-abi-2.19.3.tgz?cache=0&sync_timestamp=1605684389947&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fnode-abi%2Fdownload%2Fnode-abi-2.19.3.tgz#252f5dcab12dad1b5503b2d27eddd4733930282d"
   integrity sha1-JS9dyrEtrRtVA7LSft3UczkwKC0=
@@ -10101,7 +10096,7 @@ postcss@^7.0.27:
 
 prebuild-install@^5.3.2, prebuild-install@^5.3.3:
   version "5.3.6"
-  resolved "https://registry.npm.taobao.org/prebuild-install/download/prebuild-install-5.3.6.tgz?cache=0&sync_timestamp=1603472163282&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fprebuild-install%2Fdownload%2Fprebuild-install-5.3.6.tgz#7c225568d864c71d89d07f8796042733a3f54291"
+  resolved "https://registry.npm.taobao.org/prebuild-install/download/prebuild-install-5.3.6.tgz#7c225568d864c71d89d07f8796042733a3f54291"
   integrity sha1-fCJVaNhkxx2J0H+HlgQnM6P1QpE=
   dependencies:
     detect-libc "^1.0.3"
@@ -10927,13 +10922,11 @@ roarr@^2.15.2:
     semver-compare "^1.0.0"
     sprintf-js "^1.1.2"
 
-robotjs@^0.6.0:
+"robotjs@https://github.com/octalmage/robotjs.git#master":
   version "0.6.0"
-  resolved "https://registry.npm.taobao.org/robotjs/download/robotjs-0.6.0.tgz#8d1f63221f5b18dc496c7768f75261043891f64a"
-  integrity sha1-jR9jIh9bGNxJbHdo91JhBDiR9ko=
+  resolved "https://github.com/octalmage/robotjs.git#c9cbd98ec47378dfae62871f0f2830782322b06d"
   dependencies:
     nan "^2.14.0"
-    node-abi "^2.13.0"
     prebuild-install "^5.3.3"
 
 rsvp@^4.8.4:

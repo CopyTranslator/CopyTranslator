@@ -36,6 +36,8 @@ export const normalActionTypes = [
   "notify",
   "toast",
   "incrementSelect",
+  "simulateCopy",
+  "simulateIncrementCopy",
 ] as const;
 
 //切换值的动作

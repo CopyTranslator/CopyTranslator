@@ -50,9 +50,12 @@ class ShortcutManager {
 
   register() {
     for (const [key, accelerator] of this.shortcuts) {
-      globalShortcut.register(accelerator, () => {
+      const status = globalShortcut.register(accelerator, () => {
         this.callback(key);
       });
+      if (!status) {
+        console.log("register", accelerator, "fail");
+      }
     }
   }
 

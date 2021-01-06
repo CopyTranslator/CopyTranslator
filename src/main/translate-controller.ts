@@ -567,7 +567,7 @@ class TranslateController {
       config: this.get(engine),
     });
     translators.set(engine, newTranslator);
-    eventBus.at("dispatch", "toast", "update " + engine);
+    eventBus.at("dispatch", "toast", `update  ${engine}`);
   }
 
   postSet(identifier: Identifier, value: any): boolean {

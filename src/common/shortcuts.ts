@@ -13,6 +13,8 @@ export type Shortcuts = Map<string, Accelerator>;
 export const defaultGlobalShortcuts: Shortcuts = new Map([
   ["focus", "Shift+F1"],
   ["contrast", "Shift+F2"],
+  ["simulateCopy", "Super+`"],
+  ["simulateIncrementCopy", "Super+Shift+`"],
 ]);
 
 export const defaultLocalShortcuts: Shortcuts = new Map([

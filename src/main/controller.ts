@@ -15,6 +15,8 @@ import { MainController } from "../common/controller";
 import { UpdateChecker } from "./views/update";
 import config from "@/common/configuration";
 import eventBus from "@/common/event-bus";
+import simulate from "./simulate";
+import logger from "@/common/logger";
 
 class Controller extends MainController {
   win: WindowMangaer = new WindowMangaer(this);
@@ -70,6 +72,13 @@ class Controller extends MainController {
         break;
       case "minimize":
         this.win.get("contrast").minimize();
+        break;
+      case "simulateCopy":
+        setTimeout(() => {
+          logger.toast("模拟复制");
+          simulate.copy();
+        }, 100);
+        break;
       default:
         return this.transCon.handle(identifier, param);
     }

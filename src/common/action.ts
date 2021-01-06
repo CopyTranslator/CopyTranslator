@@ -38,9 +38,10 @@ function subMenuGenerator(
   });
 }
 
-const alias = new Map<string, string>([
-  ["focus", "layoutType|focus"],
-  ["contrast", "layoutType|horizontal"],
+const alias = new Map<string, string[]>([
+  ["focus", ["layoutType|focus"]],
+  ["contrast", ["layoutType|horizontal"]],
+  ["simulateIncrementCopy", ["incrementSelect", "simulateCopy"]],
 ]);
 
 //兼容旧版本的
@@ -59,7 +60,9 @@ class ActionManager {
   dispatch(...args: any[]) {
     const { identifier, param } = decompose(...args);
     if (alias.get(identifier) != undefined) {
-      this.dispatch(alias.get(identifier) as string);
+      for (const id of alias.get(identifier) as string[]) {
+        this.dispatch(id);
+      }
       return;
     }
     const action = this.getAction(identifier);
@@ -246,6 +249,7 @@ class ActionManager {
     this.append(normalAction("translateClipboard"));
     this.append(normalAction("doubleCopyTranslate"));
     this.append(normalAction("incrementSelect"));
+    this.append(normalAction("simulateCopy"));
 
     //引擎配置
     structActionTypes.forEach((id) => {

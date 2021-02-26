@@ -11,12 +11,12 @@
   <a href="https://github.com/CopyTranslator/CopyTranslator/blob/master/README.md" style="color:#8e24aa">英语 / English</a>
 </h4>
 
-[![OpenTranslate](https://img.shields.io/badge/Powered_by-OpenTranslate-brightgreen)](https://github.com/OpenTranslate)
-[![](https://img.shields.io/github/stars/copytranslator/copytranslator.svg)](https://github.com/copytranslator/copytranslator/stargazers)
-[![](https://img.shields.io/github/release/copytranslator/copytranslator.svg)](https://github.com/copytranslator/copytranslator/releases)
-[![](https://img.shields.io/gitter/room/copytranslator/copytranslator.svg)](https://gitter.im/CopyTranslator/Lobby?utm_source=share-link&utm_medium=link&utm_campaign=share-link)
-[![](https://img.shields.io/github/downloads/copytranslator/copytranslator/total.svg)](https://github.com/copytranslator/copytranslator/wiki/Downloads-%E4%B8%8B%E8%BD%BD%E4%B8%8E%E5%AE%89%E8%A3%85)
-![](https://img.shields.io/badge/platform-windows|macos|linux-orange.svg)
+[![OpenTranslate](https://img.shields.io/badge/Powered_by-OpenTranslate-brightgreen?style=flat-square&logo=appveyor)](https://github.com/OpenTranslate)
+[![](https://img.shields.io/github/stars/copytranslator/copytranslator.svg?style=flat-square&logo=appveyor)](https://github.com/copytranslator/copytranslator/stargazers)
+[![](https://img.shields.io/github/release/copytranslator/copytranslator.svg?style=flat-square&logo=appveyor)](https://github.com/copytranslator/copytranslator/releases)
+[![](https://img.shields.io/gitter/room/copytranslator/copytranslator.svg?style=flat-square&logo=appveyor)](https://gitter.im/CopyTranslator/Lobby?utm_source=share-link&utm_medium=link&utm_campaign=share-link)
+[![](https://img.shields.io/github/downloads/copytranslator/copytranslator/total.svg?style=flat-square&logo=appveyor)](https://github.com/copytranslator/copytranslator/wiki/Downloads-%E4%B8%8B%E8%BD%BD%E4%B8%8E%E5%AE%89%E8%A3%85)
+![](https://img.shields.io/badge/platform-windows|macos|linux-orange.svg?style=flat-square&logo=appveyor)
 [![](https://img.shields.io/github/license/copytranslator/copytranslator.svg)](./LICENSE)
 
 

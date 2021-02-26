@@ -4,7 +4,7 @@
 </h1>
 
 <h4 align="center">
-  <a style="color: #8e24aa;" href="https://github.com/CopyTranslator/CopyTranslator/blob/master/README.md">英语/English</a>
+  <a style="color: #8e24aa;" href="https://github.com/CopyTranslator/CopyTranslator/blob/master/README.md">英语 / English</a>
 </h4>
 
 

@@ -9,7 +9,6 @@
 
 <h4 align="center">
   <a href="https://github.com/CopyTranslator/CopyTranslator/blob/master/README.md" style="color:#8e24aa">英语 / English</a>
-  <div align="center">:heart: 喜欢这个项目? 可以在<a href="https://afdian.net/@elliottzheng/plan" target="_blank">爱发电</a>请作者喝杯咖啡</div>   
 </h4>
 
 [![OpenTranslate](https://img.shields.io/badge/Powered_by-OpenTranslate-brightgreen)](https://github.com/OpenTranslate)
@@ -27,6 +26,7 @@
 如果您觉得软件对您有所帮助，不用follow，不用fork，点一下右上角的star并推荐给周围的朋友就是对我极大的支持。</br>
 (在线翻译资源来自互联网，版权属于相关网站，软件仅供交流使用，严禁商用)</br>
 本软件免费开源，如果您发现有人在网上售卖此软件，请帮忙举报下
+<div align="center">:heart: 喜欢这个项目? 可以在<a href="https://afdian.net/@elliottzheng/plan" target="_blank">爱发电</a>请作者喝杯咖啡</div>   
 </h4>
 
 ## 1. 简介

@@ -4,12 +4,6 @@
   <img src ="https://user-images.githubusercontent.com/22427645/50773452-d738dd80-12cb-11e9-9b7c-45e5d7f74c8a.png" alt ="CopyTranslator">
 </h1>
 
-<h4 align="center">
-  <a href="https://github.com/CopyTranslator/CopyTranslator/blob/master/README.md" style="color:#8e24aa">英语 / English</a>
-  <div align="center">:heart: 喜欢这个项目? 可以在<a href="https://afdian.net/@elliottzheng/plan" target="_blank">爱发电</a>请作者喝杯咖啡</div>   
-</h4>
-
-
 [![OpenTranslate](https://img.shields.io/badge/Powered_by-OpenTranslate-brightgreen)](https://github.com/OpenTranslate)
 [![](https://img.shields.io/github/stars/copytranslator/copytranslator.svg)](https://github.com/copytranslator/copytranslator/stargazers)
 [![](https://img.shields.io/github/release/copytranslator/copytranslator.svg)](https://github.com/copytranslator/copytranslator/releases)
@@ -17,6 +11,12 @@
 [![](https://img.shields.io/github/downloads/copytranslator/copytranslator/total.svg)](https://github.com/copytranslator/copytranslator/wiki/Downloads-%E4%B8%8B%E8%BD%BD%E4%B8%8E%E5%AE%89%E8%A3%85)
 ![](https://img.shields.io/badge/platform-windows|macos|linux-orange.svg)
 [![](https://img.shields.io/github/license/copytranslator/copytranslator.svg)](./LICENSE)
+
+<h4 align="center">
+  <a href="https://github.com/CopyTranslator/CopyTranslator/blob/master/README.md" style="color:#8e24aa">英语 / English</a>
+  <div align="center">:heart: 喜欢这个项目? 可以在<a href="https://afdian.net/@elliottzheng/plan" target="_blank">爱发电</a>请作者喝杯咖啡</div>   
+</h4>
+
 
 <h4 align="center">
 复制即翻译的外文辅助阅读翻译解决方案</br>

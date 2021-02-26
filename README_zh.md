@@ -5,6 +5,7 @@
 
 <h4 align="center">
   <a href="https://github.com/CopyTranslator/CopyTranslator/blob/master/README.md" style="color:#8e24aa">英语 / English</a>
+  <div align="center">:heart: 喜欢这个项目? 可以在<a href="https://afdian.net/@elliottzheng/plan" target="_blank">爱发电</a>请作者喝杯咖啡</div>   
 </h4>
 
 
@@ -26,7 +27,6 @@
 
 **本软件免费开源，如果您发现有人在网上售卖此软件，请帮忙举报下**
 
-<div align="center">:heart: 喜欢这个项目? 可以在<a href="https://afdian.net/@elliottzheng/plan" target="_blank">爱发电</a>请作者喝杯咖啡</div>   
 
 ## 1. 简介
 ### 1.1 前言

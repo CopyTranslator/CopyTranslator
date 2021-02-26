@@ -1,8 +1,3 @@
-<style>
-.a {
-  color: #8e24aa
-}
-</style>
 
 <h1 align ="center"> 
   <br> 

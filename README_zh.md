@@ -22,7 +22,7 @@
 
 
 <h4 align="center">
-请尽快更新到<a href="https://github.com/copytranslator/copytranslator/releases"><image src="https://img.shields.io/github/release/copytranslator/copytranslator.svg"></a>，这是你没有体验过的全新版本，只需3分钟，你就会跟我一样，爱上这个软件。</br>
+请尽快更新到<a href="https://github.com/copytranslator/copytranslator/releases"><image src="https://img.shields.io/github/release/copytranslator/copytranslator.svg?style=flat-square"></a>，这是你没有体验过的全新版本，只需3分钟，你就会跟我一样，爱上这个软件。</br>
 如果您觉得软件对您有所帮助，不用follow，不用fork，点一下右上角的star并推荐给周围的朋友就是对我极大的支持。</br>
 (在线翻译资源来自互联网，版权属于相关网站，软件仅供交流使用，严禁商用)</br>
 本软件免费开源，如果您发现有人在网上售卖此软件，请帮忙举报下

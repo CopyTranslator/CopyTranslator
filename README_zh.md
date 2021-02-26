@@ -2,7 +2,13 @@
 <h1 align ="center"> 
   <br> 
   <img src ="https://user-images.githubusercontent.com/22427645/50773452-d738dd80-12cb-11e9-9b7c-45e5d7f74c8a.png" alt ="CopyTranslator">
+  <h4 align="center">复制即翻译的外文辅助阅读翻译解决方案</h4>
 </h1>
+
+<h4 align="center">
+  <a href="https://github.com/CopyTranslator/CopyTranslator/blob/master/README.md" style="color:#8e24aa">英语 / English</a>
+  <div align="center">:heart: 喜欢这个项目? 可以在<a href="https://afdian.net/@elliottzheng/plan" target="_blank">爱发电</a>请作者喝杯咖啡</div>   
+</h4>
 
 [![OpenTranslate](https://img.shields.io/badge/Powered_by-OpenTranslate-brightgreen)](https://github.com/OpenTranslate)
 [![](https://img.shields.io/github/stars/copytranslator/copytranslator.svg)](https://github.com/copytranslator/copytranslator/stargazers)
@@ -12,14 +18,9 @@
 ![](https://img.shields.io/badge/platform-windows|macos|linux-orange.svg)
 [![](https://img.shields.io/github/license/copytranslator/copytranslator.svg)](./LICENSE)
 
-<h4 align="center">
-  <a href="https://github.com/CopyTranslator/CopyTranslator/blob/master/README.md" style="color:#8e24aa">英语 / English</a>
-  <div align="center">:heart: 喜欢这个项目? 可以在<a href="https://afdian.net/@elliottzheng/plan" target="_blank">爱发电</a>请作者喝杯咖啡</div>   
-</h4>
 
 
 <h4 align="center">
-复制即翻译的外文辅助阅读翻译解决方案</br>
 请尽快更新到<a href="https://github.com/copytranslator/copytranslator/releases"><image src="https://img.shields.io/github/release/copytranslator/copytranslator.svg"></a>，这是你没有体验过的全新版本，只需3分钟，你就会跟我一样，爱上这个软件。</br>
 如果您觉得软件对您有所帮助，不用follow，不用fork，点一下右上角的star并推荐给周围的朋友就是对我极大的支持。</br>
 (在线翻译资源来自互联网，版权属于相关网站，软件仅供交流使用，严禁商用)</br>

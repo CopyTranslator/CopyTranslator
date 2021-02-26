@@ -2,7 +2,9 @@
 <h1 align ="center"> 
   <br> 
   <img src ="https://user-images.githubusercontent.com/22427645/50773452-d738dd80-12cb-11e9-9b7c-45e5d7f74c8a.png" alt ="CopyTranslator">
-  <h4 align="center">复制即翻译的外文辅助阅读翻译解决方案</h4>
+   <br>
+  复制即翻译的外文辅助阅读翻译解决方案
+  <br>
 </h1>
 
 <h4 align="center">

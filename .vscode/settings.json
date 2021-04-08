@@ -4,18 +4,12 @@
     "terminal.integrated.rendererType": "dom",
     "window.zoomLevel": 0,
     "eslint.alwaysShowStatus": true,
-    "eslint.autoFixOnSave": true,
+    "eslint.packageManager":"yarn",
     "eslint.validate": [
         "javascript",
         "html",
-        {
-            "language": "vue",
-            "autoFix": true
-        },
-        {
-            "language": "typescript",
-            "autoFix": true
-        }
+        "vue",
+        "typescript"
     ],
     "typescript.updateImportsOnFileMove.enabled": "always",
     // "editor.fontFamily": "Monaco",

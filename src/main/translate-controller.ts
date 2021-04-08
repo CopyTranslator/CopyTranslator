@@ -242,14 +242,18 @@ class TranslateController {
       };
     }
     store.dispatch("setShared", sharedResult);
-    if (this.get<boolean>("enableNotify")) {
-      eventBus.at("dispatch", "notify", sharedResult.translation);
+    if (this.translateResult != undefined) {
+      if (this.get<boolean>("enableNotify")) {
+        eventBus.at("dispatch", "notify", sharedResult.translation);
+      }
+      logger.toast(
+        `翻译完成 ${this.getL(<Language>sharedResult.from)} -> ${this.getL(
+          <Language>sharedResult.to
+        )}`
+      );
+    } else {
+      logger.toast(`清空`);
     }
-    logger.toast(
-      `翻译完成 ${this.getL(<Language>sharedResult.from)} -> ${this.getL(
-        <Language>sharedResult.to
-      )}`
-    );
   }
 
   postProcess(language: any, result: CopyTranslateResult) {
@@ -469,6 +473,7 @@ class TranslateController {
       .catch((err) => {
         this.translateFail();
         logger.error(err);
+        logger.toast("翻译失败");
       });
   }
 
@@ -503,6 +508,7 @@ class TranslateController {
           throw "no cache";
         }
         logger.debug("cache hit");
+        logger.debug(buffer);
         this.postTranslate(buffer);
       } catch (e) {
         logger.debug(e);

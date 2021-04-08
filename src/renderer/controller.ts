@@ -76,7 +76,7 @@ export class RendererController extends RenController {
       case "localeSetting":
         break;
       case "layoutType":
-        bus.at("dispatch", "toast", value);
+        bus.at("dispatch", "toast", value.toString() + " 布局");
         break;
       default:
         return false;

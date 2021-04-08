@@ -73,11 +73,11 @@ export class Compound implements CopyTranslator {
     return getTranslator(engine)
       .translate(text, from, to, this.config)
       .then(autoReSegment)
-      .then((res) => {
+      .then((res: any) => {
         this.resultBuffer.set(engine, res);
         return res;
       })
-      .catch((err) => {
+      .catch((err: any) => {
         console.log(engine, "translate error", err);
         return null;
       })

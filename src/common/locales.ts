@@ -83,6 +83,7 @@ export const zh_cn = new Map<Identifier, string>([
   ["translatorConfig", "翻译器设置"],
   ["openAtLogin", "开机启动"],
   ["doubleClickCopy", "双击复制"],
+  ["toastTip", "操作提示"],
 ]);
 
 export const en = new Map<Identifier, string>([
@@ -168,5 +169,6 @@ export const en = new Map<Identifier, string>([
   ["translatorConfig", "Translator Config"],
   ["openAtLogin", "Open at login"],
   ["doubleClickCopy", "Double Click Copy"],
+  ["toastTip", "Toast tip"],
 ]);
 export type Locale = typeof en;

@@ -102,6 +102,7 @@ function initConfig(
     "neverShow",
     new TypeRule<boolean>(false, "never show warning")
   );
+  config.setRule("toastTip", new TypeRule<boolean>(false, "action toast tip"));
 
   config.setRule("drawer", new TypeRule<boolean>(false, "never show warning"));
 

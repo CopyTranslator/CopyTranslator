@@ -79,5 +79,6 @@
     "drawer": "Drawer",
     "translatorConfig": "Translator Config",
     "openAtLogin": "Open at login",
-    "doubleClickCopy": "Double Click Copy"
+    "doubleClickCopy": "Double Click Copy",
+    "toastTip": "Toast tip"
 }

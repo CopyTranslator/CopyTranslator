@@ -83,5 +83,6 @@
     "contrastDict": "Contrast Dict",
     "pasteResult": "Paste Result",
     "openAtLogin": "Open at login",
-    "doubleClickCopy": "Double Click Copy"
+    "doubleClickCopy": "Double Click Copy",
+    "toastTip": "Toast tip"
 }

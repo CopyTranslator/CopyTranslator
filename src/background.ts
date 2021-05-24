@@ -6,6 +6,7 @@ console.time("before-ready");
 
 //确保全局单例
 if (!gotTheLock) {
+  console.error("Another instance is running");
   app.exit();
 } else {
   app.on("second-instance", (event, commandLine, workingDirectory) => {

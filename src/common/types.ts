@@ -102,6 +102,7 @@ export const switchActionTypes = [
   "closeAsQuit",
   "contrastDict",
   "openAtLogin",
+  "toastTip",
 ] as const;
 
 //Electron 原生 角色

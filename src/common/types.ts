@@ -64,7 +64,7 @@ export const translatorTypes = [
   // "sogou",
   "caiyun",
   "tencent",
-  // "youdao",
+  "youdao",
   "baidu-domain",
 ] as const;
 

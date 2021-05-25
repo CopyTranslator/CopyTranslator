@@ -59,7 +59,7 @@ class ConfigParser {
     try {
       const values = JSON.parse(readFileSync(fileName) as any);
       if (!values["version"] || !compatible(values["version"])) {
-        throw "version incompatible, configs have been reset";
+        throw "version incompatible, configs will be reset";
       }
       const config: Config = {};
       for (const key of this.rules.keys()) {
@@ -72,6 +72,7 @@ class ConfigParser {
       }
       store.dispatch("setConfig", config);
     } catch (e) {
+      console.log(e);
       this.restoreDefault(fileName);
 
       status = false;

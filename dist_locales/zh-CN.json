@@ -80,5 +80,6 @@
     "translatorConfig": "翻译器设置",
     "openAtLogin": "开机启动",
     "doubleClickCopy": "双击复制",
-    "toastTip": "操作提示"
+    "toastTip": "操作提示",
+    "multiSource": "多源对比"
 }

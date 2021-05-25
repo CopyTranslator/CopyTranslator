@@ -103,6 +103,7 @@ export const switchActionTypes = [
   "contrastDict",
   "openAtLogin",
   "toastTip",
+  "multiSource",
 ] as const;
 
 //Electron 原生 角色
@@ -150,12 +151,7 @@ export const translatorGroups = [
 ] as const;
 
 //布局名称
-export const layoutTypes = [
-  "horizontal",
-  "vertical",
-  "focus",
-  "compare",
-] as const;
+export const layoutTypes = ["horizontal", "vertical", "focus"] as const;
 
 // 百度垂直领域翻译
 export const domains = ["medicine", "electronics", "mechanics"];

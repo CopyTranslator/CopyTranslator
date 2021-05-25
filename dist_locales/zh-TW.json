@@ -97,5 +97,6 @@
     "pasteResult": "貼上結果",
     "openAtLogin": "登入時開啟",
     "doubleClickCopy": "Double Click Copy",
-    "toastTip": "Toast tip"
+    "toastTip": "Toast tip",
+    "multiSource": "Multi-source"
 }

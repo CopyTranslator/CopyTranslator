@@ -84,6 +84,7 @@ export const zh_cn = new Map<Identifier, string>([
   ["openAtLogin", "开机启动"],
   ["doubleClickCopy", "双击复制"],
   ["toastTip", "操作提示"],
+  ["multiSource", "多源对比"],
 ]);
 
 export const en = new Map<Identifier, string>([
@@ -170,5 +171,6 @@ export const en = new Map<Identifier, string>([
   ["openAtLogin", "Open at login"],
   ["doubleClickCopy", "Double Click Copy"],
   ["toastTip", "Toast tip"],
+  ["multiSource", "Multi-source"],
 ]);
 export type Locale = typeof en;

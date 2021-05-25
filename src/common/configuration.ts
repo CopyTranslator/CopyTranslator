@@ -119,6 +119,11 @@ function initConfig(
   );
 
   config.setRule(
+    "multiSource",
+    new TypeRule<boolean>(false, "show multi source result")
+  );
+
+  config.setRule(
     "translatorType",
     new UnionRule<TranslatorType>(
       "google",
@@ -362,14 +367,6 @@ function initConfig(
 
   config.setRule(
     "focus",
-    new StructRule<LayoutConfig>(
-      { fontSize: 15, x: 535, y: 186, height: 600, width: 1094 },
-      "layout config"
-    )
-  );
-
-  config.setRule(
-    "compare",
     new StructRule<LayoutConfig>(
       { fontSize: 15, x: 535, y: 186, height: 600, width: 1094 },
       "layout config"

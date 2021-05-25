@@ -14,8 +14,15 @@
         class="focusText max"
         v-bind:style="focusStyle"
         v-model="sharedResult.translation"
-        v-if="sharedResult && !dictResult.valid"
+        v-if="sharedResult && !dictResult.valid && !multiSource"
       ></textarea>
+      <DiffTextArea
+        contenteditable="true"
+        v-if="sharedResult && !dictResult.valid && multiSource"
+        class="focusText max"
+        :allParts="sharedDiff.allParts"
+        ref="diffText"
+      ></DiffTextArea>
       <DictResultPanel
         v-if="dictResult.valid && config['smartDict']"
         ref="dictResultPanel"
@@ -26,17 +33,17 @@
 </template>
 
 <script lang="ts">
-import { shell } from "electron";
 import BaseView from "./BaseView.vue";
 import WindowController from "./WindowController.vue";
 import DictResultPanel from "./DictResult.vue";
 import { Mixins, Ref, Component } from "vue-property-decorator";
 import { Identifier, RouteActionType } from "../common/types";
 import eventBus from "../common/event-bus";
-
+import DiffTextArea from "./DiffTextArea.vue";
 @Component({
   components: {
     DictResultPanel,
+    DiffTextArea,
   },
 })
 export default class FocusMode extends Mixins(BaseView, WindowController) {
@@ -58,7 +65,12 @@ export default class FocusMode extends Mixins(BaseView, WindowController) {
 
   getModifiedText() {
     if (this.sharedResult && !this.dictResult.valid) {
-      return this.sharedResult.translation;
+      if (this.multiSource) {
+        //@ts-ignore
+        return (this.diffText[0].$el as any).innerText;
+      } else {
+        return this.sharedResult.translation;
+      }
     } else {
       //@ts-ignore
       return (this.dictResultPanel[0].$el as any).innerText;

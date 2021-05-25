@@ -84,5 +84,6 @@
     "pasteResult": "Paste Result",
     "openAtLogin": "Open at login",
     "doubleClickCopy": "Double Click Copy",
-    "toastTip": "Toast tip"
+    "toastTip": "Toast tip",
+    "multiSource": "Multi-source"
 }

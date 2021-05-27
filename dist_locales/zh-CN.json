@@ -81,5 +81,6 @@
     "openAtLogin": "开机启动",
     "doubleClickCopy": "双击复制",
     "toastTip": "操作提示",
-    "multiSource": "多源对比"
+    "multiSource": "多源对比",
+    "enableDoubleCopyTranslate": "双Ctrl+C翻译"
 }

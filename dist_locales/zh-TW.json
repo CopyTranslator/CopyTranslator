@@ -98,5 +98,6 @@
     "openAtLogin": "登入時開啟",
     "doubleClickCopy": "Double Click Copy",
     "toastTip": "Toast tip",
-    "multiSource": "Multi-source"
+    "multiSource": "Multi-source",
+    "enableDoubleCopyTranslate": "Double Ctrl+C Translate"
 }

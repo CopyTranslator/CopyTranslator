@@ -228,6 +228,7 @@ class ActionManager {
     this.append(switchAction("openAtLogin"));
     this.append(switchAction("toastTip"));
     this.append(switchAction("multiSource"));
+    this.append(switchAction("enableDoubleCopyTranslate"));
 
     this.append(normalAction("copySource"));
     this.append(normalAction("copyResult"));

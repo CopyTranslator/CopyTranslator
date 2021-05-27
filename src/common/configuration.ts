@@ -124,6 +124,11 @@ function initConfig(
   );
 
   config.setRule(
+    "enableDoubleCopyTranslate",
+    new TypeRule<boolean>(false, "enable Double Ctrl+C Translate")
+  );
+
+  config.setRule(
     "translatorType",
     new UnionRule<TranslatorType>(
       "google",

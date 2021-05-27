@@ -84,7 +84,10 @@ class EventListener {
       if (event.keycode == 46 && event.ctrlKey) {
         //双击ctrl c 可以在没有开监听剪贴板的情况下 翻译
         const now = Date.now();
-        if (now - this.lastCopy < 1000) {
+        if (
+          now - this.lastCopy < 1000 &&
+          config.get("enableDoubleCopyTranslate")
+        ) {
           console.debug("triggered double ctrl c", clipboard.readText());
           eventBus.at("dispatch", "doubleCopyTranslate");
         }

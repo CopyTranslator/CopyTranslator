@@ -104,6 +104,7 @@ export const switchActionTypes = [
   "openAtLogin",
   "toastTip",
   "multiSource",
+  "enableDoubleCopyTranslate",
 ] as const;
 
 //Electron 原生 角色

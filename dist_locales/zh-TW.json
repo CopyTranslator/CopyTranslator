@@ -100,5 +100,10 @@
     "toastTip": "Toast tip",
     "multiSource": "Multi-source",
     "enableDoubleCopyTranslate": "Double Ctrl+C Translate",
-    "pasteDelay": "Auto paste dalay"
+    "pasteDelay": "Auto paste dalay",
+    "horizontal": "Horizontal",
+    "vertical": "Vertical",
+    "basic": "Basic",
+    "advance": "Advance",
+    "translateInput": "translate"
 }

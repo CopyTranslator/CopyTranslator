@@ -15,6 +15,7 @@ import {
   structActionTypes,
   translatorTypes,
   translatorGroups,
+  Frequency,
 } from "./types";
 import { dictionaryTypes } from "./dictionary/types";
 import { getLanguageLocales, Language } from "./translate/locale";
@@ -124,11 +125,15 @@ class ActionManager {
     }
 
     //切换状态的动作
-    function switchAction(identifier: Identifier): ActionInitOpt {
+    function switchAction(
+      identifier: Identifier,
+      freq: Frequency = "basic"
+    ): ActionInitOpt {
       return {
         type: "checkbox",
         id: identifier,
         tooltip: config.getTooltip(identifier),
+        freq: freq,
       };
     }
 
@@ -221,31 +226,31 @@ class ActionManager {
     this.append(listAction("dictionaryType", dictionaryTypes));
     this.append(listAction("layoutType", layoutTypes));
     this.append(listAction("colorMode", colorModes));
-    this.append(listAction("pasteDelay", delays));
 
+    this.append(switchAction("listenClipboard"));
+    this.append(switchAction("dragCopy"));
     this.append(switchAction("autoCopy"));
     this.append(switchAction("autoPaste"));
     this.append(switchAction("autoFormat"));
     this.append(switchAction("autoPurify"));
     this.append(switchAction("incrementalCopy"));
-    this.append(switchAction("smartTranslate"));
     this.append(switchAction("autoHide"));
     this.append(switchAction("autoShow"));
     this.append(switchAction("stayTop"));
-    this.append(switchAction("smartDict"));
-    this.append(switchAction("contrastDict"));
-    this.append(switchAction("drawer"));
-    this.append(switchAction("listenClipboard"));
-    this.append(switchAction("dragCopy"));
+    this.append(switchAction("toastTip"));
     this.append(switchAction("doubleClickCopy"));
     this.append(switchAction("enableNotify"));
     this.append(switchAction("skipTaskbar"));
-    this.append(switchAction("closeAsQuit"));
-    this.append(switchAction("autoCheckUpdate"));
-    this.append(switchAction("openAtLogin"));
-    this.append(switchAction("toastTip"));
     this.append(switchAction("multiSource"));
     this.append(switchAction("enableDoubleCopyTranslate"));
+
+    this.append(switchAction("openAtLogin", "advance"));
+    this.append(switchAction("closeAsQuit", "advance"));
+    this.append(switchAction("smartDict", "advance"));
+    this.append(switchAction("contrastDict", "advance"));
+    this.append(switchAction("smartTranslate", "advance"));
+    this.append(switchAction("autoCheckUpdate", "advance"));
+    this.append(switchAction("drawer", "advance"));
 
     this.append(normalAction("copySource"));
     this.append(normalAction("copyResult"));
@@ -270,6 +275,7 @@ class ActionManager {
     this.append(normalAction("doubleCopyTranslate"));
     this.append(normalAction("incrementSelect"));
     this.append(normalAction("simulateCopy"));
+    this.append(normalAction("translateInput"));
 
     //引擎配置
     structActionTypes.forEach((id) => {
@@ -302,6 +308,8 @@ class ActionManager {
       selectAction("localeSetting", localeGenerator("localeSetting"))
     );
 
+    this.append(listAction("pasteDelay", delays));
+
     this.append(normalAction("settings"));
     this.append(normalAction("helpAndUpdate"));
     this.append(normalAction("exit"));
@@ -330,12 +338,6 @@ class ActionManager {
           (x) => this.getAction(x).actionType === "submenu"
         );
         break;
-      case "switches":
-        contain = keys.filter(
-          (x) => this.getAction(x).actionType === "checkbox"
-        );
-        contain.push("restoreDefault");
-        break;
       case "focusContext":
         contain = ["copy", "paste", "cut", "clear"];
         break;
@@ -346,8 +348,30 @@ class ActionManager {
         contain = keys.filter(
           (x) => this.getAction(x).actionType !== "constant"
         );
+      default:
+        throw "wrong";
     }
     return contain.filter((key) => keys.includes(key));
+  }
+
+  getGroups(optionType: MenuActionType): { [freq: string]: Array<Identifier> } {
+    let retval = {
+      basic: Array<Identifier>(),
+      advance: Array<Identifier>(),
+    };
+    const keys = Array.from(this.actions.keys());
+    switch (optionType) {
+      case "switches":
+        for (const key of keys) {
+          const action = this.getAction(key);
+          if (action.actionType === "checkbox") {
+            retval[action.freq as Frequency].push(key);
+          }
+        }
+        retval["advance"].push("restoreDefault");
+        break;
+    }
+    return retval;
   }
 }
 

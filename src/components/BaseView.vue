@@ -71,6 +71,10 @@ export default class BaseView extends Vue {
     });
   }
 
+  created() {
+    eventBus.on("translateInput", this.translate);
+  }
+
   command() {
     const text = this.getModifiedText();
     eventBus.at("dispatch", text);

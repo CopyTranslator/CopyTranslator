@@ -87,6 +87,11 @@ export const zh_cn = new Map<Identifier, string>([
   ["multiSource", "多源对比"],
   ["enableDoubleCopyTranslate", "双Ctrl+C翻译"],
   ["pasteDelay", "自动粘贴延迟(秒)"],
+  ["horizontal", "水平布局"],
+  ["vertical", "垂直布局"],
+  ["basic", "基础"],
+  ["advance", "进阶"],
+  ["translateInput", "翻译"],
 ]);
 
 export const en = new Map<Identifier, string>([
@@ -176,5 +181,10 @@ export const en = new Map<Identifier, string>([
   ["multiSource", "Multi-source"],
   ["enableDoubleCopyTranslate", "Double Ctrl+C Translate"],
   ["pasteDelay", "Auto paste dalay"],
+  ["horizontal", "Horizontal"],
+  ["vertical", "Vertical"],
+  ["basic", "Basic"],
+  ["advance", "Advance"],
+  ["translateInput", "Translate"],
 ]);
 export type Locale = typeof en;

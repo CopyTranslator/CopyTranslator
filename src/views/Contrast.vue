@@ -3,7 +3,8 @@
     <v-app>
       <v-app-bar app color="#8E24AA" dark dense height="40px">
         <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
-        <v-spacer style="height: 100%; width: 100%;">
+        {{ trans[layoutType] }}
+        <v-spacer style="height: 100%;">
           <div
             style="
               -webkit-app-region: drag;
@@ -112,7 +113,13 @@ import {
 export default class Contrast extends Mixins(BaseView, WindowController) {
   barWidth: number = 0;
   readonly routeName = "contrast";
-  actionKeys: Identifier[] = this.$controller.action.getKeys("contrastPanel");
+  actionKeys: Identifier[] = this.$controller.action.getKeys(
+    "contrastPanel"
+  ) as Identifier[];
+
+  get trans() {
+    return this.$store.getters.locale;
+  }
 
   get valid() {
     return this.dictResult.valid && this.layoutType === "focus";

@@ -54,7 +54,7 @@ function initConfig(
     "incrementalCopy",
     new TypeRule<boolean>(false, "incremental copy")
   );
-  config.setRule("stayTop", new TypeRule<boolean>(false, "always stay on top"));
+  config.setRule("stayTop", new TypeRule<boolean>(true, "always stay on top"));
   config.setRule("smartDict", new TypeRule<boolean>(true, "smart dict"));
   config.setRule(
     "contrastDict",
@@ -188,7 +188,7 @@ function initConfig(
         x: 1390,
         y: 133,
         height: 787,
-        width: 362,
+        width: 415,
       },
       "parameters of setting panel"
     )
@@ -270,7 +270,6 @@ function initConfig(
         "dragCopy",
         "stayTop",
         "listenClipboard",
-        "enableNotify",
         "settings",
         "helpAndUpdate",
         "exit",
@@ -290,12 +289,12 @@ function initConfig(
         "autoHide",
         "autoShow",
         "autoFormat",
-        "enableNotify",
         "dragCopy",
         "stayTop",
         "listenClipboard",
         "sourceLanguage",
         "targetLanguage",
+        "translateInput",
         "settings",
       ],
       "the options of contrast mode",

@@ -68,6 +68,9 @@ export class RendererController extends RenController {
       case "toast":
         this.toast(param);
         break;
+      case "translateInput":
+        bus.at("translateInput");
+        break;
       default:
         return false;
     }

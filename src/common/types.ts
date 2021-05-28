@@ -38,6 +38,7 @@ export const normalActionTypes = [
   "incrementSelect",
   "simulateCopy",
   "simulateIncrementCopy",
+  "translateInput",
 ] as const;
 
 //切换值的动作
@@ -70,9 +71,11 @@ export const translatorTypes = [
 ] as const;
 
 export const recognizerTypes = ["baidu-ocr"] as const;
+export const frequencies = ["basic", "advance"] as const;
 
 export type TranslatorType = typeof translatorTypes[number];
 export type RecognizerType = typeof recognizerTypes[number];
+export type Frequency = typeof frequencies[number];
 
 //结构体的动作
 export type StructActionType = TranslatorType | RecognizerType;
@@ -206,7 +209,8 @@ export type Identifier =
   | TranslatorType
   | RecognizerType
   | Role
-  | TranslatorGroup;
+  | TranslatorGroup
+  | Frequency;
 
 export const identifiers: readonly Identifier[] = flatten([
   roles,
@@ -247,10 +251,12 @@ export interface SubActionView extends AbstractAction {
 export interface ActionView extends AbstractAction {
   id: Identifier;
   actionType: ActionType | MenuItemType;
+  freq?: Frequency;
 }
 
 export interface ActionInitOpt extends AbstractAction {
   id: Identifier;
+  freq?: Frequency;
 }
 
 export const hideDirections = [

@@ -199,12 +199,29 @@ class ActionManager {
         return locales;
       };
     };
+    const delays = [
+      0.0,
+      0.1,
+      0.2,
+      0.3,
+      0.3,
+      0.4,
+      0.5,
+      0.6,
+      0.7,
+      0.8,
+      0.9,
+      1.0,
+      1.5,
+      2.0,
+    ];
 
     this.append(listAction("hideDirect", hideDirections));
     this.append(listAction("translatorType", translatorTypes));
     this.append(listAction("dictionaryType", dictionaryTypes));
     this.append(listAction("layoutType", layoutTypes));
     this.append(listAction("colorMode", colorModes));
+    this.append(listAction("pasteDelay", delays));
 
     this.append(switchAction("autoCopy"));
     this.append(switchAction("autoPaste"));

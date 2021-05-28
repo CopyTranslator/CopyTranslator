@@ -82,5 +82,6 @@
     "doubleClickCopy": "双击复制",
     "toastTip": "操作提示",
     "multiSource": "多源对比",
-    "enableDoubleCopyTranslate": "双Ctrl+C翻译"
+    "enableDoubleCopyTranslate": "双Ctrl+C翻译",
+    "pasteDelay": "自动粘贴延迟(秒)"
 }

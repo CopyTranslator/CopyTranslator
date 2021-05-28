@@ -56,6 +56,7 @@ export const constantActionTypes = [
   "autoCheckUpdate",
   "colorMode",
   "version",
+  "pasteDelay",
 ] as const;
 
 export const translatorTypes = [

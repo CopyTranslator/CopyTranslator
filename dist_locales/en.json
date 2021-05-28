@@ -82,5 +82,6 @@
     "doubleClickCopy": "Double Click Copy",
     "toastTip": "Toast tip",
     "multiSource": "Multi-source",
-    "enableDoubleCopyTranslate": "Double Ctrl+C Translate"
+    "enableDoubleCopyTranslate": "Double Ctrl+C Translate",
+    "pasteDelay": "Auto paste dalay"
 }

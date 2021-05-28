@@ -260,7 +260,7 @@ class TranslateController {
     if (this.get<boolean>("autoCopy")) {
       clipboard.writeText(this.resultString);
       if (this.get<boolean>("autoPaste")) {
-        simulate.paste();
+        setTimeout(simulate.paste, this.get<number>("pasteDelay") * 1000); //延时粘贴
       }
     } else if (this.get<boolean>("autoFormat")) {
       clipboard.writeText(this.text);

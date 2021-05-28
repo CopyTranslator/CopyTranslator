@@ -378,6 +378,8 @@ function initConfig(
     )
   );
 
+  config.setRule("pasteDelay", new TypeRule<number>(0.0, "auto copy delay"));
+
   return config;
 }
 

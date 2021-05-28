@@ -86,6 +86,7 @@ export const zh_cn = new Map<Identifier, string>([
   ["toastTip", "操作提示"],
   ["multiSource", "多源对比"],
   ["enableDoubleCopyTranslate", "双Ctrl+C翻译"],
+  ["pasteDelay", "自动粘贴延迟(秒)"],
 ]);
 
 export const en = new Map<Identifier, string>([
@@ -174,5 +175,6 @@ export const en = new Map<Identifier, string>([
   ["toastTip", "Toast tip"],
   ["multiSource", "Multi-source"],
   ["enableDoubleCopyTranslate", "Double Ctrl+C Translate"],
+  ["pasteDelay", "Auto paste dalay"],
 ]);
 export type Locale = typeof en;

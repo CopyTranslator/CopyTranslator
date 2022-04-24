@@ -52,7 +52,7 @@ class TranslateController {
   incrementSelect: boolean = false;
 
   translator: Compound = new Compound([...translatorTypes], "google", {});
-  dictionary: Polymer = new Polymer("google");
+  dictionary: Polymer = new Polymer("youdao");
 
   controller: MainController;
 

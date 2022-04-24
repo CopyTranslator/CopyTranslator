@@ -64,9 +64,9 @@ export const translatorTypes = [
   "baidu",
   "google",
   // "sogou",
-  "caiyun",
-  "tencent",
-  "youdao",
+  // "caiyun",
+  // "tencent",
+  // "youdao",
   "baidu-domain",
 ] as const;
 

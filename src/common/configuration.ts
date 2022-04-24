@@ -212,7 +212,7 @@ function initConfig(
   config.setRule(
     "translator-auto",
     new GroupRule<TranslatorType>(
-      ["google", "baidu", "youdao", "caiyun", "tencent"],
+      ["google", "baidu"],
       "auto call",
       translatorTypes
     )
@@ -324,10 +324,10 @@ function initConfig(
     )
   );
 
-  config.setRule(
-    "caiyun",
-    new StructRule<KeyConfig>({ token: "" }, "parameters of caiyun")
-  );
+  // config.setRule(
+  //   "caiyun",
+  //   new StructRule<KeyConfig>({ token: "" }, "parameters of caiyun")
+  // );
 
   config.setRule(
     "google",
@@ -339,13 +339,13 @@ function initConfig(
   //   new StructRule<KeyConfig>({ pid: "", key: "" }, "parameters of sogou")
   // );
 
-  config.setRule(
-    "tencent",
-    new StructRule<KeyConfig>(
-      { secretId: "", secretKey: "" },
-      "parameters of tencent"
-    )
-  );
+  // config.setRule(
+  //   "tencent",
+  //   new StructRule<KeyConfig>(
+  //     { secretId: "", secretKey: "" },
+  //     "parameters of tencent"
+  //   )
+  // );
 
   config.setRule(
     "youdao",

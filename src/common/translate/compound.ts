@@ -14,7 +14,7 @@ export class Compound implements CopyTranslator {
   resultBuffer = new Map<TranslatorType, CopyTranslateResult | undefined>();
   text: string | undefined;
   engines: TranslatorType[];
-  detectEngine: TranslatorType = "google";
+  detectEngine: TranslatorType = "baidu";
   axios = setProxy(false);
 
   constructor(

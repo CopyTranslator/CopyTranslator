@@ -15,26 +15,26 @@ export const defaultTokens = new Map<TranslatorType, any>([
       token: process.env.VUE_APP_GOOGLE_TOKEN as string,
     },
   ],
-  [
-    "youdao",
-    {
-      appKey: process.env.VUE_APP_YOUDAO_APP_KEY as string,
-      key: process.env.VUE_APP_YOUDAO_APP_SECRET as string,
-    },
-  ],
-  [
-    "caiyun",
-    {
-      token: process.env.VUE_APP_CAIYUN_TOKEN as string,
-    },
-  ],
-  [
-    "tencent",
-    {
-      secretId: process.env.VUE_APP_TENCENT_APP_KEY as string,
-      secretKey: process.env.VUE_APP_TENCENT_APP_SECRET as string,
-    },
-  ],
+  // [
+  //   "youdao",
+  //   {
+  //     appKey: process.env.VUE_APP_YOUDAO_APP_KEY as string,
+  //     key: process.env.VUE_APP_YOUDAO_APP_SECRET as string,
+  //   },
+  // ],
+  // [
+  //   "caiyun",
+  //   {
+  //     token: process.env.VUE_APP_CAIYUN_TOKEN as string,
+  //   },
+  // ],
+  // [
+  //   "tencent",
+  //   {
+  //     secretId: process.env.VUE_APP_TENCENT_APP_KEY as string,
+  //     secretKey: process.env.VUE_APP_TENCENT_APP_SECRET as string,
+  //   },
+  // ],
   [
     "baidu-domain",
     {

@@ -347,10 +347,10 @@ function initConfig(
   //   )
   // );
 
-  config.setRule(
-    "youdao",
-    new StructRule<KeyConfig>({ appKey: "", key: "" }, "parameters of youdao")
-  );
+  // config.setRule(
+  //   "youdao",
+  //   new StructRule<KeyConfig>({ appKey: "", key: "" }, "parameters of youdao")
+  // );
 
   //下面是三种布局
   config.setRule(

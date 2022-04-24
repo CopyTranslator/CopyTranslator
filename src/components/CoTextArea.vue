@@ -6,7 +6,7 @@
           v-for="(val, key) in sentences"
           :key="key"
           @mouseover="mouseOver(key)"
-          style="display: block; text-indent: 2em;"
+          style="display: block;"
         >
           {{ val }}
         </span>

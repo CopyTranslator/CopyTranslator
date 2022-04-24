@@ -242,7 +242,7 @@ export class WindowMangaer {
     } = this.getDisplay().bounds;
 
     const t = store.getters.locale;
-    const config = {
+    const cfg = {
       x: xBound + (screenWidth - width) / 2,
       y: yBound + (screenHeight - height) / 2,
       width: width,
@@ -252,7 +252,10 @@ export class WindowMangaer {
       title: t["settings"],
       parent: this.get("contrast"),
     };
-    return this.createWindow("settings", config);
+    const previous_cfg = config.get("settings");
+    cfg["width"] = previous_cfg["width"];
+    cfg["height"] = previous_cfg["height"];
+    return this.createWindow("settings", cfg);
   }
 
   createUpdate() {

@@ -11,6 +11,10 @@ import logger from "@/common/logger";
 
 @Component
 export default class BaseView extends Vue {
+  get multiSource() {
+    return this.config.multiSource;
+  }
+
   get layoutType() {
     return this.config.layoutType;
   }
@@ -65,6 +69,10 @@ export default class BaseView extends Vue {
     this.$store.dispatch("setDictResult", {
       valid: false,
     });
+  }
+
+  created() {
+    eventBus.on("translateInput", this.translate);
   }
 
   command() {

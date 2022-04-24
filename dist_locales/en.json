@@ -79,5 +79,14 @@
     "drawer": "Drawer",
     "translatorConfig": "Translator Config",
     "openAtLogin": "Open at login",
-    "doubleClickCopy": "Double Click Copy"
+    "doubleClickCopy": "Double Click Copy",
+    "toastTip": "Toast tip",
+    "multiSource": "Multi-source",
+    "enableDoubleCopyTranslate": "Double Ctrl+C Translate",
+    "pasteDelay": "Auto paste dalay",
+    "horizontal": "Horizontal",
+    "vertical": "Vertical",
+    "basic": "Basic",
+    "advance": "Advance",
+    "translateInput": "translate"
 }

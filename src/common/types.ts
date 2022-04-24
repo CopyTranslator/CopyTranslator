@@ -38,6 +38,7 @@ export const normalActionTypes = [
   "incrementSelect",
   "simulateCopy",
   "simulateIncrementCopy",
+  "translateInput",
 ] as const;
 
 //切换值的动作
@@ -56,6 +57,7 @@ export const constantActionTypes = [
   "autoCheckUpdate",
   "colorMode",
   "version",
+  "pasteDelay",
 ] as const;
 
 export const translatorTypes = [
@@ -69,9 +71,11 @@ export const translatorTypes = [
 ] as const;
 
 export const recognizerTypes = ["baidu-ocr"] as const;
+export const frequencies = ["basic", "advance"] as const;
 
 export type TranslatorType = typeof translatorTypes[number];
 export type RecognizerType = typeof recognizerTypes[number];
+export type Frequency = typeof frequencies[number];
 
 //结构体的动作
 export type StructActionType = TranslatorType | RecognizerType;
@@ -102,6 +106,9 @@ export const switchActionTypes = [
   "closeAsQuit",
   "contrastDict",
   "openAtLogin",
+  "toastTip",
+  "multiSource",
+  "enableDoubleCopyTranslate",
 ] as const;
 
 //Electron 原生 角色
@@ -149,12 +156,7 @@ export const translatorGroups = [
 ] as const;
 
 //布局名称
-export const layoutTypes = [
-  "horizontal",
-  "vertical",
-  "focus",
-  "compare",
-] as const;
+export const layoutTypes = ["horizontal", "vertical", "focus"] as const;
 
 // 百度垂直领域翻译
 export const domains = ["medicine", "electronics", "mechanics"];
@@ -207,7 +209,8 @@ export type Identifier =
   | TranslatorType
   | RecognizerType
   | Role
-  | TranslatorGroup;
+  | TranslatorGroup
+  | Frequency;
 
 export const identifiers: readonly Identifier[] = flatten([
   roles,
@@ -248,10 +251,12 @@ export interface SubActionView extends AbstractAction {
 export interface ActionView extends AbstractAction {
   id: Identifier;
   actionType: ActionType | MenuItemType;
+  freq?: Frequency;
 }
 
 export interface ActionInitOpt extends AbstractAction {
   id: Identifier;
+  freq?: Frequency;
 }
 
 export const hideDirections = [

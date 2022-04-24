@@ -11,6 +11,7 @@ const Options = {
   // icon: "info",
   singleton: true,
 };
+import config from "../common/configuration";
 Vue.use(Toasted, Options);
 import logger, { initLog } from "../common/logger";
 
@@ -54,7 +55,9 @@ export class RendererController extends RenController {
   }
 
   toast(text: string) {
-    Vue.toasted.show(text);
+    if (config.get("toastTip")) {
+      Vue.toasted.show(text);
+    }
   }
 
   handle(identifier: Identifier, param: any) {
@@ -64,6 +67,9 @@ export class RendererController extends RenController {
         break;
       case "toast":
         this.toast(param);
+        break;
+      case "translateInput":
+        bus.at("translateInput");
         break;
       default:
         return false;

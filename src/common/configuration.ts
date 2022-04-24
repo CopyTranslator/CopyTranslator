@@ -47,14 +47,14 @@ function initConfig(
 
   config.setRule(
     "doubleClickCopy",
-    new TypeRule<boolean>(false, "double click copy")
+    new TypeRule<boolean>(true, "double click copy")
   );
 
   config.setRule(
     "incrementalCopy",
     new TypeRule<boolean>(false, "incremental copy")
   );
-  config.setRule("stayTop", new TypeRule<boolean>(false, "always stay on top"));
+  config.setRule("stayTop", new TypeRule<boolean>(true, "always stay on top"));
   config.setRule("smartDict", new TypeRule<boolean>(true, "smart dict"));
   config.setRule(
     "contrastDict",
@@ -102,6 +102,7 @@ function initConfig(
     "neverShow",
     new TypeRule<boolean>(false, "never show warning")
   );
+  config.setRule("toastTip", new TypeRule<boolean>(false, "action toast tip"));
 
   config.setRule("drawer", new TypeRule<boolean>(false, "never show warning"));
 
@@ -115,6 +116,16 @@ function initConfig(
   config.setRule(
     "openAtLogin",
     new TypeRule<boolean>(false, "auto start at login")
+  );
+
+  config.setRule(
+    "multiSource",
+    new TypeRule<boolean>(false, "show multi source result")
+  );
+
+  config.setRule(
+    "enableDoubleCopyTranslate",
+    new TypeRule<boolean>(false, "enable Double Ctrl+C Translate")
   );
 
   config.setRule(
@@ -177,7 +188,7 @@ function initConfig(
         x: 1390,
         y: 133,
         height: 787,
-        width: 362,
+        width: 415,
       },
       "parameters of setting panel"
     )
@@ -259,7 +270,6 @@ function initConfig(
         "dragCopy",
         "stayTop",
         "listenClipboard",
-        "enableNotify",
         "settings",
         "helpAndUpdate",
         "exit",
@@ -279,12 +289,12 @@ function initConfig(
         "autoHide",
         "autoShow",
         "autoFormat",
-        "enableNotify",
         "dragCopy",
         "stayTop",
         "listenClipboard",
         "sourceLanguage",
         "targetLanguage",
+        "translateInput",
         "settings",
       ],
       "the options of contrast mode",
@@ -337,10 +347,10 @@ function initConfig(
   //   )
   // );
 
-  // config.setRule(
-  //   "youdao",
-  //   new StructRule<KeyConfig>({ appKey: "", key: "" }, "parameters of youdao")
-  // );
+  config.setRule(
+    "youdao",
+    new StructRule<KeyConfig>({ appKey: "", key: "" }, "parameters of youdao")
+  );
 
   //下面是三种布局
   config.setRule(
@@ -367,13 +377,7 @@ function initConfig(
     )
   );
 
-  config.setRule(
-    "compare",
-    new StructRule<LayoutConfig>(
-      { fontSize: 15, x: 535, y: 186, height: 600, width: 1094 },
-      "layout config"
-    )
-  );
+  config.setRule("pasteDelay", new TypeRule<number>(0.0, "auto copy delay"));
 
   return config;
 }

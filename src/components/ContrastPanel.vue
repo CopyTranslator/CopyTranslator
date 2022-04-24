@@ -2,37 +2,6 @@
   <div class="maxNoPad">
     <Focus class="maxNoPad areaWarpper" v-if="layoutType === 'focus'"></Focus>
     <v-row
-      v-else-if="layoutType === 'compare'"
-      class="maxNoPad"
-      style="margin: 0px;"
-    >
-      <v-col class="areaWarpper">
-        <textarea
-          v-bind:style="fontStyle"
-          class="hArea"
-          @keyup.ctrl.13="translate"
-          @keyup.ctrl.71="google"
-          @keyup.ctrl.66="baidu"
-          @keyup.ctrl.80="command"
-          @select="onSelect"
-          @blur="deSelect"
-          @click="deSelect"
-          @keydown="deSelect"
-          @mousemove="mouseMove"
-          v-model="sharedDiff.text"
-          v-on:contextmenu="openMenu('contrastContext')"
-        ></textarea>
-      </v-col>
-      <v-col class="areaWarpper" v-on:contextmenu="openMenu('contrastContext')">
-        <DiffTextArea
-          class="hArea"
-          v-bind:style="fontStyle"
-          :allParts="sharedDiff.allParts"
-          ref="myhead"
-        ></DiffTextArea>
-      </v-col>
-    </v-row>
-    <v-row
       v-else-if="layoutType === 'horizontal'"
       class="maxNoPad"
       style="margin: 0px;"
@@ -55,7 +24,14 @@
         ></textarea>
       </v-col>
       <v-col class="areaWarpper" v-on:contextmenu="openMenu('contrastContext')">
+        <DiffTextArea
+          v-if="multiSource"
+          class="hArea"
+          v-bind:style="fontStyle"
+          :allParts="sharedDiff.allParts"
+        ></DiffTextArea>
         <CoTextArea
+          v-else
           class="hArea"
           v-bind:style="fontStyle"
           :sentences="sharedResult.transPara"
@@ -78,8 +54,15 @@
         ></textarea>
       </div>
       <div :style="area" class="areaWarpper">
+        <DiffTextArea
+          v-if="multiSource"
+          class="vArea"
+          v-bind:style="fontStyle"
+          :allParts="sharedDiff.allParts"
+        ></DiffTextArea>
         <CoTextArea
           class="vArea"
+          v-else
           v-bind:style="fontStyle"
           :sentences="sharedResult.transPara"
           :chineseStyle="sharedResult.chineseStyle"

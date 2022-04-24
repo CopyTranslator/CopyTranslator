@@ -22,19 +22,19 @@ export const defaultTokens = new Map<TranslatorType, any>([
   //     key: process.env.VUE_APP_YOUDAO_APP_SECRET as string,
   //   },
   // ],
-  [
-    "caiyun",
-    {
-      token: process.env.VUE_APP_CAIYUN_TOKEN as string,
-    },
-  ],
-  [
-    "tencent",
-    {
-      secretId: process.env.VUE_APP_TENCENT_APP_KEY as string,
-      secretKey: process.env.VUE_APP_TENCENT_APP_SECRET as string,
-    },
-  ],
+  // [
+  //   "caiyun",
+  //   {
+  //     token: process.env.VUE_APP_CAIYUN_TOKEN as string,
+  //   },
+  // ],
+  // [
+  //   "tencent",
+  //   {
+  //     secretId: process.env.VUE_APP_TENCENT_APP_KEY as string,
+  //     secretKey: process.env.VUE_APP_TENCENT_APP_SECRET as string,
+  //   },
+  // ],
   [
     "baidu-domain",
     {

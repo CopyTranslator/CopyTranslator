@@ -6,7 +6,7 @@ export class Polymer {
   resultBuffer = new Map<DictionaryType, QueryDictResult | undefined>();
   words: string | undefined;
 
-  constructor(engineType: DictionaryType = "google") {
+  constructor(engineType: DictionaryType = "youdao") {
     this.mainEngine = getDictionary(engineType);
   }
 

@@ -46,7 +46,7 @@ export class BingEngine extends EasyEngine {
 
 export class GoogleEngine extends EasyEngine {
   constructor() {
-    super("google");
+    super("bing");
   }
 }
 

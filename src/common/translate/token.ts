@@ -22,12 +22,12 @@ export const defaultTokens = new Map<TranslatorType, any>([
   //     key: process.env.VUE_APP_YOUDAO_APP_SECRET as string,
   //   },
   // ],
-  // [
-  //   "caiyun",
-  //   {
-  //     token: process.env.VUE_APP_CAIYUN_TOKEN as string,
-  //   },
-  // ],
+  [
+    "caiyun",
+    {
+      token: process.env.VUE_APP_CAIYUN_TOKEN as string,
+    },
+  ],
   // [
   //   "tencent",
   //   {

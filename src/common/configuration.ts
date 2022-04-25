@@ -212,7 +212,7 @@ function initConfig(
   config.setRule(
     "translator-auto",
     new GroupRule<TranslatorType>(
-      ["google", "baidu"],
+      ["google", "baidu", "caiyun"],
       "auto call",
       translatorTypes
     )

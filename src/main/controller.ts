@@ -50,6 +50,7 @@ class Controller extends MainController {
         this.changeFontSize(false);
         break;
       case "exit":
+        this.handle("closeWindow", null);
         this.onExit();
         break;
       case "settings":

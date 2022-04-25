@@ -37,7 +37,7 @@
     "@types/lodash.trim": "^4.5.6",
     "@types/lodash.trimstart": "^4.5.6",
     "@wtfcode/vue-merge": "^2.0.3",
-    "axios": "0.19.2",
+    "axios": "0.21.2",
     "baidu-aip-sdk": "^2.4.5",
     "diff": "^5.0.0",
     "eazydict-bing": "https://github.com/CopyTranslator/eazydict-bing.git",

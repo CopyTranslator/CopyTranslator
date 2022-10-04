@@ -44,7 +44,7 @@ interface SharedConfig {
 
 interface DiffConfig {
   systemLocaleDir: string;
-
+  externalResource: string;
   iconPath: string;
   trayIconPath: string;
   styleTemplate: string;
@@ -65,6 +65,7 @@ const sharedConfig: SharedConfig = {
 const diffConfig: DiffConfig =
   process.env.NODE_ENV == "production"
     ? {
+        externalResource: join(process.resourcesPath, "external_resource"),
         systemLocaleDir: join(process.resourcesPath, "locales"),
         iconPath: join(process.resourcesPath, currentSpec.iconName),
         trayIconPath: join(process.resourcesPath, trayName),
@@ -72,6 +73,7 @@ const diffConfig: DiffConfig =
         publicUrl: `file://${__dirname}`,
       }
     : {
+        externalResource: join(process.cwd(), "external_resource"),
         systemLocaleDir: join(process.cwd(), "dist_locales"),
         iconPath: join(process.cwd(), currentSpec.iconName),
         trayIconPath: join(process.cwd(), trayName),
@@ -85,4 +87,4 @@ mkdir(env.configDir);
 mkdir(env.userLocaleDir);
 const icon = nativeImage.createFromPath(env.iconPath);
 
-export { env, icon };
+export { env, icon, osType };

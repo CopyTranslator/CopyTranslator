@@ -34,6 +34,53 @@ export function showDragCopyWarning(controller: MainController) {
     });
 }
 
+const enHostsMessage =
+  "Since Google has stopped its translation service in mainland China, CopyTranslator needs to request administrator permission to change hosts so that you can continue to use fast Google translation";
+const zhHostsMessage =
+  "由于谷歌停止了在大陆的翻译服务，CopyTranslator需要请求管理员权限来更改hosts以使得您可以继续使用谷歌翻译";
+
+function setHosts() {
+  const fs = require("fs");
+  const path = require("path");
+  const hosts_exe = path.join(env.externalResource, "hosts.exe");
+  var sudo = require("sudo-prompt");
+  var options = {
+    name: "Electron",
+    // icns: path.join(process.resourcesPath, "icon.ico"), // (optional)
+  };
+  sudo.exec(
+    `${hosts_exe} set translate.googleapis.com 180.163.151.162  && ipconfig /flushdns`,
+    // "echo. >> %WINDIR%\\System32\\Drivers\\Etc\\Hosts && echo 180.163.151.162 translate.googleapis.com >> %WINDIR%\\System32\\Drivers\\Etc\\Hosts && ipconfig /flushdns",
+    options,
+    function (error: any, stdout: any, stderr: any) {
+      if (error) throw error;
+      console.log("stdout: " + stdout);
+    }
+  );
+}
+
+export function showHostsWarning(controller: MainController) {
+  const t = store.getters.locale;
+  dialog
+    .showMessageBox(BrowserWindow.getAllWindows()[0], {
+      title: "声明/Message",
+      message: [enHostsMessage, zhHostsMessage].join("\n"),
+      buttons: [t["ok"]],
+      icon: icon,
+    })
+    .then((res) => res.response)
+    .then((response) => {
+      switch (response) {
+        case 0:
+          setHosts();
+          store.dispatch("updateConfig", {
+            hostsSet: true,
+          });
+          break;
+      }
+    });
+}
+
 export function showHelpAndUpdate(controller: MainController) {
   const t = store.getters.locale;
   dialog

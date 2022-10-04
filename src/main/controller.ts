@@ -5,11 +5,14 @@ import { Identifier, authorizeKey } from "../common/types";
 import { startService } from "../proxy/main";
 import { ShortcutManager } from "./shortcut";
 import { app, BrowserWindow } from "electron";
-import { env } from "../common/env";
+import { env, osType } from "../common/env";
 import store, { observers, restoreFromConfig } from "../store";
 import { TranslateController } from "./translate-controller";
 import { l10n, L10N } from "./l10n";
-import actionLinks, { showDragCopyWarning } from "./views/dialog";
+import actionLinks, {
+  showDragCopyWarning,
+  showHostsWarning,
+} from "./views/dialog";
 import { resetAllConfig } from "./file-related";
 import { MainController } from "../common/controller";
 import { UpdateChecker } from "./views/update";
@@ -59,6 +62,9 @@ class Controller extends MainController {
       case "restoreDefault":
         this.resotreDefaultSetting();
         break;
+      case "setHosts":
+        showHostsWarning(this);
+        break;
       case "checkUpdate":
         this.updater.check();
         break;
@@ -95,6 +101,11 @@ class Controller extends MainController {
     this.win.get("contrast"); //创建主窗口
     this.shortcut.init();
     this.menu.init();
+    if (!this.get("hostsSet")) {
+      if (osType == "Windows_NT") {
+        this.handle("setHosts", null); //请求修改windows hosts
+      }
+    }
   }
 
   onExit() {

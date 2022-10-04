@@ -105,5 +105,6 @@
     "vertical": "Vertical",
     "basic": "Basic",
     "advance": "Advance",
-    "translateInput": "translate"
+    "translateInput": "translate",
+    "setHosts": "Set Hosts"
 }

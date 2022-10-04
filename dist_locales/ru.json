@@ -88,5 +88,6 @@
     "vertical": "Вертикальное расположение",
     "basic": "Основные",
     "advance": "Расширенные",
-    "translateInput": "Перевод"
+    "translateInput": "Перевод",
+    "setHosts": "Set Hosts"
 }

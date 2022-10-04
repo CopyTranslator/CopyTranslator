@@ -88,5 +88,6 @@
     "vertical": "垂直布局",
     "basic": "基础",
     "advance": "进阶",
-    "translateInput": "翻译"
+    "translateInput": "翻译",
+    "setHosts": "设置Hosts"
 }

@@ -28,6 +28,10 @@ module.exports = {
             to: `locales`,
           },
           {
+            from: `external_resource`,
+            to: `external_resource`,
+          },
+          {
             from: trayIconName,
             to: trayIconName,
           },

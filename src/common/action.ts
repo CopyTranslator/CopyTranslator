@@ -276,6 +276,7 @@ class ActionManager {
     this.append(normalAction("incrementSelect"));
     this.append(normalAction("simulateCopy"));
     this.append(normalAction("translateInput"));
+    this.append(normalAction("setHosts"));
 
     //引擎配置
     structActionTypes.forEach((id) => {
@@ -369,6 +370,7 @@ class ActionManager {
           }
         }
         retval["advance"].push("restoreDefault");
+        retval["advance"].push("setHosts");
         break;
     }
     return retval;

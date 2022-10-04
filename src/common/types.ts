@@ -39,6 +39,7 @@ export const normalActionTypes = [
   "simulateCopy",
   "simulateIncrementCopy",
   "translateInput",
+  "setHosts",
 ] as const;
 
 //切换值的动作
@@ -93,6 +94,7 @@ export const switchActionTypes = [
   "autoPaste",
   "autoPurify",
   "neverShow",
+  "hostsSet", //已经设置过了hosts
   "smartDict",
   "autoHide",
   "autoFormat",

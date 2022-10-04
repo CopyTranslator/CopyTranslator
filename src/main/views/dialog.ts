@@ -49,7 +49,7 @@ function setHosts() {
     // icns: path.join(process.resourcesPath, "icon.ico"), // (optional)
   };
   sudo.exec(
-    `${hosts_exe} set translate.googleapis.com 180.163.151.162  && ipconfig /flushdns`,
+    `"${hosts_exe}" set translate.googleapis.com 180.163.151.162  && ipconfig /flushdns`,
     // "echo. >> %WINDIR%\\System32\\Drivers\\Etc\\Hosts && echo 180.163.151.162 translate.googleapis.com >> %WINDIR%\\System32\\Drivers\\Etc\\Hosts && ipconfig /flushdns",
     options,
     function (error: any, stdout: any, stderr: any) {

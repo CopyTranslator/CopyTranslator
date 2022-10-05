@@ -29,19 +29,16 @@ export class Recognizer {
     );
   }
 
-  setUp(config: {
-    app_id: string;
-    api_key: string;
-    secret_key: string;
-  }): boolean {
+  enabled(): boolean {
+    return !!this.client;
+  }
+
+  setUp(config: { app_id: string; api_key: string; secret_key: string }) {
     if (!examToken(config)) {
       this.client = undefined;
-      return false;
     }
     const { app_id, api_key, secret_key } = config;
     this.client = new AipOcrClient(app_id, api_key, secret_key);
-
-    return true;
   }
 
   capture() {

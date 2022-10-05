@@ -71,7 +71,7 @@ export const translatorTypes = [
   "baidu-domain",
 ] as const;
 
-export const recognizerTypes = ["baidu-ocr"] as const;
+export const recognizerTypes = ["baidu-ocr", "pp-ocr"] as const;
 export const frequencies = ["basic", "advance"] as const;
 
 export type TranslatorType = typeof translatorTypes[number];

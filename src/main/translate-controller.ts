@@ -28,6 +28,7 @@ import { clipboard } from "./clipboard";
 import { MainController } from "../common/controller";
 import store from "@/store";
 import { recognizer } from "./ocr";
+import { pp_recognizer } from "./pp-ocr";
 import eventBus from "@/common/event-bus";
 import logger from "@/common/logger";
 import { getLanguageLocales } from "@/common/translate/locale";
@@ -547,11 +548,16 @@ class TranslateController {
       });
       clipboard.on("image-changed", () => {
         // OCR 相关TranslateResult
-        if (!recognizer.client) {
+        if (pp_recognizer.enabled()) {
+          logger.toast("PP 检测到剪贴板图片");
+          pp_recognizer.recognize_clipboard();
           return;
         }
-        logger.toast("检测到剪贴板图片");
-        recognizer.recognize(clipboard.readImage().toDataURL());
+        if (recognizer.enabled()) {
+          logger.toast("检测到剪贴板图片");
+          recognizer.recognize(clipboard.readImage().toDataURL());
+          return;
+        }
       });
       clipboard.startWatching();
       this.checkClipboard(); //第一次检查剪贴板
@@ -617,6 +623,9 @@ class TranslateController {
         break;
       case "baidu-ocr":
         recognizer.setUp(this.get("baidu-ocr"));
+        break;
+      case "pp-ocr":
+        pp_recognizer.setUp(this.get("pp-ocr"));
         break;
       default:
         return false;

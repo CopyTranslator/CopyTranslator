@@ -54,8 +54,8 @@ export class RendererController extends RenController {
     }
   }
 
-  toast(text: string) {
-    if (config.get("toastTip")) {
+  toast(text: string, force: boolean = false) {
+    if (force || config.get("toastTip")) {
       Vue.toasted.show(text);
     }
   }

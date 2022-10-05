@@ -91,6 +91,9 @@ class StructRule<T extends { [key: string]: any }> implements Rule {
     this.predefined = predefined;
     this.tooltip = msg;
     this.check = function (value: T) {
+      if (!value) {
+        return false;
+      }
       for (const key of Object.keys(predefined)) {
         if (
           value[key] == undefined ||

@@ -321,6 +321,14 @@ function initConfig(
   );
 
   config.setRule(
+    "pp-ocr",
+    new StructRule<KeyConfig>(
+      { cwd: "", config_name: "" },
+      "parameters of pp-ocr"
+    )
+  );
+
+  config.setRule(
     "baidu-domain",
     new StructRule<KeyConfig>(
       { appid: "", key: "", domain: "" },

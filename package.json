@@ -68,6 +68,7 @@
     "vue-toasted": "^1.1.28",
     "vuetify": "v2.2.23",
     "vuex": "^3.2.0",
+    "@mdi/font": "^7.0.96",
     "vuex-electron": "https://github.com/MaverickMartyn/vuex-electron.git"
   },
   "devDependencies": {

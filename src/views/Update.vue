@@ -2,11 +2,7 @@
   <div style="height: 100vh;">
     <v-app>
       <div v-if="version" style="height: 100%;">
-        <h2 style="text-align: center;" v-html="version"></h2>
-        <h3 style="text-align: center;">更新日志</h3>
-        <div style="height: 50%; margin: 7%;">
-          <div id="releaseNote" v-html="releaseNote"></div>
-        </div>
+        <h2 v-html="version"></h2>
         <v-row>
           <v-col v-if="!isMac">
             <v-btn @click="autoDownload()" color="#33" style="width: 100%;">
@@ -19,6 +15,10 @@
             >
           </v-col>
         </v-row>
+        <h3 style="text-align: center;">更新日志</h3>
+        <div style="height: 50%; margin: 7%;">
+          <div id="releaseNote" v-html="releaseNote"></div>
+        </div>
       </div>
     </v-app>
   </div>

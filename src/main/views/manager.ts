@@ -6,9 +6,7 @@ import {
   Identifier,
   LayoutType,
 } from "../../common/types";
-import createProtocol from "./create-protocol";
 import { BrowserWindow, screen, nativeImage, app } from "electron";
-import { env, icon } from "../../common/env";
 import store from "../../store";
 import { MainController } from "@/common/controller";
 import { defaultConfig, MinimalParam, loadRoute, insertStyles } from "./utils";
@@ -155,7 +153,9 @@ export class WindowMangaer {
   }
 
   setStayTop(val: boolean) {
-    this.get("contrast").setAlwaysOnTop(val);
+    this.windows.forEach((window, key) => {
+      window.setAlwaysOnTop(val);
+    });
   }
 
   create(routeName: RouteActionType): BrowserWindow {
@@ -165,7 +165,7 @@ export class WindowMangaer {
       case "settings":
         return this.createSetting();
       case "update":
-        return this.createSetting();
+        return this.createUpdate(); //怎么会把这个搞错的
     }
   }
 
@@ -174,16 +174,15 @@ export class WindowMangaer {
     param: MinimalParam,
     main: boolean = false
   ): BrowserWindow {
-    const config = {
+    const cfg = {
       ...defaultConfig,
       ...param,
+      alwaysOnTop: config.get("stayTop"),
     };
-    const window = new BrowserWindow(config);
+    const window = new BrowserWindow(cfg);
 
-    if (!config.show) {
-      console.time("create-window");
+    if (!cfg.show) {
       window.webContents.once("did-finish-load", () => {
-        console.timeEnd("create-window");
         window.show();
       });
     }
@@ -269,7 +268,7 @@ export class WindowMangaer {
       height: screenHeight,
     } = this.getDisplay().bounds;
 
-    const config = {
+    const cfg = {
       x: xBound + (screenWidth - width) / 2,
       y: yBound + (screenHeight - height) / 2,
       width: width,
@@ -279,6 +278,6 @@ export class WindowMangaer {
       parent: this.get("contrast"),
       title: "Update",
     };
-    return this.createWindow("update", config);
+    return this.createWindow("update", cfg);
   }
 }

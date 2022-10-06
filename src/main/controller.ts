@@ -35,6 +35,7 @@ class Controller extends MainController {
     observers.push(this);
     observers.push(this.transCon);
     this.bindLinks(actionLinks);
+    this.handle("checkUpdate"); //检查更新
   }
 
   changeFontSize(increase: boolean) {
@@ -44,7 +45,7 @@ class Controller extends MainController {
     config.set(layoutType, layoutConfig);
   }
 
-  handle(identifier: Identifier, param: any): boolean {
+  handle(identifier: Identifier, param: any = null): boolean {
     switch (identifier) {
       case "font+":
         this.changeFontSize(true);

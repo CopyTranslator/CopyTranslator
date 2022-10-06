@@ -9,6 +9,7 @@ export class UpdateChecker {
   controller: Controller;
   constructor(controller: Controller) {
     this.controller = controller;
+    this.bindUpdateEvents();
   }
 
   async check() {

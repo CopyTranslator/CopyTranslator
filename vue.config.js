@@ -22,8 +22,9 @@ module.exports = {
       builderOptions: {
         appId: "com.copytranslator.copytranslator",
         publish: {
-          provider: "generic",
-          url: "",
+          provider: "github",
+          owner: "copytranslator",
+          repo: "copytranslator",
         },
         asar: true,
         extraResources: [

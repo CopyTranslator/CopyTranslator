@@ -22,7 +22,8 @@ export function compatible(configVersion: string): boolean {
   try {
     const configInfos = configVersion.substring(1).split(".");
     const currentInfos = version.substring(1).split(".");
-    for (const i of [0, 1]) {
+    for (const i of [0]) {
+      //v10之后都是兼容的
       if (currentInfos[i] !== configInfos[i]) {
         return false;
       }

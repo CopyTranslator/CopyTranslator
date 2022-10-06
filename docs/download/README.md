@@ -16,10 +16,11 @@ sidebarDepth: 6
 软件二次分发存在巨大风险，因此请尽量通过本文档提供的下载方式下载。
 :::
 
-v9.0.2以后，软件支持Mac、Windows、Linux三大主流桌面系统，请根据您的系统选择下载页面
-- [Windows](https://gitee.com/ylzheng/CopyTranslator/wikis/windows)
-- [Mac](https://gitee.com/ylzheng/CopyTranslator/wikis/mac)
-- [Linux](https://gitee.com/ylzheng/CopyTranslator/wikis/linux)
+请根据您的系统选择下载页面，不同操作系统的更新程度可能不同，这是由于[跨平台移植问题](/support/#平台维护者)
+
+- [Windows](/download/windows)
+- [Mac](/download/mac)
+- [Linux](/download/mac)
 
 ## 订阅更新
 - 在[Github](https://github.com/CopyTranslator/CopyTranslator)上`watch`本项目

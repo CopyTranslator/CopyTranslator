@@ -65,6 +65,10 @@ class TranslateController {
     this.comparator = new Comparator(this.translator);
   }
 
+  onExit() {
+    pp_recognizer.onExit();
+  }
+
   init() {
     clipboard.init();
   }

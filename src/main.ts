@@ -1,5 +1,4 @@
 import { ipcRenderer } from "electron";
-ipcRenderer.send("what are");
 import Vue from "vue";
 
 import { RendererController } from "./renderer";

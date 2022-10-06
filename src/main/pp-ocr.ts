@@ -110,11 +110,17 @@ export class PaddlePaddleRecognizer {
       },
       false
     );
-    this.worker.on("exit", () => {
+    this.worker.on("error", () => {
       this.worker = null;
       console.log("PP OCR初始化失败");
       logger.toast("PP OCR initialize fail.", true);
     });
+  }
+
+  onExit() {
+    if (this.enabled()) {
+      this.worker.terminate();
+    }
   }
 
   recognize_clipboard() {

@@ -109,6 +109,7 @@ class Controller extends MainController {
   }
 
   onExit() {
+    this.transCon.onExit();
     this.config.save(env.configPath);
     this.shortcut.unregister();
     app.exit();

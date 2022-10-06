@@ -5,6 +5,9 @@ module.exports = {
     ['link', {
       rel: 'icon',
       href: `/icon.png`
+    }],
+    ['script', {
+      src: '/marked.min.js',
     }]
   ],
   // base: '/docs/',
@@ -61,6 +64,9 @@ module.exports = {
         collapsable: false,
         children: [
           '',
+          'windows',
+          'linux',
+          'mac',
         ]
       }],
       '/userland/': [{

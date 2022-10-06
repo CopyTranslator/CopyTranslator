@@ -21,6 +21,10 @@ module.exports = {
       },
       builderOptions: {
         appId: "com.copytranslator.copytranslator",
+        publish: {
+          provider: "generic",
+          url: "",
+        },
         asar: true,
         extraResources: [
           {

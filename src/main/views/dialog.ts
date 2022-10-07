@@ -43,7 +43,7 @@ function setHosts() {
   const fs = require("fs");
   const path = require("path");
   const hosts_exe = path.join(env.externalResource, "hosts.exe");
-  var sudo = require("sudo-prompt");
+  var sudo = require("sudo-prompt-alt");
   var options = {
     name: "Electron",
     // icns: path.join(process.resourcesPath, "icon.ico"), // (optional)

@@ -7,9 +7,6 @@ sidebarDepth: 6
 
 软件的维护需要较多精力，这些工作目前主要由作者一人花费大量私人时间与精力完成😫。如果你希望支持这个项目长久持续开发下去并不断加入新功能，可以选择[打赏❤️](/support/#打赏)我喝瓶冰阔落🥤恢复元气，更好地投入到开发当中。
 
-## 在线交流与反馈
-- 加入我们的[![](https://img.shields.io/gitter/room/copytranslator/copytranslator.svg)](https://gitter.im/CopyTranslator/Lobby?utm_source=share-link&utm_medium=link&utm_campaign=share-link)聊天室。
-
 ## 下载
 当前最新版本：[![](https://img.shields.io/github/release/copytranslator/copytranslator.svg)](https://github.com/copytranslator/copytranslator/releases)
 :::warning
@@ -20,7 +17,11 @@ sidebarDepth: 6
 
 - [Windows](/download/windows)
 - [Mac](/download/mac)
-- [Linux](/download/mac)
+- [Linux](/download/linux)
+
+
+## 在线交流与反馈
+- 加入我们的[![](https://img.shields.io/gitter/room/copytranslator/copytranslator.svg)](https://gitter.im/CopyTranslator/Lobby?utm_source=share-link&utm_medium=link&utm_campaign=share-link)聊天室。
 
 ## 订阅更新
 - 在[Github](https://github.com/CopyTranslator/CopyTranslator)上`watch`本项目

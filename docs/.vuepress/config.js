@@ -43,7 +43,7 @@ module.exports = {
       },
       {
         text: '更新日志',
-        link: '/changelogs/v9'
+        link: '/changelogs/'
       },
       {
         text: '用户生态',
@@ -87,7 +87,8 @@ module.exports = {
           '9.0.0',
           '8.4.0',
           '8.3.0',
-          'questions'
+          'tricks',
+          'questions',
         ]
       }],
       '/changelogs/': [{

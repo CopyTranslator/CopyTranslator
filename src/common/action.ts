@@ -228,26 +228,26 @@ class ActionManager {
     this.append(listAction("colorMode", colorModes));
 
     this.append(switchAction("listenClipboard"));
+    this.append(switchAction("stayTop"));
     this.append(switchAction("dragCopy"));
     this.append(switchAction("autoCopy"));
     this.append(switchAction("autoPaste"));
     this.append(switchAction("autoFormat"));
-    this.append(switchAction("autoPurify"));
     this.append(switchAction("incrementalCopy"));
     this.append(switchAction("autoHide"));
     this.append(switchAction("autoShow"));
-    this.append(switchAction("stayTop"));
-    this.append(switchAction("toastTip"));
-    this.append(switchAction("doubleClickCopy"));
-    this.append(switchAction("enableNotify"));
     this.append(switchAction("skipTaskbar"));
     this.append(switchAction("multiSource"));
-    this.append(switchAction("enableDoubleCopyTranslate"));
 
     this.append(switchAction("openAtLogin", "advance"));
     this.append(switchAction("closeAsQuit", "advance"));
+    this.append(switchAction("doubleClickCopy", "advance"));
+    this.append(switchAction("enableDoubleCopyTranslate", "advance"));
     this.append(switchAction("smartDict", "advance"));
     this.append(switchAction("contrastDict", "advance"));
+    this.append(switchAction("enableNotify", "advance"));
+    this.append(switchAction("autoPurify", "advance"));
+    this.append(switchAction("toastTip", "advance"));
     this.append(switchAction("smartTranslate", "advance"));
     this.append(switchAction("autoCheckUpdate", "advance"));
     this.append(switchAction("drawer", "advance"));

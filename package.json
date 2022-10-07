@@ -25,6 +25,7 @@
   "dependencies": {
     "@adeperio/forcefocus": "^1.0.3",
     "@gotoeasy/bus": "^1.0.0",
+    "@mdi/font": "^7.0.96",
     "@opentranslate/baidu": "^1.2.0",
     "@opentranslate/baidu-domain": "^1.4.1",
     "@opentranslate/caiyun": "^1.2.0",
@@ -59,7 +60,7 @@
     "sbd": "^1.0.18",
     "shortcut-capture": "^1.2.3",
     "socks-proxy-agent": "^5.0.0",
-    "sudo-prompt": "^9.2.1",
+    "sudo-prompt-alt": "^9.3.0",
     "v8-compile-cache": "^2.1.0",
     "vue": "^2.6.11",
     "vue-class-component": "^7.2.3",
@@ -68,7 +69,6 @@
     "vue-toasted": "^1.1.28",
     "vuetify": "v2.2.23",
     "vuex": "^3.2.0",
-    "@mdi/font": "^7.0.96",
     "vuex-electron": "https://github.com/MaverickMartyn/vuex-electron.git"
   },
   "devDependencies": {

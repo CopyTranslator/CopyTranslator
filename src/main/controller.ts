@@ -81,6 +81,9 @@ class Controller extends MainController {
       case "minimize":
         this.win.get("contrast").minimize();
         break;
+      case "simpleDebug":
+        this.transCon.debugBing();
+        break;
       case "simulateCopy":
         setTimeout(() => {
           logger.toast("模拟复制");

@@ -41,6 +41,7 @@ import {
   translators,
 } from "@/common/translate/translators";
 import { axios } from "@/common/translate/proxy";
+import { Bing, Deepl } from "./intercepter";
 
 class TranslateController {
   text: string = "";
@@ -58,6 +59,7 @@ class TranslateController {
   controller: MainController;
 
   comparator: Comparator;
+  bing: Bing | Deepl | undefined;
 
   constructor(controller: MainController) {
     this.controller = controller;
@@ -71,6 +73,17 @@ class TranslateController {
 
   init() {
     clipboard.init();
+  }
+
+  debugBing() {
+    if (this.bing == undefined) {
+      this.bing = new Deepl();
+      setTimeout(() => {
+        (this.bing as Bing).translate(clipboard.readText(), "en", "zh-CN");
+      }, 20000);
+    } else {
+      this.bing.translate(clipboard.readText(), "en", "zh-CN");
+    }
   }
 
   handle(identifier: Identifier, param: any): boolean {

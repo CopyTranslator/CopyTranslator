@@ -47,28 +47,6 @@ export const defaultConfig = {
   icon: icon,
   webPreferences: {
     nodeIntegration: true,
+    webSecurity: false,
   },
 };
-
-const windows = new Map<RouteActionType, BrowserWindow>();
-
-export function createWindow(
-  routeName: RouteActionType,
-  param: MinimalParam,
-  main: boolean = false
-): BrowserWindow {
-  const config = {
-    ...defaultConfig,
-    ...param,
-  };
-  const window = new BrowserWindow(config);
-  if (!config.show) {
-    window.webContents.once("did-finish-load", () => {
-      window.show();
-    });
-  }
-  loadRoute(window, routeName, false);
-  insertStyles(window);
-  windows.set(routeName, window);
-  return window;
-}

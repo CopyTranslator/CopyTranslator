@@ -40,6 +40,7 @@ export const normalActionTypes = [
   "simulateIncrementCopy",
   "translateInput",
   "setHosts",
+  "simpleDebug",
 ] as const;
 
 //切换值的动作

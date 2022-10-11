@@ -35,13 +35,9 @@ import { getLanguageLocales } from "@/common/translate/locale";
 import isTrad from "@/common/translate/detect-trad";
 import { Comparator } from "@/common/translate/comparator";
 import { examToken } from "@/common/translate/token";
-import {
-  getTranslator,
-  translatorMap,
-  translators,
-} from "@/common/translate/translators";
+import { getTranslator, translators } from "@/common/translate/translators";
 import { axios } from "@/common/translate/proxy";
-import { Bing, Deepl } from "./intercepter";
+import { Bing, Deepl } from "@/common/translate/intercepter";
 
 class TranslateController {
   text: string = "";
@@ -72,12 +68,14 @@ class TranslateController {
   }
 
   init() {
+    translators.set("bing", new Bing({ axios, config: { debug: false } }));
+    translators.set("deepl", new Deepl({ axios, config: { debug: false } }));
     clipboard.init();
   }
 
   debugBing() {
     if (this.bing == undefined) {
-      this.bing = new Deepl();
+      this.bing = new Bing({ config: { debug: true } });
       setTimeout(() => {
         (this.bing as Bing).translate(clipboard.readText(), "en", "zh-CN");
       }, 20000);
@@ -582,6 +580,7 @@ class TranslateController {
       clipboard.stopWatching();
     }
   }
+
   updateTranslatorSetting(engine: TranslatorType) {
     const config = this.get(engine) as KeyConfig;
     if (!examToken(config)) {

@@ -71,6 +71,9 @@ export default class EngineButton extends mixins(WindowController, AppProps) {
 .bing {
   background-image: url("../images/bing.png");
 }
+.deepl {
+  background-image: url("../images/deepl.svg");
+}
 .tencent {
   background-image: url("../images/tencent.png");
 }

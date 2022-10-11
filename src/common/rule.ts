@@ -54,6 +54,19 @@ class GroupRule<T> implements Rule {
   }
 }
 
+class ConstantGroupRule<T> implements Rule {
+  predefined: Array<T>;
+  tooltip: string;
+  check: CheckFuction;
+  constructor(predefined: Array<T>, msg: string, options: readonly T[]) {
+    this.predefined = predefined;
+    this.tooltip = msg;
+    this.check = (value: Array<T>) => {
+      return false;
+    };
+  }
+}
+
 export class UnionRule<T> implements Rule {
   predefined: any;
   tooltip: string;
@@ -107,4 +120,12 @@ class StructRule<T extends { [key: string]: any }> implements Rule {
   }
 }
 
-export { Rule, TypeRule, StructRule, CheckFuction, ModeConfig, GroupRule };
+export {
+  Rule,
+  TypeRule,
+  StructRule,
+  CheckFuction,
+  ModeConfig,
+  GroupRule,
+  ConstantGroupRule,
+};

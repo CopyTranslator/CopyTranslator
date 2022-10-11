@@ -1,6 +1,7 @@
 import { ConfigParser } from "./configParser";
 import {
   GroupRule,
+  ConstantGroupRule,
   StructRule,
   UnionRule,
   ModeConfig,
@@ -215,8 +216,8 @@ function initConfig(
 
   config.setRule(
     "translator-auto",
-    new GroupRule<TranslatorType>(
-      ["google", "baidu", "caiyun"],
+    new ConstantGroupRule<TranslatorType>(
+      ["google", "baidu", "caiyun", "bing", "deepl"],
       "auto call",
       translatorTypes
     )
@@ -224,7 +225,7 @@ function initConfig(
 
   config.setRule(
     "translator-double",
-    new GroupRule<TranslatorType>(
+    new ConstantGroupRule<TranslatorType>(
       ["baidu-domain"],
       "manually call",
       translatorTypes

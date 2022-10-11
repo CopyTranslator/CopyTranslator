@@ -9,6 +9,7 @@ import { BaiduDomain } from "@opentranslate/baidu-domain";
 import { TranslatorType } from "@/common/types";
 import { defaultTokens } from "./token";
 import { axios } from "./proxy";
+import { Bing, Deepl } from "./intercepter";
 
 export const translatorMap: [TranslatorType, Translator][] = [
   ["baidu", new Baidu({ axios, config: defaultTokens.get("baidu") })],
@@ -37,3 +38,5 @@ export function getTranslator(transType: TranslatorType): Translator {
 export function getSupportLanguages(type: TranslatorType): Language[] {
   return getTranslator(type).getSupportLanguages();
 }
+
+export { Translator };

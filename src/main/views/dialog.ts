@@ -37,7 +37,7 @@ export function showDragCopyWarning(controller: MainController) {
 const enHostsMessage =
   "Since Google has stopped its translation service in mainland China, CopyTranslator needs to request administrator permission to change hosts so that you can continue to use fast Google translation";
 const zhHostsMessage =
-  "由于谷歌停止了在大陆的翻译服务，CopyTranslator需要请求管理员权限来更改hosts以使得您可以继续使用谷歌翻译";
+  "由于谷歌停止了在大陆的翻译服务，CopyTranslator需要请求管理员权限来更改hosts以使得您可以继续使用谷歌翻译，如果自动修改失败的话，请尝试手动修改Hosts";
 
 function setHosts() {
   const fs = require("fs");
@@ -81,14 +81,27 @@ export function showHostsWarning(controller: MainController) {
     });
 }
 
-export function showHelpAndUpdate(controller: MainController) {
+export function showHelpAndUpdate(controller: MainController, startup = false) {
   const t = store.getters.locale;
+  let buttons = undefined;
+  if (startup) {
+    buttons = [
+      t["homepage"],
+      t["userManual"],
+      t["checkUpdate"],
+      t["neverShow"],
+      "cancel",
+    ];
+  } else {
+    buttons = [t["homepage"], t["userManual"], t["checkUpdate"], "cancel"];
+  }
+
   dialog
-    .showMessageBox({
+    .showMessageBox(BrowserWindow.getAllWindows()[0], {
       title: constants.appName + " " + versionString,
       message:
         "If you found it useful, please give me a star on GitHub or introduce to your friend.\n如果您感觉本软件对您有所帮助，请在项目Github上给个star或是介绍给您的朋友，谢谢。\n本软件免费开源，如果您是以付费的方式获得本软件，那么你应该是被骗了。[○･｀Д´･ ○]",
-      buttons: [t["homepage"], t["userManual"], t["checkUpdate"], "cancel"],
+      buttons: buttons,
       cancelId: 3,
       icon: icon,
     })
@@ -104,8 +117,19 @@ export function showHelpAndUpdate(controller: MainController) {
         case 2:
           eventBus.at("dispatch", "checkUpdate");
           break;
+        case 3:
+          if (startup) {
+            store.dispatch("updateConfig", {
+              isNewUser: false,
+            });
+            break;
+          }
       }
     });
+}
+
+function onStartup(controller: MainController) {
+  showHelpAndUpdate(controller, true);
 }
 
 export function showConfigFile() {
@@ -119,6 +143,7 @@ const actionLinks = new Map<Identifier, Handler>([
   ["editConfigFile", showConfigFile],
   ["showConfigFolder", showConfigFolder],
   ["helpAndUpdate", showHelpAndUpdate],
+  ["welcome", onStartup],
 ]);
 
 export default actionLinks;

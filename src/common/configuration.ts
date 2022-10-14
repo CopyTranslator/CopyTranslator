@@ -107,6 +107,12 @@ function initConfig(
     "hostsSet",
     new TypeRule<boolean>(false, "hosts has been set")
   );
+
+  config.setRule(
+    "isNewUser",
+    new TypeRule<boolean>(true, "this is the first start up of a new user")
+  );
+
   config.setRule("toastTip", new TypeRule<boolean>(false, "action toast tip"));
 
   config.setRule("drawer", new TypeRule<boolean>(false, "never show warning"));

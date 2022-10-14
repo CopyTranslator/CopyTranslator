@@ -35,7 +35,6 @@ class Controller extends MainController {
     observers.push(this);
     observers.push(this.transCon);
     this.bindLinks(actionLinks);
-    this.handle("checkUpdate"); //检查更新
   }
 
   changeFontSize(increase: boolean) {
@@ -96,9 +95,9 @@ class Controller extends MainController {
     return true;
   }
 
-  createWindow() {
+  async createWindow() {
     this.l10n.install(store, this.config.get("localeSetting")); //修复无法检测系统语言的问题
-    this.transCon.init(); //初始化翻译控制器
+    await this.transCon.init(); //初始化翻译控制器
     this.restoreFromConfig(); //恢复设置
     eventListener.bind(); //绑定事件
     startService(this, authorizeKey); // 创建代理服务
@@ -106,9 +105,14 @@ class Controller extends MainController {
     this.shortcut.init();
     this.menu.init();
     if (!this.get("hostsSet")) {
+      //设置hosts
       if (osType == "Windows_NT") {
         this.handle("setHosts", null); //请求修改windows hosts
       }
+    }
+    if (this.get("isNewUser")) {
+      //显示启动页
+      eventBus.at("dispatch", "welcome");
     }
   }
 

@@ -67,10 +67,15 @@ class TranslateController {
     pp_recognizer.onExit();
   }
 
-  init() {
-    translators.set("bing", new Bing({ axios, config: { debug: false } }));
-    translators.set("deepl", new Deepl({ axios, config: { debug: false } }));
-    clipboard.init();
+  async init() {
+    const debug = process.env.NODE_ENV != "production";
+    const bing = new Bing({ axios, config: { debug: debug } });
+    const deepl = new Deepl({ axios, config: { debug: debug } });
+    translators.set("bing", bing);
+    translators.set("deepl", deepl);
+    await Promise.all([deepl.startService(), bing.startService()]).then(() => {
+      clipboard.init();
+    });
   }
 
   debugBing() {

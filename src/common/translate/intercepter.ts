@@ -187,96 +187,79 @@ const size = {
   height: 600,
 };
 
-function commonSetup(content: BrowserView["webContents"]) {
-  // 跨域处理
-  content.session.webRequest.onBeforeSendHeaders((details, callback) => {
-    callback({
-      requestHeaders: { Origin: "*", ...details.requestHeaders },
-    });
-  });
-  content.session.webRequest.onHeadersReceived((details: any, callback) => {
-    if (details) {
-      //https://blog.csdn.net/youyudexiaowangzi/article/details/120239241
-      if (details.responseHeaders["X-Frame-Options"]) {
-        delete details.responseHeaders["X-Frame-Options"];
-      } else if (details.responseHeaders["x-frame-options"]) {
-        delete details.responseHeaders["x-frame-options"];
-      }
-      if (details.responseHeaders["Content-Security-Policy"]) {
-        delete details.responseHeaders["Content-Security-Policy"];
-      } else if (details.responseHeaders["content-security-policy"]) {
-        delete details.responseHeaders["content-security-policy"];
-      }
-      if (details.responseHeaders["access-control-allow-origin"]) {
-        delete details.responseHeaders["access-control-allow-origin"];
-      } //这一句
-    }
-    callback({
-      responseHeaders: {
-        "Access-Control-Allow-Origin": ["*"],
-        ...details.responseHeaders,
-      },
-    });
-  });
-
+function clearUA(content: BrowserView["webContents"]) {
   content.on("dom-ready", () => {
     const uaArr = content.getUserAgent().split(" ");
-    const newUaArr = uaArr.filter((uar) => !uar.startsWith("Electron"));
+    const newUaArr = uaArr.filter(
+      (uar) => !(uar.startsWith("Electron") && uar.startsWith("copytranslator"))
+    );
     content.setUserAgent(newUaArr.join(" "));
   });
+}
+
+function bingSetup(content: BrowserView["webContents"]) {
+  // TODO 不知道为什么，这里也会拦截到deepl的请求
+  // 跨域处理
+  content.session.webRequest.onBeforeSendHeaders((details, callback) => {
+    if (details.url.indexOf("deepl") != -1) {
+      callback({
+        requestHeaders: { ...details.requestHeaders },
+      });
+    } else {
+      callback({
+        requestHeaders: { Origin: "*", ...details.requestHeaders },
+      });
+    }
+  });
+  content.session.webRequest.onHeadersReceived((details: any, callback) => {
+    if (details.url.indexOf("deepl") == -1) {
+      if (details) {
+        //https://blog.csdn.net/youyudexiaowangzi/article/details/120239241
+        if (details.responseHeaders["X-Frame-Options"]) {
+          delete details.responseHeaders["X-Frame-Options"];
+        } else if (details.responseHeaders["x-frame-options"]) {
+          delete details.responseHeaders["x-frame-options"];
+        }
+        if (details.responseHeaders["Content-Security-Policy"]) {
+          delete details.responseHeaders["Content-Security-Policy"];
+        } else if (details.responseHeaders["content-security-policy"]) {
+          delete details.responseHeaders["content-security-policy"];
+        }
+        if (details.responseHeaders["access-control-allow-origin"]) {
+          delete details.responseHeaders["access-control-allow-origin"];
+        } //这一句
+        if (details.responseHeaders["access-control-allow-credentials"]) {
+          delete details.responseHeaders["access-control-allow-credentials"];
+        } //这一句
+      }
+      callback({
+        responseHeaders: {
+          "Access-Control-Allow-Origin": ["*"],
+          ...details.responseHeaders,
+        },
+      });
+    } else {
+      callback({
+        responseHeaders: {
+          ...details.responseHeaders,
+        },
+      });
+    }
+  });
+  clearUA(content);
 }
 
 const DL_PREFIX = "<__COPYTRANSLATOR__>";
 
 function deeplSetup(content: BrowserView["webContents"]) {
-  // 跨域处理
-  content.session.webRequest.onBeforeSendHeaders((details, callback) => {
-    // console.log("requests", details.requestHeaders);
-    callback({
-      requestHeaders: { ...details.requestHeaders },
-    });
-  }); //simpleDebug
-  content.session.webRequest.onHeadersReceived((details: any, callback) => {
-    // console.log("response", details.responseHeaders);
-    // if (details) {
-    //   //https://blog.csdn.net/youyudexiaowangzi/article/details/120239241
-    //   if (details.responseHeaders["X-Frame-Options"]) {
-    //     delete details.responseHeaders["X-Frame-Options"];
-    //   } else if (details.responseHeaders["x-frame-options"]) {
-    //     delete details.responseHeaders["x-frame-options"];
-    //   }
-    //   if (details.responseHeaders["Content-Security-Policy"]) {
-    //     delete details.responseHeaders["Content-Security-Policy"];
-    //   } else if (details.responseHeaders["content-security-policy"]) {
-    //     delete details.responseHeaders["content-security-policy"];
-    //   }
-    //   if (details.responseHeaders["access-control-allow-origin"]) {
-    //     delete details.responseHeaders["access-control-allow-origin"];
-    //   } //这一句
-    //   if (details.responseHeaders["access-control-allow-methods"]) {
-    //     delete details.responseHeaders["access-control-allow-methods"];
-    //   } //这一句
-    // }
-    callback({
-      responseHeaders: {
-        // "Access-Control-Allow-Origin": ["*"],
-        // "Access-Control-Allow-Methods": "POST, GET, PUT, OPTIONS, DELETE",
-        ...details.responseHeaders,
-      },
-    });
-  });
-
-  content.on("dom-ready", () => {
-    const uaArr = content.getUserAgent().split(" ");
-    const newUaArr = uaArr.filter((uar) => !uar.startsWith("Electron"));
-    content.setUserAgent(newUaArr.join(" "));
-  });
+  clearUA(content);
 }
 
 export class Deepl extends Translator<DeeplConfig> {
   readonly name = "deepl";
   results: any;
   localBus = new EventEmitter();
+  serviceStarted: boolean = false;
 
   private static readonly langMap = new Map(deeplLangMap);
 
@@ -316,7 +299,6 @@ export class Deepl extends Translator<DeeplConfig> {
       });
       this.content.openDevTools();
     }
-    this.startService();
   }
 
   onResponse(raw_res: any) {
@@ -325,7 +307,7 @@ export class Deepl extends Translator<DeeplConfig> {
     this.localBus.emit("unlocked");
   }
 
-  startService() {
+  async startService() {
     deeplSetup(this.content);
 
     console.log("开始加载页面");
@@ -344,6 +326,7 @@ export class Deepl extends Translator<DeeplConfig> {
         }
       }
     );
+    this.serviceStarted = true;
   }
 
   sendReq(from: string, to: string, text: string) {
@@ -367,6 +350,9 @@ export class Deepl extends Translator<DeeplConfig> {
     to: Language,
     config: DeeplConfig
   ): Promise<TranslateQueryResult> {
+    if (!this.serviceStarted) {
+      throw "You need to first start the service";
+    }
     console.log("deepl from", from);
     console.log("deepl to", to);
     this.sendReq(
@@ -375,7 +361,15 @@ export class Deepl extends Translator<DeeplConfig> {
       text
     );
     console.log("开始等待");
-    await new Promise((resolve) => this.localBus.once("unlocked", resolve)); //等待结束
+    await new Promise((resolve, reject) => {
+      const timeoutId = setTimeout(() => {
+        reject({ status: 408, errorMsg: "Request timeout!" });
+      }, 10000); //Prevent infinitely waiting for the result.
+      this.localBus.once("unlocked", () => {
+        clearTimeout(timeoutId);
+        resolve(0);
+      });
+    }); //等待结束
     console.log("结束等待");
 
     const deeplResult = this.results as DeeplResult;
@@ -405,6 +399,7 @@ export class Bing extends Translator<BingConfig> {
   readonly name = "bing";
   results: any;
   localBus = new EventEmitter();
+  serviceStarted: boolean = false;
 
   private static readonly langMap = new Map(bingLangMap);
 
@@ -441,7 +436,6 @@ export class Bing extends Translator<BingConfig> {
       });
       this.content.openDevTools();
     }
-    this.startService();
   }
 
   onResponse(res: any) {
@@ -449,8 +443,8 @@ export class Bing extends Translator<BingConfig> {
     this.localBus.emit("unlocked");
   }
 
-  startService() {
-    commonSetup(this.content);
+  async startService() {
+    bingSetup(this.content);
 
     interceptResponse(this.content, "bing.com/ttranslatev3", (res) => {
       this.onResponse(res);
@@ -461,6 +455,7 @@ export class Bing extends Translator<BingConfig> {
     console.log("过去加载");
 
     runScript(this.content, "bing.js");
+    this.serviceStarted = true;
   }
 
   sendReq(from: string, to: string, text: string) {
@@ -477,13 +472,24 @@ export class Bing extends Translator<BingConfig> {
     to: Language,
     config: BingConfig
   ): Promise<TranslateQueryResult> {
+    if (!this.serviceStarted) {
+      throw "You need to first start the service";
+    }
     this.sendReq(
       Bing.langMap.get(from) as string,
       Bing.langMap.get(to) as string,
       text
     );
     console.log("开始等待");
-    await new Promise((resolve) => this.localBus.once("unlocked", resolve)); //等待结束
+    await new Promise((resolve, reject) => {
+      const timeoutId = setTimeout(() => {
+        reject({ status: 408, errorMsg: "Request timeout!" });
+      }, 10000); //Prevent infinitely waiting for the result.
+      this.localBus.once("unlocked", () => {
+        clearTimeout(timeoutId);
+        resolve(0);
+      });
+    }); //等待结束
     console.log("结束等待");
     const bingRes: BingSingleResult = JSON.parse(this.results)[0];
     const results = [bingRes.translations[0].text];

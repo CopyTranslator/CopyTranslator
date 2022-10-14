@@ -278,6 +278,7 @@ class ActionManager {
     this.append(normalAction("translateInput"));
     this.append(normalAction("setHosts"));
     this.append(normalAction("simpleDebug"));
+    this.append(normalAction("welcome"));
 
     //引擎配置
     structActionTypes.forEach((id) => {

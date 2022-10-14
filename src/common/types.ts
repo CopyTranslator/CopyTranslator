@@ -41,6 +41,7 @@ export const normalActionTypes = [
   "translateInput",
   "setHosts",
   "simpleDebug",
+  "welcome",
 ] as const;
 
 //切换值的动作
@@ -114,6 +115,7 @@ export const switchActionTypes = [
   "toastTip",
   "multiSource",
   "enableDoubleCopyTranslate",
+  "isNewUser",
 ] as const;
 
 //Electron 原生 角色

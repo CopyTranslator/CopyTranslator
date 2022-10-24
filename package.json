@@ -101,7 +101,7 @@
     "node-gyp": "^3.8.0",
     "ts-jest": "^23.10.5",
     "typescript": "^3.6.3",
-    "valine": "^1.3.4",
+    "valine": "^1.5.0",
     "vue-cli-plugin-electron-builder": "^1.4.0",
     "vue-template-compiler": "^2.5.21",
     "yaml": "^1.5.0"

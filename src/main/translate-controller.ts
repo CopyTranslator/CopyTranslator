@@ -66,9 +66,10 @@ class TranslateController {
   }
 
   async init() {
-    this.translator.initialize().finally(() => {
-      clipboard.init();
-    });
+    return Promise.allSettled([
+      this.translator.initialize(),
+      Promise.resolve(clipboard.init()),
+    ]);
   }
 
   handle(identifier: Identifier, param: any): boolean {

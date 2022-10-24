@@ -103,9 +103,10 @@ function initConfig(
     "neverShow",
     new TypeRule<boolean>(false, "never show warning")
   );
+
   config.setRule(
-    "hostsSet",
-    new TypeRule<boolean>(false, "hosts has been set")
+    "showGoogleMessage",
+    new TypeRule<boolean>(true, "show google message")
   );
 
   config.setRule(
@@ -221,10 +222,28 @@ function initConfig(
   );
 
   config.setRule(
-    "translator-auto",
-    new ConstantGroupRule<TranslatorType>(
-      ["google", "baidu", "caiyun", "bing", "deepl"],
-      "auto call",
+    "translator-enabled", //所有启用的的引擎
+    new GroupRule<TranslatorType>(
+      ["google", "baidu", "caiyun", "bing", "deepl", "tencent"],
+      "所有启用的的引擎，可以关闭某些不常用引擎以节省资源",
+      translatorTypes
+    )
+  );
+
+  config.setRule(
+    "translator-cache", //所有会自动查询并缓存结果以加速切换的翻译引擎
+    new GroupRule<TranslatorType>(
+      ["google", "baidu", "caiyun", "bing", "deepl", "tencent"],
+      "所有会自动查询并缓存结果以加速切换的翻译引擎",
+      translatorTypes
+    )
+  );
+
+  config.setRule(
+    "translator-compare", //多源对比时用的引擎
+    new GroupRule<TranslatorType>(
+      ["google", "baidu", "caiyun", "bing", "deepl", "tencent"],
+      "多源对比时用的引擎",
       translatorTypes
     )
   );

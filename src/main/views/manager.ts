@@ -52,6 +52,7 @@ export class WindowMangaer {
   close() {
     this.updateBounds();
     this.get("contrast").close();
+    app.quit();
   }
 
   edgeHide(hideDirection: HideDirection) {

@@ -9,10 +9,11 @@ import {
 } from "@opentranslate/translator";
 const EventEmitter = require("events");
 import fs from "fs";
+import logger from "@/common/logger";
 
 function runScript(content: BrowserView["webContents"], file: string) {
   const js = fs.readFileSync(path.join(env.externalResource, file)).toString();
-  content.executeJavaScript(js);
+  return content.executeJavaScript(js);
 }
 
 function interceptResponse(
@@ -161,13 +162,31 @@ const deeplLangMap: [Language, string][] = [
   ["it", "it"],
   ["en", "en-US"], //en-GB
 ];
-export interface BingConfig {
-  debug: boolean;
-}
 
-export interface DeeplConfig {
+const tencentLangMap: [Language, string][] = [
+  ["auto", "auto"],
+  ["zh-CN", "zh"],
+  ["en", "en"],
+  ["ko", "kr"],
+  ["ja", "jp"],
+  ["de", "de"],
+  ["fr", "fr"],
+  ["es", "es"],
+  ["it", "it"],
+  ["tr", "tr"],
+  ["ru", "ru"],
+  ["pt", "pt"],
+  ["vi", "vi"],
+  ["id", "id"],
+  ["ms", "ms"],
+  ["th", "th"],
+];
+
+export interface IntercepterConfig {
   debug: boolean;
 }
+export interface BingConfig extends IntercepterConfig {}
+export interface DeeplConfig extends IntercepterConfig {}
 
 interface BingSingleResult {
   detectedLanguage: { language: string; score: number };
@@ -181,7 +200,12 @@ interface DeeplResult {
   targetLangSettings: { lang: string; variant: string };
 }
 
-type BingResult = BingSingleResult[];
+interface TencentResult {
+  from: string;
+  to: string;
+  targetText: string[];
+}
+
 const size = {
   width: 800,
   height: 600,
@@ -189,11 +213,11 @@ const size = {
 
 function clearUA(content: BrowserView["webContents"]) {
   content.on("dom-ready", () => {
-    const uaArr = content.getUserAgent().split(" ");
+    const uaArr = content.userAgent.split(" ");
     const newUaArr = uaArr.filter(
       (uar) => !(uar.startsWith("Electron") && uar.startsWith("copytranslator"))
     );
-    content.setUserAgent(newUaArr.join(" "));
+    content.userAgent = newUaArr.join(" ");
   });
 }
 
@@ -255,33 +279,20 @@ function deeplSetup(content: BrowserView["webContents"]) {
   clearUA(content);
 }
 
-export class Deepl extends Translator<DeeplConfig> {
-  readonly name = "deepl";
-  results: any;
+export abstract class InterceptTranslator<
+  Config extends IntercepterConfig = { debug: false }
+> extends Translator<Config> {
+  abstract startService(): Promise<any>;
   localBus = new EventEmitter();
+  content?: BrowserWindow["webContents"];
+  view?: BrowserView;
+  win?: BrowserWindow;
   serviceStarted: boolean = false;
 
-  private static readonly langMap = new Map(deeplLangMap);
-
-  private static readonly langMapReverse = new Map(
-    bingLangMap.map(([translatorLang, lang]) => [lang, translatorLang])
-  );
-
-  getSupportLanguages(): Language[] {
-    return [...Deepl.langMap.keys()];
-  }
-
-  content: BrowserWindow["webContents"];
-  view = new BrowserView();
-  constructor(
-    init: TranslatorInit<DeeplConfig> = { config: { debug: false } }
-  ) {
-    super(init);
-    this.content = this.view.webContents;
-    //这里是browser view
+  commonDebugStart() {
     if (this.config.debug) {
       //调试的时候可视化
-      const win = new BrowserWindow({
+      this.win = new BrowserWindow({
         width: 800,
         height: 600,
         // show: false,
@@ -290,43 +301,99 @@ export class Deepl extends Translator<DeeplConfig> {
           //   webSecurity: false,
         },
       });
-      win.setBrowserView(this.view);
-      this.view.setBounds({
+      this.win.setBrowserView(this.view as BrowserView);
+      (<BrowserView>this.view).setBounds({
         x: 0,
         y: 0,
         width: size.width,
         height: size.height,
       });
-      this.content.openDevTools();
+      (<BrowserWindow["webContents"]>this.content).openDevTools();
     }
+  }
+
+  commonDebugShutdown() {
+    if (this.config.debug && this.win != undefined) {
+      this.win.destroy();
+    }
+  }
+
+  destory(): void {
+    if (this.view != undefined) {
+      this.view.destroy();
+      delete this.content;
+      delete this.view;
+    }
+    this.content = undefined;
+    this.view = undefined;
+    this.commonDebugShutdown();
+    this.serviceStarted = false;
+  }
+
+  restart(): Promise<any> {
+    this.destory();
+    return this.startService();
+  }
+}
+
+export class Tencent extends InterceptTranslator<IntercepterConfig> {
+  readonly name = "tencent";
+  results: any;
+
+  private static readonly langMap = new Map(tencentLangMap);
+
+  private static readonly langMapReverse = new Map(
+    bingLangMap.map(([translatorLang, lang]) => [lang, translatorLang])
+  );
+
+  getSupportLanguages(): Language[] {
+    return [...Tencent.langMap.keys()];
+  }
+
+  constructor(
+    init: TranslatorInit<DeeplConfig> = { config: { debug: false } }
+  ) {
+    super(init);
   }
 
   onResponse(raw_res: any) {
     this.results = raw_res;
-    console.log("更新res", this.results);
     this.localBus.emit("unlocked");
   }
 
   async startService() {
+    this.view = new BrowserView();
+    this.content = this.view.webContents;
+
+    this.commonDebugStart();
+
     deeplSetup(this.content);
 
-    console.log("开始加载页面");
-    this.content.loadURL("https://www.deepl.com/translator");
-    console.log("过去加载");
-
-    runScript(this.content, "deepl.js");
     this.content.on(
       "console-message",
       (event, level, message, line, sourceID) => {
         if (message.startsWith(DL_PREFIX)) {
-          const result: DeeplResult = JSON.parse(
+          const result: TencentResult = JSON.parse(
             message.substring(DL_PREFIX.length + 1)
           );
           this.onResponse(result);
         }
       }
     );
-    this.serviceStarted = true;
+
+    return this.content
+      .loadURL("https://fanyi.qq.com/")
+      .then(() =>
+        runScript(this.content as BrowserWindow["webContents"], "tencent.js")
+      )
+      .then((res) => {
+        this.serviceStarted = true;
+        logger.toast("Tencent引擎已启动", true);
+        return res;
+      })
+      .catch((e) => {
+        console.error(e);
+      });
   }
 
   sendReq(from: string, to: string, text: string) {
@@ -335,11 +402,9 @@ export class Deepl extends Translator<DeeplConfig> {
       //from 没有变体的讲究，所以要把en-US变成en
       from = from.substring(0, idx);
     }
-    console.log("deepl inside from", from);
-    console.log("deepl inside to", to);
     let buff = Buffer.from(text, "utf-8");
     let base64data = buff.toString("base64"); //这里因为是直接传，所以可能会存在一些问题，看看如果先加密再解密会不会好点
-    this.content.executeJavaScript(`
+    (<BrowserView["webContents"]>this.content).executeJavaScript(`
           inputValue(\`${from}\`,\`${to}\`,\`${base64data}\`);
       `);
   }
@@ -353,14 +418,12 @@ export class Deepl extends Translator<DeeplConfig> {
     if (!this.serviceStarted) {
       throw "You need to first start the service";
     }
-    console.log("deepl from", from);
-    console.log("deepl to", to);
     this.sendReq(
-      Deepl.langMap.get(from) as string,
-      Deepl.langMap.get(to) as string,
+      Tencent.langMap.get(from) as string,
+      Tencent.langMap.get(to) as string,
       text
     );
-    console.log("开始等待");
+    console.log("开始等待", this.name);
     await new Promise((resolve, reject) => {
       const timeoutId = setTimeout(() => {
         reject({ status: 408, errorMsg: "Request timeout!" });
@@ -370,11 +433,131 @@ export class Deepl extends Translator<DeeplConfig> {
         resolve(0);
       });
     }); //等待结束
-    console.log("结束等待");
+    console.log("结束等待", this.name);
+
+    const tencentResult = this.results as TencentResult;
+    const results = tencentResult.targetText;
+
+    const detectedFrom =
+      Tencent.langMapReverse.get(tencentResult.from.toLowerCase()) || "auto";
+
+    return {
+      text: text,
+      from: detectedFrom,
+      to,
+      origin: {
+        paragraphs: [text],
+        tts: (await this.textToSpeech(text, detectedFrom)) as any,
+      },
+      trans: {
+        paragraphs: results,
+        tts: (await this.textToSpeech(results.join(" "), to)) as any,
+      },
+    };
+  }
+}
+
+export class Deepl extends InterceptTranslator<DeeplConfig> {
+  readonly name = "deepl";
+  results: any;
+
+  private static readonly langMap = new Map(deeplLangMap);
+
+  private static readonly langMapReverse = new Map(
+    bingLangMap.map(([translatorLang, lang]) => [lang, translatorLang])
+  );
+
+  getSupportLanguages(): Language[] {
+    return [...Deepl.langMap.keys()];
+  }
+
+  constructor(
+    init: TranslatorInit<DeeplConfig> = { config: { debug: false } }
+  ) {
+    super(init);
+  }
+
+  onResponse(raw_res: any) {
+    this.results = raw_res;
+    console.log(this.name, "更新res", this.results);
+    this.localBus.emit("unlocked");
+  }
+
+  async startService() {
+    this.view = new BrowserView();
+    this.content = this.view.webContents;
+    this.commonDebugStart();
+    deeplSetup(this.content);
+    this.content.on(
+      "console-message",
+      (event, level, message, line, sourceID) => {
+        if (message.startsWith(DL_PREFIX)) {
+          const result: DeeplResult = JSON.parse(
+            message.substring(DL_PREFIX.length + 1)
+          );
+          this.onResponse(result);
+        }
+      }
+    );
+    return this.content
+      .loadURL("https://www.deepl.com/translator")
+      .then(() => {
+        return runScript(
+          this.content as BrowserWindow["webContents"],
+          "deepl.js"
+        );
+      })
+      .then((res) => {
+        this.serviceStarted = true;
+        logger.toast("Deepl引擎已启动", true);
+        return res;
+      })
+      .catch((e) => {
+        console.error(e);
+      });
+  }
+
+  sendReq(from: string, to: string, text: string) {
+    const idx = from.indexOf("-");
+    if (idx != -1) {
+      //from 没有变体的讲究，所以要把en-US变成en
+      from = from.substring(0, idx);
+    }
+    let buff = Buffer.from(text, "utf-8");
+    let base64data = buff.toString("base64"); //这里因为是直接传，所以可能会存在一些问题，看看如果先加密再解密会不会好点
+    (<BrowserView["webContents"]>this.content).executeJavaScript(`
+          inputValue(\`${from}\`,\`${to}\`,\`${base64data}\`);
+      `);
+  }
+
+  protected async query(
+    text: string,
+    from: Language,
+    to: Language,
+    config: DeeplConfig
+  ): Promise<TranslateQueryResult> {
+    if (!this.serviceStarted) {
+      throw "You need to first start the service";
+    }
+    this.sendReq(
+      Deepl.langMap.get(from) as string,
+      Deepl.langMap.get(to) as string,
+      text
+    );
+    console.log("开始等待", this.name);
+    await new Promise((resolve, reject) => {
+      const timeoutId = setTimeout(() => {
+        reject({ status: 408, errorMsg: "Request timeout!" });
+      }, 10000); //Prevent infinitely waiting for the result.
+      this.localBus.once("unlocked", () => {
+        clearTimeout(timeoutId);
+        resolve(0);
+      });
+    }); //等待结束
+    console.log("结束等待", this.name);
 
     const deeplResult = this.results as DeeplResult;
     const results = [deeplResult.targetText];
-    console.log("翻译结果", results);
 
     const detectedFrom =
       Deepl.langMapReverse.get(deeplResult.sourceLang.toLowerCase()) || "auto";
@@ -395,12 +578,9 @@ export class Deepl extends Translator<DeeplConfig> {
   }
 }
 
-export class Bing extends Translator<BingConfig> {
+export class Bing extends InterceptTranslator<BingConfig> {
   readonly name = "bing";
   results: any;
-  localBus = new EventEmitter();
-  serviceStarted: boolean = false;
-
   private static readonly langMap = new Map(bingLangMap);
 
   private static readonly langMapReverse = new Map(
@@ -411,57 +591,52 @@ export class Bing extends Translator<BingConfig> {
     return [...Bing.langMap.keys()];
   }
 
-  content: BrowserWindow["webContents"];
-  view = new BrowserView();
   constructor(init: TranslatorInit<BingConfig> = { config: { debug: false } }) {
     super(init);
-    this.content = this.view.webContents;
-    //这里是browser view
-    if (this.config.debug) {
-      const win = new BrowserWindow({
-        width: 800,
-        height: 600,
-        // show: false,
-        webPreferences: {
-          // nodeIntegration: true,
-          //   webSecurity: false,
-        },
-      });
-      win.setBrowserView(this.view);
-      this.view.setBounds({
-        x: 0,
-        y: 0,
-        width: size.width,
-        height: size.height,
-      });
-      this.content.openDevTools();
-    }
   }
 
   onResponse(res: any) {
-    this.results = res; //更新res
-    this.localBus.emit("unlocked");
+    try {
+      this.results = JSON.parse(res)[0]; //更新res
+      this.localBus.emit("unlocked");
+    } catch (e) {
+      console.log(this.name, "res=", res);
+      console.log(e);
+    }
   }
 
   async startService() {
+    this.view = new BrowserView();
+    this.content = this.view.webContents;
+    this.commonDebugStart();
     bingSetup(this.content);
 
     interceptResponse(this.content, "bing.com/ttranslatev3", (res) => {
       this.onResponse(res);
     });
 
-    console.log("开始加载页面");
-    this.content.loadURL("https://www.bing.com/translator");
-    console.log("过去加载");
-
-    runScript(this.content, "bing.js");
-    this.serviceStarted = true;
+    return this.content
+      .loadURL("https://www.bing.com/translator")
+      .then(() => {
+        return runScript(
+          this.content as BrowserWindow["webContents"],
+          "bing.js"
+        );
+      })
+      .then((res) => {
+        this.serviceStarted = true;
+        logger.toast("Bing引擎已启动", true);
+        return res;
+      })
+      .catch((e) => {
+        console.error(e);
+      });
   }
 
   sendReq(from: string, to: string, text: string) {
     const buff = Buffer.from(text, "utf-8");
     const base64data = buff.toString("base64"); //这里因为是直接传，所以可能会存在一些问题，看看如果先加密再解密会不会好点
-    this.content.executeJavaScript(`
+    (<BrowserView["webContents"]>this.content).executeJavaScript(`
         inputValue(\`${from}\`,\`${to}\`,\`${base64data}\`);
     `);
   }
@@ -480,7 +655,7 @@ export class Bing extends Translator<BingConfig> {
       Bing.langMap.get(to) as string,
       text
     );
-    console.log("开始等待");
+    console.log("开始等待", this.name);
     await new Promise((resolve, reject) => {
       const timeoutId = setTimeout(() => {
         reject({ status: 408, errorMsg: "Request timeout!" });
@@ -490,10 +665,10 @@ export class Bing extends Translator<BingConfig> {
         resolve(0);
       });
     }); //等待结束
-    console.log("结束等待");
-    const bingRes: BingSingleResult = JSON.parse(this.results)[0];
+    console.log(this.name, "结束等待");
+    console.log(this.name, this.results);
+    const bingRes: BingSingleResult = this.results;
     const results = [bingRes.translations[0].text];
-    console.log("翻译结果", results);
     const detectedFrom =
       Bing.langMapReverse.get(bingRes.detectedLanguage.language) || "auto";
     return {

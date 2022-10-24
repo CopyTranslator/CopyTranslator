@@ -276,7 +276,6 @@ class ActionManager {
     this.append(normalAction("incrementSelect"));
     this.append(normalAction("simulateCopy"));
     this.append(normalAction("translateInput"));
-    this.append(normalAction("setHosts"));
     this.append(normalAction("simpleDebug"));
     this.append(normalAction("welcome"));
 
@@ -372,7 +371,6 @@ class ActionManager {
           }
         }
         retval["advance"].push("restoreDefault");
-        retval["advance"].push("setHosts");
         break;
     }
     return retval;

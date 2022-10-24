@@ -37,7 +37,6 @@ import { Comparator } from "@/common/translate/comparator";
 import { examToken } from "@/common/translate/token";
 import { getTranslator, translators } from "@/common/translate/translators";
 import { axios } from "@/common/translate/proxy";
-import { Bing, Deepl } from "@/common/translate/intercepter";
 
 class TranslateController {
   text: string = "";
@@ -55,8 +54,6 @@ class TranslateController {
   controller: MainController;
 
   comparator: Comparator;
-  bing: Bing | Deepl | undefined;
-
   constructor(controller: MainController) {
     this.controller = controller;
     this.syncSupportLanguages();
@@ -65,28 +62,13 @@ class TranslateController {
 
   onExit() {
     pp_recognizer.onExit();
+    return this.translator.onExit();
   }
 
   async init() {
-    const debug = process.env.NODE_ENV != "production";
-    const bing = new Bing({ axios, config: { debug: debug } });
-    const deepl = new Deepl({ axios, config: { debug: debug } });
-    translators.set("bing", bing);
-    translators.set("deepl", deepl);
-    await Promise.all([deepl.startService(), bing.startService()]).then(() => {
+    this.translator.initialize().finally(() => {
       clipboard.init();
     });
-  }
-
-  debugBing() {
-    if (this.bing == undefined) {
-      this.bing = new Bing({ config: { debug: true } });
-      setTimeout(() => {
-        (this.bing as Bing).translate(clipboard.readText(), "en", "zh-CN");
-      }, 20000);
-    } else {
-      this.bing.translate(clipboard.readText(), "en", "zh-CN");
-    }
   }
 
   handle(identifier: Identifier, param: any): boolean {
@@ -202,6 +184,9 @@ class TranslateController {
 
   checkClipboard() {
     const originalText = clipboard.readText();
+    if (typeof originalText != "string") {
+      return; //内容并非文本
+    }
     if (!this.checkLength(originalText)) {
       this.setCurrentColor(true);
       return;
@@ -416,21 +401,34 @@ class TranslateController {
     }
     this.translating = true;
     logger.debug("translate", text);
+    const multiSource = this.get<boolean>("multiSource");
+
+    if (multiSource) {
+      //多源对比的时候指示灯应该是等全部翻译完了才出来
+      eventBus.once("allTranslated", () => {
+        this.translating = false;
+        this.setCurrentColor();
+      });
+    }
 
     Promise.allSettled([
       this.translateSentence(text),
       this.queryDictionary(text),
     ]).then(() => {
-      this.translating = false;
       if (this.dictResult.words === this.text && !this.dictResult.valid) {
         //同步词典结果
+        this.translating = false;
         logger.debug("word fail");
         this.syncDict(); //翻译完了，然后发现词典有问题，这个时候才发送
         this.setCurrentColor(true);
       } else if (this.dictResult.words !== this.text && !this.translateResult) {
         this.setCurrentColor(true);
+        this.translating = false;
       } else {
-        this.setCurrentColor();
+        if (!multiSource) {
+          this.translating = false;
+          this.setCurrentColor(); //多源对比的时候指示灯应该是等全部翻译完了才出来
+        }
       }
     });
   }
@@ -487,7 +485,12 @@ class TranslateController {
       return;
     }
     this.preProcess(text);
-    const engines = this.get<TranslatorType[]>("translator-auto");
+    const activeEngines = this.get<TranslatorType[]>("translator-enabled");
+    let engines = this.get<TranslatorType[]>("translator-cache");
+    if (this.get<boolean>("multiSource")) {
+      engines = this.get<TranslatorType[]>("translator-compare");
+    }
+    engines = engines.filter((engine) => activeEngines.includes(engine));
     return this.translator
       .translate(this.text, language.source, language.target, engines)
       .then((res) => this.postTranslate(res, language))
@@ -609,7 +612,7 @@ class TranslateController {
       return true;
     }
     switch (identifier) {
-      case "translator-auto":
+      case "translator-enabled":
         this.translator.setEngines(value);
         break;
       case "translator-double":

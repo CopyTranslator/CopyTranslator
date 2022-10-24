@@ -90,6 +90,9 @@ if (isActive) {
   const observer2 = new MutationObserver(function (mutations) {
     if (mutations[0].addedNodes.length > 0) {
       //这个添加节点的事件完成后，我们就可以点击选项了，点击完之后，就会触发删除节点的事件
+      if (lang == null) {
+        return;
+      }
       document
         .querySelector("#popover_container")
         .querySelector(`button[dl-test="translator-lang-option-${lang}"]`)

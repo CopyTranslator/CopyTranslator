@@ -28,7 +28,7 @@ export class Comparator {
     if (!engines.includes(anchor)) {
       anchor = engines[0];
     }
-    engines[engines.indexOf(anchor)] = engines[0];
+    engines[engines.indexOf(anchor)] = engines[0]; //换一下位置
     engines[0] = anchor;
     let anchorResult = results.get(anchor) as CopyTranslateResult;
     const compareResults = [];

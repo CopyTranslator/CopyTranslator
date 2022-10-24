@@ -1,11 +1,18 @@
-import { getTranslator } from "./translators";
+import { getTranslator, translators } from "./translators";
 import { CopyTranslator, CopyTranslateResult } from "./types";
 import { TranslatorType } from "@/common/types";
 import { AxiosRequestConfig } from "axios";
 import { Language } from "@opentranslate/translator";
 import { autoReSegment } from "./helper";
-import { setProxy } from "./proxy";
 import eventBus from "../event-bus";
+import { axios } from "@/common/translate/proxy";
+import { interceptTranslatorTypes } from "@/common/types";
+import {
+  Bing,
+  Deepl,
+  Tencent,
+  InterceptTranslator,
+} from "@/common/translate/intercepter";
 
 export class Compound implements CopyTranslator {
   mainEngine: TranslatorType;
@@ -15,7 +22,6 @@ export class Compound implements CopyTranslator {
   text: string | undefined;
   engines: TranslatorType[];
   detectEngine: TranslatorType = "baidu";
-  axios = setProxy(false);
 
   constructor(
     engines: TranslatorType[],
@@ -27,11 +33,52 @@ export class Compound implements CopyTranslator {
     this.config = config;
   }
 
+  initialize() {
+    return this.postSetEngines();
+  }
+
+  onExit() {
+    this.engines = []; //关闭所有intercepter引擎
+    return this.postSetEngines();
+  }
+
+  postSetEngines() {
+    //关闭和启动intercepter引擎以节省资源
+    const debug = process.env.NODE_ENV != "production";
+    const engine2Class = {
+      bing: Bing,
+      deepl: Deepl,
+      tencent: Tencent,
+    };
+    const engineObjs = [];
+    for (const engine of interceptTranslatorTypes) {
+      if (this.engines.includes(engine) && !translators.has(engine)) {
+        //没有启动
+        const engineObj = new engine2Class[engine]({
+          axios,
+          config: { debug: debug },
+        });
+        translators.set(engine, engineObj);
+        engineObjs.push(engineObj);
+      } else if (!this.engines.includes(engine) && translators.has(engine)) {
+        (<InterceptTranslator>translators.get(engine)).destory();
+        //关闭引擎
+        translators.delete(engine);
+        console.log("shutdown", engine);
+      }
+    }
+    if (engineObjs.length != 0) {
+      return Promise.allSettled(engineObjs.map((obj) => obj.restart()));
+    }
+    return Promise.resolve(true);
+  }
+
   setEngines(engines: TranslatorType[]) {
     this.engines = engines;
     if (!this.engines.includes(this.mainEngine)) {
       eventBus.at("dispatch", "translatorType", this.engines[0]);
     }
+    return this.postSetEngines();
   }
 
   getMainEngine() {
@@ -48,7 +95,7 @@ export class Compound implements CopyTranslator {
     if (!engines) {
       engines = this.engines;
     }
-    //遍历所有引擎
+    this.resultBuffer.clear(); //先清空缓存
     for (const name of engines) {
       if (name === this.mainEngine) {
         continue;

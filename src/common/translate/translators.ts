@@ -1,9 +1,9 @@
 import { Translator, Language } from "@opentranslate/translator";
 import { Baidu } from "@opentranslate/baidu";
 import { Google } from "@opentranslate/google";
-import { Youdao } from "@opentranslate/youdao";
+// import { Youdao } from "@opentranslate/youdao";
 import { Caiyun } from "@opentranslate/caiyun";
-// import { Tencent } from "@opentranslate/tencent";
+import { Tencent } from "@opentranslate/tencent";
 // import { Sogou } from "@opentranslate/sogou";
 import { BaiduDomain } from "@opentranslate/baidu-domain";
 import { TranslatorType } from "@/common/types";

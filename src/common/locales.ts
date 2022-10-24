@@ -92,7 +92,7 @@ export const zh_cn = new Map<Identifier, string>([
   ["basic", "基础"],
   ["advance", "进阶"],
   ["translateInput", "翻译"],
-  ["setHosts", "设置Hosts"],
+  ["openReference", "打开参考链接"],
 ]);
 
 export const en = new Map<Identifier, string>([
@@ -187,6 +187,6 @@ export const en = new Map<Identifier, string>([
   ["basic", "Basic"],
   ["advance", "Advance"],
   ["translateInput", "Translate"],
-  ["setHosts", "Set Hosts"],
+  ["openReference", "open reference link"],
 ]);
 export type Locale = typeof en;

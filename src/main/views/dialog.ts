@@ -35,66 +35,37 @@ export function showDragCopyWarning(controller: MainController) {
 }
 
 const enHostsMessage =
-  "Since Google has stopped its translation service in mainland China, CopyTranslator needs to request administrator permission to change hosts so that you can continue to use fast Google translation";
+  "Since Google has stopped the translation service in mainland China, you need to enable web proxy (browser proxy, no global proxy is required) or modify the hosts to access Google Translate. After enabling the proxy, please refer to the following link for settings";
 const zhHostsMessage =
-  "由于谷歌停止了在大陆的翻译服务，CopyTranslator需要请求管理员权限来更改hosts以使得您可以继续使用谷歌翻译，如果自动修改失败的话，请尝试手动修改Hosts";
-
-function setHosts() {
-  const fs = require("fs");
-  const path = require("path");
-  const hosts_exe = path.join(env.externalResource, "hosts.exe");
-  var sudo = require("sudo-prompt-alt");
-  var options = {
-    name: "Electron",
-    // icns: path.join(process.resourcesPath, "icon.ico"), // (optional)
-  };
-  sudo.exec(
-    `"${hosts_exe}" set translate.googleapis.com 180.163.151.162  && ipconfig /flushdns`,
-    // "echo. >> %WINDIR%\\System32\\Drivers\\Etc\\Hosts && echo 180.163.151.162 translate.googleapis.com >> %WINDIR%\\System32\\Drivers\\Etc\\Hosts && ipconfig /flushdns",
-    options,
-    function (error: any, stdout: any, stderr: any) {
-      if (error) throw error;
-      console.log("stdout: " + stdout);
-    }
-  );
-}
+  "由于谷歌停止了在大陆的翻译服务，您需要启用网页代理（浏览器代理即可，无需全局代理）或者是修改hosts来访问谷歌翻译，请参考以下链接进行设置";
 
 export function showHostsWarning(controller: MainController) {
   const t = store.getters.locale;
   dialog
     .showMessageBox(BrowserWindow.getAllWindows()[0], {
-      title: "声明/Message",
+      title: "提示/Message",
       message: [enHostsMessage, zhHostsMessage].join("\n"),
-      buttons: [t["ok"]],
+      buttons: [t["openReference"], t["neverShow"]],
       icon: icon,
     })
     .then((res) => res.response)
     .then((response) => {
       switch (response) {
         case 0:
-          setHosts();
+          shell.openExternal("https://hcfy.app/blog/2022/09/28/ggg");
+          break;
+        case 1:
           store.dispatch("updateConfig", {
-            hostsSet: true,
+            showGoogleMessage: false,
           });
           break;
       }
     });
 }
 
-export function showHelpAndUpdate(controller: MainController, startup = false) {
+export function showHelpAndUpdate(controller: MainController) {
   const t = store.getters.locale;
-  let buttons = undefined;
-  if (startup) {
-    buttons = [
-      t["homepage"],
-      t["userManual"],
-      t["checkUpdate"],
-      t["neverShow"],
-      "cancel",
-    ];
-  } else {
-    buttons = [t["homepage"], t["userManual"], t["checkUpdate"], "cancel"];
-  }
+  let buttons = [t["homepage"], t["userManual"], t["checkUpdate"], "cancel"];
 
   dialog
     .showMessageBox(BrowserWindow.getAllWindows()[0], {
@@ -117,19 +88,54 @@ export function showHelpAndUpdate(controller: MainController, startup = false) {
         case 2:
           eventBus.at("dispatch", "checkUpdate");
           break;
-        case 3:
-          if (startup) {
-            store.dispatch("updateConfig", {
-              isNewUser: false,
-            });
-            break;
-          }
       }
     });
 }
 
-function onStartup(controller: MainController) {
-  showHelpAndUpdate(controller, true);
+const welcomeMessages = [
+  "If you found it useful, please give me a star on GitHub or introduce to your friend.",
+  "本软件功能较为丰富，有一定上手难度，如果您是第一次使用本软件，强烈您先阅读用户手册，能够极大地帮助您提升使用软件的效率，解决您的疑问。",
+  "如果您感觉本软件对您有所帮助，请在项目Github上给个star或是介绍给您的朋友，谢谢。",
+  "本软件免费开源，如果您是以付费的方式获得本软件，那么你应该是被骗了。[○･｀Д´･ ○]",
+];
+
+function welcome(controller: MainController) {
+  const t = store.getters.locale;
+  const buttons = [
+    t["userManual"],
+    t["homepage"],
+    t["checkUpdate"],
+    t["neverShow"],
+    "cancel",
+  ];
+
+  dialog
+    .showMessageBox(BrowserWindow.getAllWindows()[0], {
+      title: constants.appName + " " + versionString,
+      message: welcomeMessages.join("\n"),
+      buttons: buttons,
+      cancelId: 3,
+      icon: icon,
+    })
+    .then((res) => res.response)
+    .then((response) => {
+      switch (response) {
+        case 0:
+          shell.openExternal(constants.wiki);
+          break;
+        case 1:
+          shell.openExternal(constants.homepage);
+          break;
+        case 2:
+          eventBus.at("dispatch", "checkUpdate");
+          break;
+        case 3:
+          store.dispatch("updateConfig", {
+            isNewUser: false,
+          });
+          break;
+      }
+    });
 }
 
 export function showConfigFile() {
@@ -143,7 +149,7 @@ const actionLinks = new Map<Identifier, Handler>([
   ["editConfigFile", showConfigFile],
   ["showConfigFolder", showConfigFolder],
   ["helpAndUpdate", showHelpAndUpdate],
-  ["welcome", onStartup],
+  ["welcome", welcome],
 ]);
 
 export default actionLinks;

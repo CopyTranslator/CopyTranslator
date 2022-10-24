@@ -39,9 +39,9 @@ export const normalActionTypes = [
   "simulateCopy",
   "simulateIncrementCopy",
   "translateInput",
-  "setHosts",
   "simpleDebug",
   "welcome",
+  "openReference",
 ] as const;
 
 //切换值的动作
@@ -63,22 +63,36 @@ export const constantActionTypes = [
   "pasteDelay",
 ] as const;
 
-export const translatorTypes = [
+export const interceptTranslatorTypes = ["bing", "deepl", "tencent"] as const;
+
+export const normalTranslatorTypes = [
   "baidu",
   "google",
-  // "sogou",
   "caiyun",
-  "bing",
-  "deepl",
-  // "tencent",
-  // "youdao",
   "baidu-domain",
+  // "youdao",
+  // "sogou",
 ] as const;
+export const abstractTranslatorTypes = ["copytranslator"] as const;
+
+export type InterceptTranslatorType = typeof interceptTranslatorTypes[number];
+export type NormalTranslatorType = typeof normalTranslatorTypes[number];
+export type AbstractTranslatorType = typeof abstractTranslatorTypes[number];
+
+export type TranslatorType = InterceptTranslatorType | NormalTranslatorType;
+export type GeneralTranslatorType =
+  | InterceptTranslatorType
+  | NormalTranslatorType
+  | AbstractTranslatorType;
+
+export const translatorTypes = flatten([
+  interceptTranslatorTypes,
+  normalTranslatorTypes,
+]);
 
 export const recognizerTypes = ["baidu-ocr", "pp-ocr"] as const;
 export const frequencies = ["basic", "advance"] as const;
 
-export type TranslatorType = typeof translatorTypes[number];
 export type RecognizerType = typeof recognizerTypes[number];
 export type Frequency = typeof frequencies[number];
 
@@ -98,7 +112,6 @@ export const switchActionTypes = [
   "autoPaste",
   "autoPurify",
   "neverShow",
-  "hostsSet", //已经设置过了hosts
   "smartDict",
   "autoHide",
   "autoFormat",
@@ -116,6 +129,7 @@ export const switchActionTypes = [
   "multiSource",
   "enableDoubleCopyTranslate",
   "isNewUser",
+  "showGoogleMessage",
 ] as const;
 
 //Electron 原生 角色
@@ -158,7 +172,9 @@ export const menuActionTypes = [
 ] as const;
 
 export const translatorGroups = [
-  "translator-auto",
+  "translator-cache",
+  "translator-compare",
+  "translator-enabled",
   "translator-double",
 ] as const;
 

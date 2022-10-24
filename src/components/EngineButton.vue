@@ -41,9 +41,14 @@ export default class EngineButton extends mixins(WindowController, AppProps) {
       return;
     }
     if (this.valid) {
-      this.callback("dictionaryType|" + this.engine);
+      this.callback("dictionaryType", this.engine);
     } else {
-      this.callback("translatorType|" + this.engine);
+      if (this.engine == "copytranslator") {
+        this.callback("multiSource", true); //设置多源翻译
+      } else {
+        this.callback("multiSource", false); //关闭多源翻译
+        this.callback("translatorType", this.engine);
+      }
     }
   }
 }
@@ -87,6 +92,10 @@ export default class EngineButton extends mixins(WindowController, AppProps) {
 
 .baidu-domain-medicine {
   background-image: url("../images/medicine.svg");
+}
+
+.copytranslator {
+  background-image: url("../images/icon.png");
 }
 
 .btnBase {

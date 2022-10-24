@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div contenteditable="true">
     <div v-if="!config['contrastDict'] || !dictResult.valid">
       <div v-if="chineseStyle">
         <span

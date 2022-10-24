@@ -62,9 +62,6 @@ class Controller extends MainController {
       case "restoreDefault":
         this.resotreDefaultSetting();
         break;
-      case "setHosts":
-        showHostsWarning(this);
-        break;
       case "checkUpdate":
         this.updater.check();
         break;
@@ -81,7 +78,6 @@ class Controller extends MainController {
         this.win.get("contrast").minimize();
         break;
       case "simpleDebug":
-        this.transCon.debugBing();
         break;
       case "simulateCopy":
         setTimeout(() => {
@@ -104,11 +100,9 @@ class Controller extends MainController {
     this.win.get("contrast"); //创建主窗口
     this.shortcut.init();
     this.menu.init();
-    if (!this.get("hostsSet")) {
-      //设置hosts
-      if (osType == "Windows_NT") {
-        this.handle("setHosts", null); //请求修改windows hosts
-      }
+    if (this.get("showGoogleMessage")) {
+      console.log("showGoogleMessage");
+      showHostsWarning(this);
     }
     if (this.get("isNewUser")) {
       //显示启动页
@@ -116,11 +110,11 @@ class Controller extends MainController {
     }
   }
 
-  onExit() {
-    this.transCon.onExit();
+  async onExit() {
+    await this.transCon.onExit();
     this.config.save(env.configPath);
     this.shortcut.unregister();
-    app.exit();
+    app.exit(); //这里必须是exit，不然就会死锁
   }
 
   postSet(identifier: Identifier, value: any): boolean {

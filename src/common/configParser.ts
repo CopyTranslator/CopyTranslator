@@ -35,6 +35,7 @@ class ConfigParser {
 
   set(key: Identifier, value: any, needCheck: boolean = true) {
     if (needCheck && !this.checkValid(key, value)) {
+      console.log("invalid config value", key, value);
       return false;
     }
     const config = { [key]: value };
@@ -44,7 +45,7 @@ class ConfigParser {
 
   checkValid(key: Identifier, value: any): boolean {
     const check = this.getRule(key).check;
-    if ((check && !check(value)) || value == undefined) {
+    if (value == undefined || (check != undefined && !check(value))) {
       return false;
     }
     return true;

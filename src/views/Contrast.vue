@@ -92,7 +92,8 @@ import {
   layoutTypes,
   LayoutType,
   translatorTypes,
-  TranslatorType,
+  abstractTranslatorTypes,
+  GeneralTranslatorType,
 } from "../common/types";
 import { ipcRenderer as ipc } from "electron";
 import EngineButton from "../components/EngineButton.vue";
@@ -125,19 +126,25 @@ export default class Contrast extends Mixins(BaseView, WindowController) {
     return this.dictResult.valid && this.layoutType === "focus";
   }
 
-  get engines() {
-    return this.valid ? dictionaryTypes : this.config["translator-auto"];
+  get engines(): Array<GeneralTranslatorType | DictionaryType> {
+    const translatorEngines: GeneralTranslatorType[] = [
+      ...this.config["translator-enabled"],
+      ...abstractTranslatorTypes,
+    ];
+    return this.valid ? [...dictionaryTypes] : translatorEngines;
   }
 
   get rest_engines() {
-    return this.engines.filter(
-      (engine: string) => engine != this.currentEngine
-    );
+    return this.engines.filter((engine: any) => engine != this.currentEngine);
   }
 
   get currentEngine() {
     if (!this.valid) {
-      return this.$store.state.config.translatorType;
+      if (this.multiSource) {
+        return "copytranslator";
+      } else {
+        return this.$store.state.config.translatorType;
+      }
     } else {
       return this.$store.state.config.dictionaryType;
     }

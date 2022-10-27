@@ -61,6 +61,7 @@ export const constantActionTypes = [
   "colorMode",
   "version",
   "pasteDelay",
+  "googleMirror",
 ] as const;
 
 export const interceptTranslatorTypes = ["bing", "deepl", "tencent"] as const;

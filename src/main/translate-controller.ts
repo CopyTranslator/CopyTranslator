@@ -36,7 +36,7 @@ import isTrad from "@/common/translate/detect-trad";
 import { Comparator } from "@/common/translate/comparator";
 import { examToken } from "@/common/translate/token";
 import { getTranslator, translators } from "@/common/translate/translators";
-import { axios } from "@/common/translate/proxy";
+import { getProxyAxios } from "@/common/translate/proxy";
 
 class TranslateController {
   text: string = "";
@@ -598,13 +598,32 @@ class TranslateController {
 
     const oldTranslator = getTranslator(engine);
     const TranslatorClass: any = oldTranslator.constructor;
-
     const newTranslator = new TranslatorClass({
-      axios,
+      axios: getProxyAxios(true),
       config: this.get(engine),
     });
     translators.set(engine, newTranslator);
     eventBus.at("dispatch", "toast", `update  ${engine}`);
+  }
+
+  updateGoogleMirror(googleMirror?: string) {
+    if (googleMirror != undefined) {
+      if (googleMirror.endsWith("/")) {
+        googleMirror = googleMirror.substring(0, googleMirror.length - 1);
+      }
+      if (googleMirror.length == 0) {
+        googleMirror = undefined;
+      }
+    }
+    const engine = "google";
+    const oldTranslator = getTranslator(engine);
+    const TranslatorClass: any = oldTranslator.constructor;
+    const newTranslator = new TranslatorClass({
+      axios: getProxyAxios(true, googleMirror),
+      config: oldTranslator.config,
+    });
+    translators.set(engine, newTranslator);
+    eventBus.at("dispatch", "toast", `update mirror  ${engine}`);
   }
 
   postSet(identifier: Identifier, value: any): boolean {
@@ -613,6 +632,9 @@ class TranslateController {
       return true;
     }
     switch (identifier) {
+      case "googleMirror":
+        this.updateGoogleMirror(value as string);
+        break;
       case "translator-enabled":
         this.translator.setEngines(value);
         break;

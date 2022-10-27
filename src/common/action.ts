@@ -311,6 +311,7 @@ class ActionManager {
     );
 
     this.append(listAction("pasteDelay", delays));
+    this.append(constantAction("googleMirror"));
 
     this.append(normalAction("settings"));
     this.append(normalAction("helpAndUpdate"));
@@ -336,8 +337,8 @@ class ActionManager {
         contain = this.config.get("tray");
         break;
       case "options":
-        contain = keys.filter(
-          (x) => this.getAction(x).actionType === "submenu"
+        contain = keys.filter((x) =>
+          ["submenu", "constant"].includes(this.getAction(x).actionType)
         );
         break;
       case "focusContext":

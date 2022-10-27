@@ -417,6 +417,11 @@ function initConfig(
 
   config.setRule("pasteDelay", new TypeRule<number>(0.0, "auto copy delay"));
 
+  config.setRule(
+    "googleMirror",
+    new TypeRule<string>("https://gtranslate.cdn.haah.net", "google mirror")
+  );
+
   return config;
 }
 

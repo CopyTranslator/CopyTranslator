@@ -89,5 +89,6 @@
     "basic": "Основные",
     "advance": "Расширенные",
     "translateInput": "Перевод",
-    "openReference": "open reference link"
+    "openReference": "open reference link",
+    "googleMirror": "google Mirror URL"
 }

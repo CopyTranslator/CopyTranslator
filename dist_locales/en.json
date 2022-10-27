@@ -89,5 +89,6 @@
     "basic": "Basic",
     "advance": "Advance",
     "translateInput": "Translate",
-    "openReference": "open reference link"
+    "openReference": "open reference link",
+    "googleMirror": "google Mirror URL"
 }

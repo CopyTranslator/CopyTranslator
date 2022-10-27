@@ -1,12 +1,16 @@
 <template>
   <div v-if="action">
     <v-switch
-      v-if="action.type === 'checkbox'"
+      v-if="action.actionType === 'checkbox'"
       v-model="value"
       class="myswitch"
       :label="trans[action.id]"
     ></v-switch>
-    <div v-else-if="action.type === 'submenu'">
+    <div v-else-if="action.actionType === 'constant'">
+      <p style="margin: 0px;">{{ trans[identifier] }}</p>
+      <v-text-field v-model="value"></v-text-field>
+    </div>
+    <div v-else-if="action.actionType === 'submenu'">
       <p style="margin: 0px;">{{ trans[identifier] }}</p>
       <v-select
         v-model="command"
@@ -17,7 +21,7 @@
       >
       </v-select>
     </div>
-    <div v-else-if="action.type === 'normal'">
+    <div v-else-if="action.actionType === 'normal'">
       <v-btn @click="callback(action.id)" width="100%" style="margin-top: 4px;">
         {{ trans[action.id] }}
       </v-btn>

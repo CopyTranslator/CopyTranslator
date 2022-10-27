@@ -79,6 +79,7 @@ export class UnionRule<T> implements Rule {
     };
   }
 }
+
 class TypeRule<T> implements Rule {
   predefined: T;
   tooltip: string;

@@ -1,6 +1,8 @@
 import axios_, { AxiosRequestConfig } from "axios";
 import { net } from "electron";
+const https = require("https");
 const EventEmitter = require("events");
+const defaultGoogleAPI = "https://translate.googleapis.com";
 
 export const getProxyAxios = (info?: boolean, googleMirror?: string) => {
   if (info) {
@@ -8,19 +10,24 @@ export const getProxyAxios = (info?: boolean, googleMirror?: string) => {
       adapter: (config: AxiosRequestConfig) => {
         delete config.adapter;
         if (
-          (config.url as string).indexOf("google") != -1 &&
+          (config.url as string).startsWith(defaultGoogleAPI) &&
           config.method == "get"
         ) {
+          console.log("googleMirror", googleMirror);
           if (googleMirror != undefined && config.url != undefined) {
-            config.url = config.url.replace(
-              "https://translate.googleapis.com",
-              googleMirror
-            );
+            config.url = config.url.replace(defaultGoogleAPI, googleMirror);
+            config.method = "post";
+            console.log(config.url);
+            return axios_(config);
           }
+          console.log(config.url);
 
           //仅在google翻译中使用网页代理
           return new Promise(function (resolve, reject) {
-            const request = net.request(config.url as string);
+            const request = net.request({
+              url: config.url as string,
+              method: config.method,
+            });
             const localBus = new EventEmitter();
             request.on("response", (response) => {
               let globalChunk: Buffer | undefined = undefined;
@@ -39,7 +46,7 @@ export const getProxyAxios = (info?: boolean, googleMirror?: string) => {
                   });
                 } catch (e) {
                   console.log(config.url);
-                  console.log(text);
+                  console.log("google translate input=", text);
                   reject(e);
                 }
               });
@@ -49,6 +56,7 @@ export const getProxyAxios = (info?: boolean, googleMirror?: string) => {
                 //太神秘了，为什么要这样子才能接收到完整的数据
                 function func() {
                   const currentChunk = (<Buffer>globalChunk).toString();
+                  // console.log("chunk", currentChunk);
                   times += 1;
                   if (
                     chunks.length == 0 ||
@@ -75,6 +83,9 @@ export const getProxyAxios = (info?: boolean, googleMirror?: string) => {
           return axios_(config);
         }
       },
+      httpsAgent: new https.Agent({
+        rejectUnauthorized: false,
+      }),
     };
     return axios_.create(axiosOptions);
   } else {

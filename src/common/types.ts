@@ -62,6 +62,7 @@ export const constantActionTypes = [
   "version",
   "pasteDelay",
   "googleMirror",
+  "googleSource",
 ] as const;
 
 export const interceptTranslatorTypes = ["bing", "deepl", "tencent"] as const;
@@ -183,8 +184,8 @@ export const translatorGroups = [
 export const layoutTypes = ["horizontal", "vertical", "focus"] as const;
 
 // 百度垂直领域翻译
-export const domains = ["medicine", "electronics", "mechanics"];
-
+export const domains = ["medicine", "electronics", "mechanics"] as const;
+export const googleSources = ["google", "simply"] as const;
 //路由名称
 export const routeActionTypes = [
   "contrast",
@@ -220,6 +221,7 @@ export type MenuActionType = typeof menuActionTypes[number];
 export type RouteActionType = typeof routeActionTypes[number];
 export type LayoutType = typeof layoutTypes[number];
 export type Domain = typeof domains[number];
+export type GoogleSource = typeof googleSources[number];
 export type ColorMode = typeof colorModes[number];
 export type EventType = typeof eventTypes[number];
 

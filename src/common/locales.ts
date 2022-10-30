@@ -94,6 +94,7 @@ export const zh_cn = new Map<Identifier, string>([
   ["translateInput", "翻译"],
   ["openReference", "打开参考链接"],
   ["googleMirror", "谷歌镜像"],
+  ["googleSource", "Google翻译源"],
 ]);
 
 export const en = new Map<Identifier, string>([
@@ -190,5 +191,6 @@ export const en = new Map<Identifier, string>([
   ["translateInput", "Translate"],
   ["openReference", "open reference link"],
   ["googleMirror", "google Mirror URL"],
+  ["googleSource", "google translation provider"],
 ]);
 export type Locale = typeof en;

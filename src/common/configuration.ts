@@ -22,6 +22,8 @@ import {
   colorModes,
   HideDirection,
   hideDirections,
+  GoogleSource,
+  googleSources,
 } from "./types";
 import { DictionaryType, dictionaryTypes } from "./dictionary/types";
 import { version } from "./constant";
@@ -420,6 +422,15 @@ function initConfig(
   config.setRule(
     "googleMirror",
     new TypeRule<string>("https://gtranslate.cdn.haah.net", "google mirror")
+  );
+
+  config.setRule(
+    "googleSource",
+    new UnionRule<GoogleSource>(
+      "google",
+      "google translation provider",
+      googleSources
+    )
   );
 
   return config;

@@ -5,8 +5,10 @@ import { AxiosRequestConfig } from "axios";
 import { Language } from "@opentranslate/translator";
 import { autoReSegment } from "./helper";
 import eventBus from "../event-bus";
+import { getProxyAxios } from "./proxy";
 import { axios } from "@/common/translate/proxy";
 import { interceptTranslatorTypes } from "@/common/types";
+import config from "../configuration";
 import {
   Bing,
   Deepl,
@@ -33,6 +35,25 @@ export class Compound implements CopyTranslator {
     this.config = config;
   }
 
+  setUpGoogleOrigin() {
+    let googleMirror = config.get("googleMirror");
+    if (googleMirror != undefined) {
+      if (googleMirror.endsWith("/")) {
+        googleMirror = googleMirror.substring(0, googleMirror.length - 1);
+      }
+      if (googleMirror.length == 0) {
+        googleMirror = undefined;
+      }
+    }
+    const oldTranslator = translators.get("google");
+    const TranslatorClass: any = oldTranslator.constructor;
+    const newTranslator = new TranslatorClass({
+      axios: getProxyAxios(true, googleMirror),
+      config: oldTranslator.config,
+    });
+    translators.set("google", newTranslator);
+  }
+
   initialize() {
     return this.postSetEngines();
   }
@@ -43,6 +64,7 @@ export class Compound implements CopyTranslator {
   }
 
   postSetEngines() {
+    this.setUpGoogleOrigin();
     //关闭和启动intercepter引擎以节省资源
     const debug = process.env.NODE_ENV != "production";
     const engine2Class = {
@@ -119,6 +141,10 @@ export class Compound implements CopyTranslator {
     this.running++;
     return getTranslator(engine)
       .translate(text, from, to, this.config)
+      .then((res: CopyTranslateResult) => {
+        res.engine = engine; //防止res.engine值不一样
+        return res;
+      })
       .then(autoReSegment)
       .then((res: any) => {
         this.resultBuffer.set(engine, res);

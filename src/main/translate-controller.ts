@@ -35,7 +35,7 @@ import { getLanguageLocales } from "@/common/translate/locale";
 import isTrad from "@/common/translate/detect-trad";
 import { Comparator } from "@/common/translate/comparator";
 import { examToken } from "@/common/translate/token";
-import { getTranslator, translators } from "@/common/translate/translators";
+import { translators } from "@/common/translate/translators";
 import { getProxyAxios } from "@/common/translate/proxy";
 
 class TranslateController {
@@ -56,7 +56,6 @@ class TranslateController {
   comparator: Comparator;
   constructor(controller: MainController) {
     this.controller = controller;
-    this.syncSupportLanguages();
     this.comparator = new Comparator(this.translator);
   }
 
@@ -67,7 +66,9 @@ class TranslateController {
 
   async init() {
     return Promise.allSettled([
-      this.translator.initialize(),
+      this.translator.initialize().then(() => {
+        this.syncSupportLanguages;
+      }),
       Promise.resolve(clipboard.init()),
     ]);
   }
@@ -596,7 +597,7 @@ class TranslateController {
       return;
     }
 
-    const oldTranslator = getTranslator(engine);
+    const oldTranslator = translators.get(engine);
     const TranslatorClass: any = oldTranslator.constructor;
     const newTranslator = new TranslatorClass({
       axios: getProxyAxios(true),
@@ -606,26 +607,6 @@ class TranslateController {
     eventBus.at("dispatch", "toast", `update  ${engine}`);
   }
 
-  updateGoogleMirror(googleMirror?: string) {
-    if (googleMirror != undefined) {
-      if (googleMirror.endsWith("/")) {
-        googleMirror = googleMirror.substring(0, googleMirror.length - 1);
-      }
-      if (googleMirror.length == 0) {
-        googleMirror = undefined;
-      }
-    }
-    const engine = "google";
-    const oldTranslator = getTranslator(engine);
-    const TranslatorClass: any = oldTranslator.constructor;
-    const newTranslator = new TranslatorClass({
-      axios: getProxyAxios(true, googleMirror),
-      config: oldTranslator.config,
-    });
-    translators.set(engine, newTranslator);
-    eventBus.at("dispatch", "toast", `update mirror  ${engine}`);
-  }
-
   postSet(identifier: Identifier, value: any): boolean {
     if (translatorTypes.includes(identifier as TranslatorType)) {
       this.updateTranslatorSetting(identifier as TranslatorType);
@@ -633,7 +614,7 @@ class TranslateController {
     }
     switch (identifier) {
       case "googleMirror":
-        this.updateGoogleMirror(value as string);
+        this.translator.setUpGoogleOrigin();
         break;
       case "translator-enabled":
         this.translator.setEngines(value);

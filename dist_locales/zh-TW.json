@@ -107,5 +107,6 @@
     "advance": "Advance",
     "translateInput": "translate",
     "openReference": "open reference link",
-    "googleMirror": "google Mirror URL"
+    "googleMirror": "google Mirror URL",
+    "googleSource": "google translation provider"
 }

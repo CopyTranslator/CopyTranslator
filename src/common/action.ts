@@ -16,6 +16,7 @@ import {
   translatorTypes,
   translatorGroups,
   Frequency,
+  googleSources,
 } from "./types";
 import { dictionaryTypes } from "./dictionary/types";
 import { getLanguageLocales, Language } from "./translate/locale";
@@ -311,6 +312,7 @@ class ActionManager {
     );
 
     this.append(listAction("pasteDelay", delays));
+    this.append(listAction("googleSource", googleSources));
     this.append(constantAction("googleMirror"));
 
     this.append(normalAction("settings"));

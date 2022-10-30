@@ -4,9 +4,12 @@ import { compatible } from "./constant";
 import store, { getConfigByKey, Config } from "../store";
 type Rules = Map<Identifier, Rule>; //类型别名
 import { readFileSync, writeFileSync } from "fs";
+import { env } from "../common/env";
+
 class ConfigParser {
   rules: Rules = new Map<Identifier, Rule>();
-  file: string | undefined;
+  file: string = env.configPath;
+  lastSave = Date.now();
 
   constructor() {}
 
@@ -40,6 +43,18 @@ class ConfigParser {
     }
     const config = { [key]: value };
     store.dispatch("updateConfig", config);
+    const now = Date.now();
+    if (this.lastSave > now) {
+      //就说明我们不需要唤起一次新的保存
+      console.log("schedule save pass");
+    } else {
+      const interval = 2000; //修改后预定一次保存，在此保存之前的所有修改都不会再预定保存
+      this.lastSave = now + interval;
+      setTimeout(() => {
+        console.log("schedule save");
+        this.save();
+      }, interval);
+    }
     return true;
   }
 
@@ -55,10 +70,10 @@ class ConfigParser {
     return this.getRule(key).tooltip;
   }
 
-  load(fileName: string): boolean {
+  load(): boolean {
     let status = true;
     try {
-      const values = JSON.parse(readFileSync(fileName) as any);
+      const values = JSON.parse(readFileSync(this.file) as any);
       if (!values["version"] || !compatible(values["version"])) {
         throw "version incompatible, configs will be reset";
       }
@@ -74,23 +89,26 @@ class ConfigParser {
       store.dispatch("setConfig", config);
     } catch (e) {
       console.log(e);
-      this.restoreDefault(fileName);
-
+      this.restoreDefault();
       status = false;
     }
-    this.save(fileName);
+    this.save();
     return status;
   }
 
-  restoreDefault(fileName: string) {
+  restoreDefault() {
     for (const [key, rule] of this.rules) {
       this.set(key, rule.predefined);
     }
-    this.save(fileName);
+    this.save();
   }
 
-  save(fileName: string) {
-    writeFileSync(fileName, JSON.stringify(store.state.config, null, 4));
+  save() {
+    writeFileSync(this.file, JSON.stringify(store.state.config, null, 4));
+    const now = Date.now();
+    if (now > this.lastSave) {
+      this.lastSave = now;
+    }
   }
 }
 

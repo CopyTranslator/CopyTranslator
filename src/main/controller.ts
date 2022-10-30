@@ -5,7 +5,6 @@ import { Identifier, authorizeKey } from "../common/types";
 import { startService } from "../proxy/main";
 import { ShortcutManager } from "./shortcut";
 import { app, BrowserWindow } from "electron";
-import { env, osType } from "../common/env";
 import store, { observers, restoreFromConfig } from "../store";
 import { TranslateController } from "./translate-controller";
 import { l10n, L10N } from "./l10n";
@@ -31,7 +30,7 @@ class Controller extends MainController {
 
   constructor() {
     super();
-    this.config.load(env.configPath);
+    this.config.load();
     observers.push(this);
     observers.push(this.transCon);
     this.bindLinks(actionLinks);
@@ -112,7 +111,7 @@ class Controller extends MainController {
 
   async onExit() {
     await this.transCon.onExit();
-    this.config.save(env.configPath);
+    this.config.save();
     this.shortcut.unregister();
     app.exit(); //这里必须是exit，不然就会死锁
   }
@@ -151,7 +150,7 @@ class Controller extends MainController {
 
   resotreDefaultSetting() {
     resetAllConfig();
-    this.config.restoreDefault(env.configPath);
+    this.config.restoreDefault();
     this.restoreFromConfig();
   }
 

@@ -1,5 +1,5 @@
-import { getTranslator, translators } from "./translators";
-import { CopyTranslator, CopyTranslateResult } from "./types";
+import { getTranslator, translators, Translator } from "./translators";
+import { CopyTranslator, CopyTranslateResult, TranslateResult } from "./types";
 import { TranslatorType } from "@/common/types";
 import { AxiosRequestConfig } from "axios";
 import { Language } from "@opentranslate/translator";
@@ -45,7 +45,7 @@ export class Compound implements CopyTranslator {
         googleMirror = undefined;
       }
     }
-    const oldTranslator = translators.get("google");
+    const oldTranslator = translators.get("google") as Translator;
     const TranslatorClass: any = oldTranslator.constructor;
     const newTranslator = new TranslatorClass({
       axios: getProxyAxios(true, googleMirror),
@@ -141,7 +141,7 @@ export class Compound implements CopyTranslator {
     this.running++;
     return getTranslator(engine)
       .translate(text, from, to, this.config)
-      .then((res: CopyTranslateResult) => {
+      .then((res: TranslateResult) => {
         res.engine = engine; //防止res.engine值不一样
         return res;
       })

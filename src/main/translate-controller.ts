@@ -1,7 +1,7 @@
 import { Compound } from "../common/translate/compound";
 import { emptySharedResult, SharedResult } from "../common/translate/constants";
 import { Polymer } from "../common/dictionary/polymer";
-import { Language } from "@opentranslate/translator";
+import { Language, Translator } from "@opentranslate/translator";
 import { CopyTranslateResult } from "../common/translate/types";
 import { colorRules, getColorRule, KeyConfig } from "../common/rule";
 import {
@@ -66,11 +66,9 @@ class TranslateController {
 
   async init() {
     return Promise.allSettled([
-      this.translator.initialize().then(() => {
-        this.syncSupportLanguages;
-      }),
+      this.translator.initialize(),
       Promise.resolve(clipboard.init()),
-    ]);
+    ]).then(this.syncSupportLanguages);
   }
 
   handle(identifier: Identifier, param: any): boolean {
@@ -597,7 +595,7 @@ class TranslateController {
       return;
     }
 
-    const oldTranslator = translators.get(engine);
+    const oldTranslator = translators.get(engine) as Translator;
     const TranslatorClass: any = oldTranslator.constructor;
     const newTranslator = new TranslatorClass({
       axios: getProxyAxios(true),

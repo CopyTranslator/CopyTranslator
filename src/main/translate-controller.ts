@@ -68,7 +68,9 @@ class TranslateController {
     return Promise.allSettled([
       this.translator.initialize(),
       Promise.resolve(clipboard.init()),
-    ]).then(this.syncSupportLanguages);
+    ]).then(() => {
+      this.syncSupportLanguages();
+    });
   }
 
   handle(identifier: Identifier, param: any): boolean {

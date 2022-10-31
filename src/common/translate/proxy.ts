@@ -5,6 +5,7 @@ const EventEmitter = require("events");
 const defaultGoogleAPI = "https://translate.googleapis.com";
 
 export const getProxyAxios = (info?: boolean, googleMirror?: string) => {
+  let antscdn_waf_cookie1: string = "";
   if (info) {
     const axiosOptions: AxiosRequestConfig = {
       adapter: (config: AxiosRequestConfig) => {
@@ -16,9 +17,31 @@ export const getProxyAxios = (info?: boolean, googleMirror?: string) => {
           console.log("googleMirror", googleMirror);
           if (googleMirror != undefined && config.url != undefined) {
             config.url = config.url.replace(defaultGoogleAPI, googleMirror);
-            config.method = "post";
-            console.log(config.url);
-            return axios_(config);
+            if (antscdn_waf_cookie1.length > 0) {
+              config.headers[
+                "Cookie"
+              ] = `antscdn_waf_cookie1=${antscdn_waf_cookie1}`;
+            }
+            config.withCredentials = true;
+            return axios_(config).then((res) => {
+              if (typeof res.data !== "string") {
+                return res; //没有遇到阻碍
+              } else {
+                //需要更新cookie
+                const content: string = res.data;
+                antscdn_waf_cookie1 = content
+                  .substring(
+                    content.indexOf("setCookie('antscdn_waf_cookie1',")
+                  )
+                  .split(",")[1]
+                  .split("'")[1]; //更新cookie
+                config.headers[
+                  "Cookie"
+                ] = `antscdn_waf_cookie1=${antscdn_waf_cookie1}`;
+                console.log("update google mirror cookie");
+                return axios_(config);
+              }
+            });
           }
           console.log(config.url);
 

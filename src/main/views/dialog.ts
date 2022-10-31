@@ -35,9 +35,9 @@ export function showDragCopyWarning(controller: MainController) {
 }
 
 const enHostsMessage =
-  "Since Google has stopped the translation service in mainland China, you need to enable web proxy (browser proxy, no global proxy is required) or modify the hosts to access Google Translate. After enabling the proxy, please refer to the following link for settings";
+  "Google has stopped the translation service in the mainland. After version 10.2.3, the domestic mirror of Google Translate is used by default for translation. In theory, no additional settings are required. If there are still problems, please refer to the following link for settings.";
 const zhHostsMessage =
-  "由于谷歌停止了在大陆的翻译服务，您需要启用网页代理（浏览器代理即可，无需全局代理）或者是修改hosts来访问谷歌翻译，请参考以下链接进行设置";
+  "谷歌停止了在大陆的翻译服务，10.2.3版本后默认使用谷歌翻译国内镜像进行翻译，理论上不需要额外设置，如果依然存在问题，请参考以下链接进行设置";
 
 export function showHostsWarning(controller: MainController) {
   const t = store.getters.locale;
@@ -52,7 +52,9 @@ export function showHostsWarning(controller: MainController) {
     .then((response) => {
       switch (response) {
         case 0:
-          shell.openExternal("https://hcfy.app/blog/2022/09/28/ggg");
+          shell.openExternal(
+            "https://copytranslator.gitee.io/guide/questions.html#%E8%B0%B7%E6%AD%8C%E7%BF%BB%E8%AF%91%E9%80%80%E5%87%BA%E4%B8%AD%E5%9B%BD%E5%B8%82%E5%9C%BA%E7%9A%84%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88"
+          );
           break;
         case 1:
           store.dispatch("updateConfig", {

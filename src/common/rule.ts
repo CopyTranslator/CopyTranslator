@@ -25,6 +25,7 @@ export type LayoutConfig = {
   height: number;
   width: number;
   fontSize: number;
+  diffFontSize: number;
 };
 
 export type KeyConfig = { [key: string]: string };

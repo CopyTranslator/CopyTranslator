@@ -396,7 +396,14 @@ function initConfig(
   config.setRule(
     "horizontal",
     new StructRule<LayoutConfig>(
-      { fontSize: 15, x: 535, y: 186, height: 600, width: 1094 },
+      {
+        diffFontSize: 15,
+        fontSize: 15,
+        x: 535,
+        y: 186,
+        height: 600,
+        width: 1094,
+      },
       "layout config"
     )
   );
@@ -404,7 +411,14 @@ function initConfig(
   config.setRule(
     "vertical",
     new StructRule<LayoutConfig>(
-      { fontSize: 15, x: 535, y: 186, height: 600, width: 1094 },
+      {
+        diffFontSize: 15,
+        fontSize: 15,
+        x: 535,
+        y: 186,
+        height: 600,
+        width: 1094,
+      },
       "layout config"
     )
   );
@@ -412,7 +426,14 @@ function initConfig(
   config.setRule(
     "focus",
     new StructRule<LayoutConfig>(
-      { fontSize: 15, x: 535, y: 186, height: 600, width: 1094 },
+      {
+        diffFontSize: 15,
+        fontSize: 15,
+        x: 535,
+        y: 186,
+        height: 600,
+        width: 1094,
+      },
       "layout config"
     )
   );

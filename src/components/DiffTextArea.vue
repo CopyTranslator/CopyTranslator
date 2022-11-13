@@ -4,7 +4,7 @@
       <div v-for="(part, key) in allParts" :key="key">
         <span style="color: red;">{{ part.engine }}</span>
         <br />
-        <div>
+        <div v-bind:style="diffStyle">
           <div v-for="(line, k) in part.parts" :key="key + k">
             <span
               v-for="(p, k2) in line"
@@ -39,6 +39,16 @@ const AppProps = Vue.extend({
   },
 })
 export default class DiffTextArea extends Mixins(Vue, AppProps, BaseView) {
+  get diffFontSize() {
+    return this.config[this.layoutType].diffFontSize;
+  }
+
+  get diffStyle() {
+    return {
+      fontSize: this.diffFontSize.toString() + "px",
+    };
+  }
+
   mouseOver(idx: number) {
     this.targetIdx = idx;
   }

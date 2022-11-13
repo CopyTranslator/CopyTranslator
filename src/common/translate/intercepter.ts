@@ -547,6 +547,7 @@ export class Deepl extends InterceptTranslator<DeeplConfig> {
     console.log("开始等待", this.name);
     await new Promise((resolve, reject) => {
       const timeoutId = setTimeout(() => {
+        this.restart(); //自动重启
         reject({ status: 408, errorMsg: "Request timeout!" });
       }, 10000); //Prevent infinitely waiting for the result.
       this.localBus.once("unlocked", () => {
@@ -611,7 +612,7 @@ export class Bing extends InterceptTranslator<BingConfig> {
     this.commonDebugStart();
     bingSetup(this.content);
 
-    interceptResponse(this.content, "bing.com/ttranslatev3", (res) => {
+    interceptResponse(this.content, "bing.com/t translatev3", (res) => {
       this.onResponse(res);
     });
 
@@ -658,6 +659,7 @@ export class Bing extends InterceptTranslator<BingConfig> {
     console.log("开始等待", this.name);
     await new Promise((resolve, reject) => {
       const timeoutId = setTimeout(() => {
+        this.restart(); //自动重启
         reject({ status: 408, errorMsg: "Request timeout!" });
       }, 10000); //Prevent infinitely waiting for the result.
       this.localBus.once("unlocked", () => {

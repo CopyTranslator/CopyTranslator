@@ -39,7 +39,12 @@ class Controller extends MainController {
   changeFontSize(increase: boolean) {
     const layoutType = config.get("layoutType");
     const layoutConfig = config.get(layoutType);
-    layoutConfig.fontSize += increase ? 1 : -1;
+    const delta = increase ? 1 : -1;
+    if (config.get("multiSource")) {
+      layoutConfig.diffFontSize += delta;
+    } else {
+      layoutConfig.fontSize += delta;
+    }
     config.set(layoutType, layoutConfig);
   }
 

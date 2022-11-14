@@ -11,6 +11,7 @@ const EventEmitter = require("events");
 import fs from "fs";
 import logger from "@/common/logger";
 
+const TIMEOUT = 5000;
 function runScript(content: BrowserView["webContents"], file: string) {
   const js = fs.readFileSync(path.join(env.externalResource, file)).toString();
   return content.executeJavaScript(js);
@@ -427,7 +428,7 @@ export class Tencent extends InterceptTranslator<IntercepterConfig> {
     await new Promise((resolve, reject) => {
       const timeoutId = setTimeout(() => {
         reject({ status: 408, errorMsg: "Request timeout!" });
-      }, 10000); //Prevent infinitely waiting for the result.
+      }, TIMEOUT); //Prevent infinitely waiting for the result.
       this.localBus.once("unlocked", () => {
         clearTimeout(timeoutId);
         resolve(0);
@@ -547,9 +548,9 @@ export class Deepl extends InterceptTranslator<DeeplConfig> {
     console.log("开始等待", this.name);
     await new Promise((resolve, reject) => {
       const timeoutId = setTimeout(() => {
-        this.restart(); //自动重启
+        // this.restart(); //自动重启
         reject({ status: 408, errorMsg: "Request timeout!" });
-      }, 10000); //Prevent infinitely waiting for the result.
+      }, TIMEOUT); //Prevent infinitely waiting for the result.
       this.localBus.once("unlocked", () => {
         clearTimeout(timeoutId);
         resolve(0);
@@ -659,9 +660,9 @@ export class Bing extends InterceptTranslator<BingConfig> {
     console.log("开始等待", this.name);
     await new Promise((resolve, reject) => {
       const timeoutId = setTimeout(() => {
-        this.restart(); //自动重启
+        // this.restart(); //自动重启
         reject({ status: 408, errorMsg: "Request timeout!" });
-      }, 10000); //Prevent infinitely waiting for the result.
+      }, TIMEOUT); //Prevent infinitely waiting for the result.
       this.localBus.once("unlocked", () => {
         clearTimeout(timeoutId);
         resolve(0);

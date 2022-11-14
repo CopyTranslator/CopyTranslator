@@ -11,6 +11,26 @@ import logger from "@/common/logger";
 
 @Component
 export default class BaseView extends Vue {
+  toKeyan() {
+    shell.openExternal("https://www.keyanyuedu.com/?channel=copytranslator");
+  }
+
+  get valid() {
+    return this.dictResult.valid && this.layoutType === "focus";
+  }
+
+  get currentEngine() {
+    if (!this.valid) {
+      if (this.multiSource) {
+        return "copytranslator";
+      } else {
+        return this.$store.state.config.translatorType;
+      }
+    } else {
+      return this.$store.state.config.dictionaryType;
+    }
+  }
+
   get multiSource() {
     return this.config.multiSource;
   }

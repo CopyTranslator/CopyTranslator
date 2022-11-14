@@ -19,6 +19,7 @@ import config from "@/common/configuration";
 import eventBus from "@/common/event-bus";
 import simulate from "./simulate";
 import logger from "@/common/logger";
+import { keyan } from "@/common/translate/keyan";
 
 class Controller extends MainController {
   win: WindowMangaer = new WindowMangaer(this);
@@ -46,6 +47,18 @@ class Controller extends MainController {
       layoutConfig.fontSize += delta;
     }
     config.set(layoutType, layoutConfig);
+  }
+
+  simpleDebug() {
+    keyan
+      .translate(
+        "Large-size 2D black phosphorus (BP) nanosheets have been success-fully synthesized by a facile liquid exfoliation method.",
+        "en",
+        "zh-CN"
+      )
+      .then((res) => {
+        console.log(res);
+      });
   }
 
   handle(identifier: Identifier, param: any = null): boolean {
@@ -82,6 +95,7 @@ class Controller extends MainController {
         this.win.get("contrast").minimize();
         break;
       case "simpleDebug":
+        this.simpleDebug();
         break;
       case "simulateCopy":
         setTimeout(() => {

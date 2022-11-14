@@ -122,10 +122,6 @@ export default class Contrast extends Mixins(BaseView, WindowController) {
     return this.$store.getters.locale;
   }
 
-  get valid() {
-    return this.dictResult.valid && this.layoutType === "focus";
-  }
-
   get engines(): Array<GeneralTranslatorType | DictionaryType> {
     const translatorEngines: GeneralTranslatorType[] = [
       ...this.config["translator-enabled"],
@@ -136,18 +132,6 @@ export default class Contrast extends Mixins(BaseView, WindowController) {
 
   get rest_engines() {
     return this.engines.filter((engine: any) => engine != this.currentEngine);
-  }
-
-  get currentEngine() {
-    if (!this.valid) {
-      if (this.multiSource) {
-        return "copytranslator";
-      } else {
-        return this.$store.state.config.translatorType;
-      }
-    } else {
-      return this.$store.state.config.dictionaryType;
-    }
   }
 
   get styleNow() {

@@ -11,6 +11,7 @@ import { defaultTokens } from "./token";
 import { axios } from "./proxy";
 import { Simply } from "./simply";
 import config from "../configuration";
+import { keyan } from "./keyan";
 
 export const translatorMap: [TranslatorType | GoogleSource, Translator][] = [
   ["baidu", new Baidu({ axios, config: defaultTokens.get("baidu") })],
@@ -22,6 +23,7 @@ export const translatorMap: [TranslatorType | GoogleSource, Translator][] = [
       config: { URL: "https://simplytranslate.org" },
     }),
   ],
+  ["keyan", keyan],
   // ["youdao", new Youdao({ axios, config: defaultTokens.get("youdao") })],
   // ["sogou", new Sogou({ axios, config: defaultTokens.get("sogou") })],
   ["caiyun", new Caiyun({ axios, config: defaultTokens.get("caiyun") })],

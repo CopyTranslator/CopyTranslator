@@ -38,7 +38,10 @@ export const getProxyAxios = (info?: boolean, googleMirror?: string) => {
                 config.headers[
                   "Cookie"
                 ] = `antscdn_waf_cookie1=${antscdn_waf_cookie1}`;
-                console.log("update google mirror cookie");
+                console.log(
+                  "update google mirror cookie as",
+                  antscdn_waf_cookie1
+                );
                 return axios_(config);
               }
             });

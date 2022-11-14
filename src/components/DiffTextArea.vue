@@ -2,7 +2,16 @@
   <div>
     <div v-if="!config['contrastDict'] || !dictResult.valid">
       <div v-for="(part, key) in allParts" :key="key">
-        <span style="color: red;">{{ part.engine }}</span>
+        <span style="color: red; font-size: 15px;">
+          {{ part.engine }}
+        </span>
+        <a
+          v-if="part.engine === 'keyan'"
+          @click="toKeyan()"
+          style="font-size: 15px;"
+        >
+          <span>来⾃棵岩翻译 免费⼀键翻译全⽂>>></span>
+        </a>
         <br />
         <div v-bind:style="diffStyle">
           <div v-for="(line, k) in part.parts" :key="key + k">

@@ -2,8 +2,24 @@ import {
   Language,
   Translator,
   TranslateQueryResult,
+  TranslatorInit,
 } from "@opentranslate/translator";
 import qs from "qs";
+
+const promiseAny = async <T>(
+  iterable: Iterable<T | PromiseLike<T>>
+): Promise<T> => {
+  return Promise.all(
+    [...iterable].map((promise) => {
+      return new Promise((resolve, reject) =>
+        Promise.resolve(promise).then(reject, resolve)
+      );
+    })
+  ).then(
+    (errors) => Promise.reject(errors),
+    (value) => Promise.resolve<T>(value)
+  );
+};
 
 const langMap: [Language, string][] = [
   ["auto", "auto"],
@@ -114,6 +130,26 @@ const langMap: [Language, string][] = [
   ["zu", "zu"],
 ];
 
+const instances = [
+  "simplytranslate.org",
+  "st.tokhmi.xyz",
+  "translate.josias.dev",
+  "translate.namazso.eu",
+  "translate.riverside.rocks",
+  "simplytranslate.manerakai.com",
+  "translate.bus-hit.me",
+  "simplytranslate.pussthecat.org",
+  "translate.northboot.xyz",
+  "translate.tiekoetter.com",
+  "simplytranslate.esmailelbob.xyz",
+  "tl.vern.cc",
+  "translate.slipfox.xyz",
+  "st.privacydev.net",
+  "translate.beparanoid.de",
+  "translate.priv.pw",
+  "st.odyssey346.dev",
+];
+
 interface SimplyDataResult {
   base: string;
   data: {
@@ -128,6 +164,10 @@ export interface SimplyConfig {
 }
 
 export class Simply extends Translator<SimplyConfig> {
+  constructor(init: TranslatorInit<SimplyConfig>) {
+    super(init);
+    this.updateFastestInstance();
+  }
   /** Translator lang to custom lang */
   private static readonly langMap = new Map(langMap);
 
@@ -135,6 +175,32 @@ export class Simply extends Translator<SimplyConfig> {
   private static readonly langMapReverse = new Map(
     langMap.map(([translatorLang, lang]) => [lang, translatorLang])
   );
+
+  async updateFastestInstance() {
+    //自动寻找最快节点
+    const text =
+      "The main idea is transforming the passed promises list into a reverted promises list. When a reverted Promise resolves it calls reject, while when it rejects it calls resolve. Then the reverted promises list is passed to Promise.all method and when any of Promises rejects, Promise.all will terminate execution with reject error. However in reality this means that we have the successful result, so we just transform the result from reject to resolve back and that's all. We got first successfully resolved promise as a result without magic wand.";
+    promiseAny(
+      instances.map((url) => {
+        return this.axios.get<SimplyDataResult["data"]>(
+          `https://${url}/api/translate/?` +
+            qs.stringify({
+              engine: "google",
+              from: "en",
+              to: "zh-CN",
+              text: text,
+            })
+        );
+      })
+    ).then((res) => {
+      if (res.status != 200) {
+        throw "update fastest simply instance fail";
+      }
+      const url = res.config.url as string;
+      this.config.URL = url.split("/api/translate/")[0];
+      console.log("fastest simply URL=", this.config.URL);
+    });
+  }
 
   private async fetch(
     text: string,

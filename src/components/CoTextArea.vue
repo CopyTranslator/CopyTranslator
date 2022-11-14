@@ -1,32 +1,42 @@
 <template>
-  <div contenteditable="true">
-    <div v-if="!config['contrastDict'] || !dictResult.valid">
-      <div v-if="chineseStyle">
-        <span
-          v-for="(val, key) in sentences"
-          :key="key"
-          @mouseover="mouseOver(key)"
-          style="display: block;"
-        >
-          {{ val }}
-        </span>
-      </div>
-      <div v-else>
-        <div
-          v-for="(val, key) in sentences"
-          :key="key"
-          @mouseover="mouseOver(key)"
-        >
-          <span style="display: block;">
+  <div>
+    <div contenteditable="true">
+      <div v-if="!config['contrastDict'] || !dictResult.valid">
+        <div v-if="chineseStyle">
+          <span
+            v-for="(val, key) in sentences"
+            :key="key"
+            @mouseover="mouseOver(key)"
+            style="display: block;"
+          >
             {{ val }}
           </span>
-          <br />
+        </div>
+        <div v-else>
+          <div
+            v-for="(val, key) in sentences"
+            :key="key"
+            @mouseover="mouseOver(key)"
+          >
+            <span style="display: block;">
+              {{ val }}
+            </span>
+            <br />
+          </div>
         </div>
       </div>
+      <DictResultPanel
+        v-if="config['contrastDict'] && dictResult.valid"
+      ></DictResultPanel>
     </div>
-    <DictResultPanel
-      v-if="config['contrastDict'] && dictResult.valid"
-    ></DictResultPanel>
+    <div
+      v-if="currentEngine === 'keyan'"
+      style="font-size: 15px; position: absolute; right: 0px; bottom: 5px;"
+    >
+      <a @click="toKeyan()">
+        <span>来⾃棵岩翻译 免费⼀键翻译全⽂>>></span>
+      </a>
+    </div>
   </div>
 </template>
 

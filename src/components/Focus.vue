@@ -29,6 +29,14 @@
         class="max"
       ></DictResultPanel>
     </div>
+    <div
+      v-if="currentEngine === 'keyan'"
+      style="font-size: 15px; position: absolute; right: 0px; bottom: 5px;"
+    >
+      <a @click="toKeyan()">
+        <span>来⾃棵岩翻译 免费⼀键翻译全⽂>>></span>
+      </a>
+    </div>
   </div>
 </template>
 

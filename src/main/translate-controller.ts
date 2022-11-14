@@ -534,7 +534,6 @@ class TranslateController {
           throw "no cache";
         }
         logger.debug("cache hit");
-        logger.debug(buffer);
         this.postTranslate(buffer);
       } catch (e) {
         logger.debug(e);

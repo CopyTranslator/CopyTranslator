@@ -67,6 +67,9 @@ export default class EngineButton extends mixins(WindowController, AppProps) {
 .caiyun {
   background-image: url("../images/caiyun.png");
 }
+.keyan {
+  background-image: url("../images/keyan.svg");
+}
 .sogou {
   background-image: url("../images/sogou.svg");
 }

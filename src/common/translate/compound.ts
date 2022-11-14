@@ -66,7 +66,8 @@ export class Compound implements CopyTranslator {
   postSetEngines() {
     this.setUpGoogleOrigin();
     //关闭和启动intercepter引擎以节省资源
-    const debug = process.env.NODE_ENV != "production";
+    let debug = false;
+    debug = debug && process.env.NODE_ENV != "production";
     const engine2Class = {
       bing: Bing,
       deepl: Deepl,

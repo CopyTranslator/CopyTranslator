@@ -127,7 +127,7 @@ class TranslateController {
       "setTargetLanguages",
       this.translator.getSupportTargetLanguages()
     );
-    bus.iat("sourceLanguage"); //更新界面上的source和target
+    bus.iat("sourceLanguage"); //更新界面上的source和target列表
     bus.iat("targetLanguage");
   }
 

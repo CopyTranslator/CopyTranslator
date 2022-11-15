@@ -91,5 +91,6 @@
     "translateInput": "翻译",
     "openReference": "打开参考链接",
     "googleMirror": "谷歌镜像",
-    "googleSource": "Google翻译源"
+    "googleSource": "Google翻译源",
+    "fallbackTranslator": "备用翻译引擎"
 }

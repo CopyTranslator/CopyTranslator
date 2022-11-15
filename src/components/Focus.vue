@@ -29,13 +29,21 @@
         class="max"
       ></DictResultPanel>
     </div>
-    <div
-      v-if="currentEngine === 'keyan'"
-      style="font-size: 15px; position: absolute; right: 0px; bottom: 5px;"
-    >
-      <a @click="toKeyan()">
-        <span>来⾃棵岩翻译 免费⼀键翻译全⽂>>></span>
-      </a>
+    <div style="font-size: 15px; position: absolute; right: 0px; bottom: 5px;">
+      <div v-if="sharedResult.engine !== currentEngine">
+        <a>
+          <span>
+            {{ currentEngine }}
+            引擎不支持此语言，此结果由备用引擎引擎
+            {{ sharedResult.engine }}提供
+          </span>
+        </a>
+      </div>
+      <div v-else-if="currentEngine === 'keyan'">
+        <a @click="toKeyan()">
+          <span>来⾃棵岩翻译 免费⼀键翻译全⽂>>></span>
+        </a>
+      </div>
     </div>
   </div>
 </template>

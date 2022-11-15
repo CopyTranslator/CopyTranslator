@@ -152,6 +152,15 @@ function initConfig(
   );
 
   config.setRule(
+    "fallbackTranslator",
+    new UnionRule<TranslatorType>(
+      "baidu",
+      "后备翻译引擎，当前引擎不支持此语言时启用",
+      translatorTypes
+    )
+  );
+
+  config.setRule(
     "version",
     new TypeRule<string>(version, "current version", (ver: string) => {
       return ver === version;

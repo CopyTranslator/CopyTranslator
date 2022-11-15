@@ -54,6 +54,7 @@ export const constantActionTypes = [
   "localeSetting",
   "hideDirect",
   "translatorType",
+  "fallbackTranslator",
   "dictionaryType",
   "layoutType",
   "frameMode",

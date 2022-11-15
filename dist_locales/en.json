@@ -91,5 +91,6 @@
     "translateInput": "Translate",
     "openReference": "open reference link",
     "googleMirror": "google Mirror URL",
-    "googleSource": "google translation provider"
+    "googleSource": "google translation provider",
+    "fallbackTranslator": "Fallback Translator"
 }

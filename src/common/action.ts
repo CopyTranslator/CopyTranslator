@@ -233,6 +233,7 @@ class ActionManager {
     this.append(listAction("dictionaryType", dictionaryTypes));
     this.append(listAction("layoutType", layoutTypes));
     this.append(listAction("colorMode", colorModes));
+    this.append(listAction("fallbackTranslator", translatorTypes));
 
     this.append(switchAction("listenClipboard"));
     this.append(switchAction("stayTop"));

@@ -46,12 +46,12 @@ class ConfigParser {
     const now = Date.now();
     if (this.lastSave > now) {
       //就说明我们不需要唤起一次新的保存
-      console.log("schedule save pass");
+      // console.log("schedule save pass");
     } else {
       const interval = 2000; //修改后预定一次保存，在此保存之前的所有修改都不会再预定保存
       this.lastSave = now + interval;
       setTimeout(() => {
-        console.log("schedule save");
+        // console.log("schedule save");
         this.save();
       }, interval);
     }

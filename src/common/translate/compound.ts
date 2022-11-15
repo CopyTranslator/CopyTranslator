@@ -113,6 +113,18 @@ export class Compound implements CopyTranslator {
     return getTranslator(this.mainEngine);
   }
 
+  isSupport(engineName: TranslatorType, from: Language, to: Language): boolean {
+    const engine = getTranslator(engineName);
+    if (
+      engine instanceof DirectionalTranslator &&
+      !engine.isSupport(from, to)
+    ) {
+      return false;
+    } else {
+      return true;
+    }
+  }
+
   async translate(
     text: string,
     from: Language,
@@ -124,8 +136,13 @@ export class Compound implements CopyTranslator {
       engines = this.engines;
     }
     this.resultBuffer.clear(); //先清空缓存
+    const fallbackEngine = config.get("fallbackTranslator") as TranslatorType;
+    const mainEngine = this.isSupport(this.mainEngine, from, to)
+      ? this.mainEngine
+      : fallbackEngine; //如果主引擎不支持的话，就切换到副引擎
+    const mainResult = this.translateWith(mainEngine, text, from, to);
     for (const name of engines) {
-      if (name === this.mainEngine) {
+      if (name === mainEngine) {
         continue;
       }
       const engine = getTranslator(name);
@@ -139,7 +156,7 @@ export class Compound implements CopyTranslator {
         this.translateWith(name, text, from, to);
       }
     }
-    return this.translateWith(this.mainEngine, text, from, to);
+    return mainResult;
   }
 
   async onAllTranslateFinish() {

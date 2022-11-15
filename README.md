@@ -66,17 +66,18 @@ Unparalleled powerful focus mode, while it's just a simple text box, it can meet
 
 - **The translation is displayed in the `Focus mode` and `Contrast Mode` at the same time**. 
 - **The result of [Smart Dictionary](#Smart-Dictionary) is only displayed in `Focus Mode`, colorful text helps you quickly distinguish between items**.
-- **Drag text to focus mode box, you can get translation results directly**.
 - **When the cursor is in the focus mode result box, `Ctrl+Enter` to translate the contents of the box, `Ctrl+B` to use Baidu to search the contents of the box, and `Ctrl+G` to use Google to search the contents of the box**.
 - **The right-click menu of `Focus mode` can be used to set up almost all options as well as all the function**.
 
 ### Smart Translation
 
-`CopyTranslator` will automatically recognize the copied text, **intelligently translate according to the set`source language` and `target language`**, for example, set `source language` to English,and the ` target language` to be Simplified Chinese. If you copy English, it will be translated into Chinese, and if you copy Chinese, it will be translated into English. 
+`CopyTranslator` will automatically recognize the copied text, **intelligently translate according to the set `source language` and `target language`**, for example, set `source language` to English,and the ` target language` to be Simplified Chinese. If you copy English, it will be translated into Chinese, and if you copy Chinese, it will be translated into English. 
 
 ### Smart Dictionary
 
-For phrase or word, you will see a more detailed explanations in `Focus Mode`. ![1537871607106](assets/1537871607106.png)
+For phrase or word, you will see a more detailed explanations.
+
+![1537871607106](assets/1537871607106.png)
 
 ### Incremental Copy
 

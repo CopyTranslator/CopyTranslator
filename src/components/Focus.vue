@@ -30,7 +30,7 @@
       ></DictResultPanel>
     </div>
     <div style="font-size: 15px; position: absolute; right: 0px; bottom: 5px;">
-      <div v-if="sharedResult.engine !== currentEngine">
+      <div v-if="sharedResult.engine !== currentEngine && !multiSource">
         <a>
           <span>
             {{ currentEngine }}

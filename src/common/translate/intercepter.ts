@@ -550,7 +550,7 @@ export class Deepl extends InterceptTranslator<DeeplConfig> {
       const timeoutId = setTimeout(() => {
         this.restart(); //自动重启
         reject({ status: 408, errorMsg: "Request timeout!" });
-      }, TIMEOUT); //Prevent infinitely waiting for the result.
+      }, TIMEOUT * 2); //Prevent infinitely waiting for the result.
       this.localBus.once("unlocked", () => {
         clearTimeout(timeoutId);
         resolve(0);

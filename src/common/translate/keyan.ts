@@ -1,10 +1,10 @@
 import { getProxyAxios } from "./proxy";
 import {
-  Translator,
   Language,
   TranslateQueryResult,
   TranslateError,
 } from "@opentranslate/translator";
+import { DirectionalTranslator } from "./types";
 import md5 from "md5";
 
 interface KeyanConfig {
@@ -27,7 +27,7 @@ interface KeyanResult {
   err_msg?: string;
 }
 
-export class Keyan extends Translator<KeyanConfig> {
+export class Keyan extends DirectionalTranslator<KeyanConfig> {
   readonly name = "keyan";
   private static readonly langMap = new Map(keyanLangMap);
 
@@ -35,9 +35,22 @@ export class Keyan extends Translator<KeyanConfig> {
     keyanLangMap.map(([translatorLang, lang]) => [lang, translatorLang])
   );
 
-  getSupportLanguages(): Language[] {
-    return [...Keyan.langMap.keys()];
+  isSupport(from: Language, to: Language): boolean {
+    if (from == "en" && to == "zh-CN") {
+      return true;
+    } else {
+      return false;
+    }
   }
+
+  getSupportSourceLanguages(): Language[] {
+    return ["en"];
+  }
+
+  getSupportTargetLanguages(): Language[] {
+    return ["zh-CN"];
+  }
+
   protected async query(
     text: string,
     from: Language,

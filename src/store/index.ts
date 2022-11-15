@@ -23,7 +23,8 @@ const plugins = [
 
 const store = new Vuex.Store({
   state: {
-    languages: [],
+    sourceLanguages: [],
+    targetLanguages: [],
     color: "white",
     sharedResult: emptySharedResult(),
     sharedDiff: emptySharedDiff(),
@@ -52,8 +53,11 @@ const store = new Vuex.Store({
     setConfig(state, config) {
       Vue.set(state, "config", config);
     },
-    setLanguages(state: any, languages: any) {
-      Vue.set(state, "languages", languages);
+    setSourceLanguages(state: any, languages: any) {
+      Vue.set(state, "sourceLanguages", languages);
+    },
+    setTargetLanguages(state: any, languages: any) {
+      Vue.set(state, "targetLanguages", languages);
     },
     updateConfig(state, config) {
       for (const key of Object.keys(config)) {
@@ -74,8 +78,11 @@ const store = new Vuex.Store({
     setColor(context, color) {
       context.commit("setColor", color);
     },
-    setLanguages(context: any, languages: any) {
-      context.commit("setLanguages", languages);
+    setSourceLanguages(context: any, languages: any) {
+      context.commit("setSourceLanguages", languages);
+    },
+    setTargetLanguages(context: any, languages: any) {
+      context.commit("setTargetLanguages", languages);
     },
     setConfig(context, config) {
       context.commit("setConfig", config);

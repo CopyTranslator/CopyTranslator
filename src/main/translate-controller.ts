@@ -37,6 +37,7 @@ import { Comparator } from "@/common/translate/comparator";
 import { examToken } from "@/common/translate/token";
 import { translators } from "@/common/translate/translators";
 import { getProxyAxios } from "@/common/translate/proxy";
+import bus from "@/common/event-bus";
 
 class TranslateController {
   text: string = "";
@@ -118,7 +119,16 @@ class TranslateController {
   }
 
   syncSupportLanguages() {
-    store.dispatch("setLanguages", this.translator.getSupportLanguages());
+    store.dispatch(
+      "setSourceLanguages",
+      this.translator.getSupportSourceLanguages()
+    );
+    store.dispatch(
+      "setTargetLanguages",
+      this.translator.getSupportTargetLanguages()
+    );
+    bus.iat("sourceLanguage"); //更新界面上的source和target
+    bus.iat("targetLanguage");
   }
 
   get<T>(identifier: Identifier) {
@@ -515,13 +525,13 @@ class TranslateController {
     this.syncSupportLanguages();
 
     //检查源语言是否支持
-    if (!this.translator.isValid(this.source())) {
+    if (!this.translator.getSupportSourceLanguages().includes(this.source())) {
       this.controller.set("sourceLanguage", "en");
       valid = false;
     }
 
     //检查目标语言是否支持
-    if (!this.translator.isValid(this.target())) {
+    if (!this.translator.getSupportSourceLanguages().includes(this.target())) {
       this.controller.set("targetLanguage", "zh-CN");
       valid = false;
     }

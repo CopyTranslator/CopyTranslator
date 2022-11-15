@@ -1,5 +1,10 @@
 import { getTranslator, translators, Translator } from "./translators";
-import { CopyTranslator, CopyTranslateResult, TranslateResult } from "./types";
+import {
+  CopyTranslator,
+  CopyTranslateResult,
+  TranslateResult,
+  DirectionalTranslator,
+} from "./types";
 import { TranslatorType } from "@/common/types";
 import { AxiosRequestConfig } from "axios";
 import { Language } from "@opentranslate/translator";
@@ -123,7 +128,16 @@ export class Compound implements CopyTranslator {
       if (name === this.mainEngine) {
         continue;
       }
-      this.translateWith(name, text, from, to);
+      const engine = getTranslator(name);
+      if (
+        engine instanceof DirectionalTranslator &&
+        !engine.isSupport(from, to)
+      ) {
+        console.log(name, "不支持", from, "to", to);
+        continue;
+      } else {
+        this.translateWith(name, text, from, to);
+      }
     }
     return this.translateWith(this.mainEngine, text, from, to);
   }
@@ -182,10 +196,24 @@ export class Compound implements CopyTranslator {
   }
 
   getSupportLanguages(): Language[] {
-    return this.getMainEngine().getSupportLanguages();
+    throw "This method should not be used.";
   }
 
-  isValid(lang: Language): boolean {
-    return this.getMainEngine().getSupportLanguages().includes(lang);
+  getSupportSourceLanguages(): Language[] {
+    const mainEngine = this.getMainEngine();
+    if (mainEngine instanceof DirectionalTranslator) {
+      return mainEngine.getSupportSourceLanguages();
+    } else {
+      return mainEngine.getSupportLanguages();
+    }
+  }
+
+  getSupportTargetLanguages(): Language[] {
+    const mainEngine = this.getMainEngine();
+    if (mainEngine instanceof DirectionalTranslator) {
+      return mainEngine.getSupportTargetLanguages();
+    } else {
+      return mainEngine.getSupportLanguages();
+    }
   }
 }

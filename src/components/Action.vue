@@ -69,7 +69,7 @@ export default class Action extends Vue {
 
   mounted() {
     if (this.action?.actionType == "submenu") {
-      bus.on(this.identifier, this.sync);
+      bus.gon(this.identifier, this.sync);
     }
   }
 }

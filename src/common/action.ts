@@ -168,9 +168,15 @@ class ActionManager {
       };
     }
 
-    function getLanguages(allowAuto: boolean = true): Language[] {
-      return store.state.languages.filter((x) => {
-        if (!allowAuto && x == "auto") {
+    function getLanguages(isSource: boolean = true): Language[] {
+      let langs = [];
+      if (isSource) {
+        langs = store.state.sourceLanguages;
+      } else {
+        langs = store.state.targetLanguages;
+      }
+      return langs.filter((x) => {
+        if (!isSource && x == "auto") {
           return false;
         }
         return true;
@@ -179,11 +185,11 @@ class ActionManager {
 
     function createLanguageGenerator(
       identifier: Identifier,
-      allowAuto: boolean = true
+      isSource: boolean = true
     ): () => Array<SubActionView> {
       return () => {
         const l = getLanguageLocales(store.getters.localeSetting);
-        return getLanguages(allowAuto).map((e) => {
+        return getLanguages(isSource).map((e) => {
           return {
             id: compose([identifier, e]),
             label: l[e],

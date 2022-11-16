@@ -187,7 +187,7 @@ export const layoutTypes = ["horizontal", "vertical", "focus"] as const;
 
 // 百度垂直领域翻译
 export const domains = ["medicine", "electronics", "mechanics"] as const;
-export const googleSources = ["simply"] as const;
+export const googleSources = ["simply", "lingva"] as const;
 //路由名称
 export const routeActionTypes = [
   "contrast",

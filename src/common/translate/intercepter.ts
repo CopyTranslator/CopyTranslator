@@ -424,7 +424,7 @@ export class Tencent extends InterceptTranslator<IntercepterConfig> {
       Tencent.langMap.get(to) as string,
       text
     );
-    console.log("开始等待", this.name);
+    // console.log("开始等待", this.name);
     await new Promise((resolve, reject) => {
       const timeoutId = setTimeout(() => {
         reject({ status: 408, errorMsg: "Request timeout!" });
@@ -434,7 +434,7 @@ export class Tencent extends InterceptTranslator<IntercepterConfig> {
         resolve(0);
       });
     }); //等待结束
-    console.log("结束等待", this.name);
+    // console.log("结束等待", this.name);
 
     const tencentResult = this.results as TencentResult;
     const results = tencentResult.targetText;
@@ -480,7 +480,7 @@ export class Deepl extends InterceptTranslator<DeeplConfig> {
 
   onResponse(raw_res: any) {
     this.results = raw_res;
-    console.log(this.name, "更新res", this.results);
+    // console.log(this.name, "更新res", this.results);
     this.localBus.emit("unlocked");
   }
 
@@ -545,7 +545,7 @@ export class Deepl extends InterceptTranslator<DeeplConfig> {
       Deepl.langMap.get(to) as string,
       text
     );
-    console.log("开始等待", this.name);
+    // console.log("开始等待", this.name);
     await new Promise((resolve, reject) => {
       const timeoutId = setTimeout(() => {
         this.restart(); //自动重启
@@ -556,7 +556,7 @@ export class Deepl extends InterceptTranslator<DeeplConfig> {
         resolve(0);
       });
     }); //等待结束
-    console.log("结束等待", this.name);
+    // console.log("结束等待", this.name);
 
     const deeplResult = this.results as DeeplResult;
     const results = [deeplResult.targetText];
@@ -602,8 +602,8 @@ export class Bing extends InterceptTranslator<BingConfig> {
       this.results = JSON.parse(res)[0]; //更新res
       this.localBus.emit("unlocked");
     } catch (e) {
-      console.log(this.name, "res=", res);
-      console.log(e);
+      console.error(this.name, "res=", res);
+      console.error(e);
     }
   }
 
@@ -657,7 +657,7 @@ export class Bing extends InterceptTranslator<BingConfig> {
       Bing.langMap.get(to) as string,
       text
     );
-    console.log("开始等待", this.name);
+    // console.log("开始等待", this.name);
     await new Promise((resolve, reject) => {
       const timeoutId = setTimeout(() => {
         this.restart(); //自动重启
@@ -668,8 +668,8 @@ export class Bing extends InterceptTranslator<BingConfig> {
         resolve(0);
       });
     }); //等待结束
-    console.log(this.name, "结束等待");
-    console.log(this.name, this.results);
+    // console.log(this.name, "结束等待");
+    // console.log(this.name, this.results);
     const bingRes: BingSingleResult = this.results;
     const results = [bingRes.translations[0].text];
     const detectedFrom =

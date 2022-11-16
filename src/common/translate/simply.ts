@@ -2,24 +2,11 @@ import {
   Language,
   Translator,
   TranslateQueryResult,
-  TranslatorInit,
 } from "@opentranslate/translator";
 import qs from "qs";
+import { promiseAny } from "./types";
 
-const promiseAny = async <T>(
-  iterable: Iterable<T | PromiseLike<T>>
-): Promise<T> => {
-  return Promise.all(
-    [...iterable].map((promise) => {
-      return new Promise((resolve, reject) =>
-        Promise.resolve(promise).then(reject, resolve)
-      );
-    })
-  ).then(
-    (errors) => Promise.reject(errors),
-    (value) => Promise.resolve<T>(value)
-  );
-};
+const TIMEOUT = 1000 * 60 * 10; //10分钟检查一次
 
 const langMap: [Language, string][] = [
   ["auto", "auto"],
@@ -151,23 +138,16 @@ const instances = [
 ];
 
 interface SimplyDataResult {
-  base: string;
-  data: {
-    source_language: Language;
-    "translated-text": string;
-  };
+  source_language: Language;
+  "translated-text": string;
 }
 
 export interface SimplyConfig {
-  /** Network request priority */
   URL: string;
 }
 
 export class Simply extends Translator<SimplyConfig> {
-  constructor(init: TranslatorInit<SimplyConfig>) {
-    super(init);
-    this.updateFastestInstance();
-  }
+  readonly name = "Simply";
   /** Translator lang to custom lang */
   private static readonly langMap = new Map(langMap);
 
@@ -176,39 +156,15 @@ export class Simply extends Translator<SimplyConfig> {
     langMap.map(([translatorLang, lang]) => [lang, translatorLang])
   );
 
-  async updateFastestInstance() {
-    //自动寻找最快节点
-    const text =
-      "The main idea is transforming the passed promises list into a reverted promises list. When a reverted Promise resolves it calls reject, while when it rejects it calls resolve. Then the reverted promises list is passed to Promise.all method and when any of Promises rejects, Promise.all will terminate execution with reject error. However in reality this means that we have the successful result, so we just transform the result from reject to resolve back and that's all. We got first successfully resolved promise as a result without magic wand.";
-    promiseAny(
-      instances.map((url) => {
-        return this.axios.get<SimplyDataResult["data"]>(
-          `https://${url}/api/translate/?` +
-            qs.stringify({
-              engine: "google",
-              from: "en",
-              to: "zh-CN",
-              text: text,
-            })
-        );
-      })
-    ).then((res) => {
-      if (res.status != 200) {
-        throw "update fastest simply instance fail";
-      }
-      const url = res.config.url as string;
-      this.config.URL = url.split("/api/translate/")[0];
-      console.log("fastest simply URL=", this.config.URL);
-    });
-  }
+  config: SimplyConfig = {
+    URL: instances[0],
+  };
 
-  private async fetch(
-    text: string,
-    from: string,
-    to: string
-  ): Promise<SimplyDataResult> {
-    const { data } = await this.axios.get<SimplyDataResult["data"]>(
-      `${this.config.URL}/api/translate/?` +
+  lastCheck: number = 0;
+
+  private async fetch(from: string, to: string, text: string, URL: string) {
+    return this.axios.get<SimplyDataResult>(
+      `https://${URL}/api/translate/?` +
         qs.stringify({
           engine: "google",
           from: from,
@@ -216,12 +172,29 @@ export class Simply extends Translator<SimplyConfig> {
           text: text,
         })
     );
-    return { base: "https://translate.Simply.cn", data };
   }
 
-  config: SimplyConfig = {
-    URL: "https://simplytranslate.org",
-  };
+  private fetchWithMultipleURLs(
+    from: Language,
+    to: Language,
+    text: string,
+    URLs: string[]
+  ) {
+    return promiseAny(
+      URLs.map((url) => {
+        return this.fetch(from, to, text, url);
+      })
+    ).then((res) => {
+      if (res.status != 200) {
+        throw "update fastest simply instance fail";
+      }
+      const url = res.config.url as string;
+      this.config.URL = url.split("https://")[1].split("/api/translate/")[0];
+      console.log("fastest simply URL=", this.config.URL);
+      this.lastCheck = Date.now();
+      return res;
+    });
+  }
 
   protected async query(
     text: string,
@@ -229,10 +202,15 @@ export class Simply extends Translator<SimplyConfig> {
     to: Language,
     config: SimplyConfig
   ): Promise<TranslateQueryResult> {
-    // console.log("use simply");
-    let result = await this.fetch(text, from, to);
+    let result;
+    if (Date.now() - this.lastCheck > TIMEOUT) {
+      result = await this.fetchWithMultipleURLs(from, to, text, instances);
+    } else {
+      result = await this.fetch(from, to, text, config.URL);
+    }
 
-    if (!result) {
+    if (!result.data) {
+      console.error(result);
       throw new Error("NETWORK_ERROR");
     }
 
@@ -252,8 +230,6 @@ export class Simply extends Translator<SimplyConfig> {
       },
     };
   }
-
-  readonly name = "Simply";
 
   getSupportLanguages(): Language[] {
     return [...Simply.langMap.keys()];

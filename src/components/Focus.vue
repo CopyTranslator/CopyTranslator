@@ -41,7 +41,7 @@
           <span>
             {{ currentEngine }}引擎不支持此语言，此结果由备用引擎{{
               sharedResult.engine
-            }}提供
+            }}提供（可在设置更改）
           </span>
         </a>
       </div>
@@ -59,8 +59,6 @@ import BaseView from "./BaseView.vue";
 import WindowController from "./WindowController.vue";
 import DictResultPanel from "./DictResult.vue";
 import { Mixins, Ref, Component } from "vue-property-decorator";
-import { Identifier, RouteActionType } from "../common/types";
-import eventBus from "../common/event-bus";
 import DiffTextArea from "./DiffTextArea.vue";
 @Component({
   components: {

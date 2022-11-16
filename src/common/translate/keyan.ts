@@ -1,4 +1,4 @@
-import { getProxyAxios } from "./proxy";
+import { axios } from "./proxy";
 import {
   Language,
   TranslateQueryResult,
@@ -103,6 +103,6 @@ export class Keyan extends DirectionalTranslator<KeyanConfig> {
 }
 
 export const keyan = new Keyan({
-  axios: getProxyAxios(true),
+  axios: axios,
   config: defaultKeyanConfig,
 });

@@ -30,7 +30,7 @@
       ></DictResultPanel>
     </div>
     <div style="font-size: 15px; position: absolute; right: 0px; bottom: 5px;">
-      <div v-if="sharedResult.engine !== currentEngine">
+      <div v-if="sharedResult.engine !== currentEngine && !dictResult.valid">
         <a>
           <span>
             {{ currentEngine }}引擎不支持此语言，此结果由备用引擎{{

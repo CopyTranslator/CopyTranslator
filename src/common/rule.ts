@@ -34,23 +34,25 @@ interface Rule {
   predefined: any;
   tooltip: string;
   check?: CheckFuction; // 检查是否有效的函数
+  minimalVersion?: string;
 }
 
 class GroupRule<T> implements Rule {
   predefined: Array<T>;
   tooltip: string;
   check: CheckFuction;
-  constructor(predefined: Array<T>, msg: string, options: readonly T[]) {
+  minimalVersion?: string;
+  constructor(
+    predefined: Array<T>,
+    msg: string,
+    options: readonly T[],
+    minimalVersion?: string
+  ) {
     this.predefined = predefined;
     this.tooltip = msg;
+    this.minimalVersion = minimalVersion;
     this.check = (value: Array<T>) => {
-      value.forEach((item) => {
-        if (!options.includes(item)) {
-          return false;
-        }
-        return true;
-      });
-      return true;
+      return !value.map((item) => options.includes(item)).includes(false);
     };
   }
 }

@@ -234,28 +234,31 @@ function initConfig(
 
   config.setRule(
     "translator-enabled", //所有启用的的引擎
-    new ConstantGroupRule<TranslatorType>(
+    new GroupRule<TranslatorType>(
       ["google", "baidu", "caiyun", "keyan", "bing", "deepl", "tencent"],
       "所有启用的的引擎，可以关闭某些不常用引擎以节省资源",
-      translatorTypes
+      translatorTypes,
+      "v10.2.4"
     )
   );
 
   config.setRule(
     "translator-cache", //所有会自动查询并缓存结果以加速切换的翻译引擎
-    new ConstantGroupRule<TranslatorType>(
+    new GroupRule<TranslatorType>(
       ["google", "baidu", "caiyun", "keyan", "bing", "deepl", "tencent"],
       "所有会自动查询并缓存结果以加速切换的翻译引擎",
-      translatorTypes
+      translatorTypes,
+      "v10.2.4"
     )
   );
 
   config.setRule(
     "translator-compare", //多源对比时用的引擎
-    new ConstantGroupRule<TranslatorType>(
+    new GroupRule<TranslatorType>(
       ["google", "baidu", "caiyun", "keyan", "bing", "deepl", "tencent"],
       "多源对比时用的引擎",
-      translatorTypes
+      translatorTypes,
+      "v10.2.4"
     )
   );
 

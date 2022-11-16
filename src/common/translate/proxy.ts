@@ -14,7 +14,6 @@ export const getProxyAxios = (info?: boolean, googleMirror?: string) => {
           (config.url as string).startsWith(defaultGoogleAPI) &&
           config.method == "get"
         ) {
-          console.log("googleMirror", googleMirror);
           if (googleMirror != undefined && config.url != undefined) {
             config.url = config.url.replace(defaultGoogleAPI, googleMirror);
             if (antscdn_waf_cookie1.length > 0) {

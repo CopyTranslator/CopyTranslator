@@ -1,6 +1,6 @@
 import { Rule } from "./rule";
 import { Identifier } from "./types";
-import { compatible } from "./constant";
+import { compatible, isLower } from "./constant";
 import store, { getConfigByKey, Config } from "../store";
 type Rules = Map<Identifier, Rule>; //类型别名
 import { readFileSync, writeFileSync } from "fs";
@@ -75,12 +75,22 @@ class ConfigParser {
     try {
       const values = JSON.parse(readFileSync(this.file) as any);
       if (!values["version"] || !compatible(values["version"])) {
-        throw "version incompatible, configs will be reset";
+        throw "version incompatible, configs will be reset"; //大版本冲突
       }
       const config: Config = {};
       for (const key of this.rules.keys()) {
         let val = values[key];
-        if (!this.checkValid(key, val)) {
+        let isValid: boolean = true;
+        const rule = this.getRule(key);
+        if (
+          rule.minimalVersion != undefined &&
+          isLower(values["version"], rule.minimalVersion as string)
+        ) {
+          //config的版本小于这项rule的最低版本，则需要更新为最新的预定义值
+          isValid = false;
+        }
+        isValid = isValid && this.checkValid(key, val);
+        if (!isValid) {
           //无效的话，就置为默认值
           val = this.getRule(key).predefined;
         }

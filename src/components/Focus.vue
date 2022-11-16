@@ -30,12 +30,18 @@
       ></DictResultPanel>
     </div>
     <div style="font-size: 15px; position: absolute; right: 0px; bottom: 5px;">
-      <div v-if="sharedResult.engine !== currentEngine && !multiSource">
+      <div
+        v-if="
+          sharedResult.engine !== currentEngine &&
+          !multiSource &&
+          !dictResult.valid
+        "
+      >
         <a>
           <span>
-            {{ currentEngine }}
-            引擎不支持此语言，此结果由备用引擎引擎
-            {{ sharedResult.engine }}提供
+            {{ currentEngine }}引擎不支持此语言，此结果由备用引擎{{
+              sharedResult.engine
+            }}提供
           </span>
         </a>
       </div>

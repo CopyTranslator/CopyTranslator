@@ -4,7 +4,7 @@ import {
   TranslateQueryResult,
 } from "@opentranslate/translator";
 import { promiseAny } from "./types";
-import { getProxyAxios } from "./proxy";
+import { axios } from "./proxy";
 
 const langMap: [Language, string][] = [
   ["auto", "auto"],
@@ -274,6 +274,6 @@ export class Lingva extends Translator<LingvaConfig> {
 }
 
 export const lingva = new Lingva({
-  axios: getProxyAxios(true),
+  axios: axios,
   config: defaultLingvaConfig,
 });

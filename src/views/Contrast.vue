@@ -80,7 +80,6 @@
 </template>
 
 <script lang="ts">
-import Vue from "vue";
 import ContrastPanel from "../components/ContrastPanel.vue";
 import BaseView from "../components/BaseView.vue";
 import WindowController from "../components/WindowController.vue";
@@ -95,7 +94,6 @@ import {
   abstractTranslatorTypes,
   GeneralTranslatorType,
 } from "../common/types";
-import { ipcRenderer as ipc } from "electron";
 import EngineButton from "../components/EngineButton.vue";
 
 import {

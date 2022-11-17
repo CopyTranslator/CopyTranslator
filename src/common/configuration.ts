@@ -24,6 +24,8 @@ import {
   hideDirections,
   GoogleSource,
   googleSources,
+  DragCopyMode,
+  dragCopyModes,
 } from "./types";
 import { DictionaryType, dictionaryTypes } from "./dictionary/types";
 import { version } from "./constant";
@@ -110,6 +112,22 @@ function initConfig(
     "showGoogleMessage",
     new TypeRule<boolean>(true, "show google message")
   );
+
+  config.setRule(
+    "activeWindows",
+    new TypeRule<string[]>([], "info about active window")
+  );
+
+  config.setRule(
+    "dragCopyMode",
+    new UnionRule<DragCopyMode>(
+      "dragCopyGlobal",
+      "DragCopy mode",
+      dragCopyModes
+    )
+  );
+  config.setRule("dragCopyWhiteList", new TypeRule<string[]>([], ""));
+  config.setRule("dragCopyBlackList", new TypeRule<string[]>([], ""));
 
   config.setRule(
     "isNewUser",

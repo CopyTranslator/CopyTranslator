@@ -92,5 +92,13 @@
     "openReference": "打开参考链接",
     "googleMirror": "谷歌镜像",
     "googleSource": "Google翻译源",
-    "fallbackTranslator": "备用翻译引擎"
+    "fallbackTranslator": "备用翻译引擎",
+    "dragCopyConfig": "拖拽复制设置",
+    "dragCopyMode": "拖拽复制模式",
+    "dragCopyGlobal": "全局拖拽复制",
+    "dragCopyWhiteList": "拖拽复制白名单",
+    "dragCopyBlackList": "拖拽复制黑名单",
+    "dragCopyPrompt": "如果这里没有列出你要的程序，请在该程序上尝试拖拽操作之后再试一次",
+    "fallbackPrompt1": "引擎不支持此语言，此结果由备用引擎",
+    "fallbackPrompt2": "提供（可在设置更改）"
 }

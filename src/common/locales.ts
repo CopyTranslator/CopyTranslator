@@ -96,6 +96,17 @@ export const zh_cn = new Map<Identifier, string>([
   ["googleMirror", "谷歌镜像"],
   ["googleSource", "Google翻译源"],
   ["fallbackTranslator", "备用翻译引擎"],
+  ["dragCopyConfig", "拖拽复制设置"],
+  ["dragCopyMode", "拖拽复制模式"],
+  ["dragCopyGlobal", "全局拖拽复制"],
+  ["dragCopyWhiteList", "拖拽复制白名单"],
+  ["dragCopyBlackList", "拖拽复制黑名单"],
+  [
+    "dragCopyPrompt",
+    "如果这里没有列出你要的程序，请在该程序上尝试拖拽操作之后再试一次",
+  ],
+  ["fallbackPrompt1", "引擎不支持此语言，此结果由备用引擎"],
+  ["fallbackPrompt2", "提供（可在设置更改）"],
 ]);
 
 export const en = new Map<Identifier, string>([
@@ -194,5 +205,19 @@ export const en = new Map<Identifier, string>([
   ["googleMirror", "google Mirror URL"],
   ["googleSource", "google translation provider"],
   ["fallbackTranslator", "Fallback Translator"],
+  ["dragCopyConfig", "DragCopy Config"],
+  ["dragCopyMode", "DragCopy Mode"],
+  ["dragCopyGlobal", "Global DragCopy"],
+  ["dragCopyWhiteList", "DragCopy WhiteList"],
+  ["dragCopyBlackList", "DragCopy BlackList"],
+  [
+    "dragCopyPrompt",
+    "If the program you want is not listed here, please try dragging and dropping on the program and try again",
+  ],
+  [
+    "fallbackPrompt1",
+    "engine does not support this language, this result is provided by the fallback engine",
+  ],
+  ["fallbackPrompt2", "(can be changed in settings)"],
 ]);
 export type Locale = typeof en;

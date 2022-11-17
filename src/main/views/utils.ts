@@ -18,7 +18,7 @@ export function loadRoute(
   if (process.env.WEBPACK_DEV_SERVER_URL) {
     // Load the url of the dev server if in development mode
     const url = env.publicUrl + `/#/${routeName}`;
-    console.log(url);
+    // console.log(url);
     window.loadURL(url);
     if (!process.env.IS_TEST && main) window.webContents.openDevTools();
   } else {

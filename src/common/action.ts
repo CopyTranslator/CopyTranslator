@@ -17,6 +17,7 @@ import {
   translatorGroups,
   Frequency,
   googleSources,
+  dragCopyModes,
 } from "./types";
 import { dictionaryTypes } from "./dictionary/types";
 import { getLanguageLocales, Language } from "./translate/locale";
@@ -28,14 +29,20 @@ type Actions = Map<Identifier, ActionView>;
 
 function subMenuGenerator(
   identifier: Identifier,
-  list: Array<string>
+  list: Array<string>,
+  needLocale: boolean = false
 ): SubActionView[] {
+  const l = store.getters.locale;
   return list.map((e) => {
     const id = compose([identifier, e]);
+    let label = e;
+    if (needLocale) {
+      label = l[e].toString();
+    }
     return {
       id,
       type: "checkbox",
-      label: e,
+      label,
     };
   });
 }
@@ -139,13 +146,27 @@ class ActionManager {
     }
 
     //列表类型，是select的一种特化
-    function listAction(identifier: Identifier, list: any): ActionInitOpt {
-      return {
-        type: "submenu",
-        id: identifier,
-        tooltip: config.getTooltip(identifier),
-        submenu: subMenuGenerator(identifier, list),
-      };
+    function listAction(
+      identifier: Identifier,
+      list: any,
+      needLocale: boolean = false
+    ): ActionInitOpt {
+      if (!needLocale) {
+        return {
+          type: "submenu",
+          id: identifier,
+          tooltip: config.getTooltip(identifier),
+          submenu: subMenuGenerator(identifier, list, needLocale),
+        };
+      } else {
+        return {
+          type: "submenu",
+          id: identifier,
+          tooltip: config.getTooltip(identifier),
+          subMenuGenerator: () =>
+            subMenuGenerator(identifier, list, needLocale),
+        };
+      }
     }
 
     //自动生成子菜单
@@ -321,6 +342,10 @@ class ActionManager {
     this.append(listAction("pasteDelay", delays));
     this.append(listAction("googleSource", googleSources));
     this.append(constantAction("googleMirror"));
+
+    this.append(listAction("dragCopyMode", dragCopyModes, true));
+    this.append(configAction("dragCopyWhiteList"));
+    this.append(configAction("dragCopyBlackList"));
 
     this.append(normalAction("settings"));
     this.append(normalAction("helpAndUpdate"));

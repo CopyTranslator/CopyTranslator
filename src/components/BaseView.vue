@@ -15,6 +15,10 @@ export default class BaseView extends Vue {
     shell.openExternal("https://www.keyanyuedu.com/?channel=copytranslator");
   }
 
+  get trans() {
+    return this.$store.getters.locale;
+  }
+
   get valid() {
     return this.dictResult.valid && this.layoutType === "focus";
   }

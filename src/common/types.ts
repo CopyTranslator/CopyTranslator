@@ -64,6 +64,8 @@ export const constantActionTypes = [
   "pasteDelay",
   "googleMirror",
   "googleSource",
+  "dragCopyMode",
+  "activeWindows",
 ] as const;
 
 export const interceptTranslatorTypes = ["bing", "deepl", "tencent"] as const;
@@ -169,6 +171,7 @@ export const menuActionTypes = [
   "switches", //设置的开关面板
   "options", //设置的选项面板
   "apiConfig", //设置的配置面板
+  "dragCopyConfig", //拖拽复制的配置面板
   "translatorConfig",
   "tray", //任务栏托盘右键菜单
   "draggableOptions", //
@@ -188,6 +191,12 @@ export const layoutTypes = ["horizontal", "vertical", "focus"] as const;
 // 百度垂直领域翻译
 export const domains = ["medicine", "electronics", "mechanics"] as const;
 export const googleSources = ["google", "simply", "lingva"] as const;
+export const dragCopyModes = [
+  "dragCopyGlobal",
+  "dragCopyWhiteList",
+  "dragCopyBlackList",
+] as const;
+
 //路由名称
 export const routeActionTypes = [
   "contrast",
@@ -214,6 +223,12 @@ export const eventTypes = [
   "allTranslated",
 ] as const;
 
+export const displayTexts = [
+  "dragCopyPrompt",
+  "fallbackPrompt1",
+  "fallbackPrompt2",
+] as const; //一些显示在界面上的文本
+
 export type Role = typeof roles[number];
 export type SwitchActionType = typeof switchActionTypes[number];
 export type ConstantActionType = typeof constantActionTypes[number];
@@ -224,8 +239,10 @@ export type RouteActionType = typeof routeActionTypes[number];
 export type LayoutType = typeof layoutTypes[number];
 export type Domain = typeof domains[number];
 export type GoogleSource = typeof googleSources[number];
+export type DragCopyMode = typeof dragCopyModes[number];
 export type ColorMode = typeof colorModes[number];
 export type EventType = typeof eventTypes[number];
+export type DisplayText = typeof displayTexts[number];
 
 export type Identifier =
   | RouteActionType
@@ -238,7 +255,9 @@ export type Identifier =
   | RecognizerType
   | Role
   | TranslatorGroup
-  | Frequency;
+  | Frequency
+  | DragCopyMode
+  | DisplayText;
 
 export const identifiers: readonly Identifier[] = flatten([
   roles,

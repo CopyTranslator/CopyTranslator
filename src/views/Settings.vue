@@ -7,6 +7,7 @@
           <v-tab>{{ trans["switches"] }} </v-tab>
           <v-tab>{{ trans["apiConfig"] }} </v-tab>
           <v-tab>{{ trans["translatorConfig"] }} </v-tab>
+          <v-tab>{{ trans["dragCopyConfig"] }} </v-tab>
           <v-tab-item>
             <Options></Options>
           </v-tab-item>
@@ -19,6 +20,9 @@
           <v-tab-item>
             <EngineManage></EngineManage>
           </v-tab-item>
+          <v-tab-item>
+            <DragCopyConfig></DragCopyConfig>
+          </v-tab-item>
         </v-tabs>
       </div>
     </v-app>
@@ -26,11 +30,11 @@
 </template>
 
 <script lang="ts">
-import { shell } from "electron";
 import Options from "./Options.vue";
 import Config from "./Config.vue";
 import Switches from "./Switches.vue";
 import EngineManage from "./EngineManage.vue";
+import DragCopyConfig from "./DrogCopyConfig.vue";
 import { Mixins, Component, Vue } from "vue-property-decorator";
 
 @Component({
@@ -39,6 +43,7 @@ import { Mixins, Component, Vue } from "vue-property-decorator";
     Config,
     Switches,
     EngineManage,
+    DragCopyConfig,
   },
 })
 export default class Focus extends Vue {

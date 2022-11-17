@@ -4,6 +4,8 @@ import { clipboard } from "./clipboard";
 import eventBus from "../common/event-bus";
 import config from "../common/configuration";
 import iohook from "iohook";
+import { DragCopyMode } from "@/common/types";
+const activeWindow = require("active-win");
 
 class EventListener {
   drag = false;
@@ -98,17 +100,38 @@ class EventListener {
     ioHook.on("mouseup", (event: MouseEvent) => {
       //模拟点按复制
       if (
-        config.get("dragCopy") &&
-        config.get("listenClipboard") &&
         !this.copied &&
         Date.now() - this.lastDown > 100 &&
         Math.abs(this.newX - this.lastX) + Math.abs(this.newY - this.lastY) > 10
       ) {
-        this.simulateCopy();
-        if (event.ctrlKey) {
-          eventBus.at("dispatch", "incrementSelect");
-        }
-        this.copied = true;
+        activeWindow().then((res: any) => {
+          const windowName = res.owner.name.toString();
+          const windows = new Set(config.get("activeWindows"));
+          if (!windows.has(windowName)) {
+            windows.add(windowName);
+            config.set("activeWindows", [...windows]);
+          }
+          let condition =
+            config.get("dragCopy") && config.get("listenClipboard");
+          if (!condition) {
+            return;
+          }
+          const mode = config.get("dragCopyMode") as DragCopyMode;
+          if (mode === "dragCopyWhiteList") {
+            const whitelist = config.get("dragCopyWhiteList") as string[];
+            condition = condition && whitelist.includes(windowName);
+          } else if (mode === "dragCopyBlackList") {
+            const blacklist = config.get("dragCopyBlackList") as string[];
+            condition = condition && !blacklist.includes(windowName);
+          }
+          if (condition) {
+            this.simulateCopy();
+            if (event.ctrlKey) {
+              eventBus.at("dispatch", "incrementSelect");
+            }
+            this.copied = true;
+          }
+        });
       }
     });
 

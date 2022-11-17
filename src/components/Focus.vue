@@ -39,9 +39,8 @@
       >
         <a>
           <span>
-            {{ currentEngine }}引擎不支持此语言，此结果由备用引擎{{
-              sharedResult.engine
-            }}提供（可在设置更改）
+            {{ currentEngine }}{{ trans["fallbackPrompt1"]
+            }}{{ sharedResult.engine }}{{ trans["fallbackPrompt2"] }}
           </span>
         </a>
       </div>

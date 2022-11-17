@@ -1,11 +1,13 @@
 <template>
   <div>
+    <Action identifier="dragCopy"></Action>
+    <br />
     <Action identifier="dragCopyMode"></Action>
-    <p v-if="config.dragCopyMode !== 'dragCopyGlobal'">
+    <p v-if="config.dragCopyMode !== 'dragCopyGlobal'" style="color: red;">
       {{ trans["dragCopyPrompt"] }}
     </p>
     <div v-if="config.dragCopyMode === 'dragCopyWhiteList'">
-      <p>{{ trans["dragCopyWhiteList"] }}</p>
+      <p>{{ trans["dragCopyWhiteList"] }}:</p>
       <v-select
         v-model="whitelist"
         :items="config.activeWindows"
@@ -16,7 +18,7 @@
       </v-select>
     </div>
     <div v-if="config.dragCopyMode === 'dragCopyBlackList'">
-      <p>{{ trans["dragCopyBlackList"] }}</p>
+      <p>{{ trans["dragCopyBlackList"] }}:</p>
       <v-select
         v-model="blacklist"
         :items="config.activeWindows"

@@ -1,8 +1,8 @@
 <template>
   <div style="height: 100%;">
-    <v-app>
-      <div style="height: 80%; margin: 2%;">
-        <v-tabs v-model="activeName">
+    <v-app style="height: 100%;">
+      <div style="height: 100%; margin: 2%;">
+        <v-tabs v-model="activeName" vertical>
           <v-tab>{{ trans["options"] }} </v-tab>
           <v-tab>{{ trans["switches"] }} </v-tab>
           <v-tab>{{ trans["apiConfig"] }} </v-tab>

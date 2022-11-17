@@ -232,7 +232,7 @@ export class WindowMangaer {
   }
 
   createSetting() {
-    const width = 320;
+    const width = 500;
     const height = 680;
     const {
       x: xBound,
@@ -252,9 +252,10 @@ export class WindowMangaer {
       title: t["settings"],
       parent: this.get("contrast"),
     };
-    const previous_cfg = config.get<LayoutConfig>("settings");
-    cfg["width"] = previous_cfg["width"];
-    cfg["height"] = previous_cfg["height"];
+    // TODO 这里要保存用户当前的窗口参数
+    // const previous_cfg = config.get<LayoutConfig>("settings");
+    // cfg["width"] = previous_cfg["width"];
+    // cfg["height"] = previous_cfg["height"];
     return this.createWindow("settings", cfg);
   }
 

@@ -1,20 +1,22 @@
 <template>
-  <v-expansion-panels v-model="panel">
-    <div
-      v-for="switchGroup in switchGroups"
-      :key="switchGroup"
-      style="width: 50%;"
-    >
-      <v-subheader style="text-align: left; padding: 0px;"
-        >{{ trans[switchGroup] }}
-      </v-subheader>
-      <Action
-        v-for="actionId in actionKeys[switchGroup]"
-        :identifier="actionId"
-        :key="actionId"
-      ></Action>
-    </div>
-  </v-expansion-panels>
+  <div>
+    <v-expansion-panels v-model="panel">
+      <div
+        v-for="switchGroup in switchGroups"
+        :key="switchGroup"
+        style="width: 50%;"
+      >
+        <v-subheader style="text-align: left; padding: 0px;"
+          >{{ trans[switchGroup] }}
+        </v-subheader>
+        <Action
+          v-for="actionId in actionKeys[switchGroup]"
+          :identifier="actionId"
+          :key="actionId"
+        ></Action>
+      </div>
+    </v-expansion-panels>
+  </div>
 </template>
 
 <script lang="ts">

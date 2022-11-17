@@ -26,11 +26,13 @@ import bus from "../common/event-bus";
 import logger from "./logger";
 
 type Actions = Map<Identifier, ActionView>;
+type PostLocaleFunc = (x: string) => string;
 
 function subMenuGenerator(
   identifier: Identifier,
   list: Array<string>,
-  needLocale: boolean = false //是否需要把选项进行翻译
+  needLocale: boolean = false, //是否需要把选项进行翻译,
+  postLocaleFunc?: PostLocaleFunc
 ): SubActionView[] {
   const l = store.getters.locale;
   return list.map((e) => {
@@ -38,6 +40,9 @@ function subMenuGenerator(
     let label = e;
     if (needLocale) {
       label = l[e].toString();
+      if (postLocaleFunc != undefined) {
+        label = postLocaleFunc(label);
+      }
     }
     return {
       id,
@@ -149,14 +154,15 @@ class ActionManager {
     function listAction(
       identifier: Identifier,
       list: any,
-      needLocale: boolean = false
+      needLocale: boolean = false,
+      postLocaleFunc?: PostLocaleFunc
     ): ActionInitOpt {
       if (!needLocale) {
         return {
           type: "submenu",
           id: identifier,
           tooltip: config.getTooltip(identifier),
-          submenu: subMenuGenerator(identifier, list, needLocale),
+          submenu: subMenuGenerator(identifier, list, false),
         };
       } else {
         return {
@@ -164,7 +170,7 @@ class ActionManager {
           id: identifier,
           tooltip: config.getTooltip(identifier),
           subMenuGenerator: () =>
-            subMenuGenerator(identifier, list, needLocale),
+            subMenuGenerator(identifier, list, true, postLocaleFunc),
         };
       }
     }
@@ -343,7 +349,12 @@ class ActionManager {
     this.append(listAction("googleSource", googleSources));
     this.append(constantAction("googleMirror"));
 
-    this.append(listAction("dragCopyMode", dragCopyModes, true));
+    this.append(
+      listAction("dragCopyMode", dragCopyModes, true, (x) =>
+        x.replace("拖拽复制", "").replace("DragCopy", "").trim()
+      )
+    ); //TODO 很丑的实现，但是不是很想改
+
     this.append(configAction("dragCopyWhiteList"));
     this.append(configAction("dragCopyBlackList"));
 
@@ -371,9 +382,12 @@ class ActionManager {
         contain = this.config.get("tray");
         break;
       case "options":
-        contain = keys.filter((x) =>
-          ["submenu", "constant"].includes(this.getAction(x).actionType)
-        );
+        contain = keys.filter((x) => {
+          return (
+            ["submenu", "constant"].includes(this.getAction(x).actionType) &&
+            !["dragCopyMode"].includes(x)
+          );
+        });
         break;
       case "focusContext":
         contain = ["copy", "paste", "cut", "clear"];

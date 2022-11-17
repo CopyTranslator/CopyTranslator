@@ -223,13 +223,14 @@ function initConfig(
   );
 
   config.setRule(
+    //TODO 但是这里其实没有自动更新过参数
     "settings",
     new StructRule<ModeConfig>(
       {
         x: 1390,
         y: 133,
         height: 787,
-        width: 415,
+        width: 500,
       },
       "parameters of setting panel"
     )

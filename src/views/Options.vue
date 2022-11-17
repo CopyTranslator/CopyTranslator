@@ -1,12 +1,10 @@
 <template>
-  <div>
-    <div style="text-align: left;">
-      <Action
-        v-for="actionId in actionKeys"
-        :identifier="actionId"
-        :key="actionId"
-      ></Action>
-    </div>
+  <div style="text-align: left; overflow: scroll; height: 95vh;">
+    <Action
+      v-for="actionId in actionKeys"
+      :identifier="actionId"
+      :key="actionId"
+    ></Action>
   </div>
 </template>
 

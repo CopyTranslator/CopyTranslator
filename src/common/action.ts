@@ -30,7 +30,7 @@ type Actions = Map<Identifier, ActionView>;
 function subMenuGenerator(
   identifier: Identifier,
   list: Array<string>,
-  needLocale: boolean = false
+  needLocale: boolean = false //是否需要把选项进行翻译
 ): SubActionView[] {
   const l = store.getters.locale;
   return list.map((e) => {

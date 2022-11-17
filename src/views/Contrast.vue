@@ -80,6 +80,7 @@
 </template>
 
 <script lang="ts">
+import Vue from "vue";
 import ContrastPanel from "../components/ContrastPanel.vue";
 import BaseView from "../components/BaseView.vue";
 import WindowController from "../components/WindowController.vue";

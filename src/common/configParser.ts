@@ -32,8 +32,8 @@ class ConfigParser {
     return <Rule>this.rules.get(key);
   }
 
-  get(key: Identifier) {
-    return getConfigByKey(key);
+  get<T>(key: Identifier): T {
+    return getConfigByKey(key) as T;
   }
 
   set(key: Identifier, value: any, needCheck: boolean = true) {

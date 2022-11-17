@@ -1,5 +1,5 @@
 <template>
-  <div v-if="action">
+  <div v-if="action" class="actionStyle">
     <v-switch
       v-if="action.actionType === 'checkbox'"
       v-model="value"
@@ -7,22 +7,24 @@
       :label="trans[action.id]"
     ></v-switch>
     <div v-else-if="action.actionType === 'constant'">
-      <p style="margin: 0px;">{{ trans[identifier] }}</p>
+      <p class="pStyle">{{ trans[identifier] }}</p>
       <v-text-field v-model="value"></v-text-field>
     </div>
     <div v-else-if="action.actionType === 'submenu'">
-      <p style="margin: 0px;">{{ trans[identifier] }}</p>
+      <p class="pStyle">
+        {{ trans[identifier] }}
+      </p>
       <v-select
         v-model="command"
         :items="action.submenu"
         item-text="label"
         item-value="id"
-        style="margin: 0px; padding: 0px;"
+        style="padding: 2px;"
       >
       </v-select>
     </div>
     <div v-else-if="action.actionType === 'normal'">
-      <v-btn @click="callback(action.id)" width="100%" style="margin-top: 4px;">
+      <v-btn @click="callback(action.id)" width="98%" style="margin-top: 4px;">
         {{ trans[action.id] }}
       </v-btn>
     </div>
@@ -77,12 +79,24 @@ export default class Action extends Vue {
 
 <style scoped>
 .myswitch {
-  margin: 0px;
+  margin-top: 1px;
+  margin-left: 5px;
+  margin-right: 5px;
 }
 .myswitch >>> .v-messages {
   min-height: 0px;
 }
 .myswitch >>> .v-input__slot {
   margin-bottom: 0px !important;
+}
+.actionStyle {
+  margin-top: 0px;
+  margin-left: 2px;
+  margin-right: 2px;
+  text-align: center;
+}
+.pStyle {
+  margin-bottom: 0px;
+  text-align: left;
 }
 </style>

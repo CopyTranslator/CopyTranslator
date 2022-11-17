@@ -13,7 +13,6 @@ import WindowController from "./WindowController.vue";
 import Vue from "vue";
 import Component, { mixins } from "vue-class-component";
 import config from "@/common/configuration";
-import eventBus from "@/common/event-bus";
 
 const AppProps = Vue.extend({
   props: {
@@ -30,7 +29,7 @@ const AppProps = Vue.extend({
 export default class EngineButton extends mixins(WindowController, AppProps) {
   get engineClass() {
     if (this.engine == "baidu-domain") {
-      return `${this.engine}-${config.get("baidu-domain").domain}`;
+      return `${this.engine}-${config.get<any>("baidu-domain").domain}`;
     } else {
       return this.engine;
     }

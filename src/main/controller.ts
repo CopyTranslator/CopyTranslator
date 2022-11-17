@@ -1,7 +1,7 @@
 import { WindowMangaer } from "./views/manager";
 import { eventListener } from "./event-listener";
 import { MenuManager } from "./menu-manager";
-import { Identifier, authorizeKey } from "../common/types";
+import { Identifier, authorizeKey, LayoutType } from "../common/types";
 import { startService } from "../proxy/main";
 import { ShortcutManager } from "./shortcut";
 import { app, BrowserWindow } from "electron";
@@ -20,6 +20,7 @@ import eventBus from "@/common/event-bus";
 import simulate from "./simulate";
 import logger from "@/common/logger";
 import { keyan } from "@/common/translate/keyan";
+import { LayoutConfig } from "@/common/rule";
 
 class Controller extends MainController {
   win: WindowMangaer = new WindowMangaer(this);
@@ -38,8 +39,8 @@ class Controller extends MainController {
   }
 
   changeFontSize(increase: boolean) {
-    const layoutType = config.get("layoutType");
-    const layoutConfig = config.get(layoutType);
+    const layoutType = config.get<LayoutType>("layoutType");
+    const layoutConfig = config.get<LayoutConfig>(layoutType);
     const delta = increase ? 1 : -1;
     if (config.get("multiSource")) {
       layoutConfig.diffFontSize += delta;

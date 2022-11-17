@@ -41,7 +41,7 @@ export class Compound implements CopyTranslator {
   }
 
   setUpGoogleOrigin() {
-    let googleMirror = config.get("googleMirror");
+    let googleMirror = config.get<string | undefined>("googleMirror");
     if (googleMirror != undefined) {
       if (googleMirror.endsWith("/")) {
         googleMirror = googleMirror.substring(0, googleMirror.length - 1);

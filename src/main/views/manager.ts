@@ -12,6 +12,7 @@ import { MainController } from "@/common/controller";
 import { defaultConfig, MinimalParam, loadRoute, insertStyles } from "./utils";
 import config from "@/common/configuration";
 import eventBus from "@/common/event-bus";
+import { LayoutConfig } from "@/common/rule";
 const forceFocus = require("@adeperio/forcefocus");
 
 export class WindowMangaer {
@@ -28,9 +29,8 @@ export class WindowMangaer {
   }
 
   updateBounds(newLayoutType: LayoutType | null = null) {
-    const oldLayoutType = config.get("layoutType");
-
-    let windowConfig = config.get(oldLayoutType);
+    const oldLayoutType = config.get<LayoutType>("layoutType");
+    let windowConfig = config.get<LayoutConfig>(oldLayoutType);
     const window = this.get("contrast");
     config.set(oldLayoutType, {
       ...windowConfig,
@@ -178,7 +178,7 @@ export class WindowMangaer {
     const cfg = {
       ...defaultConfig,
       ...param,
-      alwaysOnTop: config.get("stayTop"),
+      alwaysOnTop: config.get<boolean>("stayTop"),
     };
     const window = new BrowserWindow(cfg);
 
@@ -215,7 +215,7 @@ export class WindowMangaer {
       frame: false,
       title: "CopyTranslator",
     };
-    const previous_config = config.get(config.get("layoutType"));
+    const previous_config = config.get<LayoutConfig>(config.get("layoutType"));
     window_config = { ...window_config, ...previous_config };
     const window = this.createWindow("contrast", window_config, true);
     window.on("blur", () => {
@@ -252,7 +252,7 @@ export class WindowMangaer {
       title: t["settings"],
       parent: this.get("contrast"),
     };
-    const previous_cfg = config.get("settings");
+    const previous_cfg = config.get<LayoutConfig>("settings");
     cfg["width"] = previous_cfg["width"];
     cfg["height"] = previous_cfg["height"];
     return this.createWindow("settings", cfg);

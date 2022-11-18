@@ -136,7 +136,7 @@ function initConfig(
 
   config.setRule("toastTip", new TypeRule<boolean>(false, "action toast tip"));
 
-  config.setRule("drawer", new TypeRule<boolean>(false, "never show warning"));
+  config.setRule("drawer", new TypeRule<boolean>(true, ""));
 
   config.setRule("closeAsQuit", new TypeRule<boolean>(true, "close as quit"));
 

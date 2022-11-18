@@ -74,9 +74,16 @@ export class UnionRule<T> implements Rule {
   predefined: any;
   tooltip: string;
   check: CheckFuction;
-  constructor(predefined: T, msg: string, options: readonly T[]) {
+  minimalVersion?: string;
+  constructor(
+    predefined: T,
+    msg: string,
+    options: readonly T[],
+    minimalVersion?: string
+  ) {
     this.predefined = predefined;
     this.tooltip = msg;
+    this.minimalVersion = minimalVersion;
     this.check = function (value: T) {
       return options.includes(value);
     };

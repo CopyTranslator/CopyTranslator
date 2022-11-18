@@ -474,9 +474,10 @@ function initConfig(
   config.setRule(
     "googleSource",
     new UnionRule<GoogleSource>(
-      "simply",
+      "google",
       "google translation provider",
-      googleSources
+      googleSources,
+      "v10.2.4"
     )
   );
 

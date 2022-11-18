@@ -3,6 +3,7 @@ export const constants = {
   nickName: "破晓",
   version: "10.2.4",
   stage: "stable",
+  changelogs: "https://copytranslator.gitee.io/changelogs/v10.html",
   wiki: "https://copytranslator.gitee.io/guide",
   homepage: "https://copytranslator.gitee.io",
   downloadPage: "https://copytranslator.gitee.io/guide/download.html",
@@ -35,7 +36,7 @@ export function compatible(configVersion: string): boolean {
     const currentCount =
       currentInfos[0] * 10000 + currentInfos[1] * 100 + currentInfos[2];
     if (configCount > currentCount) {
-      return false; //回退到旧版本也要更新下
+      return false; //回退到旧版本要把整个配置文件重置一下，避免冲突
     }
     for (const i of [0]) {
       //v10之后都是兼容的
@@ -54,7 +55,7 @@ export function isLower(
   minimalVersion: string
 ): boolean {
   if (configVersion.indexOf("beta") != -1) {
-    return false; //如果是测试版，肯定要更新的
+    return true; //如果是测试版，肯定要更新的
   }
   const configInfos = configVersion
     .substring(1)

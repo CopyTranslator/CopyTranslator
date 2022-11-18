@@ -107,6 +107,9 @@ export const zh_cn = new Map<Identifier, string>([
   ],
   ["fallbackPrompt1", "引擎不支持此语言，此结果由备用引擎"],
   ["fallbackPrompt2", "提供（可在设置更改）"],
+  ["about", "关于"],
+  ["appearance", "外观"],
+  ["other", "其他"],
 ]);
 
 export const en = new Map<Identifier, string>([
@@ -151,7 +154,7 @@ export const en = new Map<Identifier, string>([
   ["userManual", "User Manual"],
   ["checkUpdate", "Check Update"],
   ["toDownload", "To Download"],
-  ["changelog", "Change Log"],
+  ["changelog", "Changelog"],
   ["cancel", "Cancel"],
   ["ok", "OK"],
   ["restoreDefault", "Restore default settings"],
@@ -212,12 +215,15 @@ export const en = new Map<Identifier, string>([
   ["dragCopyBlackList", "DragCopy BlackList"],
   [
     "dragCopyPrompt",
-    "If the program you want is not listed here, please try dragging and dropping on the program and try again",
+    "If the program you want is not listed here, please try dragging and dropping on that program and try again",
   ],
   [
     "fallbackPrompt1",
     "engine does not support this language, this result is provided by the fallback engine",
   ],
   ["fallbackPrompt2", "(can be changed in settings)"],
+  ["about", "About"],
+  ["appearance", "Appearance"],
+  ["other", "Other"],
 ]);
 export type Locale = typeof en;

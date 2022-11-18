@@ -4,7 +4,7 @@ import { MenuManager } from "./menu-manager";
 import { Identifier, authorizeKey, LayoutType } from "../common/types";
 import { startService } from "../proxy/main";
 import { ShortcutManager } from "./shortcut";
-import { app, BrowserWindow } from "electron";
+import { app, BrowserWindow, shell } from "electron";
 import store, { observers, restoreFromConfig } from "../store";
 import { TranslateController } from "./translate-controller";
 import { l10n, L10N } from "./l10n";
@@ -21,6 +21,7 @@ import simulate from "./simulate";
 import logger from "@/common/logger";
 import { keyan } from "@/common/translate/keyan";
 import { LayoutConfig } from "@/common/rule";
+import { constants, versionString } from "../common/constant";
 
 class Controller extends MainController {
   win: WindowMangaer = new WindowMangaer(this);
@@ -82,6 +83,15 @@ class Controller extends MainController {
         break;
       case "checkUpdate":
         this.updater.check();
+        break;
+      case "homepage":
+        shell.openExternal(constants.homepage);
+        break;
+      case "changelog":
+        shell.openExternal(constants.changelogs);
+        break;
+      case "userManual":
+        shell.openExternal(constants.wiki);
         break;
       case "hideWindow":
         this.win.get("contrast").hide();

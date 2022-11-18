@@ -314,11 +314,8 @@ function initConfig(
 
   config.setRule(
     "tray",
-    new GroupRule<Identifier>(
+    new ConstantGroupRule<Identifier>(
       [
-        "translatorType",
-        "dictionaryType",
-        "hideDirect",
         "copySource",
         "copyResult",
         "pasteResult",
@@ -329,12 +326,10 @@ function initConfig(
         "incrementalCopy",
         "autoHide",
         "autoShow",
-        "autoFormat",
         "dragCopy",
         "stayTop",
         "listenClipboard",
         "settings",
-        "helpAndUpdate",
         "exit",
       ],
       "the menu of tray",

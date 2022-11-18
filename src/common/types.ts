@@ -97,10 +97,16 @@ export const translatorTypes = flatten([
 ]);
 
 export const recognizerTypes = ["baidu-ocr", "pp-ocr"] as const;
-export const frequencies = ["basic", "advance"] as const;
+export const categories = [
+  "basic",
+  "advance",
+  "translation",
+  "appearance",
+  "other",
+] as const;
 
 export type RecognizerType = typeof recognizerTypes[number];
-export type Frequency = typeof frequencies[number];
+export type Category = typeof categories[number];
 
 //结构体的动作
 export type StructActionType = TranslatorType | RecognizerType;
@@ -174,7 +180,6 @@ export const menuActionTypes = [
   "dragCopyConfig", //拖拽复制的配置面板
   "translatorConfig",
   "tray", //任务栏托盘右键菜单
-  "draggableOptions", //
   "allActions",
 ] as const;
 
@@ -227,6 +232,7 @@ export const displayTexts = [
   "dragCopyPrompt",
   "fallbackPrompt1",
   "fallbackPrompt2",
+  "about",
 ] as const; //一些显示在界面上的文本
 
 export type Role = typeof roles[number];
@@ -255,7 +261,7 @@ export type Identifier =
   | RecognizerType
   | Role
   | TranslatorGroup
-  | Frequency
+  | Category
   | DragCopyMode
   | DisplayText;
 
@@ -298,12 +304,12 @@ export interface SubActionView extends AbstractAction {
 export interface ActionView extends AbstractAction {
   id: Identifier;
   actionType: ActionType | MenuItemType;
-  freq?: Frequency;
+  cate?: Category;
 }
 
 export interface ActionInitOpt extends AbstractAction {
   id: Identifier;
-  freq?: Frequency;
+  cate?: Category;
 }
 
 export const hideDirections = [

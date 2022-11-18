@@ -100,5 +100,8 @@
     "dragCopyBlackList": "拖拽复制黑名单",
     "dragCopyPrompt": "如果这里没有列出你要的程序，请在该程序上尝试拖拽操作之后再试一次",
     "fallbackPrompt1": "引擎不支持此语言，此结果由备用引擎",
-    "fallbackPrompt2": "提供（可在设置更改）"
+    "fallbackPrompt2": "提供（可在设置更改）",
+    "about": "关于",
+    "appearance": "外观",
+    "other": "其他"
 }

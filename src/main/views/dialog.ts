@@ -1,4 +1,4 @@
-import { dialog, nativeImage, BrowserWindow, shell } from "electron";
+import { dialog, BrowserWindow, shell } from "electron";
 import { env, icon } from "../../common/env";
 import store from "../../store";
 import { constants, versionString } from "../../common/constant";
@@ -7,9 +7,9 @@ import { Identifier } from "../../common/types";
 import { Handler, MainController } from "../../common/controller";
 
 const enWarning =
-  "Ctrl + C is simulated when the drag copy is triggered. In most scenes, this means safe text copying, but in some scenes it may cause some unexpected problems, such as clipboard data being overwritten.  Triggering Ctrl + C in the shell will interrupt the running program and so on.  When you enable it, please be aware that after you enable the drag and drop option, you will be responsible for any possible losses.";
+  "It is strongly recommended that you enable the white list mode of drag replication (Settings ->DragCopy), so that drag replication will be triggered in specific programs. Ctrl + C is simulated when the drag copy is triggered. In most scenes, this means safe text copying, but in some scenes it may cause some unexpected problems, such as clipboard data being overwritten.  Triggering Ctrl + C in the shell will interrupt the running program and so on.  When you enable it, please be aware that after you enable the drag and drop option, you will be responsible for any possible losses.";
 const zhWarning =
-  "拖拽复制触发时会模拟Ctrl+C，大部分情况下，这都意味着安全的文本复制，但在某些场景中可能会引起一些意料之外的问题，如剪贴板数据被覆盖、在shell中触发Ctrl+C会使正在运行的程序中断等等。启用时请务必注意，当您启用拖拽复制选项后，任何可能由此导致的损失均由您自行负责。";
+  "强烈建议您启用拖拽复制的白名单模式（设置->拖拽复制），这样在特定程序才会触发拖拽复制。拖拽复制触发时会模拟Ctrl+C，大部分情况下，这都意味着安全的文本复制，但在某些场景中可能会引起一些意料之外的问题，如剪贴板数据被覆盖、在shell中触发Ctrl+C会使正在运行的程序中断等等。启用时请务必注意，当您启用拖拽复制选项后，任何可能由此导致的损失均由您自行负责。";
 
 export function showDragCopyWarning(controller: MainController) {
   const t = store.getters.locale;
@@ -82,10 +82,10 @@ export function showHelpAndUpdate(controller: MainController) {
     .then((response) => {
       switch (response) {
         case 0:
-          shell.openExternal(constants.homepage);
+          eventBus.at("dispatch", "homepage");
           break;
         case 1:
-          shell.openExternal(constants.wiki);
+          eventBus.at("dispatch", "userManual");
           break;
         case 2:
           eventBus.at("dispatch", "checkUpdate");
@@ -104,6 +104,7 @@ const welcomeMessages = [
 function welcome(controller: MainController) {
   const t = store.getters.locale;
   const buttons = [
+    t["changelog"],
     t["userManual"],
     t["homepage"],
     t["checkUpdate"],
@@ -123,15 +124,18 @@ function welcome(controller: MainController) {
     .then((response) => {
       switch (response) {
         case 0:
-          shell.openExternal(constants.wiki);
+          eventBus.at("dispatch", "changelog");
           break;
         case 1:
-          shell.openExternal(constants.homepage);
+          eventBus.at("dispatch", "userManual");
           break;
         case 2:
-          eventBus.at("dispatch", "checkUpdate");
+          eventBus.at("dispatch", "homepage");
           break;
         case 3:
+          eventBus.at("dispatch", "checkUpdate");
+          break;
+        case 4:
           store.dispatch("updateConfig", {
             isNewUser: false,
           });

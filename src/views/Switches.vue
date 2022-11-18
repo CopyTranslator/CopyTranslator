@@ -1,16 +1,12 @@
 <template>
   <div>
-    <v-expansion-panels v-model="panel">
-      <div
-        v-for="switchGroup in switchGroups"
-        :key="switchGroup"
-        style="width: 50%;"
-      >
+    <v-expansion-panels>
+      <div v-for="(cate, index) in cates" :key="cate" style="width: 50%;">
         <v-subheader style="text-align: left; padding: 0px;"
-          >{{ trans[switchGroup] }}
+          >{{ trans[cate] }}
         </v-subheader>
         <Action
-          v-for="actionId in actionKeys[switchGroup]"
+          v-for="actionId in actionKeys[index]"
           :identifier="actionId"
           :key="actionId"
         ></Action>
@@ -20,10 +16,9 @@
 </template>
 
 <script lang="ts">
-import { shell } from "electron";
-import { Component, Vue } from "vue-property-decorator";
+import { Component, Vue, Prop } from "vue-property-decorator";
 import KeyConfig from "@/components/KeyConfig.vue";
-import { structActionTypes, frequencies, Identifier } from "../common/types";
+import { Identifier, Category } from "../common/types";
 import Action from "../components/Action.vue";
 
 @Component({
@@ -33,14 +28,11 @@ import Action from "../components/Action.vue";
   },
 })
 export default class SwitchGroups extends Vue {
-  translators = structActionTypes;
-  switchGroups = frequencies;
-  actionKeys = this.$controller.action.getGroups("switches");
-  panel = [0, 1];
+  @Prop({ default: [] }) readonly cates!: Category[];
+  actionKeys: Array<Identifier[]> = this.cates.map((x) =>
+    this.$controller.action.getKeys(x as Category)
+  );
 
-  tutorial() {
-    shell.openExternal("https://www.bilibili.com/video/av53888416/");
-  }
   get trans() {
     return this.$store.getters.locale;
   }

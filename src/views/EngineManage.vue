@@ -10,9 +10,8 @@
 </template>
 
 <script lang="ts">
-import { shell } from "electron";
 import { Component, Vue } from "vue-property-decorator";
-import { Identifier, translatorGroups } from "../common/types";
+import { translatorGroups } from "../common/types";
 import EngineGroup from "@/components/EngineGroup.vue";
 
 @Component({

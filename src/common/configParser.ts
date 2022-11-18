@@ -1,6 +1,6 @@
 import { Rule } from "./rule";
 import { Identifier } from "./types";
-import { compatible, isLower } from "./constant";
+import { compatible, isLower, version } from "./constant";
 import store, { getConfigByKey, Config } from "../store";
 type Rules = Map<Identifier, Rule>; //类型别名
 import { readFileSync, writeFileSync } from "fs";
@@ -76,6 +76,10 @@ class ConfigParser {
       const values = JSON.parse(readFileSync(this.file) as any);
       if (!values["version"] || !compatible(values["version"])) {
         throw "version incompatible, configs will be reset"; //大版本冲突
+      }
+      if (isLower(values["version"], version)) {
+        //升级到新版本的也认为是新用户
+        values["isNewUser"] = true;
       }
       const config: Config = {};
       for (const key of this.rules.keys()) {

@@ -10,8 +10,8 @@
 
 <script lang="ts">
 import Action from "../components/Action.vue";
-import { Component, Mixins, Vue } from "vue-property-decorator";
-import { Identifier } from "../common/types";
+import { Prop, Component, Vue } from "vue-property-decorator";
+import { Identifier, MenuActionType, Category } from "../common/types";
 
 @Component({
   components: {
@@ -19,7 +19,8 @@ import { Identifier } from "../common/types";
   },
 })
 export default class Options extends Vue {
-  actionKeys: Identifier[] = this.$controller.action.getKeys("options");
+  @Prop({ default: undefined }) readonly optionType!: MenuActionType | Category;
+  actionKeys: Identifier[] = this.$controller.action.getKeys(this.optionType);
 }
 </script>
 

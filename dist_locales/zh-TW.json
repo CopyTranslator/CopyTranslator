@@ -117,5 +117,8 @@
     "dragCopyBlackList": "DragCopy BlackList",
     "dragCopyPrompt": "If the program you want is not listed here, please try dragging and dropping on the program and try again",
     "fallbackPrompt1": "engine does not support this language, this result is provided by the fallback engine",
-    "fallbackPrompt2": "(can be changed in settings)"
+    "fallbackPrompt2": "(can be changed in settings)",
+    "about": "About",
+    "appearance": "Appearance",
+    "other": "Other"
 }

@@ -30,10 +30,17 @@
       ></DictResultPanel>
     </div>
     <div style="font-size: 15px; position: absolute; right: 0px; bottom: 5px;">
-      <div v-if="sharedResult.engine !== currentEngine && !dictResult.valid">
+      <div
+        v-if="
+          sharedResult.engine !== '' &&
+          sharedResult.engine !== currentEngine &&
+          !dictResult.valid &&
+          !multiSource
+        "
+      >
         <a>
           <span>
-            {{ currentEngine }}{{ trans["fallbackPrompt1"]
+            {{ currentEngine }}&nbsp;{{ trans["fallbackPrompt1"]
             }}{{ sharedResult.engine }}{{ trans["fallbackPrompt2"] }}
           </span>
         </a>

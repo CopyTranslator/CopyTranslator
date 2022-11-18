@@ -34,7 +34,7 @@ export class UpdateChecker {
 
     autoUpdater.on("update-downloaded", () => {
       dialog
-        .showMessageBox({
+        .showMessageBox(BrowserWindow.getAllWindows()[0], {
           type: "info",
           title: "安装更新",
           icon: icon,

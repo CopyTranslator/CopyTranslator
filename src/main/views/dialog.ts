@@ -45,7 +45,7 @@ export function showHostsWarning(controller: MainController) {
     .showMessageBox(BrowserWindow.getAllWindows()[0], {
       title: "提示/Message",
       message: [enHostsMessage, zhHostsMessage].join("\n"),
-      buttons: [t["openReference"], t["neverShow"]],
+      buttons: [t["openReference"], t["neverShow"], "cancel"],
       icon: icon,
     })
     .then((res) => res.response)

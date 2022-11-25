@@ -181,6 +181,7 @@ export const menuActionTypes = [
   "translatorConfig",
   "tray", //任务栏托盘右键菜单
   "allActions",
+  "translatorGroups",
 ] as const;
 
 export const translatorGroups = [
@@ -233,6 +234,7 @@ export const displayTexts = [
   "fallbackPrompt1",
   "fallbackPrompt2",
   "about",
+  "textAdjustPrompt",
 ] as const; //一些显示在界面上的文本
 
 export type Role = typeof roles[number];
@@ -285,7 +287,7 @@ export type MenuItemType =
   | "checkbox"
   | "radio";
 
-export type ActionType = "constant" | "config";
+export type ActionType = "constant" | "config" | "multi_select" | "prompt";
 interface AbstractAction {
   actionType?: ActionType | MenuItemType;
   id: string;

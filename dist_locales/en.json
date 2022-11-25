@@ -103,5 +103,6 @@
     "fallbackPrompt2": "(can be changed in settings)",
     "about": "About",
     "appearance": "Appearance",
-    "other": "Other"
+    "other": "Other",
+    "textAdjustPrompt": "In any mode, you can adjust the font size by using Ctrl and plus or minus signs."
 }

@@ -24,7 +24,7 @@
             <Config></Config>
           </v-tab-item>
           <v-tab-item>
-            <EngineManage></EngineManage>
+            <Options optionType="translatorGroups"></Options>
           </v-tab-item>
           <v-tab-item>
             <DragCopyConfig></DragCopyConfig>
@@ -45,7 +45,6 @@
 import Options from "./Options.vue";
 import Config from "./Config.vue";
 import Switches from "./Switches.vue";
-import EngineManage from "./EngineManage.vue";
 import DragCopyConfig from "./DrogCopyConfig.vue";
 import About from "./About.vue";
 import { Component, Vue } from "vue-property-decorator";
@@ -55,7 +54,6 @@ import { Component, Vue } from "vue-property-decorator";
     Options,
     Config,
     Switches,
-    EngineManage,
     DragCopyConfig,
     About,
   },

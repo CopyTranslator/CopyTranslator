@@ -19,6 +19,7 @@ import {
   googleSources,
   dragCopyModes,
   categories,
+  displayTexts,
 } from "./types";
 import { dictionaryTypes } from "./dictionary/types";
 import { getLanguageLocales, Language } from "./translate/locale";
@@ -117,7 +118,7 @@ class ActionManager {
       return {
         type: "normal",
         id,
-        tooltip: id,
+        // tooltip: config.getTooltip(id),
         cate,
       };
     }
@@ -138,7 +139,7 @@ class ActionManager {
       return {
         actionType: "constant",
         id: identifier,
-        tooltip: identifier,
+        tooltip: config.getTooltip(identifier),
         cate,
       };
     }
@@ -199,10 +200,18 @@ class ActionManager {
       };
     }
 
-    function configAction(identifier: Identifier): ActionInitOpt {
+    function typeAction(
+      actionType: ActionInitOpt["actionType"],
+      identifier: Identifier
+    ): ActionInitOpt {
+      let tooltip: undefined | string;
+      if (config.has(identifier)) {
+        tooltip = config.getTooltip(identifier);
+      }
       return {
-        actionType: "config",
+        actionType: actionType,
         id: identifier,
+        tooltip,
       };
     }
 
@@ -344,17 +353,23 @@ class ActionManager {
 
     //引擎配置
     structActionTypes.forEach((id) => {
-      this.append(configAction(id));
+      this.append(typeAction("config", id));
     });
 
+    //引擎组设置
     translatorGroups.forEach((id) => {
-      this.append(configAction(id));
+      this.append(typeAction("multi_select", id));
     });
 
-    //role action
-    roles.forEach((role) => {
-      this.append(roleAction(role));
+    //显示文本的动作
+    displayTexts.forEach((id) => {
+      this.append(typeAction("prompt", id));
     });
+
+    roles //role action
+      .forEach((role) => {
+        this.append(roleAction(role));
+      });
 
     this.append(
       selectAction(
@@ -376,8 +391,8 @@ class ActionManager {
       )
     ); //TODO 很丑的实现，但是不是很想改
 
-    this.append(configAction("dragCopyWhiteList"));
-    this.append(configAction("dragCopyBlackList"));
+    this.append(typeAction("config", "dragCopyWhiteList"));
+    this.append(typeAction("config", "dragCopyBlackList"));
 
     this.append(normalAction("settings"));
     this.append(normalAction("helpAndUpdate"));
@@ -395,6 +410,9 @@ class ActionManager {
       return (x: Identifier) => this.getAction(x).cate === cate;
     };
     switch (optionType) {
+      case "translatorGroups":
+        contain = Array.from(translatorGroups);
+        break;
       case "allActions":
         contain = keys;
         break;
@@ -429,6 +447,9 @@ class ActionManager {
       default:
         if (categories.includes(optionType as Category)) {
           contain = keys.filter(filterByCate(optionType as Category));
+          if (optionType === "appearance") {
+            contain = ["textAdjustPrompt", ...contain]; //加一个关于文本大小的调节提示
+          }
         } else {
           throw "wrong";
         }

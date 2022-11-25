@@ -1,42 +1,73 @@
 <template>
-  <div v-if="action" class="actionStyle">
-    <v-switch
-      v-if="action.actionType === 'checkbox'"
-      v-model="value"
-      class="myswitch"
-      :label="trans[action.id]"
-    ></v-switch>
-    <div v-else-if="action.actionType === 'constant'">
-      <p class="pStyle">{{ trans[identifier] }}</p>
-      <v-text-field v-model="value"></v-text-field>
-    </div>
-    <div v-else-if="action.actionType === 'submenu'">
-      <p class="pStyle">
-        {{ trans[identifier] }}
-      </p>
-      <v-select
-        v-model="command"
-        :items="action.submenu"
-        item-text="label"
-        item-value="id"
-        style="padding: 2px;"
-      >
-      </v-select>
-    </div>
-    <div v-else-if="action.actionType === 'normal'">
-      <v-btn @click="callback(action.id)" width="98%" style="margin-top: 4px;">
-        {{ trans[action.id] }}
-      </v-btn>
-    </div>
+  <div>
+    <v-tooltip
+      v-if="action"
+      bottom
+      open-delay="100"
+      :disabled="
+        !action.tooltip ||
+        action.tooltip.length == 0 ||
+        action.actionType === 'normal' ||
+        action.actionType === 'prompt'
+      "
+    >
+      <template v-slot:activator="{ on, attrs }">
+        <div class="actionStyle" v-bind="attrs" v-on="on">
+          <v-switch
+            v-if="action.actionType === 'checkbox'"
+            v-model="value"
+            class="myswitch"
+            :label="trans[action.id]"
+          ></v-switch>
+          <p v-if="action.actionType === 'prompt'" style="text-align: left;">
+            {{ trans[action.id] }}
+          </p>
+          <EngineGroup
+            v-else-if="action.actionType === 'multi_select'"
+            :identifier="action.id"
+          ></EngineGroup>
+          <div v-else-if="action.actionType === 'constant'">
+            <p class="pStyle">{{ trans[identifier] }}</p>
+            <v-text-field v-model="value"></v-text-field>
+          </div>
+          <div v-else-if="action.actionType === 'submenu'">
+            <p class="pStyle">
+              {{ trans[identifier] }}
+            </p>
+            <v-select
+              v-model="command"
+              :items="action.submenu"
+              item-text="label"
+              item-value="id"
+              style="padding: 2px;"
+            >
+            </v-select>
+          </div>
+          <div v-else-if="action.actionType === 'normal'">
+            <v-btn
+              @click="callback(action.id)"
+              width="98%"
+              style="margin-top: 4px;"
+            >
+              {{ trans[action.id] }}
+            </v-btn>
+          </div>
+        </div>
+      </template>
+      <span>{{ action.tooltip }}</span>
+    </v-tooltip>
   </div>
 </template>
 
 <script lang="ts">
 import { Identifier, compose, ActionView } from "../common/types";
-import { Prop, Component, Watch, Vue } from "vue-property-decorator";
+import { Prop, Component, Vue } from "vue-property-decorator";
+import EngineGroup from "./EngineGroup.vue";
 import bus from "../common/event-bus";
 
-@Component
+@Component({
+  components: { EngineGroup },
+})
 export default class Action extends Vue {
   @Prop({ default: undefined }) readonly identifier!: Identifier;
   action: ActionView = this.$controller.action.getAction(this.identifier);

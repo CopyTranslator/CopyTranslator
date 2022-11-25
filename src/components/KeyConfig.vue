@@ -4,14 +4,14 @@
       <p>{{ key }}</p>
       <v-text-field
         v-model="config[key]"
-        @change="sync(key)"
+        @change="sync()"
         v-if="!isSelect(key)"
       ></v-text-field>
       <v-select
         v-else
         v-model="config[key]"
         :items="domains"
-        @change="sync(key)"
+        @change="sync()"
         style="margin: 0px; padding: 0px;"
       >
       </v-select>
@@ -37,11 +37,11 @@ export default class KeyConfig extends Vue {
     return this.$store.state.config[this.identifier];
   }
 
-  isSelect(key: string) {
+  isSelect(key: string | number) {
     return this.identifier == "baidu-domain" && key == "domain";
   }
 
-  sync(key: string) {
+  sync() {
     this.callback(this.identifier, this.config);
   }
 

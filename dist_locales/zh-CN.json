@@ -103,5 +103,6 @@
     "fallbackPrompt2": "提供（可在设置更改）",
     "about": "关于",
     "appearance": "外观",
-    "other": "其他"
+    "other": "其他",
+    "textAdjustPrompt": "任意模式均可通过Ctrl配合加号或减号进行字体大小的缩放调节。"
 }

@@ -1,7 +1,7 @@
 export const constants = {
   appName: "CopyTranslator",
   nickName: "破晓",
-  version: "10.2.4",
+  version: "10.2.5",
   stage: "stable",
   changelogs: "https://copytranslator.gitee.io/changelogs/v10.html",
   wiki: "https://copytranslator.gitee.io/guide",

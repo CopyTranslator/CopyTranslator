@@ -37,76 +37,70 @@ function initConfig(
 
   config.setRule(
     "autoCopy",
-    new TypeRule<boolean>(false, "auto copy result to clipboard")
+    new TypeRule<boolean>(false, "翻译后自动复制翻译结果到剪贴板")
   );
 
   config.setRule(
     "listenClipboard",
-    new TypeRule<boolean>(true, "Listen to Clipboard")
+    new TypeRule<boolean>(true, "监听并翻译剪贴板内容")
   );
 
   config.setRule(
     "dragCopy",
-    new TypeRule<boolean>(false, "catch simulate copy")
+    new TypeRule<boolean>(false, "拖拽后模拟复制选中内容")
   );
 
   config.setRule(
     "doubleClickCopy",
-    new TypeRule<boolean>(true, "double click copy")
+    new TypeRule<boolean>(true, "双击复制选中内容")
   );
 
   config.setRule(
     "incrementalCopy",
-    new TypeRule<boolean>(false, "incremental copy")
+    new TypeRule<boolean>(false, "将新复制的内容附加到之前的原文后")
   );
-  config.setRule("stayTop", new TypeRule<boolean>(true, "always stay on top"));
-  config.setRule("smartDict", new TypeRule<boolean>(true, "smart dict"));
+  config.setRule(
+    "stayTop",
+    new TypeRule<boolean>(true, "界面始终保持在最上层")
+  );
+  config.setRule("smartDict", new TypeRule<boolean>(true, ""));
   config.setRule(
     "contrastDict",
-    new TypeRule<boolean>(true, "dict on contrast")
+    new TypeRule<boolean>(true, "在非专注模式显示词典")
   );
-  config.setRule(
-    "smartTranslate",
-    new TypeRule<boolean>(true, "smart translate")
-  );
+  config.setRule("smartTranslate", new TypeRule<boolean>(true, "智能互译"));
 
   config.setRule(
     "autoPaste",
-    new TypeRule<boolean>(false, "auto paste after translate")
+    new TypeRule<boolean>(false, "翻译后模拟Ctrl+V粘贴")
   );
 
   config.setRule(
     "autoHide",
-    new TypeRule<boolean>(false, "auto hide when close to edge")
+    new TypeRule<boolean>(false, "贴近屏幕边缘时自动隐藏")
   );
 
-  config.setRule(
-    "autoShow",
-    new TypeRule<boolean>(false, "auto show after translate")
-  );
+  config.setRule("autoShow", new TypeRule<boolean>(false, "翻译后自动显示"));
 
   config.setRule(
     "autoFormat",
-    new TypeRule<boolean>(false, "auto replace the contene in clipboard")
+    new TypeRule<boolean>(
+      false,
+      "去除剪贴板的文本的格式问题（会覆盖剪贴板内容）"
+    )
   );
 
   config.setRule(
     "autoPurify",
-    new TypeRule<boolean>(true, "remove extra linebreak when translate")
+    new TypeRule<boolean>(true, "翻译时处理剪贴板的格式问题")
   );
 
   config.setRule(
     "enableNotify",
     new TypeRule<boolean>(false, "notify after translate")
   );
-  config.setRule(
-    "skipTaskbar",
-    new TypeRule<boolean>(false, "hide the taskbar")
-  );
-  config.setRule(
-    "neverShow",
-    new TypeRule<boolean>(false, "never show warning")
-  );
+  config.setRule("skipTaskbar", new TypeRule<boolean>(false, "隐藏状态栏"));
+  config.setRule("neverShow", new TypeRule<boolean>(false, "不再显示警告"));
 
   config.setRule(
     "showGoogleMessage",
@@ -122,7 +116,7 @@ function initConfig(
     "dragCopyMode",
     new UnionRule<DragCopyMode>(
       "dragCopyGlobal",
-      "DragCopy mode",
+      "推荐使用白名单模式，只在特定应用响应拖拽复制",
       dragCopyModes
     )
   );
@@ -134,39 +128,38 @@ function initConfig(
     new TypeRule<boolean>(true, "this is the first start up of a new user")
   );
 
-  config.setRule("toastTip", new TypeRule<boolean>(false, "action toast tip"));
+  config.setRule("toastTip", new TypeRule<boolean>(false, "提示"));
 
   config.setRule("drawer", new TypeRule<boolean>(true, ""));
 
-  config.setRule("closeAsQuit", new TypeRule<boolean>(true, "close as quit"));
+  config.setRule(
+    "closeAsQuit",
+    new TypeRule<boolean>(true, "关闭窗口即完全退出，而非最小化到托盘")
+  );
 
   config.setRule(
     "autoCheckUpdate",
-    new TypeRule<boolean>(true, "auto check update after startup")
+    new TypeRule<boolean>(true, "启动时自动检查更新")
   );
 
-  config.setRule(
-    "openAtLogin",
-    new TypeRule<boolean>(false, "auto start at login")
-  );
+  config.setRule("openAtLogin", new TypeRule<boolean>(false, ""));
 
   config.setRule(
     "multiSource",
-    new TypeRule<boolean>(false, "show multi source result")
+    new TypeRule<boolean>(false, "同时显示并对比多个引擎的翻译结果")
   );
 
   config.setRule(
     "enableDoubleCopyTranslate",
-    new TypeRule<boolean>(false, "enable Double Ctrl+C Translate")
+    new TypeRule<boolean>(
+      false,
+      "双击Ctrl+C触发翻译，可以在关闭监听剪贴板时使用"
+    )
   );
 
   config.setRule(
     "translatorType",
-    new UnionRule<TranslatorType>(
-      "google",
-      "type of translator",
-      translatorTypes
-    )
+    new UnionRule<TranslatorType>("google", "", translatorTypes)
   );
 
   config.setRule(
@@ -187,26 +180,26 @@ function initConfig(
 
   config.setRule(
     "dictionaryType",
-    new UnionRule<DictionaryType>(
-      "youdao",
-      "type of dictionary",
-      dictionaryTypes
-    )
+    new UnionRule<DictionaryType>("youdao", "", dictionaryTypes)
   );
 
   config.setRule(
     "layoutType",
-    new UnionRule<LayoutType>("horizontal", "type of layout", layoutTypes)
+    new UnionRule<LayoutType>("horizontal", "", layoutTypes)
   );
 
   config.setRule(
     "hideDirect",
-    new UnionRule<HideDirection>("Up", "HideDirection", hideDirections)
+    new UnionRule<HideDirection>("Up", "", hideDirections)
   );
 
   config.setRule(
     "colorMode",
-    new UnionRule<ColorMode>("auto", "color mode", colorModes)
+    new UnionRule<ColorMode>(
+      "auto",
+      "明亮或者是暗黑模式，自动则跟随系统",
+      colorModes
+    )
   );
 
   config.setRule(
@@ -238,17 +231,21 @@ function initConfig(
 
   config.setRule(
     "sourceLanguage",
-    new UnionRule<Language>("en", "sourceLanguage language", languages)
+    new UnionRule<Language>("en", "", languages)
   );
 
   config.setRule(
     "targetLanguage",
-    new UnionRule<Language>("zh-CN", "targetLanguage language", languages)
+    new UnionRule<Language>("zh-CN", "", languages)
   );
 
   config.setRule(
     "localeSetting",
-    new UnionRule<Language>("auto", "localeSetting setting", languages)
+    new UnionRule<Language>(
+      "auto",
+      "界面显示的语言，默认是自动检测系统语言",
+      languages
+    )
   );
 
   config.setRule(
@@ -285,7 +282,7 @@ function initConfig(
     "translator-double",
     new ConstantGroupRule<TranslatorType>(
       ["baidu-domain"],
-      "manually call",
+      "需要手动调用的引擎，目前应该是没啥用",
       translatorTypes
     )
   );
@@ -464,18 +461,21 @@ function initConfig(
     )
   );
 
-  config.setRule("pasteDelay", new TypeRule<number>(0.0, "auto copy delay"));
+  config.setRule("pasteDelay", new TypeRule<number>(0.0, ""));
 
   config.setRule(
     "googleMirror",
-    new TypeRule<string>("https://gtranslate.cdn.haah.net", "google mirror")
+    new TypeRule<string>(
+      "https://gtranslate.cdn.haah.net",
+      "谷歌翻译API镜像URL，置空则恢复到谷歌官方API的URL"
+    )
   );
 
   config.setRule(
     "googleSource",
     new UnionRule<GoogleSource>(
       "google",
-      "google translation provider",
+      "google应该是最快的，其他的可能稍慢，但是如果google用不了可以试试别的",
       googleSources,
       "v10.2.4"
     )

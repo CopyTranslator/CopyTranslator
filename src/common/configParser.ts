@@ -21,6 +21,10 @@ class ConfigParser {
     return store.getters.keys;
   }
 
+  has(key: Identifier) {
+    return this.rules.has(key);
+  }
+
   setRule(key: Identifier, rule: Rule) {
     if (this.rules.has(key)) {
       throw `duplicate rule ${key}`;

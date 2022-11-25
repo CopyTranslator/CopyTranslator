@@ -110,6 +110,10 @@ export const zh_cn = new Map<Identifier, string>([
   ["about", "关于"],
   ["appearance", "外观"],
   ["other", "其他"],
+  [
+    "textAdjustPrompt",
+    "任意模式均可通过Ctrl配合加号或减号进行字体大小的缩放调节。",
+  ],
 ]);
 
 export const en = new Map<Identifier, string>([
@@ -225,5 +229,9 @@ export const en = new Map<Identifier, string>([
   ["about", "About"],
   ["appearance", "Appearance"],
   ["other", "Other"],
+  [
+    "textAdjustPrompt",
+    "In any mode, you can adjust the font size by using Ctrl and plus or minus signs.",
+  ],
 ]);
 export type Locale = typeof en;

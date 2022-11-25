@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="text-align: left;">
     <p>{{ identifier }}</p>
     <v-select
       v-model="value"
@@ -13,13 +13,8 @@
 </template>
 
 <script lang="ts">
-import {
-  translatorTypes,
-  Identifier,
-  compose,
-  ActionView,
-} from "../common/types";
-import { Prop, Component, Watch, Vue } from "vue-property-decorator";
+import { translatorTypes, Identifier } from "../common/types";
+import { Prop, Component, Vue } from "vue-property-decorator";
 import bus from "../common/event-bus";
 
 @Component

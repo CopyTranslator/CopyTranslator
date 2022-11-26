@@ -25,6 +25,15 @@ function isDarkMode() {
   }
 }
 
+const themes = {
+  light: {
+    primary: "#8E24AA",
+  },
+  dark: {
+    primary: "#8E24AA",
+  },
+};
+
 export default () => {
   return new Vue({
     router,
@@ -33,6 +42,7 @@ export default () => {
       theme: {
         dark: isDarkMode(),
         options: { customProperties: true },
+        themes,
       },
       icons: {
         iconfont: "mdi",

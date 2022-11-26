@@ -1,11 +1,18 @@
 <template>
-  <v-btn
-    v-bind:class="[engineClass, 'btnBase']"
-    @click="switchTranslator"
-    color="white"
-    x-small
-    fab
-  ></v-btn>
+  <v-tooltip bottom open-delay="100" :disabled="!tooltipText">
+    <template v-slot:activator="{ on, attrs }">
+      <div v-bind="attrs" v-on="on">
+        <v-btn
+          v-bind:class="[engineClass, 'btnBase']"
+          @click="switchTranslator"
+          color="white"
+          x-small
+          fab
+        ></v-btn>
+      </div>
+    </template>
+    <span>{{ tooltipText }}</span>
+  </v-tooltip>
 </template>
 
 <script lang="ts">
@@ -18,6 +25,7 @@ const AppProps = Vue.extend({
   props: {
     engine: String,
     valid: Boolean,
+    tooltip: String,
     enable: {
       type: Boolean,
       default: true,
@@ -32,6 +40,14 @@ export default class EngineButton extends mixins(WindowController, AppProps) {
       return `${this.engine}-${config.get<any>("baidu-domain").domain}`;
     } else {
       return this.engine;
+    }
+  }
+
+  get tooltipText() {
+    if (this.tooltip == undefined && this.engine == "copytranslator") {
+      return this.trans["multiSource"]; //多源对比
+    } else {
+      return this.tooltip;
     }
   }
 

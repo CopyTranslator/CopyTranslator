@@ -20,10 +20,10 @@
           @keydown="deSelect"
           @mousemove="mouseMove"
           v-model="sharedResult.text"
-          v-on:contextmenu="openMenu('contrastContext')"
+          @contextmenu="openMenu('contrastContext')"
         ></textarea>
       </v-col>
-      <v-col class="areaWarpper" v-on:contextmenu="openMenu('contrastContext')">
+      <v-col class="areaWarpper" @contextmenu="openMenu('contrastContext')">
         <DiffTextArea
           v-if="multiSource"
           class="hArea"
@@ -50,7 +50,7 @@
           @keyup.ctrl.80="command"
           class="vArea"
           v-model="sharedResult.text"
-          v-on:contextmenu="openMenu('contrastContext')"
+          @contextmenu="openMenu('contrastContext')"
         ></textarea>
       </div>
       <div :style="area" class="areaWarpper">

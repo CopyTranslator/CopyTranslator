@@ -1,27 +1,21 @@
 <template>
   <div>
     <v-app>
-      <v-app-bar app color="#8E24AA" dark dense height="40px">
+      <v-app-bar app color="primary" dark dense height="40px">
         <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
         {{ trans[layoutType] }}
         <v-spacer style="height: 100%;">
-          <div
-            style="
-              -webkit-app-region: drag;
-              height: 100%;
-              width: 100%;
-              font-family: 'Encode Sans', sans-serif;
-            "
-          ></div>
+          <div class="dragableDiv"></div>
         </v-spacer>
         <v-menu top>
           <template v-slot:activator="{ on }">
-            <div v-on="on" v-on:contextmenu="callback('listenClipboard')">
+            <div v-on="on" @contextmenu="callback('listenClipboard')">
               <v-badge dot :color="color" offset-y="pl/ml-5" offset-x="pl/ml-1">
                 <EngineButton
                   :engine="currentEngine"
                   :valid="valid"
-                  :enable="Boolean(false)"
+                  :enable="false"
+                  :tooltip="trans['engineButton']"
                 ></EngineButton>
               </v-badge>
             </div>
@@ -33,28 +27,25 @@
             </v-list-item>
           </v-list>
         </v-menu>
-
-        <v-btn @click="enumerateLayouts" fab small depressed color="#8E24AA">
-          <v-icon>mdi-view-quilt</v-icon>
-        </v-btn>
-        <v-btn
-          color="#8E24AA"
-          small
-          depressed
-          fab
-          @click="callback('copyResult')"
-          v-on:contextmenu="callback('copySource')"
-          ><v-icon>mdi-content-copy</v-icon></v-btn
-        >
-        <v-btn
-          color="#8E24AA"
-          small
-          depressed
-          fab
-          @click="callback('minimize')"
-          @contextmenu="close"
-          ><v-icon>mdi-window-minimize</v-icon></v-btn
-        >
+        <!-- 添加事件监听器时使用事件捕获模式 -->
+        <!-- 即内部元素触发的事件先在此处理，然后才交由内部元素进行处理 -->
+        <ActionButton
+          @click="enumerateLayouts"
+          icon="mdi-view-quilt"
+          tooltip="layoutButton"
+        ></ActionButton>
+        <ActionButton
+          left_click="copyResult"
+          right_click="copySource"
+          icon="mdi-content-copy"
+          tooltip="copyButton"
+        ></ActionButton>
+        <ActionButton
+          left_click="minimize"
+          right_click="closeWindow"
+          icon="mdi-window-minimize"
+          tooltip="closeButton"
+        ></ActionButton>
       </v-app-bar>
       <v-navigation-drawer
         v-model="drawer"
@@ -80,7 +71,7 @@
 </template>
 
 <script lang="ts">
-import Vue from "vue";
+import ActionButton from "../components/ActionButton.vue";
 import ContrastPanel from "../components/ContrastPanel.vue";
 import BaseView from "../components/BaseView.vue";
 import WindowController from "../components/WindowController.vue";
@@ -90,8 +81,6 @@ import { Mixins, Watch } from "vue-property-decorator";
 import {
   Identifier,
   layoutTypes,
-  LayoutType,
-  translatorTypes,
   abstractTranslatorTypes,
   GeneralTranslatorType,
 } from "../common/types";
@@ -105,9 +94,10 @@ import {
 
 @Component({
   components: {
-    Action: Action,
-    ContrastPanel: ContrastPanel,
-    EngineButton: EngineButton,
+    Action,
+    ContrastPanel,
+    EngineButton,
+    ActionButton,
   },
 })
 export default class Contrast extends Mixins(BaseView, WindowController) {
@@ -116,10 +106,6 @@ export default class Contrast extends Mixins(BaseView, WindowController) {
   actionKeys: Identifier[] = this.$controller.action.getKeys(
     "contrastPanel"
   ) as Identifier[];
-
-  get trans() {
-    return this.$store.getters.locale;
-  }
 
   get engines(): Array<GeneralTranslatorType | DictionaryType> {
     const translatorEngines: GeneralTranslatorType[] = [
@@ -181,6 +167,12 @@ export default class Contrast extends Mixins(BaseView, WindowController) {
 }
 ::-webkit-scrollbar {
   display: none;
+}
+
+.dragableDiv {
+  -webkit-app-region: drag;
+  height: 100%;
+  width: 100%;
 }
 .ctrlBtn {
   position: absolute;

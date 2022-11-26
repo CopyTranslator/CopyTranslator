@@ -114,6 +114,10 @@ export const zh_cn = new Map<Identifier, string>([
     "textAdjustPrompt",
     "任意模式均可通过Ctrl配合加号或减号进行字体大小的缩放调节。",
   ],
+  ["copyButton", "点击复制译文，右键复制原文"],
+  ["closeButton", "点击最小化，右键退出程序"],
+  ["engineButton", "点击选择其他引擎，右键切换监听剪贴板"],
+  ["layoutButton", "点击切换不同界面布局"],
 ]);
 
 export const en = new Map<Identifier, string>([
@@ -233,5 +237,15 @@ export const en = new Map<Identifier, string>([
     "textAdjustPrompt",
     "In any mode, you can adjust the font size by using Ctrl and plus or minus signs.",
   ],
+  [
+    "copyButton",
+    "Click to copy translation and right-click to copy the original text",
+  ],
+  ["closeButton", "Click to minimize and right-click to exit the program"],
+  [
+    "engineButton",
+    "Click to select another engine, right-click to switch to the listening clipboard",
+  ],
+  ["layoutButton", "Click to switch between different interface layouts"],
 ]);
 export type Locale = typeof en;

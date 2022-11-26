@@ -6,7 +6,7 @@
       @keyup.ctrl.71="google"
       @keyup.ctrl.66="baidu"
       @keyup.ctrl.80="command"
-      v-on:contextmenu="openMenu('focusContext')"
+      @contextmenu="openMenu('focusContext')"
       v-on:drop="dragTranslate"
     >
       <textarea

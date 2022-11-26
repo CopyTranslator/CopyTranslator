@@ -3,7 +3,6 @@
 </template>
 
 <script lang="ts">
-import { ipcRenderer as ipc, webFrame } from "electron";
 import { RouteActionType, MenuActionType, Identifier } from "../common/types";
 import Vue from "vue";
 import Component, { mixins } from "vue-class-component";
@@ -43,6 +42,10 @@ export default class WindowController extends Vue {
   destroyed() {
     window.removeEventListener("resize", this.onResize);
     this.onResize();
+  }
+
+  get trans() {
+    return this.$store.getters.locale;
   }
 }
 </script>

@@ -235,6 +235,10 @@ export const displayTexts = [
   "fallbackPrompt2",
   "about",
   "textAdjustPrompt",
+  "copyButton",
+  "closeButton",
+  "engineButton",
+  "layoutButton",
 ] as const; //一些显示在界面上的文本
 
 export type Role = typeof roles[number];

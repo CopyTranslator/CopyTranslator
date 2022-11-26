@@ -104,5 +104,9 @@
     "about": "About",
     "appearance": "Appearance",
     "other": "Other",
-    "textAdjustPrompt": "In any mode, you can adjust the font size by using Ctrl and plus or minus signs."
+    "textAdjustPrompt": "In any mode, you can adjust the font size by using Ctrl and plus or minus signs.",
+    "copyButton": "Click Copy Translation and right-click to copy the original text",
+    "closeButton": "Click to minimize and right-click to exit the program",
+    "engineButton": "Click to select another engine, right-click to switch to the listening clipboard",
+    "layoutButton": "Click to switch between different interface layouts"
 }

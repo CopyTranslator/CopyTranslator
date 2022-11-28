@@ -284,6 +284,26 @@ export const identifiers: readonly Identifier[] = flatten([
   recognizerTypes,
 ]);
 
+type ConfigItem<T> = {
+  name: T;
+};
+
+function defineConfigs<T extends string>(configs: Array<ConfigItem<T>>) {
+  return configs;
+}
+
+const _configs = defineConfigs(
+  identifiers.map((x) => {
+    return {
+      name: `<tooltip>${x}`,
+    };
+  })
+);
+
+export type TooltipType = typeof _configs[number]["name"];
+
+export type LocaleKey = Identifier | TooltipType;
+
 export type MenuItemType =
   | "normal"
   | "separator"
@@ -298,7 +318,6 @@ interface AbstractAction {
   submenu?: Array<SubActionView>;
   subMenuGenerator?: () => SubActionView[];
   type?: MenuItemType;
-  tooltip?: string;
   role?: Role;
   label?: string;
 }
@@ -403,7 +422,7 @@ export function mapToObj<T>(strMap: Map<string, T>): { [key: string]: T } {
   return obj;
 }
 
-export function objToMap<T>(obj: { [key: string]: T }): Map<Identifier, T> {
+export function objToMap<T>(obj: { [key: string]: T }): Map<LocaleKey, T> {
   const strMap = new Map();
   for (const k of Object.keys(obj)) {
     strMap.set(k, obj[k]);

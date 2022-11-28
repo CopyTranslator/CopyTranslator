@@ -70,10 +70,6 @@ class ConfigParser {
     return true;
   }
 
-  getTooltip(key: Identifier) {
-    return this.getRule(key).tooltip;
-  }
-
   load(): boolean {
     let status = true;
     try {

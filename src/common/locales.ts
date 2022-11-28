@@ -1,6 +1,6 @@
-import { Identifier } from "./types";
+import { LocaleKey } from "./types";
 
-export const zh_cn = new Map<Identifier, string>([
+export const zh_cn = new Map<LocaleKey, string>([
   ["localeName", "简体中文"],
   ["stayTop", "总是置顶"],
   ["listenClipboard", "监听剪贴板"],
@@ -118,9 +118,47 @@ export const zh_cn = new Map<Identifier, string>([
   ["closeButton", "点击最小化，右键退出程序"],
   ["engineButton", "点击选择其他引擎，右键切换监听剪贴板"],
   ["layoutButton", "点击切换不同界面布局"],
+  ["<tooltip>autoCopy", "翻译后自动复制翻译结果到剪贴板"],
+  ["<tooltip>listenClipboard", "监听并翻译剪贴板内容"],
+  ["<tooltip>dragCopy", "拖拽后模拟复制选中内容"],
+  ["<tooltip>doubleClickCopy", "双击复制选中内容"],
+  ["<tooltip>incrementalCopy", "将新复制的内容附加到之前的原文后"],
+  ["<tooltip>stayTop", "界面始终保持在最上层"],
+  ["<tooltip>contrastDict", "在非专注模式显示词典"],
+  ["<tooltip>smartTranslate", "智能互译"],
+  ["<tooltip>autoPaste", "翻译后模拟Ctrl+V粘贴"],
+  ["<tooltip>autoHide", "贴近屏幕边缘时自动隐藏"],
+  ["<tooltip>autoShow", "翻译后自动显示"],
+  ["<tooltip>autoFormat", "去除剪贴板的文本的格式问题（会覆盖剪贴板内容）"],
+  ["<tooltip>autoPurify", "翻译时处理剪贴板的格式问题"],
+  ["<tooltip>skipTaskbar", "隐藏状态栏"],
+  ["<tooltip>neverShow", "不再显示警告"],
+  ["<tooltip>dragCopyMode", "推荐使用白名单模式，只在特定应用响应拖拽复制"],
+  ["<tooltip>closeAsQuit", "关闭窗口即完全退出，而非最小化到托盘"],
+  ["<tooltip>autoCheckUpdate", "启动时自动检查更新"],
+  ["<tooltip>multiSource", "同时显示并对比多个引擎的翻译结果"],
+  [
+    "<tooltip>enableDoubleCopyTranslate",
+    "双击Ctrl+C触发翻译，可以在关闭监听剪贴板时使用",
+  ],
+  ["<tooltip>fallbackTranslator", "后备翻译引擎，当前引擎不支持此语言时启用"],
+  ["<tooltip>colorMode", "明亮或者是暗黑模式，自动则跟随系统"],
+  ["<tooltip>localeSetting", "界面显示的语言，默认是自动检测系统语言"],
+  [
+    "<tooltip>translator-enabled",
+    "所有启用的的引擎，可以关闭某些不常用引擎以节省资源",
+  ],
+  ["<tooltip>translator-cache", "所有会自动查询并缓存结果以加速切换的翻译引擎"],
+  ["<tooltip>translator-compare", "多源对比时用的引擎"],
+  ["<tooltip>translator-double", "需要手动调用的引擎，目前应该是没啥用"],
+  ["<tooltip>googleMirror", "谷歌翻译API镜像URL，置空则恢复到谷歌官方API的URL"],
+  [
+    "<tooltip>googleSource",
+    "google应该是最快的，其他的可能稍慢，但是如果google用不了可以试试别的",
+  ],
 ]);
 
-export const en = new Map<Identifier, string>([
+export const en = new Map<LocaleKey, string>([
   ["localeName", "English"],
   ["stayTop", "Stay on top"],
   ["listenClipboard", "Listen Clipboard"],
@@ -247,5 +285,85 @@ export const en = new Map<Identifier, string>([
     "Click to select another engine, right-click to switch to the listening clipboard",
   ],
   ["layoutButton", "Click to switch between different interface layouts"],
+  [
+    "<tooltip>autoCopy",
+    "Automatically copy the translation results to the clipboard after translation",
+  ],
+  ["<tooltip>listenClipboard", "Listen and translate clipboard content"],
+  ["<tooltip>dragCopy", "Drag and drop to copy the selected content"],
+  ["<tooltip>doubleClickCopy", "Double-click to copy the selected content"],
+  [
+    "<tooltip>incrementalCopy",
+    "append the newly copied content to the previous original text",
+  ],
+  ["<tooltip>stayTop", "The interface is always kept at the top"],
+  ["<tooltip>contrastDict", "Display dictionary in non-focused mode"],
+  ["<tooltip>smartTranslate", "Smart Translate"],
+  ["<tooltip>autoPaste", "Simulate Ctrl+V paste after translation"],
+  [
+    "<tooltip>autoHide",
+    "Automatically hide when close to the edge of the screen",
+  ],
+  ["<tooltip>autoShow", "Automatic display after translation"],
+  [
+    "<tooltip>autoFormat",
+    "Remove the formatting problem of the clipboard text (will overwrite the clipboard content)",
+  ],
+  [
+    "<tooltip>autoPurify",
+    "Process the format of the clipboard when translating",
+  ],
+  ["<tooltip>skipTaskbar", "Hide status bar"],
+  ["<tooltip>neverShow", "Never show warning"],
+  [
+    "<tooltip>dragCopyMode",
+    "It is recommended to use the whitelist mode, and only respond to drag and drop copying in specific applications",
+  ],
+  [
+    "<tooltip>closeAsQuit",
+    "Close the window to exit completely instead of minimizing to the tray",
+  ],
+  ["<tooltip>autoCheckUpdate", "Automatically check for updates at startup"],
+  [
+    "<tooltip>multiSource",
+    "Display and compare the translation results of multiple engines at the same time",
+  ],
+  [
+    "<tooltip>enableDoubleCopyTranslate",
+    "Double-click Ctrl+C to trigger translation, which can be used when the clipboard is closed",
+  ],
+  [
+    "<tooltip>fallbackTranslator",
+    "fallback translation engine, enabled when the current engine does not support this language",
+  ],
+  [
+    "<tooltip>colorMode",
+    "Bright or dark mode, automatically follow the system",
+  ],
+  [
+    "<tooltip>localeSetting",
+    "The language displayed on the interface, the default is the automatic detection system language",
+  ],
+  [
+    "<tooltip>translator-enabled",
+    "All enabled engines, you can turn off some infrequently used engines to save resources",
+  ],
+  [
+    "<tooltip>translator-cache",
+    "All translation engines that will automatically query and cache results to speed up switching",
+  ],
+  ["<tooltip>translator-compare", "Engine used for multi-source comparison"],
+  [
+    "<tooltip>translator-double",
+    "The engine that needs to be called manually should be useless at present",
+  ],
+  [
+    "<tooltip>googleMirror",
+    "Google Translate API mirror URL, if left blank, it will restore to Google official API URL",
+  ],
+  [
+    "<tooltip>googleSource",
+    "Google should be the fastest, others may be slower, but if you can't use google, you can try other",
+  ],
 ]);
 export type Locale = typeof en;

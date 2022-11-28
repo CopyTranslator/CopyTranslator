@@ -1,16 +1,6 @@
 <template>
   <div>
-    <v-tooltip
-      v-if="action"
-      bottom
-      open-delay="100"
-      :disabled="
-        !action.tooltip ||
-        action.tooltip.length == 0 ||
-        action.actionType === 'normal' ||
-        action.actionType === 'prompt'
-      "
-    >
+    <v-tooltip v-if="action" bottom open-delay="100" :disabled="!tooltip">
       <template v-slot:activator="{ on, attrs }">
         <div class="actionStyle" v-bind="attrs" v-on="on">
           <v-switch
@@ -54,7 +44,7 @@
           </div>
         </div>
       </template>
-      <span>{{ action.tooltip }}</span>
+      <span>{{ tooltip }}</span>
     </v-tooltip>
   </div>
 </template>
@@ -74,6 +64,18 @@ export default class Action extends Vue {
 
   callback(...args: any[]) {
     bus.at("dispatch", ...args);
+  }
+
+  get tooltip(): undefined | string {
+    if (
+      !this.action ||
+      this.action.actionType === "normal" ||
+      this.action.actionType === "prompt"
+    ) {
+      return undefined;
+    }
+    const tp = this.trans[`<tooltip>${this.action.id}`];
+    return tp;
   }
 
   get command() {

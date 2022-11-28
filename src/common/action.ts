@@ -118,7 +118,6 @@ class ActionManager {
       return {
         type: "normal",
         id,
-        // tooltip: config.getTooltip(id),
         cate,
       };
     }
@@ -128,7 +127,6 @@ class ActionManager {
         role: role,
         id: role,
         type: "normal",
-        tooltip: role,
       };
     }
     //设置常量
@@ -139,7 +137,6 @@ class ActionManager {
       return {
         actionType: "constant",
         id: identifier,
-        tooltip: config.getTooltip(identifier),
         cate,
       };
     }
@@ -152,7 +149,6 @@ class ActionManager {
       return {
         type: "checkbox",
         id: identifier,
-        tooltip: config.getTooltip(identifier),
         cate,
       };
     }
@@ -169,7 +165,6 @@ class ActionManager {
         return {
           type: "submenu",
           id: identifier,
-          tooltip: config.getTooltip(identifier),
           submenu: subMenuGenerator(identifier, list, false),
           cate,
         };
@@ -177,7 +172,6 @@ class ActionManager {
         return {
           type: "submenu",
           id: identifier,
-          tooltip: config.getTooltip(identifier),
           cate,
           subMenuGenerator: () =>
             subMenuGenerator(identifier, list, true, postLocaleFunc),
@@ -195,7 +189,6 @@ class ActionManager {
         type: "submenu",
         id: identifier,
         subMenuGenerator: subMenuGenerator,
-        tooltip: config.getTooltip(identifier),
         cate,
       };
     }
@@ -204,14 +197,9 @@ class ActionManager {
       actionType: ActionInitOpt["actionType"],
       identifier: Identifier
     ): ActionInitOpt {
-      let tooltip: undefined | string;
-      if (config.has(identifier)) {
-        tooltip = config.getTooltip(identifier);
-      }
       return {
         actionType: actionType,
         id: identifier,
-        tooltip,
       };
     }
 

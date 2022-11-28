@@ -20,8 +20,8 @@
 </template>
 
 <script lang="ts">
-import { domains, Identifier, compose, ActionView } from "../common/types";
-import { Prop, Component, Watch, Vue } from "vue-property-decorator";
+import { domains, Identifier } from "../common/types";
+import { Prop, Component, Vue } from "vue-property-decorator";
 import bus from "../common/event-bus";
 
 @Component

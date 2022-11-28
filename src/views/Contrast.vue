@@ -77,7 +77,7 @@ import BaseView from "../components/BaseView.vue";
 import WindowController from "../components/WindowController.vue";
 import Action from "../components/Action.vue";
 import Component from "vue-class-component";
-import { Mixins, Watch } from "vue-property-decorator";
+import { Mixins } from "vue-property-decorator";
 import {
   Identifier,
   layoutTypes,
@@ -101,7 +101,6 @@ import {
   },
 })
 export default class Contrast extends Mixins(BaseView, WindowController) {
-  barWidth: number = 0;
   readonly routeName = "contrast";
   actionKeys: Identifier[] = this.$controller.action.getKeys(
     "contrastPanel"
@@ -127,13 +126,8 @@ export default class Contrast extends Mixins(BaseView, WindowController) {
     return this.$store.state.color;
   }
 
-  @Watch("drawer")
-  changeDrawer(val: boolean) {
-    if (val) {
-      this.barWidth = 200;
-    } else {
-      this.barWidth = 0;
-    }
+  get barWidth(): number {
+    return this.drawer ? 200 : 0;
   }
 
   get area() {

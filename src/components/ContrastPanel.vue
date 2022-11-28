@@ -84,13 +84,10 @@
 </template>
 
 <script lang="ts">
-import Vue from "vue";
 import BaseView from "../components/BaseView.vue";
-import { Mixins, Watch, Component } from "vue-property-decorator";
+import { Mixins, Component } from "vue-property-decorator";
 import WindowController from "../components/WindowController.vue";
 import Focus from "./Focus.vue";
-import { LayoutType, layoutTypes } from "../common/types";
-import eventBus from "@/common/event-bus";
 import CoTextArea from "./CoTextArea.vue";
 import DiffTextArea from "./DiffTextArea.vue";
 

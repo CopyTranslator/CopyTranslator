@@ -32,7 +32,7 @@
 </template>
 
 <script lang="ts">
-import { Mixins, Component, Vue, Watch } from "vue-property-decorator";
+import { Mixins, Component, Vue } from "vue-property-decorator";
 import DictResultPanel from "./DictResult.vue";
 import BaseView from "./BaseView.vue";
 

@@ -3,7 +3,7 @@
 </template>
 
 <script lang="ts">
-import { Watch, Component, Vue, Mixins } from "vue-property-decorator";
+import { Component, Vue } from "vue-property-decorator";
 import { Identifier } from "../common/types";
 import { shell } from "electron";
 import eventBus from "@/common/event-bus";

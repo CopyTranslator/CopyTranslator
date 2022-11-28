@@ -27,7 +27,7 @@
 <script lang="ts">
 import { ipcRenderer, shell } from "electron";
 import os from "os";
-import { Watch, Component, Vue, Mixins } from "vue-property-decorator";
+import { Component, Vue } from "vue-property-decorator";
 
 @Component
 export default class UpdatePanel extends Vue {

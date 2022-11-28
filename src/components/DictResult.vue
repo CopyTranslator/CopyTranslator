@@ -31,13 +31,13 @@
 
 <script lang="ts">
 import BaseView from "./BaseView.vue";
-import { Mixins, Component, Vue } from "vue-property-decorator";
+import { Mixins, Component } from "vue-property-decorator";
 
 @Component
 export default class DictResult extends Mixins(BaseView) {
   get dictStyle() {
     return {
-      fontSize: this.size.toString() + "px",
+      fontSize: this.dictSize.toString() + "px",
       height: "100%;",
     };
   }
@@ -50,6 +50,7 @@ export default class DictResult extends Mixins(BaseView) {
   margin-top: 0%;
   padding-top: 0%;
   top: 0%;
+  height: 100%;
 }
 
 .notation {

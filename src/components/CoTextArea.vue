@@ -1,33 +1,28 @@
 <template>
-  <div>
-    <div contenteditable="true">
-      <div v-if="!config['contrastDict'] || !dictResult.valid">
-        <div v-if="chineseStyle">
-          <span
-            v-for="(val, key) in sentences"
-            :key="key"
-            @mouseover="mouseOver(key)"
-            style="display: block;"
-          >
+  <div contenteditable="true">
+    <div style="height: 100%;">
+      <div v-if="chineseStyle">
+        <span
+          v-for="(val, key) in sentences"
+          :key="key"
+          @mouseover="mouseOver(key)"
+          style="display: block;"
+        >
+          {{ val }}
+        </span>
+      </div>
+      <div v-else>
+        <div
+          v-for="(val, key) in sentences"
+          :key="key"
+          @mouseover="mouseOver(key)"
+        >
+          <span style="display: block;">
             {{ val }}
           </span>
-        </div>
-        <div v-else>
-          <div
-            v-for="(val, key) in sentences"
-            :key="key"
-            @mouseover="mouseOver(key)"
-          >
-            <span style="display: block;">
-              {{ val }}
-            </span>
-            <br />
-          </div>
+          <br />
         </div>
       </div>
-      <DictResultPanel
-        v-if="config['contrastDict'] && dictResult.valid"
-      ></DictResultPanel>
     </div>
     <div style="font-size: 15px; position: absolute; right: 0px; bottom: 5px;">
       <div

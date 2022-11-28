@@ -291,11 +291,14 @@ function initConfig(
     "horizontal",
     new StructRule<LayoutConfig>({
       diffFontSize: 15,
-      fontSize: 15,
+      sourceFontSize: 15,
+      resultFontSize: 15,
+      dictFontSize: 15,
       x: 535,
       y: 186,
       height: 600,
       width: 1094,
+      ratio: 0.5,
     })
   );
 
@@ -303,11 +306,14 @@ function initConfig(
     "vertical",
     new StructRule<LayoutConfig>({
       diffFontSize: 15,
-      fontSize: 15,
+      sourceFontSize: 15,
+      resultFontSize: 15,
+      dictFontSize: 15,
       x: 535,
       y: 186,
       height: 600,
       width: 1094,
+      ratio: 0.5,
     })
   );
 
@@ -315,7 +321,8 @@ function initConfig(
     "focus",
     new StructRule<LayoutConfig>({
       diffFontSize: 15,
-      fontSize: 15,
+      resultFontSize: 15,
+      dictFontSize: 15,
       x: 535,
       y: 186,
       height: 600,

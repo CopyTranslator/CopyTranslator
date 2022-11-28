@@ -9,6 +9,8 @@ import { shell } from "electron";
 import eventBus from "@/common/event-bus";
 import logger from "@/common/logger";
 
+type Name = "result" | "source" | "diff" | "dict";
+
 @Component
 export default class BaseView extends Vue {
   toKeyan() {
@@ -20,7 +22,10 @@ export default class BaseView extends Vue {
   }
 
   get valid() {
-    return this.dictResult.valid && this.layoutType === "focus";
+    return (
+      this.dictResult.valid &&
+      (this.config.contrastDict || this.layoutType === "focus")
+    );
   }
 
   get currentEngine() {
@@ -66,8 +71,71 @@ export default class BaseView extends Vue {
     this.$controller.set(key, val);
   }
 
-  get size() {
-    return this.config[this.layoutType].fontSize;
+  get sourceSize() {
+    return this.config[this.layoutType].sourceFontSize;
+  }
+
+  get resultSize() {
+    return this.config[this.layoutType].resultFontSize;
+  }
+
+  get diffSize() {
+    return this.config[this.layoutType].diffFontSize;
+  }
+
+  get dictSize() {
+    return this.config[this.layoutType].dictFontSize;
+  }
+
+  get layoutConfig() {
+    return this.config[this.layoutType];
+  }
+
+  changeFont(name: Name, plus: boolean) {
+    if (name == "result") {
+      if (this.multiSource) {
+        name = "diff";
+      } else if (!this.config["contrastDict"] || !this.dictResult.valid) {
+      } else if (this.config["contrastDict"] && this.dictResult.valid) {
+        name = "dict";
+      }
+    }
+    const n: Name = name;
+    console.log(n);
+    const size: number = this[`${n}Size`];
+    const fontKey = `${n}FontSize`;
+    if (plus) {
+      this.updateLayoutConfig({ [fontKey]: size + 1 });
+    } else {
+      this.updateLayoutConfig({ [fontKey]: size - 1 });
+    }
+  }
+
+  wheelHandler(e: WheelEvent, name: Name) {
+    if (!e.ctrlKey) {
+      return;
+    }
+    if (e.deltaY > 0) {
+      this.changeFont(name, false);
+    } else if (e.deltaY < 0) {
+      this.changeFont(name, true);
+    } else {
+      console.log(e, name);
+    }
+  }
+
+  keyboardFontHandler(e: KeyboardEvent, name: Name) {
+    if (e.key == "-") {
+      this.changeFont(name, false);
+    } else if (e.key == "=") {
+      this.changeFont(name, true);
+    } else {
+      console.log(e);
+    }
+  }
+
+  updateLayoutConfig(newLayoutConfig: any) {
+    this.set(this.layoutType, { ...this.layoutConfig, ...newLayoutConfig });
   }
 
   baidu() {

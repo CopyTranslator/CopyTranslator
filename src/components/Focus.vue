@@ -1,5 +1,11 @@
 <template>
-  <div>
+  <div
+    contenteditable="true"
+    @wheel="wheelHandler($event, 'result')"
+    @keydown.ctrl.187="keyboardFontHandler($event, 'result')"
+    @keydown.ctrl.189="keyboardFontHandler($event, 'result')"
+    style="overflow: auto;"
+  >
     <div
       class="max"
       @keyup.ctrl.13="translate"
@@ -17,7 +23,6 @@
         v-if="sharedResult && !dictResult.valid && !multiSource"
       ></textarea>
       <DiffTextArea
-        contenteditable="true"
         v-if="sharedResult && !dictResult.valid && multiSource"
         class="focusText max"
         :allParts="sharedDiff.allParts"
@@ -79,7 +84,7 @@ export default class FocusMode extends Mixins(BaseView, WindowController) {
 
   get focusStyle() {
     return {
-      fontSize: this.size.toString() + "px",
+      fontSize: this.resultSize.toString() + "px",
     };
   }
 
@@ -101,7 +106,7 @@ export default class FocusMode extends Mixins(BaseView, WindowController) {
 
 <style scoped>
 .focusText {
-  border: solid 1px #bebebe;
+  resize: none;
 }
 .max {
   height: 100%;

@@ -23,7 +23,7 @@ export class WindowMangaer {
     this.controller = controller;
     eventBus.gon("preSet", (identifier: Identifier, newLayoutType: any) => {
       if (identifier == "layoutType") {
-        this.updateBounds(newLayoutType);
+        this.updateBounds(newLayoutType); //在切换布局的时候保存窗口信息
       }
     });
   }

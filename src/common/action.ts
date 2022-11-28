@@ -318,8 +318,6 @@ class ActionManager {
     this.append(normalAction("focus"));
     this.append(normalAction("contrast"));
     this.append(normalAction("capture"));
-    this.append(normalAction("font+"));
-    this.append(normalAction("font-"));
     this.append(normalAction("checkUpdate"));
 
     this.append(normalAction("changelog"));

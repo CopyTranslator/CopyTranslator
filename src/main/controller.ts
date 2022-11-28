@@ -38,19 +38,6 @@ class Controller extends MainController {
     observers.push(this.transCon);
     this.bindLinks(actionLinks);
   }
-
-  changeFontSize(increase: boolean) {
-    const layoutType = config.get<LayoutType>("layoutType");
-    const layoutConfig = config.get<LayoutConfig>(layoutType);
-    const delta = increase ? 1 : -1;
-    if (config.get("multiSource")) {
-      layoutConfig.diffFontSize += delta;
-    } else {
-      layoutConfig.fontSize += delta;
-    }
-    config.set(layoutType, layoutConfig);
-  }
-
   simpleDebug() {
     keyan
       .translate(
@@ -65,12 +52,6 @@ class Controller extends MainController {
 
   handle(identifier: Identifier, param: any = null): boolean {
     switch (identifier) {
-      case "font+":
-        this.changeFontSize(true);
-        break;
-      case "font-":
-        this.changeFontSize(false);
-        break;
       case "exit":
         this.handle("closeWindow", null);
         this.onExit();
@@ -129,10 +110,10 @@ class Controller extends MainController {
     this.win.get("contrast"); //创建主窗口
     this.shortcut.init();
     this.menu.init();
-    if (this.get("showGoogleMessage")) {
-      console.log("showGoogleMessage");
-      showHostsWarning(this);
-    }
+    // if (this.get("showGoogleMessage")) {
+    //   console.log("showGoogleMessage");
+    //   showHostsWarning(this);
+    // }
     if (this.get("isNewUser")) {
       //显示启动页
       eventBus.at("dispatch", "welcome");

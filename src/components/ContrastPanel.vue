@@ -1,14 +1,20 @@
 <template>
-  <div class="maxNoPad">
+  <div class="maxParent">
     <Focus class="maxNoPad areaWarpper" v-if="layoutType === 'focus'"></Focus>
-    <v-row
+    <div
       v-else-if="layoutType === 'horizontal'"
       class="maxNoPad"
-      style="margin: 0px;"
+      style="margin: 0px; display: flex;"
     >
-      <v-col class="areaWarpper">
+      <div
+        class="areaWarpper"
+        v-bind:style="leftStyle"
+        @wheel="wheelHandler($event, 'source')"
+        @keydown.ctrl.187="keyboardFontHandler($event, 'source')"
+        @keydown.ctrl.189="keyboardFontHandler($event, 'source')"
+      >
         <textarea
-          v-bind:style="fontStyle"
+          v-bind:style="sourceFontStyle"
           class="hArea"
           @keyup.ctrl.13="translate"
           @keyup.ctrl.71="google"
@@ -22,28 +28,51 @@
           v-model="sharedResult.text"
           @contextmenu="openMenu('contrastContext')"
         ></textarea>
-      </v-col>
-      <v-col class="areaWarpper" @contextmenu="openMenu('contrastContext')">
+      </div>
+      <div
+        id="hDrag"
+        class="resizer"
+        style="width: 4px; cursor: col-resize;"
+        @mousedown="mousedown"
+      ></div>
+      <div
+        class="areaWarpper"
+        v-bind:style="rightStyle"
+        @wheel="wheelHandler($event, 'result')"
+        tabindex="-1"
+        @keydown.ctrl.187="keyboardFontHandler($event, 'result')"
+        @keydown.ctrl.189="keyboardFontHandler($event, 'result')"
+      >
         <DiffTextArea
           v-if="multiSource"
           class="hArea"
-          v-bind:style="fontStyle"
           :allParts="sharedDiff.allParts"
         ></DiffTextArea>
         <CoTextArea
-          v-else
+          v-else-if="!config['contrastDict'] || !dictResult.valid"
           class="hArea"
-          v-bind:style="fontStyle"
+          v-bind:style="resultFontStyle"
           :sentences="sharedResult.transPara"
           :chineseStyle="sharedResult.chineseStyle"
           ref="myhead"
+          @contextmenu="openMenu('contrastContext')"
         ></CoTextArea>
-      </v-col>
-    </v-row>
-    <v-col v-else class="maxNoPad">
-      <div :style="area" class="areaWarpper" @keyup.ctrl.13="translate">
+        <DictResultPanel
+          v-else-if="config['contrastDict'] && dictResult.valid"
+        ></DictResultPanel>
+      </div>
+    </div>
+    <div v-else class="maxNoPad">
+      <div
+        :style="topStyle"
+        class="areaWarpper"
+        @wheel="wheelHandler($event, 'source')"
+        @keydown.ctrl.187="keyboardFontHandler($event, 'source')"
+        @keydown.ctrl.189="keyboardFontHandler($event, 'source')"
+        @keyup.ctrl.13="translate"
+      >
         <textarea
-          v-bind:style="fontStyle"
+          v-bind:style="sourceFontStyle"
           @keyup.ctrl.13="translate"
           @keyup.ctrl.71="google"
           @keyup.ctrl.66="baidu"
@@ -53,33 +82,38 @@
           @contextmenu="openMenu('contrastContext')"
         ></textarea>
       </div>
-      <div :style="area" class="areaWarpper">
+      <div
+        id="vDrag"
+        class="resizer"
+        style="height: 4px; cursor: row-resize;"
+        @mousedown="vMousedown"
+      ></div>
+      <div
+        :style="bottomStyle"
+        class="areaWarpper"
+        @wheel="wheelHandler($event, 'result')"
+        @keydown.ctrl.187="keyboardFontHandler($event, 'result')"
+        @keydown.ctrl.189="keyboardFontHandler($event, 'result')"
+        tabindex="-1"
+      >
         <DiffTextArea
           v-if="multiSource"
           class="vArea"
-          v-bind:style="fontStyle"
           :allParts="sharedDiff.allParts"
         ></DiffTextArea>
         <CoTextArea
           class="vArea"
-          v-else
-          v-bind:style="fontStyle"
+          v-else-if="!config['contrastDict'] || !dictResult.valid"
+          v-bind:style="resultFontStyle"
           :sentences="sharedResult.transPara"
           :chineseStyle="sharedResult.chineseStyle"
           ref="myhead"
         ></CoTextArea>
+        <DictResultPanel
+          v-else-if="config['contrastDict'] && dictResult.valid"
+        ></DictResultPanel>
       </div>
-    </v-col>
-
-    <v-btn
-      class="floating-div"
-      v-bind:style="floatingStyle"
-      small
-      fab
-      @mouseenter="mouseEnter"
-      @mouseleave="mouseLeave"
-      ><v-icon>mdi-magnify</v-icon></v-btn
-    >
+    </div>
   </div>
 </template>
 
@@ -90,12 +124,14 @@ import WindowController from "../components/WindowController.vue";
 import Focus from "./Focus.vue";
 import CoTextArea from "./CoTextArea.vue";
 import DiffTextArea from "./DiffTextArea.vue";
+import DictResultPanel from "./DictResult.vue";
 
 @Component({
   components: {
-    Focus: Focus,
-    CoTextArea: CoTextArea,
-    DiffTextArea: DiffTextArea,
+    Focus,
+    CoTextArea,
+    DiffTextArea,
+    DictResultPanel,
   },
 })
 export default class ContrastPanel extends Mixins(BaseView, WindowController) {
@@ -104,6 +140,125 @@ export default class ContrastPanel extends Mixins(BaseView, WindowController) {
   visible: boolean = false;
   funcID: any = null;
   selectedText: string = "";
+
+  x: number = 0;
+  y: number = 0;
+
+  get ratio(): number {
+    return this.layoutConfig.ratio;
+  }
+
+  set ratio(val: number) {
+    this.updateLayoutConfig({ ratio: val });
+  }
+
+  mousedown(e: MouseEvent) {
+    // Get the current mouse position
+    this.x = e.clientX;
+    // Attach the listeners to `document`
+    document.addEventListener("mousemove", this.mouseMoveHandler);
+    document.addEventListener("mouseup", this.mouseUpHandler);
+  }
+
+  mouseMoveHandler(e: MouseEvent) {
+    const resizer = document.getElementById("hDrag") as any;
+    const leftSide = resizer.previousElementSibling;
+    const rightSide = resizer.nextElementSibling;
+    leftSide.style.userSelect = "none";
+    leftSide.style.pointerEvents = "none";
+    rightSide.style.userSelect = "none";
+    rightSide.style.pointerEvents = "none";
+    // How far the mouse has been moved
+    const dx = e.clientX - this.x;
+    const fullWidth = resizer.parentNode.getBoundingClientRect().width;
+    const leftWidth = leftSide.getBoundingClientRect().width;
+    this.ratio = (leftWidth + 1 + dx) / fullWidth;
+    this.x = e.clientX;
+  }
+
+  mouseUpHandler(e: MouseEvent) {
+    const resizer = document.getElementById("hDrag") as any;
+    const leftSide = resizer.previousElementSibling;
+    const rightSide = resizer.nextElementSibling;
+
+    leftSide.style.removeProperty("user-select");
+    leftSide.style.removeProperty("pointer-events");
+
+    rightSide.style.removeProperty("user-select");
+    rightSide.style.removeProperty("pointer-events");
+
+    // Remove the handlers of `mousemove` and `mouseup`
+    document.removeEventListener("mousemove", this.mouseMoveHandler);
+    document.removeEventListener("mouseup", this.mouseUpHandler);
+  }
+
+  vMousedown(e: MouseEvent) {
+    // Get the current mouse position
+    this.y = e.clientY;
+    // Attach the listeners to `document`
+    document.addEventListener("mousemove", this.vMouseMoveHandler);
+    document.addEventListener("mouseup", this.vMouseUpHandler);
+  }
+
+  vMouseMoveHandler(e: MouseEvent) {
+    const resizer = document.getElementById("vDrag") as any;
+    const leftSide = resizer.previousElementSibling;
+    const rightSide = resizer.nextElementSibling;
+    leftSide.style.userSelect = "none";
+    leftSide.style.pointerEvents = "none";
+    rightSide.style.userSelect = "none";
+    rightSide.style.pointerEvents = "none";
+    // How far the mouse has been moved
+    const dy = e.clientY - this.y;
+    const fullHeight = resizer.parentNode.getBoundingClientRect().height;
+    const leftHeight = leftSide.getBoundingClientRect().height;
+    this.ratio = (leftHeight + 1 + dy) / fullHeight;
+    this.y = e.clientY;
+  }
+
+  vMouseUpHandler(e: MouseEvent) {
+    const resizer = document.getElementById("vDrag") as any;
+    const leftSide = resizer.previousElementSibling;
+    const rightSide = resizer.nextElementSibling;
+
+    leftSide.style.removeProperty("user-select");
+    leftSide.style.removeProperty("pointer-events");
+
+    rightSide.style.removeProperty("user-select");
+    rightSide.style.removeProperty("pointer-events");
+
+    // Remove the handlers of `mousemove` and `mouseup`
+    document.removeEventListener("mousemove", this.vMouseMoveHandler);
+    document.removeEventListener("mouseup", this.vMouseUpHandler);
+  }
+
+  get leftStyle() {
+    return {
+      width: `calc(${this.ratio * 100}% - 2px)`,
+    };
+  }
+
+  get rightStyle() {
+    return {
+      width: `calc(${(1 - this.ratio) * 100}% - 2px)`,
+      "overscroll-behavior": "contain",
+      overflow: "auto",
+    };
+  }
+
+  get topStyle() {
+    return {
+      height: `calc(${this.ratio * 100}% - 2px)`,
+    };
+  }
+
+  get bottomStyle() {
+    return {
+      height: `calc(${(1 - this.ratio) * 100}% - 2px)`,
+      "overscroll-behavior": "contain",
+      overflow: "auto",
+    };
+  }
 
   getModifiedText() {
     return this.sharedResult.text;
@@ -134,15 +289,6 @@ export default class ContrastPanel extends Mixins(BaseView, WindowController) {
     this.funcID = setTimeout(this.onSearch, 500);
   }
 
-  get area() {
-    return {
-      height: `${(this.windowHeight - 45) / 2}px`,
-      margin: `0`,
-      padding: `0`,
-      overflow: "auto",
-    };
-  }
-
   mouseLeave(event: MouseEvent) {
     if (this.funcID != null) {
       clearTimeout(this.funcID);
@@ -164,9 +310,18 @@ export default class ContrastPanel extends Mixins(BaseView, WindowController) {
     };
   }
 
-  get fontStyle() {
+  get sourceFontStyle() {
     return {
-      fontSize: this.size.toString() + "px",
+      fontSize: this.sourceSize.toString() + "px",
+      height: "100%",
+      overflow: "auto",
+    };
+  }
+
+  get resultFontStyle() {
+    return {
+      fontSize: this.resultSize.toString() + "px",
+      height: "100%",
     };
   }
 
@@ -181,25 +336,31 @@ export default class ContrastPanel extends Mixins(BaseView, WindowController) {
 .hArea {
   height: 100%;
   width: 100%;
-  border: solid 1px #bebebe;
   resize: none;
-  padding: 0;
+  padding: 0px;
+  margin: 0px;
 }
 .vArea {
-  height: 100%;
   width: 100%;
-  border: solid 1px #bebebe;
   resize: none;
-  padding: 0;
+  padding: 0px;
+  margin: 0px;
 }
 .maxNoPad {
   height: 100%;
   width: 100%;
   padding: 0px;
+  overflow: hidden;
+}
+
+.maxParent {
+  height: calc(100vh - 42px);
+  width: 100%;
+  padding: 0px;
 }
 .areaWarpper {
-  border: solid 1px #d3d3d3;
   padding: 0px;
+  overflow: hidden;
 }
 .myswitch >>> .v-messages {
   min-height: 0px;
@@ -208,5 +369,10 @@ export default class ContrastPanel extends Mixins(BaseView, WindowController) {
 .floating-div {
   position: absolute;
   z-index: 100000;
+}
+.resizer {
+  /* Doesn't allow to select the content inside */
+  user-select: none;
+  background-color: #bebebe;
 }
 </style>

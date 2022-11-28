@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div contenteditable="true">
     <div v-if="!config['contrastDict'] || !dictResult.valid">
       <div v-for="(part, key) in allParts" :key="key">
         <span style="color: red; font-size: 15px;">
@@ -25,9 +25,6 @@
         </div>
       </div>
     </div>
-    <DictResultPanel
-      v-if="config['contrastDict'] && dictResult.valid"
-    ></DictResultPanel>
   </div>
 </template>
 
@@ -48,13 +45,9 @@ const AppProps = Vue.extend({
   },
 })
 export default class DiffTextArea extends Mixins(Vue, AppProps, BaseView) {
-  get diffFontSize() {
-    return this.config[this.layoutType].diffFontSize;
-  }
-
   get diffStyle() {
     return {
-      fontSize: this.diffFontSize.toString() + "px",
+      fontSize: this.diffSize.toString() + "px",
     };
   }
 

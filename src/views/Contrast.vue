@@ -3,7 +3,7 @@
     <v-app>
       <v-app-bar app color="primary" dark dense height="40px">
         <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
-        {{ trans[layoutType] }}
+        <div class="hidden-mobile">{{ trans[layoutType] }}</div>
         <v-spacer style="height: 100%;">
           <div class="dragableDiv"></div>
         </v-spacer>
@@ -159,8 +159,11 @@ export default class Contrast extends Mixins(BaseView, WindowController) {
 .active {
   margin-left: 200px;
 }
-::-webkit-scrollbar {
-  display: none;
+
+@media (max-width: 300px) {
+  .hidden-mobile {
+    display: none;
+  }
 }
 
 .dragableDiv {

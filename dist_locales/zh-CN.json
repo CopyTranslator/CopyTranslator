@@ -104,7 +104,7 @@
     "about": "关于",
     "appearance": "外观",
     "other": "其他",
-    "textAdjustPrompt": "任意模式均可通过Ctrl配合加号或减号进行字体大小的缩放调节。",
+    "textAdjustPrompt": "任意文本框均可通过Ctrl配合滚轮（或者加号或减号）进行字体大小的缩放调节。",
     "copyButton": "点击复制译文，右键复制原文",
     "closeButton": "点击最小化，右键退出程序",
     "engineButton": "点击选择其他引擎，右键切换监听剪贴板",

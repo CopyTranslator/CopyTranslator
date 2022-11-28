@@ -24,8 +24,11 @@ export type LayoutConfig = {
   y: number;
   height: number;
   width: number;
-  fontSize: number;
+  sourceFontSize?: number;
+  resultFontSize: number;
   diffFontSize: number;
+  dictFontSize: number;
+  ratio?: number;
 };
 
 export type KeyConfig = { [key: string]: string };

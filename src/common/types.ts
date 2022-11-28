@@ -24,8 +24,6 @@ export const normalActionTypes = [
   "ok",
   "restoreDefault",
   "capture",
-  "font+",
-  "font-",
   "drawer",
   "editConfigFile",
   "showConfigFolder",

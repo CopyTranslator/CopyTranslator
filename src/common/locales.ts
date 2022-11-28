@@ -112,7 +112,7 @@ export const zh_cn = new Map<LocaleKey, string>([
   ["other", "其他"],
   [
     "textAdjustPrompt",
-    "任意模式均可通过Ctrl配合加号或减号进行字体大小的缩放调节。",
+    "任意文本框均可通过Ctrl配合滚轮（或者加号或减号）进行字体大小的缩放调节。",
   ],
   ["copyButton", "点击复制译文，右键复制原文"],
   ["closeButton", "点击最小化，右键退出程序"],
@@ -273,7 +273,7 @@ export const en = new Map<LocaleKey, string>([
   ["other", "Other"],
   [
     "textAdjustPrompt",
-    "In any mode, you can adjust the font size by using Ctrl and plus or minus signs.",
+    "In any mode, the font size can be adjusted by pressing Ctrl with the scroll wheel (or plus or minus sign). ",
   ],
   [
     "copyButton",

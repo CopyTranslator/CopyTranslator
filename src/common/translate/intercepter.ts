@@ -333,7 +333,15 @@ export abstract class InterceptTranslator<
 
   restart(): Promise<any> {
     this.destory();
-    return this.startService();
+    return new Promise((resolve, reject) => {
+      const timeoutId = setTimeout(() => {
+        reject(this.name);
+      }, 10000); //Prevent infinitely waiting for the result.
+      this.startService().then(() => {
+        clearTimeout(timeoutId);
+        resolve(0);
+      });
+    }); //等待结束
   }
 }
 

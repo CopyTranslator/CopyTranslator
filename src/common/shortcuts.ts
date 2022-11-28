@@ -27,8 +27,6 @@ export const defaultLocalShortcuts: Shortcuts = new Map([
   ["copyResult", "CmdOrCtrl+S"],
   ["copySource", "CmdOrCtrl+D"],
   ["quit", "Cmd+Q"],
-  ["font+", "CmdOrCtrl+="],
-  ["font-", "CmdOrCtrl+-"],
   ["hideWindow", "Escape"],
 ]);
 

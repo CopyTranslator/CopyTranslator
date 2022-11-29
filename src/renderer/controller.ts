@@ -1,7 +1,7 @@
 import { Identifier, authorizeKey } from "../common/types";
 import store, { observers, restoreFromConfig } from "../store";
 import bus from "../common/event-bus";
-import createApp from "./createApp";
+import createApp, { isDarkMode } from "./createApp";
 import Vue from "vue";
 import Toasted from "vue-toasted";
 const Options = {
@@ -79,6 +79,17 @@ export class RendererController extends RenController {
 
   postSet(identifier: Identifier, value: any): boolean {
     switch (identifier) {
+      case "primaryColor": //动态更新主题颜色
+        if (this.app != undefined) {
+          this.app.$vuetify.theme.themes.light.primary = value;
+          this.app.$vuetify.theme.themes.dark.primary = value;
+        }
+        break;
+      case "colorMode": //动态更新暗黑明亮模式
+        if (this.app != undefined) {
+          this.app.$vuetify.theme.dark = isDarkMode();
+        }
+        break;
       case "localeSetting":
         break;
       case "layoutType":

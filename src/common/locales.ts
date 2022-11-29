@@ -114,6 +114,15 @@ export const zh_cn = new Map<LocaleKey, string>([
     "textAdjustPrompt",
     "任意文本框均可通过Ctrl配合滚轮（或者加号或减号）进行字体大小的缩放调节。",
   ],
+  [
+    "googlePrompt",
+    "v10.2.3版本后默认使用谷歌翻译国内镜像进行翻译，理论上不需要额外设置，如果依然存在问题，可以尝试切换google翻译源",
+  ],
+  ["primaryColor", "选择主题颜色"],
+  [
+    "<tooltip>primaryColor",
+    "您可以随意选择任意颜色，软件会实时更新，你可以直接看到效果",
+  ],
   ["copyButton", "点击复制译文，右键复制原文"],
   ["closeButton", "点击最小化，右键退出程序"],
   ["engineButton", "点击选择其他引擎，右键切换监听剪贴板"],
@@ -155,6 +164,16 @@ export const zh_cn = new Map<LocaleKey, string>([
   [
     "<tooltip>googleSource",
     "google应该是最快的，其他的可能稍慢，但是如果google用不了可以试试别的",
+  ],
+  ["contentFontFamily", "内容字体设置"],
+  ["interfaceFontFamily", "界面字体设置"],
+  [
+    "<tooltip>contentFontFamily",
+    "可以设置多个字体，搜索font-family就知道怎么设置",
+  ],
+  [
+    "<tooltip>interfaceFontFamily",
+    "可以设置多个字体，搜索font-family就知道怎么设置",
   ],
 ]);
 
@@ -364,6 +383,25 @@ export const en = new Map<LocaleKey, string>([
   [
     "<tooltip>googleSource",
     "Google should be the fastest, others may be slower, but if you can't use google, you can try other",
+  ],
+  ["primaryColor", "Choose Primary Color"],
+  [
+    "<tooltip>primaryColor",
+    "You can choose any color at will. The software will update in real time, and you can see the effect directly",
+  ],
+  [
+    "googlePrompt",
+    "After v10.2.3, Google Translate's domestic image is used by default for translation. In theory, no additional settings are required. If there are still problems, you can try to switch to the Google translation source",
+  ],
+  ["contentFontFamily", "Content Font-Family"],
+  ["interfaceFontFamily", "Interface Font-Family"],
+  [
+    "<tooltip>contentFontFamily",
+    "You can set multiple fonts. Search font family to know how to set",
+  ],
+  [
+    "<tooltip>interfaceFontFamily",
+    "You can set multiple fonts. Search font family to know how to set",
   ],
 ]);
 export type Locale = typeof en;

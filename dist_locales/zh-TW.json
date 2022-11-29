@@ -154,5 +154,12 @@
     "<tooltip>translator-compare": "Engine used for multi-source comparison",
     "<tooltip>translator-double": "The engine that needs to be called manually should be useless at present",
     "<tooltip>googleMirror": "Google Translate API mirror URL, if left blank, it will restore to Google official API URL",
-    "<tooltip>googleSource": "Google should be the fastest, others may be slower, but if you can't use google, you can try other"
+    "<tooltip>googleSource": "Google should be the fastest, others may be slower, but if you can't use google, you can try other",
+    "primaryColor": "Primary Color",
+    "<tooltip>primaryColor": "You can choose any color at will. The software will update in real time, and you can see the effect directly",
+    "googlePrompt": "After v10.2.3, Google Translate's domestic image is used by default for translation. In theory, no additional settings are required. If there are still problems, you can try to switch to the Google translation source",
+    "contentFontFamily": "Content Font-Family",
+    "interfaceFontFamily": "Interface Font-Family",
+    "<tooltip>contentFontFamily": "You can set multiple fonts. Search font family to know how to set",
+    "<tooltip>interfaceFontFamily": "You can set multiple fonts. Search font family to know how to set"
 }

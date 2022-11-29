@@ -9,16 +9,43 @@
             class="myswitch"
             :label="trans[action.id]"
           ></v-switch>
-          <p v-if="action.actionType === 'prompt'" style="text-align: left;">
+          <v-dialog v-else-if="action.id == 'primaryColor'">
+            <template v-slot:activator="{ on, attrs }">
+              <v-btn
+                width="98%"
+                style="margin-top: 4px;"
+                v-bind="attrs"
+                v-on="on"
+              >
+                {{ trans[action.id] }}
+              </v-btn>
+            </template>
+            <v-color-picker
+              v-model="value"
+              flat
+              :swatches="swatches"
+              show-swatches
+              style="margin: 10px auto;"
+            ></v-color-picker>
+          </v-dialog>
+          <p
+            v-else-if="action.actionType === 'prompt'"
+            style="text-align: left; font-weight: bold;"
+            class="pStyle"
+          >
             {{ trans[action.id] }}
           </p>
-          <EngineGroup
+          <MultiSelect
             v-else-if="action.actionType === 'multi_select'"
             :identifier="action.id"
-          ></EngineGroup>
+          ></MultiSelect>
           <div v-else-if="action.actionType === 'constant'">
             <p class="pStyle">{{ trans[identifier] }}</p>
-            <v-text-field v-model="value"></v-text-field>
+            <v-text-field
+              style="marigin-top: 0px; padding-top: 0px;"
+              v-model="value"
+              class="mytext"
+            ></v-text-field>
           </div>
           <div v-else-if="action.actionType === 'submenu'">
             <p class="pStyle">
@@ -29,7 +56,8 @@
               :items="action.submenu"
               item-text="label"
               item-value="id"
-              style="padding: 2px;"
+              style="padding: 2px; padding-top: 0px;"
+              class="myswitch"
             >
             </v-select>
           </div>
@@ -50,13 +78,13 @@
 </template>
 
 <script lang="ts">
-import { Identifier, compose, ActionView } from "../common/types";
+import { Identifier, compose, ActionView, swatches } from "../common/types";
 import { Prop, Component, Vue } from "vue-property-decorator";
-import EngineGroup from "./EngineGroup.vue";
+import MultiSelect from "./MultiSelect.vue";
 import bus from "../common/event-bus";
 
 @Component({
-  components: { EngineGroup },
+  components: { MultiSelect },
 })
 export default class Action extends Vue {
   @Prop({ default: undefined }) readonly identifier!: Identifier;
@@ -65,6 +93,8 @@ export default class Action extends Vue {
   callback(...args: any[]) {
     bus.at("dispatch", ...args);
   }
+
+  swatches = swatches; //调色盘的预定义颜色
 
   get tooltip(): undefined | string {
     if (
@@ -120,7 +150,11 @@ export default class Action extends Vue {
   min-height: 0px;
 }
 .myswitch >>> .v-input__slot {
-  margin-bottom: 0px !important;
+  margin-bottom: 1px !important;
+}
+.myswitch >>> .v-select__selection--comma {
+  margin-bottom: 0px;
+  min-height: 20px;
 }
 .actionStyle {
   margin-top: 0px;
@@ -129,7 +163,14 @@ export default class Action extends Vue {
   text-align: center;
 }
 .pStyle {
-  margin-bottom: 0px;
+  margin-bottom: 4px;
   text-align: left;
+}
+
+/* .mytext >>> .v-messages {
+  min-height: 0px;
+} */
+.mytext >>> .v-input__slot {
+  margin-bottom: 0px !important;
 }
 </style>

@@ -49,6 +49,13 @@ export class WindowMangaer {
     }
   }
 
+  closeByName(routeName: RouteActionType) {
+    if (this.windows.has(routeName)) {
+      (<BrowserWindow>this.windows.get(routeName)).close();
+      this.windows.delete(routeName);
+    }
+  }
+
   close() {
     this.updateBounds();
     this.get("contrast").close();
@@ -251,6 +258,7 @@ export class WindowMangaer {
       minimizable: false,
       title: t["settings"],
       parent: this.get("contrast"),
+      frame: false,
     };
     // TODO 这里要保存用户当前的窗口参数
     // const previous_cfg = config.get<LayoutConfig>("settings");

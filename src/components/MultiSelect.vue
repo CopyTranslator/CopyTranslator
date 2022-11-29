@@ -18,7 +18,7 @@ import { Prop, Component, Vue } from "vue-property-decorator";
 import bus from "../common/event-bus";
 
 @Component
-export default class EngineGroup extends Vue {
+export default class MultiSelect extends Vue {
   @Prop({ default: undefined }) readonly identifier!: Identifier;
   readonly translatorTypes = translatorTypes;
 

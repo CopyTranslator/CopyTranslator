@@ -1,27 +1,22 @@
 import { WindowMangaer } from "./views/manager";
 import { eventListener } from "./event-listener";
 import { MenuManager } from "./menu-manager";
-import { Identifier, authorizeKey, LayoutType } from "../common/types";
+import { Identifier, authorizeKey, RouteActionType } from "../common/types";
 import { startService } from "../proxy/main";
 import { ShortcutManager } from "./shortcut";
-import { app, BrowserWindow, shell } from "electron";
+import { app, shell } from "electron";
 import store, { observers, restoreFromConfig } from "../store";
 import { TranslateController } from "./translate-controller";
 import { l10n, L10N } from "./l10n";
-import actionLinks, {
-  showDragCopyWarning,
-  showHostsWarning,
-} from "./views/dialog";
+import actionLinks, { showDragCopyWarning } from "./views/dialog";
 import { resetAllConfig } from "./file-related";
 import { MainController } from "../common/controller";
 import { UpdateChecker } from "./views/update";
-import config from "@/common/configuration";
 import eventBus from "@/common/event-bus";
 import simulate from "./simulate";
 import logger from "@/common/logger";
 import { keyan } from "@/common/translate/keyan";
-import { LayoutConfig } from "@/common/rule";
-import { constants, versionString } from "../common/constant";
+import { constants } from "../common/constant";
 
 class Controller extends MainController {
   win: WindowMangaer = new WindowMangaer(this);
@@ -77,8 +72,11 @@ class Controller extends MainController {
       case "hideWindow":
         this.win.get("contrast").hide();
         break;
+      case "close":
+        this.win.closeByName(param as RouteActionType);
+        break;
       case "closeWindow":
-        this.win.close();
+        this.win.closeByName("contrast");
         break;
       case "showWindow":
         this.win.showWindow();
@@ -136,11 +134,6 @@ class Controller extends MainController {
         if (value == true && !this.get("neverShow")) {
           showDragCopyWarning(this);
         }
-        break;
-      case "colorMode":
-        BrowserWindow.getAllWindows().forEach((window) => {
-          window.reload();
-        });
         break;
       case "stayTop":
         this.win.setStayTop(value);

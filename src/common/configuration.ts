@@ -10,7 +10,7 @@ import {
   LayoutConfig,
 } from "./rule";
 import { languages, Language } from "@opentranslate/languages";
-
+import { getFonts } from "font-list";
 import {
   translatorTypes,
   TranslatorType,
@@ -26,6 +26,8 @@ import {
   googleSources,
   DragCopyMode,
   dragCopyModes,
+  isValidActionButton,
+  ActionButton,
 } from "./types";
 import { DictionaryType, dictionaryTypes } from "./dictionary/types";
 import { version } from "./constant";
@@ -171,6 +173,19 @@ function initConfig(
   );
 
   config.setRule(
+    "contentFontFamily",
+    new TypeRule<string>(
+      '"Microsoft YaHei", Arial, Helvetica, sans-serif, "宋体"'
+    )
+  );
+  config.setRule(
+    "interfaceFontFamily",
+    new TypeRule<string>(
+      '"Microsoft YaHei", Arial, Helvetica, sans-serif, "宋体"'
+    )
+  );
+
+  config.setRule(
     "focusRight",
     new GroupRule<Identifier>(
       [
@@ -236,6 +251,33 @@ function initConfig(
       identifiers
     )
   );
+
+  const predefinedActionButtons: ActionButton[] = [
+    {
+      icon: "mdi-view-quilt",
+      tooltip: "layoutButton",
+      predefined: "layoutButton",
+    },
+    {
+      left_click: "copyResult",
+      right_click: "copySource",
+      icon: "mdi-content-copy",
+      tooltip: "copyButton",
+    },
+    {
+      left_click: "minimize",
+      right_click: "closeWindow",
+      icon: "mdi-window-minimize",
+      tooltip: "closeButton",
+    },
+  ];
+
+  config.setRule("actionButtons", {
+    predefined: predefinedActionButtons,
+    check: (vals: ActionButton[]) =>
+      !vals.map(isValidActionButton).includes(false),
+    minimalVersion: "v10.2.5",
+  });
 
   //下面是N种翻译引擎
   config.setRule(
@@ -340,6 +382,11 @@ function initConfig(
   config.setRule(
     "googleSource",
     new UnionRule<GoogleSource>("google", googleSources, "v10.2.4")
+  );
+
+  config.setRule(
+    "primaryColor",
+    new TypeRule<string>("#8E24AA", (x: string) => x.startsWith("#"))
   );
 
   return config;

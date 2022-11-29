@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-app>
+    <v-app v-bind:style="appStyle">
       <v-app-bar app color="primary" dark dense height="40px">
         <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
         <div class="hidden-mobile">{{ trans[layoutType] }}</div>
@@ -27,24 +27,14 @@
             </v-list-item>
           </v-list>
         </v-menu>
-        <!-- 添加事件监听器时使用事件捕获模式 -->
-        <!-- 即内部元素触发的事件先在此处理，然后才交由内部元素进行处理 -->
         <ActionButton
-          @click="enumerateLayouts"
-          icon="mdi-view-quilt"
-          tooltip="layoutButton"
-        ></ActionButton>
-        <ActionButton
-          left_click="copyResult"
-          right_click="copySource"
-          icon="mdi-content-copy"
-          tooltip="copyButton"
-        ></ActionButton>
-        <ActionButton
-          left_click="minimize"
-          right_click="closeWindow"
-          icon="mdi-window-minimize"
-          tooltip="closeButton"
+          v-for="(actionButton, buttonIndex) in actionButtons"
+          :left_click="actionButton.left_click"
+          :right_click="actionButton.right_click"
+          :icon="actionButton.icon"
+          :tooltip="actionButton.tooltip"
+          :predefined="actionButton.predefined"
+          :key="buttonIndex"
         ></ActionButton>
       </v-app-bar>
       <v-navigation-drawer
@@ -80,7 +70,7 @@ import Component from "vue-class-component";
 import { Mixins } from "vue-property-decorator";
 import {
   Identifier,
-  layoutTypes,
+  ActionButton as ActionButtonType,
   abstractTranslatorTypes,
   GeneralTranslatorType,
 } from "../common/types";
@@ -118,8 +108,8 @@ export default class Contrast extends Mixins(BaseView, WindowController) {
     return this.engines.filter((engine: any) => engine != this.currentEngine);
   }
 
-  get styleNow() {
-    return `background:${this.color};`;
+  get actionButtons(): ActionButtonType[] {
+    return this.config.actionButtons;
   }
 
   get color() {
@@ -134,6 +124,7 @@ export default class Contrast extends Mixins(BaseView, WindowController) {
     return {
       "margin-top": "40px",
       width: `${(this.windowWidth - this.barWidth).toString()}px`,
+      "font-family": this.config.contentFontFamily,
     };
   }
 
@@ -143,11 +134,6 @@ export default class Contrast extends Mixins(BaseView, WindowController) {
 
   set drawer(val: boolean) {
     this.set("drawer", val);
-  }
-
-  enumerateLayouts() {
-    const index = layoutTypes.findIndex((x) => x === this.layoutType);
-    this.set("layoutType", layoutTypes[(index + 1) % layoutTypes.length]);
   }
 
   get layoutType() {
@@ -189,5 +175,8 @@ export default class Contrast extends Mixins(BaseView, WindowController) {
 }
 .switchBtn {
   background-image: url("../images/switch.png");
+}
+::-webkit-scrollbar {
+  display: none;
 }
 </style>

@@ -42,6 +42,7 @@
         tabindex="-1"
         @keydown.ctrl.187="keyboardFontHandler($event, 'result')"
         @keydown.ctrl.189="keyboardFontHandler($event, 'result')"
+        @contextmenu="openMenu('contrastContext')"
       >
         <DiffTextArea
           v-if="multiSource"
@@ -55,7 +56,6 @@
           :sentences="sharedResult.transPara"
           :chineseStyle="sharedResult.chineseStyle"
           ref="myhead"
-          @contextmenu="openMenu('contrastContext')"
         ></CoTextArea>
         <DictResultPanel
           v-else-if="config['contrastDict'] && dictResult.valid"
@@ -95,6 +95,7 @@
         @keydown.ctrl.187="keyboardFontHandler($event, 'result')"
         @keydown.ctrl.189="keyboardFontHandler($event, 'result')"
         tabindex="-1"
+        @contextmenu="openMenu('contrastContext')"
       >
         <DiffTextArea
           v-if="multiSource"

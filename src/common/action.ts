@@ -195,11 +195,13 @@ class ActionManager {
 
     function typeAction(
       actionType: ActionInitOpt["actionType"],
-      identifier: Identifier
+      identifier: Identifier,
+      cate?: Category
     ): ActionInitOpt {
       return {
         actionType: actionType,
         id: identifier,
+        cate,
       };
     }
 
@@ -272,8 +274,9 @@ class ActionManager {
     this.append(listAction("googleSource", googleSources, "translation"));
     this.append(constantAction("googleMirror", "translation"));
 
-    this.append(listAction("hideDirect", hideDirections, "appearance"));
-    this.append(listAction("layoutType", layoutTypes, "appearance"));
+    this.append(constantAction("primaryColor", "appearance"));
+    this.append(constantAction("contentFontFamily", "appearance"));
+    this.append(constantAction("interfaceFontFamily", "appearance"));
     this.append(listAction("colorMode", colorModes, "appearance"));
     this.append(
       selectAction(
@@ -282,6 +285,8 @@ class ActionManager {
         "appearance"
       )
     );
+    this.append(listAction("hideDirect", hideDirections, "appearance"));
+    this.append(listAction("layoutType", layoutTypes, "appearance"));
 
     this.append(switchAction("listenClipboard"));
     this.append(switchAction("stayTop"));
@@ -435,6 +440,8 @@ class ActionManager {
           contain = keys.filter(filterByCate(optionType as Category));
           if (optionType === "appearance") {
             contain = ["textAdjustPrompt", ...contain]; //加一个关于文本大小的调节提示
+          } else if (optionType === "translation") {
+            contain = ["googlePrompt", ...contain]; //加一个关于谷歌的提示
           }
         } else {
           throw "wrong";

@@ -48,6 +48,7 @@
     "electron-clipboard-extended": "^1.1.1",
     "electron-log": "^4.2.4",
     "electron-updater": "4.2.5",
+    "font-list": "^1.4.5",
     "iohook": "^0.7.2",
     "lodash.compact": "^3.0.1",
     "lodash.flatten": "^4.4.0",
@@ -68,7 +69,7 @@
     "vue-property-decorator": "^8.4.1",
     "vue-router": "^3.1.6",
     "vue-toasted": "^1.1.28",
-    "vuetify": "v2.2.23",
+    "vuetify": "v2.6.12",
     "vuex": "^3.2.0",
     "vuex-electron": "https://github.com/MaverickMartyn/vuex-electron.git"
   },
@@ -99,9 +100,8 @@
     "sass-loader": "^8.0.2",
     "typescript": "^3.8.3",
     "vue-cli-plugin-electron-builder": "^1.4.6",
-    "vue-cli-plugin-vuetify": "^2.0.5",
     "vue-template-compiler": "^2.6.11",
-    "vuetify-loader": "^1.4.3",
+    "vuetify-loader": "^1.9.1",
     "webpack-bundle-analyzer": "^3.7.0"
   },
   "cmake-js": {

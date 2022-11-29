@@ -101,7 +101,8 @@ export default class BaseView extends Vue {
       }
     }
     const n: Name = name;
-    console.log(n);
+    // console.log(n);
+    //@ts-ignore
     const size: number = this[`${n}Size`];
     const fontKey = `${n}FontSize`;
     if (plus) {
@@ -165,6 +166,12 @@ export default class BaseView extends Vue {
 
   created() {
     eventBus.on("translateInput", this.translate);
+  }
+
+  get appStyle() {
+    return {
+      "font-family": this.config.interfaceFontFamily,
+    };
   }
 
   command() {

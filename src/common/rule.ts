@@ -56,6 +56,21 @@ class GroupRule<T> implements Rule {
   }
 }
 
+// class CustomGroupRule<T> implements Rule {
+//   predefined: Array<T>;
+//   check: CheckFuction;
+//   minimalVersion?: string;
+//   constructor(
+//     predefined: Array<T>,
+//     check: CheckFuction,
+//     minimalVersion?: string
+//   ) {
+//     this.predefined = predefined;
+//     this.minimalVersion = minimalVersion;
+//     this.check = check;
+//   }
+// }
+
 class ConstantGroupRule<T> implements Rule {
   predefined: Array<T>;
   check: CheckFuction;
@@ -87,7 +102,8 @@ class TypeRule<T> implements Rule {
     this.predefined = predefined;
     this.check = function (value) {
       let result: boolean = typeof value === typeof predefined;
-      if (result && check) {
+      console.log(predefined, value, result);
+      if (check != undefined) {
         result = result && check(value);
       }
       return result;

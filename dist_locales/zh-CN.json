@@ -105,6 +105,9 @@
     "appearance": "外观",
     "other": "其他",
     "textAdjustPrompt": "任意文本框均可通过Ctrl配合滚轮（或者加号或减号）进行字体大小的缩放调节。",
+    "googlePrompt": "v10.2.3版本后默认使用谷歌翻译国内镜像进行翻译，理论上不需要额外设置，如果依然存在问题，可以尝试切换google翻译源",
+    "primaryColor": "主题颜色",
+    "<tooltip>primaryColor": "您可以随意选择任意颜色，软件会实时更新，你可以直接看到效果",
     "copyButton": "点击复制译文，右键复制原文",
     "closeButton": "点击最小化，右键退出程序",
     "engineButton": "点击选择其他引擎，右键切换监听剪贴板",
@@ -137,5 +140,9 @@
     "<tooltip>translator-compare": "多源对比时用的引擎",
     "<tooltip>translator-double": "需要手动调用的引擎，目前应该是没啥用",
     "<tooltip>googleMirror": "谷歌翻译API镜像URL，置空则恢复到谷歌官方API的URL",
-    "<tooltip>googleSource": "google应该是最快的，其他的可能稍慢，但是如果google用不了可以试试别的"
+    "<tooltip>googleSource": "google应该是最快的，其他的可能稍慢，但是如果google用不了可以试试别的",
+    "contentFontFamily": "内容字体设置",
+    "interfaceFontFamily": "界面字体设置",
+    "<tooltip>contentFontFamily": "可以设置多个字体，搜索font-family就知道怎么设置",
+    "<tooltip>interfaceFontFamily": "可以设置多个字体，搜索font-family就知道怎么设置"
 }

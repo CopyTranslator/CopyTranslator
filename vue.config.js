@@ -7,6 +7,8 @@ const osSpec = {
 const BundleAnalyzerPlugin = require("webpack-bundle-analyzer")
   .BundleAnalyzerPlugin;
 
+const VuetifyLoaderPlugin = require("vuetify-loader/lib/plugin");
+
 const trayIconName = "tray@2x.png";
 
 module.exports = {
@@ -110,6 +112,7 @@ module.exports = {
     },
   },
   configureWebpack: {
+    plugins: [new VuetifyLoaderPlugin()],
     optimization: {
       usedExports: true,
     },

@@ -9,7 +9,7 @@ import "@mdi/font/css/materialdesignicons.css";
 
 Vue.use(Vuetify);
 
-function isDarkMode() {
+export function isDarkMode() {
   const colorMode: ColorMode = getConfigByKey("colorMode");
   switch (colorMode) {
     case "light":
@@ -25,16 +25,16 @@ function isDarkMode() {
   }
 }
 
-const themes = {
-  light: {
-    primary: "#8E24AA",
-  },
-  dark: {
-    primary: "#8E24AA",
-  },
-};
-
 export default () => {
+  //如果要获取配置值要在这里获取，不然获取不到
+  const themes = {
+    light: {
+      primary: getConfigByKey("primaryColor"),
+    },
+    dark: {
+      primary: getConfigByKey("primaryColor"),
+    },
+  };
   return new Vue({
     router,
     store,

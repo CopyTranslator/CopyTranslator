@@ -106,7 +106,7 @@
     "other": "其他",
     "textAdjustPrompt": "任意文本框均可通过Ctrl配合滚轮（或者加号或减号）进行字体大小的缩放调节。",
     "googlePrompt": "v10.2.3版本后默认使用谷歌翻译国内镜像进行翻译，理论上不需要额外设置，如果依然存在问题，可以尝试切换google翻译源",
-    "primaryColor": "主题颜色",
+    "primaryColor": "选择主题颜色",
     "<tooltip>primaryColor": "您可以随意选择任意颜色，软件会实时更新，你可以直接看到效果",
     "copyButton": "点击复制译文，右键复制原文",
     "closeButton": "点击最小化，右键退出程序",

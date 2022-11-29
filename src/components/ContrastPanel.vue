@@ -144,6 +144,10 @@ export default class ContrastPanel extends Mixins(BaseView, WindowController) {
 
   x: number = 0;
   y: number = 0;
+  leftWidth: number = 0;
+  fullWidth: number = 0;
+  fullHeight: number = 0;
+  leftHeight: number = 0;
 
   get ratio(): number {
     return this.layoutConfig.ratio;
@@ -157,11 +161,6 @@ export default class ContrastPanel extends Mixins(BaseView, WindowController) {
     // Get the current mouse position
     this.x = e.clientX;
     // Attach the listeners to `document`
-    document.addEventListener("mousemove", this.mouseMoveHandler);
-    document.addEventListener("mouseup", this.mouseUpHandler);
-  }
-
-  mouseMoveHandler(e: MouseEvent) {
     const resizer = document.getElementById("hDrag") as any;
     const leftSide = resizer.previousElementSibling;
     const rightSide = resizer.nextElementSibling;
@@ -169,12 +168,16 @@ export default class ContrastPanel extends Mixins(BaseView, WindowController) {
     leftSide.style.pointerEvents = "none";
     rightSide.style.userSelect = "none";
     rightSide.style.pointerEvents = "none";
+    this.fullWidth = resizer.parentNode.getBoundingClientRect().width;
+    this.leftWidth = leftSide.getBoundingClientRect().width;
+    document.addEventListener("mousemove", this.mouseMoveHandler);
+    document.addEventListener("mouseup", this.mouseUpHandler);
+  }
+
+  mouseMoveHandler(e: MouseEvent) {
     // How far the mouse has been moved
     const dx = e.clientX - this.x;
-    const fullWidth = resizer.parentNode.getBoundingClientRect().width;
-    const leftWidth = leftSide.getBoundingClientRect().width;
-    this.ratio = (leftWidth + 1 + dx) / fullWidth;
-    this.x = e.clientX;
+    this.ratio = (this.leftWidth + 2 + dx) / this.fullWidth;
   }
 
   mouseUpHandler(e: MouseEvent) {
@@ -196,12 +199,6 @@ export default class ContrastPanel extends Mixins(BaseView, WindowController) {
   vMousedown(e: MouseEvent) {
     // Get the current mouse position
     this.y = e.clientY;
-    // Attach the listeners to `document`
-    document.addEventListener("mousemove", this.vMouseMoveHandler);
-    document.addEventListener("mouseup", this.vMouseUpHandler);
-  }
-
-  vMouseMoveHandler(e: MouseEvent) {
     const resizer = document.getElementById("vDrag") as any;
     const leftSide = resizer.previousElementSibling;
     const rightSide = resizer.nextElementSibling;
@@ -209,12 +206,17 @@ export default class ContrastPanel extends Mixins(BaseView, WindowController) {
     leftSide.style.pointerEvents = "none";
     rightSide.style.userSelect = "none";
     rightSide.style.pointerEvents = "none";
+    this.fullHeight = resizer.parentNode.getBoundingClientRect().height;
+    this.leftHeight = leftSide.getBoundingClientRect().height;
+    // Attach the listeners to `document`
+    document.addEventListener("mousemove", this.vMouseMoveHandler);
+    document.addEventListener("mouseup", this.vMouseUpHandler);
+  }
+
+  vMouseMoveHandler(e: MouseEvent) {
     // How far the mouse has been moved
     const dy = e.clientY - this.y;
-    const fullHeight = resizer.parentNode.getBoundingClientRect().height;
-    const leftHeight = leftSide.getBoundingClientRect().height;
-    this.ratio = (leftHeight + 1 + dy) / fullHeight;
-    this.y = e.clientY;
+    this.ratio = (this.leftHeight + 2 + dy) / this.fullHeight;
   }
 
   vMouseUpHandler(e: MouseEvent) {

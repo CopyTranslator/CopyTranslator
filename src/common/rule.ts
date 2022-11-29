@@ -102,7 +102,6 @@ class TypeRule<T> implements Rule {
     this.predefined = predefined;
     this.check = function (value) {
       let result: boolean = typeof value === typeof predefined;
-      console.log(predefined, value, result);
       if (check != undefined) {
         result = result && check(value);
       }

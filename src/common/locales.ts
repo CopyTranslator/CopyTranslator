@@ -175,6 +175,7 @@ export const zh_cn = new Map<LocaleKey, string>([
     "<tooltip>interfaceFontFamily",
     "可以设置多个字体，搜索font-family就知道怎么设置",
   ],
+  ["multiSourceButton", "多源对比，可设置要对比哪些"],
 ]);
 
 export const en = new Map<LocaleKey, string>([
@@ -402,6 +403,10 @@ export const en = new Map<LocaleKey, string>([
   [
     "<tooltip>interfaceFontFamily",
     "You can set multiple fonts. Search font family to know how to set",
+  ],
+  [
+    "multiSourceButton",
+    "Multi source comparison, you can set which to compare",
   ],
 ]);
 export type Locale = typeof en;

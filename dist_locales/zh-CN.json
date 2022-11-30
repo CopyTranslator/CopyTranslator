@@ -144,5 +144,6 @@
     "contentFontFamily": "内容字体设置",
     "interfaceFontFamily": "界面字体设置",
     "<tooltip>contentFontFamily": "可以设置多个字体，搜索font-family就知道怎么设置",
-    "<tooltip>interfaceFontFamily": "可以设置多个字体，搜索font-family就知道怎么设置"
+    "<tooltip>interfaceFontFamily": "可以设置多个字体，搜索font-family就知道怎么设置",
+    "multiSourceButton": "多源对比，可设置要对比哪些"
 }

@@ -1,15 +1,24 @@
 import eventBus from "../event-bus";
 import { Compound } from "./compound";
-import { CopyTranslator, CopyTranslateResult } from "./types";
+import { CopyTranslateResult } from "./types";
 import { TranslatorType } from "@/common/types";
 import store from "@/store";
+import config from "../configuration";
 const Diff = require("diff");
+
+export interface CompareResult {
+  engine: string;
+  parts: any;
+}
 
 export class Comparator {
   compound: Compound;
   constructor(compound: Compound) {
     this.compound = compound;
     eventBus.on("allTranslated", () => {
+      if (!config.get<boolean>("multiSource")) {
+        return;
+      }
       const resultBuffer = this.compound.resultBuffer;
       let results = new Map<TranslatorType, CopyTranslateResult>();
       resultBuffer.forEach(function (value, key, map) {
@@ -18,6 +27,13 @@ export class Comparator {
         }
       });
       this.compareAll(results);
+    });
+  }
+
+  clear() {
+    store.dispatch("setDiff", {
+      text: "",
+      allParts: [],
     });
   }
 
@@ -31,7 +47,7 @@ export class Comparator {
     engines[engines.indexOf(anchor)] = engines[0]; //换一下位置
     engines[0] = anchor;
     let anchorResult = results.get(anchor) as CopyTranslateResult;
-    const compareResults = [];
+    const compareResults: CompareResult[] = [];
     for (let engine of engines) {
       let parts: any = undefined;
       if (engine == anchor) {

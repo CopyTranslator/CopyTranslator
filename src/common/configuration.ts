@@ -10,7 +10,6 @@ import {
   LayoutConfig,
 } from "./rule";
 import { languages, Language } from "@opentranslate/languages";
-import { getFonts } from "font-list";
 import {
   translatorTypes,
   TranslatorType,
@@ -143,27 +142,57 @@ function initConfig(
   config.setRule(
     "translator-enabled", //所有启用的的引擎
     new GroupRule<TranslatorType>(
-      ["google", "baidu", "caiyun", "keyan", "bing", "deepl", "tencent"],
+      [
+        "google",
+        "baidu",
+        "caiyun",
+        "keyan",
+        "bing",
+        "deepl",
+        "tencent",
+        "youdao",
+        "sogou",
+      ],
       translatorTypes,
-      "v10.2.4"
+      "v10.2.6"
     )
   );
 
   config.setRule(
     "translator-cache", //所有会自动查询并缓存结果以加速切换的翻译引擎
     new GroupRule<TranslatorType>(
-      ["google", "baidu", "caiyun", "keyan", "bing", "deepl", "tencent"],
+      [
+        // "google",
+        // "baidu",
+        // "caiyun",
+        // "keyan",
+        // "bing",
+        // "deepl",
+        // "tencent",
+        // "youdao",
+        // "sogou",
+      ],
       translatorTypes,
-      "v10.2.4"
+      "v10.2.6"
     )
   );
 
   config.setRule(
     "translator-compare", //多源对比时用的引擎
     new GroupRule<TranslatorType>(
-      ["google", "baidu", "caiyun", "keyan", "bing", "deepl", "tencent"],
+      [
+        "google",
+        "baidu",
+        "caiyun",
+        "keyan",
+        "bing",
+        "deepl",
+        "tencent",
+        "youdao",
+        "sogou",
+      ],
       translatorTypes,
-      "v10.2.4"
+      "v10.2.6"
     )
   );
 
@@ -310,10 +339,10 @@ function initConfig(
     new StructRule<KeyConfig>({ token: "" })
   );
 
-  // config.setRule(
-  //   "sogou",
-  //   new StructRule<KeyConfig>({ pid: "", key: "" }, "parameters of sogou")
-  // );
+  config.setRule(
+    "sogou",
+    new StructRule<KeyConfig>({ pid: "", key: "" })
+  );
 
   // config.setRule(
   //   "tencent",
@@ -323,10 +352,10 @@ function initConfig(
   //   )
   // );
 
-  // config.setRule(
-  //   "youdao",
-  //   new StructRule<KeyConfig>({ appKey: "", key: "" }, "parameters of youdao")
-  // );
+  config.setRule(
+    "youdao",
+    new StructRule<KeyConfig>({ appKey: "", key: "" })
+  );
 
   //下面是三种布局
   config.setRule(
@@ -381,7 +410,7 @@ function initConfig(
 
   config.setRule(
     "googleSource",
-    new UnionRule<GoogleSource>("google", googleSources, "v10.2.4")
+    new UnionRule<GoogleSource>("simply", googleSources, "v10.2.5")
   );
 
   config.setRule(

@@ -17,10 +17,9 @@
           :key="key"
           @mouseover="mouseOver(key)"
         >
-          <span style="display: block;">
+          <span style="display: block; padding-bottom: 5px;">
             {{ val }}
           </span>
-          <br />
         </div>
       </div>
     </div>

@@ -168,6 +168,7 @@ class TranslateController {
     this.lastAppend = "";
     this.translateResult = undefined;
     this.dictResult = emptyDictResult();
+    this.comparator.clear();
     this.sync();
     this.syncDict();
   }
@@ -205,6 +206,7 @@ class TranslateController {
     }
     const text = this.normalizeText(originalText);
     if (this.checkValid(text)) {
+      this.clear();
       this.translate(text);
     }
   }

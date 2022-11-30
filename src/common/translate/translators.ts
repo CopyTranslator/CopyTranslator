@@ -1,10 +1,10 @@
 import { Translator, Language } from "@opentranslate/translator";
 import { Baidu } from "@opentranslate/baidu";
 import { Google } from "@opentranslate/google";
-// import { Youdao } from "@opentranslate/youdao";
+import { Youdao } from "@opentranslate/youdao";
 import { Caiyun } from "@opentranslate/caiyun";
-import { Tencent } from "@opentranslate/tencent";
-// import { Sogou } from "@opentranslate/sogou";
+// import { Tencent } from "@opentranslate/tencent";
+import { Sogou } from "@opentranslate/sogou";
 import { BaiduDomain } from "@opentranslate/baidu-domain";
 import { TranslatorType, GoogleSource } from "@/common/types";
 import { defaultTokens } from "./token";
@@ -26,8 +26,8 @@ export const translatorMap: [TranslatorType | GoogleSource, Translator][] = [
   ],
   ["keyan", keyan],
   ["lingva", lingva],
-  // ["youdao", new Youdao({ axios, config: defaultTokens.get("youdao") })],
-  // ["sogou", new Sogou({ axios, config: defaultTokens.get("sogou") })],
+  ["youdao", new Youdao({ axios, config: defaultTokens.get("youdao") })],
+  ["sogou", new Sogou({ axios, config: defaultTokens.get("sogou") })],
   ["caiyun", new Caiyun({ axios, config: defaultTokens.get("caiyun") })],
   // ["tencent", new Tencent({ axios, config: defaultTokens.get("tencent") })],
   [

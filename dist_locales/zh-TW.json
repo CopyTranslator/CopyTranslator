@@ -161,5 +161,6 @@
     "contentFontFamily": "Content Font-Family",
     "interfaceFontFamily": "Interface Font-Family",
     "<tooltip>contentFontFamily": "You can set multiple fonts. Search font family to know how to set",
-    "<tooltip>interfaceFontFamily": "You can set multiple fonts. Search font family to know how to set"
+    "<tooltip>interfaceFontFamily": "You can set multiple fonts. Search font family to know how to set",
+    "multiSourceButton": "Multi source comparison, you can set which to compare"
 }

@@ -1,4 +1,4 @@
-import { Identifier } from "./types";
+import { Identifier, ActionInitOpt } from "./types";
 import config, { ConfigParser } from "./configuration";
 import { Promisified } from "@/proxy/renderer";
 import { ActionManager } from "./action";
@@ -53,7 +53,8 @@ export abstract class CommonController {
     bus.gon("callback", (args: any) => {
       const { identifier, param, type, isMain: main } = args;
       console.debug("action triggered", identifier, param, type, isMain);
-      switch (type) {
+      const actionType: ActionInitOpt["actionType"] = type;
+      switch (actionType) {
         case "normal":
           if (
             !(
@@ -69,6 +70,7 @@ export abstract class CommonController {
         case "submenu":
         case "constant":
         case "config":
+        case "multi_select":
           this.set(identifier, param);
           break;
         case "checkbox":
@@ -78,6 +80,8 @@ export abstract class CommonController {
             this.set(identifier, param);
           }
           break;
+        default:
+          throw `Unhandled Action Type <${actionType}>`;
       }
     });
   }

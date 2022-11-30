@@ -45,7 +45,7 @@ export default class EngineButton extends mixins(WindowController, AppProps) {
 
   get tooltipText() {
     if (this.tooltip == undefined && this.engine == "copytranslator") {
-      return this.trans["multiSource"]; //多源对比
+      return this.trans["multiSourceButton"]; //多源对比
     } else {
       return this.tooltip;
     }

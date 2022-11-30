@@ -77,8 +77,8 @@ export const normalTranslatorTypes = [
   "caiyun",
   "keyan",
   "baidu-domain",
-  // "youdao",
-  // "sogou",
+  "youdao",
+  "sogou",
 ] as const;
 export const abstractTranslatorTypes = ["copytranslator"] as const;
 
@@ -242,6 +242,7 @@ export const displayTexts = [
   "closeButton",
   "engineButton",
   "layoutButton",
+  "multiSourceButton",
 ] as const; //一些显示在界面上的文本
 
 export type Role = typeof roles[number];

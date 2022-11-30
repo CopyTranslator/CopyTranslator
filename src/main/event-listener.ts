@@ -93,6 +93,9 @@ class EventListener {
   //注册该窗口，同时检查是否是在白名单内
   async isValidWindow(): Promise<boolean> {
     return activeWindow().then((res: any) => {
+      if (!res) {
+        return;
+      }
       const windowName = res.owner.name.toString();
       const windows = new Set(config.get<string[]>("activeWindows"));
       if (!windows.has(windowName)) {

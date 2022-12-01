@@ -126,7 +126,7 @@ export const zh_cn = new Map<LocaleKey, string>([
   ["copyButton", "点击复制译文，右键复制原文"],
   ["closeButton", "点击最小化，右键退出程序"],
   ["engineButton", "点击选择其他引擎，右键切换监听剪贴板"],
-  ["layoutButton", "点击切换不同界面布局"],
+  ["layoutButton", "点击切换不同界面布局，右键单次增量复制"],
   ["<tooltip>autoCopy", "翻译后自动复制翻译结果到剪贴板"],
   ["<tooltip>listenClipboard", "监听并翻译剪贴板内容"],
   ["<tooltip>dragCopy", "拖拽后模拟复制选中内容"],
@@ -304,7 +304,10 @@ export const en = new Map<LocaleKey, string>([
     "engineButton",
     "Click to select another engine, right-click to switch to the listening clipboard",
   ],
-  ["layoutButton", "Click to switch between different interface layouts"],
+  [
+    "layoutButton",
+    "Click to switch to different interface layouts, right-click to copy incrementally",
+  ],
   [
     "<tooltip>autoCopy",
     "Automatically copy the translation results to the clipboard after translation",

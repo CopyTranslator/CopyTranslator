@@ -108,7 +108,7 @@
     "copyButton": "Click to copy translation and right-click to copy the original text",
     "closeButton": "Click to minimize and right-click to exit the program",
     "engineButton": "Click to select another engine, right-click to switch to the listening clipboard",
-    "layoutButton": "Click to switch between different interface layouts",
+    "layoutButton": "Click to switch to different interface layouts, right-click to copy incrementally",
     "<tooltip>autoCopy": "Automatically copy the translation results to the clipboard after translation",
     "<tooltip>listenClipboard": "Listen and translate clipboard content",
     "<tooltip>dragCopy": "Drag and drop to copy the selected content",

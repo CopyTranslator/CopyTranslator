@@ -22,11 +22,7 @@
 import { Prop, Component, Mixins } from "vue-property-decorator";
 import BaseView from "./BaseView.vue";
 import bus from "../common/event-bus";
-import {
-  LayoutType,
-  layoutTypes,
-  PredefinedActionButton,
-} from "../common/types";
+import { layoutTypes, PredefinedActionButton } from "../common/types";
 
 @Component({
   components: {},
@@ -46,26 +42,12 @@ export default class Action extends Mixins(BaseView) {
     }
   }
 
-  handlePredefined(isLeft: boolean) {
-    if (this.predefined == "layoutButton") {
-      this.enumerateLayouts(isLeft);
-      return true;
-    }
-    return false;
-  }
-
   handle(identifier: string | undefined, isLeft: boolean) {
-    const handled = this.handlePredefined(isLeft);
-    if (handled) {
+    if (identifier == undefined) {
       return;
     }
-    if (identifier == undefined) {
-      //调用父组件的事件
-      if (isLeft) {
-        this.$emit("click");
-      } else {
-        this.$emit("contextmenu");
-      }
+    if (identifier == "enumerateLayouts") {
+      this.enumerateLayouts(true);
       return;
     }
     bus.at("dispatch", identifier);

@@ -1,4 +1,4 @@
-import { DisplayText, Identifier, LayoutType } from "./types";
+import { Identifier } from "./types";
 
 export const colorRules = new Map<Identifier, number>([
   ["autoCopy", 1],
@@ -109,6 +109,7 @@ class TypeRule<T> implements Rule {
     };
   }
 }
+
 class StructRule<T extends { [key: string]: any }> implements Rule {
   predefined: T;
   check: CheckFuction;

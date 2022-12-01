@@ -11,6 +11,13 @@ type Handler2 = (controller: MainController | RenController) => void;
 
 export type Handler = Handler1 | Handler2;
 
+type Args = {
+  identifier: Identifier;
+  param: any;
+  type: ActionInitOpt["actionType"];
+  isMain: boolean;
+};
+
 export abstract class CommonController {
   config: ConfigParser = config;
   action: ActionManager = new ActionManager(config);
@@ -28,8 +35,13 @@ export abstract class CommonController {
   }
 
   set(identifier: Identifier, value: any): boolean {
-    bus.gat("preSet", identifier, value);
-    return this.config.set(identifier, value);
+    if (this.config.checkValid(identifier, value)) {
+      bus.gat("preSet", identifier, value);
+      //这里已经检查过了，所以不用再检查了
+      return this.config.set(identifier, value, false);
+    } else {
+      return false;
+    }
   }
 
   bindLinks(handlers: Map<Identifier, Handler>) {
@@ -50,10 +62,9 @@ export abstract class CommonController {
   }
 
   bind() {
-    bus.gon("callback", (args: any) => {
-      const { identifier, param, type, isMain: main } = args;
-      console.debug("action triggered", identifier, param, type, isMain);
-      const actionType: ActionInitOpt["actionType"] = type;
+    bus.gon("callback", (args: Args) => {
+      const { identifier, param, type: actionType, isMain: main } = args;
+      console.debug("action triggered", identifier, param, actionType, main);
       switch (actionType) {
         case "normal":
           if (
@@ -77,7 +88,11 @@ export abstract class CommonController {
           if (param == undefined) {
             this.set(identifier, !this.get(identifier));
           } else {
-            this.set(identifier, param);
+            if (typeof param == "boolean") {
+              this.set(identifier, param);
+            } else {
+              throw `invalid type of param for ${identifier}, the value is ${param}, the type if ${typeof param}`;
+            }
           }
           break;
         default:

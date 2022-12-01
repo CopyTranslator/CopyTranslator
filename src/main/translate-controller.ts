@@ -164,8 +164,12 @@ class TranslateController {
 
   clear() {
     this.text = "";
-    this.resultString = "";
     this.lastAppend = "";
+    this.clearResult();
+  }
+
+  clearResult() {
+    this.resultString = "";
     this.translateResult = undefined;
     this.dictResult = emptyDictResult();
     this.comparator.clear();
@@ -206,7 +210,7 @@ class TranslateController {
     }
     const text = this.normalizeText(originalText);
     if (this.checkValid(text)) {
-      this.clear();
+      this.clearResult();
       this.translate(text);
     }
   }

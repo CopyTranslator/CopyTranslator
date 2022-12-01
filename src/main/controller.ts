@@ -17,6 +17,7 @@ import simulate from "./simulate";
 import logger from "@/common/logger";
 import { keyan } from "@/common/translate/keyan";
 import { constants } from "../common/constant";
+import { DragCopyMode } from "@/common/types";
 
 class Controller extends MainController {
   win: WindowMangaer = new WindowMangaer(this);
@@ -131,7 +132,11 @@ class Controller extends MainController {
         this.l10n.updateLocale(this.get("localeSetting"));
         break;
       case "dragCopy":
-        if (value == true && !this.get("neverShow")) {
+        if (
+          value == true &&
+          this.get<DragCopyMode>("dragCopyMode") === "dragCopyGlobal" &&
+          !this.get("neverShow") //只在全局模式才show出来
+        ) {
           showDragCopyWarning(this);
         }
         break;

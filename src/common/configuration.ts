@@ -286,7 +286,7 @@ function initConfig(
       icon: "mdi-view-quilt",
       tooltip: "layoutButton",
       left_click: "enumerateLayouts",
-      right_click: "incrementSelect",
+      right_click: "incrementCounter",
     },
     {
       left_click: "copyResult",

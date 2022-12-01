@@ -145,7 +145,7 @@ class EventListener {
           }
           this.simulateCopy();
           if (event.ctrlKey) {
-            eventBus.at("dispatch", "incrementSelect");
+            eventBus.at("dispatch", "incrementCounter", 1);
           }
           this.copied = true;
         });

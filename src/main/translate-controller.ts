@@ -47,7 +47,7 @@ class TranslateController {
   lastAppend: string = "";
   translating: boolean = false; //正在翻译
   words: string = "";
-  incrementSelect: number = 0; //增量复制的次数
+  incrementCounter: number = 0; //增量复制计数器
 
   translator: Compound = new Compound([...translatorTypes], "google", {});
   dictionary: Polymer = new Polymer("youdao");
@@ -103,11 +103,12 @@ class TranslateController {
         this.handle("copyResult", null);
         simulate.paste();
         break;
-      case "incrementSelect":
+      case "incrementCounter":
         if (typeof param != "number") {
           param = 1; //下一次监听剪贴板是增量选中
         }
-        this.incrementSelect = param as number;
+        this.incrementCounter = param as number;
+        this.setCurrentColor();
         break;
       case "retryTranslate":
         this.translate(this.text);
@@ -138,9 +139,12 @@ class TranslateController {
     return this.controller.get(identifier) as T;
   }
 
+  isIncremental(): boolean {
+    return this.get<boolean>("incrementalCopy") || this.incrementCounter > 0;
+  }
+
   setSrc(append: string) {
-    const incremental =
-      this.get<boolean>("incrementalCopy") || this.incrementSelect > 0;
+    const incremental = this.isIncremental();
     if (incremental) {
       eventBus.at("dispatch", "toast", "增量复制");
     }
@@ -154,8 +158,8 @@ class TranslateController {
     } else {
       this.text = append;
     }
-    if (this.incrementSelect > 0) {
-      this.incrementSelect -= 1;
+    if (this.incrementCounter > 0) {
+      this.handle("incrementCounter", this.incrementCounter - 1);
     }
   }
 
@@ -304,7 +308,11 @@ class TranslateController {
   getOptions() {
     let realOptions = 0;
     for (const [key, value] of colorRules) {
-      if (this.get<boolean>(key)) {
+      if (key == "incrementalCopy") {
+        if (this.isIncremental()) {
+          realOptions |= value;
+        }
+      } else if (this.get<boolean>(key)) {
         realOptions |= value;
       }
     }
@@ -462,11 +470,7 @@ class TranslateController {
 
   isWord(text: string) {
     text = trimEnd(text.trim(), ",.!?. ");
-    if (
-      !this.get("smartDict") ||
-      !checkIsWord(text) ||
-      this.get("incrementalCopy")
-    ) {
+    if (!this.get("smartDict") || !checkIsWord(text) || this.isIncremental()) {
       return false;
     }
     return true;
@@ -477,10 +481,10 @@ class TranslateController {
   }
 
   async queryDictionary(text: string) {
+    const isWord = this.isWord(text);
     this.dictFail("");
     this.syncDict();
-    if (!this.isWord(text)) {
-      this.dictFail("");
+    if (!isWord) {
       return;
     }
     return this.dictionary
@@ -650,8 +654,6 @@ class TranslateController {
         break;
       case "sourceLanguage":
         this.translate(this.text);
-        break;
-      case "incrementalCopy":
         break;
       case "autoFormat":
         if (value) {

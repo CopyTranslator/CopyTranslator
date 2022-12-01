@@ -33,7 +33,7 @@ export const normalActionTypes = [
   "translateClipboard",
   "notify",
   "toast",
-  "incrementSelect",
+  "incrementCounter",
   "simulateCopy",
   "simulateIncrementCopy",
   "translateInput",

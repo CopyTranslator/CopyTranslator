@@ -57,7 +57,7 @@ function subMenuGenerator(
 const alias = new Map<string, string[]>([
   ["focus", ["layoutType|focus"]],
   ["contrast", ["layoutType|horizontal"]],
-  ["simulateIncrementCopy", ["incrementSelect", "simulateCopy"]],
+  ["simulateIncrementCopy", ["incrementCounter", "simulateCopy"]],
 ]);
 
 //兼容旧版本的
@@ -336,7 +336,7 @@ class ActionManager {
     this.append(normalAction("showWindow"));
     this.append(normalAction("translateClipboard"));
     this.append(normalAction("doubleCopyTranslate"));
-    this.append(normalAction("incrementSelect"));
+    this.append(normalAction("incrementCounter"));
     this.append(normalAction("simulateCopy"));
     this.append(normalAction("translateInput"));
     this.append(normalAction("simpleDebug"));

@@ -109,14 +109,6 @@ class Controller extends MainController {
     this.win.get("contrast"); //创建主窗口
     this.shortcut.init();
     this.menu.init();
-    // if (this.get("showGoogleMessage")) {
-    //   console.log("showGoogleMessage");
-    //   showHostsWarning(this);
-    // }
-    if (this.get("isNewUser")) {
-      //显示启动页
-      eventBus.at("dispatch", "welcome");
-    }
   }
 
   async onExit() {

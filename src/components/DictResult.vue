@@ -8,13 +8,13 @@
     <p class="dictSrc noMargin">[{{ dictResult.words }}]</p>
     <div v-if="dictResult.phonetics.length != 0">
       <p class="notation noMargin">Phonetic:</p>
-      <p
+      <span
         class="dictPhonetic noMargin"
         v-for="item in dictResult.phonetics"
         :key="item.type + item.value"
       >
-        [{{ item.type }}]{{ item.value }}
-      </p>
+        [{{ item.type }}]{{ item.value }} &nbsp;
+      </span>
     </div>
     <div v-if="dictResult.explains.length > 0">
       <p class="notation noMargin">Basic Explains:</p>

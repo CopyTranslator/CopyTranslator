@@ -15,7 +15,7 @@
       >
         <textarea
           v-bind:style="sourceFontStyle"
-          class="hArea"
+          class="hArea text--primary"
           @keyup.ctrl.13="translate"
           @keyup.ctrl.71="google"
           @keyup.ctrl.66="baidu"
@@ -77,7 +77,7 @@
           @keyup.ctrl.71="google"
           @keyup.ctrl.66="baidu"
           @keyup.ctrl.80="command"
-          class="vArea"
+          class="vArea text--primary"
           v-model="sharedResult.text"
           @contextmenu="openMenu('contrastContext')"
         ></textarea>

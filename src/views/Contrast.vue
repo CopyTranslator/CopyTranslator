@@ -1,6 +1,9 @@
 <template>
   <div>
     <v-app v-bind:style="appStyle">
+      <v-dialog v-model="dialog">
+        <Tips></Tips>
+      </v-dialog>
       <v-app-bar app color="primary" dark dense height="40px">
         <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
         <div class="hidden-mobile">{{ trans[layoutType] }}</div>
@@ -22,7 +25,7 @@
           </template>
 
           <v-list>
-            <v-list-item v-for="engine in rest_engines" :key="engine">
+            <v-list-item v-for="engine in restEngines" :key="engine">
               <EngineButton :engine="engine" :valid="valid"></EngineButton>
             </v-list-item>
           </v-list>
@@ -68,6 +71,7 @@ import WindowController from "../components/WindowController.vue";
 import Action from "../components/Action.vue";
 import Component from "vue-class-component";
 import { Mixins } from "vue-property-decorator";
+import Tips from "@/components/Tips.vue";
 import {
   Identifier,
   ActionButton as ActionButtonType,
@@ -88,6 +92,7 @@ import {
     ContrastPanel,
     EngineButton,
     ActionButton,
+    Tips,
   },
 })
 export default class Contrast extends Mixins(BaseView, WindowController) {
@@ -95,6 +100,12 @@ export default class Contrast extends Mixins(BaseView, WindowController) {
   actionKeys: Identifier[] = this.$controller.action.getKeys(
     "contrastPanel"
   ) as Identifier[];
+
+  dialog: boolean = false;
+
+  mounted() {
+    this.dialog = this.config.isNewUser;
+  }
 
   get engines(): Array<GeneralTranslatorType | DictionaryType> {
     const translatorEngines: GeneralTranslatorType[] = [
@@ -104,7 +115,7 @@ export default class Contrast extends Mixins(BaseView, WindowController) {
     return this.valid ? [...dictionaryTypes] : translatorEngines;
   }
 
-  get rest_engines() {
+  get restEngines() {
     return this.engines.filter((engine: any) => engine != this.currentEngine);
   }
 

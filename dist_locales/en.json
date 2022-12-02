@@ -140,10 +140,13 @@
     "<tooltip>googleSource": "Google should be the fastest, others may be slower, but if you can't use google, you can try other",
     "primaryColor": "Choose Primary Color",
     "<tooltip>primaryColor": "You can choose any color at will. The software will update in real time, and you can see the effect directly",
-    "googlePrompt": "After v10.2.3, Google Translate's domestic image is used by default for translation. In theory, no additional settings are required. If there are still problems, you can try to switch to the Google translation source",
+    "googlePrompt": "After v10.3.0, Google Translate uses the Simple source by default. In theory, no additional settings are required. If there are still problems, you can try to switch to the Google translation source",
     "contentFontFamily": "Content Font-Family",
     "interfaceFontFamily": "Interface Font-Family",
     "<tooltip>contentFontFamily": "You can set multiple fonts. Search font family to know how to set",
     "<tooltip>interfaceFontFamily": "You can set multiple fonts. Search font family to know how to set",
-    "multiSourceButton": "Multi source comparison, you can set which to compare"
+    "multiSourceButton": "Multi source comparison, you can set which to compare",
+    "<tooltip>welcome": "If you found it useful, please give me a star on GitHub or introduce to your friend.",
+    "dragCopyWarning": "It is strongly recommended that you enable the white list mode of drag replication (Settings ->DragCopy), so that drag replication will be triggered in specific programs. Ctrl + C is simulated when the drag copy is triggered. In most scenes, this means safe text copying, but in some scenes it may cause some unexpected problems, such as clipboard data being overwritten.  Triggering Ctrl + C in the shell will interrupt the running program and so on.  When you enable it, please be aware that after you enable the drag and drop option, you will be responsible for any possible losses.",
+    "dragCopyTip": "After the drag copy option is turned on, just press and hold the mouse and drag the selected text to copy the text.\nIt is strongly recommended that you enable the white list mode of drag replication (Settings ->DragCopy), so that drag replication will be triggered in specific programs."
 }

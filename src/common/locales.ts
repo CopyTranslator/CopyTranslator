@@ -116,7 +116,7 @@ export const zh_cn = new Map<LocaleKey, string>([
   ],
   [
     "googlePrompt",
-    "v10.2.3版本后默认使用谷歌翻译国内镜像进行翻译，理论上不需要额外设置，如果依然存在问题，可以尝试切换google翻译源",
+    "v10.3.0版本后谷歌翻译默认使用Simply源，理论上不需要额外设置，如果依然存在问题，可以尝试切换google翻译源",
   ],
   ["primaryColor", "选择主题颜色"],
   [
@@ -176,6 +176,18 @@ export const zh_cn = new Map<LocaleKey, string>([
     "可以设置多个字体，搜索font-family就知道怎么设置",
   ],
   ["multiSourceButton", "多源对比，可设置要对比哪些"],
+  [
+    "<tooltip>welcome",
+    "本软件功能较为丰富，有一定上手难度，建议您先阅读用户手册，能够极大地帮助您提升使用软件的效率，解决您的疑问。\n如果您感觉本软件对您有所帮助，请在项目Github上给个star或是介绍给您的朋友，谢谢。\n本软件免费开源，如果您是以付费的方式获得本软件，那么你应该是被骗了。[○･｀Д´･ ○]",
+  ],
+  [
+    "dragCopyWarning",
+    "强烈建议您启用拖拽复制的白名单模式（设置->拖拽复制），这样在特定程序才会触发拖拽复制。拖拽复制触发时会模拟Ctrl+C，大部分情况下，这都意味着安全的文本复制，但在某些场景中可能会引起一些意料之外的问题，如剪贴板数据被覆盖、在shell中触发Ctrl+C会使正在运行的程序中断等等。启用时请务必注意，当您启用拖拽复制选项后，任何可能由此导致的损失均由您自行负责。",
+  ],
+  [
+    "dragCopyTip",
+    "在打开拖拽复制选项后，只需按住鼠标并拖拽选中文字，即可复制文字。\n强烈建议您启用拖拽复制的白名单模式（设置->拖拽复制），这样在特定程序才会触发拖拽复制",
+  ],
 ]);
 
 export const en = new Map<LocaleKey, string>([
@@ -395,7 +407,7 @@ export const en = new Map<LocaleKey, string>([
   ],
   [
     "googlePrompt",
-    "After v10.2.3, Google Translate's domestic image is used by default for translation. In theory, no additional settings are required. If there are still problems, you can try to switch to the Google translation source",
+    "After v10.3.0, Google Translate uses the Simple source by default. In theory, no additional settings are required. If there are still problems, you can try to switch to the Google translation source",
   ],
   ["contentFontFamily", "Content Font-Family"],
   ["interfaceFontFamily", "Interface Font-Family"],
@@ -410,6 +422,18 @@ export const en = new Map<LocaleKey, string>([
   [
     "multiSourceButton",
     "Multi source comparison, you can set which to compare",
+  ],
+  [
+    "<tooltip>welcome",
+    "If you found it useful, please give me a star on GitHub or introduce to your friend.",
+  ],
+  [
+    "dragCopyWarning",
+    "It is strongly recommended that you enable the white list mode of drag replication (Settings ->DragCopy), so that drag replication will be triggered in specific programs. Ctrl + C is simulated when the drag copy is triggered. In most scenes, this means safe text copying, but in some scenes it may cause some unexpected problems, such as clipboard data being overwritten.  Triggering Ctrl + C in the shell will interrupt the running program and so on.  When you enable it, please be aware that after you enable the drag and drop option, you will be responsible for any possible losses.",
+  ],
+  [
+    "dragCopyTip",
+    "After the drag copy option is turned on, just press and hold the mouse and drag the selected text to copy the text.\nIt is strongly recommended that you enable the white list mode of drag replication (Settings ->DragCopy), so that drag replication will be triggered in specific programs.",
   ],
 ]);
 export type Locale = typeof en;

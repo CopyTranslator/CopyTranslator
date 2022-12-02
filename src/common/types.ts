@@ -233,6 +233,8 @@ export const eventTypes = [
 
 export const displayTexts = [
   "dragCopyPrompt",
+  "dragCopyWarning",
+  "dragCopyTip",
   "fallbackPrompt1",
   "fallbackPrompt2",
   "about",

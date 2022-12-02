@@ -17,7 +17,7 @@
     >
       <textarea
         ref="normalResult"
-        class="focusText max"
+        class="focusText max text--primary"
         v-bind:style="focusStyle"
         v-model="sharedResult.translation"
         v-if="sharedResult && !dictResult.valid && !multiSource"

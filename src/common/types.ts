@@ -23,6 +23,8 @@ export const normalActionTypes = [
   "cancel",
   "ok",
   "restoreDefault",
+  "restoreMultiDefault",
+  "enumerateLayouts",
   "capture",
   "drawer",
   "editConfigFile",
@@ -245,6 +247,8 @@ export const displayTexts = [
   "engineButton",
   "layoutButton",
   "multiSourceButton",
+  "addNewActionButton",
+  "chooseIconPrompt",
 ] as const; //一些显示在界面上的文本
 
 export type Role = typeof roles[number];

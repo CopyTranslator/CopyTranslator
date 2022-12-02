@@ -69,6 +69,7 @@
     "vue-property-decorator": "^8.4.1",
     "vue-router": "^3.1.6",
     "vue-toasted": "^1.1.28",
+    "vuedraggable": "^2.24.3",
     "vuetify": "v2.6.12",
     "vuex": "^3.2.0",
     "vuex-electron": "https://github.com/MaverickMartyn/vuex-electron.git"

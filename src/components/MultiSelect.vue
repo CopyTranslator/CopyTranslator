@@ -14,17 +14,13 @@
 
 <script lang="ts">
 import { translatorTypes, Identifier } from "../common/types";
-import { Prop, Component, Vue } from "vue-property-decorator";
-import bus from "../common/event-bus";
+import { Prop, Component } from "vue-property-decorator";
+import Base from "./Base.vue";
 
 @Component
-export default class MultiSelect extends Vue {
+export default class MultiSelect extends Base {
   @Prop({ default: undefined }) readonly identifier!: Identifier;
   readonly translatorTypes = translatorTypes;
-
-  callback(...args: any[]) {
-    bus.at("dispatch", ...args);
-  }
 
   get value() {
     return this.$store.state.config[this.identifier];

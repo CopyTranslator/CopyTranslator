@@ -4,7 +4,6 @@
     @wheel="wheelHandler($event, 'result')"
     @keydown.ctrl.187="keyboardFontHandler($event, 'result')"
     @keydown.ctrl.189="keyboardFontHandler($event, 'result')"
-    style="overflow: auto;"
   >
     <div
       class="max"

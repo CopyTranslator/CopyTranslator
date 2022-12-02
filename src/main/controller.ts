@@ -1,7 +1,15 @@
 import { WindowMangaer } from "./views/manager";
 import { eventListener } from "./event-listener";
 import { MenuManager } from "./menu-manager";
-import { Identifier, authorizeKey, RouteActionType } from "../common/types";
+import {
+  Identifier,
+  authorizeKey,
+  RouteActionType,
+  MenuActionType,
+  Category,
+  layoutTypes,
+  LayoutType,
+} from "../common/types";
 import { startService } from "../proxy/main";
 import { ShortcutManager } from "./shortcut";
 import { app, shell } from "electron";
@@ -12,7 +20,6 @@ import actionLinks, { showDragCopyWarning } from "./views/dialog";
 import { resetAllConfig } from "./file-related";
 import { MainController } from "../common/controller";
 import { UpdateChecker } from "./views/update";
-import eventBus from "@/common/event-bus";
 import simulate from "./simulate";
 import logger from "@/common/logger";
 import { keyan } from "@/common/translate/keyan";
@@ -34,6 +41,7 @@ class Controller extends MainController {
     observers.push(this.transCon);
     this.bindLinks(actionLinks);
   }
+
   simpleDebug() {
     keyan
       .translate(
@@ -46,6 +54,26 @@ class Controller extends MainController {
       });
   }
 
+  restoreMultiDefault(optionType: MenuActionType | Category) {
+    const keys = this.action.getKeys(optionType);
+    for (const key of keys) {
+      this.config.reset(key as Identifier); //带参时仅重置特定项
+    }
+  }
+
+  enumerateLayouts(isLeft: boolean) {
+    const index = layoutTypes.findIndex(
+      (x) => x === this.config.get<LayoutType>("layoutType")
+    );
+    let newIndex: number;
+    if (isLeft) {
+      newIndex = (index + 1) % layoutTypes.length;
+    } else {
+      newIndex = (index + layoutTypes.length - 1) % layoutTypes.length;
+    }
+    this.set("layoutType", layoutTypes[newIndex]);
+  }
+
   handle(identifier: Identifier, param: any = null): boolean {
     switch (identifier) {
       case "exit":
@@ -55,8 +83,18 @@ class Controller extends MainController {
       case "settings":
         this.win.get("settings").show();
         break;
+      case "enumerateLayouts":
+        this.enumerateLayouts(!!param);
+        break;
+      case "restoreMultiDefault":
+        this.restoreMultiDefault(param);
+        break;
       case "restoreDefault":
-        this.resotreDefaultSetting();
+        if (param == null) {
+          this.resotreDefaultSetting();
+        } else {
+          this.config.reset(param as Identifier); //带参时仅重置特定项
+        }
         break;
       case "checkUpdate":
         this.updater.check();

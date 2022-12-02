@@ -5,7 +5,7 @@
 <script lang="ts">
 import { RouteActionType, MenuActionType, Identifier } from "../common/types";
 import Vue from "vue";
-import Component, { mixins } from "vue-class-component";
+import Component from "vue-class-component";
 import bus from "../common/event-bus";
 
 @Component

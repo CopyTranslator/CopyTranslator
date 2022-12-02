@@ -117,6 +117,15 @@ class ConfigParser {
     this.save();
   }
 
+  reset(key: Identifier) {
+    const rule = this.rules.get(key);
+    if (rule != undefined) {
+      this.set(key, rule.predefined);
+    } else {
+      console.log(`Not rule named ${key}`);
+    }
+  }
+
   save() {
     writeFileSync(this.file, JSON.stringify(store.state.config, null, 4));
     const now = Date.now();

@@ -148,5 +148,15 @@
     "multiSourceButton": "Multi source comparison, you can set which to compare",
     "<tooltip>welcome": "If you found it useful, please give me a star on GitHub or introduce to your friend.",
     "dragCopyWarning": "It is strongly recommended that you enable the white list mode of drag replication (Settings ->DragCopy), so that drag replication will be triggered in specific programs. Ctrl + C is simulated when the drag copy is triggered. In most scenes, this means safe text copying, but in some scenes it may cause some unexpected problems, such as clipboard data being overwritten.  Triggering Ctrl + C in the shell will interrupt the running program and so on.  When you enable it, please be aware that after you enable the drag and drop option, you will be responsible for any possible losses.",
-    "dragCopyTip": "After the drag copy option is turned on, just press and hold the mouse and drag the selected text to copy the text.\nIt is strongly recommended that you enable the white list mode of drag replication (Settings ->DragCopy), so that drag replication will be triggered in specific programs."
+    "dragCopyTip": "After the drag copy option is turned on, just press and hold the mouse and drag the selected text to copy the text.\nIt is strongly recommended that you enable the white list mode of drag replication (Settings ->DragCopy), so that drag replication will be triggered in specific programs.",
+    "actionButtons": "Action Button",
+    "addNewActionButton": "Add New ActionButton",
+    "chooseIconPrompt": "Click here to get the optional icon field",
+    "restoreMultiDefault": "Restore these settings to default",
+    "enumerateLayouts": "Enumerate Layouts",
+    "hideWindow": "Hide Window",
+    "closeWindow": "Close Window",
+    "showWindow": "Show Window",
+    "translateClipboard": "Translate Clipboard",
+    "incrementCounter": "Incremental Copy Once"
 }

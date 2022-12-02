@@ -33,20 +33,13 @@
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
-import bus from "@/common/event-bus";
 import Action from "../components/Action.vue";
+import Base from "@/components/Base.vue";
 
 @Component({
   components: { Action },
 })
-export default class DrogCopyConfig extends Vue {
-  get trans() {
-    return this.$store.getters.locale;
-  }
-  callback(...args: any[]) {
-    bus.at("dispatch", ...args);
-  }
-
+export default class DrogCopyConfig extends Base {
   get whitelist() {
     return this.$store.state.config["dragCopyWhiteList"];
   }
@@ -61,10 +54,6 @@ export default class DrogCopyConfig extends Vue {
 
   set blacklist(val) {
     this.callback("dragCopyBlackList", val);
-  }
-
-  get config() {
-    return this.$store.state.config;
   }
 }
 </script>

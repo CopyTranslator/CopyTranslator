@@ -347,6 +347,8 @@ class ActionManager {
       this.append(typeAction("config", id));
     });
 
+    this.append(typeAction("config", "actionButtons"));
+
     //引擎组设置
     translatorGroups.forEach((id) => {
       this.append(typeAction("multi_select", id));
@@ -392,6 +394,8 @@ class ActionManager {
     this.append(normalAction("editConfigFile", "other"));
     this.append(normalAction("showConfigFolder", "other"));
     this.append(normalAction("restoreDefault", "other"));
+    this.append(normalAction("restoreMultiDefault"));
+    this.append(normalAction("enumerateLayouts"));
   }
 
   getKeys(optionType: MenuActionType | Category): Array<Identifier> {
@@ -405,7 +409,32 @@ class ActionManager {
         contain = Array.from(translatorGroups);
         break;
       case "allActions":
-        contain = keys;
+        const invalidTypes: ActionInitOpt["actionType"][] = [
+          "prompt",
+          "submenu",
+          "multi_select",
+          "config",
+          "constant",
+        ];
+        const invalidKeys: Identifier[] = [
+          "simpleDebug",
+          "notify",
+          "toast",
+          "selectionQuery",
+          "simulateCopy",
+          "welcome",
+          "doubleCopyTranslate",
+          "restoreMultiDefault",
+        ];
+        contain = keys.filter((x) => {
+          const action = this.getAction(x);
+          return (
+            (!invalidKeys.includes(x) &&
+              !invalidTypes.includes(action.actionType) &&
+              !action.role) ||
+            x == "minimize"
+          );
+        });
         break;
       case "focusRight":
         contain = this.config.get("focusRight");

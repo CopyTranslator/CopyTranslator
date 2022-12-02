@@ -15,6 +15,7 @@ module.exports = {
   transpileDependencies: ["vuetify"],
   pluginOptions: {
     electronBuilder: {
+      customFileProtocol: "./",
       mainProcessTypeChecking: false,
       chainWebpackMainProcess: (config) => {
         // config.when(process.env.NODE_ENV === "production", (config) => {

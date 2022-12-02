@@ -6,7 +6,11 @@
       </v-dialog>
       <v-app-bar app color="primary" dark dense height="40px">
         <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
-        <div class="hidden-mobile">{{ trans[layoutType] }}</div>
+        <div class="noSelect">
+          <p style="margin: auto;" class="hidden-mobile">
+            {{ trans[layoutType] }}
+          </p>
+        </div>
         <v-spacer style="height: 100%;">
           <div class="dragableDiv"></div>
         </v-spacer>
@@ -23,12 +27,23 @@
               </v-badge>
             </div>
           </template>
-
-          <v-list>
-            <v-list-item v-for="engine in restEngines" :key="engine">
-              <EngineButton :engine="engine" :valid="valid"></EngineButton>
-            </v-list-item>
-          </v-list>
+          <v-card :style="popupStyle" class="popup">
+            <v-row style="margin: 0px;">
+              <v-col
+                v-for="(engineGroup, groupIndex) in restEngineGroups"
+                :key="groupIndex"
+                style="padding: 0px;"
+              >
+                <div
+                  v-for="engine in engineGroup"
+                  :key="engine"
+                  style="margin-bottom: 8px;"
+                >
+                  <EngineButton :engine="engine" :valid="valid"></EngineButton>
+                </div>
+              </v-col>
+            </v-row>
+          </v-card>
         </v-menu>
         <ActionButton
           v-for="(actionButton, buttonIndex) in actionButtons"
@@ -86,6 +101,14 @@ import {
   emptyDictResult,
 } from "../common/dictionary/types";
 
+function sliceArray<T>(arr: T[], size: number) {
+  var arr2 = [];
+  for (var i = 0; i < arr.length; i = i + size) {
+    arr2.push(arr.slice(i, i + size));
+  }
+  return arr2;
+}
+
 @Component({
   components: {
     Action,
@@ -107,6 +130,10 @@ export default class Contrast extends Mixins(BaseView, WindowController) {
     this.dialog = this.config.isNewUser;
   }
 
+  get nButton() {
+    return Math.floor((this.windowHeight - 40) / 40);
+  }
+
   get engines(): Array<GeneralTranslatorType | DictionaryType> {
     const translatorEngines: GeneralTranslatorType[] = [
       ...this.config["translator-enabled"],
@@ -117,6 +144,15 @@ export default class Contrast extends Mixins(BaseView, WindowController) {
 
   get restEngines() {
     return this.engines.filter((engine: any) => engine != this.currentEngine);
+  }
+
+  get restEngineGroups() {
+    return sliceArray(this.restEngines, this.nButton);
+  }
+
+  get popupStyle() {
+    const width = 55 * this.restEngineGroups.length;
+    return { width: `${width}px` };
   }
 
   get actionButtons(): ActionButtonType[] {
@@ -168,26 +204,24 @@ export default class Contrast extends Mixins(BaseView, WindowController) {
   height: 100%;
   width: 100%;
 }
-.ctrlBtn {
-  position: absolute;
-  bottom: 5px;
-  right: 5px;
-  width: 300px;
-}
-.btnBase {
-  background-position: center;
-  background-size: contain;
-}
+
 .noPad {
   padding: 0px;
 }
-.copyBtn {
-  background-image: url("../images/copy.png");
-}
-.switchBtn {
-  background-image: url("../images/switch.png");
-}
+
 ::-webkit-scrollbar {
   display: none;
+}
+
+.noSelect {
+  user-select: none;
+  display: flex;
+  -webkit-app-region: drag;
+}
+
+.popup {
+  margin-top: 30px;
+  padding-top: 5px;
+  text-align: center;
 }
 </style>

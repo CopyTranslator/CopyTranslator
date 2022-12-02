@@ -45,6 +45,13 @@ export const zh_cn = new Map<LocaleKey, string>([
   ["cancel", "取消"],
   ["ok", "确定"],
   ["restoreDefault", "恢复默认设置"],
+  ["restoreMultiDefault", "重置这些设置"],
+  ["hideWindow", "隐藏窗口"],
+  ["closeWindow", "关闭窗口"],
+  ["showWindow", "显示窗口"],
+  ["translateClipboard", "翻译剪贴板"],
+  ["incrementCounter", "单次增量复制"],
+  ["enumerateLayouts", "遍历布局"],
   ["enableNotify", "启用通知"],
   ["smartTranslate", "智能互译"],
   ["capture", "截图翻译"],
@@ -188,6 +195,9 @@ export const zh_cn = new Map<LocaleKey, string>([
     "dragCopyTip",
     "在打开拖拽复制选项后，只需按住鼠标并拖拽选中文字，即可复制文字。\n强烈建议您启用拖拽复制的白名单模式（设置->拖拽复制），这样在特定程序才会触发拖拽复制",
   ],
+  ["actionButtons", "动作按钮"],
+  ["addNewActionButton", "添加新的动作按钮"],
+  ["chooseIconPrompt", "点这里获取可选图标字段"],
 ]);
 
 export const en = new Map<LocaleKey, string>([
@@ -236,6 +246,8 @@ export const en = new Map<LocaleKey, string>([
   ["cancel", "Cancel"],
   ["ok", "OK"],
   ["restoreDefault", "Restore default settings"],
+  ["restoreMultiDefault", "Restore these settings to default"],
+  ["enumerateLayouts", "Enumerate Layouts"],
   ["enableNotify", "Enable Notify"],
   ["smartTranslate", "Smart Translate"],
   ["capture", "Screenshot Translate"],
@@ -435,5 +447,13 @@ export const en = new Map<LocaleKey, string>([
     "dragCopyTip",
     "After the drag copy option is turned on, just press and hold the mouse and drag the selected text to copy the text.\nIt is strongly recommended that you enable the white list mode of drag replication (Settings ->DragCopy), so that drag replication will be triggered in specific programs.",
   ],
+  ["actionButtons", "Action Button"],
+  ["addNewActionButton", "Add New ActionButton"],
+  ["chooseIconPrompt", "Click here to get the optional icon field"],
+  ["hideWindow", "Hide Window"],
+  ["closeWindow", "Close Window"],
+  ["showWindow", "Show Window"],
+  ["translateClipboard", "Translate Clipboard"],
+  ["incrementCounter", "Incremental Copy Once"],
 ]);
 export type Locale = typeof en;

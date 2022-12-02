@@ -46,26 +46,11 @@ export default class Action extends Mixins(BaseView) {
     if (identifier == undefined) {
       return;
     }
-    if (identifier == "enumerateLayouts") {
-      this.enumerateLayouts(true);
-      return;
-    }
     bus.at("dispatch", identifier);
   }
 
   get trans() {
     return this.$store.getters.locale;
-  }
-
-  enumerateLayouts(isLeft: boolean) {
-    const index = layoutTypes.findIndex((x) => x === this.layoutType);
-    let newIndex: number;
-    if (isLeft) {
-      newIndex = (index + 1) % layoutTypes.length;
-    } else {
-      newIndex = (index + layoutTypes.length - 1) % layoutTypes.length;
-    }
-    this.set("layoutType", layoutTypes[newIndex]);
   }
 
   get layoutType() {

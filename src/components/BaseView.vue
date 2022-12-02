@@ -8,17 +8,14 @@ import { Identifier } from "../common/types";
 import { shell } from "electron";
 import eventBus from "@/common/event-bus";
 import logger from "@/common/logger";
+import Base from "./Base.vue";
 
 type Name = "result" | "source" | "diff" | "dict";
 
 @Component
-export default class BaseView extends Vue {
+export default class BaseView extends Base {
   toKeyan() {
     shell.openExternal("https://www.keyanyuedu.com/?channel=copytranslator");
-  }
-
-  get trans() {
-    return this.$store.getters.locale;
   }
 
   get valid() {
@@ -61,10 +58,6 @@ export default class BaseView extends Vue {
 
   get dictResult() {
     return this.$store.state.dictResult;
-  }
-
-  get config() {
-    return this.$store.state.config;
   }
 
   set(key: Identifier, val: any) {

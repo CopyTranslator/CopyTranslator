@@ -1,15 +1,15 @@
 <template>
   <div>
-    <div v-for="(vulue, key) in config" :key="key">
+    <div v-for="(_, key) in keyConfig" :key="key">
       <p>{{ key }}</p>
       <v-text-field
-        v-model="config[key]"
+        v-model="keyConfig[key]"
         @change="sync()"
         v-if="!isSelect(key)"
       ></v-text-field>
       <v-select
         v-else
-        v-model="config[key]"
+        v-model="keyConfig[key]"
         :items="domains"
         @change="sync()"
         style="margin: 0px; padding: 0px;"
@@ -21,19 +21,15 @@
 
 <script lang="ts">
 import { domains, Identifier } from "../common/types";
-import { Prop, Component, Vue } from "vue-property-decorator";
-import bus from "../common/event-bus";
+import { Prop, Component } from "vue-property-decorator";
+import Base from "./Base.vue";
 
 @Component
-export default class KeyConfig extends Vue {
+export default class KeyConfig extends Base {
   @Prop({ default: undefined }) readonly identifier!: Identifier;
   readonly domains = domains;
 
-  callback(...args: any[]) {
-    bus.at("dispatch", ...args);
-  }
-
-  get config() {
+  get keyConfig() {
     return this.$store.state.config[this.identifier];
   }
 
@@ -42,11 +38,7 @@ export default class KeyConfig extends Vue {
   }
 
   sync() {
-    this.callback(this.identifier, this.config);
-  }
-
-  get trans() {
-    return this.$store.getters.locale;
+    this.callback(this.identifier, this.keyConfig);
   }
 }
 </script>

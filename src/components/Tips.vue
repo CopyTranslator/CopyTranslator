@@ -1,6 +1,11 @@
 <template>
   <div style="height: 100%; width: 100%;">
-    <v-carousel v-model="model" height="300px" :cycle="true" :interval="10000">
+    <v-carousel
+      v-model="tipIndex"
+      height="300px"
+      :cycle="true"
+      :interval="10000"
+    >
       <v-carousel-item v-for="(tip, i) in tips" :key="i">
         <v-sheet height="100%" tile>
           <div class="flex">
@@ -13,41 +18,28 @@
 </template>
 
 <script lang="ts">
-import { translatorTypes, Identifier } from "../common/types";
-import { Prop, Component, Vue } from "vue-property-decorator";
-import bus from "../common/event-bus";
+import { Component } from "vue-property-decorator";
+import Base from "./Base.vue";
 
 @Component
-export default class Tips extends Vue {
-  @Prop({ default: undefined }) readonly identifier!: Identifier;
-  tips = [
-    this.trans["<tooltip>welcome"],
-    this.trans["textAdjustPrompt"],
-    this.trans["googlePrompt"],
-    this.trans["dragCopyTip"],
-  ];
-  model: number = this.getRandomInt(0, this.tips.length);
-
-  callback(...args: any[]) {
-    bus.at("dispatch", ...args);
-  }
-
-  get value() {
-    return this.$store.state.config[this.identifier];
-  }
-
-  set value(val) {
-    this.callback(this.identifier, val);
-  }
-
-  get trans() {
-    return this.$store.getters.locale;
-  }
+export default class Tips extends Base {
+  tips: string[] = [];
+  tipIndex: number = 0;
 
   getRandomInt(min: number, max: number): number {
     min = Math.ceil(min);
     max = Math.floor(max);
     return Math.floor(Math.random() * (max - min) + min); // The maximum is exclusive and the minimum is inclusive
+  }
+
+  mounted() {
+    this.tips = [
+      this.trans["<tooltip>welcome"],
+      this.trans["textAdjustPrompt"],
+      this.trans["googlePrompt"],
+      this.trans["dragCopyTip"],
+    ];
+    this.tipIndex = this.getRandomInt(0, this.tips.length);
   }
 }
 </script>

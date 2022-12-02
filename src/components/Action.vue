@@ -11,14 +11,9 @@
           ></v-switch>
           <v-dialog v-else-if="action.id == 'primaryColor'">
             <template v-slot:activator="{ on, attrs }">
-              <v-btn
-                width="98%"
-                style="margin-top: 4px;"
-                v-bind="attrs"
-                v-on="on"
-              >
+              <SimpleButton v-bind="attrs" v-on="on">
                 {{ trans[action.id] }}
-              </v-btn>
+              </SimpleButton>
             </template>
             <v-color-picker
               v-model="value"
@@ -62,13 +57,9 @@
             </v-select>
           </div>
           <div v-else-if="action.actionType === 'normal'">
-            <v-btn
-              @click="callback(action.id)"
-              width="98%"
-              style="margin-top: 4px;"
-            >
+            <SimpleButton @click="callback(action.id)">
               {{ trans[action.id] }}
-            </v-btn>
+            </SimpleButton>
           </div>
         </div>
       </template>
@@ -79,20 +70,18 @@
 
 <script lang="ts">
 import { Identifier, compose, ActionView, swatches } from "../common/types";
-import { Prop, Component, Vue } from "vue-property-decorator";
+import { Prop, Component } from "vue-property-decorator";
 import MultiSelect from "./MultiSelect.vue";
 import bus from "../common/event-bus";
+import Base from "@/components/Base.vue";
+import SimpleButton from "./SimpleButton.vue";
 
 @Component({
-  components: { MultiSelect },
+  components: { MultiSelect, SimpleButton },
 })
-export default class Action extends Vue {
+export default class Action extends Base {
   @Prop({ default: undefined }) readonly identifier!: Identifier;
   action: ActionView = this.$controller.action.getAction(this.identifier);
-
-  callback(...args: any[]) {
-    bus.at("dispatch", ...args);
-  }
 
   swatches = swatches; //调色盘的预定义颜色
 
@@ -126,10 +115,6 @@ export default class Action extends Vue {
 
   async sync() {
     this.action = this.$controller.action.getAction(this.identifier);
-  }
-
-  get trans() {
-    return this.$store.getters.locale;
   }
 
   mounted() {

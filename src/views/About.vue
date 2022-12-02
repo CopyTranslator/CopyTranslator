@@ -18,27 +18,16 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from "vue-property-decorator";
-import bus from "@/common/event-bus";
-import { constants, version } from "@/common/constant";
+import { Component } from "vue-property-decorator";
+import { version } from "@/common/constant";
 import Action from "../components/Action.vue";
+import Base from "@/components/Base.vue";
 
 @Component({
   components: { Action },
 })
-export default class DrogCopyConfig extends Vue {
-  get trans() {
-    return this.$store.getters.locale;
-  }
+export default class DrogCopyConfig extends Base {
   version = version;
-
-  callback(...args: any[]) {
-    bus.at("dispatch", ...args);
-  }
-
-  get config() {
-    return this.$store.state.config;
-  }
 }
 </script>
 

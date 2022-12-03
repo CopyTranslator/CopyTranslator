@@ -8,6 +8,8 @@
           color="white"
           x-small
           fab
+          :height="buttonSize"
+          :width="buttonSize"
         ></v-btn>
       </div>
     </template>
@@ -20,6 +22,7 @@ import WindowController from "./WindowController.vue";
 import Vue from "vue";
 import Component, { mixins } from "vue-class-component";
 import config from "@/common/configuration";
+import Base from "./Base.vue";
 
 const AppProps = Vue.extend({
   props: {
@@ -34,13 +37,21 @@ const AppProps = Vue.extend({
 });
 
 @Component
-export default class EngineButton extends mixins(WindowController, AppProps) {
+export default class EngineButton extends mixins(
+  WindowController,
+  AppProps,
+  Base
+) {
   get engineClass() {
     if (this.engine == "baidu-domain") {
       return `${this.engine}-${config.get<any>("baidu-domain").domain}`;
     } else {
       return this.engine;
     }
+  }
+
+  get buttonSize() {
+    return `${this.titlebarHeightVal - 2}px`;
   }
 
   get tooltipText() {

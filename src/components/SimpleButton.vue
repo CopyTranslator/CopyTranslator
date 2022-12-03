@@ -16,7 +16,6 @@
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
-// import "@/css/shared-styles.css";
 
 @Component({
   inheritAttrs: false,

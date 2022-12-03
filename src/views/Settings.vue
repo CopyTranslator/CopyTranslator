@@ -1,7 +1,7 @@
 <template>
   <div style="height: 100vh;">
     <v-app style="height: 100%;" v-bind:style="appStyle">
-      <v-app-bar app color="primary" dark dense height="40px"
+      <v-app-bar app color="primary" dark dense :height="titlebarHeight"
         ><v-spacer style="height: 100%;">
           <div class="dragableDiv"></div> </v-spacer
         ><ActionButton
@@ -9,7 +9,7 @@
           left_click="close|settings"
         ></ActionButton
       ></v-app-bar>
-      <div class="setting">
+      <div class="setting" :style="settingStyle">
         <v-tabs v-model="activeName" vertical class="mytab">
           <v-tab>{{ trans["translate"] }}</v-tab>
           <v-tab>{{ trans["appearance"] }}</v-tab>
@@ -54,6 +54,7 @@
 </template>
 
 <script lang="ts">
+import "@/css/shared-styles.css";
 import Options from "./Options.vue";
 import Config from "./Config.vue";
 import Switches from "./Switches.vue";
@@ -80,6 +81,10 @@ export default class Settings extends Mixins(BaseView) {
   get trans() {
     return this.$store.getters.locale;
   }
+
+  get settingStyle() {
+    return { "padding-top": `${this.titlebarHeightVal + 5}px` };
+  }
 }
 </script>
 
@@ -96,7 +101,6 @@ export default class Settings extends Mixins(BaseView) {
   height: calc(100% - 5px);
   margin-right: 10px;
   margin-left: 10px;
-  padding-top: 45px;
   overflow: hidden;
 }
 .mytab {

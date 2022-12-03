@@ -1,5 +1,5 @@
 <template>
-  <div class="maxParent">
+  <div :style="maxParent">
     <Focus class="maxNoPad areaWarpper" v-if="layoutType === 'focus'"></Focus>
     <div
       v-else-if="layoutType === 'horizontal'"
@@ -333,6 +333,14 @@ export default class ContrastPanel extends Mixins(BaseView, WindowController) {
     console.log(idx);
     return idx;
   }
+
+  get maxParent() {
+    return {
+      height: `calc(100vh - 1px - ${this.titlebarHeight})`,
+      width: "100%",
+      padding: "0px",
+    };
+  }
 }
 </script>
 <style scoped>
@@ -356,11 +364,6 @@ export default class ContrastPanel extends Mixins(BaseView, WindowController) {
   overflow: hidden;
 }
 
-.maxParent {
-  height: calc(100vh - 42px);
-  width: 100%;
-  padding: 0px;
-}
 .areaWarpper {
   padding: 0px;
   overflow: hidden;

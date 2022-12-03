@@ -6,7 +6,10 @@
           color="primary"
           small
           depressed
-          fab
+          tile
+          class="btn"
+          :height="btnSize.height"
+          :width="btnSize.width"
           @click="handle(left_click, true)"
           @contextmenu="handle(right_click, false)"
         >
@@ -56,7 +59,19 @@ export default class Action extends Mixins(BaseView) {
   get layoutType() {
     return this.config.layoutType;
   }
+
+  get btnSize() {
+    return {
+      height: this.titlebarHeight,
+      width: `${this.titlebarHeightVal + 8}px`,
+    };
+  }
 }
 </script>
 
-<style scoped></style>
+<style scoped>
+.btn {
+  padding: 0px !important;
+  min-width: 0px !important;
+}
+</style>

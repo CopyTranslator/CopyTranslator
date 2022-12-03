@@ -30,6 +30,7 @@ const store = new Vuex.Store({
     sharedDiff: emptySharedDiff(),
     dictResult: emptyDictResult(),
     config: {},
+    titlebarHeight: 32,
   },
   mutations: {
     setShared(state, sharedResult) {

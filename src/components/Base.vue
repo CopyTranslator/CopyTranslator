@@ -19,5 +19,13 @@ export default class Base extends Vue {
   get trans() {
     return this.$store.getters.locale;
   }
+
+  get titlebarHeight() {
+    return `${this.$store.state.titlebarHeight}px`;
+  }
+
+  get titlebarHeightVal() {
+    return this.$store.state.titlebarHeight;
+  }
 }
 </script>

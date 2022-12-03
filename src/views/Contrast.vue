@@ -4,8 +4,8 @@
       <v-dialog v-model="dialog">
         <Tips></Tips>
       </v-dialog>
-      <v-app-bar app color="primary" dark dense height="40px">
-        <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
+      <v-app-bar app color="primary" dark dense :height="titlebarHeight">
+        <ActionButton left_click="drawer" icon="mdi-menu"></ActionButton>
         <div class="noSelect">
           <p style="margin: auto;" class="hidden-mobile">
             {{ trans[layoutType] }}
@@ -37,7 +37,7 @@
                 <div
                   v-for="engine in engineGroup"
                   :key="engine"
-                  style="margin-bottom: 8px;"
+                  :style="engineButtonStyle"
                 >
                   <EngineButton :engine="engine" :valid="valid"></EngineButton>
                 </div>
@@ -45,15 +45,18 @@
             </v-row>
           </v-card>
         </v-menu>
-        <ActionButton
-          v-for="(actionButton, buttonIndex) in actionButtons"
-          :left_click="actionButton.left_click"
-          :right_click="actionButton.right_click"
-          :icon="actionButton.icon"
-          :tooltip="actionButton.tooltip"
-          :predefined="actionButton.predefined"
-          :key="buttonIndex"
-        ></ActionButton>
+        <div class="d-flex flex-row" style="height: 100%;">
+          <ActionButton
+            style="margin: auto;"
+            v-for="(actionButton, buttonIndex) in actionButtons"
+            :left_click="actionButton.left_click"
+            :right_click="actionButton.right_click"
+            :icon="actionButton.icon"
+            :tooltip="actionButton.tooltip"
+            :predefined="actionButton.predefined"
+            :key="buttonIndex"
+          ></ActionButton>
+        </div>
       </v-app-bar>
       <v-navigation-drawer
         v-model="drawer"
@@ -100,6 +103,7 @@ import {
   DictionaryType,
   emptyDictResult,
 } from "../common/dictionary/types";
+import "@/css/shared-styles.css";
 
 function sliceArray<T>(arr: T[], size: number) {
   var arr2 = [];
@@ -125,13 +129,20 @@ export default class Contrast extends Mixins(BaseView, WindowController) {
   ) as Identifier[];
 
   dialog: boolean = false;
+  marginBottom: number = 5;
 
   mounted() {
     this.dialog = this.config.isNewUser;
   }
 
   get nButton() {
-    return Math.floor((this.windowHeight - 40) / 40);
+    return Math.max(
+      1,
+      Math.floor(
+        (this.windowHeight - this.titlebarHeightVal) /
+          (this.titlebarHeightVal + this.marginBottom)
+      )
+    );
   }
 
   get engines(): Array<GeneralTranslatorType | DictionaryType> {
@@ -150,9 +161,14 @@ export default class Contrast extends Mixins(BaseView, WindowController) {
     return sliceArray(this.restEngines, this.nButton);
   }
 
+  get engineButtonStyle() {
+    return { "margin-bottom": `${this.marginBottom}px` };
+  }
+
   get popupStyle() {
-    const width = 55 * this.restEngineGroups.length;
-    return { width: `${width}px` };
+    const width = (this.titlebarHeightVal + 10) * this.restEngineGroups.length;
+    const margin = this.titlebarHeightVal / 2 + 5;
+    return { width: `${width}px`, "margin-top": `${margin}px` };
   }
 
   get actionButtons(): ActionButtonType[] {
@@ -169,7 +185,7 @@ export default class Contrast extends Mixins(BaseView, WindowController) {
 
   get area() {
     return {
-      "margin-top": "40px",
+      "margin-top": this.titlebarHeight,
       width: `${(this.windowWidth - this.barWidth).toString()}px`,
       "font-family": this.config.contentFontFamily,
     };
@@ -220,7 +236,6 @@ export default class Contrast extends Mixins(BaseView, WindowController) {
 }
 
 .popup {
-  margin-top: 30px;
   padding-top: 5px;
   text-align: center;
 }

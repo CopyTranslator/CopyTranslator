@@ -37,6 +37,7 @@ interface Rule {
   predefined: any;
   check?: CheckFuction; // 检查是否有效的函数
   minimalVersion?: string;
+  needSave?: boolean;
 }
 
 class GroupRule<T> implements Rule {

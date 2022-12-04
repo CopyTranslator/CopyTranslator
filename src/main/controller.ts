@@ -1,4 +1,4 @@
-import { WindowMangaer } from "./views/manager";
+import { WindowManager } from "./views/manager";
 import { eventListener } from "./event-listener";
 import { MenuManager } from "./menu-manager";
 import {
@@ -27,7 +27,7 @@ import { constants } from "../common/constant";
 import { DragCopyMode } from "@/common/types";
 
 class Controller extends MainController {
-  win: WindowMangaer = new WindowMangaer(this);
+  win: WindowManager = new WindowManager(this);
   menu: MenuManager = new MenuManager(this);
   updater = new UpdateChecker(this);
   shortcut: ShortcutManager = new ShortcutManager();
@@ -158,6 +158,9 @@ class Controller extends MainController {
 
   postSet(identifier: Identifier, value: any): boolean {
     switch (identifier) {
+      case "ignoreMouseEvents":
+        this.win.setIgnoreMouseEvents(value as boolean);
+        break;
       case "localeSetting":
         this.l10n.updateLocale(this.get("localeSetting"));
         break;

@@ -1,23 +1,37 @@
 <template>
   <div>
-    <v-app v-bind:style="appStyle">
+    <v-app v-bind:style="[appStyle, transparency]">
       <v-dialog v-model="dialog">
         <Tips></Tips>
       </v-dialog>
-      <v-app-bar app color="primary" dark dense :height="titlebarHeight">
+      <v-app-bar app :color="barColor" dark dense :height="titlebarHeight">
         <ActionButton left_click="drawer" icon="mdi-menu"></ActionButton>
         <div class="noSelect">
-          <p style="margin: auto;" class="hidden-mobile">
+          <p style="margin: auto;" class="hidden-mobile" v-if="!isMini">
             {{ trans[layoutType] }}
           </p>
         </div>
-        <v-spacer style="height: 100%;">
-          <div class="dragableDiv"></div>
+        <v-spacer
+          style="height: 100%;"
+          @mouseover="penerate(true)"
+          @mouseleave="penerate(false)"
+        >
+          <div :class="{ dragableDiv: !config.penerate }"></div>
         </v-spacer>
         <v-menu top>
           <template v-slot:activator="{ on }">
-            <div v-on="on" @contextmenu="callback('listenClipboard')">
-              <v-badge dot :color="color" offset-y="pl/ml-5" offset-x="pl/ml-1">
+            <div
+              style="display: flex;"
+              v-on="on"
+              @contextmenu="callback('listenClipboard')"
+            >
+              <v-badge
+                dot
+                :color="color"
+                offset-y="pl/ml-5"
+                offset-x="pl/ml-1"
+                style="margin: auto;"
+              >
                 <EngineButton
                   :engine="currentEngine"
                   :valid="valid"
@@ -45,9 +59,23 @@
             </v-row>
           </v-card>
         </v-menu>
-        <div class="d-flex flex-row" style="height: 100%;">
+        <div class="d-flex flex-row" style="height: 100%; padding-right: 1px;">
+          <div class="dragableDiv">
+            <ActionButton icon="mdi-drag"></ActionButton>
+          </div>
           <ActionButton
-            style="margin: auto;"
+            class="action-btn"
+            left_click="penerate"
+            icon="mdi-cursor-pointer"
+          ></ActionButton>
+          <ActionButton
+            class="action-btn"
+            left_click="transparency|1.0"
+            right_click="transparency|0.0"
+            icon="mdi-opacity"
+          ></ActionButton>
+          <ActionButton
+            class="action-btn"
             v-for="(actionButton, buttonIndex) in actionButtons"
             :left_click="actionButton.left_click"
             :right_click="actionButton.right_click"
@@ -74,8 +102,10 @@
       </v-navigation-drawer>
 
       <ContrastPanel
-        :style="area"
+        :style="[area, transparentArea]"
         v-bind:class="{ active: drawer }"
+        @mouseover.native="penerate(true)"
+        @mouseleave.native="penerate(false)"
       ></ContrastPanel>
     </v-app>
   </div>
@@ -95,14 +125,11 @@ import {
   ActionButton as ActionButtonType,
   abstractTranslatorTypes,
   GeneralTranslatorType,
+  hexToRgb,
 } from "../common/types";
 import EngineButton from "../components/EngineButton.vue";
 
-import {
-  dictionaryTypes,
-  DictionaryType,
-  emptyDictResult,
-} from "../common/dictionary/types";
+import { dictionaryTypes, DictionaryType } from "../common/dictionary/types";
 import "@/css/shared-styles.css";
 
 function sliceArray<T>(arr: T[], size: number) {
@@ -130,6 +157,20 @@ export default class Contrast extends Mixins(BaseView, WindowController) {
 
   dialog: boolean = false;
   marginBottom: number = 5;
+
+  penerate(value: boolean) {
+    if (this.config.penerate) {
+      //穿透，那就根据鼠标的情况进行设置
+      this.set("ignoreMouseEvents", value);
+    } else if (this.config.ignoreMouseEvents) {
+      //不穿透,但是此时却说要ignore，这就不对，要更新值
+      this.set("ignoreMouseEvents", false);
+    }
+  }
+
+  get isMini() {
+    return this.config.transparency > 0;
+  }
 
   mounted() {
     this.dialog = this.config.isNewUser;
@@ -186,9 +227,21 @@ export default class Contrast extends Mixins(BaseView, WindowController) {
   get area() {
     return {
       "margin-top": this.titlebarHeight,
-      width: `${(this.windowWidth - this.barWidth).toString()}px`,
+      width: `${(this.windowWidth - this.barWidth - 1).toString()}px`,
       "font-family": this.config.contentFontFamily,
     };
+  }
+
+  get transparentArea() {
+    if (this.config.transparency == 0) {
+      return {};
+    } else {
+      return {
+        "border-width": "0px 1px 1px 1px",
+        "border-style": "solid",
+        "border-color": this.$vuetify.theme.currentTheme.primary,
+      };
+    }
   }
 
   get drawer(): boolean {
@@ -201,6 +254,26 @@ export default class Contrast extends Mixins(BaseView, WindowController) {
 
   get layoutType() {
     return this.config.layoutType;
+  }
+
+  get backgroundColor() {
+    const alpha = 1 - this.config.transparency; //不透明度
+    const bgColor = this.$vuetify.theme.dark ? "#121212" : "#FFFFFF";
+    const rgb = hexToRgb(bgColor as string);
+    return `rgba(${rgb.r},${rgb.g},${rgb.b},${alpha})`;
+  }
+
+  get barColor() {
+    const alpha = 1 - this.config.transparency; //不透明度
+    const bgColor = this.$vuetify.theme.currentTheme.primary;
+    const rgb = hexToRgb(bgColor as string);
+    return `rgba(${rgb.r},${rgb.g},${rgb.b},${alpha})`;
+  }
+
+  get transparency() {
+    return {
+      background: this.backgroundColor,
+    };
   }
 }
 </script>
@@ -238,5 +311,9 @@ export default class Contrast extends Mixins(BaseView, WindowController) {
 .popup {
   padding-top: 5px;
   text-align: center;
+}
+
+.action-btn {
+  margin: auto;
 }
 </style>

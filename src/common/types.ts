@@ -69,8 +69,12 @@ export const constantActionTypes = [
   "primaryColor",
   "interfaceFontFamily",
   "contentFontFamily",
+  "titlebarHeight",
+  "titlebarMode",
+  "transparency",
 ] as const;
 
+export const titlebarModes = ["default", "mini"] as const;
 export const interceptTranslatorTypes = ["bing", "deepl", "tencent"] as const;
 
 export const normalTranslatorTypes = [
@@ -87,7 +91,7 @@ export const abstractTranslatorTypes = ["copytranslator"] as const;
 export type InterceptTranslatorType = typeof interceptTranslatorTypes[number];
 export type NormalTranslatorType = typeof normalTranslatorTypes[number];
 export type AbstractTranslatorType = typeof abstractTranslatorTypes[number];
-
+export type TitlebarMode = typeof titlebarModes[number];
 export type TranslatorType = InterceptTranslatorType | NormalTranslatorType;
 export type GeneralTranslatorType =
   | InterceptTranslatorType
@@ -145,6 +149,8 @@ export const switchActionTypes = [
   "enableDoubleCopyTranslate",
   "isNewUser",
   "showGoogleMessage",
+  "ignoreMouseEvents",
+  "penerate",
 ] as const;
 
 //Electron 原生 角色
@@ -374,6 +380,14 @@ function rgb(r: number, g: number, b: number) {
   const G = Math.floor(g / 16).toString(16) + Math.floor(g % 16).toString(16);
   const B = Math.floor(b / 16).toString(16) + Math.floor(b % 16).toString(16);
   return "#" + R + G + B;
+}
+
+export function hexToRgb(hex: string) {
+  return {
+    r: parseInt("0x" + hex.slice(1, 3)),
+    g: parseInt("0x" + hex.slice(3, 5)),
+    b: parseInt("0x" + hex.slice(5, 7)),
+  };
 }
 
 export const colorStatusMap = new Map<ColorStatus, string>([

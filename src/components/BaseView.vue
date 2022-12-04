@@ -3,8 +3,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from "vue-property-decorator";
-import { Identifier } from "../common/types";
+import { Component } from "vue-property-decorator";
 import { shell } from "electron";
 import eventBus from "@/common/event-bus";
 import logger from "@/common/logger";
@@ -58,10 +57,6 @@ export default class BaseView extends Base {
 
   get dictResult() {
     return this.$store.state.dictResult;
-  }
-
-  set(key: Identifier, val: any) {
-    this.$controller.set(key, val);
   }
 
   get sourceSize() {

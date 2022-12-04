@@ -20,6 +20,7 @@ import {
   dragCopyModes,
   categories,
   displayTexts,
+  titlebarModes,
 } from "./types";
 import { dictionaryTypes } from "./dictionary/types";
 import { getLanguageLocales, Language } from "./translate/locale";
@@ -264,6 +265,10 @@ class ActionManager {
       1.5,
       2.0,
     ];
+    const heights = [];
+    for (let i = 1; i < 41; i++) {
+      heights.push(i);
+    }
 
     this.append(listAction("translatorType", translatorTypes, "translation"));
     this.append(listAction("dictionaryType", dictionaryTypes, "translation"));
@@ -278,6 +283,17 @@ class ActionManager {
     this.append(constantAction("contentFontFamily", "appearance"));
     this.append(constantAction("interfaceFontFamily", "appearance"));
     this.append(listAction("colorMode", colorModes, "appearance"));
+
+    this.append(
+      listAction(
+        "transparency",
+        [0.0, 0.1, 0.2, 0.3, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0],
+        "appearance"
+      )
+    );
+    this.append(listAction("titlebarMode", titlebarModes, "appearance"));
+    this.append(listAction("titlebarHeight", heights, "appearance"));
+    this.append(switchAction("penerate", "appearance"));
     this.append(
       selectAction(
         "localeSetting",

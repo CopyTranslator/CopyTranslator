@@ -1,21 +1,22 @@
 <template>
   <v-tooltip bottom open-delay="100" :disabled="!tooltipText">
     <template v-slot:activator="{ on, attrs }">
-      <div v-bind="attrs" v-on="on">
-        <v-btn
-          color="primary"
-          small
-          depressed
-          tile
-          class="btn"
-          :height="btnSize.height"
-          :width="btnSize.width"
-          @click="handle(left_click, true)"
-          @contextmenu="handle(right_click, false)"
-        >
-          <v-icon>{{ icon }}</v-icon>
-        </v-btn>
-      </div>
+      <v-btn
+        v-bind="attrs"
+        v-on="on"
+        color="primary"
+        small
+        depressed
+        tile
+        :outlined="config.transparency > 0 && onContrast"
+        class="btn"
+        :height="btnSize.height"
+        :width="btnSize.width"
+        @click="handle(left_click, true)"
+        @contextmenu="handle(right_click, false)"
+      >
+        <v-icon :size="btnSize.height">{{ icon }}</v-icon>
+      </v-btn>
     </template>
     <span>{{ tooltipText }}</span>
   </v-tooltip>
@@ -36,6 +37,7 @@ export default class Action extends Mixins(BaseView) {
   @Prop({ default: undefined }) readonly right_click!: string;
   @Prop({ default: undefined }) readonly tooltip!: string;
   @Prop({ default: undefined }) readonly predefined!: PredefinedActionButton;
+  @Prop({ default: true }) readonly onContrast!: boolean;
 
   get tooltipText(): undefined | string {
     if (this.trans[this.tooltip] != undefined) {

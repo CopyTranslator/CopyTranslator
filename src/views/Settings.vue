@@ -7,6 +7,7 @@
         ><ActionButton
           icon="mdi-close"
           left_click="close|settings"
+          :onContrast="false"
         ></ActionButton
       ></v-app-bar>
       <div class="setting" :style="settingStyle">

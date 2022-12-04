@@ -15,7 +15,7 @@ import eventBus from "@/common/event-bus";
 import { LayoutConfig } from "@/common/rule";
 const forceFocus = require("@adeperio/forcefocus");
 
-export class WindowMangaer {
+export class WindowManager {
   windows = new Map<RouteActionType, BrowserWindow>();
   controller: MainController;
 
@@ -26,6 +26,14 @@ export class WindowMangaer {
         this.updateBounds(newLayoutType); //在切换布局的时候保存窗口信息
       }
     });
+  }
+
+  setIgnoreMouseEvents(value: boolean) {
+    if (value) {
+      this.get("contrast").setIgnoreMouseEvents(true, { forward: true });
+    } else {
+      this.get("contrast").setIgnoreMouseEvents(false);
+    }
   }
 
   updateBounds(newLayoutType: LayoutType | null = null) {
@@ -221,6 +229,7 @@ export class WindowMangaer {
       show: false,
       frame: false,
       title: "CopyTranslator",
+      transparent: true,
     };
     const previous_config = config.get<LayoutConfig>(config.get("layoutType"));
     window_config = { ...window_config, ...previous_config };

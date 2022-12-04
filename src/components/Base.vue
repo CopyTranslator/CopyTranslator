@@ -5,6 +5,7 @@
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
 import bus from "@/common/event-bus";
+import { Identifier } from "../common/types";
 
 @Component
 export default class Base extends Vue {
@@ -20,12 +21,16 @@ export default class Base extends Vue {
     return this.$store.getters.locale;
   }
 
+  set(key: Identifier, val: any) {
+    this.$controller.set(key, val);
+  }
+
   get titlebarHeight() {
-    return `${this.$store.state.titlebarHeight}px`;
+    return `${this.titlebarHeightVal}px`;
   }
 
   get titlebarHeightVal() {
-    return this.$store.state.titlebarHeight;
+    return this.config.titlebarHeight;
   }
 }
 </script>

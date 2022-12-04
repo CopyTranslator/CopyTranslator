@@ -10,6 +10,7 @@ class ConfigParser {
   rules: Rules = new Map<Identifier, Rule>();
   file: string = env.configPath;
   lastSave = Date.now();
+  notSavingKeys: Identifier[] = [];
 
   constructor() {}
 
@@ -25,11 +26,15 @@ class ConfigParser {
     return this.rules.has(key);
   }
 
-  setRule(key: Identifier, rule: Rule) {
+  setRule(key: Identifier, rule: Rule, needSave: boolean = true) {
     if (this.rules.has(key)) {
       throw `duplicate rule ${key}`;
     }
+    rule.needSave = needSave;
     this.rules.set(key, rule);
+    if (!needSave) {
+      this.notSavingKeys.push(key);
+    }
   }
 
   getRule(key: Identifier): Rule {
@@ -47,17 +52,20 @@ class ConfigParser {
     }
     const config = { [key]: value };
     store.dispatch("updateConfig", config);
-    const now = Date.now();
-    if (this.lastSave > now) {
-      //就说明我们不需要唤起一次新的保存
-      // console.log("schedule save pass");
-    } else {
-      const interval = 2000; //修改后预定一次保存，在此保存之前的所有修改都不会再预定保存
-      this.lastSave = now + interval;
-      setTimeout(() => {
-        // console.log("schedule save");
-        this.save();
-      }, interval);
+    if (this.getRule(key).needSave) {
+      //需要保存的才及时保存
+      const now = Date.now();
+      if (this.lastSave > now) {
+        //就说明我们不需要唤起一次新的保存
+        // console.log("schedule save pass");
+      } else {
+        const interval = 2000; //修改后预定一次保存，在此保存之前的所有修改都不会再预定保存
+        this.lastSave = now + interval;
+        setTimeout(() => {
+          // console.log("schedule save");
+          this.save();
+        }, interval);
+      }
     }
     return true;
   }
@@ -127,7 +135,9 @@ class ConfigParser {
   }
 
   save() {
-    writeFileSync(this.file, JSON.stringify(store.state.config, null, 4));
+    let config2Save: { [key: string]: string } = store.state.config;
+    this.notSavingKeys.map((key) => delete config2Save[key]); //去掉不需要保存的
+    writeFileSync(this.file, JSON.stringify(config2Save, null, 4));
     const now = Date.now();
     if (now > this.lastSave) {
       this.lastSave = now;

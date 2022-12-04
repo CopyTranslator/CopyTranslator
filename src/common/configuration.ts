@@ -27,6 +27,8 @@ import {
   dragCopyModes,
   isValidActionButton,
   ActionButton,
+  titlebarModes,
+  TitlebarMode,
 } from "./types";
 import { DictionaryType, dictionaryTypes } from "./dictionary/types";
 import { version } from "./constant";
@@ -403,6 +405,21 @@ function initConfig(
   );
 
   config.setRule("pasteDelay", new TypeRule<number>(0.0));
+
+  config.setRule("titlebarHeight", new TypeRule<number>(32));
+
+  config.setRule("ignoreMouseEvents", new TypeRule<boolean>(false), false); //这个玩意儿不需要保存
+  config.setRule("penerate", new TypeRule<boolean>(false)); //这个玩意儿需要保存
+
+  config.setRule(
+    "titlebarMode",
+    new UnionRule<TitlebarMode>("default", titlebarModes)
+  );
+
+  config.setRule(
+    "transparency",
+    new TypeRule<number>(0.0, (x) => x <= 1.0 && x >= 0.0)
+  );
 
   config.setRule(
     "googleMirror",

@@ -1,17 +1,17 @@
 <template>
   <v-tooltip bottom open-delay="100" :disabled="!tooltipText">
     <template v-slot:activator="{ on, attrs }">
-      <div v-bind="attrs" v-on="on">
-        <v-btn
-          v-bind:class="[engineClass, 'btnBase']"
-          @click="switchTranslator"
-          color="white"
-          x-small
-          fab
-          :height="buttonSize"
-          :width="buttonSize"
-        ></v-btn>
-      </div>
+      <v-btn
+        v-bind:class="[engineClass, 'btnBase']"
+        v-bind="attrs"
+        v-on="on"
+        @click="switchTranslator"
+        color="white"
+        x-small
+        fab
+        :height="buttonSize"
+        :width="buttonSize"
+      ></v-btn>
     </template>
     <span>{{ tooltipText }}</span>
   </v-tooltip>

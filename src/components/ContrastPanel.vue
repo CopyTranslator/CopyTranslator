@@ -121,7 +121,6 @@
 <script lang="ts">
 import BaseView from "../components/BaseView.vue";
 import { Mixins, Component } from "vue-property-decorator";
-import WindowController from "../components/WindowController.vue";
 import Focus from "./Focus.vue";
 import CoTextArea from "./CoTextArea.vue";
 import DiffTextArea from "./DiffTextArea.vue";
@@ -135,7 +134,7 @@ import DictResultPanel from "./DictResult.vue";
     DictResultPanel,
   },
 })
-export default class ContrastPanel extends Mixins(BaseView, WindowController) {
+export default class ContrastPanel extends Mixins(BaseView) {
   left: number = 0;
   top: number = 0;
   visible: boolean = false;

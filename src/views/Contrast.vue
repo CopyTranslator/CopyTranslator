@@ -5,7 +5,11 @@
         <Tips></Tips>
       </v-dialog>
       <v-app-bar app :color="barColor" dark dense :height="titlebarHeight">
-        <ActionButton left_click="drawer" icon="mdi-menu"></ActionButton>
+        <ActionButton
+          v-if="!isMini"
+          left_click="drawer"
+          icon="mdi-menu"
+        ></ActionButton>
         <div class="noSelect">
           <p style="margin: auto;" class="hidden-mobile" v-if="!isMini">
             {{ trans[layoutType] }}
@@ -60,9 +64,14 @@
           </v-card>
         </v-menu>
         <div class="d-flex flex-row" style="height: 100%; padding-right: 1px;">
-          <div class="dragableDiv">
-            <ActionButton icon="mdi-drag"></ActionButton>
+          <div v-if="isMini" class="dragableDiv" style="display: flex;">
+            <ActionButton icon="mdi-drag" style="margin: auto;"></ActionButton>
           </div>
+          <ActionButton
+            v-if="isMini"
+            left_click="drawer"
+            icon="mdi-menu"
+          ></ActionButton>
           <ActionButton
             class="action-btn"
             left_click="penerate"

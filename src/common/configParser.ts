@@ -1,10 +1,11 @@
 import { Rule } from "./rule";
-import { Identifier } from "./types";
+import { ConfigSnapshot, ConfigSnapshots, Identifier } from "./types";
 import { compatible, isLower, version } from "./constant";
 import store, { getConfigByKey, Config } from "../store";
 type Rules = Map<Identifier, Rule>; //类型别名
 import { readFileSync, writeFileSync } from "fs";
 import { env } from "../common/env";
+import bus from "./event-bus";
 
 class ConfigParser {
   rules: Rules = new Map<Identifier, Rule>();
@@ -30,6 +31,11 @@ class ConfigParser {
     if (this.rules.has(key)) {
       throw `duplicate rule ${key}`;
     }
+    if (rule.check) {
+      if (!rule.check(rule.predefined)) {
+        console.log("invalid predefined", key, rule.predefined);
+      }
+    }
     rule.needSave = needSave;
     this.rules.set(key, rule);
     if (!needSave) {
@@ -45,10 +51,18 @@ class ConfigParser {
     return getConfigByKey(key) as T;
   }
 
-  set(key: Identifier, value: any, needCheck: boolean = true) {
+  set(
+    key: Identifier,
+    value: any,
+    needCheck: boolean = true,
+    preSet: boolean = true
+  ) {
     if (needCheck && !this.checkValid(key, value)) {
       console.log("invalid config value", key, value);
       return false;
+    }
+    if (preSet) {
+      bus.gat("preSet", key, value);
     }
     const config = { [key]: value };
     store.dispatch("updateConfig", config);
@@ -89,26 +103,7 @@ class ConfigParser {
         //升级到新版本的也认为是新用户
         values["isNewUser"] = true;
       }
-      const config: Config = {};
-      for (const key of this.rules.keys()) {
-        let val = values[key];
-        let isValid: boolean = true;
-        const rule = this.getRule(key);
-        if (
-          rule.minimalVersion != undefined &&
-          isLower(values["version"], rule.minimalVersion as string)
-        ) {
-          //config的版本小于这项rule的最低版本，则需要更新为最新的预定义值
-          isValid = false;
-        }
-        isValid = isValid && this.checkValid(key, val);
-        if (!isValid) {
-          //无效的话，就置为默认值
-          val = this.getRule(key).predefined;
-        }
-        config[key] = val;
-      }
-      store.dispatch("setConfig", config);
+      this.loadFromConfig(values);
     } catch (e) {
       console.log(e);
       this.restoreDefault();
@@ -116,6 +111,29 @@ class ConfigParser {
     }
     this.save();
     return status;
+  }
+
+  loadFromConfig(values: Config) {
+    const config: Config = {};
+    for (const key of this.rules.keys()) {
+      let val = values[key];
+      let isValid: boolean = true;
+      const rule = this.getRule(key);
+      if (
+        rule.minimalVersion != undefined &&
+        isLower(values["version"], rule.minimalVersion as string)
+      ) {
+        //config的版本小于这项rule的最低版本，则需要更新为最新的预定义值
+        isValid = false;
+      }
+      isValid = isValid && this.checkValid(key, val);
+      if (!isValid) {
+        //无效的话，就置为默认值
+        val = this.getRule(key).predefined;
+      }
+      config[key] = val;
+    }
+    store.dispatch("setConfig", config);
   }
 
   restoreDefault() {
@@ -134,14 +152,64 @@ class ConfigParser {
     }
   }
 
-  save() {
+  getConfig2Save() {
     let config2Save: { [key: string]: string } = store.state.config;
     this.notSavingKeys.map((key) => delete config2Save[key]); //去掉不需要保存的
-    writeFileSync(this.file, JSON.stringify(config2Save, null, 4));
+    return config2Save;
+  }
+
+  save() {
+    writeFileSync(this.file, JSON.stringify(this.getConfig2Save(), null, 4));
     const now = Date.now();
     if (now > this.lastSave) {
       this.lastSave = now;
     }
+  }
+
+  newSnapshot(name: string) {
+    const snapshot: ConfigSnapshot = JSON.parse(
+      JSON.stringify(this.getConfig2Save())
+    );
+    delete snapshot["configSnapshots"]; //这个不删除的话会越搞越多
+    const snapshots = this.get<ConfigSnapshots>("configSnapshots");
+    if (snapshots[name] != undefined) {
+      delete snapshots[name];
+    }
+    const newSnapshots = {
+      ...snapshots,
+      [name]: snapshot,
+    };
+    this.set("configSnapshots", newSnapshots);
+    bus.iat("configSnapshot"); //通知快照列表更新
+  }
+
+  resumeSnapshot(name: string) {
+    const snapshot = this.get<ConfigSnapshots>("configSnapshots")[name];
+    const resume = (key: Identifier) => {
+      let val = snapshot[key];
+      const rule = this.getRule(key);
+      let invalid: boolean =
+        rule.minimalVersion != undefined &&
+        isLower(snapshot["version"], rule.minimalVersion as string);
+      //config的版本小于这项rule的最低版本，则需要更新为最新的预定义值
+      invalid = invalid || !this.checkValid(key, val);
+      if (invalid) {
+        return;
+      }
+      if (key == "layoutType") {
+        this.set(key, val, true, false); //必须要禁止preset才能
+      } else {
+        this.set(key, val);
+      }
+    };
+    const keys: Identifier[] = Object.keys(snapshot) as Identifier[];
+    for (const key of keys) {
+      if (key == "layoutType") {
+        continue;
+      }
+      resume(key);
+    }
+    resume("layoutType"); //最后才设置，不然会被覆盖，这样才能恢复
   }
 }
 

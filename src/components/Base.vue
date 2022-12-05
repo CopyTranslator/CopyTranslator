@@ -5,7 +5,7 @@
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
 import bus from "@/common/event-bus";
-import { Identifier } from "../common/types";
+import { Identifier, MenuActionType } from "../common/types";
 
 @Component
 export default class Base extends Vue {
@@ -31,6 +31,10 @@ export default class Base extends Vue {
 
   get titlebarHeightVal() {
     return this.config.titlebarHeight;
+  }
+
+  openMenu(id: MenuActionType) {
+    bus.iat("openMenu", id);
   }
 }
 </script>

@@ -76,6 +76,12 @@ class Controller extends MainController {
 
   handle(identifier: Identifier, param: any = null): boolean {
     switch (identifier) {
+      case "newConfigSnapshot":
+        this.config.newSnapshot(param as string);
+        break;
+      case "configSnapshot":
+        this.config.resumeSnapshot(param as string);
+        break;
       case "exit":
         this.handle("closeWindow", null);
         this.onExit();
@@ -109,19 +115,20 @@ class Controller extends MainController {
         shell.openExternal(constants.wiki);
         break;
       case "hideWindow":
-        this.win.get("contrast").hide();
+        this.win.mainWindow.hide();
         break;
       case "close":
         this.win.closeByName(param as RouteActionType);
         break;
       case "closeWindow":
+        this.win.saveBounds(); //修复直接退出时没有保存布局设置的问题
         this.win.closeByName("contrast");
         break;
       case "showWindow":
         this.win.showWindow();
         break;
       case "minimize":
-        this.win.get("contrast").minimize();
+        this.win.mainWindow.minimize();
         break;
       case "simpleDebug":
         this.simpleDebug();
@@ -144,7 +151,7 @@ class Controller extends MainController {
     this.restoreFromConfig(); //恢复设置
     eventListener.bind(); //绑定事件
     startService(this, authorizeKey); // 创建代理服务
-    this.win.get("contrast"); //创建主窗口
+    this.win.mainWindow; //创建主窗口
     this.shortcut.init();
     this.menu.init();
   }
@@ -158,6 +165,9 @@ class Controller extends MainController {
 
   postSet(identifier: Identifier, value: any): boolean {
     switch (identifier) {
+      case "layoutType":
+        this.win.syncBounds();
+        break;
       case "ignoreMouseEvents":
         this.win.setIgnoreMouseEvents(value as boolean);
         break;
@@ -177,7 +187,7 @@ class Controller extends MainController {
         this.win.setStayTop(value);
         break;
       case "skipTaskbar":
-        this.win.get("contrast").setSkipTaskbar(value);
+        this.win.mainWindow.setSkipTaskbar(value);
         break;
       case "openAtLogin":
         app.setLoginItemSettings({

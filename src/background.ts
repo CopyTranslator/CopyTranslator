@@ -11,7 +11,7 @@ if (!gotTheLock) {
 } else {
   app.on("second-instance", (event, commandLine, workingDirectory) => {
     // 当运行第二个实例时,将会聚焦到window这个窗口
-    const window = global.controller.win.get("contrast");
+    const window = global.controller.win.mainWindow;
     if (window.isMinimized()) {
       window.restore();
     }

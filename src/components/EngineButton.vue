@@ -18,7 +18,6 @@
 </template>
 
 <script lang="ts">
-import WindowController from "./WindowController.vue";
 import Vue from "vue";
 import Component, { mixins } from "vue-class-component";
 import config from "@/common/configuration";
@@ -37,11 +36,7 @@ const AppProps = Vue.extend({
 });
 
 @Component
-export default class EngineButton extends mixins(
-  WindowController,
-  AppProps,
-  Base
-) {
+export default class EngineButton extends mixins(AppProps, Base) {
   get engineClass() {
     if (this.engine == "baidu-domain") {
       return `${this.engine}-${config.get<any>("baidu-domain").domain}`;

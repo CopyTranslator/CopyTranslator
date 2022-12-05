@@ -23,30 +23,47 @@ export class WindowManager {
     this.controller = controller;
     eventBus.gon("preSet", (identifier: Identifier, newLayoutType: any) => {
       if (identifier == "layoutType") {
-        this.updateBounds(newLayoutType); //在切换布局的时候保存窗口信息
+        this.saveBounds(); //在切换布局的时候保存窗口信息
       }
     });
   }
 
+  get mainWindow() {
+    return this.get("contrast");
+  }
+
   setIgnoreMouseEvents(value: boolean) {
     if (value) {
-      this.get("contrast").setIgnoreMouseEvents(true, { forward: true });
+      this.mainWindow.setIgnoreMouseEvents(true, { forward: true });
     } else {
-      this.get("contrast").setIgnoreMouseEvents(false);
+      this.mainWindow.setIgnoreMouseEvents(false);
     }
   }
 
-  updateBounds(newLayoutType: LayoutType | null = null) {
+  get hasMain() {
+    return this.windows.has("contrast");
+  }
+
+  saveBounds() {
+    if (!this.hasMain) {
+      return;
+    }
     const oldLayoutType = config.get<LayoutType>("layoutType");
     let windowConfig = config.get<LayoutConfig>(oldLayoutType);
-    const window = this.get("contrast");
+    const window = this.mainWindow;
     config.set(oldLayoutType, {
       ...windowConfig,
       ...window.getBounds(),
     });
-    if (newLayoutType != null) {
-      window.setBounds(config.get(newLayoutType));
+  }
+
+  syncBounds() {
+    if (!this.hasMain) {
+      return;
     }
+    const layoutType = config.get<LayoutType>("layoutType");
+    let windowConfig = config.get<LayoutConfig>(layoutType);
+    this.mainWindow.setBounds(windowConfig);
   }
 
   get(routeName: RouteActionType): BrowserWindow {
@@ -65,13 +82,13 @@ export class WindowManager {
   }
 
   close() {
-    this.updateBounds();
-    this.get("contrast").close();
+    this.saveBounds();
+    this.mainWindow.close();
     app.quit();
   }
 
   edgeHide(hideDirection: HideDirection) {
-    const window = this.get("contrast");
+    const window = this.mainWindow;
     const bounds = window.getBounds();
     let { x, y, width, height } = bounds;
     const { x: xBound, width: screenWidth } = screen.getDisplayMatching(
@@ -107,7 +124,7 @@ export class WindowManager {
   }
 
   edgeShow() {
-    const window = this.get("contrast");
+    const window = this.mainWindow;
     const bounds = window.getBounds();
     let { x, y, width, height } = bounds;
     const { x: xBound, width: screenWidth } = screen.getDisplayMatching(
@@ -135,7 +152,7 @@ export class WindowManager {
   }
 
   onEdge(): HideDirection {
-    const window = this.get("contrast");
+    const window = this.mainWindow;
     if (!this.controller.get("autoHide")) {
       return "None";
     }
@@ -156,7 +173,7 @@ export class WindowManager {
   }
 
   showWindow() {
-    const window = this.get("contrast");
+    const window = this.mainWindow;
     if (window.isMinimized()) {
       window.restore();
     }
@@ -266,7 +283,7 @@ export class WindowManager {
       maximizable: false,
       minimizable: false,
       title: t["settings"],
-      parent: this.get("contrast"),
+      parent: this.mainWindow,
       frame: false,
     };
     // TODO 这里要保存用户当前的窗口参数
@@ -294,7 +311,7 @@ export class WindowManager {
       height: height,
       maximizable: false,
       minimizable: false,
-      parent: this.get("contrast"),
+      parent: this.mainWindow,
       title: "Update",
     };
     return this.createWindow("update", cfg);

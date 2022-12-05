@@ -42,6 +42,8 @@ export const normalActionTypes = [
   "simpleDebug",
   "welcome",
   "openReference",
+  "configSnapshot", //恢复snapshot
+  "newConfigSnapshot", //创建新snapshot
 ] as const;
 
 //切换值的动作
@@ -70,11 +72,10 @@ export const constantActionTypes = [
   "interfaceFontFamily",
   "contentFontFamily",
   "titlebarHeight",
-  "titlebarMode",
+  "configSnapshots",
   "transparency",
 ] as const;
 
-export const titlebarModes = ["default", "mini"] as const;
 export const interceptTranslatorTypes = ["bing", "deepl", "tencent"] as const;
 
 export const normalTranslatorTypes = [
@@ -91,7 +92,6 @@ export const abstractTranslatorTypes = ["copytranslator"] as const;
 export type InterceptTranslatorType = typeof interceptTranslatorTypes[number];
 export type NormalTranslatorType = typeof normalTranslatorTypes[number];
 export type AbstractTranslatorType = typeof abstractTranslatorTypes[number];
-export type TitlebarMode = typeof titlebarModes[number];
 export type TranslatorType = InterceptTranslatorType | NormalTranslatorType;
 export type GeneralTranslatorType =
   | InterceptTranslatorType
@@ -327,12 +327,20 @@ export type MenuItemType =
   | "checkbox"
   | "radio";
 
-export type ActionType = "constant" | "config" | "multi_select" | "prompt";
+export type ActionType =
+  | "constant"
+  | "config"
+  | "multi_select" //多选
+  | "prompt" //一些文字
+  | "color_picker" //选择颜色
+  | "param_normal"; //带参数的normal action
+
+export type SubMenuGenerator = (id: string) => SubActionView[];
 interface AbstractAction {
   actionType?: ActionType | MenuItemType;
   id: string;
   submenu?: Array<SubActionView>;
-  subMenuGenerator?: () => SubActionView[];
+  subMenuGenerator?: SubMenuGenerator;
   type?: MenuItemType;
   role?: Role;
   label?: string;
@@ -403,6 +411,8 @@ export const colorStatusMap = new Map<ColorStatus, string>([
 ]);
 
 export type Locale = { [key: string]: string };
+export type ConfigSnapshot = { [key: string]: any };
+export type ConfigSnapshots = { [key: string]: ConfigSnapshot };
 
 export function compose(actions: Array<string>) {
   return actions.join("|");

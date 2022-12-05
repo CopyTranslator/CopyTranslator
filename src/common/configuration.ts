@@ -27,8 +27,7 @@ import {
   dragCopyModes,
   isValidActionButton,
   ActionButton,
-  titlebarModes,
-  TitlebarMode,
+  ConfigSnapshots,
 } from "./types";
 import { DictionaryType, dictionaryTypes } from "./dictionary/types";
 import { version } from "./constant";
@@ -53,7 +52,6 @@ function initConfig(
   config.setRule("autoFormat", new TypeRule<boolean>(false));
   config.setRule("autoPurify", new TypeRule<boolean>(true));
   config.setRule("enableNotify", new TypeRule<boolean>(false));
-  config.setRule("skipTaskbar", new TypeRule<boolean>(false));
   config.setRule("neverShow", new TypeRule<boolean>(false));
   config.setRule("showGoogleMessage", new TypeRule<boolean>(true));
   config.setRule("activeWindows", new TypeRule<string[]>([]));
@@ -63,33 +61,12 @@ function initConfig(
   );
   config.setRule("dragCopyWhiteList", new TypeRule<string[]>([]));
   config.setRule("dragCopyBlackList", new TypeRule<string[]>([]));
-
   config.setRule("isNewUser", new TypeRule<boolean>(true));
-
   config.setRule("toastTip", new TypeRule<boolean>(false));
-
-  config.setRule("drawer", new TypeRule<boolean>(true));
-
   config.setRule("closeAsQuit", new TypeRule<boolean>(true));
-
   config.setRule("autoCheckUpdate", new TypeRule<boolean>(true));
-
   config.setRule("openAtLogin", new TypeRule<boolean>(false));
-
-  config.setRule("multiSource", new TypeRule<boolean>(false));
-
   config.setRule("enableDoubleCopyTranslate", new TypeRule<boolean>(false));
-
-  config.setRule(
-    "translatorType",
-    new UnionRule<TranslatorType>("google", translatorTypes)
-  );
-
-  config.setRule(
-    "fallbackTranslator",
-    new UnionRule<TranslatorType>("baidu", translatorTypes)
-  );
-
   config.setRule(
     "version",
     new TypeRule<string>(version, (ver: string) => {
@@ -97,26 +74,82 @@ function initConfig(
     })
   );
 
+  //外观相关
+  config.setRule("skipTaskbar", new TypeRule<boolean>(false));
+  config.setRule("multiSource", new TypeRule<boolean>(false));
+  config.setRule("drawer", new TypeRule<boolean>(true));
+  config.setRule("localeSetting", new UnionRule<Language>("auto", languages));
   config.setRule(
-    "dictionaryType",
-    new UnionRule<DictionaryType>("youdao", dictionaryTypes)
+    "hideDirect",
+    new UnionRule<HideDirection>("Up", hideDirections)
+  );
+  config.setRule(
+    "primaryColor",
+    new TypeRule<string>("#8E24AA", (x: string) => x.startsWith("#"))
+  );
+  config.setRule(
+    "contentFontFamily",
+    new TypeRule<string>(
+      '"Microsoft YaHei", Arial, Helvetica, sans-serif, "宋体"'
+    )
+  );
+  config.setRule(
+    "interfaceFontFamily",
+    new TypeRule<string>(
+      '"Microsoft YaHei", Arial, Helvetica, sans-serif, "宋体"'
+    )
+  );
+  config.setRule("colorMode", new UnionRule<ColorMode>("auto", colorModes));
+  config.setRule("titlebarHeight", new TypeRule<number>(32));
+  config.setRule("ignoreMouseEvents", new TypeRule<boolean>(false), false); //这个玩意儿不需要保存
+  config.setRule("penerate", new TypeRule<boolean>(false)); //这个玩意儿需要保存
+  config.setRule("configSnapshots", { predefined: {} });
+  config.setRule(
+    "transparency",
+    new TypeRule<number>(0.0, (x) => x <= 1.0 && x >= 0.0)
   );
 
   config.setRule(
     "layoutType",
     new UnionRule<LayoutType>("horizontal", layoutTypes)
+  ); //布局类型
+  //下面是三种布局
+  config.setRule(
+    "horizontal",
+    new StructRule<LayoutConfig>({
+      diffFontSize: 15,
+      sourceFontSize: 15,
+      resultFontSize: 15,
+      dictFontSize: 15,
+      x: 535,
+      y: 186,
+      height: 600,
+      width: 1094,
+      ratio: 0.5,
+    })
   );
 
   config.setRule(
-    "hideDirect",
-    new UnionRule<HideDirection>("Up", hideDirections)
+    "vertical",
+    new StructRule<LayoutConfig>({
+      diffFontSize: 15,
+      sourceFontSize: 15,
+      resultFontSize: 15,
+      dictFontSize: 15,
+      x: 535,
+      y: 186,
+      height: 600,
+      width: 1094,
+      ratio: 0.5,
+    })
   );
 
-  config.setRule("colorMode", new UnionRule<ColorMode>("auto", colorModes));
-
   config.setRule(
-    "contrast",
-    new StructRule<ModeConfig>({
+    "focus",
+    new StructRule<LayoutConfig>({
+      diffFontSize: 15,
+      resultFontSize: 15,
+      dictFontSize: 15,
       x: 535,
       y: 186,
       height: 600,
@@ -135,11 +168,126 @@ function initConfig(
     })
   );
 
+  // 以下是一些菜单
+  config.setRule(
+    "focusRight",
+    new GroupRule<Identifier>(
+      [
+        "retryTranslate",
+        "autoCopy",
+        "autoPaste",
+        "incrementalCopy",
+        "autoHide",
+        "autoShow",
+        "autoFormat",
+        "dragCopy",
+        "stayTop",
+        "listenClipboard",
+        "settings",
+        "exit",
+      ],
+      identifiers
+    )
+  );
+
+  config.setRule(
+    "tray",
+    new GroupRule<Identifier>(
+      [
+        "copySource",
+        "copyResult",
+        "pasteResult",
+        "clear",
+        "retryTranslate",
+        "autoCopy",
+        "autoPaste",
+        "incrementalCopy",
+        "autoHide",
+        "autoShow",
+        "dragCopy",
+        "stayTop",
+        "listenClipboard",
+        "settings",
+        "exit",
+      ],
+      identifiers,
+      "v10.3.0"
+    )
+  );
+
+  config.setRule(
+    "contrastPanel",
+    new GroupRule<Identifier>(
+      [
+        "autoCopy",
+        "autoPaste",
+        "incrementalCopy",
+        "autoHide",
+        "autoShow",
+        "autoFormat",
+        "dragCopy",
+        "stayTop",
+        "listenClipboard",
+        "sourceLanguage",
+        "targetLanguage",
+        "translateInput",
+        "settings",
+      ],
+      identifiers
+    )
+  );
+
+  const predefinedActionButtons: ActionButton[] = [
+    {
+      icon: "mdi-view-quilt",
+      tooltip: "layoutButton",
+      left_click: "enumerateLayouts",
+      right_click: "incrementCounter",
+    },
+    {
+      left_click: "copyResult",
+      right_click: "copySource",
+      icon: "mdi-content-copy",
+      tooltip: "copyButton",
+    },
+    {
+      left_click: "minimize",
+      right_click: "closeWindow",
+      icon: "mdi-window-minimize",
+      tooltip: "closeButton",
+    },
+  ];
+
+  config.setRule("actionButtons", {
+    predefined: predefinedActionButtons,
+    check: (vals: ActionButton[]) =>
+      !vals.map(isValidActionButton).includes(false),
+    minimalVersion: "v10.2.5",
+  });
+
+  config.setRule(
+    "translatorType",
+    new UnionRule<TranslatorType>("google", translatorTypes)
+  );
+  config.setRule(
+    "dictionaryType",
+    new UnionRule<DictionaryType>("youdao", dictionaryTypes)
+  );
   config.setRule("sourceLanguage", new UnionRule<Language>("en", languages));
-
   config.setRule("targetLanguage", new UnionRule<Language>("zh-CN", languages));
-
-  config.setRule("localeSetting", new UnionRule<Language>("auto", languages));
+  config.setRule(
+    "googleMirror",
+    new TypeRule<string>("https://gtranslate.cdn.haah.net")
+  );
+  config.setRule(
+    "googleSource",
+    new UnionRule<GoogleSource>("simply", googleSources, "v10.2.5")
+  );
+  config.setRule(
+    "fallbackTranslator",
+    new UnionRule<TranslatorType>("baidu", translatorTypes)
+  );
+  config.setRule("pasteDelay", new TypeRule<number>(0.0));
 
   config.setRule(
     "translator-enabled", //所有启用的的引擎
@@ -200,116 +348,8 @@ function initConfig(
 
   config.setRule(
     "translator-double",
-    new ConstantGroupRule<TranslatorType>(["baidu-domain"], translatorTypes)
+    new GroupRule<TranslatorType>([], translatorTypes)
   );
-
-  config.setRule(
-    "contentFontFamily",
-    new TypeRule<string>(
-      '"Microsoft YaHei", Arial, Helvetica, sans-serif, "宋体"'
-    )
-  );
-  config.setRule(
-    "interfaceFontFamily",
-    new TypeRule<string>(
-      '"Microsoft YaHei", Arial, Helvetica, sans-serif, "宋体"'
-    )
-  );
-
-  config.setRule(
-    "focusRight",
-    new GroupRule<Identifier>(
-      [
-        "retryTranslate",
-        "autoCopy",
-        "autoPaste",
-        "incrementalCopy",
-        "autoHide",
-        "autoShow",
-        "autoFormat",
-        "dragCopy",
-        "stayTop",
-        "listenClipboard",
-        "settings",
-        "exit",
-      ],
-      identifiers
-    )
-  );
-
-  config.setRule(
-    "tray",
-    new ConstantGroupRule<Identifier>(
-      [
-        "copySource",
-        "copyResult",
-        "pasteResult",
-        "clear",
-        "retryTranslate",
-        "autoCopy",
-        "autoPaste",
-        "incrementalCopy",
-        "autoHide",
-        "autoShow",
-        "dragCopy",
-        "stayTop",
-        "listenClipboard",
-        "settings",
-        "exit",
-      ],
-      identifiers
-    )
-  );
-
-  config.setRule(
-    "contrastPanel",
-    new GroupRule<Identifier>(
-      [
-        "autoCopy",
-        "autoPaste",
-        "incrementalCopy",
-        "autoHide",
-        "autoShow",
-        "autoFormat",
-        "dragCopy",
-        "stayTop",
-        "listenClipboard",
-        "sourceLanguage",
-        "targetLanguage",
-        "translateInput",
-        "settings",
-      ],
-      identifiers
-    )
-  );
-
-  const predefinedActionButtons: ActionButton[] = [
-    {
-      icon: "mdi-view-quilt",
-      tooltip: "layoutButton",
-      left_click: "enumerateLayouts",
-      right_click: "incrementCounter",
-    },
-    {
-      left_click: "copyResult",
-      right_click: "copySource",
-      icon: "mdi-content-copy",
-      tooltip: "copyButton",
-    },
-    {
-      left_click: "minimize",
-      right_click: "closeWindow",
-      icon: "mdi-window-minimize",
-      tooltip: "closeButton",
-    },
-  ];
-
-  config.setRule("actionButtons", {
-    predefined: predefinedActionButtons,
-    check: (vals: ActionButton[]) =>
-      !vals.map(isValidActionButton).includes(false),
-    minimalVersion: "v10.2.5",
-  });
 
   //下面是N种翻译引擎
   config.setRule(
@@ -358,82 +398,6 @@ function initConfig(
   config.setRule(
     "youdao",
     new StructRule<KeyConfig>({ appKey: "", key: "" })
-  );
-
-  //下面是三种布局
-  config.setRule(
-    "horizontal",
-    new StructRule<LayoutConfig>({
-      diffFontSize: 15,
-      sourceFontSize: 15,
-      resultFontSize: 15,
-      dictFontSize: 15,
-      x: 535,
-      y: 186,
-      height: 600,
-      width: 1094,
-      ratio: 0.5,
-    })
-  );
-
-  config.setRule(
-    "vertical",
-    new StructRule<LayoutConfig>({
-      diffFontSize: 15,
-      sourceFontSize: 15,
-      resultFontSize: 15,
-      dictFontSize: 15,
-      x: 535,
-      y: 186,
-      height: 600,
-      width: 1094,
-      ratio: 0.5,
-    })
-  );
-
-  config.setRule(
-    "focus",
-    new StructRule<LayoutConfig>({
-      diffFontSize: 15,
-      resultFontSize: 15,
-      dictFontSize: 15,
-      x: 535,
-      y: 186,
-      height: 600,
-      width: 1094,
-    })
-  );
-
-  config.setRule("pasteDelay", new TypeRule<number>(0.0));
-
-  config.setRule("titlebarHeight", new TypeRule<number>(32));
-
-  config.setRule("ignoreMouseEvents", new TypeRule<boolean>(false), false); //这个玩意儿不需要保存
-  config.setRule("penerate", new TypeRule<boolean>(false)); //这个玩意儿需要保存
-
-  config.setRule(
-    "titlebarMode",
-    new UnionRule<TitlebarMode>("default", titlebarModes)
-  );
-
-  config.setRule(
-    "transparency",
-    new TypeRule<number>(0.0, (x) => x <= 1.0 && x >= 0.0)
-  );
-
-  config.setRule(
-    "googleMirror",
-    new TypeRule<string>("https://gtranslate.cdn.haah.net")
-  );
-
-  config.setRule(
-    "googleSource",
-    new UnionRule<GoogleSource>("simply", googleSources, "v10.2.5")
-  );
-
-  config.setRule(
-    "primaryColor",
-    new TypeRule<string>("#8E24AA", (x: string) => x.startsWith("#"))
   );
 
   return config;

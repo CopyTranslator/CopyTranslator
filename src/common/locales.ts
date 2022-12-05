@@ -198,6 +198,13 @@ export const zh_cn = new Map<LocaleKey, string>([
   ["actionButtons", "动作按钮"],
   ["addNewActionButton", "添加新的动作按钮"],
   ["chooseIconPrompt", "点这里获取可选图标字段"],
+  ["penerate", "鼠标穿透"],
+  ["transparency", "透明度"],
+  ["titlebarHeight", "标题栏高度"],
+  ["<tooltip>penerate", "使得你可以透过窗口操作其他程序"],
+  ["<tooltip>transparency", "窗口透明度"],
+  ["configSnapshot", "配置快照"],
+  ["newConfigSnapshot", "拍摄配置快照"],
 ]);
 
 export const en = new Map<LocaleKey, string>([
@@ -455,5 +462,12 @@ export const en = new Map<LocaleKey, string>([
   ["showWindow", "Show Window"],
   ["translateClipboard", "Translate Clipboard"],
   ["incrementCounter", "Incremental Copy Once"],
+  ["penerate", "mouse penerate"],
+  ["transparency", "transparency"],
+  ["titlebarHeight", "Titlebar Height"],
+  ["<tooltip>penerate", "Allows you to operate other programs through windows"],
+  ["<tooltip>transparency", "transparency of the window"],
+  ["configSnapshot", "Config Snapshot"],
+  ["newConfigSnapshot", "New ConfigSnapshot"],
 ]);
 export type Locale = typeof en;

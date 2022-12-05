@@ -20,7 +20,8 @@ import {
   dragCopyModes,
   categories,
   displayTexts,
-  titlebarModes,
+  ConfigSnapshots,
+  SubMenuGenerator,
 } from "./types";
 import { dictionaryTypes } from "./dictionary/types";
 import { getLanguageLocales, Language } from "./translate/locale";
@@ -97,7 +98,7 @@ class ActionManager {
     }
     const action = this.actions.get(identifier) as ActionView;
     if (action.subMenuGenerator) {
-      action.submenu = action.subMenuGenerator();
+      action.submenu = action.subMenuGenerator(action.id);
     }
     return action;
   }
@@ -183,11 +184,25 @@ class ActionManager {
     //动态生成子菜单
     function selectAction(
       identifier: Identifier,
-      subMenuGenerator: () => Array<SubActionView>,
+      subMenuGenerator: SubMenuGenerator,
       cate?: Category
     ): ActionInitOpt {
       return {
         type: "submenu",
+        id: identifier,
+        subMenuGenerator: subMenuGenerator,
+        cate,
+      };
+    }
+
+    //含参数的normal action
+    function paramNormalAction(
+      identifier: Identifier,
+      subMenuGenerator: SubMenuGenerator,
+      cate?: Category
+    ): ActionInitOpt {
+      return {
+        actionType: "param_normal",
         id: identifier,
         subMenuGenerator: subMenuGenerator,
         cate,
@@ -237,17 +252,15 @@ class ActionManager {
       };
     }
 
-    const localeGenerator = (id: Identifier) => {
-      return () => {
-        const locales = store.getters.locales.map((locale: any) => {
-          return {
-            id: compose([id, locale.lang]),
-            label: locale.localeName,
-            type: "checkbox",
-          };
-        });
-        return locales;
-      };
+    const localeGenerator: SubMenuGenerator = (id: string) => {
+      const locales = store.getters.locales.map((locale: any) => {
+        return {
+          id: compose([id, locale.lang]),
+          label: locale.localeName,
+          type: "checkbox",
+        };
+      });
+      return locales;
     };
     const delays = [
       0.0,
@@ -270,6 +283,19 @@ class ActionManager {
       heights.push(i);
     }
 
+    const getConfigSnapshotNames: SubMenuGenerator = (id: string) => {
+      const names = [
+        ...Object.keys(config.get<ConfigSnapshots>("configSnapshots")),
+      ];
+      return names.map((option) => {
+        return {
+          id: compose([id, option]),
+          type: "normal",
+          label: option,
+        };
+      });
+    };
+
     this.append(listAction("translatorType", translatorTypes, "translation"));
     this.append(listAction("dictionaryType", dictionaryTypes, "translation"));
     this.append(
@@ -279,7 +305,7 @@ class ActionManager {
     this.append(listAction("googleSource", googleSources, "translation"));
     this.append(constantAction("googleMirror", "translation"));
 
-    this.append(constantAction("primaryColor", "appearance"));
+    this.append(typeAction("color_picker", "primaryColor", "appearance"));
     this.append(constantAction("contentFontFamily", "appearance"));
     this.append(constantAction("interfaceFontFamily", "appearance"));
     this.append(listAction("colorMode", colorModes, "appearance"));
@@ -291,16 +317,14 @@ class ActionManager {
         "appearance"
       )
     );
-    this.append(listAction("titlebarMode", titlebarModes, "appearance"));
+    this.append(normalAction("newConfigSnapshot", "appearance"));
+    this.append(
+      paramNormalAction("configSnapshot", getConfigSnapshotNames, "appearance")
+    );
+
     this.append(listAction("titlebarHeight", heights, "appearance"));
     this.append(switchAction("penerate", "appearance"));
-    this.append(
-      selectAction(
-        "localeSetting",
-        localeGenerator("localeSetting"),
-        "appearance"
-      )
-    );
+    this.append(selectAction("localeSetting", localeGenerator, "appearance"));
     this.append(listAction("hideDirect", hideDirections, "appearance"));
     this.append(listAction("layoutType", layoutTypes, "appearance"));
 

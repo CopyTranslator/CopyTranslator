@@ -9,7 +9,52 @@
             class="myswitch"
             :label="trans[action.id]"
           ></v-switch>
-          <v-dialog v-else-if="action.id == 'primaryColor'">
+          <v-dialog
+            v-else-if="action.id === 'newConfigSnapshot'"
+            v-model="dialog"
+          >
+            <template v-slot:activator="{ on, attrs }">
+              <SimpleButton v-bind="attrs" v-on="on">
+                {{ trans[identifier] }}
+              </SimpleButton>
+            </template>
+            <v-card>
+              <v-text-field
+                class="mytext"
+                v-model="text"
+                :rules="rules"
+                label="请输入快照名"
+              ></v-text-field>
+              <SimpleButton
+                @click="
+                  callback(identifier, text);
+                  dialog = false;
+                  text = '';
+                "
+                :disabled="
+                  rules.map((rule) => rule(text) == true).includes(false)
+                "
+                >{{ trans[identifier] }}</SimpleButton
+              >
+            </v-card>
+          </v-dialog>
+          <v-menu offset-y v-else-if="action.actionType === 'param_normal'">
+            <template v-slot:activator="{ on, attrs }">
+              <SimpleButton v-bind="attrs" v-on="on">
+                {{ trans[action.id] }}
+              </SimpleButton>
+            </template>
+            <v-list>
+              <v-list-item
+                v-for="(item, index) in action.submenu"
+                :key="index"
+                @click="callback(item.id)"
+              >
+                <v-list-item-title>{{ item.label }}</v-list-item-title>
+              </v-list-item>
+            </v-list>
+          </v-menu>
+          <v-dialog v-else-if="action.actionType == 'color_picker'">
             <template v-slot:activator="{ on, attrs }">
               <SimpleButton v-bind="attrs" v-on="on">
                 {{ trans[action.id] }}
@@ -84,6 +129,23 @@ export default class Action extends Base {
   action: ActionView = this.$controller.action.getAction(this.identifier);
 
   swatches = swatches; //调色盘的预定义颜色
+  dialog: boolean = false;
+
+  text: string = "";
+
+  rules = [
+    (value: string) => !!value || "Required.",
+    (value: string) => {
+      if (value == undefined) {
+        return true;
+      } else {
+        if (value.includes("|")) {
+          return 'Symbol "|" should not be used in snapshot name';
+        }
+        return true;
+      }
+    },
+  ];
 
   get tooltip(): undefined | string {
     if (
@@ -118,7 +180,7 @@ export default class Action extends Base {
   }
 
   mounted() {
-    if (this.action?.actionType == "submenu") {
+    if (["submenu", "param_normal"].includes(this.action.actionType)) {
       bus.gon(this.identifier, this.sync);
     }
   }

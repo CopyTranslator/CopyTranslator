@@ -158,5 +158,12 @@
     "closeWindow": "Close Window",
     "showWindow": "Show Window",
     "translateClipboard": "Translate Clipboard",
-    "incrementCounter": "Incremental Copy Once"
+    "incrementCounter": "Incremental Copy Once",
+    "penerate": "click penerate",
+    "transparency": "transparency",
+    "titlebarHeight": "Titlebar Height",
+    "<tooltip>penerate": "Allows you to operate other programs through windows",
+    "<tooltip>transparency": "transparency of the window",
+    "configSnapshot": "Appearance Snapshot",
+    "newConfigSnapshot": "New ConfigSnapshot"
 }

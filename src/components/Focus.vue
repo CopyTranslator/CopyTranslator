@@ -60,7 +60,6 @@
 
 <script lang="ts">
 import BaseView from "./BaseView.vue";
-import WindowController from "./WindowController.vue";
 import DictResultPanel from "./DictResult.vue";
 import { Mixins, Ref, Component } from "vue-property-decorator";
 import DiffTextArea from "./DiffTextArea.vue";
@@ -70,7 +69,7 @@ import DiffTextArea from "./DiffTextArea.vue";
     DiffTextArea,
   },
 })
-export default class FocusMode extends Mixins(BaseView, WindowController) {
+export default class FocusMode extends Mixins(BaseView) {
   @Ref("dictResultPanel") readonly dictResultPanel!: DictResultPanel;
 
   dragTranslate(event: any) {

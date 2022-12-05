@@ -35,13 +35,7 @@ export abstract class CommonController {
   }
 
   set(identifier: Identifier, value: any): boolean {
-    if (this.config.checkValid(identifier, value)) {
-      bus.gat("preSet", identifier, value);
-      //这里已经检查过了，所以不用再检查了
-      return this.config.set(identifier, value, false);
-    } else {
-      return false;
-    }
+    return this.config.set(identifier, value);
   }
 
   bindLinks(handlers: Map<Identifier, Handler>) {
@@ -67,6 +61,7 @@ export abstract class CommonController {
       console.debug("action triggered", identifier, param, actionType, main);
       switch (actionType) {
         case "normal":
+        case "param_normal":
           if (
             !(
               this.handleWithLinks(identifier, param) ||
@@ -81,6 +76,7 @@ export abstract class CommonController {
         case "submenu":
         case "constant":
         case "config":
+        case "color_picker":
         case "multi_select":
           this.set(identifier, param);
           break;

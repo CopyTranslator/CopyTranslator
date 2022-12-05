@@ -5,7 +5,7 @@
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
 import bus from "@/common/event-bus";
-import { Identifier, MenuActionType } from "../common/types";
+import { Identifier, MenuActionType, ColorStatus } from "../common/types";
 
 @Component
 export default class Base extends Vue {
@@ -35,6 +35,19 @@ export default class Base extends Vue {
 
   openMenu(id: MenuActionType) {
     bus.iat("openMenu", id);
+  }
+
+  get fontColor() {
+    const color = this.config.fontColor;
+    if (this.$vuetify.theme.dark) {
+      return color.dark;
+    } else {
+      return color.light;
+    }
+  }
+
+  get status(): ColorStatus {
+    return this.$store.state.status;
   }
 }
 </script>

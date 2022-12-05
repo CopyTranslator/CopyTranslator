@@ -16,7 +16,7 @@
     >
       <textarea
         ref="normalResult"
-        class="focusText max text--primary"
+        class="focusText max"
         v-bind:style="focusStyle"
         v-model="sharedResult.translation"
         v-if="sharedResult && !dictResult.valid && !multiSource"
@@ -83,6 +83,7 @@ export default class FocusMode extends Mixins(BaseView) {
   get focusStyle() {
     return {
       fontSize: this.resultSize.toString() + "px",
+      color: this.fontColor,
     };
   }
 

@@ -29,10 +29,10 @@ export default () => {
   //如果要获取配置值要在这里获取，不然获取不到
   const themes = {
     light: {
-      primary: getConfigByKey("primaryColor"),
+      primary: getConfigByKey("primaryColor").light,
     },
     dark: {
-      primary: getConfigByKey("primaryColor"),
+      primary: getConfigByKey("primaryColor").dark,
     },
   };
   return new Vue({

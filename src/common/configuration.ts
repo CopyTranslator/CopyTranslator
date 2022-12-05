@@ -7,6 +7,7 @@ import {
   ModeConfig,
   TypeRule,
   KeyConfig,
+  ColorRule,
   LayoutConfig,
 } from "./rule";
 import { languages, Language } from "@opentranslate/languages";
@@ -27,7 +28,6 @@ import {
   dragCopyModes,
   isValidActionButton,
   ActionButton,
-  ConfigSnapshots,
 } from "./types";
 import { DictionaryType, dictionaryTypes } from "./dictionary/types";
 import { version } from "./constant";
@@ -85,7 +85,11 @@ function initConfig(
   );
   config.setRule(
     "primaryColor",
-    new TypeRule<string>("#8E24AA", (x: string) => x.startsWith("#"))
+    new ColorRule({ light: "#8E24AA", dark: "#8E24AA" })
+  );
+  config.setRule(
+    "fontColor",
+    new ColorRule({ light: "#000000", dark: "#FFFFFF" })
   );
   config.setRule(
     "contentFontFamily",
@@ -194,6 +198,7 @@ function initConfig(
     "tray",
     new GroupRule<Identifier>(
       [
+        "configSnapshot",
         "copySource",
         "copyResult",
         "pasteResult",

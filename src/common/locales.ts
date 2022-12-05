@@ -126,6 +126,7 @@ export const zh_cn = new Map<LocaleKey, string>([
     "v10.3.0版本后谷歌翻译默认使用Simply源，理论上不需要额外设置，如果依然存在问题，可以尝试切换google翻译源",
   ],
   ["primaryColor", "选择主题颜色"],
+  ["fontColor", "选择字体颜色"],
   [
     "<tooltip>primaryColor",
     "您可以随意选择任意颜色，软件会实时更新，你可以直接看到效果",
@@ -203,7 +204,7 @@ export const zh_cn = new Map<LocaleKey, string>([
   ["titlebarHeight", "标题栏高度"],
   ["<tooltip>penerate", "使得你可以透过窗口操作其他程序"],
   ["<tooltip>transparency", "窗口透明度"],
-  ["configSnapshot", "配置快照"],
+  ["configSnapshot", "切换配置快照"],
   ["newConfigSnapshot", "拍摄配置快照"],
 ]);
 
@@ -420,6 +421,7 @@ export const en = new Map<LocaleKey, string>([
     "Google should be the fastest, others may be slower, but if you can't use google, you can try other",
   ],
   ["primaryColor", "Choose Primary Color"],
+  ["fontColor", "Choose Font Color"],
   [
     "<tooltip>primaryColor",
     "You can choose any color at will. The software will update in real time, and you can see the effect directly",
@@ -467,7 +469,7 @@ export const en = new Map<LocaleKey, string>([
   ["titlebarHeight", "Titlebar Height"],
   ["<tooltip>penerate", "Allows you to operate other programs through windows"],
   ["<tooltip>transparency", "transparency of the window"],
-  ["configSnapshot", "Config Snapshot"],
+  ["configSnapshot", "Switch Config Snapshot"],
   ["newConfigSnapshot", "New ConfigSnapshot"],
 ]);
 export type Locale = typeof en;

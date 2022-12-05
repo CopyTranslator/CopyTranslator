@@ -15,7 +15,7 @@
       >
         <textarea
           v-bind:style="sourceFontStyle"
-          class="hArea text--primary"
+          class="hArea"
           @keyup.ctrl.13="translate"
           @keyup.ctrl.71="google"
           @keyup.ctrl.66="baidu"
@@ -77,7 +77,7 @@
           @keyup.ctrl.71="google"
           @keyup.ctrl.66="baidu"
           @keyup.ctrl.80="command"
-          class="vArea text--primary"
+          class="vArea"
           v-model="sharedResult.text"
           @contextmenu="openMenu('contrastContext')"
         ></textarea>
@@ -317,6 +317,7 @@ export default class ContrastPanel extends Mixins(BaseView) {
       fontSize: this.sourceSize.toString() + "px",
       height: "100%",
       overflow: "auto",
+      color: this.fontColor,
     };
   }
 
@@ -324,6 +325,7 @@ export default class ContrastPanel extends Mixins(BaseView) {
     return {
       fontSize: this.resultSize.toString() + "px",
       height: "100%",
+      color: this.fontColor,
     };
   }
 

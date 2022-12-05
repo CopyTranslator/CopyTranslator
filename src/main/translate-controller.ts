@@ -13,7 +13,6 @@ import {
 import {
   Identifier,
   ColorStatus,
-  colorStatusMap,
   TranslatorType,
   translatorTypes,
 } from "../common/types";
@@ -108,7 +107,7 @@ class TranslateController {
           param = 1; //下一次监听剪贴板是增量选中
         }
         this.incrementCounter = param as number;
-        this.setCurrentColor();
+        this.setCurrentStatus();
         break;
       case "retryTranslate":
         this.translate(this.text);
@@ -214,7 +213,7 @@ class TranslateController {
       return; //内容并非文本
     }
     if (!this.checkLength(originalText)) {
-      this.setCurrentColor(true);
+      this.setCurrentStatus(true);
       return;
     }
     const text = this.normalizeText(originalText);
@@ -319,13 +318,13 @@ class TranslateController {
     return realOptions;
   }
 
-  setCurrentColor(fail = false) {
+  setCurrentStatus(fail = false) {
     if (fail) {
-      this.setColor("Fail");
+      this.setStatus("Fail");
       return;
     }
     if (!this.get<boolean>("listenClipboard")) {
-      this.setColor("None");
+      this.setStatus("None");
       return;
     }
     const options = this.getOptions();
@@ -334,26 +333,26 @@ class TranslateController {
     const autoPaste = getColorRule("autoPaste");
     switch (options) {
       case incrementalCopy | autoCopy | autoPaste:
-        this.setColor("IncrementalCopyPaste");
+        this.setStatus("IncrementalCopyPaste");
         return;
       case incrementalCopy | autoCopy:
-        this.setColor("IncrementalCopy");
+        this.setStatus("IncrementalCopy");
         return;
       case incrementalCopy:
-        this.setColor("Incremental");
+        this.setStatus("Incremental");
         return;
       case autoCopy | autoPaste:
-        this.setColor("AutoPaste");
+        this.setStatus("AutoPaste");
         return;
       case autoCopy:
-        this.setColor("AutoCopy");
+        this.setStatus("AutoCopy");
         return;
     }
-    this.setColor("Listen");
+    this.setStatus("Listen");
   }
 
-  setColor(color: ColorStatus) {
-    store.dispatch("setColor", colorStatusMap.get(color));
+  setStatus(status: ColorStatus) {
+    store.dispatch("setStatus", status);
   }
 
   getL(lang: Language) {
@@ -408,7 +407,7 @@ class TranslateController {
   preProcess(text: string) {
     this.lastAppend = text;
     this.setSrc(text);
-    this.setColor("Translating");
+    this.setStatus("Translating");
   }
 
   postTranslate(
@@ -438,7 +437,7 @@ class TranslateController {
       //多源对比的时候指示灯应该是等全部翻译完了才出来
       eventBus.once("allTranslated", () => {
         this.translating = false;
-        this.setCurrentColor();
+        this.setCurrentStatus();
       });
     }
 
@@ -451,14 +450,14 @@ class TranslateController {
         this.translating = false;
         logger.debug("word fail");
         this.syncDict(); //翻译完了，然后发现词典有问题，这个时候才发送
-        this.setCurrentColor(true);
+        this.setCurrentStatus(true);
       } else if (this.dictResult.words !== this.text && !this.translateResult) {
-        this.setCurrentColor(true);
+        this.setCurrentStatus(true);
         this.translating = false;
       } else {
         if (!multiSource) {
           this.translating = false;
-          this.setCurrentColor(); //多源对比的时候指示灯应该是等全部翻译完了才出来
+          this.setCurrentStatus(); //多源对比的时候指示灯应该是等全部翻译完了才出来
         }
       }
     });
@@ -637,6 +636,8 @@ class TranslateController {
       return true;
     }
     switch (identifier) {
+      case "multiSource":
+        break;
       case "googleMirror":
         this.translator.setUpGoogleOrigin();
         break;
@@ -680,7 +681,7 @@ class TranslateController {
       default:
         return false;
     }
-    this.setCurrentColor();
+    this.setCurrentStatus();
     return true;
   }
 }

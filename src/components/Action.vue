@@ -61,7 +61,7 @@
               </SimpleButton>
             </template>
             <v-color-picker
-              v-model="value"
+              v-model="color"
               flat
               :swatches="swatches"
               show-swatches
@@ -120,6 +120,7 @@ import MultiSelect from "./MultiSelect.vue";
 import bus from "../common/event-bus";
 import Base from "@/components/Base.vue";
 import SimpleButton from "./SimpleButton.vue";
+import { ColorConfig } from "@/common/rule";
 
 @Component({
   components: { MultiSelect, SimpleButton },
@@ -173,6 +174,23 @@ export default class Action extends Base {
 
   set value(val) {
     this.callback(this.identifier, val);
+  }
+
+  get color() {
+    const color = this.value as ColorConfig;
+    if (this.$vuetify.theme.dark) {
+      return color.dark;
+    } else {
+      return color.light;
+    }
+  }
+
+  set color(val) {
+    if (this.$vuetify.theme.dark) {
+      this.callback(this.identifier, { ...this.value, dark: val });
+    } else {
+      this.callback(this.identifier, { ...this.value, light: val });
+    }
   }
 
   async sync() {

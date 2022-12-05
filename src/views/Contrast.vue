@@ -31,7 +31,7 @@
             >
               <v-badge
                 dot
-                :color="color"
+                :color="badgeColor"
                 offset-y="pl/ml-5"
                 offset-x="pl/ml-1"
                 style="margin: auto;"
@@ -135,6 +135,7 @@ import {
   abstractTranslatorTypes,
   GeneralTranslatorType,
   hexToRgb,
+  colorStatusMap,
 } from "../common/types";
 import EngineButton from "../components/EngineButton.vue";
 
@@ -225,8 +226,8 @@ export default class Contrast extends Mixins(BaseView, WindowController) {
     return this.config.actionButtons;
   }
 
-  get color() {
-    return this.$store.state.color;
+  get badgeColor() {
+    return colorStatusMap.get(this.status);
   }
 
   get barWidth(): number {

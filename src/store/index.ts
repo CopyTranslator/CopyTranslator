@@ -25,7 +25,7 @@ const store = new Vuex.Store({
   state: {
     sourceLanguages: [],
     targetLanguages: [],
-    color: "white",
+    status: "None",
     sharedResult: emptySharedResult(),
     sharedDiff: emptySharedDiff(),
     dictResult: emptyDictResult(),
@@ -47,8 +47,8 @@ const store = new Vuex.Store({
     setDictResult(state, dictResult) {
       state.dictResult = dictResult;
     },
-    setColor(state, color) {
-      state.color = color;
+    setStatus(state, status) {
+      state.status = status;
     },
     setConfig(state, config) {
       Vue.set(state, "config", config);
@@ -75,8 +75,8 @@ const store = new Vuex.Store({
     setDictResult(context, dictResult) {
       context.commit("setDictResult", dictResult);
     },
-    setColor(context, color) {
-      context.commit("setColor", color);
+    setStatus(context, status) {
+      context.commit("setStatus", status);
     },
     setSourceLanguages(context: any, languages: any) {
       context.commit("setSourceLanguages", languages);

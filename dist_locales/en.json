@@ -141,6 +141,7 @@
     "<tooltip>googleMirror": "Google Translate API mirror URL, if left blank, it will restore to Google official API URL",
     "<tooltip>googleSource": "Google should be the fastest, others may be slower, but if you can't use google, you can try other",
     "primaryColor": "Choose Primary Color",
+    "fontColor": "Choose Font Color",
     "<tooltip>primaryColor": "You can choose any color at will. The software will update in real time, and you can see the effect directly",
     "googlePrompt": "After v10.3.0, Google Translate uses the Simple source by default. In theory, no additional settings are required. If there are still problems, you can try to switch to the Google translation source",
     "contentFontFamily": "Content Font-Family",
@@ -164,6 +165,6 @@
     "titlebarHeight": "Titlebar Height",
     "<tooltip>penerate": "Allows you to operate other programs through windows",
     "<tooltip>transparency": "transparency of the window",
-    "configSnapshot": "Config Snapshot",
+    "configSnapshot": "Switch Config Snapshot",
     "newConfigSnapshot": "New ConfigSnapshot"
 }

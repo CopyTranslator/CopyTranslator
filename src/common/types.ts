@@ -69,6 +69,7 @@ export const constantActionTypes = [
   "dragCopyMode",
   "activeWindows",
   "primaryColor",
+  "fontColor",
   "interfaceFontFamily",
   "contentFontFamily",
   "titlebarHeight",

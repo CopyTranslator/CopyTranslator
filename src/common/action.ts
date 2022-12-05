@@ -306,6 +306,7 @@ class ActionManager {
     this.append(constantAction("googleMirror", "translation"));
 
     this.append(typeAction("color_picker", "primaryColor", "appearance"));
+    this.append(typeAction("color_picker", "fontColor", "appearance"));
     this.append(constantAction("contentFontFamily", "appearance"));
     this.append(constantAction("interfaceFontFamily", "appearance"));
     this.append(listAction("colorMode", colorModes, "appearance"));

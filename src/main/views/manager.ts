@@ -1,7 +1,6 @@
 import { loadStyles } from "../style";
 import {
   RouteActionType,
-  routeActionTypes,
   HideDirection,
   Identifier,
   LayoutType,
@@ -15,9 +14,44 @@ import eventBus from "@/common/event-bus";
 import { LayoutConfig } from "@/common/rule";
 const forceFocus = require("@adeperio/forcefocus");
 
+class IntervalSaver {
+  //以一定间隔进行
+  func: Function;
+  lastSave: number = 0;
+  interval: number;
+  constructor(func: Function, interval: number = 1000) {
+    this.func = func;
+    this.interval = interval;
+  }
+
+  call() {
+    const now = Date.now();
+    if (this.lastSave > now) {
+      //就说明我们不需要唤起一次新的同步
+    } else {
+      const interval = this.interval; //修改后预定一次保存，在此保存之前的所有修改都不会再预定保存
+      this.lastSave = now + interval;
+      setTimeout(() => {
+        this.realCall();
+      }, interval);
+    }
+  }
+
+  realCall() {
+    const now = Date.now();
+    if (now > this.lastSave) {
+      this.lastSave = now;
+    }
+    this.func();
+  }
+}
+
 export class WindowManager {
   windows = new Map<RouteActionType, BrowserWindow>();
   controller: MainController;
+  saver = new IntervalSaver(() => {
+    this.saveBounds();
+  });
 
   constructor(controller: MainController) {
     this.controller = controller;
@@ -256,6 +290,12 @@ export class WindowManager {
     });
     window.on("focus", () => {
       this.edgeShow();
+    });
+    window.on("resize", () => {
+      this.saver.call();
+    });
+    window.on("move", () => {
+      this.saver.call();
     });
     return window;
   }

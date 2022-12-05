@@ -18,6 +18,7 @@ import logger, { initLog } from "../common/logger";
 import { constants, versionString } from "../common/constant";
 import { RenController, MainController } from "../common/controller";
 import { createProxy } from "../proxy/renderer";
+import { ColorConfig } from "@/common/rule";
 
 export class RendererController extends RenController {
   private static _instance: RendererController;
@@ -80,9 +81,10 @@ export class RendererController extends RenController {
   postSet(identifier: Identifier, value: any): boolean {
     switch (identifier) {
       case "primaryColor": //动态更新主题颜色
+        const color = value as ColorConfig;
         if (this.app != undefined) {
-          this.app.$vuetify.theme.themes.light.primary = value;
-          this.app.$vuetify.theme.themes.dark.primary = value;
+          this.app.$vuetify.theme.themes.light.primary = color.light;
+          this.app.$vuetify.theme.themes.dark.primary = color.dark;
         }
         break;
       case "colorMode": //动态更新暗黑明亮模式

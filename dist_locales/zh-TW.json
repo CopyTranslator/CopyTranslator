@@ -182,5 +182,6 @@
     "<tooltip>penerate": "Allows you to operate other programs through windows",
     "<tooltip>transparency": "transparency of the window",
     "configSnapshot": "Appearance Snapshot",
-    "newConfigSnapshot": "New ConfigSnapshot"
+    "newConfigSnapshot": "New ConfigSnapshot",
+    "fontColor": "Choose Font Color"
 }

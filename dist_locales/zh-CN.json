@@ -114,6 +114,7 @@
     "textAdjustPrompt": "任意文本框均可通过Ctrl配合滚轮（或者加号或减号）进行字体大小的缩放调节。",
     "googlePrompt": "v10.3.0版本后谷歌翻译默认使用Simply源，理论上不需要额外设置，如果依然存在问题，可以尝试切换google翻译源",
     "primaryColor": "选择主题颜色",
+    "fontColor": "选择字体颜色",
     "<tooltip>primaryColor": "您可以随意选择任意颜色，软件会实时更新，你可以直接看到效果",
     "copyButton": "点击复制译文，右键复制原文",
     "closeButton": "点击最小化，右键退出程序",
@@ -164,6 +165,6 @@
     "titlebarHeight": "标题栏高度",
     "<tooltip>penerate": "使得你可以透过窗口操作其他程序",
     "<tooltip>transparency": "窗口透明度",
-    "configSnapshot": "配置快照",
+    "configSnapshot": "切换配置快照",
     "newConfigSnapshot": "拍摄配置快照"
 }

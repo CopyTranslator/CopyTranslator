@@ -75,8 +75,13 @@ export class MenuManager {
     if (menuItem.submenu) {
       const value = this.config.get(menuItem.id as Identifier);
       for (const subMenuItem of menuItem.submenu) {
-        const { identifier, param } = decompose(subMenuItem.id);
-        subMenuItem.checked = param == value;
+        if (subMenuItem.type == "checkbox") {
+          const { identifier, param } = decompose(subMenuItem.id);
+          subMenuItem.checked = param == value;
+        } else if (subMenuItem.type == "normal") {
+        } else {
+          throw "invalid submenu item type";
+        }
         subMenuItem.click = this.getCallback(subMenuItem.id);
       }
     }

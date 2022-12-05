@@ -1,7 +1,10 @@
 <template>
-  <div contenteditable="true">
-    <div v-if="(allParts.length==0)">
+  <div contenteditable="true" :style="colorStyle">
+    <div v-if="allParts.length == 0 && status !== 'Translating'">
       <h2>暂无多源对比结果，请翻译一句新的</h2>
+    </div>
+    <div v-else-if="status === 'Translating'">
+      <h2>多源翻译中，引擎较多，请耐心等待</h2>
     </div>
     <div v-if="!config['contrastDict'] || !dictResult.valid">
       <div v-for="(part, key) in allParts" :key="key">
@@ -43,6 +46,12 @@ export default class DiffTextArea extends Mixins(BaseView) {
   get diffStyle() {
     return {
       fontSize: this.diffSize.toString() + "px",
+    };
+  }
+
+  get colorStyle() {
+    return {
+      color: this.fontColor,
     };
   }
 

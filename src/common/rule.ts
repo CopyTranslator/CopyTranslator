@@ -33,11 +33,35 @@ export type LayoutConfig = {
 
 export type KeyConfig = { [key: string]: string };
 
+export type ColorConfig = {
+  light: string;
+  dark: string;
+};
+
 interface Rule {
   predefined: any;
   check?: CheckFuction; // 检查是否有效的函数
   minimalVersion?: string;
   needSave?: boolean;
+}
+
+export class ColorRule implements Rule {
+  predefined: ColorConfig;
+  check?: CheckFuction;
+  constructor(predefined: ColorConfig) {
+    this.predefined = predefined;
+    this.check = function (value: ColorConfig) {
+      let valid: boolean = typeof value === typeof predefined;
+      if (!valid) {
+        return false;
+      }
+      for (const key of Object.keys(predefined)) {
+        const val = value[key as keyof ColorConfig];
+        valid = valid && !!val && val.startsWith("#");
+      }
+      return valid;
+    };
+  }
 }
 
 class GroupRule<T> implements Rule {

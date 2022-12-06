@@ -1,33 +1,27 @@
 <template>
   <div contenteditable="true" :style="colorStyle">
-    <div v-if="allParts.length == 0 && status !== 'Translating'">
-      <h2>暂无多源对比结果，请翻译一句新的</h2>
-    </div>
-    <div v-else-if="status === 'Translating'">
-      <h2>多源翻译中，引擎较多，请耐心等待</h2>
-    </div>
-    <div v-if="!config['contrastDict'] || !dictResult.valid">
-      <div v-for="(part, key) in allParts" :key="key">
-        <span style="color: red; font-size: 15px;">
-          {{ part.engine }}
-        </span>
-        <a
-          v-if="part.engine === 'keyan'"
-          @click="toKeyan()"
-          style="font-size: 15px;"
-        >
-          <span>来⾃棵岩翻译 免费⼀键翻译全⽂>>></span>
-        </a>
-        <br />
-        <div v-bind:style="diffStyle">
-          <div v-for="(line, k) in part.parts" :key="key + k">
-            <span
-              v-for="(p, k2) in line"
-              :key="key + k + k2"
-              :style="getStyle(p)"
-              >{{ p.value }}</span
-            >
-          </div>
+    <div>
+      <div v-for="(result, engine) in resultBuffer" :key="engine">
+        <div>
+          <span style="color: red; font-size: 15px;"> {{ engine }} </span>
+          <v-progress-circular
+            v-if="result.status == 'Translating'"
+            :size="15"
+            :width="2"
+            color="primary"
+            :indeterminate="result.status == 'Translating'"
+            value="100"
+          >
+          </v-progress-circular>
+          <a
+            v-if="engine === 'keyan'"
+            @click="toKeyan()"
+            style="font-size: 15px;"
+          >
+            <span>来⾃棵岩翻译 免费⼀键翻译全⽂>>></span>
+          </a>
+          <br />
+          {{ result.translation }}
         </div>
       </div>
     </div>
@@ -35,13 +29,15 @@
 </template>
 
 <script lang="ts">
-import { Mixins, Component, Prop } from "vue-property-decorator";
+import { Mixins, Component } from "vue-property-decorator";
 import BaseView from "./BaseView.vue";
-import { CompareResult } from "../common/translate/comparator";
+import { ResultBuffer } from "../common/translate/types";
 
 @Component
 export default class DiffTextArea extends Mixins(BaseView) {
-  @Prop({ default: [] }) readonly allParts!: CompareResult[];
+  get resultBuffer(): ResultBuffer {
+    return this.config.resultBuffer;
+  }
 
   get diffStyle() {
     return {

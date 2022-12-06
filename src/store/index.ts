@@ -5,10 +5,7 @@ import { Identifier } from "./plugins/types";
 import { updateViewPlugin, observePlugin, initState } from "./plugins";
 export * from "./plugins";
 import { registerLocale } from "./plugins/l10n";
-import {
-  emptySharedResult,
-  emptySharedDiff,
-} from "@/common/translate/constants";
+import { emptySharedResult, emptySharedDiff } from "@/common/translate/types";
 import { emptyDictResult } from "@/common/dictionary/types";
 
 Vue.use(Vuex);
@@ -23,8 +20,6 @@ const plugins = [
 
 const store = new Vuex.Store({
   state: {
-    sourceLanguages: [],
-    targetLanguages: [],
     status: "None",
     sharedResult: emptySharedResult(),
     sharedDiff: emptySharedDiff(),
@@ -41,9 +36,6 @@ const store = new Vuex.Store({
     setDiff(state, sharedDiff) {
       state.sharedDiff = sharedDiff;
     },
-    clearDiff(state) {
-      state.sharedDiff = emptySharedDiff();
-    },
     setDictResult(state, dictResult) {
       state.dictResult = dictResult;
     },
@@ -52,12 +44,6 @@ const store = new Vuex.Store({
     },
     setConfig(state, config) {
       Vue.set(state, "config", config);
-    },
-    setSourceLanguages(state: any, languages: any) {
-      Vue.set(state, "sourceLanguages", languages);
-    },
-    setTargetLanguages(state: any, languages: any) {
-      Vue.set(state, "targetLanguages", languages);
     },
     updateConfig(state, config) {
       for (const key of Object.keys(config)) {
@@ -78,12 +64,6 @@ const store = new Vuex.Store({
     setStatus(context, status) {
       context.commit("setStatus", status);
     },
-    setSourceLanguages(context: any, languages: any) {
-      context.commit("setSourceLanguages", languages);
-    },
-    setTargetLanguages(context: any, languages: any) {
-      context.commit("setTargetLanguages", languages);
-    },
     setConfig(context, config) {
       context.commit("setConfig", config);
     },
@@ -92,9 +72,6 @@ const store = new Vuex.Store({
     },
     clearShared(context) {
       context.commit("clearShared");
-    },
-    clearDiff(context) {
-      context.commit("clearDiff");
     },
   },
   modules: {},

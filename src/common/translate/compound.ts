@@ -1,14 +1,16 @@
 import { getTranslator, translators, Translator } from "./translators";
 import {
-  CopyTranslator,
-  CopyTranslateResult,
   TranslateResult,
   DirectionalTranslator,
+  ResultBuffer,
+  CopyTranslateResult,
+  SharedResult,
+  emptySharedResult,
 } from "./types";
 import { TranslatorType } from "@/common/types";
 import { AxiosRequestConfig } from "axios";
 import { Language } from "@opentranslate/translator";
-import { autoReSegment } from "./helper";
+import { autoReSegment, notEnglish } from "./helper";
 import eventBus from "../event-bus";
 import { getProxyAxios } from "./proxy";
 import { axios } from "@/common/translate/proxy";
@@ -21,12 +23,65 @@ import {
   InterceptTranslator,
 } from "@/common/translate/intercepter";
 
-export class Compound implements CopyTranslator {
+class ResultBufferManager {
+  public resultBufferMap = new Map<TranslatorType, SharedResult | undefined>();
+
+  engines: TranslatorType[] = [];
+
+  clear(engines: TranslatorType[]) {
+    this.engines = engines;
+    this.resultBufferMap.clear();
+    this.sync();
+  }
+
+  sync() {
+    let resultBuffer: ResultBuffer = {};
+    for (const engine of this.engines) {
+      if (this.has(engine)) {
+        resultBuffer[engine] = this.get(engine) as SharedResult;
+      } else {
+        resultBuffer[engine] = emptySharedResult({ status: "Translating" });
+      }
+    }
+    config.set("resultBuffer", resultBuffer);
+  }
+
+  extend(engines: TranslatorType[]) {
+    for (const engine of engines) {
+      if (!this.engines.includes(engine)) {
+        this.engines.push(engine);
+      }
+    }
+    this.sync();
+  }
+
+  get(engine: TranslatorType) {
+    return this.resultBufferMap.get(engine);
+  }
+
+  has(engine: TranslatorType) {
+    return this.resultBufferMap.has(engine);
+  }
+
+  set(engine: TranslatorType, result: SharedResult) {
+    if (!this.engines.includes(engine)) {
+      this.engines.push(engine);
+    }
+    this.resultBufferMap.set(engine, result);
+    this.sync();
+  }
+}
+
+export class Compound {
   mainEngine: TranslatorType;
   config: AxiosRequestConfig;
   running: number = 0;
-  resultBuffer = new Map<TranslatorType, CopyTranslateResult | undefined>();
-  text: string | undefined;
+  resultBuffer = new ResultBufferManager();
+
+  text: string = "";
+  from: Language = "auto";
+  to: Language = "en";
+
   engines: TranslatorType[];
   detectEngine: TranslatorType = "baidu";
 
@@ -115,13 +170,11 @@ export class Compound implements CopyTranslator {
 
   isSupport(engineName: TranslatorType, from: Language, to: Language): boolean {
     const engine = getTranslator(engineName);
-    if (
-      engine instanceof DirectionalTranslator &&
-      !engine.isSupport(from, to)
-    ) {
-      return false;
+    if (engine instanceof DirectionalTranslator) {
+      return engine.isSupport(from, to);
     } else {
-      return true;
+      const supportLanguages = engine.getSupportLanguages();
+      return supportLanguages.includes(from) && supportLanguages.includes(to);
     }
   }
 
@@ -130,18 +183,34 @@ export class Compound implements CopyTranslator {
     from: Language,
     to: Language,
     engines?: TranslatorType[]
-  ): Promise<CopyTranslateResult> {
-    this.text = text;
+  ): Promise<SharedResult> {
     if (!engines) {
-      engines = this.engines;
+      engines = [...this.engines];
     }
-    this.resultBuffer.clear(); //先清空缓存
     const fallbackEngine = config.get("fallbackTranslator") as TranslatorType;
-    const mainEngine = this.isSupport(this.mainEngine, from, to)
-      ? this.mainEngine
-      : fallbackEngine; //如果主引擎不支持的话，就切换到副引擎
+    let mainEngine = this.mainEngine;
+    if (!engines.includes(this.mainEngine)) {
+      engines.push(this.mainEngine);
+    } //这里肯定是要有mainEngine
+
+    const supportEngines = engines.filter((engine) => {
+      const support = this.isSupport(engine, from, to);
+      return support;
+    });
+    if (!supportEngines.includes(this.mainEngine)) {
+      mainEngine = fallbackEngine;
+    } //如果主引擎不支持的话，就切换到副引擎
+    if (this.text === text && this.from === from && this.to === to) {
+      this.resultBuffer.extend(supportEngines);
+    } else {
+      this.resultBuffer.clear(supportEngines);
+      this.text = text;
+      this.from = from;
+      this.to = to;
+    }
+    //先清空缓存
     const mainResult = this.translateWith(mainEngine, text, from, to);
-    for (const name of engines) {
+    for (const name of supportEngines) {
       if (name === mainEngine) {
         continue;
       }
@@ -168,8 +237,11 @@ export class Compound implements CopyTranslator {
     text: string,
     from: Language,
     to: Language
-  ): Promise<CopyTranslateResult> {
-    this.resultBuffer.delete(engine);
+  ): Promise<SharedResult> {
+    if (this.resultBuffer.has(engine)) {
+      //如果已经有缓存了,直接返回就行了
+      return Promise.resolve(this.resultBuffer.get(engine) as SharedResult);
+    }
     this.running++;
     return getTranslator(engine)
       .translate(text, from, to, this.config)
@@ -178,10 +250,6 @@ export class Compound implements CopyTranslator {
         return res;
       })
       .then(autoReSegment)
-      .then((res: any) => {
-        this.resultBuffer.set(engine, res);
-        return res;
-      })
       .catch((err: any) => {
         console.log(engine, "translate error", err);
         return null;
@@ -197,6 +265,22 @@ export class Compound implements CopyTranslator {
         } else {
           return res;
         }
+      })
+      .then((result: CopyTranslateResult) => {
+        return {
+          text: result.text,
+          translation: result.resultString,
+          from: result.from,
+          to: result.to,
+          engine: result.engine,
+          transPara: result.trans.paragraphs,
+          textPara: result.origin.paragraphs,
+          chineseStyle: notEnglish(result.to),
+        };
+      })
+      .then((res: SharedResult) => {
+        this.resultBuffer.set(engine, res);
+        return res;
       });
   }
 

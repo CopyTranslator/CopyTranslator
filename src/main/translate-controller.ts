@@ -1,14 +1,12 @@
 import { Compound } from "../common/translate/compound";
-import { emptySharedResult, SharedResult } from "../common/translate/constants";
 import { Polymer } from "../common/dictionary/polymer";
 import { Language, Translator } from "@opentranslate/translator";
-import { CopyTranslateResult } from "../common/translate/types";
+import { emptySharedResult, SharedResult } from "../common/translate/types";
 import { colorRules, getColorRule, KeyConfig } from "../common/rule";
 import {
   normalizeAppend,
   checkIsWord,
   isChinese,
-  notEnglish,
 } from "../common/translate/helper";
 import {
   Identifier,
@@ -38,14 +36,29 @@ import { translators } from "@/common/translate/translators";
 import { getProxyAxios } from "@/common/translate/proxy";
 import bus from "@/common/event-bus";
 
+type TranslateOption = {
+  text?: string;
+  updateLanguage?: boolean;
+  clearResult?: boolean;
+  dict?: boolean;
+};
+
 class TranslateController {
-  text: string = "";
-  resultString: string = "";
-  translateResult: CopyTranslateResult | undefined;
+  translateResult: SharedResult | undefined;
   dictResult: SharedDictResult = emptyDictResult();
+
+  text: string = "";
   lastAppend: string = "";
+
+  language: { source: Language; target: Language } = {
+    source: "auto",
+    target: "auto",
+  };
+
+  needDict: boolean = false;
+
   translating: boolean = false; //正在翻译
-  words: string = "";
+
   incrementCounter: number = 0; //增量复制计数器
 
   translator: Compound = new Compound([...translatorTypes], "google", {});
@@ -54,6 +67,15 @@ class TranslateController {
   controller: MainController;
 
   comparator: Comparator;
+
+  get resultString() {
+    if (this.translateResult) {
+      return this.translateResult.translation;
+    } else {
+      return "";
+    }
+  }
+
   constructor(controller: MainController) {
     this.controller = controller;
     this.comparator = new Comparator(this.translator);
@@ -79,7 +101,12 @@ class TranslateController {
         recognizer.capture();
         break;
       case "translate":
-        this.tryTranslate(param as string);
+        this.translateWithOption({
+          text: param as string,
+          updateLanguage: true,
+          clearResult: true,
+          dict: true,
+        });
         break;
       case "translateClipboard":
         this.checkClipboard();
@@ -110,7 +137,11 @@ class TranslateController {
         this.setCurrentStatus();
         break;
       case "retryTranslate":
-        this.translate(this.text);
+        this.translateWithOption({
+          updateLanguage: true,
+          clearResult: true,
+          dict: true,
+        });
         break;
       case "selectionQuery":
         this.selectionQuary(param);
@@ -122,12 +153,12 @@ class TranslateController {
   }
 
   syncSupportLanguages() {
-    store.dispatch(
-      "setSourceLanguages",
+    this.controller.set(
+      "sourceLanguages",
       this.translator.getSupportSourceLanguages()
     );
-    store.dispatch(
-      "setTargetLanguages",
+    this.controller.set(
+      "targetLanguages",
       this.translator.getSupportTargetLanguages()
     );
     bus.iat("sourceLanguage"); //更新界面上的source和target列表
@@ -138,12 +169,13 @@ class TranslateController {
     return this.controller.get(identifier) as T;
   }
 
-  isIncremental(): boolean {
+  get isIncremental(): boolean {
     return this.get<boolean>("incrementalCopy") || this.incrementCounter > 0;
   }
 
   setSrc(append: string) {
-    const incremental = this.isIncremental();
+    this.lastAppend = append;
+    const incremental = this.isIncremental;
     if (incremental) {
       eventBus.at("dispatch", "toast", "增量复制");
     }
@@ -162,11 +194,11 @@ class TranslateController {
     }
   }
 
-  source() {
+  get source() {
     return this.get<Language>("sourceLanguage");
   }
 
-  target() {
+  get target() {
     return this.get<Language>("targetLanguage");
   }
 
@@ -177,11 +209,14 @@ class TranslateController {
   }
 
   clearResult() {
-    this.resultString = "";
     this.translateResult = undefined;
-    this.dictResult = emptyDictResult();
-    this.comparator.clear();
     this.sync();
+    this.clearDict();
+    this.comparator.clear();
+  }
+
+  clearDict() {
+    this.dictResult = emptyDictResult();
     this.syncDict();
   }
 
@@ -218,8 +253,12 @@ class TranslateController {
     }
     const text = this.normalizeText(originalText);
     if (this.checkValid(text)) {
-      this.clearResult();
-      this.translate(text);
+      this.translateWithOption({
+        text,
+        updateLanguage: true,
+        clearResult: true,
+        dict: true,
+      }); //这里的text可能不是真正被翻译的
     }
   }
 
@@ -231,64 +270,7 @@ class TranslateController {
     return text;
   }
 
-  tryTranslate(text: string, clear = false) {
-    if (text != undefined && text != "") {
-      if (clear) {
-        this.clear();
-      }
-      this.translate(this.normalizeText(text));
-    }
-  }
-
-  dictFail(text: string) {
-    this.dictResult = emptyDictResult();
-    if (this.translateResult && this.translateResult.text === text) {
-      this.syncDict();
-    }
-  }
-
-  translateFail() {
-    this.translateResult = undefined;
-    this.resultString = "";
-    this.sync();
-  }
-
-  sync(language?: { source: Language; target: Language }) {
-    if (!language) {
-      language = {
-        source: this.source(),
-        target: this.target(),
-      };
-    }
-    let sharedResult: SharedResult = emptySharedResult();
-    if (this.translateResult != undefined) {
-      sharedResult = {
-        text: this.translateResult.text,
-        translation: this.translateResult.resultString,
-        from: this.translateResult.from,
-        to: this.translateResult.to,
-        engine: this.translateResult.engine,
-        transPara: this.translateResult.trans.paragraphs,
-        textPara: this.translateResult.origin.paragraphs,
-        chineseStyle: notEnglish(this.translateResult.to),
-      };
-    }
-    store.dispatch("setShared", sharedResult);
-    if (this.translateResult != undefined) {
-      if (this.get<boolean>("enableNotify")) {
-        eventBus.at("dispatch", "notify", sharedResult.translation);
-      }
-      logger.toast(
-        `翻译完成 ${this.getL(<Language>sharedResult.from)} -> ${this.getL(
-          <Language>sharedResult.to
-        )}`
-      );
-    } else {
-      logger.toast(`清空`);
-    }
-  }
-
-  postProcess(language: any, result: CopyTranslateResult) {
+  postProcess(language: any, result: SharedResult) {
     if (this.get<boolean>("autoCopy")) {
       clipboard.writeText(this.resultString);
       if (this.get<boolean>("autoPaste")) {
@@ -308,7 +290,7 @@ class TranslateController {
     let realOptions = 0;
     for (const [key, value] of colorRules) {
       if (key == "incrementalCopy") {
-        if (this.isIncremental()) {
+        if (this.isIncremental) {
           realOptions |= value;
         }
       } else if (this.get<boolean>(key)) {
@@ -361,8 +343,8 @@ class TranslateController {
   }
 
   async decideLanguage(text: string) {
-    const shouldSrc = this.source();
-    let destLang = this.target();
+    const shouldSrc = this.source;
+    let destLang = this.target;
     let srcLang = shouldSrc;
 
     let end = 50;
@@ -404,61 +386,71 @@ class TranslateController {
     };
   }
 
-  preProcess(text: string) {
-    this.lastAppend = text;
+  //做一些判断，设置需要的输入，之后所有的都应该和text无关了
+  async preTranslate(text: string) {
     this.setSrc(text);
-    this.setStatus("Translating");
+    this.needDict = this.isWord(this.text);
+  }
+
+  async updateLanguage() {
+    this.language = await this.decideLanguage(this.text);
   }
 
   postTranslate(
-    res: CopyTranslateResult,
+    res: SharedResult,
     language?: { source: Language; target: Language }
   ) {
     const resultString = normalizeAppend(
-      res.resultString,
+      res.translation,
       this.get("autoPurify")
     );
-
-    this.resultString = resultString;
-    res.resultString = resultString;
+    res.translation = resultString;
     this.postProcess(language, res);
   }
 
-  private async translate(text: string) {
-    if (this.translating || !this.checkLength(text)) {
+  private async translateWithOption(options: TranslateOption = {}) {
+    if (this.translating) {
       //保证翻译时不被打断
       return;
     }
+    if (options.clearResult) {
+      this.clearResult(); //在这里只清理结果，因为可能需要source做增量
+    }
     this.translating = true;
-    logger.debug("translate", text);
-    const multiSource = this.get<boolean>("multiSource");
+    this.setStatus("Translating");
 
+    if (options.text) {
+      await this.preTranslate(options.text); //设置字体之后就不应该再使用text了
+      logger.debug("tryTranslate", options.text);
+    }
+    if (options.updateLanguage) {
+      await this.updateLanguage();
+    }
+    this.realTranslate(true, options.dict);
+  }
+
+  realTranslate(correct: boolean = false, dict: boolean = false) {
+    if (!correct) {
+      throw "incorrect call";
+    }
+    const multiSource = this.get<boolean>("multiSource");
     if (multiSource) {
       //多源对比的时候指示灯应该是等全部翻译完了才出来
       eventBus.once("allTranslated", () => {
         this.translating = false;
-        this.setCurrentStatus();
+        this.setCurrentStatus(this.translateResult == undefined);
       });
     }
 
-    Promise.allSettled([
-      this.translateSentence(text),
-      this.queryDictionary(text),
-    ]).then(() => {
-      if (this.dictResult.words === this.text && !this.dictResult.valid) {
-        //同步词典结果
-        this.translating = false;
-        logger.debug("word fail");
-        this.syncDict(); //翻译完了，然后发现词典有问题，这个时候才发送
-        this.setCurrentStatus(true);
-      } else if (this.dictResult.words !== this.text && !this.translateResult) {
-        this.setCurrentStatus(true);
-        this.translating = false;
-      } else {
-        if (!multiSource) {
-          this.translating = false;
-          this.setCurrentStatus(); //多源对比的时候指示灯应该是等全部翻译完了才出来
-        }
+    let tasks = [this.translateSentence()];
+    if (dict && this.needDict) {
+      tasks.push(this.queryDictionary());
+    }
+
+    Promise.allSettled(tasks).then(() => {
+      this.translating = false;
+      if (!multiSource) {
+        this.setCurrentStatus(this.translateResult == undefined); //多源对比的时候指示灯应该是等全部翻译完了才出来
       }
     });
   }
@@ -467,9 +459,35 @@ class TranslateController {
     store.dispatch("setDictResult", this.dictResult);
   }
 
+  sync(language?: { source: Language; target: Language }) {
+    if (!language) {
+      language = {
+        source: this.source,
+        target: this.target,
+      };
+    }
+    let sharedResult: SharedResult = emptySharedResult();
+    if (this.translateResult != undefined) {
+      sharedResult = this.translateResult;
+    }
+    store.dispatch("setShared", sharedResult);
+    if (this.translateResult != undefined) {
+      if (this.get<boolean>("enableNotify")) {
+        eventBus.at("dispatch", "notify", sharedResult.translation);
+      }
+      logger.toast(
+        `翻译完成 ${this.getL(<Language>sharedResult.from)} -> ${this.getL(
+          <Language>sharedResult.to
+        )}`
+      );
+    } else {
+      logger.toast(`清空`);
+    }
+  }
+
   isWord(text: string) {
     text = trimEnd(text.trim(), ",.!?. ");
-    if (!this.get("smartDict") || !checkIsWord(text) || this.isIncremental()) {
+    if (!this.get("smartDict") || !checkIsWord(text) || this.isIncremental) {
       return false;
     }
     return true;
@@ -479,15 +497,9 @@ class TranslateController {
     logger.debug(text);
   }
 
-  async queryDictionary(text: string) {
-    const isWord = this.isWord(text);
-    this.dictFail("");
-    this.syncDict();
-    if (!isWord) {
-      return;
-    }
+  async queryDictionary() {
     return this.dictionary
-      .query(text)
+      .query(this.text)
       .then((res) => {
         if (res.explains.length != 0) {
           this.dictResult = {
@@ -501,16 +513,14 @@ class TranslateController {
       })
       .catch((e) => {
         logger.log("query dict fail");
-        this.dictFail(text);
       });
   }
 
-  async translateSentence(text: string) {
-    const language = await this.decideLanguage(text);
+  async translateSentence() {
+    const language = this.language;
     if (language.source == language.target) {
       return;
     }
-    this.preProcess(text);
     const activeEngines = this.get<TranslatorType[]>("translator-enabled");
     let engines = this.get<TranslatorType[]>("translator-cache");
     if (this.get<boolean>("multiSource")) {
@@ -521,7 +531,8 @@ class TranslateController {
       .translate(this.text, language.source, language.target, engines)
       .then((res) => this.postTranslate(res, language))
       .catch((err) => {
-        this.translateFail();
+        this.translateResult = undefined;
+        this.sync();
         logger.error(err);
         logger.toast("翻译失败");
       });
@@ -539,13 +550,13 @@ class TranslateController {
     this.syncSupportLanguages();
 
     //检查源语言是否支持
-    if (!this.translator.getSupportSourceLanguages().includes(this.source())) {
+    if (!this.translator.getSupportSourceLanguages().includes(this.source)) {
       this.controller.set("sourceLanguage", "en");
       valid = false;
     }
 
     //检查目标语言是否支持
-    if (!this.translator.getSupportSourceLanguages().includes(this.target())) {
+    if (!this.translator.getSupportTargetLanguages().includes(this.target)) {
       this.controller.set("targetLanguage", "zh-CN");
       valid = false;
     }
@@ -561,11 +572,11 @@ class TranslateController {
         this.postTranslate(buffer);
       } catch (e) {
         logger.debug(e);
-        this.translate(this.text);
+        this.translateWithOption({});
       }
     } else {
       logger.debug("fallback lang");
-      this.translate(this.text);
+      this.translateWithOption({ updateLanguage: true });
     }
   }
 
@@ -583,7 +594,7 @@ class TranslateController {
           throw Error("query dict fail");
         }
       } catch (e) {
-        this.dictFail(this.text);
+        this.clearDict();
       }
       this.syncDict();
     }
@@ -637,6 +648,9 @@ class TranslateController {
     }
     switch (identifier) {
       case "multiSource":
+        if (value == true) {
+          this.translateWithOption();
+        }
         break;
       case "googleMirror":
         this.translator.setUpGoogleOrigin();
@@ -651,10 +665,8 @@ class TranslateController {
         this.setWatch(value);
         break;
       case "targetLanguage":
-        this.translate(this.text);
-        break;
       case "sourceLanguage":
-        this.translate(this.text);
+        this.translateWithOption({ updateLanguage: true });
         break;
       case "autoFormat":
         if (value) {

@@ -24,7 +24,6 @@
       <DiffTextArea
         v-if="sharedResult && !dictResult.valid && multiSource"
         class="focusText max"
-        :allParts="sharedDiff.allParts"
         ref="diffText"
       ></DiffTextArea>
       <DictResultPanel
@@ -39,7 +38,8 @@
           sharedResult.engine !== '' &&
           sharedResult.engine !== currentEngine &&
           !multiSource &&
-          !dictResult.valid
+          !dictResult.valid &&
+          status != 'Translating'
         "
       >
         <a>

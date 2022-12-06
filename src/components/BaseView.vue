@@ -29,10 +29,10 @@ export default class BaseView extends Base {
       if (this.multiSource) {
         return "copytranslator";
       } else {
-        return this.$store.state.config.translatorType;
+        return this.config.translatorType;
       }
     } else {
-      return this.$store.state.config.dictionaryType;
+      return this.config.dictionaryType;
     }
   }
 
@@ -54,7 +54,6 @@ export default class BaseView extends Base {
   get sharedDiff() {
     return this.$store.state.sharedDiff;
   }
-
   get dictResult() {
     return this.$store.state.dictResult;
   }

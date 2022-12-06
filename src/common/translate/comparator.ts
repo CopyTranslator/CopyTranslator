@@ -1,6 +1,6 @@
 import eventBus from "../event-bus";
 import { Compound } from "./compound";
-import { CopyTranslateResult } from "./types";
+import { SharedResult, emptySharedDiff } from "./types";
 import { TranslatorType } from "@/common/types";
 import store from "@/store";
 import config from "../configuration";
@@ -19,8 +19,8 @@ export class Comparator {
       if (!config.get<boolean>("multiSource")) {
         return;
       }
-      const resultBuffer = this.compound.resultBuffer;
-      let results = new Map<TranslatorType, CopyTranslateResult>();
+      const resultBuffer = this.compound.resultBuffer.resultBufferMap;
+      let results = new Map<TranslatorType, SharedResult>();
       resultBuffer.forEach(function (value, key, map) {
         if (!!value) {
           results.set(key, value);
@@ -31,13 +31,10 @@ export class Comparator {
   }
 
   clear() {
-    store.dispatch("setDiff", {
-      text: "",
-      allParts: [],
-    });
+    store.dispatch("setDiff", emptySharedDiff());
   }
 
-  compareAll(results: Map<TranslatorType, CopyTranslateResult>) {
+  compareAll(results: Map<TranslatorType, SharedResult>) {
     let engines = [...results.keys()];
     engines.sort();
     let anchor = this.compound.mainEngine;
@@ -46,17 +43,17 @@ export class Comparator {
     }
     engines[engines.indexOf(anchor)] = engines[0]; //换一下位置
     engines[0] = anchor;
-    let anchorResult = results.get(anchor) as CopyTranslateResult;
+    let anchorResult = results.get(anchor) as SharedResult;
     const compareResults: CompareResult[] = [];
     for (let engine of engines) {
       let parts: any = undefined;
       if (engine == anchor) {
         parts = this.compare(
-          results.get(engines[1]) as CopyTranslateResult,
+          results.get(engines[1]) as SharedResult,
           anchorResult
         );
       } else {
-        let targetResult = results.get(engine) as CopyTranslateResult;
+        let targetResult = results.get(engine) as SharedResult;
         parts = this.compare(anchorResult, targetResult);
       }
 
@@ -71,16 +68,13 @@ export class Comparator {
     });
   }
 
-  compare(
-    anchorResult: CopyTranslateResult,
-    targetResult: CopyTranslateResult
-  ) {
-    let anchorParas = anchorResult.trans.paragraphs;
-    let targetParas = targetResult.trans.paragraphs;
+  compare(anchorResult: SharedResult, targetResult: SharedResult) {
+    let anchorParas = anchorResult.transPara;
+    let targetParas = targetResult.transPara;
     let all_parts = [];
     if (anchorParas.length != targetParas.length) {
-      anchorParas = [anchorResult.resultString];
-      targetParas = [targetResult.resultString];
+      anchorParas = [anchorResult.translation];
+      targetParas = [targetResult.translation];
     }
     for (let i = 0; i < anchorParas.length; i++) {
       let diffParts = Diff.diffWords(anchorParas[i], targetParas[i]);

@@ -222,12 +222,10 @@ class ActionManager {
     }
 
     function getLanguages(isSource: boolean = true): Language[] {
-      let langs = [];
-      if (isSource) {
-        langs = store.state.sourceLanguages;
-      } else {
-        langs = store.state.targetLanguages;
-      }
+      let langs: Language[] | undefined = isSource
+        ? config.get("sourceLanguages")
+        : config.get("targetLanguages");
+      langs = langs || [];
       return langs.filter((x) => {
         if (!isSource && x == "auto") {
           return false;

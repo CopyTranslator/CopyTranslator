@@ -44,11 +44,7 @@
         @keydown.ctrl.189="keyboardFontHandler($event, 'result')"
         @contextmenu="openMenu('contrastContext')"
       >
-        <DiffTextArea
-          v-if="multiSource"
-          class="hArea"
-          :allParts="sharedDiff.allParts"
-        ></DiffTextArea>
+        <DiffTextArea v-if="multiSource" class="hArea"></DiffTextArea>
         <CoTextArea
           v-else-if="!config['contrastDict'] || !dictResult.valid"
           class="hArea"
@@ -97,11 +93,7 @@
         tabindex="-1"
         @contextmenu="openMenu('contrastContext')"
       >
-        <DiffTextArea
-          v-if="multiSource"
-          class="vArea"
-          :allParts="sharedDiff.allParts"
-        ></DiffTextArea>
+        <DiffTextArea v-if="multiSource" class="vArea"></DiffTextArea>
         <CoTextArea
           class="vArea"
           v-else-if="!config['contrastDict'] || !dictResult.valid"

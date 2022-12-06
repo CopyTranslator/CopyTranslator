@@ -152,6 +152,9 @@ export const switchActionTypes = [
   "showGoogleMessage",
   "ignoreMouseEvents",
   "penerate",
+  "resultBuffer",
+  "sourceLanguages",
+  "targetLanguages",
 ] as const;
 
 //Electron 原生 角色

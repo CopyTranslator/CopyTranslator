@@ -2,7 +2,6 @@ const AipOcrClient = require("baidu-aip-sdk").ocr;
 import { examToken } from "@/common/translate/token";
 import eventBus from "@/common/event-bus";
 import conf from "@/common/configuration";
-import { defaultConfig } from "./views/utils";
 import { Language } from "@opentranslate/languages";
 import logger from "@/common/logger";
 const ShortcutCapture = require("shortcut-capture");
@@ -35,10 +34,12 @@ export class Recognizer {
 
   setUp(config: { app_id: string; api_key: string; secret_key: string }) {
     if (!examToken(config)) {
+      //修复config无效时依然client不为undefined
       this.client = undefined;
+    } else {
+      const { app_id, api_key, secret_key } = config;
+      this.client = new AipOcrClient(app_id, api_key, secret_key);
     }
-    const { app_id, api_key, secret_key } = config;
-    this.client = new AipOcrClient(app_id, api_key, secret_key);
   }
 
   capture() {

@@ -29,7 +29,8 @@
           sharedResult.engine !== '' &&
           sharedResult.engine !== currentEngine &&
           !dictResult.valid &&
-          !multiSource
+          !multiSource &&
+          status != 'Translating'
         "
       >
         <a>

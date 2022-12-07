@@ -43,18 +43,6 @@ export interface DiffParts {
   engine: TranslatorType;
 }
 
-export interface SharedDiff {
-  text: string;
-  allParts: DiffParts[];
-}
-
-export function emptySharedDiff(): SharedDiff {
-  return {
-    text: "",
-    allParts: [],
-  };
-}
-
 export type CopyTranslateResult = TranslateResult & {
   resultString: string;
 };

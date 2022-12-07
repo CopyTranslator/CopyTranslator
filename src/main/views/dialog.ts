@@ -34,37 +34,6 @@ export function showDragCopyWarning(controller: MainController) {
     });
 }
 
-const enHostsMessage =
-  "Google has stopped the translation service in the mainland. After version 10.2.3, the domestic mirror of Google Translate is used by default for translation. In theory, no additional settings are required. If there are still problems, please refer to the following link for settings.";
-const zhHostsMessage =
-  "谷歌停止了在大陆的翻译服务，10.2.3版本后默认使用谷歌翻译国内镜像进行翻译，理论上不需要额外设置，如果依然存在问题，请参考以下链接进行设置";
-
-export function showHostsWarning(controller: MainController) {
-  const t = store.getters.locale;
-  dialog
-    .showMessageBox(BrowserWindow.getAllWindows()[0], {
-      title: "提示/Message",
-      message: [enHostsMessage, zhHostsMessage].join("\n"),
-      buttons: [t["openReference"], t["neverShow"], "cancel"],
-      icon: icon,
-    })
-    .then((res) => res.response)
-    .then((response) => {
-      switch (response) {
-        case 0:
-          shell.openExternal(
-            "https://copytranslator.gitee.io/guide/questions.html#%E8%B0%B7%E6%AD%8C%E7%BF%BB%E8%AF%91%E9%80%80%E5%87%BA%E4%B8%AD%E5%9B%BD%E5%B8%82%E5%9C%BA%E7%9A%84%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88"
-          );
-          break;
-        case 1:
-          store.dispatch("updateConfig", {
-            showGoogleMessage: false,
-          });
-          break;
-      }
-    });
-}
-
 export function showHelpAndUpdate(controller: MainController) {
   const t = store.getters.locale;
   let buttons = [t["homepage"], t["userManual"], t["checkUpdate"], "cancel"];
@@ -101,49 +70,6 @@ const welcomeMessages = [
   "本软件免费开源，如果您是以付费的方式获得本软件，那么你应该是被骗了。[○･｀Д´･ ○]",
 ];
 
-function welcome(controller: MainController) {
-  const t = store.getters.locale;
-  const buttons = [
-    t["changelog"],
-    t["userManual"],
-    t["homepage"],
-    t["checkUpdate"],
-    t["neverShow"],
-    "cancel",
-  ];
-
-  dialog
-    .showMessageBox(BrowserWindow.getAllWindows()[0], {
-      title: constants.appName + " " + versionString,
-      message: welcomeMessages.join("\n"),
-      buttons: buttons,
-      cancelId: 3,
-      icon: icon,
-    })
-    .then((res) => res.response)
-    .then((response) => {
-      switch (response) {
-        case 0:
-          eventBus.at("dispatch", "changelog");
-          break;
-        case 1:
-          eventBus.at("dispatch", "userManual");
-          break;
-        case 2:
-          eventBus.at("dispatch", "homepage");
-          break;
-        case 3:
-          eventBus.at("dispatch", "checkUpdate");
-          break;
-        case 4:
-          store.dispatch("updateConfig", {
-            isNewUser: false,
-          });
-          break;
-      }
-    });
-}
-
 export function showConfigFile() {
   shell.openItem(env.configPath);
 }
@@ -155,7 +81,6 @@ const actionLinks = new Map<Identifier, Handler>([
   ["editConfigFile", showConfigFile],
   ["showConfigFolder", showConfigFolder],
   ["helpAndUpdate", showHelpAndUpdate],
-  ["welcome", welcome],
 ]);
 
 export default actionLinks;

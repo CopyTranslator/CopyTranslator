@@ -75,7 +75,6 @@ class ResultBufferManager {
 export class Compound {
   mainEngine: TranslatorType;
   config: AxiosRequestConfig;
-  running: number = 0;
   resultBuffer = new ResultBufferManager();
 
   text: string = "";
@@ -222,14 +221,12 @@ export class Compound {
         console.log(name, "不支持", from, "to", to);
         continue;
       } else {
-        this.translateWith(name, text, from, to);
+        this.translateWith(name, text, from, to).catch((err: any) => {
+          console.log(name, "translate error", err);
+        }); //这里catch一下就好了
       }
     }
     return mainResult;
-  }
-
-  async onAllTranslateFinish() {
-    eventBus.at("allTranslated", this.resultBuffer);
   }
 
   async translateWith(
@@ -242,7 +239,6 @@ export class Compound {
       //如果已经有缓存了,直接返回就行了
       return Promise.resolve(this.resultBuffer.get(engine) as SharedResult);
     }
-    this.running++;
     return getTranslator(engine)
       .translate(text, from, to, this.config)
       .then((res: TranslateResult) => {
@@ -250,22 +246,6 @@ export class Compound {
         return res;
       })
       .then(autoReSegment)
-      .catch((err: any) => {
-        console.log(engine, "translate error", err);
-        return null;
-      })
-      .then((res: any) => {
-        if (--this.running == 0) {
-          this.onAllTranslateFinish();
-        }
-        if (res == null) {
-          if (engine == this.mainEngine) {
-            throw "TRANSLATE ERROR";
-          }
-        } else {
-          return res;
-        }
-      })
       .then((result: CopyTranslateResult) => {
         return {
           text: result.text,

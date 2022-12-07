@@ -240,7 +240,6 @@ export const eventTypes = [
   "callback",
   "dispatch",
   "preSet",
-  "allTranslated",
 ] as const;
 
 export const displayTexts = [

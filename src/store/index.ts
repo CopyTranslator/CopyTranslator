@@ -5,7 +5,7 @@ import { Identifier } from "./plugins/types";
 import { updateViewPlugin, observePlugin, initState } from "./plugins";
 export * from "./plugins";
 import { registerLocale } from "./plugins/l10n";
-import { emptySharedResult, emptySharedDiff } from "@/common/translate/types";
+import { emptySharedResult } from "@/common/translate/types";
 import { emptyDictResult } from "@/common/dictionary/types";
 
 Vue.use(Vuex);
@@ -22,7 +22,6 @@ const store = new Vuex.Store({
   state: {
     status: "None",
     sharedResult: emptySharedResult(),
-    sharedDiff: emptySharedDiff(),
     dictResult: emptyDictResult(),
     config: {},
   },
@@ -32,9 +31,6 @@ const store = new Vuex.Store({
     },
     clearShared(state) {
       state.sharedResult = emptySharedResult();
-    },
-    setDiff(state, sharedDiff) {
-      state.sharedDiff = sharedDiff;
     },
     setDictResult(state, dictResult) {
       state.dictResult = dictResult;
@@ -54,9 +50,6 @@ const store = new Vuex.Store({
   actions: {
     setShared(context, sharedResult) {
       context.commit("setShared", sharedResult);
-    },
-    setDiff(context, sharedDiff) {
-      context.commit("setDiff", sharedDiff);
     },
     setDictResult(context, dictResult) {
       context.commit("setDictResult", dictResult);

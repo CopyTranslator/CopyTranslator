@@ -30,7 +30,6 @@ import eventBus from "@/common/event-bus";
 import logger from "@/common/logger";
 import { getLanguageLocales } from "@/common/translate/locale";
 import isTrad from "@/common/translate/detect-trad";
-import { Comparator } from "@/common/translate/comparator";
 import { examToken } from "@/common/translate/token";
 import { translators } from "@/common/translate/translators";
 import { getProxyAxios } from "@/common/translate/proxy";
@@ -66,8 +65,6 @@ class TranslateController {
 
   controller: MainController;
 
-  comparator: Comparator;
-
   get resultString() {
     if (this.translateResult) {
       return this.translateResult.translation;
@@ -78,7 +75,6 @@ class TranslateController {
 
   constructor(controller: MainController) {
     this.controller = controller;
-    this.comparator = new Comparator(this.translator);
   }
 
   onExit() {
@@ -212,7 +208,6 @@ class TranslateController {
     this.translateResult = undefined;
     this.sync();
     this.clearDict();
-    this.comparator.clear();
   }
 
   clearDict() {
@@ -433,14 +428,6 @@ class TranslateController {
     if (!correct) {
       throw "incorrect call";
     }
-    const multiSource = this.get<boolean>("multiSource");
-    if (multiSource) {
-      //多源对比的时候指示灯应该是等全部翻译完了才出来
-      eventBus.once("allTranslated", () => {
-        this.translating = false;
-        this.setCurrentStatus(this.translateResult == undefined);
-      });
-    }
 
     let tasks = [this.translateSentence()];
     if (dict && this.needDict) {
@@ -449,9 +436,7 @@ class TranslateController {
 
     Promise.allSettled(tasks).then(() => {
       this.translating = false;
-      if (!multiSource) {
-        this.setCurrentStatus(this.translateResult == undefined); //多源对比的时候指示灯应该是等全部翻译完了才出来
-      }
+      this.setCurrentStatus(this.translateResult == undefined);
     });
   }
 

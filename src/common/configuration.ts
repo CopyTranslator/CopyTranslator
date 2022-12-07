@@ -292,7 +292,7 @@ function initConfig(
   );
   config.setRule(
     "googleSource",
-    new UnionRule<GoogleSource>("simply", googleSources, "v10.2.5")
+    new UnionRule<GoogleSource>("google", googleSources, "v10.3.0")
   );
   config.setRule(
     "fallbackTranslator",

@@ -1,8 +1,4 @@
-import {
-  Translator,
-  Language,
-  TranslateResult,
-} from "@opentranslate/translator";
+import { TranslateResult } from "@opentranslate/translator";
 import compact from "lodash.compact";
 import sum from "lodash.sum";
 import trim from "lodash.trim";
@@ -113,8 +109,7 @@ export function reSegment(
   const src_counts = src_sentences.map((sentence) =>
     countSentences(sentence, splitFunc)
   );
-
-  const dest_counts = result.map((sentence) =>
+  const dest_counts = dst_sentences.map((sentence) =>
     countSentences(sentence, splitDstFunc)
   );
 

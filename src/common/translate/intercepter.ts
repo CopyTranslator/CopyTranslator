@@ -339,8 +339,11 @@ export abstract class InterceptTranslator<
       }, 10000); //Prevent infinitely waiting for the result.
       this.startService().then(() => {
         clearTimeout(timeoutId);
+        console.log(this.name, "启动完成");
         resolve(0);
       });
+    }).catch(() => {
+      console.log(this.name, "启动失败");
     }); //等待结束
   }
 }
@@ -435,6 +438,8 @@ export class Tencent extends InterceptTranslator<IntercepterConfig> {
     // console.log("开始等待", this.name);
     await new Promise((resolve, reject) => {
       const timeoutId = setTimeout(() => {
+        this.restart();
+        console.log(this.name, "翻译失败，已自动重启");
         reject({ status: 408, errorMsg: "Request timeout!" });
       }, TIMEOUT); //Prevent infinitely waiting for the result.
       this.localBus.once("unlocked", () => {
@@ -557,6 +562,7 @@ export class Deepl extends InterceptTranslator<DeeplConfig> {
     await new Promise((resolve, reject) => {
       const timeoutId = setTimeout(() => {
         this.restart(); //自动重启
+        console.log(this.name, "翻译失败，已自动重启");
         reject({ status: 408, errorMsg: "Request timeout!" });
       }, TIMEOUT * 2); //Prevent infinitely waiting for the result.
       this.localBus.once("unlocked", () => {
@@ -669,6 +675,7 @@ export class Bing extends InterceptTranslator<BingConfig> {
     await new Promise((resolve, reject) => {
       const timeoutId = setTimeout(() => {
         this.restart(); //自动重启
+        console.log(this.name, "翻译失败，已自动重启");
         reject({ status: 408, errorMsg: "Request timeout!" });
       }, TIMEOUT); //Prevent infinitely waiting for the result.
       this.localBus.once("unlocked", () => {

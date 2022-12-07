@@ -6,7 +6,6 @@
 import { RouteActionType } from "../common/types";
 import Vue from "vue";
 import Component from "vue-class-component";
-import bus from "@/common/event-bus";
 
 @Component
 export default class WindowController extends Vue {

@@ -134,18 +134,17 @@ export default class BaseView extends Base {
       `https://www.google.com/search?q=${this.getModifiedText()}`
     );
   }
-
-  getModifiedText(): string {
-    return "";
+  // 要支持translateInput必须要实现该方法
+  getModifiedText(): string | undefined {
+    return undefined;
   }
 
   translate() {
     const text = this.getModifiedText();
+    if (text == undefined) {
+      return;
+    }
     eventBus.at("dispatch", "translate", text);
-    this.$store.dispatch("clearShared");
-    this.$store.dispatch("setDictResult", {
-      valid: false,
-    });
   }
 
   created() {

@@ -166,5 +166,8 @@
     "<tooltip>transparency": "transparency of the window",
     "configSnapshot": "Appearance Snapshot",
     "newConfigSnapshot": "New ConfigSnapshot",
-    "fontColor": "Choose Font Color"
+    "fontColor": "Choose Font Color",
+    "backgroundColor": "Choose Background Color",
+    "delConfigSnapshot": "Delete ConfigSnapshot",
+    "<tooltip>translateInput": "You can translate by pressing Ctrl+Enter in the original text box. You don't need to click this"
 }

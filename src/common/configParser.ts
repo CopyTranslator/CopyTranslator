@@ -166,6 +166,12 @@ class ConfigParser {
     }
   }
 
+  private updateSnapshots(snapshots: ConfigSnapshots) {
+    this.set("configSnapshots", snapshots);
+    bus.iat("configSnapshot"); //通知快照列表更新
+    bus.iat("delConfigSnapshot");
+  }
+
   newSnapshot(name: string) {
     const snapshot: ConfigSnapshot = JSON.parse(
       JSON.stringify(this.getConfig2Save())
@@ -179,8 +185,18 @@ class ConfigParser {
       ...snapshots,
       [name]: snapshot,
     };
-    this.set("configSnapshots", newSnapshots);
-    bus.iat("configSnapshot"); //通知快照列表更新
+    this.updateSnapshots(newSnapshots);
+  }
+
+  delSnapshot(name: string) {
+    const snapshots = this.get<ConfigSnapshots>("configSnapshots");
+    if (snapshots[name] != undefined) {
+      delete snapshots[name];
+    }
+    const newSnapshots = {
+      ...snapshots,
+    };
+    this.updateSnapshots(newSnapshots);
   }
 
   resumeSnapshot(name: string) {

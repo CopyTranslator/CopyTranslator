@@ -26,7 +26,7 @@ export const zh_cn = new Map<LocaleKey, string>([
   ["autoShow", "自动显示"],
   ["settings", "设置"],
   ["viewSource", "查看原文"],
-  ["localeSetting", "区域设置"],
+  ["localeSetting", "界面语言"],
   ["return", "返回"],
   ["retryTranslate", "重试翻译"],
   ["dragCopy", "拖拽复制"],
@@ -127,6 +127,7 @@ export const zh_cn = new Map<LocaleKey, string>([
   ],
   ["primaryColor", "选择主题颜色"],
   ["fontColor", "选择字体颜色"],
+  ["backgroundColor", "选择背景颜色"],
   [
     "<tooltip>primaryColor",
     "您可以随意选择任意颜色，软件会实时更新，你可以直接看到效果",
@@ -200,12 +201,15 @@ export const zh_cn = new Map<LocaleKey, string>([
   ["addNewActionButton", "添加新的动作按钮"],
   ["chooseIconPrompt", "点这里获取可选图标字段"],
   ["penerate", "鼠标穿透"],
-  ["transparency", "透明度"],
+  ["transparency", "背景透明度"],
   ["titlebarHeight", "标题栏高度"],
   ["<tooltip>penerate", "使得你可以透过窗口操作其他程序"],
   ["<tooltip>transparency", "窗口透明度"],
   ["configSnapshot", "切换配置快照"],
   ["newConfigSnapshot", "拍摄配置快照"],
+  ["delConfigSnapshot", "删除配置快照"],
+  ["<tooltip>translateInput", "在原文框Ctrl+Enter即可翻译，不需要点这个"],
+  ["translator-compare", "多源对比引擎"],
 ]);
 
 export const en = new Map<LocaleKey, string>([
@@ -422,6 +426,7 @@ export const en = new Map<LocaleKey, string>([
   ],
   ["primaryColor", "Choose Primary Color"],
   ["fontColor", "Choose Font Color"],
+  ["backgroundColor", "Choose Background Color"],
   [
     "<tooltip>primaryColor",
     "You can choose any color at will. The software will update in real time, and you can see the effect directly",
@@ -465,11 +470,17 @@ export const en = new Map<LocaleKey, string>([
   ["translateClipboard", "Translate Clipboard"],
   ["incrementCounter", "Incremental Copy Once"],
   ["penerate", "mouse penerate"],
-  ["transparency", "transparency"],
+  ["transparency", "UI transparency"],
   ["titlebarHeight", "Titlebar Height"],
   ["<tooltip>penerate", "Allows you to operate other programs through windows"],
   ["<tooltip>transparency", "transparency of the window"],
   ["configSnapshot", "Switch Config Snapshot"],
   ["newConfigSnapshot", "New ConfigSnapshot"],
+  ["delConfigSnapshot", "Delete ConfigSnapshot"],
+  [
+    "<tooltip>translateInput",
+    "You can translate by pressing Ctrl+Enter in the original text box. You don't need to click this",
+  ],
+  ["translator-compare", "Multi source comparison engines"],
 ]);
 export type Locale = typeof en;

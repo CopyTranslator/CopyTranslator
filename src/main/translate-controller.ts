@@ -118,8 +118,10 @@ class TranslateController {
         logger.toast("已复制原文");
         break;
       case "copyResult":
-        clipboard.writeText(this.resultString);
-        logger.toast("已复制译文");
+        if (!param) {
+          clipboard.writeText(this.resultString);
+          logger.toast("已复制译文");
+        }
         break;
       case "pasteResult":
         this.handle("copyResult", null);
@@ -266,6 +268,7 @@ class TranslateController {
   }
 
   postProcess(language: any, result: SharedResult) {
+    this.translateResult = result; //BUG FIX: 因为resultString是依赖于result的，所以要先设置一下
     if (this.get<boolean>("autoCopy")) {
       clipboard.writeText(this.resultString);
       if (this.get<boolean>("autoPaste")) {
@@ -277,7 +280,6 @@ class TranslateController {
     if (this.get<boolean>("autoShow")) {
       eventBus.at("dispatch", "showWindow");
     }
-    this.translateResult = result;
     this.sync(language);
   }
 

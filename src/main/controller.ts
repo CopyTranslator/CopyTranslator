@@ -79,6 +79,9 @@ class Controller extends MainController {
       case "newConfigSnapshot":
         this.config.newSnapshot(param as string);
         break;
+      case "delConfigSnapshot":
+        this.config.delSnapshot(param as string);
+        break;
       case "configSnapshot":
         this.config.resumeSnapshot(param as string);
         break;
@@ -121,7 +124,6 @@ class Controller extends MainController {
         this.win.closeByName(param as RouteActionType);
         break;
       case "closeWindow":
-        this.win.saveBounds(); //修复直接退出时没有保存布局设置的问题
         this.win.closeByName("contrast");
         break;
       case "showWindow":

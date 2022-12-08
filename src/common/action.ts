@@ -303,12 +303,10 @@ class ActionManager {
     this.append(listAction("googleSource", googleSources, "translation"));
     this.append(constantAction("googleMirror", "translation"));
 
-    this.append(typeAction("color_picker", "primaryColor", "appearance"));
-    this.append(typeAction("color_picker", "fontColor", "appearance"));
-    this.append(constantAction("contentFontFamily", "appearance"));
-    this.append(constantAction("interfaceFontFamily", "appearance"));
     this.append(listAction("colorMode", colorModes, "appearance"));
-
+    this.append(typeAction("color_picker", "fontColor", "appearance"));
+    this.append(typeAction("color_picker", "backgroundColor", "appearance"));
+    this.append(typeAction("color_picker", "primaryColor", "appearance"));
     this.append(
       listAction(
         "transparency",
@@ -320,9 +318,17 @@ class ActionManager {
     this.append(
       paramNormalAction("configSnapshot", getConfigSnapshotNames, "appearance")
     );
-
+    this.append(
+      paramNormalAction(
+        "delConfigSnapshot",
+        getConfigSnapshotNames,
+        "appearance"
+      )
+    );
     this.append(listAction("titlebarHeight", heights, "appearance"));
     this.append(switchAction("penerate", "appearance"));
+    this.append(constantAction("contentFontFamily", "appearance"));
+    this.append(constantAction("interfaceFontFamily", "appearance"));
     this.append(selectAction("localeSetting", localeGenerator, "appearance"));
     this.append(listAction("hideDirect", hideDirections, "appearance"));
     this.append(listAction("layoutType", layoutTypes, "appearance"));

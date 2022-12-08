@@ -249,7 +249,7 @@ export default class Contrast extends Mixins(BaseView, WindowController) {
       return {
         "border-width": "0px 1px 1px 1px",
         "border-style": "solid",
-        "border-color": this.$vuetify.theme.currentTheme.primary,
+        "border-color": this.barColor,
       };
     }
   }
@@ -268,7 +268,9 @@ export default class Contrast extends Mixins(BaseView, WindowController) {
 
   get backgroundColor() {
     const alpha = 1 - this.config.transparency; //不透明度
-    const bgColor = this.$vuetify.theme.dark ? "#121212" : "#FFFFFF";
+    const bgColor = this.$vuetify.theme.dark
+      ? this.config.backgroundColor.dark
+      : this.config.backgroundColor.light;
     const rgb = hexToRgb(bgColor as string);
     return `rgba(${rgb.r},${rgb.g},${rgb.b},${alpha})`;
   }

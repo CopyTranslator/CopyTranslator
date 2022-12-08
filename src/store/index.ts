@@ -29,9 +29,6 @@ const store = new Vuex.Store({
     setShared(state, sharedResult) {
       state.sharedResult = sharedResult;
     },
-    clearShared(state) {
-      state.sharedResult = emptySharedResult();
-    },
     setDictResult(state, dictResult) {
       state.dictResult = dictResult;
     },
@@ -62,9 +59,6 @@ const store = new Vuex.Store({
     },
     updateConfig(context, config) {
       context.commit("updateConfig", config);
-    },
-    clearShared(context) {
-      context.commit("clearShared");
     },
   },
   modules: {},

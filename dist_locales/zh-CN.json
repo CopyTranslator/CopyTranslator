@@ -24,7 +24,7 @@
     "autoShow": "自动显示",
     "settings": "设置",
     "viewSource": "查看原文",
-    "localeSetting": "区域设置",
+    "localeSetting": "界面语言",
     "return": "返回",
     "retryTranslate": "重试翻译",
     "dragCopy": "拖拽复制",
@@ -115,6 +115,7 @@
     "googlePrompt": "v10.3.0版本后谷歌翻译默认使用Simply源，理论上不需要额外设置，如果依然存在问题，可以尝试切换google翻译源",
     "primaryColor": "选择主题颜色",
     "fontColor": "选择字体颜色",
+    "backgroundColor": "选择背景颜色",
     "<tooltip>primaryColor": "您可以随意选择任意颜色，软件会实时更新，你可以直接看到效果",
     "copyButton": "点击复制译文，右键复制原文",
     "closeButton": "点击最小化，右键退出程序",
@@ -161,10 +162,12 @@
     "addNewActionButton": "添加新的动作按钮",
     "chooseIconPrompt": "点这里获取可选图标字段",
     "penerate": "鼠标穿透",
-    "transparency": "透明度",
+    "transparency": "背景透明度",
     "titlebarHeight": "标题栏高度",
     "<tooltip>penerate": "使得你可以透过窗口操作其他程序",
     "<tooltip>transparency": "窗口透明度",
     "configSnapshot": "切换配置快照",
-    "newConfigSnapshot": "拍摄配置快照"
+    "newConfigSnapshot": "拍摄配置快照",
+    "delConfigSnapshot": "删除配置快照",
+    "<tooltip>translateInput": "在原文框Ctrl+Enter即可翻译，不需要点这个"
 }

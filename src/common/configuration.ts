@@ -92,6 +92,10 @@ function initConfig(
     new ColorRule({ light: "#000000", dark: "#FFFFFF" })
   );
   config.setRule(
+    "backgroundColor",
+    new ColorRule({ light: "#FFFFFF", dark: "#121212" })
+  );
+  config.setRule(
     "contentFontFamily",
     new TypeRule<string>(
       '"Microsoft YaHei", Arial, Helvetica, sans-serif, "宋体"'

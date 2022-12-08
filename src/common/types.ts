@@ -44,6 +44,7 @@ export const normalActionTypes = [
   "openReference",
   "configSnapshot", //恢复snapshot
   "newConfigSnapshot", //创建新snapshot
+  "delConfigSnapshot", //删除快照
 ] as const;
 
 //切换值的动作
@@ -70,6 +71,7 @@ export const constantActionTypes = [
   "activeWindows",
   "primaryColor",
   "fontColor",
+  "backgroundColor",
   "interfaceFontFamily",
   "contentFontFamily",
   "titlebarHeight",

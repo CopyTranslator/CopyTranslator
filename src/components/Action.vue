@@ -34,8 +34,8 @@
                 :disabled="
                   rules.map((rule) => rule(text) == true).includes(false)
                 "
-                >{{ trans[identifier] }}</SimpleButton
-              >
+                >{{ trans[identifier] }}
+              </SimpleButton>
             </v-card>
           </v-dialog>
           <v-menu offset-y v-else-if="action.actionType === 'param_normal'">
@@ -149,11 +149,7 @@ export default class Action extends Base {
   ];
 
   get tooltip(): undefined | string {
-    if (
-      !this.action ||
-      this.action.actionType === "normal" ||
-      this.action.actionType === "prompt"
-    ) {
+    if (!this.action || this.action.actionType === "prompt") {
       return undefined;
     }
     const tp = this.trans[`<tooltip>${this.action.id}`];

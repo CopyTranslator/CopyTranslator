@@ -110,6 +110,9 @@ export class WindowManager {
 
   closeByName(routeName: RouteActionType) {
     if (this.windows.has(routeName)) {
+      if (routeName == "contrast") {
+        this.saveBounds(); //修复直接退出时没有保存布局设置的问题
+      }
       (<BrowserWindow>this.windows.get(routeName)).close();
       this.windows.delete(routeName);
     }

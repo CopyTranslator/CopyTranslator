@@ -162,7 +162,7 @@
     "addNewActionButton": "添加新的动作按钮",
     "chooseIconPrompt": "点这里获取可选图标字段",
     "penerate": "鼠标穿透",
-    "transparency": "背景透明度",
+    "transparency": "界面透明度",
     "titlebarHeight": "标题栏高度",
     "<tooltip>penerate": "使得你可以透过窗口操作其他程序",
     "<tooltip>transparency": "窗口透明度",

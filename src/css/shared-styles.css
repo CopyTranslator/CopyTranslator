@@ -1,3 +1,60 @@
 .v-toolbar__content {
-    padding: 0px !important;
+  padding: 0px !important;
+}
+
+.baidu {
+  background-image: url("../images/baidu.svg");
+}
+
+.google {
+  background-image: url("../images/google.svg");
+}
+
+.caiyun {
+  background-image: url("../images/caiyun.png");
+}
+
+.keyan {
+  background-image: url("../images/keyan.svg");
+}
+
+.sogou {
+  background-image: url("../images/sogou.svg");
+}
+
+.youdao {
+  background-image: url("../images/youdao.png");
+}
+
+.bing {
+  background-image: url("../images/bing.png");
+}
+
+.deepl {
+  background-image: url("../images/deepl.svg");
+}
+
+.tencent {
+  background-image: url("../images/tencent.png");
+}
+
+.baidu-domain-electronics {
+  background-image: url("../images/electronics.svg");
+}
+
+.baidu-domain-mechanics {
+  background-image: url("../images/mechanics.svg");
+}
+
+.baidu-domain-medicine {
+  background-image: url("../images/medicine.svg");
+}
+
+.copytranslator {
+  background-image: url("../images/icon.png");
+}
+
+.engineBtnBase {
+  background-position: center;
+  background-size: contain;
 }

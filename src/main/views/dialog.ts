@@ -1,7 +1,7 @@
 import { dialog, BrowserWindow, shell } from "electron";
 import { env, icon } from "../../common/env";
 import store from "../../store";
-import { constants, versionString } from "../../common/constant";
+import { constants, version } from "../../common/constant";
 import eventBus from "../../common/event-bus";
 import { Identifier } from "../../common/types";
 import { Handler, MainController } from "../../common/controller";
@@ -40,7 +40,7 @@ export function showHelpAndUpdate(controller: MainController) {
 
   dialog
     .showMessageBox(BrowserWindow.getAllWindows()[0], {
-      title: constants.appName + " " + versionString,
+      title: constants.appName + " " + version,
       message:
         "If you found it useful, please give me a star on GitHub or introduce to your friend.\n如果您感觉本软件对您有所帮助，请在项目Github上给个star或是介绍给您的朋友，谢谢。\n本软件免费开源，如果您是以付费的方式获得本软件，那么你应该是被骗了。[○･｀Д´･ ○]",
       buttons: buttons,

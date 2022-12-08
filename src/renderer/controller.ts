@@ -15,7 +15,7 @@ import config from "../common/configuration";
 Vue.use(Toasted, Options);
 import logger, { initLog } from "../common/logger";
 
-import { constants, versionString } from "../common/constant";
+import { constants, version } from "../common/constant";
 import { RenController, MainController } from "../common/controller";
 import { createProxy } from "../proxy/renderer";
 import { ColorConfig } from "@/common/rule";
@@ -49,7 +49,7 @@ export class RendererController extends RenController {
 
   notify(text: string) {
     if (text.length > 0) {
-      new Notification(constants.appName + " " + versionString, {
+      new Notification(constants.appName + " " + version, {
         body: text,
       });
     }

@@ -1,20 +1,18 @@
 export const constants = {
   appName: "CopyTranslator",
   nickName: "破晓",
-  version: "10.3.0",
-  stage: "stable",
+  version: "11.0.0",
+  stage: "beta",
   changelogs: "https://copytranslator.gitee.io/changelogs/v10.html",
   wiki: "https://copytranslator.gitee.io/guide",
   homepage: "https://copytranslator.gitee.io",
   downloadPage: "https://copytranslator.gitee.io/guide/download.html",
 };
-export const versionString = [
-  "v" + constants.version,
-  constants.nickName,
-  constants.stage,
-].join(" ");
-
-export const version = versionString;
+const terms = ["v" + constants.version, constants.nickName];
+if (constants.stage != "stable") {
+  terms.push(constants.stage);
+}
+export const version = terms.join(" ");
 
 export function compatible(configVersion: string): boolean {
   if (configVersion.indexOf("beta") != -1 && configVersion != version) {
@@ -40,7 +38,7 @@ export function compatible(configVersion: string): boolean {
     }
     for (const i of [0]) {
       //v10之后都是兼容的
-      if (currentInfos[i] !== configInfos[i]) {
+      if (configInfos[i] < 10) {
         return false;
       }
     }

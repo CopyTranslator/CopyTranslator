@@ -2,9 +2,28 @@
   <div contenteditable="true" :style="colorStyle">
     <div>
       <div v-for="(result, engine) in resultBuffer" :key="engine">
-        <span style="color: red; font-size: 15px;"> {{ engine }} </span>
+        <v-btn
+          v-bind:class="[engine, 'engineBtnBase']"
+          icon
+          width="18px"
+          height="18px"
+        ></v-btn>
+        <span style="color: red; font-size: 15px; text-transform: capitalize;">
+          {{ engine }}
+        </span>
+        <v-btn
+          v-if="result.status !== 'Translating'"
+          color="primary"
+          icon
+          class="btn"
+          width="18px"
+          height="18px"
+          @click="callback('copyResult', engine)"
+        >
+          <v-icon size="18px"> mdi-content-copy </v-icon>
+        </v-btn>
         <v-progress-circular
-          v-if="result.status == 'Translating'"
+          v-else
           :size="15"
           :width="2"
           color="primary"
@@ -17,7 +36,7 @@
           @click="toKeyan()"
           style="font-size: 15px;"
         >
-          <span>来⾃棵岩翻译 免费⼀键翻译全⽂>>></span>
+          <span>&nbsp;来⾃棵岩翻译 免费⼀键翻译全⽂>>></span>
         </a>
         <br />
         <div v-bind:style="diffStyle">
@@ -43,6 +62,7 @@ import { Mixins, Component } from "vue-property-decorator";
 import BaseView from "./BaseView.vue";
 import { ResultBuffer } from "@/common/translate/types";
 import { compareAll, CompareResult } from "@/renderer/comparator";
+import "@/css/shared-styles.css";
 
 @Component
 export default class DiffTextArea extends Mixins(BaseView) {
@@ -99,4 +119,9 @@ export default class DiffTextArea extends Mixins(BaseView) {
 /* span:hover {
   background: #fee972;
 } */
+
+.btn {
+  padding: 0px !important;
+  min-width: 0px !important;
+}
 </style>

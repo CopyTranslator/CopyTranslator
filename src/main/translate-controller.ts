@@ -1,7 +1,11 @@
 import { Compound } from "../common/translate/compound";
 import { Polymer } from "../common/dictionary/polymer";
 import { Language, Translator } from "@opentranslate/translator";
-import { emptySharedResult, SharedResult } from "../common/translate/types";
+import {
+  emptySharedResult,
+  ResultBuffer,
+  SharedResult,
+} from "../common/translate/types";
 import { colorRules, getColorRule, KeyConfig } from "../common/rule";
 import {
   normalizeAppend,
@@ -13,6 +17,7 @@ import {
   ColorStatus,
   TranslatorType,
   translatorTypes,
+  mapToObj,
 } from "../common/types";
 import trimEnd from "lodash.trimend";
 import simulate from "./simulate";
@@ -91,6 +96,16 @@ class TranslateController {
     });
   }
 
+  getResultBuffer(engine: TranslatorType | "all") {
+    if (engine == "all") {
+      return mapToObj(
+        this.translator.resultBuffer.resultBufferMap
+      ) as ResultBuffer;
+    } else {
+      return this.translator.resultBuffer.resultBufferMap.get(engine);
+    }
+  }
+
   handle(identifier: Identifier, param: any): boolean {
     switch (identifier) {
       case "capture":
@@ -121,6 +136,17 @@ class TranslateController {
         if (!param) {
           clipboard.writeText(this.resultString);
           logger.toast("已复制译文");
+        } else {
+          //带参数的话就是复制特定的引擎的结果
+          const buffer = this.getResultBuffer(param) as
+            | SharedResult
+            | undefined;
+          if (buffer && buffer.status != "Translating") {
+            clipboard.writeText(buffer.translation);
+            console.log("复制成功", param);
+          } else {
+            console.log("复制失败", param);
+          }
         }
         break;
       case "pasteResult":
@@ -228,15 +254,27 @@ class TranslateController {
 
   checkValid(text: string) {
     if (
-      this.resultString == text ||
       this.text == text ||
       this.lastAppend == text ||
-      text == ""
+      text == "" ||
+      this.matchAnyResults(text)
     ) {
       return false;
     } else {
       return true;
     }
+  }
+
+  matchAnyResults(text: string) {
+    const buffers = this.getResultBuffer("all") || {};
+    for (const buffer of Object.values(buffers)) {
+      if (buffer && buffer.status != "Translating") {
+        if (buffer.translation == text) {
+          return true;
+        }
+      }
+    }
+    return false;
   }
 
   checkClipboard() {

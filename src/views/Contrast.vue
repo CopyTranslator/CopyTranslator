@@ -4,7 +4,14 @@
       <v-dialog v-model="dialog">
         <Tips></Tips>
       </v-dialog>
-      <v-app-bar app :color="barColor" dark dense :height="titlebarHeight">
+      <v-app-bar
+        app
+        :color="barColor"
+        dark
+        dense
+        :height="titlebarHeight"
+        :flat="config.penerate"
+      >
         <ActionButton
           v-if="!config.penerate"
           left_click="drawer"
@@ -70,19 +77,16 @@
             class="dragableDiv"
             style="display: flex;"
           >
-            <ActionButton icon="mdi-drag" style="margin: auto;"></ActionButton>
+            <ActionButton
+              icon="mdi-cursor-move"
+              style="margin: auto;"
+            ></ActionButton>
           </div>
           <ActionButton
             v-if="config.penerate"
             left_click="drawer"
             right_click="settings"
             icon="mdi-menu"
-          ></ActionButton>
-          <ActionButton
-            class="action-btn"
-            left_click="transparency|1.0"
-            right_click="transparency|0.0"
-            icon="mdi-opacity"
           ></ActionButton>
           <ActionButton
             class="action-btn"
@@ -238,21 +242,17 @@ export default class Contrast extends Mixins(BaseView, WindowController) {
   get area() {
     return {
       "margin-top": this.titlebarHeight,
-      width: `${(this.windowWidth - this.barWidth - 1).toString()}px`,
+      width: `${(this.windowWidth - this.barWidth).toString()}px`,
       "font-family": this.config.contentFontFamily,
     };
   }
 
   get transparentArea() {
-    if (this.config.transparency == 0) {
-      return {};
-    } else {
-      return {
-        "border-width": "0px 1px 1px 1px",
-        "border-style": "solid",
-        "border-color": this.barColor,
-      };
-    }
+    return {
+      "border-width": "0px 1px 1px 1px",
+      "border-style": "solid",
+      "border-color": this.barColor,
+    };
   }
 
   get drawer(): boolean {

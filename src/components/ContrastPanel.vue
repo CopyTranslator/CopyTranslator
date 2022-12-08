@@ -329,7 +329,7 @@ export default class ContrastPanel extends Mixins(BaseView) {
 
   get maxParent() {
     return {
-      height: `calc(100vh - 1px - ${this.titlebarHeight})`,
+      height: `calc(100vh - ${this.titlebarHeight})`,
       width: "100%",
       padding: "0px",
     };

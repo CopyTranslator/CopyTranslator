@@ -8,7 +8,7 @@
         small
         depressed
         tile
-        :outlined="config.transparency > 0 && onContrast"
+        :outlined="config.transparency > 0.5 && onContrast"
         class="btn"
         :height="btnSize.height"
         :width="btnSize.width"

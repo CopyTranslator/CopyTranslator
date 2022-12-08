@@ -51,7 +51,7 @@ export const zh_cn = new Map<LocaleKey, string>([
   ["showWindow", "显示窗口"],
   ["translateClipboard", "翻译剪贴板"],
   ["incrementCounter", "单次增量复制"],
-  ["enumerateLayouts", "遍历布局"],
+  ["enumerateLayouts", "切换布局"],
   ["enableNotify", "启用通知"],
   ["smartTranslate", "智能互译"],
   ["capture", "截图翻译"],

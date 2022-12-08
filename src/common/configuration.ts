@@ -249,7 +249,6 @@ function initConfig(
   const predefinedActionButtons: ActionButton[] = [
     {
       icon: "mdi-view-quilt",
-      tooltip: "layoutButton",
       left_click: "enumerateLayouts",
       right_click: "incrementCounter",
     },
@@ -257,13 +256,11 @@ function initConfig(
       left_click: "copyResult",
       right_click: "copySource",
       icon: "mdi-content-copy",
-      tooltip: "copyButton",
     },
     {
       left_click: "minimize",
       right_click: "closeWindow",
       icon: "mdi-window-minimize",
-      tooltip: "closeButton",
     },
   ];
 

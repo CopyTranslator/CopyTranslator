@@ -93,7 +93,7 @@ class Controller extends MainController {
         this.win.get("settings").show();
         break;
       case "enumerateLayouts":
-        this.enumerateLayouts(!!param);
+        this.enumerateLayouts(true);
         break;
       case "restoreMultiDefault":
         this.restoreMultiDefault(param);

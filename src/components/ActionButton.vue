@@ -26,7 +26,7 @@
 import { Prop, Component, Mixins } from "vue-property-decorator";
 import BaseView from "./BaseView.vue";
 import bus from "../common/event-bus";
-import { layoutTypes, PredefinedActionButton } from "../common/types";
+import { PredefinedActionButton } from "../common/types";
 
 @Component({
   components: {},
@@ -40,10 +40,29 @@ export default class Action extends Mixins(BaseView) {
   @Prop({ default: true }) readonly onContrast!: boolean;
 
   get tooltipText(): undefined | string {
-    if (this.trans[this.tooltip] != undefined) {
-      return this.trans[this.tooltip];
+    if (this.tooltip == undefined) {
+      let descs = [];
+      if (this.left_click != undefined) {
+        descs.push(`点击${this.getActionName(this.left_click)}`);
+      }
+      if (this.right_click != undefined) {
+        descs.push(`右键${this.getActionName(this.right_click)}`);
+      }
+      return descs.join("，");
     } else {
-      return this.tooltip;
+      if (this.trans[this.tooltip] != undefined) {
+        return this.trans[this.tooltip];
+      } else {
+        return this.tooltip;
+      }
+    }
+  }
+
+  getActionName(name: string) {
+    if (this.trans[name]) {
+      return this.trans[name];
+    } else {
+      return name;
     }
   }
 

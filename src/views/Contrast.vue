@@ -6,8 +6,9 @@
       </v-dialog>
       <v-app-bar app :color="barColor" dark dense :height="titlebarHeight">
         <ActionButton
-          v-if="!isMini"
+          v-if="!config.penerate"
           left_click="drawer"
+          right_click="settings"
           icon="mdi-menu"
         ></ActionButton>
         <div class="noSelect">
@@ -64,18 +65,18 @@
           </v-card>
         </v-menu>
         <div class="d-flex flex-row" style="height: 100%; padding-right: 1px;">
-          <div v-if="isMini" class="dragableDiv" style="display: flex;">
+          <div
+            v-if="config.penerate"
+            class="dragableDiv"
+            style="display: flex;"
+          >
             <ActionButton icon="mdi-drag" style="margin: auto;"></ActionButton>
           </div>
           <ActionButton
-            v-if="isMini"
+            v-if="config.penerate"
             left_click="drawer"
+            right_click="settings"
             icon="mdi-menu"
-          ></ActionButton>
-          <ActionButton
-            class="action-btn"
-            left_click="penerate"
-            icon="mdi-cursor-pointer"
           ></ActionButton>
           <ActionButton
             class="action-btn"

@@ -16,7 +16,7 @@
           </p>
         </div>
         <v-spacer
-          style="height: 100%;"
+          style="height: calc(100% - 1px); padding-top: 1px;"
           @mouseover="penerate(true)"
           @mouseleave="penerate(false)"
         >

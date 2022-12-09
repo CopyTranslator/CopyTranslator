@@ -18,6 +18,7 @@ const plugins = [
   updateViewPlugin,
 ];
 
+// renderer在config里存放多层的对象，可能会出现丢失的情况，尽量不要这样子做，应该像Languages那样
 const store = new Vuex.Store({
   state: {
     status: "None",

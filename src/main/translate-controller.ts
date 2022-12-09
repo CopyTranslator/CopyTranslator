@@ -546,6 +546,7 @@ class TranslateController {
       engines = this.get<TranslatorType[]>("translator-compare");
     }
     engines = engines.filter((engine) => activeEngines.includes(engine));
+    engines.sort();
     return this.translator
       .translate(this.text, language.source, language.target, engines)
       .then((res) => this.postTranslate(res, language))

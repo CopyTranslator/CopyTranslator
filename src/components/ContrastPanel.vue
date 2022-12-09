@@ -42,7 +42,6 @@
         tabindex="-1"
         @keydown.ctrl.187="keyboardFontHandler($event, 'result')"
         @keydown.ctrl.189="keyboardFontHandler($event, 'result')"
-        @contextmenu="openMenu('contrastContext')"
       >
         <DiffTextArea v-if="multiSource" class="hArea"></DiffTextArea>
         <CoTextArea
@@ -66,6 +65,7 @@
         @keydown.ctrl.187="keyboardFontHandler($event, 'source')"
         @keydown.ctrl.189="keyboardFontHandler($event, 'source')"
         @keyup.ctrl.13="translate"
+        @contextmenu="openMenu('contrastContext')"
       >
         <textarea
           v-bind:style="sourceFontStyle"
@@ -75,7 +75,6 @@
           @keyup.ctrl.80="command"
           class="vArea"
           v-model="sharedResult.text"
-          @contextmenu="openMenu('contrastContext')"
         ></textarea>
       </div>
       <div
@@ -91,7 +90,6 @@
         @keydown.ctrl.187="keyboardFontHandler($event, 'result')"
         @keydown.ctrl.189="keyboardFontHandler($event, 'result')"
         tabindex="-1"
-        @contextmenu="openMenu('contrastContext')"
       >
         <DiffTextArea v-if="multiSource" class="vArea"></DiffTextArea>
         <CoTextArea

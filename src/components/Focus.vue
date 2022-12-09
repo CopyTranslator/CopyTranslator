@@ -10,13 +10,13 @@
       @keyup.ctrl.71.capture="google"
       @keyup.ctrl.66.capture="baidu"
       @keyup.ctrl.80.capture="command"
-      @contextmenu="openMenu('focusContext')"
       v-on:drop="dragTranslate"
     >
       <div
         v-if="(mode === 'normal'|| mode==='none')"
         style="height: 100%;"
         v-bind:style="focusStyle"
+        @contextmenu="openMenu('focusContext')"
       >
         <div v-if="(config.focusSource && mode=='normal')">
           <div>原文：</div>

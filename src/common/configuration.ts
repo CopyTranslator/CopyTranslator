@@ -195,7 +195,8 @@ function initConfig(
         "settings",
         "exit",
       ],
-      identifiers
+      identifiers,
+      "v11.0.0"
     )
   );
 
@@ -204,24 +205,23 @@ function initConfig(
     new GroupRule<Identifier>(
       [
         "configSnapshot",
-        "copySource",
-        "copyResult",
-        "pasteResult",
         "clear",
         "retryTranslate",
         "autoCopy",
         "autoPaste",
-        "incrementalCopy",
+        "incrementCounter",
         "autoHide",
         "autoShow",
-        "dragCopy",
         "stayTop",
         "listenClipboard",
+        "dragCopy",
+        "copySource",
+        "copyResult",
         "settings",
         "exit",
       ],
       identifiers,
-      "v10.3.0"
+      "v11.0.0"
     )
   );
 
@@ -243,7 +243,8 @@ function initConfig(
         "translateInput",
         "settings",
       ],
-      identifiers
+      identifiers,
+      "v11.0.0"
     )
   );
 
@@ -269,7 +270,7 @@ function initConfig(
     predefined: predefinedActionButtons,
     check: (vals: ActionButton[]) =>
       !vals.map(isValidActionButton).includes(false),
-    minimalVersion: "v10.2.5",
+    minimalVersion: "v11.0.0",
   });
 
   //不要在config里存放过于复杂的东西，老老实实用store的action

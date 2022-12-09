@@ -77,6 +77,7 @@ export const constantActionTypes = [
   "titlebarHeight",
   "configSnapshots",
   "transparency",
+  "actionButtons",
 ] as const;
 
 export const interceptTranslatorTypes = ["bing", "deepl", "tencent"] as const;
@@ -186,6 +187,7 @@ export const menuActionTypes = [
   "contrastPanel", //面板上显示的
   "contrastContext", //上下文
   "focusContext", //上下文
+  "diffContext",
   "focusRight", // 按钮右键
   "switches", //设置的开关面板
   "options", //设置的选项面板
@@ -195,7 +197,6 @@ export const menuActionTypes = [
   "tray", //任务栏托盘右键菜单
   "allActions",
   "translatorGroups",
-  "actionButtons",
 ] as const;
 
 export const translatorGroups = [

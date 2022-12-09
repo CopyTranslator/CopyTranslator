@@ -1,5 +1,9 @@
 <template>
-  <div contenteditable="true" :style="colorStyle">
+  <div
+    contenteditable="true"
+    :style="colorStyle"
+    @contextmenu="openMenu('diffContext')"
+  >
     <div>
       <div
         v-for="(result, engine) in resultBuffer"

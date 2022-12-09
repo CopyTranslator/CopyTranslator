@@ -1,5 +1,5 @@
 <template>
-  <div contenteditable="true">
+  <div contenteditable="true" @contextmenu="openMenu('contrastContext')">
     <div style="height: 100%;">
       <div v-if="chineseStyle">
         <span

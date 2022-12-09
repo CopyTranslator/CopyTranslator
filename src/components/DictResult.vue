@@ -4,6 +4,7 @@
     class="dict"
     v-bind:style="dictStyle"
     v-if="dictResult && dictResult.valid"
+    @contextmenu="openMenu('contrastContext')"
   >
     <p class="dictSrc noMargin">[{{ dictResult.words }}]</p>
     <div v-if="dictResult.phonetics.length != 0">

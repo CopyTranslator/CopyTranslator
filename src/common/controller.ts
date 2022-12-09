@@ -77,8 +77,21 @@ export abstract class CommonController {
         case "constant":
         case "config":
         case "color_picker":
-        case "multi_select":
           this.set(identifier, param);
+          break;
+        case "multi_select":
+          if (param instanceof Array) {
+            this.set(identifier, param);
+          } else {
+            let currentItems = [...this.get<string[]>(identifier)];
+            const idx = currentItems.indexOf(param);
+            if (idx == -1) {
+              currentItems.push(param);
+            } else {
+              currentItems.splice(idx, 1);
+            }
+            this.set(identifier, currentItems);
+          }
           break;
         case "checkbox":
           if (param == undefined) {

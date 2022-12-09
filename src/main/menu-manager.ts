@@ -77,7 +77,11 @@ export class MenuManager {
       for (const subMenuItem of menuItem.submenu) {
         if (subMenuItem.type == "checkbox") {
           const { identifier, param } = decompose(subMenuItem.id);
-          subMenuItem.checked = param == value;
+          if (action.actionType == "multi_select") {
+            subMenuItem.checked = (<Array<string>>value).includes(param);
+          } else {
+            subMenuItem.checked = param == value;
+          }
         } else if (subMenuItem.type == "normal") {
         } else {
           throw "invalid submenu item type";

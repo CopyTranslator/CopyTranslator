@@ -181,6 +181,33 @@ class ActionManager {
       }
     }
 
+    //列表类型，是select的一种特化
+    function genericListAction(
+      actionType: ActionInitOpt["actionType"],
+      identifier: Identifier,
+      list: any,
+      cate?: Category,
+      needLocale: boolean = false,
+      postLocaleFunc?: PostLocaleFunc
+    ): ActionInitOpt {
+      if (!needLocale) {
+        return {
+          actionType,
+          id: identifier,
+          submenu: subMenuGenerator(identifier, list, false),
+          cate,
+        };
+      } else {
+        return {
+          actionType,
+          id: identifier,
+          cate,
+          subMenuGenerator: () =>
+            subMenuGenerator(identifier, list, true, postLocaleFunc),
+        };
+      }
+    }
+
     //动态生成子菜单
     function selectAction(
       identifier: Identifier,
@@ -328,7 +355,6 @@ class ActionManager {
     this.append(constantAction("contentFontFamily", "appearance"));
     this.append(constantAction("interfaceFontFamily", "appearance"));
     this.append(selectAction("localeSetting", localeGenerator, "appearance"));
-    this.append(switchAction("focusSource", "appearance"));
     this.append(listAction("hideDirect", hideDirections, "appearance"));
     this.append(listAction("layoutType", layoutTypes, "appearance"));
 
@@ -350,6 +376,7 @@ class ActionManager {
     this.append(switchAction("enableDoubleCopyTranslate", "advance"));
     this.append(switchAction("smartDict", "advance"));
     this.append(switchAction("contrastDict", "advance"));
+    this.append(switchAction("focusSource", "advance"));
     this.append(switchAction("enableNotify", "advance"));
     this.append(switchAction("autoPurify", "advance"));
     this.append(switchAction("toastTip", "advance"));
@@ -395,7 +422,16 @@ class ActionManager {
 
     //引擎组设置
     translatorGroups.forEach((id) => {
-      this.append(typeAction("multi_select", id));
+      this.append(
+        genericListAction(
+          "multi_select",
+          id,
+          translatorTypes,
+          undefined,
+          false,
+          undefined
+        )
+      );
     });
 
     //显示文本的动作
@@ -492,10 +528,13 @@ class ActionManager {
         });
         break;
       case "focusContext":
-        contain = ["copy", "paste", "cut", "clear"];
+        contain = ["copy", "paste", "cut", "copyResult", "copySource"];
         break;
       case "contrastContext":
-        contain = ["copy", "paste", "cut", "clear", "copyResult", "copySource"];
+        contain = ["copy", "paste", "cut", "copyResult", "copySource"];
+        break;
+      case "diffContext":
+        contain = ["copy", "paste", "cut", "copySource", "translator-compare"];
         break;
       default:
         if (categories.includes(optionType as Category)) {

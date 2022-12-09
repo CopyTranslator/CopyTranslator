@@ -15,7 +15,7 @@
         @click="handle(left_click, true)"
         @contextmenu="handle(right_click, false)"
       >
-        <v-icon :size="btnSize.height">{{ icon }}</v-icon>
+        <v-icon :size="btnSize.font">{{ icon }}</v-icon>
       </v-btn>
     </template>
     <span>{{ tooltipText }}</span>
@@ -85,6 +85,7 @@ export default class Action extends Mixins(BaseView) {
     return {
       height: this.titlebarHeight,
       width: `${this.titlebarHeightVal + 8}px`,
+      font: Math.ceil(this.titlebarHeightVal * 0.7),
     };
   }
 }

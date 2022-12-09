@@ -172,5 +172,7 @@
     "<tooltip>translateInput": "在原文框Ctrl+Enter即可翻译，不需要点这个",
     "translator-compare": "多源对比引擎",
     "focusSource": "专注模式原文",
-    "<tooltip>focusSource": "在专注模式显示原文"
+    "<tooltip>focusSource": "在专注模式显示原文",
+    "left_click": "点击",
+    "right_click": "右键"
 }

@@ -259,6 +259,8 @@ export const displayTexts = [
   "multiSourceButton",
   "addNewActionButton",
   "chooseIconPrompt",
+  "left_click",
+  "right_click",
 ] as const; //一些显示在界面上的文本
 
 export type Role = typeof roles[number];

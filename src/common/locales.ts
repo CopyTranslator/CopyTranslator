@@ -212,6 +212,8 @@ export const zh_cn = new Map<LocaleKey, string>([
   ["translator-compare", "多源对比引擎"],
   ["focusSource", "专注模式原文"],
   ["<tooltip>focusSource", "在专注模式显示原文"],
+  ["left_click", "点击"],
+  ["right_click", "右键"],
 ]);
 
 export const en = new Map<LocaleKey, string>([
@@ -486,5 +488,7 @@ export const en = new Map<LocaleKey, string>([
   ["translator-compare", "Multi source comparison engines"],
   ["focusSource", "Focus Source"],
   ["<tooltip>focusSource", "Show Source in Focus Mode"],
+  ["left_click", "Click to"],
+  ["right_click", "Right Click to"],
 ]);
 export type Locale = typeof en;

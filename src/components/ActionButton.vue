@@ -43,10 +43,14 @@ export default class Action extends Mixins(BaseView) {
     if (this.tooltip == undefined) {
       let descs = [];
       if (this.left_click != undefined) {
-        descs.push(`点击${this.getActionName(this.left_click)}`);
+        descs.push(
+          `${this.trans["left_click"]}${this.getActionName(this.left_click)}`
+        );
       }
       if (this.right_click != undefined) {
-        descs.push(`右键${this.getActionName(this.right_click)}`);
+        descs.push(
+          `${this.trans["right_click"]}${this.getActionName(this.right_click)}`
+        );
       }
       return descs.join("，");
     } else {

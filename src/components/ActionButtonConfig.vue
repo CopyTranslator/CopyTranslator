@@ -100,10 +100,18 @@ export default class ActionButtonConfig extends Base {
     if (actionButton.tooltip == undefined) {
       let descs = [];
       if (actionButton.left_click != undefined) {
-        descs.push(`点击${this.getActionName(actionButton.left_click)}`);
+        descs.push(
+          `${this.trans["left_click"]}${this.getActionName(
+            actionButton.left_click
+          )}`
+        );
       }
       if (actionButton.right_click != undefined) {
-        descs.push(`右键${this.getActionName(actionButton.right_click)}`);
+        descs.push(
+          `${this.trans["right_click"]}${this.getActionName(
+            actionButton.right_click
+          )}`
+        );
       }
       return descs.join("|");
     } else {

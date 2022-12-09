@@ -172,5 +172,7 @@
     "<tooltip>translateInput": "You can translate by pressing Ctrl+Enter in the original text box. You don't need to click this",
     "translator-compare": "Multi source comparison engines",
     "focusSource": "Focus Source",
-    "<tooltip>focusSource": "Show Source in Focus Mode"
+    "<tooltip>focusSource": "Show Source in Focus Mode",
+    "left_click": "Click to",
+    "right_click": "Right Click to"
 }

@@ -235,10 +235,9 @@ class ActionManager {
     }
 
     function createLanguageGenerator(
-      identifier: Identifier,
       isSource: boolean = true
-    ): () => Array<SubActionView> {
-      return () => {
+    ): SubMenuGenerator {
+      return (identifier: string) => {
         const l = getLanguageLocales(store.getters.localeSetting);
         return getLanguages(isSource).map((e) => {
           return {
@@ -330,6 +329,7 @@ class ActionManager {
     this.append(constantAction("contentFontFamily", "appearance"));
     this.append(constantAction("interfaceFontFamily", "appearance"));
     this.append(selectAction("localeSetting", localeGenerator, "appearance"));
+    this.append(switchAction("focusSource", "appearance"));
     this.append(listAction("hideDirect", hideDirections, "appearance"));
     this.append(listAction("layoutType", layoutTypes, "appearance"));
 
@@ -409,19 +409,8 @@ class ActionManager {
         this.append(roleAction(role));
       });
 
-    this.append(
-      selectAction(
-        "sourceLanguage",
-        createLanguageGenerator("sourceLanguage", true)
-      )
-    );
-
-    this.append(
-      selectAction(
-        "targetLanguage",
-        createLanguageGenerator("targetLanguage", false)
-      )
-    );
+    this.append(selectAction("sourceLanguage", createLanguageGenerator(true)));
+    this.append(selectAction("targetLanguage", createLanguageGenerator(false)));
 
     this.append(
       listAction("dragCopyMode", dragCopyModes, undefined, true, (x) =>

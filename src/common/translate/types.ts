@@ -28,6 +28,7 @@ export function emptySharedResult(overrides = {}): SharedResult {
     engine: "",
     transPara: [],
     textPara: [],
+    status: "None",
     chineseStyle: false,
     ...overrides,
   };

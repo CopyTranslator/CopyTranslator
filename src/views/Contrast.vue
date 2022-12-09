@@ -18,8 +18,12 @@
           right_click="settings"
           icon="mdi-menu"
         ></ActionButton>
-        <div class="noSelect">
-          <p style="margin: auto;" class="hidden-mobile" v-if="!isMini">
+        <div class="noSelect" style="overflow: hidden;">
+          <p
+            style="margin-top: auto; margin-bottom: auto; white-space: nowrap;"
+            class="hidden-mobile"
+            v-if="!isMini"
+          >
             {{ trans[layoutType] }}
           </p>
         </div>

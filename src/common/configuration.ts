@@ -45,6 +45,7 @@ function initConfig(
   config.setRule("stayTop", new TypeRule<boolean>(true));
   config.setRule("smartDict", new TypeRule<boolean>(true));
   config.setRule("contrastDict", new TypeRule<boolean>(true));
+  config.setRule("focusSource", new TypeRule<boolean>(false));
   config.setRule("smartTranslate", new TypeRule<boolean>(true));
   config.setRule("autoPaste", new TypeRule<boolean>(false));
   config.setRule("autoHide", new TypeRule<boolean>(false));

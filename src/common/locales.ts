@@ -210,6 +210,8 @@ export const zh_cn = new Map<LocaleKey, string>([
   ["delConfigSnapshot", "删除配置快照"],
   ["<tooltip>translateInput", "在原文框Ctrl+Enter即可翻译，不需要点这个"],
   ["translator-compare", "多源对比引擎"],
+  ["focusSource", "专注模式原文"],
+  ["<tooltip>focusSource", "在专注模式显示原文"],
 ]);
 
 export const en = new Map<LocaleKey, string>([
@@ -482,5 +484,7 @@ export const en = new Map<LocaleKey, string>([
     "You can translate by pressing Ctrl+Enter in the original text box. You don't need to click this",
   ],
   ["translator-compare", "Multi source comparison engines"],
+  ["focusSource", "Focus Source"],
+  ["<tooltip>focusSource", "Show Source in Focus Mode"],
 ]);
 export type Locale = typeof en;

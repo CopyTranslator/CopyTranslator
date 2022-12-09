@@ -157,6 +157,7 @@ export const switchActionTypes = [
   "resultBuffer",
   "sourceLanguages",
   "targetLanguages",
+  "focusSource",
 ] as const;
 
 //Electron 原生 角色

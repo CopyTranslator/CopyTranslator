@@ -170,5 +170,7 @@
     "backgroundColor": "Choose Background Color",
     "delConfigSnapshot": "Delete ConfigSnapshot",
     "<tooltip>translateInput": "You can translate by pressing Ctrl+Enter in the original text box. You don't need to click this",
-    "translator-compare": "Multi source comparison engines"
+    "translator-compare": "Multi source comparison engines",
+    "focusSource": "Focus Source",
+    "<tooltip>focusSource": "Show Source in Focus Mode"
 }

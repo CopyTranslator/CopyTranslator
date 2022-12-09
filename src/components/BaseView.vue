@@ -8,6 +8,7 @@ import { shell } from "electron";
 import eventBus from "@/common/event-bus";
 import logger from "@/common/logger";
 import Base from "./Base.vue";
+import { SharedResult } from "@/common/translate/types";
 
 type Name = "result" | "source" | "diff" | "dict";
 
@@ -48,7 +49,7 @@ export default class BaseView extends Base {
     this.set("layoutType", layoutType);
   }
 
-  get sharedResult() {
+  get sharedResult(): SharedResult {
     return this.$store.state.sharedResult;
   }
   get dictResult() {
@@ -155,6 +156,19 @@ export default class BaseView extends Base {
     return {
       "font-family": this.config.interfaceFontFamily,
     };
+  }
+
+  get mode() {
+    if (this.multiSource) {
+      return "diff";
+    }
+    if (this.config.smartDict && this.dictResult.valid) {
+      return "dict";
+    }
+    if (this.sharedResult.status === "None") {
+      return "none";
+    }
+    return "normal";
   }
 
   command() {

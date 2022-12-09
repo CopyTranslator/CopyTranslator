@@ -34,6 +34,34 @@ export function showDragCopyWarning(controller: MainController) {
     });
 }
 
+const enWarning2 =
+  "You have enabled the white list mode of drag and drop replication, but there are no programs in the white list. Please go to Settings ->Drag and drop replication to add the programs to be dragged and copied to the white list, or drag and drop replication will not work properly.";
+const zhWarning2 =
+  "您启用了拖拽复制的白名单模式，然而白名单中没有任何程序，请您前往 设置->拖拽复制 把需要拖拽复制的程序加入白名单中，否则拖拽复制无法正常工作。";
+
+export function showDragCopyEmptyWhitelistWarning(controller: MainController) {
+  const t = store.getters.locale;
+  dialog
+    .showMessageBox(BrowserWindow.getAllWindows()[0], {
+      title: "声明/Warning",
+      message: [enWarning2, zhWarning2].join("\n"),
+      buttons: [t["neverShow"], t["ok"]],
+      icon: icon,
+    })
+    .then((res) => res.response)
+    .then((response) => {
+      switch (response) {
+        case 0:
+          store.dispatch("updateConfig", {
+            neverShow: true,
+          });
+          break;
+        case 1:
+          break;
+      }
+    });
+}
+
 export function showHelpAndUpdate(controller: MainController) {
   const t = store.getters.locale;
   let buttons = [t["homepage"], t["userManual"], t["checkUpdate"], "cancel"];

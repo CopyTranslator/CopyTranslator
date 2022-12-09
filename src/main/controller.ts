@@ -16,7 +16,10 @@ import { app, shell } from "electron";
 import store, { observers, restoreFromConfig } from "../store";
 import { TranslateController } from "./translate-controller";
 import { l10n, L10N } from "./l10n";
-import actionLinks, { showDragCopyWarning } from "./views/dialog";
+import actionLinks, {
+  showDragCopyWarning,
+  showDragCopyEmptyWhitelistWarning,
+} from "./views/dialog";
 import { resetAllConfig } from "./file-related";
 import { MainController } from "../common/controller";
 import { UpdateChecker } from "./views/update";
@@ -177,12 +180,20 @@ class Controller extends MainController {
         this.l10n.updateLocale(this.get("localeSetting"));
         break;
       case "dragCopy":
-        if (
-          value == true &&
-          this.get<DragCopyMode>("dragCopyMode") === "dragCopyGlobal" &&
-          !this.get("neverShow") //只在全局模式才show出来
-        ) {
-          showDragCopyWarning(this);
+        if (value == true) {
+          if (
+            this.get<DragCopyMode>("dragCopyMode") === "dragCopyGlobal" &&
+            !this.get("neverShow")
+          ) {
+            //只在全局模式才show出来
+            showDragCopyWarning(this);
+          }
+          if (
+            this.get<DragCopyMode>("dragCopyMode") === "dragCopyWhiteList" &&
+            this.get<string[]>("dragCopyWhiteList").length == 0 //白名单模式且白名单为空则警告
+          ) {
+            showDragCopyEmptyWhitelistWarning(this);
+          }
         }
         break;
       case "stayTop":

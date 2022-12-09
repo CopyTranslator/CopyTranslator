@@ -154,9 +154,6 @@ export const switchActionTypes = [
   "showGoogleMessage",
   "ignoreMouseEvents",
   "penerate",
-  "resultBuffer",
-  "sourceLanguages",
-  "targetLanguages",
   "focusSource",
 ] as const;
 

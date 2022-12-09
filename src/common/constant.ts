@@ -36,11 +36,8 @@ export function compatible(configVersion: string): boolean {
     if (configCount > currentCount) {
       return false; //回退到旧版本要把整个配置文件重置一下，避免冲突
     }
-    for (const i of [0]) {
-      //v10之后都是兼容的
-      if (configInfos[i] < 10) {
-        return false;
-      }
+    if (configInfos[0] < 10) {
+      return false;
     }
     return true;
   } catch (e) {

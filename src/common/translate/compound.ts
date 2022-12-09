@@ -22,6 +22,7 @@ import {
   Tencent,
   InterceptTranslator,
 } from "@/common/translate/intercepter";
+import store from "@/store";
 
 class ResultBufferManager {
   public resultBufferMap = new Map<TranslatorType, SharedResult | undefined>();
@@ -43,7 +44,7 @@ class ResultBufferManager {
         resultBuffer[engine] = emptySharedResult({ status: "Translating" });
       }
     }
-    config.set("resultBuffer", resultBuffer);
+    store.dispatch("setResultBuffer", resultBuffer);
   }
 
   extend(engines: TranslatorType[]) {

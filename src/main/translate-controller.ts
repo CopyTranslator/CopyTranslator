@@ -177,16 +177,10 @@ class TranslateController {
   }
 
   syncSupportLanguages() {
-    this.controller.set(
-      "sourceLanguages",
-      this.translator.getSupportSourceLanguages()
-    );
-    this.controller.set(
-      "targetLanguages",
-      this.translator.getSupportTargetLanguages()
-    );
-    bus.iat("sourceLanguage"); //更新界面上的source和target列表
-    bus.iat("targetLanguage");
+    store.dispatch("setLanguages", {
+      sources: this.translator.getSupportSourceLanguages(),
+      targets: this.translator.getSupportTargetLanguages(),
+    }); //update-view插件会帮我们处理的
   }
 
   get<T>(identifier: Identifier) {

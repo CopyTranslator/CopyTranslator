@@ -94,7 +94,7 @@ export default class DiffTextArea extends Mixins(BaseView) {
   }
 
   get resultBuffer(): ResultBuffer {
-    return this.config.resultBuffer;
+    return this.$store.state.resultBuffer;
   }
 
   get diffStyle() {

@@ -272,10 +272,7 @@ function initConfig(
     minimalVersion: "v10.2.5",
   });
 
-  //临时缓存,这些都是不保存的
-  config.setRule("resultBuffer", { predefined: {} }, false);
-  config.setRule("sourceLanguages", { predefined: [] }, false);
-  config.setRule("targetLanguages", { predefined: [] }, false);
+  //不要在config里存放过于复杂的东西，老老实实用store的action
 
   //与翻译有关的
   config.setRule(

@@ -24,6 +24,8 @@ const store = new Vuex.Store({
     sharedResult: emptySharedResult(),
     dictResult: emptyDictResult(),
     config: {},
+    languages: { sources: [], targets: [] },
+    resultBuffer: {},
   },
   mutations: {
     setShared(state, sharedResult) {
@@ -34,6 +36,12 @@ const store = new Vuex.Store({
     },
     setStatus(state, status) {
       state.status = status;
+    },
+    setLanguages(state, languages) {
+      Vue.set(state, "languages", languages);
+    },
+    setResultBuffer(state, resultBuffer) {
+      Vue.set(state, "resultBuffer", resultBuffer);
     },
     setConfig(state, config) {
       Vue.set(state, "config", config);
@@ -53,6 +61,12 @@ const store = new Vuex.Store({
     },
     setStatus(context, status) {
       context.commit("setStatus", status);
+    },
+    setLanguages(context, languages) {
+      context.commit("setLanguages", languages);
+    },
+    setResultBuffer(context, resultBuffer) {
+      context.commit("setResultBuffer", resultBuffer);
     },
     setConfig(context, config) {
       context.commit("setConfig", config);

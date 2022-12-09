@@ -48,10 +48,10 @@
     <div style="font-size: 15px; position: absolute; right: 0px; bottom: 5px;">
       <div
         v-if="
+          status !== 'Translating' &&
           mode === 'normal' &&
           sharedResult.engine !== '' &&
-          sharedResult.engine !== currentEngine &&
-          status != 'Translating'
+          sharedResult.engine !== currentEngine
         "
       >
         <a>

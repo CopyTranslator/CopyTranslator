@@ -700,10 +700,10 @@ class TranslateController {
         break;
       case "translatorType":
         this.switchTranslator(value as TranslatorType);
-        break;
+        return true; //在这里直接返回，不要设置状态
       case "dictionaryType":
         this.switchDictionary(value as DictionaryType);
-        break;
+        return true; //在这里直接返回，不要设置状态
       case "baidu-ocr":
         recognizer.setUp(this.get("baidu-ocr"));
         break;

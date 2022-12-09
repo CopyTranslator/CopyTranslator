@@ -26,11 +26,10 @@
     <div style="font-size: 15px; position: absolute; right: 0px; bottom: 5px;">
       <div
         v-if="
+          status !== 'Translating' &&
           sharedResult.engine !== '' &&
           sharedResult.engine !== currentEngine &&
-          !dictResult.valid &&
-          !multiSource &&
-          status != 'Translating'
+          mode === 'normal'
         "
       >
         <a>

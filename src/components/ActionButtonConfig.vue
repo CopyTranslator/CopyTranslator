@@ -3,9 +3,18 @@
     <v-expansion-panels style="height: 100%;">
       <draggable v-model="buttons" style="width: 100%;" :disabled="!drag">
         <v-expansion-panel v-for="(button, index) in buttons" :key="index">
-          <v-expansion-panel-header
-            >[{{ index }}] {{ button.tooltip }}</v-expansion-panel-header
-          >
+          <v-expansion-panel-header style="text-align: left;">
+            <div style="display: flex;">
+              <v-icon style="margin-top: auto; margin-bottom: auto;">{{
+                button.icon
+              }}</v-icon>
+              <p
+                style="margin-top: auto; margin-bottom: auto; margin-left: 5px;"
+              >
+                {{ tooltipText(button) }}
+              </p>
+            </div>
+          </v-expansion-panel-header>
           <v-expansion-panel-content>
             <div @mouseover="drag = false" @mouseleave="drag = true">
               <div style="text-align: center;">
@@ -78,6 +87,33 @@ interface Option {
 export default class ActionButtonConfig extends Base {
   actionCandidates: Option[] = [];
   drag: boolean = true;
+
+  getActionName(name: string) {
+    if (this.trans[name]) {
+      return this.trans[name];
+    } else {
+      return name;
+    }
+  }
+
+  tooltipText(actionButton: ActionButton): undefined | string {
+    if (actionButton.tooltip == undefined) {
+      let descs = [];
+      if (actionButton.left_click != undefined) {
+        descs.push(`点击${this.getActionName(actionButton.left_click)}`);
+      }
+      if (actionButton.right_click != undefined) {
+        descs.push(`右键${this.getActionName(actionButton.right_click)}`);
+      }
+      return descs.join("|");
+    } else {
+      if (this.trans[actionButton.tooltip] != undefined) {
+        return this.trans[actionButton.tooltip];
+      } else {
+        return actionButton.tooltip;
+      }
+    }
+  }
 
   mounted() {
     this.actionCandidates = [

@@ -1,5 +1,5 @@
 <template>
-  <v-tooltip bottom open-delay="100" :disabled="!tooltipText">
+  <v-tooltip bottom open-delay="100" :disabled="(!tooltipText||!onContrast)">
     <template v-slot:activator="{ on, attrs }">
       <v-btn
         v-bind="attrs"

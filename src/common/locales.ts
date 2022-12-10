@@ -216,6 +216,7 @@ export const zh_cn = new Map<LocaleKey, string>([
   ["right_click", "右键"],
   ["snapshotPrompt", "请输入快照名"],
   ["snapshotValidate", "快照名不能为空且不能包含'|'"],
+  ["gotoSetting", "前往设置"],
 ]);
 
 export const en = new Map<LocaleKey, string>([
@@ -494,5 +495,6 @@ export const en = new Map<LocaleKey, string>([
   ["right_click", "Right Click to"],
   ["snapshotPrompt", "Please Input Snapshot Name"],
   ["snapshotValidate", "Must not be empty or contain character '|'"],
+  ["gotoSetting", "Goto Setting"],
 ]);
 export type Locale = typeof en;

@@ -176,5 +176,6 @@
     "left_click": "点击",
     "right_click": "右键",
     "snapshotPrompt": "请输入快照名",
-    "snapshotValidate": "快照名不能为空且不能包含'|'"
+    "snapshotValidate": "快照名不能为空且不能包含'|'",
+    "gotoSetting": "前往设置"
 }

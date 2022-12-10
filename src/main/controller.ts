@@ -129,7 +129,7 @@ class Controller extends MainController {
         this.onExit();
         break;
       case "settings":
-        this.win.get("settings").show();
+        this.win.showSettings(param);
         break;
       case "enumerateLayouts":
         this.enumerateLayouts(true);

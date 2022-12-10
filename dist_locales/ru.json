@@ -176,5 +176,6 @@
     "left_click": "Click to",
     "right_click": "Right Click to",
     "snapshotPrompt": "Please Input Snapshot Name",
-    "snapshotValidate": "Must not be empty or contain character '|'"
+    "snapshotValidate": "Must not be empty or contain character '|'",
+    "gotoSetting": "Goto Setting"
 }

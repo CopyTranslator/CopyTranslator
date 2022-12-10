@@ -12,7 +12,9 @@ import { defaultConfig, MinimalParam, loadRoute, insertStyles } from "./utils";
 import config from "@/common/configuration";
 import eventBus from "@/common/event-bus";
 import { LayoutConfig } from "@/common/rule";
+import bus from "@/common/event-bus";
 const forceFocus = require("@adeperio/forcefocus");
+import qs from "qs";
 
 class IntervalSaver {
   //以一定间隔进行
@@ -117,6 +119,17 @@ export class WindowManager {
       return this.windows.get(routeName) as BrowserWindow;
     } else {
       return this.create(routeName);
+    }
+  }
+
+  showSettings(tab: string | null) {
+    if (this.windows.has("settings")) {
+      this.get("settings").show();
+      if (tab != null) {
+        bus.iat("setSettingTab", tab);
+      }
+    } else {
+      this.createSetting(tab).show();
     }
   }
 
@@ -254,7 +267,8 @@ export class WindowManager {
   createWindow(
     routeName: RouteActionType,
     param: MinimalParam,
-    main: boolean
+    main: boolean,
+    queryString: string = ""
   ): BrowserWindow {
     const cfg = {
       ...defaultConfig,
@@ -268,7 +282,7 @@ export class WindowManager {
         window.show();
       });
     }
-    loadRoute(window, routeName, true);
+    loadRoute(window, routeName, true, queryString);
     insertStyles(window);
     if (main) {
       this.started = false;
@@ -326,7 +340,7 @@ export class WindowManager {
     return screen.getDisplayNearestPoint(screen.getCursorScreenPoint());
   }
 
-  createSetting() {
+  createSetting(tab?: string | null) {
     const width = 500;
     const height = 680;
     const {
@@ -352,7 +366,8 @@ export class WindowManager {
     // const previous_cfg = config.get<LayoutConfig>("settings");
     // cfg["width"] = previous_cfg["width"];
     // cfg["height"] = previous_cfg["height"];
-    return this.createWindow("settings", cfg, false);
+    const queryString = tab ? "?" + qs.stringify({ tab }) : "";
+    return this.createWindow("settings", cfg, false, queryString);
   }
 
   createUpdate() {

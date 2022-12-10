@@ -240,6 +240,7 @@ export const eventTypes = [
   "callback",
   "dispatch",
   "preSet",
+  "setSettingTab",
 ] as const;
 
 export const displayTexts = [
@@ -262,6 +263,7 @@ export const displayTexts = [
   "right_click",
   "snapshotPrompt",
   "snapshotValidate",
+  "gotoSetting",
 ] as const; //一些显示在界面上的文本
 
 export type Role = typeof roles[number];

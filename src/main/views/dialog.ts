@@ -18,7 +18,7 @@ export function showDragCopyWarning(controller: MainController) {
       title: "CopyTranslator 声明/Warning",
       type: "warning",
       message: [enWarning, zhWarning].join("\n"),
-      buttons: [t["neverShow"], t["ok"]],
+      buttons: [t["neverShow"], t["gotoSetting"]],
       icon: icon,
     })
     .then((res) => res.response)
@@ -30,7 +30,7 @@ export function showDragCopyWarning(controller: MainController) {
           });
           break;
         case 1:
-          eventBus.at("dispatch", "settings");
+          eventBus.at("dispatch", "settings", "dragCopyConfig");
           break;
       }
     });
@@ -48,14 +48,14 @@ export function showDragCopyEmptyWhitelistWarning(controller: MainController) {
       title: "CopyTranslator 声明/Warning",
       type: "warning",
       message: [enWarning2, zhWarning2].join("\n"),
-      buttons: [t["ok"]],
+      buttons: [t["gotoSetting"]],
       icon: icon,
     })
     .then((res) => res.response)
     .then((response) => {
       switch (response) {
         case 0:
-          eventBus.at("dispatch", "settings");
+          eventBus.at("dispatch", "settings", "dragCopyConfig");
           break;
       }
     });

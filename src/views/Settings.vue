@@ -1,45 +1,48 @@
 <template>
   <div style="height: 100vh;">
     <v-app style="height: 100%;" v-bind:style="appStyle">
-      <v-app-bar app color="primary" dark dense :height="titlebarHeight"
-        ><v-spacer style="height: 100%;">
-          <div class="dragableDiv"></div> </v-spacer
-        ><ActionButton
+      <v-app-bar app color="primary" dark dense :height="titlebarHeight">
+        <v-spacer style="height: 100%;">
+          <div class="dragableDiv"></div>
+        </v-spacer>
+        <ActionButton
           icon="mdi-close"
           left_click="close|settings"
           :onContrast="false"
         ></ActionButton
       ></v-app-bar>
       <div class="setting" :style="settingStyle">
-        <v-tabs v-model="activeName" vertical class="mytab">
-          <v-tab>{{ trans["translate"] }}</v-tab>
-          <v-tab>{{ trans["appearance"] }}</v-tab>
-          <v-tab>{{ trans["switches"] }}</v-tab>
-          <v-tab>{{ trans["apiConfig"] }}</v-tab>
-          <v-tab>{{ trans["translatorConfig"] }}</v-tab>
-          <v-tab>{{ trans["dragCopyConfig"] }}</v-tab>
-          <v-tab>{{ trans["actionButtons"] }}</v-tab>
+        <v-tabs v-model="tab" vertical class="mytab">
+          <v-tab href="#translation">{{ trans["translate"] }}</v-tab>
+          <v-tab href="#appearance">{{ trans["appearance"] }}</v-tab>
+          <v-tab href="#switches">{{ trans["switches"] }}</v-tab>
+          <v-tab href="#apiConfig">{{ trans["apiConfig"] }}</v-tab>
+          <v-tab href="#translatorConfig">
+            {{ trans["translatorConfig"] }}
+          </v-tab>
+          <v-tab href="#dragCopyConfig">{{ trans["dragCopyConfig"] }}</v-tab>
+          <v-tab href="#actionButtons">{{ trans["actionButtons"] }}</v-tab>
           <v-tab>{{ trans["other"] }}</v-tab>
           <v-tab>{{ trans["about"] }}</v-tab>
-          <v-tab-item>
+          <v-tab-item value="translation">
             <Options optionType="translation"></Options>
           </v-tab-item>
-          <v-tab-item>
+          <v-tab-item value="appearance">
             <Options optionType="appearance"></Options>
           </v-tab-item>
-          <v-tab-item>
+          <v-tab-item value="switches">
             <Switches :cates="['basic', 'advance']"></Switches>
           </v-tab-item>
-          <v-tab-item>
+          <v-tab-item value="apiConfig">
             <Config></Config>
           </v-tab-item>
-          <v-tab-item>
+          <v-tab-item value="translatorConfig">
             <Options optionType="translatorGroups"></Options>
           </v-tab-item>
-          <v-tab-item>
+          <v-tab-item value="dragCopyConfig">
             <DragCopyConfig></DragCopyConfig>
           </v-tab-item>
-          <v-tab-item>
+          <v-tab-item value="actionButtons">
             <ActionButtonConfig></ActionButtonConfig>
           </v-tab-item>
           <v-tab-item>
@@ -65,6 +68,7 @@ import { Component, Mixins } from "vue-property-decorator";
 import BaseView from "@/components/BaseView.vue";
 import ActionButton from "@/components/ActionButton.vue";
 import ActionButtonConfig from "@/components/ActionButtonConfig.vue";
+import bus from "@/common/event-bus";
 
 @Component({
   components: {
@@ -78,13 +82,26 @@ import ActionButtonConfig from "@/components/ActionButtonConfig.vue";
   },
 })
 export default class Settings extends Mixins(BaseView) {
-  activeName: string = "first";
+  set tab(val) {
+    this.$router.replace({ query: { ...this.$route.query, ...{ tab: val } } });
+  }
+
+  get tab() {
+    return this.$route.query.tab || "translation";
+  }
+
   get trans() {
     return this.$store.getters.locale;
   }
 
   get settingStyle() {
     return { "padding-top": `${this.titlebarHeightVal + 5}px` };
+  }
+
+  mounted() {
+    bus.gon("setSettingTab", (tab: string) => {
+      this.tab = tab;
+    });
   }
 }
 </script>

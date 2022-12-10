@@ -185,27 +185,23 @@ class ActionManager {
     function genericListAction(
       actionType: ActionInitOpt["actionType"],
       identifier: Identifier,
-      list: any,
+      listGenerator: () => string[],
       cate?: Category,
       needLocale: boolean = false,
       postLocaleFunc?: PostLocaleFunc
     ): ActionInitOpt {
-      if (!needLocale) {
-        return {
-          actionType,
-          id: identifier,
-          submenu: subMenuGenerator(identifier, list, false),
-          cate,
-        };
-      } else {
-        return {
-          actionType,
-          id: identifier,
-          cate,
-          subMenuGenerator: () =>
-            subMenuGenerator(identifier, list, true, postLocaleFunc),
-        };
-      }
+      return {
+        actionType,
+        id: identifier,
+        cate,
+        subMenuGenerator: () =>
+          subMenuGenerator(
+            identifier,
+            listGenerator(),
+            needLocale,
+            postLocaleFunc
+          ),
+      };
     }
 
     //动态生成子菜单
@@ -420,13 +416,28 @@ class ActionManager {
 
     this.append(typeAction("config", "actionButtons"));
 
+    const getTranslatorTypes = (id: Identifier) => {
+      return () => {
+        switch (id) {
+          case "translator-compare":
+            return config.get<string[]>("translator-enabled");
+          case "translator-cache":
+            return config.get<string[]>("translator-enabled");
+          case "translator-enabled":
+            return translatorTypes;
+          default:
+            return translatorTypes;
+        }
+      };
+    };
+
     //引擎组设置
     translatorGroups.forEach((id) => {
       this.append(
         genericListAction(
           "multi_select",
           id,
-          translatorTypes,
+          getTranslatorTypes(id),
           undefined,
           false,
           undefined

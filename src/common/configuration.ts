@@ -272,7 +272,7 @@ function initConfig(
   );
   config.setRule(
     "googleSource",
-    new UnionRule<GoogleSource>("google", googleSources, "v10.3.0")
+    new UnionRule<GoogleSource>("google", googleSources, "v11.0.0")
   );
   config.setRule(
     "fallbackTranslator",
@@ -281,7 +281,7 @@ function initConfig(
   config.setRule("pasteDelay", new TypeRule<number>(0.0));
 
   config.setRule(
-    "translator-enabled", //所有启用的的引擎
+    "translator-enabled", //所有启用的引擎
     new GroupRule<TranslatorType>(
       [
         "google",
@@ -295,7 +295,7 @@ function initConfig(
         "sogou",
       ],
       translatorTypes,
-      "v10.2.6"
+      "v11.0.0"
     )
   );
 
@@ -314,7 +314,7 @@ function initConfig(
         // "sogou",
       ],
       translatorTypes,
-      "v10.2.6"
+      "v11.0.0"
     )
   );
 
@@ -333,7 +333,7 @@ function initConfig(
         "sogou",
       ],
       translatorTypes,
-      "v10.2.6"
+      "v11.0.0"
     )
   );
 

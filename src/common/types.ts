@@ -266,6 +266,17 @@ export const displayTexts = [
   "snapshotPrompt",
   "snapshotValidate",
   "gotoSetting",
+  "<tip>snapshot",
+  "<tip>focusSource",
+  "<tip>splitRatio",
+  "<tip>engineRight",
+  "<tip>multiSourceEngines",
+  "<tip>font",
+  "<tip>themeColor",
+  "<tip>transparency",
+  "<tip>penerate",
+  "<tip>titlebarHeight",
+  "<tip>engineCache",
 ] as const; //一些显示在界面上的文本
 
 export type Role = typeof roles[number];

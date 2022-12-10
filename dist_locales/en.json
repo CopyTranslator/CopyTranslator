@@ -144,7 +144,7 @@
     "fontColor": "Choose Font Color",
     "backgroundColor": "Choose Background Color",
     "<tooltip>primaryColor": "You can choose any color at will. The software will update in real time, and you can see the effect directly",
-    "googlePrompt": "After v10.3.0, Google Translate uses the Simple source by default. In theory, no additional settings are required. If there are still problems, you can try to switch to the Google translation source",
+    "googlePrompt": "After v10.2.4, Google Translate uses the Google Translate API mirror by default. In theory, no additional settings are required. If there are still problems, you can try to switch to the Google translation source",
     "contentFontFamily": "Content Font-Family",
     "interfaceFontFamily": "Interface Font-Family",
     "<tooltip>contentFontFamily": "You can set multiple fonts. Search font family to know how to set",
@@ -179,5 +179,16 @@
     "snapshotPrompt": "Please Input Snapshot Name",
     "snapshotValidate": "Must not be empty or contain character '|'",
     "gotoSetting": "Goto Setting",
-    "snapshotManage": "Snapshot Manage"
+    "snapshotManage": "Snapshot Manage",
+    "<tip>snapshot": "Using the snapshot mechanism, you can quickly switch between different application scenarios. You only need to take a snapshot after setting it up, and switch to this snapshot next time.",
+    "<tip>focusSource": "You can also choose to display the original text in the focus mode, but it is not a fixed ratio. You can turn on `focus mode original text` in Settings->Switch",
+    "<tip>splitRatio": "You can adjust the ratio of the original text to the target text in the comparison mode by dragging the dividing line.",
+    "<tip>engineRight": "Right click the engine button to mark the next copy as incremental copy",
+    "<tip>multiSourceEngines": "Multi-source comparison engines can be quickly set through the right-click menu of the result box",
+    "<tip>font": "(Settings->Appearance) interface font, and text font can be set",
+    "<tip>themeColor": "(Settings->Appearance) The color you set in the bright mode will only be applied in the bright mode, and the same is true for the night mode.",
+    "<tip>transparency": "(Settings->Appearance) you can adjust the transparency of the interface",
+    "<tip>penerate": "(Settings -> Appearance) mouse penetration: After selecting, there will be an additional button for dragging. Except for specific action buttons, copytranslator will no longer respond to mouse events, that is, you can operate through the interface of copytranslator to The following program. It is generally used in conjunction with transparency adjustment.",
+    "<tip>titlebarHeight": "(Settings -> Appearance) You can adjust the height of the title bar and make the title bar smaller when needed",
+    "<tip>engineCache": "The compound translation engine currently does not have accelerated caching by default, but you can set it yourself."
 }

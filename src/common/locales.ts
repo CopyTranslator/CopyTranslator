@@ -123,7 +123,7 @@ export const zh_cn = new Map<LocaleKey, string>([
   ],
   [
     "googlePrompt",
-    "v10.3.0版本后谷歌翻译默认使用Simply源，理论上不需要额外设置，如果依然存在问题，可以尝试切换google翻译源",
+    "v10.2.4版本后谷歌翻译默认使用谷歌翻译镜像，理论上不需要额外设置，如果依然存在问题，可以尝试切换google翻译源",
   ],
   ["primaryColor", "选择主题颜色"],
   ["fontColor", "选择字体颜色"],
@@ -219,6 +219,35 @@ export const zh_cn = new Map<LocaleKey, string>([
   ["snapshotValidate", "快照名不能为空且不能包含'|'"],
   ["gotoSetting", "前往设置"],
   ["snapshotManage", "快照管理"],
+  [
+    "<tip>snapshot",
+    "利用快照机制，你可以快速地在不同应用场景间切换。你只需要设置好之后，拍摄一个快照，下次切换到该快照即可。你可以在设置窗口的几乎任何地方通过右键菜单来进行快照管理，此外主窗口的大部分位置的右键菜单都有相关选项",
+  ],
+  [
+    "<tip>focusSource",
+    "你可以选择在专注模式中也显示原文，但不是固定比例的，在设置->开关中打开`专注模式原文`即可",
+  ],
+  ["<tip>splitRatio", "你可以通过拖动分隔线来调节对比模式中原文与译文的比例。"],
+  ["<tip>engineRight", "右键引擎按钮可以标记下次复制为增量复制"],
+  ["<tip>multiSourceEngines", "多源对比引擎可以通过结果框的右键菜单来快速设置"],
+  ["<tip>font", "（设置->外观）界面的字体，以及正文的字体都可以设置"],
+  [
+    "<tip>themeColor",
+    "（设置->外观）你在明亮模式设置的颜色，只会作用在明亮模式，夜间模式同理。",
+  ],
+  ["<tip>transparency", "（设置->外观）你可以调节界面的透明度"],
+  [
+    "<tip>penerate",
+    "（设置->外观）鼠标穿透: 选中后，会多出一个用于拖动的按钮，除特定动作按钮外，copytranslator将不再响应鼠标事件，也就是你可以透过copytranslator的界面操作到后面的程序。一般配合透明度调节使用。",
+  ],
+  [
+    "<tip>titlebarHeight",
+    "（设置->外观）在需要时，你可以调节标题栏的高度，把标题栏变小",
+  ],
+  [
+    "<tip>engineCache",
+    "化合物翻译引擎目前默认是没有加速缓存的，但是你可以自行设置。",
+  ],
 ]);
 
 export const en = new Map<LocaleKey, string>([
@@ -442,7 +471,7 @@ export const en = new Map<LocaleKey, string>([
   ],
   [
     "googlePrompt",
-    "After v10.3.0, Google Translate uses the Simple source by default. In theory, no additional settings are required. If there are still problems, you can try to switch to the Google translation source",
+    "After v10.2.4, Google Translate uses the Google Translate API mirror by default. In theory, no additional settings are required. If there are still problems, you can try to switch to the Google translation source",
   ],
   ["contentFontFamily", "Content Font-Family"],
   ["interfaceFontFamily", "Interface Font-Family"],
@@ -500,5 +529,49 @@ export const en = new Map<LocaleKey, string>([
   ["snapshotValidate", "Must not be empty or contain character '|'"],
   ["gotoSetting", "Goto Setting"],
   ["snapshotManage", "Snapshot Manage"],
+  [
+    "<tip>snapshot",
+    "Using the snapshot mechanism, you can quickly switch between different application scenarios. You only need to take a snapshot after setting it up, and switch to that snapshot next time. You can use the right-click menu to manage snapshots almost anywhere in the settings window, and the right-click menu in most places in the main window has related options",
+  ],
+  [
+    "<tip>focusSource",
+    "You can also choose to display the original text in the focus mode, but it is not a fixed ratio. You can turn on `focus mode original text` in Settings->Switch",
+  ],
+  [
+    "<tip>splitRatio",
+    "You can adjust the ratio of the original text to the target text in the comparison mode by dragging the dividing line.",
+  ],
+  [
+    "<tip>engineRight",
+    "Right click the engine button to mark the next copy as incremental copy",
+  ],
+  [
+    "<tip>multiSourceEngines",
+    "Multi-source comparison engines can be quickly set through the right-click menu of the result box",
+  ],
+  [
+    "<tip>font",
+    "(Settings->Appearance) interface font, and text font can be set",
+  ],
+  [
+    "<tip>themeColor",
+    "(Settings->Appearance) The color you set in the bright mode will only be applied in the bright mode, and the same is true for the night mode.",
+  ],
+  [
+    "<tip>transparency",
+    "(Settings->Appearance) you can adjust the transparency of the interface",
+  ],
+  [
+    "<tip>penerate",
+    "(Settings -> Appearance) mouse penetration: After selecting, there will be an additional button for dragging. Except for specific action buttons, copytranslator will no longer respond to mouse events, that is, you can operate through the interface of copytranslator to The following program. It is generally used in conjunction with transparency adjustment.",
+  ],
+  [
+    "<tip>titlebarHeight",
+    "(Settings -> Appearance) You can adjust the height of the title bar and make the title bar smaller when needed",
+  ],
+  [
+    "<tip>engineCache",
+    "The compound translation engine currently does not have accelerated caching by default, but you can set it yourself.",
+  ],
 ]);
 export type Locale = typeof en;

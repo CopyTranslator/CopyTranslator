@@ -38,6 +38,17 @@ export default class Tips extends Base {
       this.trans["textAdjustPrompt"],
       this.trans["googlePrompt"],
       this.trans["dragCopyTip"],
+      this.trans["<tip>snapshot"],
+      this.trans["<tip>focusSource"],
+      this.trans["<tip>splitRatio"],
+      this.trans["<tip>engineRight"],
+      this.trans["<tip>multiSourceEngines"],
+      this.trans["<tip>font"],
+      this.trans["<tip>themeColor"],
+      this.trans["<tip>transparency"],
+      this.trans["<tip>penerate"],
+      this.trans["<tip>titlebarHeight"],
+      this.trans["<tip>engineCache"],
     ];
     this.tipIndex = this.getRandomInt(0, this.tips.length);
   }

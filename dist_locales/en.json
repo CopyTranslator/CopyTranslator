@@ -174,5 +174,7 @@
     "focusSource": "Focus Source",
     "<tooltip>focusSource": "Show Source in Focus Mode",
     "left_click": "Click to",
-    "right_click": "Right Click to"
+    "right_click": "Right Click to",
+    "snapshotPrompt": "Please Input Snapshot Name",
+    "snapshotValidate": "Must not be empty or contain character '|'"
 }

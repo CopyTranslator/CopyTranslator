@@ -174,5 +174,7 @@
     "focusSource": "专注模式原文",
     "<tooltip>focusSource": "在专注模式显示原文",
     "left_click": "点击",
-    "right_click": "右键"
+    "right_click": "右键",
+    "snapshotPrompt": "请输入快照名",
+    "snapshotValidate": "快照名不能为空且不能包含'|'"
 }

@@ -53,6 +53,18 @@ export class WindowManager {
     this.saveBounds();
   });
 
+  postStartCallbacks: Function[] = [];
+  started: boolean = false;
+
+  //有一些函数需要在窗口创建之后才执行
+  registerPostStart(func: Function) {
+    if (this.started) {
+      func();
+    } else {
+      this.postStartCallbacks.push(func);
+    }
+  }
+
   constructor(controller: MainController) {
     this.controller = controller;
     eventBus.gon("preSet", (identifier: Identifier, newLayoutType: any) => {
@@ -242,7 +254,7 @@ export class WindowManager {
   createWindow(
     routeName: RouteActionType,
     param: MinimalParam,
-    main: boolean = false
+    main: boolean
   ): BrowserWindow {
     const cfg = {
       ...defaultConfig,
@@ -259,11 +271,18 @@ export class WindowManager {
     loadRoute(window, routeName, true);
     insertStyles(window);
     if (main) {
+      this.started = false;
       window.on("close", (e: any) => {
         const closeAsQuit = this.controller.get("closeAsQuit");
         if (!closeAsQuit) {
           e.preventDefault();
           window.hide();
+        }
+      });
+      window.webContents.once("did-finish-load", (e: any) => {
+        this.started = true;
+        for (const func of this.postStartCallbacks) {
+          func();
         }
       });
     }
@@ -333,7 +352,7 @@ export class WindowManager {
     // const previous_cfg = config.get<LayoutConfig>("settings");
     // cfg["width"] = previous_cfg["width"];
     // cfg["height"] = previous_cfg["height"];
-    return this.createWindow("settings", cfg);
+    return this.createWindow("settings", cfg, false);
   }
 
   createUpdate() {
@@ -357,6 +376,6 @@ export class WindowManager {
       parent: this.mainWindow,
       title: "Update",
     };
-    return this.createWindow("update", cfg);
+    return this.createWindow("update", cfg, false);
   }
 }

@@ -214,6 +214,8 @@ export const zh_cn = new Map<LocaleKey, string>([
   ["<tooltip>focusSource", "在专注模式显示原文"],
   ["left_click", "点击"],
   ["right_click", "右键"],
+  ["snapshotPrompt", "请输入快照名"],
+  ["snapshotValidate", "快照名不能为空且不能包含'|'"],
 ]);
 
 export const en = new Map<LocaleKey, string>([
@@ -490,5 +492,7 @@ export const en = new Map<LocaleKey, string>([
   ["<tooltip>focusSource", "Show Source in Focus Mode"],
   ["left_click", "Click to"],
   ["right_click", "Right Click to"],
+  ["snapshotPrompt", "Please Input Snapshot Name"],
+  ["snapshotValidate", "Must not be empty or contain character '|'"],
 ]);
 export type Locale = typeof en;

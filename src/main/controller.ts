@@ -9,6 +9,7 @@ import {
   Category,
   layoutTypes,
   LayoutType,
+  isValidSnapshotName,
 } from "../common/types";
 import { startService } from "../proxy/main";
 import { ShortcutManager } from "./shortcut";
@@ -28,6 +29,8 @@ import logger from "@/common/logger";
 import { keyan } from "@/common/translate/keyan";
 import { constants } from "../common/constant";
 import { DragCopyMode } from "@/common/types";
+import { env, icon } from "@/common/env";
+import { electronPrompt } from "./prompt";
 
 class Controller extends MainController {
   win: WindowManager = new WindowManager(this);
@@ -77,10 +80,43 @@ class Controller extends MainController {
     this.set("layoutType", layoutTypes[newIndex]);
   }
 
+  promptForName() {
+    const l = store.getters.locale;
+    electronPrompt(
+      {
+        title: l["snapshotPrompt"],
+        label: l["snapshotValidate"],
+        value: "",
+        inputAttrs: {
+          type: "text",
+        },
+        type: "input",
+        icon: icon,
+      },
+      this.win.mainWindow
+    )
+      .then((r: any) => {
+        if (r === null) {
+          console.log("user cancelled");
+        } else {
+          if (isValidSnapshotName(r as string)) {
+            this.handle("newConfigSnapshot", r);
+          } else {
+            this.promptForName();
+          }
+        }
+      })
+      .catch(console.error);
+  }
+
   handle(identifier: Identifier, param: any = null): boolean {
     switch (identifier) {
       case "newConfigSnapshot":
-        this.config.newSnapshot(param as string);
+        if (param == null) {
+          this.promptForName();
+        } else {
+          this.config.newSnapshot(param as string);
+        }
         break;
       case "delConfigSnapshot":
         this.config.delSnapshot(param as string);
@@ -186,13 +222,15 @@ class Controller extends MainController {
             !this.get("neverShow")
           ) {
             //只在全局模式才show出来
-            showDragCopyWarning(this);
+            this.win.registerPostStart(() => showDragCopyWarning(this));
           }
           if (
             this.get<DragCopyMode>("dragCopyMode") === "dragCopyWhiteList" &&
             this.get<string[]>("dragCopyWhiteList").length == 0 //白名单模式且白名单为空则警告
           ) {
-            showDragCopyEmptyWhitelistWarning(this);
+            this.win.registerPostStart(() =>
+              showDragCopyEmptyWhitelistWarning(this)
+            );
           }
         }
         break;

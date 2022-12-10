@@ -505,9 +505,6 @@ class ActionManager {
           );
         });
         break;
-      case "focusRight":
-        contain = this.config.get("focusRight");
-        break;
       case "contrastPanel":
         contain = this.config.get("contrastPanel");
         break;
@@ -528,13 +525,37 @@ class ActionManager {
         });
         break;
       case "focusContext":
-        contain = ["copy", "paste", "cut", "copyResult", "copySource"];
+        contain = [
+          "copy",
+          "paste",
+          "cut",
+          "copyResult",
+          "copySource",
+          "newConfigSnapshot",
+          "configSnapshot",
+        ];
         break;
       case "contrastContext":
-        contain = ["copy", "paste", "cut", "copyResult", "copySource"];
+        contain = [
+          "copy",
+          "paste",
+          "cut",
+          "copyResult",
+          "copySource",
+          "newConfigSnapshot",
+          "configSnapshot",
+        ];
         break;
       case "diffContext":
-        contain = ["copy", "paste", "cut", "copySource", "translator-compare"];
+        contain = [
+          "copy",
+          "paste",
+          "cut",
+          "copySource",
+          "translator-compare",
+          "newConfigSnapshot",
+          "configSnapshot",
+        ];
         break;
       default:
         if (categories.includes(optionType as Category)) {

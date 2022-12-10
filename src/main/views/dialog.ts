@@ -15,7 +15,8 @@ export function showDragCopyWarning(controller: MainController) {
   const t = store.getters.locale;
   dialog
     .showMessageBox(BrowserWindow.getAllWindows()[0], {
-      title: "声明/Warning",
+      title: "CopyTranslator 声明/Warning",
+      type: "warning",
       message: [enWarning, zhWarning].join("\n"),
       buttons: [t["neverShow"], t["ok"]],
       icon: icon,
@@ -29,6 +30,7 @@ export function showDragCopyWarning(controller: MainController) {
           });
           break;
         case 1:
+          eventBus.at("dispatch", "settings");
           break;
       }
     });
@@ -43,20 +45,17 @@ export function showDragCopyEmptyWhitelistWarning(controller: MainController) {
   const t = store.getters.locale;
   dialog
     .showMessageBox(BrowserWindow.getAllWindows()[0], {
-      title: "声明/Warning",
+      title: "CopyTranslator 声明/Warning",
+      type: "warning",
       message: [enWarning2, zhWarning2].join("\n"),
-      buttons: [t["neverShow"], t["ok"]],
+      buttons: [t["ok"]],
       icon: icon,
     })
     .then((res) => res.response)
     .then((response) => {
       switch (response) {
         case 0:
-          store.dispatch("updateConfig", {
-            neverShow: true,
-          });
-          break;
-        case 1:
+          eventBus.at("dispatch", "settings");
           break;
       }
     });

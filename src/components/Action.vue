@@ -23,7 +23,7 @@
                 class="mytext"
                 v-model="text"
                 :rules="rules"
-                label="请输入快照名"
+                :label="trans['snapshotPrompt']"
               ></v-text-field>
               <SimpleButton
                 @click="
@@ -31,9 +31,7 @@
                   dialog = false;
                   text = '';
                 "
-                :disabled="
-                  rules.map((rule) => rule(text) == true).includes(false)
-                "
+                :disabled="invalidSnapshotName"
                 >{{ trans[identifier] }}
               </SimpleButton>
             </v-card>
@@ -114,7 +112,14 @@
 </template>
 
 <script lang="ts">
-import { Identifier, compose, ActionView, swatches } from "../common/types";
+import {
+  Identifier,
+  compose,
+  ActionView,
+  swatches,
+  snapshotNameRules,
+  isValidSnapshotName,
+} from "../common/types";
 import { Prop, Component } from "vue-property-decorator";
 import MultiSelect from "./MultiSelect.vue";
 import bus from "../common/event-bus";
@@ -134,19 +139,11 @@ export default class Action extends Base {
 
   text: string = "";
 
-  rules = [
-    (value: string) => !!value || "Required.",
-    (value: string) => {
-      if (value == undefined) {
-        return true;
-      } else {
-        if (value.includes("|")) {
-          return 'Symbol "|" should not be used in snapshot name';
-        }
-        return true;
-      }
-    },
-  ];
+  rules = snapshotNameRules;
+
+  get invalidSnapshotName() {
+    return !isValidSnapshotName(this.text);
+  }
 
   get tooltip(): undefined | string {
     if (!this.action || this.action.actionType === "prompt") {

@@ -178,33 +178,13 @@ function initConfig(
   );
 
   // 以下是一些菜单
-  config.setRule(
-    "focusRight",
-    new GroupRule<Identifier>(
-      [
-        "retryTranslate",
-        "autoCopy",
-        "autoPaste",
-        "incrementalCopy",
-        "autoHide",
-        "autoShow",
-        "autoFormat",
-        "dragCopy",
-        "stayTop",
-        "listenClipboard",
-        "settings",
-        "exit",
-      ],
-      identifiers,
-      "v11.0.0"
-    )
-  );
 
   config.setRule(
     "tray",
     new GroupRule<Identifier>(
       [
         "configSnapshot",
+        "newConfigSnapshot",
         "clear",
         "retryTranslate",
         "autoCopy",

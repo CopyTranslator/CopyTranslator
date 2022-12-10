@@ -188,7 +188,6 @@ export const menuActionTypes = [
   "contrastContext", //上下文
   "focusContext", //上下文
   "diffContext",
-  "focusRight", // 按钮右键
   "switches", //设置的开关面板
   "options", //设置的选项面板
   "apiConfig", //设置的配置面板
@@ -261,6 +260,8 @@ export const displayTexts = [
   "chooseIconPrompt",
   "left_click",
   "right_click",
+  "snapshotPrompt",
+  "snapshotValidate",
 ] as const; //一些显示在界面上的文本
 
 export type Role = typeof roles[number];
@@ -823,3 +824,21 @@ export const swatches = [
   ],
   ["#ffffff", "#000000"],
 ] as const;
+
+export const snapshotNameRules = [
+  (value: string) => !!value || "Required.",
+  (value: string) => {
+    if (value == undefined) {
+      return true;
+    } else {
+      if (value.includes("|")) {
+        return 'Symbol "|" should not be used in snapshot name';
+      }
+      return true;
+    }
+  },
+] as const;
+
+export function isValidSnapshotName(text: string): boolean {
+  return !snapshotNameRules.map((rule) => rule(text) == true).includes(false);
+}

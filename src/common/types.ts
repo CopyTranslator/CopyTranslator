@@ -113,6 +113,7 @@ export const categories = [
   "advance",
   "translation",
   "appearance",
+  "snapshotManage",
   "other",
 ] as const;
 
@@ -196,6 +197,7 @@ export const menuActionTypes = [
   "tray", //任务栏托盘右键菜单
   "allActions",
   "translatorGroups",
+  "snapshotManage",
 ] as const;
 
 export const translatorGroups = [

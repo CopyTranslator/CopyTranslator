@@ -178,5 +178,6 @@
     "snapshotPrompt": "Please Input Snapshot Name",
     "snapshotValidate": "Must not be empty or contain character '|'",
     "gotoSetting": "Goto Setting",
-    "translator-cache": "Cached engines"
+    "translator-cache": "Cached engines",
+    "snapshotManage": "Snapshot Manage"
 }

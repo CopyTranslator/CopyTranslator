@@ -335,15 +335,19 @@ class ActionManager {
         "appearance"
       )
     );
-    this.append(normalAction("newConfigSnapshot", "appearance"));
+    this.append(normalAction("newConfigSnapshot", "snapshotManage"));
     this.append(
-      paramNormalAction("configSnapshot", getConfigSnapshotNames, "appearance")
+      paramNormalAction(
+        "configSnapshot",
+        getConfigSnapshotNames,
+        "snapshotManage"
+      )
     );
     this.append(
       paramNormalAction(
         "delConfigSnapshot",
         getConfigSnapshotNames,
-        "appearance"
+        "snapshotManage"
       )
     );
     this.append(listAction("titlebarHeight", heights, "appearance"));

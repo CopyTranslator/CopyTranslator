@@ -11,7 +11,11 @@
           :onContrast="false"
         ></ActionButton
       ></v-app-bar>
-      <div class="setting" :style="settingStyle">
+      <div
+        class="setting"
+        :style="settingStyle"
+        @contextmenu="openMenu('snapshotManage')"
+      >
         <v-tabs v-model="tab" vertical class="mytab">
           <v-tab href="#translation">{{ trans["translate"] }}</v-tab>
           <v-tab href="#appearance">{{ trans["appearance"] }}</v-tab>
@@ -21,6 +25,7 @@
             {{ trans["translatorConfig"] }}
           </v-tab>
           <v-tab href="#dragCopyConfig">{{ trans["dragCopyConfig"] }}</v-tab>
+          <v-tab href="#snapshotManage">{{ trans["snapshotManage"] }}</v-tab>
           <v-tab href="#actionButtons">{{ trans["actionButtons"] }}</v-tab>
           <v-tab>{{ trans["other"] }}</v-tab>
           <v-tab>{{ trans["about"] }}</v-tab>
@@ -41,6 +46,12 @@
           </v-tab-item>
           <v-tab-item value="dragCopyConfig">
             <DragCopyConfig></DragCopyConfig>
+          </v-tab-item>
+          <v-tab-item value="snapshotManage">
+            <Options
+              optionType="snapshotManage"
+              :restoreButton="false"
+            ></Options>
           </v-tab-item>
           <v-tab-item value="actionButtons">
             <ActionButtonConfig></ActionButtonConfig>
@@ -117,8 +128,8 @@ export default class Settings extends Mixins(BaseView) {
 }
 .setting {
   height: calc(100% - 5px);
-  margin-right: 10px;
-  margin-left: 10px;
+  padding-right: 10px;
+  padding-left: 10px;
   overflow: hidden;
 }
 .mytab {

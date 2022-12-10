@@ -218,6 +218,7 @@ export const zh_cn = new Map<LocaleKey, string>([
   ["snapshotPrompt", "请输入快照名"],
   ["snapshotValidate", "快照名不能为空且不能包含'|'"],
   ["gotoSetting", "前往设置"],
+  ["snapshotManage", "快照管理"],
 ]);
 
 export const en = new Map<LocaleKey, string>([
@@ -498,5 +499,6 @@ export const en = new Map<LocaleKey, string>([
   ["snapshotPrompt", "Please Input Snapshot Name"],
   ["snapshotValidate", "Must not be empty or contain character '|'"],
   ["gotoSetting", "Goto Setting"],
+  ["snapshotManage", "Snapshot Manage"],
 ]);
 export type Locale = typeof en;

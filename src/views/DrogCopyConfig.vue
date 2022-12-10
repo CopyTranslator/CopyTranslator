@@ -1,5 +1,6 @@
 <template>
   <div>
+    <Action identifier="dragCopyTip"></Action>
     <Action identifier="dragCopy"></Action>
     <br />
     <Action identifier="dragCopyMode"></Action>

@@ -277,6 +277,7 @@ export const displayTexts = [
   "<tip>penerate",
   "<tip>titlebarHeight",
   "<tip>engineCache",
+  "actionSortPrompt",
 ] as const; //一些显示在界面上的文本
 
 export type Role = typeof roles[number];

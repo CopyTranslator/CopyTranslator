@@ -248,6 +248,7 @@ export const zh_cn = new Map<LocaleKey, string>([
     "<tip>engineCache",
     "化合物翻译引擎目前默认是没有加速缓存的，但是你可以自行设置。",
   ],
+  ["actionSortPrompt", "你可以通过拖拽来对这些按钮进行排序"],
 ]);
 
 export const en = new Map<LocaleKey, string>([
@@ -573,5 +574,6 @@ export const en = new Map<LocaleKey, string>([
     "<tip>engineCache",
     "The compound translation engine currently does not have accelerated caching by default, but you can set it yourself.",
   ],
+  ["actionSortPrompt", "You can sort these buttons by dragging and dropping"],
 ]);
 export type Locale = typeof en;

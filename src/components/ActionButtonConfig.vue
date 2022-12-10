@@ -1,5 +1,6 @@
 <template>
   <div style="height: 100%;">
+    <Action identifier="actionSortPrompt"></Action>
     <v-expansion-panels style="height: 100%;">
       <draggable v-model="buttons" style="width: 100%;" :disabled="!drag">
         <v-expansion-panel v-for="(button, index) in buttons" :key="index">
@@ -72,6 +73,7 @@ import draggable from "vuedraggable";
 import { shell } from "electron";
 import Base from "./Base.vue";
 import SimpleButton from "./SimpleButton.vue";
+import Action from "./Action.vue";
 
 interface Option {
   value: string;
@@ -82,6 +84,7 @@ interface Option {
   components: {
     draggable,
     SimpleButton,
+    Action,
   },
 })
 export default class ActionButtonConfig extends Base {

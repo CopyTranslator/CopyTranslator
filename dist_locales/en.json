@@ -180,7 +180,7 @@
     "snapshotValidate": "Must not be empty or contain character '|'",
     "gotoSetting": "Goto Setting",
     "snapshotManage": "Snapshot Manage",
-    "<tip>snapshot": "Using the snapshot mechanism, you can quickly switch between different application scenarios. You only need to take a snapshot after setting it up, and switch to this snapshot next time.",
+    "<tip>snapshot": "Using the snapshot mechanism, you can quickly switch between different application scenarios. You only need to take a snapshot after setting it up, and switch to that snapshot next time. You can use the right-click menu to manage snapshots almost anywhere in the settings window, and the right-click menu in most places in the main window has related options",
     "<tip>focusSource": "You can also choose to display the original text in the focus mode, but it is not a fixed ratio. You can turn on `focus mode original text` in Settings->Switch",
     "<tip>splitRatio": "You can adjust the ratio of the original text to the target text in the comparison mode by dragging the dividing line.",
     "<tip>engineRight": "Right click the engine button to mark the next copy as incremental copy",
@@ -190,5 +190,6 @@
     "<tip>transparency": "(Settings->Appearance) you can adjust the transparency of the interface",
     "<tip>penerate": "(Settings -> Appearance) mouse penetration: After selecting, there will be an additional button for dragging. Except for specific action buttons, copytranslator will no longer respond to mouse events, that is, you can operate through the interface of copytranslator to The following program. It is generally used in conjunction with transparency adjustment.",
     "<tip>titlebarHeight": "(Settings -> Appearance) You can adjust the height of the title bar and make the title bar smaller when needed",
-    "<tip>engineCache": "The compound translation engine currently does not have accelerated caching by default, but you can set it yourself."
+    "<tip>engineCache": "The compound translation engine currently does not have accelerated caching by default, but you can set it yourself.",
+    "actionSortPrompt": "You can sort these buttons by dragging and dropping"
 }

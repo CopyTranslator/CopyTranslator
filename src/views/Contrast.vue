@@ -177,6 +177,13 @@ export default class Contrast extends Mixins(BaseView, WindowController) {
   dialog: boolean = false;
   marginBottom: number = 5;
 
+  get valid() {
+    return (
+      this.mode == "dict" &&
+      (this.config.contrastDict || this.layoutType === "focus")
+    );
+  }
+
   penerate(value: boolean) {
     if (this.config.penerate) {
       //穿透，那就根据鼠标的情况进行设置
@@ -210,7 +217,7 @@ export default class Contrast extends Mixins(BaseView, WindowController) {
       ...this.config["translator-enabled"],
       ...abstractTranslatorTypes,
     ];
-    return this.valid ? [...dictionaryTypes] : translatorEngines;
+    return this.mode == "dict" ? [...dictionaryTypes] : translatorEngines;
   }
 
   get restEngines() {

@@ -18,22 +18,17 @@ export default class BaseView extends Base {
     shell.openExternal("https://www.keyanyuedu.com/?channel=copytranslator");
   }
 
-  get valid() {
-    return (
-      this.dictResult.valid &&
-      (this.config.contrastDict || this.layoutType === "focus")
-    );
-  }
-
   get currentEngine() {
-    if (!this.valid) {
-      if (this.multiSource) {
+    switch (this.mode) {
+      case "dict":
+        return this.config.dictionaryType;
+      case "diff":
         return "copytranslator";
-      } else {
+      case "normal":
+      case "none":
         return this.config.translatorType;
-      }
-    } else {
-      return this.config.dictionaryType;
+      default:
+        throw this.mode;
     }
   }
 

@@ -223,7 +223,6 @@ export const dragCopyModes = [
 export const routeActionTypes = [
   "contrast",
   "settings", //设置页面
-  "update",
 ] as const;
 
 //路由名称
@@ -234,7 +233,6 @@ export const colorModes = [
 ] as const;
 
 export const eventTypes = [
-  "firstLoad",
   "closeWindow",
   "openMenu",
   "minify",

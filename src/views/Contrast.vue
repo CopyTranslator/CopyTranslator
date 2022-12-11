@@ -199,7 +199,7 @@ export default class Contrast extends Mixins(BaseView, WindowController) {
   }
 
   mounted() {
-    this.dialog = this.config.isNewUser;
+    this.dialog = true;
   }
 
   get nButton() {

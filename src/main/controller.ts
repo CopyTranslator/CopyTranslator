@@ -26,11 +26,11 @@ import { MainController } from "../common/controller";
 import { UpdateChecker } from "./views/update";
 import simulate from "./simulate";
 import logger from "@/common/logger";
-import { keyan } from "@/common/translate/keyan";
 import { constants } from "../common/constant";
 import { DragCopyMode } from "@/common/types";
-import { env, icon } from "@/common/env";
+import { icon } from "@/common/env";
 import { electronPrompt } from "./prompt";
+import bus from "@/common/event-bus";
 
 class Controller extends MainController {
   win: WindowManager = new WindowManager(this);
@@ -46,18 +46,6 @@ class Controller extends MainController {
     observers.push(this);
     observers.push(this.transCon);
     this.bindLinks(actionLinks);
-  }
-
-  simpleDebug() {
-    keyan
-      .translate(
-        "Large-size 2D black phosphorus (BP) nanosheets have been success-fully synthesized by a facile liquid exfoliation method.",
-        "en",
-        "zh-CN"
-      )
-      .then((res) => {
-        console.log(res);
-      });
   }
 
   restoreMultiDefault(optionType: MenuActionType | Category) {
@@ -172,7 +160,6 @@ class Controller extends MainController {
         this.win.mainWindow.minimize();
         break;
       case "simpleDebug":
-        this.simpleDebug();
         break;
       case "simulateCopy":
         setTimeout(() => {
@@ -195,6 +182,9 @@ class Controller extends MainController {
     this.win.mainWindow; //创建主窗口
     this.shortcut.init();
     this.menu.init();
+    if (this.get("autoCheckUpdate")) {
+      bus.at("dispatch", "checkUpdate");
+    }
   }
 
   async onExit() {
@@ -244,6 +234,11 @@ class Controller extends MainController {
         app.setLoginItemSettings({
           openAtLogin: value,
         });
+        break;
+      case "isNewUser":
+        if (value) {
+          this.updater.showCurrentChangelog();
+        }
         break;
       default:
         return false;

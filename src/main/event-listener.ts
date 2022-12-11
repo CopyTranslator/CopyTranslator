@@ -25,10 +25,6 @@ class EventListener {
   lastCopy = Date.now();
 
   bind() {
-    eventBus.gonce("firstLoad", (event: any, args: any) => {
-      eventBus.at("dispatch", "checkUpdate");
-    });
-
     if (os.platform() !== "linux") {
       this.bindHooks();
     } else {

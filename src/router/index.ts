@@ -3,7 +3,6 @@ import VueRouter from "vue-router";
 
 const Contrast = () => import("@/views/Contrast.vue");
 const Settings = () => import("@/views/Settings.vue");
-const Update = () => import("@/views/Update.vue");
 
 Vue.use(VueRouter);
 
@@ -16,11 +15,6 @@ const routes = [
     path: "/contrast",
     name: "contrast",
     component: Contrast,
-  },
-  {
-    path: "/update",
-    name: "update",
-    component: Update,
   },
   {
     path: "/settings",

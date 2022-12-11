@@ -259,8 +259,8 @@ export class WindowManager {
         return this.createMain();
       case "settings":
         return this.createSetting();
-      case "update":
-        return this.createUpdate(); //怎么会把这个搞错的
+      default:
+        throw routeName;
     }
   }
 
@@ -368,29 +368,5 @@ export class WindowManager {
     // cfg["height"] = previous_cfg["height"];
     const queryString = tab ? "?" + qs.stringify({ tab }) : "";
     return this.createWindow("settings", cfg, false, queryString);
-  }
-
-  createUpdate() {
-    const width = 500,
-      height = 500;
-
-    const {
-      x: xBound,
-      y: yBound,
-      width: screenWidth,
-      height: screenHeight,
-    } = this.getDisplay().bounds;
-
-    const cfg = {
-      x: xBound + (screenWidth - width) / 2,
-      y: yBound + (screenHeight - height) / 2,
-      width: width,
-      height: height,
-      maximizable: false,
-      minimizable: false,
-      parent: this.mainWindow,
-      title: "Update",
-    };
-    return this.createWindow("update", cfg, false);
   }
 }

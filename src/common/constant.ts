@@ -8,7 +8,7 @@ let constants: { [key: string]: string } = {
   wiki: "https://copytranslator.gitee.io/guide",
   homepage: "https://copytranslator.gitee.io",
   downloadPage: "https://copytranslator.gitee.io/guide/download.html",
-  allChangelogs: "https://copytranslator.gitee.io/metadata/",
+  allChangelogs: "https://copytranslator.gitee.io/metadata",
   latest: `https://copytranslator.gitee.io/metadata/${osSpec.name}.json`,
   manualDownloadLink: `https://copytranslator.gitee.io/download/${osSpec.name}.html`,
 };
@@ -16,7 +16,7 @@ constants[
   "currentChangelog"
 ] = `${constants.allChangelogs}/${constants.version}.md`;
 const debug = false;
-if (debug && !process.env.IS_TEST) {
+if (debug && process.env.NODE_ENV !== "production") {
   for (const key of Object.keys(constants)) {
     constants[key] = constants[key].replace(
       "https://copytranslator.gitee.io",

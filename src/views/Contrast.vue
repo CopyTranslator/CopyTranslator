@@ -111,6 +111,7 @@
         :permanent="drawer"
         hide-overlay
         :width="200"
+        :style="drawerStyle"
       >
         <Action
           v-for="actionId in actionKeys"
@@ -253,7 +254,7 @@ export default class Contrast extends Mixins(BaseView, WindowController) {
   get area() {
     return {
       "margin-top": this.titlebarHeight,
-      width: `${(this.windowWidth - this.barWidth).toString()}px`,
+      width: `calc(100vw - ${this.barWidth.toString()}px)`,
       "font-family": this.config.contentFontFamily,
     };
   }
@@ -261,6 +262,14 @@ export default class Contrast extends Mixins(BaseView, WindowController) {
   get transparentArea() {
     return {
       "border-width": "0px 1px 1px 1px",
+      "border-style": "solid",
+      "border-color": this.barColor,
+    };
+  }
+
+  get drawerStyle() {
+    return {
+      "border-width": "1px 0px 1px 1px",
       "border-style": "solid",
       "border-color": this.barColor,
     };

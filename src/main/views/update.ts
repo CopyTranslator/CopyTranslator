@@ -3,7 +3,12 @@ import { autoUpdater } from "electron-updater";
 import { env, icon } from "@/common/env";
 import { Controller } from "@/main/controller";
 import path from "path";
-import { constants, getChangelogURL, isLower } from "@/common/constant";
+import {
+  constants,
+  getChangelogURL,
+  isLower,
+  version,
+} from "@/common/constant";
 import axios_ from "axios";
 
 autoUpdater.autoDownload = false;
@@ -39,7 +44,8 @@ export class UpdateChecker {
       .then((res) => res.data)
       .then((data) => {
         console.log("Gitee上最新版本为", JSON.stringify(data));
-        if (isLower(constants.version, data.version)) {
+        //这里的data.version是带了前缀v的
+        if (isLower(version, data.version)) {
           this.get(getChangelogURL(data.version))
             .then((res) => res.data)
             .then((releaseNotes) => {
@@ -112,7 +118,7 @@ export class UpdateChecker {
     }
 
     win.loadFile(file);
-    if (!process.env.IS_TEST) win.webContents.openDevTools();
+    if (process.env.NODE_ENV !== "production") win.webContents.openDevTools();
     return win;
   }
 

@@ -17,6 +17,11 @@ module.exports = {
     electronBuilder: {
       customFileProtocol: "./",
       mainProcessTypeChecking: false,
+      chainWebpackRendererProcess: (config) => {
+        // config.when(process.env.NODE_ENV === "production", (config) => {
+        //   config.plugin("analysis").use(new BundleAnalyzerPlugin());
+        // });
+      },
       chainWebpackMainProcess: (config) => {
         // config.when(process.env.NODE_ENV === "production", (config) => {
         //   config.plugin("analysis").use(new BundleAnalyzerPlugin());

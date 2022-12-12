@@ -32,6 +32,7 @@
           v-else
           class="focusText max"
           v-model="sharedResult.translation"
+          v-bind:style="focusStyle"
         ></textarea>
       </div>
       <DiffTextArea

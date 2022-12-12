@@ -30,7 +30,9 @@ export class UpdateChecker {
 
   async check() {
     console.log("正在检查Github更新");
-    autoUpdater.checkForUpdates();
+    autoUpdater.checkForUpdates().catch((e) => {
+      console.log("成功捕获异常好吧");
+    });
   }
 
   get(url: string) {
@@ -135,7 +137,7 @@ export class UpdateChecker {
 
   bindUpdateEvents() {
     autoUpdater.on("error", (error: Error) => {
-      console.error("Github检查更新失败", error);
+      console.error("Github检查更新失败");
       this.checkTheGiteePages();
     });
 

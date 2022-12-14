@@ -26,6 +26,7 @@
     "@adeperio/forcefocus": "^1.0.3",
     "@gotoeasy/bus": "^1.0.0",
     "@mdi/font": "^7.0.96",
+    "@nut-tree/nut-js": "^2.3.0",
     "@opentranslate/baidu": "^1.2.0",
     "@opentranslate/baidu-domain": "^1.4.1",
     "@opentranslate/caiyun": "^1.2.0",
@@ -58,7 +59,6 @@
     "lodash.trimstart": "^4.5.1",
     "node-mouse": "^0.0.2",
     "proxy-agent": "^4.0.0",
-    "robotjs": "https://github.com/octalmage/robotjs.git#master",
     "sbd": "^1.0.18",
     "shortcut-capture": "^1.2.3",
     "socks-proxy-agent": "^5.0.0",
@@ -113,7 +113,7 @@
     "targets": [
       "node-72",
       "electron-76"
-    ], 
+    ],
     "platforms": [
       "win32",
       "darwin"

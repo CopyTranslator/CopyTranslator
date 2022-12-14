@@ -112,7 +112,7 @@ module.exports = {
           license: "readable_license.txt",
         },
       },
-      externals: ["iohook", "robotjs", "shortcut-capture", "active-win"],
+      externals: ["iohook", "shortcut-capture", "active-win","@nut-tree/nut-js"],
       // 这一步还蛮重要的，不然就会报错
       nodeModulesPath: ["./node_modules"],
     },

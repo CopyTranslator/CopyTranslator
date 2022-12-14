@@ -7,6 +7,7 @@ const defaultGoogleAPI = "https://translate.googleapis.com";
 export const getProxyAxios = (info?: boolean, googleMirror?: string) => {
   if (info) {
     const axiosOptions: AxiosRequestConfig = {
+      timeout: 5000,
       adapter: (config: AxiosRequestConfig) => {
         delete config.adapter;
         if ((config.url as string).startsWith(defaultGoogleAPI)) {
@@ -90,7 +91,7 @@ export const getProxyAxios = (info?: boolean, googleMirror?: string) => {
     };
     return axios_.create(axiosOptions);
   } else {
-    return axios_.create();
+    return axios_.create({timeout:5000});
   }
 };
 

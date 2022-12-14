@@ -181,7 +181,7 @@ function initConfig(
 
   config.setRule(
     "tray",
-    new GroupRule<Identifier>(
+    new ConstantGroupRule<Identifier>(
       [
         "configSnapshot",
         "newConfigSnapshot",
@@ -200,14 +200,13 @@ function initConfig(
         "settings",
         "exit",
       ],
-      identifiers,
-      "v11.0.0"
+      identifiers
     )
   );
 
   config.setRule(
     "contrastPanel",
-    new GroupRule<Identifier>(
+    new ConstantGroupRule<Identifier>(
       [
         "autoCopy",
         "autoPaste",
@@ -223,8 +222,7 @@ function initConfig(
         "translateInput",
         "settings",
       ],
-      identifiers,
-      "v11.0.0"
+      identifiers
     )
   );
 

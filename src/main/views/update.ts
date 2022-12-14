@@ -103,7 +103,7 @@ export class UpdateChecker {
         icon,
         title,
         parent: this.controller.win.mainWindow,
-        modal: osType!=='Darwin',
+        modal: osType !== "Darwin",
         width: 800,
         height: 600,
         minimizable: false,

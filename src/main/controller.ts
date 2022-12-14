@@ -225,10 +225,12 @@ class Controller extends MainController {
         }
         break;
       case "stayTop":
-        this.win.setStayTop(value);
+        this.win.registerPostStart(() => this.win.setStayTop(value));
         break;
       case "skipTaskbar":
-        this.win.mainWindow.setSkipTaskbar(value);
+        this.win.registerPostStart(() =>
+          this.win.mainWindow.setSkipTaskbar(value)
+        );
         break;
       case "openAtLogin":
         app.setLoginItemSettings({

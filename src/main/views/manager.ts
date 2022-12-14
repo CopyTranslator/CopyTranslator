@@ -81,6 +81,9 @@ export class WindowManager {
   }
 
   setIgnoreMouseEvents(value: boolean) {
+    if (!this.hasMain) {
+      return;
+    }
     if (value) {
       this.mainWindow.setIgnoreMouseEvents(true, { forward: true });
     } else {

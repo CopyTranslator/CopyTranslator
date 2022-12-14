@@ -1,6 +1,6 @@
 import { dialog, BrowserWindow, ipcMain } from "electron";
 import { autoUpdater } from "electron-updater";
-import { env, icon } from "@/common/env";
+import { env, icon, osType } from "@/common/env";
 import { Controller } from "@/main/controller";
 import path from "path";
 import {
@@ -103,7 +103,7 @@ export class UpdateChecker {
         icon,
         title,
         parent: this.controller.win.mainWindow,
-        modal: true,
+        modal: osType!=='Darwin',
         width: 800,
         height: 600,
         minimizable: false,

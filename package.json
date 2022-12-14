@@ -113,9 +113,10 @@
     "targets": [
       "node-72",
       "electron-76"
-    ],
+    ], 
     "platforms": [
-      "win32"
+      "win32",
+      "darwin"
     ],
     "arches": [
       "x64"

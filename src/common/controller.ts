@@ -4,7 +4,7 @@ import { Promisified } from "@/proxy/renderer";
 import { ActionManager } from "./action";
 import bus from "./event-bus";
 
-const isMain = process.type == "browser";
+const currentProcessIsMain = process.type == "browser";
 
 type Handler1 = () => void;
 type Handler2 = (controller: MainController | RenController) => void;
@@ -34,9 +34,7 @@ export abstract class CommonController {
     return this.config.get(identifier) as T;
   }
 
-  set(identifier: Identifier, value: any): boolean {
-    return this.config.set(identifier, value);
-  }
+  abstract set(identifier: Identifier, value: any): boolean;
 
   bindLinks(handlers: Map<Identifier, Handler>) {
     this.links.push(handlers);
@@ -57,8 +55,15 @@ export abstract class CommonController {
 
   bind() {
     bus.gon("callback", (args: Args) => {
-      const { identifier, param, type: actionType, isMain: main } = args;
-      console.debug("action triggered", identifier, param, actionType, main);
+      const { identifier, param, type: actionType, isMain: fromMain } = args;
+      console.debug(
+        "action triggered",
+        identifier,
+        param,
+        actionType,
+        fromMain,
+        currentProcessIsMain
+      );
       switch (actionType) {
         case "normal":
         case "param_normal":
@@ -67,7 +72,7 @@ export abstract class CommonController {
               this.handleWithLinks(identifier, param) ||
               this.handle(identifier, param)
             ) &&
-            main == isMain
+            fromMain == currentProcessIsMain
           ) {
             //跨进程动作，防止出现回声
             bus.iat("callback", args);

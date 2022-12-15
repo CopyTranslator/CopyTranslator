@@ -48,6 +48,10 @@ class Controller extends MainController {
     this.bindLinks(actionLinks);
   }
 
+  set(identifier: Identifier, value: any): boolean {
+    return this.config.set(identifier, value);
+  }
+
   restoreMultiDefault(optionType: MenuActionType | Category) {
     const keys = this.action.getKeys(optionType);
     for (const key of keys) {

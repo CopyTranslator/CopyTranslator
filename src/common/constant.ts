@@ -2,7 +2,7 @@ import { osSpec } from "./env";
 let constants: { [key: string]: string } = {
   appName: "CopyTranslator",
   nickName: "破晓",
-  version: "11.0.0",
+  version: "11.0.1",
   stage: "stable",
   changelogs: "https://copytranslator.gitee.io/changelogs/v10.html",
   wiki: "https://copytranslator.gitee.io/guide",

@@ -26,6 +26,12 @@ export class RendererController extends RenController {
   app: Vue | undefined;
   keys: Identifier[] = [];
 
+  set(identifier: Identifier, value: any): boolean {
+    //在渲染进程里不要直接设置，把信息传到主进程里，让主进程设置就好了
+    this.proxy.set(identifier, value);
+    return true;
+  }
+
   public static getInstance(): RendererController {
     if (this._instance == null) {
       this._instance = new RendererController();

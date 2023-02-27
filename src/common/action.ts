@@ -18,6 +18,7 @@ import {
   Category,
   googleSources,
   dragCopyModes,
+  listenClipboardModes,
   categories,
   displayTexts,
   ConfigSnapshots,
@@ -43,7 +44,11 @@ function subMenuGenerator(
     const id = compose([identifier, e]);
     let label = e;
     if (needLocale) {
-      label = l[e].toString();
+      if (l[e]) {
+        label = l[e].toString();
+      } else {
+        console.log("no locale for", e);
+      }
       if (postLocaleFunc != undefined) {
         label = postLocaleFunc(label);
       }
@@ -468,8 +473,21 @@ class ActionManager {
       )
     ); //TODO 很丑的实现，但是不是很想改
 
+    this.append(
+      listAction(
+        "listenClipboardMode",
+        listenClipboardModes,
+        undefined,
+        true,
+        (x) => x.replace("监听剪贴板", "").replace("ListenClipboard", "").trim()
+      )
+    ); //TODO 很丑的实现，但是不是很想改
+
     this.append(typeAction("config", "dragCopyWhiteList"));
     this.append(typeAction("config", "dragCopyBlackList"));
+
+    this.append(typeAction("config", "listenClipboardWhiteList"));
+    this.append(typeAction("config", "listenClipboardBlackList"));
 
     this.append(normalAction("settings"));
     this.append(normalAction("helpAndUpdate"));
@@ -532,6 +550,7 @@ class ActionManager {
             ["submenu", "constant"].includes(this.getAction(x).actionType) &&
             ![
               "dragCopyMode",
+              "listenClipboardMode",
               "sourceLanguage",
               "targetLanguage",
               "layoutType",
@@ -544,6 +563,7 @@ class ActionManager {
           "copy",
           "paste",
           "cut",
+          "clear",
           "copyResult",
           "copySource",
           "newConfigSnapshot",
@@ -555,6 +575,7 @@ class ActionManager {
           "copy",
           "paste",
           "cut",
+          "clear",
           "copyResult",
           "copySource",
           "newConfigSnapshot",
@@ -566,6 +587,7 @@ class ActionManager {
           "copy",
           "paste",
           "cut",
+          "clear",
           "copySource",
           "translator-compare",
           "newConfigSnapshot",

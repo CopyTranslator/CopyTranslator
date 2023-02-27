@@ -68,6 +68,7 @@ export const constantActionTypes = [
   "googleMirror",
   "googleSource",
   "dragCopyMode",
+  "listenClipboardMode",
   "activeWindows",
   "primaryColor",
   "fontColor",
@@ -219,6 +220,12 @@ export const dragCopyModes = [
   "dragCopyBlackList",
 ] as const;
 
+export const listenClipboardModes = [
+  "listenClipboardGlobal",
+  "listenClipboardWhiteList",
+  "listenClipboardBlackList",
+] as const;
+
 //路由名称
 export const routeActionTypes = [
   "contrast",
@@ -247,6 +254,9 @@ export const displayTexts = [
   "dragCopyPrompt",
   "dragCopyWarning",
   "dragCopyTip",
+  "listenClipboardPrompt",
+  "listenClipboardConfig",
+  "listenClipboardTip",
   "fallbackPrompt1",
   "fallbackPrompt2",
   "about",
@@ -289,6 +299,7 @@ export type LayoutType = typeof layoutTypes[number];
 export type Domain = typeof domains[number];
 export type GoogleSource = typeof googleSources[number];
 export type DragCopyMode = typeof dragCopyModes[number];
+export type ListenClipboardMode = typeof listenClipboardModes[number];
 export type ColorMode = typeof colorModes[number];
 export type EventType = typeof eventTypes[number];
 export type DisplayText = typeof displayTexts[number];
@@ -306,6 +317,7 @@ export type Identifier =
   | TranslatorGroup
   | Category
   | DragCopyMode
+  | ListenClipboardMode
   | DisplayText;
 
 export const identifiers: readonly Identifier[] = flatten([

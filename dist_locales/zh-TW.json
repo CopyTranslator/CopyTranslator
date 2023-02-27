@@ -208,5 +208,12 @@
     "<tip>penerate": "(Settings -> Appearance) mouse penetration: After selecting, there will be an additional button for dragging. Except for specific action buttons, copytranslator will no longer respond to mouse events, that is, you can operate through the interface of copytranslator to The following program. It is generally used in conjunction with transparency adjustment.",
     "<tip>titlebarHeight": "(Settings -> Appearance) You can adjust the height of the title bar and make the title bar smaller when needed",
     "<tip>engineCache": "The compound translation engine currently does not have accelerated caching by default, but you can set it yourself.",
-    "actionSortPrompt": "You can sort these buttons by dragging and dropping"
+    "actionSortPrompt": "You can sort these buttons by dragging and dropping",
+    "listenClipboardGlobal": "Listen Clipboard Global",
+    "listenClipboardWhiteList": "Listen Clipboard White List",
+    "listenClipboardBlackList": "Listen Clipboard Black List",
+    "listenClipboardMode": "Listen Clipboard Mode",
+    "listenClipboardTip": "Only listen Clipboard in the following programs",
+    "listenClipboardPrompt": "You can set the listening mode of the clipboard in the settings",
+    "listenClipboardConfig": "Listen Clipboard"
 }

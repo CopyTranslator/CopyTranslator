@@ -191,5 +191,12 @@
     "<tip>penerate": "（设置->外观）鼠标穿透: 选中后，会多出一个用于拖动的按钮，除特定动作按钮外，copytranslator将不再响应鼠标事件，也就是你可以透过copytranslator的界面操作到后面的程序。一般配合透明度调节使用。",
     "<tip>titlebarHeight": "（设置->外观）在需要时，你可以调节标题栏的高度，把标题栏变小",
     "<tip>engineCache": "化合物翻译引擎目前默认是没有加速缓存的，但是你可以自行设置。",
-    "actionSortPrompt": "你可以通过拖拽来对这些按钮进行排序"
+    "actionSortPrompt": "你可以通过拖拽来对这些按钮进行排序",
+    "listenClipboardMode": "监听剪贴板模式",
+    "listenClipboardGlobal": "全局监听剪贴板",
+    "listenClipboardWhiteList": "监听剪贴板白名单",
+    "listenClipboardBlackList": "监听剪贴板黑名单",
+    "listenClipboardPrompt": "请选择程序",
+    "listenClipboardTip": "仅在特定程序时监听剪贴板",
+    "listenClipboardConfig": "监听剪贴板"
 }

@@ -249,6 +249,13 @@ export const zh_cn = new Map<LocaleKey, string>([
     "化合物翻译引擎目前默认是没有加速缓存的，但是你可以自行设置。",
   ],
   ["actionSortPrompt", "你可以通过拖拽来对这些按钮进行排序"],
+  ["listenClipboardMode", "监听剪贴板模式"],
+  ["listenClipboardGlobal", "全局监听剪贴板"],
+  ["listenClipboardWhiteList", "监听剪贴板白名单"],
+  ["listenClipboardBlackList", "监听剪贴板黑名单"],
+  ["listenClipboardPrompt", "请选择程序"],
+  ["listenClipboardTip", "仅在特定程序时监听剪贴板"],
+  ["listenClipboardConfig", "监听剪贴板"],
 ]);
 
 export const en = new Map<LocaleKey, string>([
@@ -349,15 +356,6 @@ export const en = new Map<LocaleKey, string>([
   ["googleMirror", "google Mirror URL"],
   ["googleSource", "google translation provider"],
   ["fallbackTranslator", "Fallback Translator"],
-  ["dragCopyConfig", "DragCopy"],
-  ["dragCopyMode", "DragCopy Mode"],
-  ["dragCopyGlobal", "Global DragCopy"],
-  ["dragCopyWhiteList", "DragCopy WhiteList"],
-  ["dragCopyBlackList", "DragCopy BlackList"],
-  [
-    "dragCopyPrompt",
-    "If the program you want is not listed here, please try dragging and dropping on that program and try again",
-  ],
   [
     "fallbackPrompt1",
     "engine does not support this language, this result is provided by the fallback engine",
@@ -388,7 +386,6 @@ export const en = new Map<LocaleKey, string>([
     "Automatically copy the translation results to the clipboard after translation",
   ],
   ["<tooltip>listenClipboard", "Listen and translate clipboard content"],
-  ["<tooltip>dragCopy", "Drag and drop to copy the selected content"],
   ["<tooltip>doubleClickCopy", "Double-click to copy the selected content"],
   [
     "<tooltip>incrementalCopy",
@@ -413,10 +410,6 @@ export const en = new Map<LocaleKey, string>([
   ],
   ["<tooltip>skipTaskbar", "Hide status bar"],
   ["<tooltip>neverShow", "Never show warning"],
-  [
-    "<tooltip>dragCopyMode",
-    "It is recommended to use the whitelist mode, and only respond to drag and drop copying in specific applications",
-  ],
   [
     "<tooltip>closeAsQuit",
     "Close the window to exit completely instead of minimizing to the tray",
@@ -491,14 +484,6 @@ export const en = new Map<LocaleKey, string>([
   [
     "<tooltip>welcome",
     "If you found it useful, please give me a star on GitHub or introduce to your friend.",
-  ],
-  [
-    "dragCopyWarning",
-    "It is strongly recommended that you enable the white list mode of drag replication (Settings ->DragCopy), so that drag replication will be triggered in specific programs. Ctrl + C is simulated when the drag copy is triggered. In most scenes, this means safe text copying, but in some scenes it may cause some unexpected problems, such as clipboard data being overwritten.  Triggering Ctrl + C in the shell will interrupt the running program and so on.  When you enable it, please be aware that after you enable the drag and drop option, you will be responsible for any possible losses.",
-  ],
-  [
-    "dragCopyTip",
-    "After the drag copy option is turned on, just press and hold the mouse and drag the selected text to copy the text.\nIt is strongly recommended that you enable the white list mode of drag replication (Settings ->DragCopy), so that drag replication will be triggered in specific programs.",
   ],
   ["actionButtons", "Action Button"],
   ["addNewActionButton", "Add New ActionButton"],
@@ -575,5 +560,37 @@ export const en = new Map<LocaleKey, string>([
     "The compound translation engine currently does not have accelerated caching by default, but you can set it yourself.",
   ],
   ["actionSortPrompt", "You can sort these buttons by dragging and dropping"],
+  ["listenClipboardGlobal", "Listen Clipboard Global"],
+  ["listenClipboardWhiteList", "Listen Clipboard White List"],
+  ["listenClipboardBlackList", "Listen Clipboard Black List"],
+  ["listenClipboardMode", "Listen Clipboard Mode"],
+  ["listenClipboardTip", "Only listen Clipboard in the following programs"],
+  [
+    "listenClipboardPrompt",
+    "You can set the listening mode of the clipboard in the settings",
+  ],
+  ["listenClipboardConfig", "Listen Clipboard"],
+  ["dragCopyConfig", "DragCopy"],
+  ["dragCopyMode", "DragCopy Mode"],
+  ["dragCopyGlobal", "Global DragCopy"],
+  ["dragCopyWhiteList", "DragCopy WhiteList"],
+  ["dragCopyBlackList", "DragCopy BlackList"],
+  [
+    "dragCopyPrompt",
+    "If the program you want is not listed here, please try dragging and dropping on that program and try again",
+  ],
+  ["<tooltip>dragCopy", "Drag and drop to copy the selected content"],
+  [
+    "<tooltip>dragCopyMode",
+    "It is recommended to use the whitelist mode, and only respond to drag and drop copying in specific applications",
+  ],
+  [
+    "dragCopyWarning",
+    "It is strongly recommended that you enable the white list mode of drag replication (Settings ->DragCopy), so that drag replication will be triggered in specific programs. Ctrl + C is simulated when the drag copy is triggered. In most scenes, this means safe text copying, but in some scenes it may cause some unexpected problems, such as clipboard data being overwritten.  Triggering Ctrl + C in the shell will interrupt the running program and so on.  When you enable it, please be aware that after you enable the drag and drop option, you will be responsible for any possible losses.",
+  ],
+  [
+    "dragCopyTip",
+    "After the drag copy option is turned on, just press and hold the mouse and drag the selected text to copy the text.\nIt is strongly recommended that you enable the white list mode of drag replication (Settings ->DragCopy), so that drag replication will be triggered in specific programs.",
+  ],
 ]);
 export type Locale = typeof en;

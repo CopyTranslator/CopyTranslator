@@ -4,8 +4,7 @@ import { clipboard } from "./clipboard";
 import eventBus from "../common/event-bus";
 import config from "../common/configuration";
 import iohook from "iohook";
-import { DragCopyMode } from "@/common/types";
-const activeWindow = require("active-win");
+import { isValidWindow } from "./focus-handler";
 
 class EventListener {
   drag = false;
@@ -69,39 +68,6 @@ class EventListener {
     });
   }
 
-  //检查该窗口是否在白名单内
-  checkList(windowName: string): boolean {
-    const mode = config.get("dragCopyMode") as DragCopyMode;
-    switch (mode) {
-      case "dragCopyWhiteList":
-        const whitelist = config.get("dragCopyWhiteList") as string[];
-        return whitelist.includes(windowName);
-      case "dragCopyBlackList":
-        const blacklist = config.get("dragCopyBlackList") as string[];
-        return !blacklist.includes(windowName);
-      case "dragCopyGlobal":
-        return true;
-      default:
-        throw "Unknow DragCopy Mode";
-    }
-  }
-
-  //注册该窗口，同时检查是否是在白名单内
-  async isValidWindow(): Promise<boolean> {
-    return activeWindow().then((res: any) => {
-      if (!res) {
-        return;
-      }
-      const windowName = res.owner.name.toString();
-      const windows = new Set(config.get<string[]>("activeWindows"));
-      if (!windows.has(windowName)) {
-        windows.add(windowName);
-        config.set("activeWindows", [...windows]);
-      }
-      return this.checkList(windowName);
-    });
-  }
-
   simulateCopy() {
     simulate.copy();
     eventBus.at("dispatch", "toast", "模拟复制");
@@ -133,7 +99,7 @@ class EventListener {
         Date.now() - this.lastDown > 100 &&
         Math.abs(this.newX - this.lastX) + Math.abs(this.newY - this.lastY) > 10
       ) {
-        this.isValidWindow().then((valid) => {
+        isValidWindow("dragCopy").then((valid) => {
           const condition =
             valid && config.get("dragCopy") && config.get("listenClipboard");
           if (!condition) {
@@ -170,7 +136,7 @@ class EventListener {
         Math.abs(newX - this.lastClickX) < 4 &&
         Math.abs(newY - this.lastClickY) < 4
       ) {
-        this.isValidWindow().then((valid) => {
+        isValidWindow("dragCopy").then((valid) => {
           let condition =
             valid &&
             config.get("listenClipboard") &&

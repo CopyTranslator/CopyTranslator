@@ -28,6 +28,8 @@ import {
   dragCopyModes,
   isValidActionButton,
   ActionButton,
+  ListenClipboardMode,
+  listenClipboardModes,
 } from "./types";
 import { DictionaryType, dictionaryTypes } from "./dictionary/types";
 import { version } from "./constant";
@@ -62,6 +64,17 @@ function initConfig(
   );
   config.setRule("dragCopyWhiteList", new TypeRule<string[]>([]));
   config.setRule("dragCopyBlackList", new TypeRule<string[]>([]));
+
+  config.setRule(
+    "listenClipboardMode",
+    new UnionRule<ListenClipboardMode>(
+      "listenClipboardGlobal",
+      listenClipboardModes
+    )
+  );
+  config.setRule("listenClipboardWhiteList", new TypeRule<string[]>([]));
+  config.setRule("listenClipboardBlackList", new TypeRule<string[]>([]));
+
   config.setRule("isNewUser", new TypeRule<boolean>(true));
   config.setRule("toastTip", new TypeRule<boolean>(false));
   config.setRule("closeAsQuit", new TypeRule<boolean>(true));

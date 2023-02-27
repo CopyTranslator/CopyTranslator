@@ -24,6 +24,9 @@
           <v-tab href="#translatorConfig">
             {{ trans["translatorConfig"] }}
           </v-tab>
+          <v-tab href="#listenClipboardConfig">{{
+            trans["listenClipboardConfig"]
+          }}</v-tab>
           <v-tab href="#dragCopyConfig">{{ trans["dragCopyConfig"] }}</v-tab>
           <v-tab href="#snapshotManage">{{ trans["snapshotManage"] }}</v-tab>
           <v-tab href="#actionButtons">{{ trans["actionButtons"] }}</v-tab>
@@ -44,8 +47,11 @@
           <v-tab-item value="translatorConfig">
             <Options optionType="translatorGroups"></Options>
           </v-tab-item>
+          <v-tab-item value="listenClipboardConfig">
+            <BlackWhiteConfig optionName="listenClipboard"></BlackWhiteConfig>
+          </v-tab-item>
           <v-tab-item value="dragCopyConfig">
-            <DragCopyConfig></DragCopyConfig>
+            <BlackWhiteConfig optionName="dragCopy"></BlackWhiteConfig>
           </v-tab-item>
           <v-tab-item value="snapshotManage">
             <Options
@@ -73,7 +79,7 @@ import "@/css/shared-styles.css";
 import Options from "./Options.vue";
 import Config from "./Config.vue";
 import Switches from "./Switches.vue";
-import DragCopyConfig from "./DrogCopyConfig.vue";
+import BlackWhiteConfig from "./BlackWhiteConfig.vue";
 import About from "./About.vue";
 import { Component, Mixins } from "vue-property-decorator";
 import BaseView from "@/components/BaseView.vue";
@@ -86,7 +92,7 @@ import bus from "@/common/event-bus";
     Options,
     Config,
     Switches,
-    DragCopyConfig,
+    BlackWhiteConfig,
     About,
     ActionButton,
     ActionButtonConfig,

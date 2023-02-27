@@ -39,6 +39,7 @@ import { examToken } from "@/common/translate/token";
 import { translators } from "@/common/translate/translators";
 import { getProxyAxios } from "@/common/translate/proxy";
 import bus from "@/common/event-bus";
+import { isValidWindow } from "./focus-handler";
 
 type TranslateOption = {
   text?: string;
@@ -120,7 +121,7 @@ class TranslateController {
         });
         break;
       case "translateClipboard":
-        this.checkClipboard();
+        this.checkClipboard(false); //不需要进行检查
         break;
       case "doubleCopyTranslate":
         this.doubleCopyTranslate();
@@ -271,7 +272,17 @@ class TranslateController {
     return false;
   }
 
-  checkClipboard() {
+  checkClipboard(checkFocus: boolean = false): void {
+    if (checkFocus) {
+      isValidWindow("listenClipboard").then((valid) => {
+        if (valid) {
+          this.checkClipboard(false);
+        } else {
+          console.log("invalid window, not check clipboard");
+        }
+      });
+      return;
+    }
     const originalText = clipboard.readText();
     if (typeof originalText != "string") {
       return; //内容并非文本
@@ -559,7 +570,7 @@ class TranslateController {
   }
 
   async doubleCopyTranslate() {
-    return this.checkClipboard();
+    return this.checkClipboard(false);
   }
 
   async switchTranslator(value: TranslatorType) {
@@ -623,7 +634,7 @@ class TranslateController {
   setWatch(watch: boolean) {
     if (watch) {
       clipboard.on("text-changed", () => {
-        this.checkClipboard();
+        this.checkClipboard(true);
       });
       clipboard.on("image-changed", () => {
         // OCR 相关TranslateResult
@@ -639,7 +650,7 @@ class TranslateController {
         }
       });
       clipboard.startWatching();
-      this.checkClipboard(); //第一次检查剪贴板
+      this.checkClipboard(true); //第一次检查剪贴板
     } else {
       clipboard.stopWatching();
     }

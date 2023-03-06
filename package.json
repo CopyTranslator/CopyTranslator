@@ -50,7 +50,7 @@
     "electron-log": "^4.2.4",
     "electron-updater": "4.2.5",
     "font-list": "^1.4.5",
-    "iohook": "^0.9.0",
+    "iohook": "0.9.0",
     "lodash.compact": "^3.0.1",
     "lodash.flatten": "^4.4.0",
     "lodash.sum": "^4.0.2",

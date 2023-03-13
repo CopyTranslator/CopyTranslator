@@ -127,7 +127,6 @@
   }
  , 
   "resolutions": {
-    "cheerio": "1.0.0-rc.10",
-    "parse5-htmlparser2-tree-adapter": "^6.0.0"
+    "htmlparser2": "~7.0.0"
 }
 }

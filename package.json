@@ -12,13 +12,13 @@
     "postinstall": "electron-builder install-app-deps",
     "rebuild": "npm rebuild --runtime=electron --target=8.2.3 --disturl=https://atom.io/download/atom-shell --abi=76",
     "rebuild_32": "npm rebuild --runtime=electron --target=8.2.3 --disturl=https://atom.io/download/atom-shell --abi=76 --arch=ia32",
-    "prebuild": "tsc ./src/prebuild.ts --downlevelIteration --esModuleInterop && node ./src/prebuild.js && npm run clean",
+    "prebuild": "tsx ./src/prebuild.ts --downlevelIteration --esModuleInterop && tsx ./src/prebuild.ts && npm run clean",
     "postbuild": "node postbuild.js",
     "clean": "node clean.js",
     "postuninstall": "electron-builder install-app-deps",
     "docs:dev": "vuepress dev docs",
     "docs:build": "vuepress build docs",
-    "docs:gen": "tsc ./src/generate-doc.ts --downlevelIteration --resolveJsonModule --esModuleInterop && node ./src/generate-doc.js && npm run clean",
+    "docs:gen": "tsx ./src/generate-doc.ts --downlevelIteration --resolveJsonModule --esModuleInterop && node ./src/generate-doc.js && npm run clean",
     "docs:deploy": "sh docs/.vuepress/release/sync.sh deploy"
   },
   "main": "background.js",
@@ -41,6 +41,7 @@
     "@wtfcode/vue-merge": "^2.0.3",
     "active-win": "^7.7.2",
     "axios": "0.19.2",
+    "babel-preset-es2015": "^6.24.1",
     "baidu-aip-sdk": "^2.4.5",
     "diff": "^5.0.0",
     "eazydict-bing": "https://github.com/CopyTranslator/eazydict-bing.git",
@@ -63,6 +64,7 @@
     "shortcut-capture": "^1.2.3",
     "socks-proxy-agent": "^5.0.0",
     "sudo-prompt-alt": "^9.3.0",
+    "tsx": "^3.12.5",
     "v8-compile-cache": "^2.1.0",
     "vue": "^2.6.11",
     "vue-class-component": "^7.2.3",
@@ -123,4 +125,9 @@
       "x64"
     ]
   }
+ , 
+  "resolutions": {
+    "cheerio": "1.0.0-rc.10",
+    "parse5-htmlparser2-tree-adapter": "^6.0.0"
+}
 }

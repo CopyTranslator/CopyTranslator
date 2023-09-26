@@ -1,12 +1,13 @@
 const DL_PREFIX = "<__COPYTRANSLATOR__>";
 
-const target = document.querySelector("#target-dummydiv");
+const target = document.querySelector("d-textarea[data-testid='translator-target-input']");
 // Create an observer instance.
+
 const observer = new MutationObserver(function (mutations) {
   if (target.textContent.trim().length > 0) {
     const state = window._tState;
     const result = {
-      targetText: state.targetText,
+      targetText: state.targetSentences.map(item => item._lastFullTrimmedText).join(""),
       sourceLang: state._sourceLang,
       targetLangSettings: state._targetLangSettings,
     };
@@ -17,6 +18,7 @@ const observer = new MutationObserver(function (mutations) {
 observer.observe(target, {
   // attributes: true, //simpleDebug
   childList: true, //内容发生变化
+  subtree: true
   // characterData: true,
 });
 
@@ -37,17 +39,17 @@ function b64_to_utf8(str) {
 }
 
 function setLang(from, to) {
-  document.querySelector(`button[dl-test=translator-source-lang-btn]`).click();
+  document.querySelector(`button[data-testid=translator-source-lang-btn]`).click();
   document
-    .querySelector("div[dl-test=translator-source-lang-list]")
+    .querySelector("div[data-testid=translator-source-lang-list]")
     .querySelector(".lmt__language_wrapper")
-    .querySelector(`button[dl-test="translator-lang-option-${from}"]`)
+    .querySelector(`button[data-testid="translator-lang-option-${from}"]`)
     .click();
-  document.querySelector(`button[dl-test=translator-target-lang-btn]`).click();
+  document.querySelector(`button[data-testid=translator-target-lang-btn]`).click();
   document
-    .querySelector("div[dl-test=translator-target-lang-list]")
+    .querySelector("div[data-testid=translator-target-lang-list]")
     .querySelector(".lmt__language_wrapper")
-    .querySelector(`button[dl-test="translator-lang-option-${to}"]`)
+    .querySelector(`button[data-testid="translator-lang-option-${to}"]`)
     .click();
 }
 
@@ -75,12 +77,12 @@ function setLangV2(from, to, callback) {
       bus.addEventListener("done", callback, { once: true });
       lang = to;
       document
-        .querySelector(`button[dl-test=translator-target-lang-btn]`)
+        .querySelector(`button[data-testid=translator-target-lang-btn]`)
         .click();
     },
     { once: true }
   );
-  document.querySelector(`button[dl-test=translator-source-lang-btn]`).click(); //https://developer.mozilla.org/zh-CN/docs/Web/API/EventTarget
+  document.querySelector(`button[data-testid=translator-source-lang-btn]`).click(); //https://developer.mozilla.org/zh-CN/docs/Web/API/EventTarget
 }
 
 if (isActive) {
@@ -95,7 +97,7 @@ if (isActive) {
       }
       document
         .querySelector("#popover_container")
-        .querySelector(`button[dl-test="translator-lang-option-${lang}"]`)
+        .querySelector(`button[data-testid="translator-lang-option-${lang}"]`)
         .click();
       // console.log(lang);
       lang = null;

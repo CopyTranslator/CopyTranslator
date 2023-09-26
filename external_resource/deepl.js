@@ -1,13 +1,13 @@
 const DL_PREFIX = "<__COPYTRANSLATOR__>";
 
 const target = document.querySelector("d-textarea[data-testid='translator-target-input']");
-
+// Create an observer instance.
 
 const observer = new MutationObserver(function (mutations) {
   if (target.textContent.trim().length > 0) {
     const state = window._tState;
     const result = {
-      targetText: state.targetSentences.map(item => item._lastFullTrimmedText),
+      targetText: state.targetSentences.map(item => item._lastFullTrimmedText).join(""),
       sourceLang: state._sourceLang,
       targetLangSettings: state._targetLangSettings,
     };

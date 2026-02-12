@@ -258,10 +258,10 @@ export class OpenAI extends Translator<OpenAIConfig> {
       );
 
       return response.data;
-    } catch (error: any) {
+    } catch (error) {
       console.error("OpenAI API 调用失败:", error);
-      if (error.response) {
-        console.error("错误响应:", error.response.data);
+      if (error && typeof error === 'object' && 'response' in error) {
+        console.error("错误响应:", (error as any).response.data);
         throw new TranslateError("API_SERVER_ERROR");
       }
       throw new TranslateError("NETWORK_ERROR");

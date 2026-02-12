@@ -111,7 +111,16 @@ class ConstantGroupRule<T> implements Rule {
   constructor(predefined: Array<T>, options: readonly T[]) {
     this.predefined = predefined;
     this.check = (value: Array<T>) => {
-      return false;
+      if (!value.map((item) => options.includes(item)).includes(false)) {
+        return true;
+      } else {
+        for (const item of value) {
+          if (!options.includes(item)) {
+            console.log("check fail, invalid item", item);
+          }
+        }
+        return false;
+      }
     };
   }
 }

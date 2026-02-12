@@ -283,7 +283,7 @@ function initConfig(
   );
   config.setRule(
     "googleSource",
-    new UnionRule<GoogleSource>("google", googleSources, "v11.0.0")
+    new UnionRule<GoogleSource>("lingva", googleSources, "v12.0.0")
   );
   config.setRule(
     "fallbackTranslator",
@@ -299,14 +299,10 @@ function initConfig(
         "baidu",
         "caiyun",
         "keyan",
-        "bing",
-        "deepl",
-        "tencent",
-        "youdao",
-        "sogou",
+        "stepfun",
       ],
       translatorTypes,
-      "v11.0.0"
+      "v12.0.0"
     )
   );
 
@@ -318,6 +314,7 @@ function initConfig(
         // "baidu",
         // "caiyun",
         // "keyan",
+        // "stepfun",
         // "bing",
         // "deepl",
         // "tencent",
@@ -325,7 +322,7 @@ function initConfig(
         // "sogou",
       ],
       translatorTypes,
-      "v11.0.0"
+      "v12.0.0"
     )
   );
 
@@ -337,6 +334,7 @@ function initConfig(
         "baidu",
         "caiyun",
         "keyan",
+        "stepfun",
         "bing",
         "deepl",
         "tencent",
@@ -344,7 +342,7 @@ function initConfig(
         "sogou",
       ],
       translatorTypes,
-      "v11.0.0"
+      "v12.0.0"
     )
   );
 
@@ -408,6 +406,18 @@ function initConfig(
       apiBase: "https://api.openai.com/v1",
       apiKey: "",
       model: "gpt-3.5-turbo",
+      prompt: "default",
+      temperature: "0.3",
+      maxTokens: "4000",
+    })
+  );
+
+  config.setRule(
+    "stepfun",
+    new StructRule<KeyConfig>({
+      apiBase: "https://api.stepfun.com/v1",
+      apiKey: "",
+      model: "step-3.5-flash",
       prompt: "default",
       temperature: "0.3",
       maxTokens: "4000",

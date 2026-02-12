@@ -92,6 +92,7 @@ export const normalTranslatorTypes = [
   "youdao",
   "sogou",
   "openai",
+  "stepfun",
 ] as const;
 export const abstractTranslatorTypes = ["copytranslator"] as const;
 
@@ -287,6 +288,8 @@ export const displayTexts = [
   "<tip>titlebarHeight",
   "<tip>engineCache",
   "actionSortPrompt",
+  "keyanSlogan",
+  "stepfunSlogan",
 ] as const; //一些显示在界面上的文本
 
 export type Role = typeof roles[number];

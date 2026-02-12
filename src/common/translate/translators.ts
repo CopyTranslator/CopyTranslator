@@ -14,6 +14,7 @@ import config from "../configuration";
 import { keyan } from "./keyan";
 import { lingva } from "./lingva";
 import { OpenAI } from "./openai";
+import { Stepfun } from "./stepfun";
 
 export const translatorMap: [TranslatorType | GoogleSource, Translator][] = [
   ["baidu", new Baidu({ axios, config: defaultTokens.get("baidu") })],
@@ -42,6 +43,7 @@ export const translatorMap: [TranslatorType | GoogleSource, Translator][] = [
     }) as any,
   ],
   ["openai", new OpenAI({ axios, config: defaultTokens.get("openai") })],
+  ["stepfun", new Stepfun({ axios, config: defaultTokens.get("stepfun") })],
 ];
 
 export const translators = new Map(translatorMap);

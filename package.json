@@ -1,6 +1,6 @@
 {
   "name": "copytranslator",
-  "version": "11.0.2",
+  "version": "12.0.0",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",

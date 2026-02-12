@@ -1,16 +1,16 @@
 import { osSpec } from "./env";
 let constants: { [key: string]: string } = {
   appName: "CopyTranslator",
-  nickName: "破晓",
-  version: "11.0.2",
+  nickName: "知微",
+  version: "12.0.0",
   stage: "stable",
-  changelogs: "https://copytranslator.gitee.io/changelogs/v10.html",
-  wiki: "https://copytranslator.gitee.io/guide",
-  homepage: "https://copytranslator.gitee.io",
-  downloadPage: "https://copytranslator.gitee.io/guide/download.html",
-  allChangelogs: "https://copytranslator.gitee.io/metadata",
-  latest: `https://copytranslator.gitee.io/metadata/${osSpec.name}.json`,
-  manualDownloadLink: `https://copytranslator.gitee.io/download/${osSpec.name}.html`,
+  changelogs: "https://copytranslator.github.io/changelogs/v10.html",
+  wiki: "https://copytranslator.github.io/guide",
+  homepage: "https://copytranslator.github.io",
+  downloadPage: "https://copytranslator.github.io/guide/download.html",
+  allChangelogs: "https://copytranslator.github.io/metadata",
+  latest: `https://copytranslator.github.io/metadata/${osSpec.name}.json`,
+  manualDownloadLink: `https://copytranslator.github.io/download/${osSpec.name}.html`,
 };
 constants[
   "currentChangelog"
@@ -19,7 +19,7 @@ const debug = false;
 if (debug && process.env.NODE_ENV !== "production") {
   for (const key of Object.keys(constants)) {
     constants[key] = constants[key].replace(
-      "https://copytranslator.gitee.io",
+      "https://copytranslator.github.io",
       "http://localhost:8080"
     );
   }

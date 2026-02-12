@@ -60,6 +60,17 @@ export const defaultTokens = new Map<TranslatorType, any>([
       maxTokens: "4000",
     },
   ],
+  [
+    "stepfun",
+    {
+      apiBase: process.env.VUE_APP_STEPFUN_API_BASE || "https://api.stepfun.com/v1",
+      apiKey: process.env.VUE_APP_STEPFUN_API_KEY || "",
+      model: process.env.VUE_APP_STEPFUN_MODEL || "step-3.5-flash",
+      prompt: "default",
+      temperature: "0.3",
+      maxTokens: "4000",
+    },
+  ],
 ]);
 
 export function examToken(config: KeyConfig): boolean {

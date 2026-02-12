@@ -1,17 +1,17 @@
-±¾Èí¼ş»ùÓÚGPL v2Ğ­Òé¿ªÔ´£¬¿ª·¢ÕßÎªElliott Zheng£¬Èí¼şÎŞÈÎºÎÊÕ·Ñ,Í¬Ê±½ûÖ¹ÈÎºÎÈË³öÊÛ±¾Èí¼ş¡£
-Èç¹ûÄú¾õµÃÈí¼ş¶ÔÄúÓĞËù°ïÖú£¬ÔÚGithub¸øÒ»¸östar¾ÍÊÇ¶ÔÏîÄ¿¼«´óµÄÖ§³Ö£¬»¶Ó­½éÉÜ¸øÅóÓÑÊ¹ÓÃ¡£
-GithubÏîÄ¿µØÖ·£ºhttps://github.com/copytranslator/CopyTranslator
-Èí¼ş¹ÙÍø¼°ÎÄµµµØÖ·£ºhttps://copytranslator.gitee.io
-Èí¼ş²»±£Ö¤¿ÉÓÃĞÔ£¬Ö»ÄÜ¿¿Ïà»¥Ö®¼äµÄĞÅÈÎ£¬×÷Õß»á¾¡Á¿ËµÃ÷Ê¹ÓÃ±¾Èí¼ş¿ÉÄÜ²úÉúµÄ·çÏÕ£¬¶øÓÉÓÚÊ¹ÓÃÈí¼ş¶ø²úÉúµÄÈÎºÎËğÊ§¾ùÓÉÓÃ»§×ÔĞĞ³Ğµ£¡£
-ÔÚÏß·­Òë×ÊÔ´À´×Ô»¥ÁªÍø£¬°æÈ¨ÊôÓÚÏà¹ØÍøÕ¾£¬Èí¼ş½ö¹©½»Á÷Ê¹ÓÃ¡£
-»¶Ó­×ªÔØ±¾Èí¼ş£¬×ªÔØÎŞĞè¸æÖª×÷Õß£¬µ«ÇëÒ»¶¨¸½ÉÏÏîÄ¿µØÖ·,Î´¸½ÉÏÏîÄ¿µØÖ·µÄÈí¼ş×ªÔØĞĞÎª¾ùÎ´¾­¹ıÊÚÈ¨¡£
-Èí¼ş¶ş´Î·Ö·¢´æÔÚ¾Ş´ó·çÏÕ£¬Òò´ËÇë¾¡Á¿Í¨¹ı¹Ù·½ÎÄµµÌá¹©µÄÏÂÔØ·½Ê½ÏÂÔØ¡£
+ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½GPL v2Ğ­ï¿½é¿ªÔ´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÎªElliott Zhengï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Îºï¿½ï¿½Õ·ï¿½,Í¬Ê±ï¿½ï¿½Ö¹ï¿½Îºï¿½ï¿½Ë³ï¿½ï¿½Û±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Githubï¿½ï¿½Ò»ï¿½ï¿½starï¿½ï¿½ï¿½Ç¶ï¿½ï¿½ï¿½Ä¿ï¿½ï¿½ï¿½ï¿½ï¿½Ö§ï¿½Ö£ï¿½ï¿½ï¿½Ó­ï¿½ï¿½ï¿½Ü¸ï¿½ï¿½ï¿½ï¿½ï¿½Ê¹ï¿½Ã¡ï¿½
+Githubï¿½ï¿½Ä¿ï¿½ï¿½Ö·ï¿½ï¿½https://github.com/copytranslator/CopyTranslator
+ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Äµï¿½ï¿½ï¿½github.io://copytranslator.gitee.io
+ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö¤ï¿½ï¿½ï¿½ï¿½ï¿½Ô£ï¿½Ö»ï¿½Ü¿ï¿½ï¿½à»¥Ö®ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Î£ï¿½ï¿½ï¿½ï¿½ß»á¾¡ï¿½ï¿½Ëµï¿½ï¿½Ê¹ï¿½Ã±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ü²ï¿½ï¿½ï¿½ï¿½Ä·ï¿½ï¿½Õ£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¹ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Îºï¿½ï¿½ï¿½Ê§ï¿½ï¿½ï¿½ï¿½ï¿½Ã»ï¿½ï¿½ï¿½ï¿½Ğ³Ğµï¿½ï¿½ï¿½
+ï¿½ï¿½ï¿½ß·ï¿½ï¿½ï¿½ï¿½ï¿½Ô´ï¿½ï¿½ï¿½Ô»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È¨ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Õ¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¹ï¿½Ã¡ï¿½
+ï¿½ï¿½Ó­×ªï¿½Ø±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½×ªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Öªï¿½ï¿½ï¿½ß£ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¿ï¿½ï¿½Ö·,Î´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¿ï¿½ï¿½Ö·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½×ªï¿½ï¿½ï¿½ï¿½Îªï¿½ï¿½Î´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È¨ï¿½ï¿½
+ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Î·Ö·ï¿½ï¿½ï¿½ï¿½Ú¾Ş´ï¿½ï¿½ï¿½Õ£ï¿½ï¿½ï¿½ï¿½ï¿½ë¾¡ï¿½ï¿½Í¨ï¿½ï¿½ï¿½Ù·ï¿½ï¿½Äµï¿½ï¿½á¹©ï¿½ï¿½ï¿½ï¿½ï¿½Ø·ï¿½Ê½ï¿½ï¿½ï¿½Ø¡ï¿½
 
 English version:
 The software is open source under the GPL v2 license and is developed by Elliott Zheng. The software is free of charge and no one is allowed to sell the software.
 If you found it helpful to you, no need to follow or fork, just give me a star and recommend it to your friends around you.
 Github: https://github.com/copytranslator/CopyTranslator 
-Offical website: https://copytranslator.gitee.io/ 
+Offical website: https://copytranslator.github.io/ 
 Online translation resources come from the Internet, copyright belongs to related websites, and this software is only for academic usage.
 Please attach the project address when forwarding, and the reprinting CopyTranslator without project homepage/software official website is infringement.
 The usability of the software is not guaranteed. The author will try his best to explain the possible risks arising from the use of the software, and any loss arising from the use of the software shall be borne by the user.

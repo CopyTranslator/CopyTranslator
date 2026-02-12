@@ -54,6 +54,10 @@
   background-image: url("../images/icon.png");
 }
 
+.stepfun {
+  background-image: url("../images/stepfun.png");
+}
+
 .engineBtnBase {
   background-position: center;
   background-size: contain;

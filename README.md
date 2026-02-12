@@ -31,7 +31,7 @@ Researchers always have to read a lot of literature, and understanding the conte
 
 Just open the `CopyTranslator` and copy the PDF text to clipboard,  `CopyTranslator` will watch the clipboard changes, then it will process the clipboard contents (such as removing extra line breaks, etc.) and display the translation results. The translation effect is greatly improved compared to the direct copy and paste to the web version of the translation, and the time required for translation is greatly reduced. With the powerful Google translation API, the translation quality is guaranteed. There are also a wealth of options you can set, such as automatically copy translation results to the clipboard, [Incremental Copy](#Incremental-Copy), [Smart Translation](#Smart-Translation), etc., it effectively improve people's reading and translation efficiency of foreign literature.
 
-**After several iterations, `CopyTranslator` has became more and more powerful as well as user-friendly. It is recommended to read the full [User Manual](https://copytranslator.gitee.io/guide/) to make best use of it**.
+**After several iterations, `CopyTranslator` has became more and more powerful as well as user-friendly. It is recommended to read the full [User Manual](https://copytranslator.github.io/guide/) to make best use of it**.
 
 ### Core usage
 
@@ -100,17 +100,17 @@ Append the copied text to the source other than replace it, **especially useful 
 - Many automated customization options are available, such as `Auto Copy`, `Config Memorization`, `Auto Hide`, `Auto Display`.
 - There will be more new features in`CopyTranslator` , so stay tuned.
 
-Please refer to the [Documentation](https://copytranslator.gitee.io) to learn more about `CopyTranslator`
+Please refer to the [Documentation](https://copytranslator.github.io) to learn more about `CopyTranslator`
 
 ## User Manual/Documentation/Homepage
 
-Link: [User Manual](https://copytranslator.gitee.io/guide/)
+Link: [User Manual](https://copytranslator.github.io/guide/)
 
 ## Download/Install
 
-Link: [Install Guide](https://copytranslator.gitee.io/download/)
+Link: [Install Guide](https://copytranslator.github.io/download/)
 
-**After several iterations, `CopyTranslator` has became more and more powerful as well as user-friendly. It is recommended to read the full  [User Manual](https://copytranslator.gitee.io/guide/) to make best use of it**.
+**After several iterations, `CopyTranslator` has became more and more powerful as well as user-friendly. It is recommended to read the full  [User Manual](https://copytranslator.github.io/guide/) to make best use of it**.
 
 ## Reprint statement
 
@@ -118,14 +118,14 @@ This software is free open source software, the developer is [Elliott Zheng](htt
 
 ## Related Links
 
-- [Software official website](https://copytranslator.gitee.io/) 
+- [Software official website](https://copytranslator.github.io/) 
 - [Project homepage on Github ](https://github.com/copytranslator/CopyTranslator) 
 - [Project homepage on Gitee](https://gitee.com/ylzheng/CopyTranslator) 
 - [Official Email](mailto:copytranslator@hypercube.top)
 
 ## Acknowledgements
 
-`CopyTranslator`'s rebirth depends on the contributions of many devoted people. As the limited space, there is a detailed list here: [Acknowledgements](https://copytranslator.gitee.io/about/acknowledge.html).
+`CopyTranslator`'s rebirth depends on the contributions of many devoted people. As the limited space, there is a detailed list here: [Acknowledgements](https://copytranslator.github.io/about/acknowledge.html).
 
 ## License
 

@@ -161,7 +161,7 @@ export interface OpenAIChatResponse {
 }
 
 export class OpenAI extends Translator<OpenAIConfig> {
-  readonly name = "openai";
+  readonly name: string = "openai";
 
   /** Translator lang to language name */
   private static readonly langMap = new Map(langMap);

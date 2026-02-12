@@ -48,7 +48,14 @@
             @click="toKeyan()"
             style="font-size: 15px; margin-left: 5px;"
           >
-            <span>&nbsp;&nbsp; 来⾃棵岩翻译 免费⼀键翻译全⽂>>></span>
+            <span>&nbsp;&nbsp; {{ trans["keyanSlogan"] }}</span>
+          </a>
+          <a
+            v-if="engine === 'stepfun'"
+            @click="toStepfun()"
+            style="font-size: 15px; margin-left: 5px;"
+          >
+            <span>&nbsp;&nbsp; {{ trans["stepfunSlogan"] }}</span>
           </a>
         </div>
 

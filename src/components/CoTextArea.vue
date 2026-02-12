@@ -41,7 +41,12 @@
       </div>
       <div v-else-if="currentEngine === 'keyan'">
         <a @click="toKeyan()">
-          <span>来⾃棵岩翻译 免费⼀键翻译全⽂>>></span>
+          <span>{{ trans["keyanSlogan"] }}</span>
+        </a>
+      </div>
+      <div v-else-if="currentEngine === 'stepfun'">
+        <a @click="toStepfun()">
+          <span>{{ trans["stepfunSlogan"] }}</span>
         </a>
       </div>
     </div>

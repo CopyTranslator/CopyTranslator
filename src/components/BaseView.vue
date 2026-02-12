@@ -18,6 +18,10 @@ export default class BaseView extends Base {
     shell.openExternal("https://www.keyanyuedu.com/?channel=copytranslator");
   }
 
+  toStepfun() {
+    shell.openExternal("https://www.stepfun.com/?channel=copytranslator");
+  }
+
   get currentEngine() {
     switch (this.mode) {
       case "dict":

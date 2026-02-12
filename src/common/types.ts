@@ -79,6 +79,7 @@ export const constantActionTypes = [
   "configSnapshots",
   "transparency",
   "actionButtons",
+  "customTranslators",
 ] as const;
 
 export const interceptTranslatorTypes = ["bing", "deepl", "tencent"] as const;
@@ -250,6 +251,7 @@ export const eventTypes = [
   "dispatch",
   "preSet",
   "setSettingTab",
+  "customTranslatorsChanged", // 自定义翻译器列表变化事件
 ] as const;
 
 export const displayTexts = [

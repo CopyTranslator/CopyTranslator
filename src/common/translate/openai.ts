@@ -279,6 +279,7 @@ export class OpenAI extends Translator<OpenAIConfig> {
   ): Promise<TranslateQueryResult> {
     // 检查 API 密钥是否配置
     if (!config.apiKey) {
+      console.error("OpenAI API 密钥未配置");
       throw new TranslateError("API_SERVER_ERROR");
     }
 
@@ -300,6 +301,7 @@ export class OpenAI extends Translator<OpenAIConfig> {
       response.choices.length === 0 ||
       !response.choices[0].message
     ) {
+      console.error("OpenAI API 响应格式异常:", response);
       throw new TranslateError("API_SERVER_ERROR");
     }
 

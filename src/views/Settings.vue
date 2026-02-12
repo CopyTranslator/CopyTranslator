@@ -21,6 +21,7 @@
           <v-tab href="#appearance">{{ trans["appearance"] }}</v-tab>
           <v-tab href="#switches">{{ trans["switches"] }}</v-tab>
           <v-tab href="#apiConfig">{{ trans["apiConfig"] }}</v-tab>
+          <v-tab href="#customTranslators">{{ trans["customTranslators"] }}</v-tab>
           <v-tab href="#translatorConfig">
             {{ trans["translatorConfig"] }}
           </v-tab>
@@ -43,6 +44,9 @@
           </v-tab-item>
           <v-tab-item value="apiConfig">
             <Config></Config>
+          </v-tab-item>
+          <v-tab-item value="customTranslators">
+            <CustomTranslatorManager></CustomTranslatorManager>
           </v-tab-item>
           <v-tab-item value="translatorConfig">
             <Options optionType="translatorGroups"></Options>
@@ -82,6 +86,7 @@ import Switches from "./Switches.vue";
 import BlackWhiteConfig from "./BlackWhiteConfig.vue";
 import About from "./About.vue";
 import { Component, Mixins } from "vue-property-decorator";
+import CustomTranslatorManager from "@/components/CustomTranslatorManager.vue";
 import BaseView from "@/components/BaseView.vue";
 import ActionButton from "@/components/ActionButton.vue";
 import ActionButtonConfig from "@/components/ActionButtonConfig.vue";
@@ -95,6 +100,7 @@ import bus from "@/common/event-bus";
     BlackWhiteConfig,
     About,
     ActionButton,
+    CustomTranslatorManager,
     ActionButtonConfig,
   },
 })

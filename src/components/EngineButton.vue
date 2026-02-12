@@ -23,6 +23,7 @@ import Component, { mixins } from "vue-class-component";
 import config from "@/common/configuration";
 import Base from "./Base.vue";
 import "@/css/shared-styles.css";
+import { customTranslatorManager } from "@/common/translate/custom-translators";
 
 const AppProps = Vue.extend({
   props: {
@@ -39,6 +40,11 @@ const AppProps = Vue.extend({
 @Component
 export default class EngineButton extends mixins(AppProps, Base) {
   get engineClass() {
+    // 检查是否为自定义翻译器
+    if (customTranslatorManager.isCustomTranslator(this.engine)) {
+      return "custom-translator";
+    }
+    
     if (this.engine == "baidu-domain") {
       return `${this.engine}-${config.get<any>("baidu-domain").domain}`;
     } else {
@@ -53,9 +59,14 @@ export default class EngineButton extends mixins(AppProps, Base) {
   get tooltipText() {
     if (this.tooltip == undefined && this.engine == "copytranslator") {
       return this.trans["multiSourceButton"]; //多源对比
-    } else {
-      return this.tooltip;
+    } else if (this.tooltip == undefined) {
+      // 如果是自定义翻译器，显示其名称
+      const customConfig = customTranslatorManager.getConfig(this.engine);
+      if (customConfig) {
+        return customConfig.name;
+      }
     }
+    return this.tooltip;
   }
 
   switchTranslator() {

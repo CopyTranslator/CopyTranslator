@@ -4,6 +4,7 @@ import {
   ConstantGroupRule,
   StructRule,
   UnionRule,
+  FlexibleUnionRule,
   ModeConfig,
   TypeRule,
   KeyConfig,
@@ -269,7 +270,7 @@ function initConfig(
   //与翻译有关的
   config.setRule(
     "translatorType",
-    new UnionRule<TranslatorType>("google", translatorTypes)
+    new FlexibleUnionRule<TranslatorType>("google", translatorTypes)
   );
   config.setRule(
     "dictionaryType",
@@ -415,13 +416,16 @@ function initConfig(
   config.setRule(
     "stepfun",
     new StructRule<KeyConfig>({
-      apiBase: "https://api.stepfun.com/v1",
-      apiKey: "",
-      model: "step-3.5-flash",
       prompt: "default",
       temperature: "0.3",
       maxTokens: "4000",
     })
+  );
+
+  // 自定义翻译器配置
+  config.setRule(
+    "customTranslators",
+    new TypeRule<any[]>([])
   );
 
   return config;

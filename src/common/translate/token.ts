@@ -63,9 +63,9 @@ export const defaultTokens = new Map<TranslatorType, any>([
   [
     "stepfun",
     {
-      apiBase: process.env.VUE_APP_STEPFUN_API_BASE || "https://api.stepfun.com/v1",
+      apiBase: process.env.VUE_APP_STEPFUN_API_BASE || "https://openrouter.ai/api/v1",
       apiKey: process.env.VUE_APP_STEPFUN_API_KEY || "",
-      model: process.env.VUE_APP_STEPFUN_MODEL || "step-3.5-flash",
+      model: process.env.VUE_APP_STEPFUN_MODEL || "stepfun/step-3.5-flash:free",
       prompt: "default",
       temperature: "0.3",
       maxTokens: "4000",

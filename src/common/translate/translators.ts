@@ -15,6 +15,7 @@ import { keyan } from "./keyan";
 import { lingva } from "./lingva";
 import { OpenAI } from "./openai";
 import { Stepfun } from "./stepfun";
+import { customTranslatorManager } from "./custom-translators";
 
 export const translatorMap: [TranslatorType | GoogleSource, Translator][] = [
   ["baidu", new Baidu({ axios, config: defaultTokens.get("baidu") })],
@@ -48,13 +49,52 @@ export const translatorMap: [TranslatorType | GoogleSource, Translator][] = [
 
 export const translators = new Map(translatorMap);
 
-export function getTranslator(transType: TranslatorType): Translator {
+/**
+ * 获取翻译器实例（支持内置翻译器和自定义翻译器）
+ */
+export function getTranslator(transType: TranslatorType | string): Translator {
+  // 处理 Google 翻译的特殊情况
   if (transType == "google") {
     transType = config.get("googleSource");
   }
-  return translators.get(transType) as Translator;
+  
+  // 首先尝试从内置翻译器中获取
+  const builtinTranslator = translators.get(transType as TranslatorType);
+  if (builtinTranslator) {
+    return builtinTranslator;
+  }
+  
+  // 如果不是内置翻译器，尝试从自定义翻译器中获取
+  const customTranslator = customTranslatorManager.getTranslator(transType);
+  if (customTranslator) {
+    return customTranslator;
+  }
+  
+  // 如果都找不到，返回默认的 Google 翻译器
+  console.warn(`翻译器 "${transType}" 未找到，使用 Google 作为后备`);
+  return translators.get("google") as Translator;
 }
-export function getSupportLanguages(type: TranslatorType): Language[] {
+
+/**
+ * 检查翻译器是否存在
+ */
+export function hasTranslator(transType: string): boolean {
+  return translators.has(transType as TranslatorType) || 
+         customTranslatorManager.isCustomTranslator(transType);
+}
+
+/**
+ * 获取所有可用的翻译器 ID（包括内置和自定义）
+ */
+export function getAllTranslatorIds(): string[] {
+  const builtinIds = Array.from(translators.keys());
+  const customIds = customTranslatorManager.getAllIds();
+  return [...builtinIds, ...customIds];
+}
+/**
+ * 获取翻译器支持的语言列表
+ */
+export function getSupportLanguages(type: TranslatorType | string): Language[] {
   return getTranslator(type).getSupportLanguages();
 }
 

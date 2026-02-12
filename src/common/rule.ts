@@ -138,6 +138,23 @@ export class UnionRule<T> implements Rule {
   }
 }
 
+/**
+ * FlexibleUnionRule 允许值为预定义选项之一，或任意字符串（用于自定义翻译器等扩展场景）
+ */
+export class FlexibleUnionRule<T> implements Rule {
+  predefined: any;
+  check: CheckFuction;
+  minimalVersion?: string;
+  constructor(predefined: T, options: readonly T[], minimalVersion?: string) {
+    this.predefined = predefined;
+    this.minimalVersion = minimalVersion;
+    this.check = function (value: T | string) {
+      // 接受预定义选项或任何字符串类型的值
+      return options.includes(value as T) || typeof value === 'string';
+    };
+  }
+}
+
 class TypeRule<T> implements Rule {
   predefined: T;
   check?: CheckFuction;

@@ -551,10 +551,10 @@ class TranslateController {
     if (language.source == language.target) {
       return;
     }
-    const activeEngines = this.get<TranslatorType[]>("translator-enabled");
-    let engines = this.get<TranslatorType[]>("translator-cache");
+    const activeEngines = this.get<(TranslatorType | string)[]>("translator-enabled");
+    let engines = this.get<(TranslatorType | string)[]>("translator-cache");
     if (this.get<boolean>("multiSource")) {
-      engines = this.get<TranslatorType[]>("translator-compare");
+      engines = this.get<(TranslatorType | string)[]>("translator-compare");
     }
     engines = engines.filter((engine) => activeEngines.includes(engine));
     engines.sort();
@@ -573,7 +573,7 @@ class TranslateController {
     return this.checkClipboard(false);
   }
 
-  async switchTranslator(value: TranslatorType) {
+  async switchTranslator(value: TranslatorType | string) {
     let valid = true;
     this.translator.setMainEngine(value);
 

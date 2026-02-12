@@ -58,6 +58,10 @@
   background-image: url("../images/stepfun.png");
 }
 
+.custom-translator {
+  background-image: url("../images/icon.png");
+}
+
 .engineBtnBase {
   background-position: center;
   background-size: contain;

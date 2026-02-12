@@ -25,11 +25,11 @@ import {
 import store from "@/store";
 
 class ResultBufferManager {
-  public resultBufferMap = new Map<TranslatorType, SharedResult | undefined>();
+  public resultBufferMap = new Map<TranslatorType | string, SharedResult | undefined>();
 
-  engines: TranslatorType[] = [];
+  engines: (TranslatorType | string)[] = [];
 
-  clear(engines: TranslatorType[]) {
+  clear(engines: (TranslatorType | string)[]) {
     this.engines = engines;
     this.resultBufferMap.clear();
     this.sync();
@@ -47,7 +47,7 @@ class ResultBufferManager {
     store.dispatch("setResultBuffer", resultBuffer);
   }
 
-  extend(engines: TranslatorType[]) {
+  extend(engines: (TranslatorType | string)[]) {
     for (const engine of engines) {
       if (!this.engines.includes(engine)) {
         this.engines.push(engine);
@@ -56,15 +56,15 @@ class ResultBufferManager {
     this.sync();
   }
 
-  get(engine: TranslatorType) {
+  get(engine: TranslatorType | string) {
     return this.resultBufferMap.get(engine);
   }
 
-  has(engine: TranslatorType) {
+  has(engine: TranslatorType | string) {
     return this.resultBufferMap.has(engine);
   }
 
-  set(engine: TranslatorType, result: SharedResult) {
+  set(engine: TranslatorType | string, result: SharedResult) {
     if (!this.engines.includes(engine)) {
       this.engines.push(engine);
     }
@@ -74,7 +74,7 @@ class ResultBufferManager {
 }
 
 export class Compound {
-  mainEngine: TranslatorType;
+  mainEngine: TranslatorType | string;
   config: AxiosRequestConfig;
   resultBuffer = new ResultBufferManager();
 
@@ -82,12 +82,12 @@ export class Compound {
   from: Language = "auto";
   to: Language = "en";
 
-  engines: TranslatorType[];
+  engines: (TranslatorType | string)[];
   detectEngine: TranslatorType = "baidu";
 
   constructor(
-    engines: TranslatorType[],
-    mainEngine: TranslatorType = "google",
+    engines: (TranslatorType | string)[],
+    mainEngine: TranslatorType | string = "google",
     config: AxiosRequestConfig = {}
   ) {
     this.engines = engines;
@@ -156,7 +156,7 @@ export class Compound {
     return Promise.resolve(true);
   }
 
-  setEngines(engines: TranslatorType[]) {
+  setEngines(engines: (TranslatorType | string)[]) {
     this.engines = engines;
     if (!this.engines.includes(this.mainEngine)) {
       eventBus.at("dispatch", "translatorType", this.engines[0]);
@@ -168,7 +168,7 @@ export class Compound {
     return getTranslator(this.mainEngine);
   }
 
-  isSupport(engineName: TranslatorType, from: Language, to: Language): boolean {
+  isSupport(engineName: TranslatorType | string, from: Language, to: Language): boolean {
     const engine = getTranslator(engineName);
     if (engine instanceof DirectionalTranslator) {
       return engine.isSupport(from, to);
@@ -182,7 +182,7 @@ export class Compound {
     text: string,
     from: Language,
     to: Language,
-    engines?: TranslatorType[]
+    engines?: (TranslatorType | string)[]
   ): Promise<SharedResult> {
     if (!engines) {
       engines = [...this.engines];
@@ -231,7 +231,7 @@ export class Compound {
   }
 
   async translateWith(
-    engine: TranslatorType,
+    engine: TranslatorType | string,
     text: string,
     from: Language,
     to: Language
@@ -269,11 +269,11 @@ export class Compound {
     return getTranslator(this.detectEngine).detect(text);
   }
 
-  getBuffer(engine: TranslatorType) {
-    return this.resultBuffer.get(engine);
+  getBuffer(engine: TranslatorType | string) {
+    return this.resultBuffer.get(engine as TranslatorType);
   }
 
-  setMainEngine(engineType: TranslatorType) {
+  setMainEngine(engineType: TranslatorType | string) {
     this.mainEngine = engineType;
   }
 

@@ -91,6 +91,7 @@ export const normalTranslatorTypes = [
   "baidu-domain",
   "youdao",
   "sogou",
+  "openai",
 ] as const;
 export const abstractTranslatorTypes = ["copytranslator"] as const;
 

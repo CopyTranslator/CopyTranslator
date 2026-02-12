@@ -13,6 +13,7 @@ import { Simply } from "./simply";
 import config from "../configuration";
 import { keyan } from "./keyan";
 import { lingva } from "./lingva";
+import { OpenAI } from "./openai";
 
 export const translatorMap: [TranslatorType | GoogleSource, Translator][] = [
   ["baidu", new Baidu({ axios, config: defaultTokens.get("baidu") })],
@@ -40,6 +41,7 @@ export const translatorMap: [TranslatorType | GoogleSource, Translator][] = [
       },
     }) as any,
   ],
+  ["openai", new OpenAI({ axios, config: defaultTokens.get("openai") })],
 ];
 
 export const translators = new Map(translatorMap);

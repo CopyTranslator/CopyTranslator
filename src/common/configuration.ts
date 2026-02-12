@@ -402,6 +402,18 @@ function initConfig(
     new StructRule<KeyConfig>({ appKey: "", key: "" })
   );
 
+  config.setRule(
+    "openai",
+    new StructRule<KeyConfig>({
+      apiBase: "https://api.openai.com/v1",
+      apiKey: "",
+      model: "gpt-3.5-turbo",
+      prompt: "default",
+      temperature: "0.3",
+      maxTokens: "4000",
+    })
+  );
+
   return config;
 }
 

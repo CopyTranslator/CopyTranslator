@@ -49,6 +49,17 @@ export const defaultTokens = new Map<TranslatorType, any>([
       key: process.env.VUE_APP_SOGOU_KEY as string,
     },
   ],
+  [
+    "openai",
+    {
+      apiBase: process.env.VUE_APP_OPENAI_API_BASE || "https://api.openai.com/v1",
+      apiKey: process.env.VUE_APP_OPENAI_API_KEY || "",
+      model: process.env.VUE_APP_OPENAI_MODEL || "gpt-3.5-turbo",
+      prompt: "default",
+      temperature: "0.3",
+      maxTokens: "4000",
+    },
+  ],
 ]);
 
 export function examToken(config: KeyConfig): boolean {

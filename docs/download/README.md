@@ -19,6 +19,9 @@ sidebarDepth: 6
 - [Mac](/download/mac)
 - [Linux](/download/linux)
 
+如果您在下载时遇到困难，您还可以通过以下途径下载
+
+- 从[![](https://img.shields.io/sourceforge/dt/copytranslator.mirror?label=SourceForge&logo=sourceforge)](https://sourceforge.net/projects/copytranslator.mirror/files/)下载
 
 ## 在线交流与反馈
 - 加入我们的[![](https://img.shields.io/gitter/room/copytranslator/copytranslator.svg)](https://gitter.im/CopyTranslator/Lobby?utm_source=share-link&utm_medium=link&utm_campaign=share-link)聊天室。

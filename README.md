@@ -12,6 +12,19 @@
 ![](https://img.shields.io/badge/platform-windows|macos|linux-orange.svg)
 [![](https://img.shields.io/github/license/copytranslator/copytranslator.svg)](./LICENSE)
 
+## 🎉 What's New
+
+### v12 Zhiwei - Large Language Model AI Translation Era
+
+The v12 release introduces **Large Language Model AI Translation**! CopyTranslator can now integrate various translation services that comply with OpenAI API format, bringing smarter and more accurate translation experience.
+
+**Key Highlights:**
+- 🤖 **LLM AI Translation**: Support OpenAI, DeepSeek, Moonshot, Zhipu AI, Alibaba Cloud Bailian, Ollama, and more
+- ⚡ **StepFun Free Translation**: Built-in StepFun translation engine with free `step-3.5-flash` model, ready to use out of the box
+- 🔧 **Visual Vendor Management**: Easily manage AI translation vendors and models through settings interface
+- 🎯 **Smart Model Selection**: Fetch available model list from API and freely choose which models to enable
+
+> See the [v12 Release Notes](https://copytranslator.github.io/changelogs/v12.html) for detailed updates.
 
 **Foreign language assisted reading and translation solution**
 

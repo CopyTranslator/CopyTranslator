@@ -100,12 +100,43 @@ export interface OpenAIConfig {
 }
 
 /**
- * 自定义翻译器配置接口
+ * 供应商配置接口
+ * 一个供应商可以提供多个翻译模型
  */
-export interface CustomTranslatorConfig {
-  id: string; // 唯一标识符，如 "openai-1", "openai-gpt4", "custom-deepseek" 等
-  name?: string; // 显示名称
-  type: "openai"; // 基础类型,目前仅支持 "openai"，未来可扩展为其他类型
-  config: OpenAIConfig; // 翻译器配置
-  enabled?: boolean; // 是否启用
+export interface ProviderConfig {
+  id: string; // 供应商唯一标识符，如 "openai-official", "deepseek-main"
+  name: string; // 显示名称，如 "OpenAI Official", "DeepSeek API"
+  providerType: string; // 供应商类型：openai/deepseek/moonshot/zhipu/dashscope/custom
+  apiBase: string; // API 基础地址
+  apiKey: string; // API 密钥
+  enabledModels: string[]; // 已启用的模型列表，如 ["gpt-4", "gpt-3.5-turbo"]
+  config?: {
+    // 可选的默认配置，会应用到所有模型
+    temperature?: number;
+    maxTokens?: number;
+    prompt?: string;
+  };
+  enabled?: boolean; // 是否启用该供应商（默认true）
 }
+
+/**
+ * 预定义供应商模板
+ * 用于快速配置常见的 API 供应商
+ */
+export interface ProviderTemplate {
+  type: string; // 供应商类型标识，如 "openai", "deepseek"
+  name: string; // 默认显示名称
+  apiBase: string; // 默认 API Base URL
+  recommendedModels: string[]; // 推荐模型列表（作为获取失败时的后备）
+  icon?: string; // 图标名称（mdi-icon）
+  docUrl?: string; // 文档链接
+  description?: string; // 供应商描述
+}
+
+// 目前只支持 OpenAI 兼容 API 的自定义翻译器配置
+export type CustomTranslatorConfig = {
+  id: string;
+  name: string;
+  providerId: string; // 关联到供应商 ID
+  config: OpenAIConfig;
+};

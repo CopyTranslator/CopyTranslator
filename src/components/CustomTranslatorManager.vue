@@ -2,136 +2,199 @@
   <div class="custom-translator-manager">
     <v-card flat>
       <v-card-title class="pb-2">
-        {{ trans["customTranslators"] }}
+        {{ trans["providers"] || "翻译供应商" }}
         <v-spacer></v-spacer>
-        <v-btn color="primary" small @click="showAddDialog = true">
+        <v-btn color="primary" small @click="showAddProviderDialog = true">
           <v-icon small left>mdi-plus</v-icon>
-          {{ trans["addTranslator"] }}
+          {{ trans["addProvider"] || "添加供应商" }}
         </v-btn>
       </v-card-title>
 
       <v-card-text>
-        <v-list v-if="translators.length > 0">
-          <v-list-item
-            v-for="translator in translators"
-            :key="translator.id"
-            two-line
+        <!-- 供应商列表 -->
+        <v-expansion-panels v-if="providers.length > 0" multiple>
+          <v-expansion-panel
+            v-for="provider in providers"
+            :key="provider.id"
           >
-            <v-list-item-content>
-              <v-list-item-title>{{ translator.name }}</v-list-item-title>
-              <v-list-item-subtitle>
-                {{ translator.config.model }}
-              </v-list-item-subtitle>
-            </v-list-item-content>
-
-            <v-list-item-action>
-              <div class="d-flex">
-                <v-btn icon small @click="editTranslator(translator)" class="mr-1">
-                  <v-icon small>mdi-pencil</v-icon>
-                </v-btn>
-                <v-btn icon small @click="testTranslator(translator)" class="mr-1">
-                  <v-icon small>mdi-test-tube</v-icon>
-                </v-btn>
-                <v-btn icon small @click="removeTranslatorConfirm(translator.id)">
-                  <v-icon small>mdi-delete</v-icon>
-                </v-btn>
+            <!-- 供应商头部 -->
+            <v-expansion-panel-header>
+              <div class="d-flex align-center flex-grow-1">
+                <v-icon class="mr-2">{{ getProviderIcon(provider.providerType) }}</v-icon>
+                <div class="flex-grow-1">
+                  <div class="font-weight-medium">{{ provider.name }}</div>
+                  <div class="caption grey--text">
+                    {{ provider.apiBase }} | {{ provider.enabledModels.length }} {{ trans["modelsEnabled"] || "个模型已启用" }}
+                  </div>
+                </div>
               </div>
-            </v-list-item-action>
-          </v-list-item>
-        </v-list>
+            </v-expansion-panel-header>
 
+            <!-- 供应商内容 -->
+            <v-expansion-panel-content>
+              <v-card flat>
+                <!-- 供应商操作按钮 -->
+                <v-card-actions class="px-0 py-2">
+                  <v-btn small text color="primary" @click="editProvider(provider)">
+                    <v-icon small left>mdi-pencil</v-icon>
+                    {{ trans["edit"] || "编辑" }}
+                  </v-btn>
+                  <v-btn small text color="error" @click="removeProviderConfirm(provider.id)">
+                    <v-icon small left>mdi-delete</v-icon>
+                    {{ trans["delete"] || "删除" }}
+                  </v-btn>
+                  <v-spacer></v-spacer>
+                  <v-btn small text @click="testProvider(provider)">
+                    <v-icon small left>mdi-test-tube</v-icon>
+                    {{ trans["test"] || "测试" }}
+                  </v-btn>
+                </v-card-actions>
+
+                <v-divider></v-divider>
+
+                <!-- 模型选择区域 -->
+                <v-card-text class="px-0">
+                  <div class="d-flex align-center mb-2">
+                    <span class="subtitle-2">{{ trans["selectModels"] || "选择要启用的模型" }}</span>
+                    <v-spacer></v-spacer>
+                    <v-btn
+                      x-small
+                      text
+                      :loading="provider.fetchingModels"
+                      @click="fetchProviderModels(provider)"
+                    >
+                      <v-icon small left>mdi-refresh</v-icon>
+                      {{ trans["refreshModels"] || "刷新" }}
+                    </v-btn>
+                  </div>
+
+                  <!-- 模型列表 -->
+                  <div v-if="provider.availableModels && provider.availableModels.length > 0">
+                    <v-chip-group
+                      :value="provider.enabledModels"
+                      @change="(models) => updateProviderModels(provider.id, models)"
+                      multiple
+                      column
+                    >
+                      <v-chip
+                        v-for="model in provider.availableModels"
+                        :key="model"
+                        :value="model"
+                        filter
+                        outlined
+                        small
+                      >
+                        {{ model }}
+                      </v-chip>
+                    </v-chip-group>
+                  </div>
+
+                  <!-- 无可用模型提示 -->
+                  <v-alert
+                    v-else-if="!provider.fetchingModels"
+                    dense
+                    text
+                    type="info"
+                    class="mt-2"
+                  >
+                    {{ trans["noModelsHint"] || "点击刷新按钮获取可用模型列表" }}
+                  </v-alert>
+
+                  <!-- 模型获取错误 -->
+                  <v-alert
+                    v-if="provider.modelFetchError"
+                    dense
+                    text
+                    type="error"
+                    class="mt-2"
+                    dismissible
+                    @input="provider.modelFetchError = ''"
+                  >
+                    {{ provider.modelFetchError }}
+                  </v-alert>
+                </v-card-text>
+              </v-card>
+            </v-expansion-panel-content>
+          </v-expansion-panel>
+        </v-expansion-panels>
+
+        <!-- 无供应商提示 -->
         <div v-else class="text-center pa-4 grey--text">
-          {{ trans["noCustomTranslators"] }}
+          {{ trans["noProviders"] || "尚未添加翻译供应商" }}
         </div>
       </v-card-text>
     </v-card>
 
-    <!-- 添加/编辑对话框 -->
-    <v-dialog v-model="showAddDialog" max-width="600px" persistent>
+    <!-- 添加/编辑供应商对话框 -->
+    <v-dialog v-model="showAddProviderDialog" max-width="600px" persistent>
       <v-card>
         <v-card-title>
-          {{ editingTranslator ? trans["editTranslator"] : trans["addTranslator"] }}
+          {{ editingProvider ? (trans["editProvider"] || "编辑供应商") : (trans["addProvider"] || "添加供应商") }}
         </v-card-title>
 
         <v-card-text>
           <v-form ref="form" v-model="formValid">
-            <!-- 快速选择提供商 -->
+            <!-- 快速选择供应商模板 -->
             <v-select
-              v-model="selectedProvider"
-              :items="providerItems"
-              :label="trans['selectProvider']"
-              @change="onProviderChange"
+              v-if="!editingProvider"
+              v-model="selectedTemplate"
+              :items="templateItems"
+              :label="trans['selectProviderTemplate'] || '选择供应商模板'"
+              @change="onTemplateChange"
               outlined
               dense
-            ></v-select>
+            >
+              <template v-slot:item="{ item }">
+                <v-icon class="mr-2">{{ item.icon }}</v-icon>
+                <div>
+                  <div>{{ item.text }}</div>
+                  <div class="caption grey--text">{{ item.description }}</div>
+                </div>
+              </template>
+            </v-select>
 
-            <!-- 基本配置 -->
+            <!-- 供应商名称 -->
             <v-text-field
-              v-model="formData.name"
-              :label="trans['translatorName']"
+              v-model="providerForm.name"
+              :label="trans['providerName'] || '供应商名称'"
               :rules="[rules.required]"
-              hint="ID 将根据名称自动生成"
+              hint="例如: OpenAI 官方账号"
               outlined
               dense
             ></v-text-field>
 
-            <!-- API 配置 -->
+            <!-- API Base URL -->
             <v-text-field
-              v-model="formData.config.apiBase"
-              :label="trans['apiBase']"
+              v-model="providerForm.apiBase"
+              :label="trans['apiBase'] || 'API Base URL'"
               :rules="[rules.required]"
               outlined
               dense
             ></v-text-field>
 
+            <!-- API Key -->
             <v-text-field
-              v-model="formData.config.apiKey"
-              :label="trans['apiKey']"
+              v-model="providerForm.apiKey"
+              :label="trans['apiKey'] || 'API Key'"
               :rules="[rules.required]"
               type="password"
               outlined
               dense
             ></v-text-field>
 
-            <v-row dense>
-              <v-col cols="10">
-                <v-combobox
-                  v-model="formData.config.model"
-                  :items="availableModels"
-                  :label="trans['model']"
-                  :rules="[rules.required]"
-                  :loading="fetchingModels"
-                  outlined
-                  dense
-                ></v-combobox>
-              </v-col>
-              <v-col cols="2" class="d-flex align-center">
-                <v-btn
-                  icon
-                  :loading="fetchingModels"
-                  :disabled="!canFetchModels"
-                  @click="fetchAvailableModels"
-                  :title="trans['fetchModels'] || '获取模型列表'"
-                >
-                  <v-icon>mdi-refresh</v-icon>
-                </v-btn>
-              </v-col>
-            </v-row>
-            <div v-if="modelFetchError" class="error--text caption mb-2">
-              {{ modelFetchError }}
-            </div>
-
             <!-- 高级配置 -->
             <v-expansion-panels flat>
               <v-expansion-panel>
                 <v-expansion-panel-header>
-                  {{ trans["advancedConfig"] }}
+                  {{ trans["advancedConfig"] || "高级配置" }}
                 </v-expansion-panel-header>
                 <v-expansion-panel-content>
                   <div class="mt-2">
-                    <label class="caption">{{ trans["temperature"] }}: {{ formData.config.temperature }}</label>
+                    <label class="caption">
+                      {{ trans["temperature"] || "温度" }}: {{ providerForm.config.temperature }}
+                    </label>
                     <v-slider
-                      v-model="formData.config.temperature"
+                      v-model="providerForm.config.temperature"
                       min="0"
                       max="1"
                       step="0.1"
@@ -142,17 +205,17 @@
                   </div>
 
                   <v-text-field
-                    v-model.number="formData.config.maxTokens"
-                    :label="trans['maxTokens']"
+                    v-model.number="providerForm.config.maxTokens"
+                    :label="trans['maxTokens'] || '最大Token数'"
                     type="number"
                     outlined
                     dense
                   ></v-text-field>
 
                   <v-textarea
-                    v-model="formData.config.prompt"
-                    :label="trans['customPrompt']"
-                    :placeholder="trans['promptPlaceholder']"
+                    v-model="providerForm.config.prompt"
+                    :label="trans['customPrompt'] || '自定义提示词'"
+                    :placeholder="trans['promptPlaceholder'] || '留空使用默认提示词'"
                     rows="4"
                     outlined
                     dense
@@ -165,13 +228,13 @@
 
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn text @click="closeDialog">{{ trans["cancel"] }}</v-btn>
+          <v-btn text @click="closeProviderDialog">{{ trans["cancel"] || "取消" }}</v-btn>
           <v-btn
             color="primary"
             :disabled="!formValid"
-            @click="saveTranslator"
+            @click="saveProvider"
           >
-            {{ trans["ok"] }}
+            {{ trans["ok"] || "确定" }}
           </v-btn>
         </v-card-actions>
       </v-card>
@@ -180,15 +243,24 @@
     <!-- 测试对话框 -->
     <v-dialog v-model="showTestDialog" max-width="500px">
       <v-card>
-        <v-card-title>{{ trans["testTranslator"] }}</v-card-title>
+        <v-card-title>{{ trans["testProvider"] || "测试供应商" }}</v-card-title>
         <v-card-text>
+          <v-select
+            v-model="testModel"
+            :items="testingProvider ? testingProvider.enabledModels : []"
+            :label="trans['selectModel'] || '选择模型'"
+            outlined
+            dense
+          ></v-select>
+
           <v-textarea
             v-model="testText"
-            :label="trans['testText']"
+            :label="trans['testText'] || '测试文本'"
             rows="2"
             outlined
             dense
           ></v-textarea>
+
           <v-row dense>
             <v-col cols="6">
               <v-select
@@ -209,15 +281,18 @@
               ></v-select>
             </v-col>
           </v-row>
+
           <v-btn color="primary" @click="runTest" :loading="testing" block>
-            {{ trans["testTranslator"] }}
+            {{ trans["test"] || "测试" }}
           </v-btn>
+
           <div v-if="testResult" class="mt-3">
             <v-alert type="success" dense>
-              <div><strong>{{ trans["testResult"] }}:</strong></div>
+              <div><strong>{{ trans["testResult"] || "测试结果" }}:</strong></div>
               <div>{{ testResult }}</div>
             </v-alert>
           </div>
+
           <div v-if="testError" class="mt-3">
             <v-alert type="error" dense>
               {{ testError }}
@@ -226,7 +301,7 @@
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn text @click="showTestDialog = false">{{ trans["cancel"] }}</v-btn>
+          <v-btn text @click="showTestDialog = false">{{ trans["cancel"] || "取消" }}</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -235,203 +310,197 @@
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
-import {
-  customTranslatorManager
-} from "@/common/translate/custom-translators";
+import { customTranslatorManager } from "@/common/translate/custom-translators";
 import { getTranslator } from "@/common/translate/translators";
 import { fetchModels } from "@/common/translate/model-fetcher";
-import { CustomTranslatorConfig } from "@/common/translate/types";
+import { ProviderConfig } from "@/common/translate/types";
+import { providerTemplates, getProviderTemplate } from "@/common/translate/provider-templates";
+
+interface ProviderWithUI extends ProviderConfig {
+  availableModels?: string[];
+  fetchingModels?: boolean;
+  modelFetchError?: string;
+}
 
 @Component
-export default class CustomTranslatorManager extends Vue {
-  translators: CustomTranslatorConfig[] = [];
-  showAddDialog = false;
+export default class CustomTranslatorManagerView extends Vue {
+  providers: ProviderWithUI[] = [];
+  showAddProviderDialog = false;
   showTestDialog = false;
   formValid = false;
-  editingTranslator: CustomTranslatorConfig | null = null;
-  selectedProvider = "";
+  editingProvider: ProviderConfig | null = null;
+  selectedTemplate = "";
+  
+  // 测试相关
   testing = false;
   testText = "Hello, world!";
   testFrom = "en";
   testTo = "zh-CN";
   testResult = "";
   testError = "";
-  testingTranslatorId = "";
-  fetchingModels = false;
-  fetchedModels: string[] = [];
-  modelFetchError = "";
+  testingProvider: ProviderWithUI | null = null;
+  testModel = "";
 
   testLanguages = ["en", "zh-CN", "zh-TW", "ja", "ko", "fr", "es", "de", "ru"];
+
+  // 供应商表单
+  providerForm: ProviderConfig = {
+    id: "",
+    name: "",
+    providerType: "custom",
+    apiBase: "https://",
+    apiKey: "",
+    enabledModels: [],
+    config: {
+      temperature: 0.3,
+      maxTokens: 4000,
+      prompt: "",
+    },
+    enabled: true,
+  };
 
   get trans() {
     return this.$store.getters.locale;
   }
 
-  get providerItems() {
-    return [
-      { text: this.trans["providerOpenAI"] || "OpenAI", value: "openai" },
-      { text: this.trans["providerAzure"] || "Azure OpenAI", value: "azure" },
-      { text: this.trans["providerDeepSeek"] || "DeepSeek", value: "deepseek" },
-      { text: this.trans["providerMoonshot"] || "Moonshot", value: "moonshot" },
-      { text: this.trans["providerZhipu"] || "Zhipu AI", value: "zhipu" },
-      { text: this.trans["providerDashScope"] || "Alibaba DashScope", value: "dashscope" },
-      { text: this.trans["providerCustom"] || "Custom", value: "custom" },
-    ];
+  get templateItems() {
+    return providerTemplates.map(t => ({
+      text: t.name,
+      value: t.type,
+      icon: t.icon || "mdi-cog",
+      description: t.description || "",
+    }));
   }
-
-  formData: CustomTranslatorConfig = {
-    id: "",
-    name: "",
-    type: "openai",
-    config: {
-      apiBase: "https://api.openai.com/v1",
-      apiKey: "",
-      model: "gpt-3.5-turbo",
-      temperature: 0.3,
-      maxTokens: 4000,
-      prompt: "default",
-    },
-  };
 
   get rules() {
     return {
-      required: (v: string) => !!v || (this.trans["idRequired"] || "Required"),
+      required: (v: string) => !!v || (this.trans["required"] || "此项必填"),
     };
-  }
-
-  get recommendedModels(): string[] {
-    return [];
-  }
-
-  get availableModels(): string[] {
-    // 如果有获取到的模型，优先使用，否则使用推荐模型
-    return this.fetchedModels.length > 0 ? this.fetchedModels : this.recommendedModels;
-  }
-
-  get canFetchModels(): boolean {
-    // 需要有 API Base 和 API Key 才能获取模型
-    return !!this.formData.config.apiBase && !!this.formData.config.apiKey;
   }
 
   get temperatureDesc(): string {
-    const temp = this.formData.config.temperature || 0.3;
-    if (temp < 0.2) return this.trans["temperatureDesc0"] || "";
-    if (temp < 0.5) return this.trans["temperatureDesc1"] || "";
-    if (temp < 0.8) return this.trans["temperatureDesc2"] || "";
-    return this.trans["temperatureDesc3"] || "";
+    const temp = this.providerForm.config?.temperature || 0.3;
+    if (temp < 0.2) return this.trans["temperatureDesc0"] || "更精确，更确定";
+    if (temp < 0.5) return this.trans["temperatureDesc1"] || "平衡";
+    if (temp < 0.8) return this.trans["temperatureDesc2"] || "更有创意";
+    return this.trans["temperatureDesc3"] || "非常有创意，可能不稳定";
   }
 
   mounted() {
-    this.loadTranslators();
+    this.loadProviders();
   }
 
-  loadTranslators() {
-    this.translators = customTranslatorManager.getAllConfigs();
+  loadProviders() {
+    const baseProviders = customTranslatorManager.getAllProviders();
+    this.providers = baseProviders.map(p => ({
+      ...p,
+      availableModels: p.enabledModels.length > 0 ? [...p.enabledModels] : undefined,
+      fetchingModels: false,
+      modelFetchError: "",
+    }));
   }
 
-  onProviderChange(provider: string) {
-    const presets: Record<string, any> = {
-      openai: {
-        apiBase: "https://api.openai.com/v1",
-        model: "gpt-3.5-turbo",
-      },
-      deepseek: {
-        apiBase: "https://api.deepseek.com/v1",
-        model: "deepseek-chat",
-      },
-      moonshot: {
-        apiBase: "https://api.moonshot.cn/v1",
-        model: "moonshot-v1-8k",
-      },
-      zhipu: {
-        apiBase: "https://open.bigmodel.cn/api/paas/v4",
-        model: "glm-4",
-      },
-      dashscope: {
-        apiBase: "https://dashscope.aliyuncs.com/compatible-mode/v1",
-        model: "qwen-plus",
-      },
-    };
+  getProviderIcon(providerType: string): string {
+    const template = getProviderTemplate(providerType);
+    return template?.icon || "mdi-cog";
+  }
 
-    const preset = presets[provider];
-    if (preset) {
-      this.formData.config.apiBase = preset.apiBase;
-      this.formData.config.model = preset.model;
+  onTemplateChange(templateType: string) {
+    const template = getProviderTemplate(templateType);
+    if (template) {
+      this.providerForm.providerType = template.type;
+      this.providerForm.apiBase = template.apiBase;
+      this.providerForm.name = template.name;
+      
+      // 清空已获取的模型
+      this.providerForm.enabledModels = [];
     }
-    
-    // 清空已获取的模型列表
-    this.fetchedModels = [];
-    this.modelFetchError = "";
   }
 
-  async fetchAvailableModels() {
-    if (!this.canFetchModels) {
+  async fetchProviderModels(provider: ProviderWithUI) {
+    if (!provider.apiBase || !provider.apiKey) {
+      provider.modelFetchError = this.trans["apiConfigRequired"] || "请先配置 API Base 和 API Key";
       return;
     }
 
-    this.fetchingModels = true;
-    this.modelFetchError = "";
+    provider.fetchingModels = true;
+    provider.modelFetchError = "";
 
     try {
-      const models = await fetchModels(
-        this.formData.config.apiBase,
-        this.formData.config.apiKey
-      );
+      const models = await fetchModels(provider.apiBase, provider.apiKey);
       
       if (models.length === 0) {
-        this.modelFetchError = this.trans["noModelsFound"] || "未找到任何模型";
-        this.fetchedModels = [];
-      } else {
-        this.fetchedModels = models;
-        console.log(`获取到 ${models.length} 个模型:`, models);
-        
-        // 如果当前没有选择模型，自动选择第一个
-        if (!this.formData.config.model && models.length > 0) {
-          this.formData.config.model = models[0];
+        // 使用推荐模型作为后备
+        const template = getProviderTemplate(provider.providerType);
+        if (template && template.recommendedModels.length > 0) {
+          provider.availableModels = template.recommendedModels;
+          provider.modelFetchError = this.trans["usingRecommendedModels"] || "API 未返回模型列表，使用推荐模型";
+        } else {
+          provider.modelFetchError = this.trans["noModelsFound"] || "未找到任何模型";
+          provider.availableModels = [];
         }
+      } else {
+        provider.availableModels = models;
+        console.log(`获取到 ${models.length} 个模型:`, models);
       }
     } catch (error: any) {
-      this.modelFetchError = error.message || "获取模型列表失败";
+      provider.modelFetchError = error.message || "获取模型列表失败";
       console.error("获取模型失败:", error);
+      
+      // 失败时尝试使用推荐模型
+      const template = getProviderTemplate(provider.providerType);
+      if (template && template.recommendedModels.length > 0) {
+        provider.availableModels = template.recommendedModels;
+      }
     } finally {
-      this.fetchingModels = false;
+      provider.fetchingModels = false;
     }
   }
 
-  editTranslator(translator: CustomTranslatorConfig) {
-    this.editingTranslator = translator;
-    this.formData = JSON.parse(JSON.stringify(translator));
-    this.selectedProvider = "";
-    this.showAddDialog = true;
+  updateProviderModels(providerId: string, models: string[]) {
+    customTranslatorManager.setEnabledModels(providerId, models);
+    this.loadProviders();
   }
 
-  removeTranslatorConfirm(id: string) {
-    if (confirm(`${this.trans["confirmDelete"]} "${id}"?`)) {
-      customTranslatorManager.removeTranslator(id);
-      this.loadTranslators();
+  editProvider(provider: ProviderConfig) {
+    this.editingProvider = provider;
+    this.providerForm = JSON.parse(JSON.stringify(provider));
+    this.selectedTemplate = "";
+    this.showAddProviderDialog = true;
+  }
+
+  removeProviderConfirm(id: string) {
+    const provider = this.providers.find(p => p.id === id);
+    const name = provider?.name || id;
+    if (confirm(`${this.trans["confirmDelete"] || "确认删除"} "${name}"?`)) {
+      customTranslatorManager.removeProvider(id);
+      this.loadProviders();
     }
   }
 
-  saveTranslator() {
-    // 确保 prompt 字段存在
-    if (!this.formData.config.prompt) {
-      this.formData.config.prompt = "default";
+  saveProvider() {
+    // 确保有必要字段
+    if (!this.providerForm.config) {
+      this.providerForm.config = {
+        temperature: 0.3,
+        maxTokens: 4000,
+        prompt: "",
+      };
     }
 
-    if (this.editingTranslator) {
-      customTranslatorManager.updateTranslator(
-        this.editingTranslator.id,
-        this.formData
+    if (this.editingProvider) {
+      // 更新现有供应商
+      customTranslatorManager.updateProvider(
+        this.editingProvider.id,
+        this.providerForm
       );
     } else {
-      // 添加新翻译器时自动生成 ID
-      // 基于提供商类型生成基础 ID
-      let baseId = this.selectedProvider || "custom";
+      // 添加新供应商时自动生成 ID
+      let baseId = this.providerForm.providerType || "custom";
       
-      // 如果有名称，尝试使用名称的拼音或简化版本
-      if (this.formData.name) {
-        // 移除特殊字符，转换为小写，用连字符分隔
-        const simpleName = this.formData.name
+      // 如果有名称，尝试使用名称的简化版本
+      if (this.providerForm.name) {
+        const simpleName = this.providerForm.name
           .toLowerCase()
           .replace(/\s+/g, "-")
           .replace(/[^a-z0-9\u4e00-\u9fa5-]/g, "");
@@ -441,40 +510,46 @@ export default class CustomTranslatorManager extends Vue {
       }
       
       // 生成唯一 ID
-      this.formData.id = customTranslatorManager.generateUniqueId(baseId);
-      customTranslatorManager.addTranslator(this.formData);
+      this.providerForm.id = customTranslatorManager.generateUniqueProviderId(baseId);
+      customTranslatorManager.addProvider(this.providerForm);
     }
-    this.loadTranslators();
-    this.closeDialog();
+    
+    this.loadProviders();
+    this.closeProviderDialog();
   }
 
-  closeDialog() {
-    this.showAddDialog = false;
-    this.editingTranslator = null;
-    this.resetForm();
+  closeProviderDialog() {
+    this.showAddProviderDialog = false;
+    this.editingProvider = null;
+    this.resetProviderForm();
   }
 
-  resetForm() {
-    this.formData = {
+  resetProviderForm() {
+    this.providerForm = {
       id: "",
       name: "",
-      type: "openai",
+      providerType: "custom",
+      apiBase: "https://",
+      apiKey: "",
+      enabledModels: [],
       config: {
-        apiBase: "https://api.openai.com/v1",
-        apiKey: "",
-        model: "gpt-3.5-turbo",
         temperature: 0.3,
         maxTokens: 4000,
-        prompt: "default",
+        prompt: "",
       },
+      enabled: true,
     };
-    this.selectedProvider = "";
-    this.fetchedModels = [];
-    this.modelFetchError = "";
+    this.selectedTemplate = "";
   }
 
-  testTranslator(translator: CustomTranslatorConfig) {
-    this.testingTranslatorId = translator.id;
+  testProvider(provider: ProviderWithUI) {
+    if (provider.enabledModels.length === 0) {
+      alert(this.trans["noModelsEnabled"] || "请先启用至少一个模型");
+      return;
+    }
+    
+    this.testingProvider = provider;
+    this.testModel = provider.enabledModels[0];
     this.showTestDialog = true;
     this.testResult = "";
     this.testError = "";
@@ -482,12 +557,21 @@ export default class CustomTranslatorManager extends Vue {
   }
 
   async runTest() {
+    if (!this.testingProvider || !this.testModel) {
+      return;
+    }
+
     this.testing = true;
     this.testResult = "";
     this.testError = "";
 
     try {
-      const translator = getTranslator(this.testingTranslatorId);
+      const translatorId = customTranslatorManager.getTranslatorIdForModel(
+        this.testingProvider.id,
+        this.testModel
+      );
+      
+      const translator = getTranslator(translatorId);
       const result = await translator.translate(
         this.testText,
         this.testFrom as any,

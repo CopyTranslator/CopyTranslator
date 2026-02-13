@@ -45,7 +45,6 @@ export const normalActionTypes = [
   "configSnapshot", //恢复snapshot
   "newConfigSnapshot", //创建新snapshot
   "delConfigSnapshot", //删除快照
-  "customTranslatorsChanged", // 自定义翻译器列表变化事件
 ] as const;
 
 //切换值的动作
@@ -81,6 +80,7 @@ export const constantActionTypes = [
   "transparency",
   "actionButtons",
   "customTranslators",
+  "translatorProviders",
 ] as const;
 
 export const interceptTranslatorTypes = ["bing", "deepl", "tencent"] as const;
@@ -292,6 +292,25 @@ export const displayTexts = [
   "actionSortPrompt",
   "keyanSlogan",
   "stepfunSlogan",
+  // Provider management UI texts
+  "providers",
+  "addProvider",
+  "editProvider",
+  "providerName",
+  "selectProviderTemplate",
+  "noProviders",
+  "modelsEnabled",
+  "selectModels",
+  "refreshModels",
+  "noModelsHint",
+  "noModelsEnabled",
+  "apiConfigRequired",
+  "usingRecommendedModels",
+  "testProvider",
+  "selectModel",
+  "required",
+  "edit",
+  "test",
 ] as const; //一些显示在界面上的文本
 
 export type Role = typeof roles[number];

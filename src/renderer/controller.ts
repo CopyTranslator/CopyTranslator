@@ -99,8 +99,8 @@ export class RendererController extends RenController {
           this.app.$vuetify.theme.dark = isDarkMode();
         }
         break;
-      case "customTranslators":
-        logger.log("renderer", "customTranslators changed");
+      case "translatorProviders":
+        logger.log("renderer", "translators config changed");
         customTranslatorManager.reload();
         break;
       case "localeSetting":

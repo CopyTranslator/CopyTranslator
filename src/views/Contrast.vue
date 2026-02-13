@@ -147,7 +147,6 @@ import {
   hexToRgb,
   colorStatusMap,
 } from "../common/types";
-import { CustomTranslatorConfig } from "../common/translate/types";
 import EngineButton from "../components/EngineButton.vue";
 
 import { dictionaryTypes, DictionaryType } from "../common/dictionary/types";
@@ -178,7 +177,6 @@ export default class Contrast extends Mixins(BaseView, WindowController) {
 
   dialog: boolean = false;
   marginBottom: number = 5;
-  customTranslatorsVersion: number = 0; // 用于强制更新
 
   get valid() {
     return (
@@ -218,7 +216,7 @@ export default class Contrast extends Mixins(BaseView, WindowController) {
   }
 
   get customTranslators(): Array<GeneralTranslatorType | string> {
-    return this.config.customTranslators?.map((element: CustomTranslatorConfig) => element.id) || [];
+    return this.config.customTranslators || [];
   }
 
   get engines(): Array<GeneralTranslatorType | DictionaryType | string> {

@@ -422,10 +422,18 @@ function initConfig(
     })
   );
 
-  // 自定义翻译器配置
+
+  // 翻译器供应商配置（新架构）
+  config.setRule(
+    "translatorProviders",
+    new TypeRule<any[]>([])
+  );
+  
+  // 这个是动态生成的，不需要保存
   config.setRule(
     "customTranslators",
-    new TypeRule<any[]>([])
+    new TypeRule<string[]>([]),
+    false
   );
 
   return config;

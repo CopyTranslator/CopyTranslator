@@ -2,19 +2,27 @@ import { Translator } from "@opentranslate/translator";
 import { OpenAI } from "./openai";
 import { axios } from "./proxy";
 import config from "../configuration";
-import { CustomTranslatorConfig } from "./types";
+import { ProviderConfig, CustomTranslatorConfig } from "./types";
 
 /**
- * 自定义翻译器管理器
+ * 自定义翻译器管理器（基于供应商）
+ * 
+ * 新架构：
+ * - 供应商配置：存储 API Base、API Key、已启用的模型列表
+ * - 翻译器实例：从供应商配置展开生成，ID 格式为 `{providerId}-{modelName}`
  */
 export class CustomTranslatorManager {
   private static instance: CustomTranslatorManager;
+  
+  // 翻译器实例缓存（运行时生成）
   private customTranslators: Map<string, Translator> = new Map();
   private customConfigs: Map<string, CustomTranslatorConfig> = new Map();
+  
+  // 供应商配置（持久化存储）
+  private providers: Map<string, ProviderConfig> = new Map();
 
   private constructor() {
     // 延迟加载，等待配置系统初始化
-    // 注意：不在构造函数中调用 loadFromConfig
   }
 
   /**
@@ -31,185 +39,326 @@ export class CustomTranslatorManager {
    * 确保已初始化（懒加载）
    */
   private initialize() {
-    console.log("[自定义翻译器] 开始初始化...");
+    console.log("[供应商管理] 开始初始化...");
     this.loadFromConfig();
+    this.expandProvidersToTranslators();
+    config.set("customTranslators", this.getAllIds());
+    console.log("[供应商管理] 初始化完成");
   }
 
   /**
-   * 从配置系统加载自定义翻译器
+   * 从配置系统加载供应商配置
    */
   private loadFromConfig() {
     try {
-      // 检查配置系统是否可用
       if (!config || typeof config.get !== 'function') {
-        console.warn("[自定义翻译器] 配置系统尚未初始化，跳过加载");
+        console.warn("[供应商管理] 配置系统尚未初始化，跳过加载");
         return;
       }
       
-      const customTranslatorConfigs = config.get("customTranslators") as CustomTranslatorConfig[] || [];
-      console.log(`[自定义翻译器] 从配置加载 ${customTranslatorConfigs.length} 个翻译器`);
+      const providerConfigs = config.get("translatorProviders") as ProviderConfig[] || [];
+      console.log(`[供应商管理] 从配置加载 ${providerConfigs.length} 个供应商`);
       
-      for (const cfg of customTranslatorConfigs) {
-        if (cfg.enabled !== false) { // 默认启用
-          console.log(`[自定义翻译器] 加载翻译器: ${cfg.id} (${cfg.name})`);
-          // 直接添加，不调用 addTranslator 避免重复初始化
-          this.addTranslatorInternal(cfg);
+      for (const cfg of providerConfigs) {
+        if (cfg.enabled !== false) {
+          this.providers.set(cfg.id, cfg);
+          console.log(`[供应商管理] 加载供应商: ${cfg.id} (${cfg.name}), 启用 ${cfg.enabledModels.length} 个模型`);
         }
       }
     } catch (error) {
-      console.error("[自定义翻译器] 加载失败:", error);
+      console.error("[供应商管理] 加载失败:", error);
     }
   }
 
   /**
-   * 内部添加方法
+   * 从供应商配置展开生成翻译器实例
    */
-  private addTranslatorInternal(cfg: CustomTranslatorConfig): boolean {
-    try {
-      // 验证 ID 唯一性
-      if (this.customTranslators.has(cfg.id)) {
-        console.warn(`[自定义翻译器] ID "${cfg.id}" 已存在`);
-        return false;
-      }
-
-      // 根据类型创建翻译器实例, 如果是在render进程，其实这部分不需要，因为用户添加的翻译器只会在主进程使用，render进程只会调用主进程的翻译器实例
-      let translator: Translator;
-      switch (cfg.type) {
-        case "openai":
-          translator = new OpenAI({ axios, config: cfg.config });
-          break;
-        default:
-          console.error(`[自定义翻译器] 未知的翻译器类型: ${cfg.type}`);
-          return false;
-      }
-
-      this.customTranslators.set(cfg.id, translator);
-      this.customConfigs.set(cfg.id, cfg);
-      console.log(`[自定义翻译器] 成功添加: ${cfg.id}，当前共有 ${this.customTranslators.size} 个自定义翻译器`);
+  private expandProvidersToTranslators() {
+    this.customTranslators.clear();
+    
+    for (const provider of this.providers.values()) {
+      if (provider.enabled === false) continue;
       
-      return true;
-    } catch (error) {
-      console.error(`[自定义翻译器] 添加失败:`, error);
-      return false;
+      for (const modelName of provider.enabledModels) {
+        try {
+          const translatorId = this.getTranslatorIdForModel(provider.id, modelName);
+          const translatorConfig = this.getTranslatorConfig(provider, modelName);
+          
+          if (translatorConfig) {
+            const translator = this.createTranslator(translatorConfig);
+            this.customConfigs.set(translatorId, translatorConfig);
+            this.customTranslators.set(translatorId, translator);
+
+            console.log(`[供应商管理] 生成翻译器实例: ${translatorId}`);
+          }
+        } catch (error) {
+          console.error(`[供应商管理] 创建翻译器失败 ${provider.id}-${modelName}:`, error);
+        }
+      }
     }
+    
+    console.log(`[供应商管理] 共生成 ${this.customTranslators.size} 个翻译器实例`);
+  }
+
+
+  private getTranslatorConfig(provider: ProviderConfig, modelName: string): CustomTranslatorConfig|null {
+    try {
+      // 目前只支持 OpenAI 兼容 API
+      const config = provider.config || {};
+      const translatorConfig = {
+        apiBase: provider.apiBase,
+        apiKey: provider.apiKey,
+        model: modelName,
+        temperature: config.temperature,
+        maxTokens: config.maxTokens,
+        prompt: config.prompt,
+      };
+      return {
+        config: translatorConfig,
+        id: this.getTranslatorIdForModel(provider.id, modelName),
+        name: `${provider.name} - ${modelName}`,
+        providerId: provider.id,
+      };
+    } catch (error) {
+      console.error(`[供应商管理] 创建翻译器实例失败:`, error);
+      return null;
+    }
+  }
+  /**
+   * 创建翻译器实例
+   */
+  private createTranslator(translatorConfig: CustomTranslatorConfig): Translator {
+    return new OpenAI({ axios, config: translatorConfig.config });
   }
 
   /**
-   * 保存自定义翻译器到配置
+   * 保存供应商配置到配置系统
    */
   private saveToConfig() {
     try {
-      const configs = Array.from(this.customConfigs.values());
-      config.set("customTranslators", configs);
+      const configs = Array.from(this.providers.values());
+      config.set("translatorProviders", configs);
     } catch (error) {
-      console.error("保存自定义翻译器失败:", error);
+      console.error("[供应商管理] 保存配置失败:", error);
     }
   }
 
+  // ==================== 供应商管理方法 ====================
+
   /**
-   * 添加自定义翻译器
+   * 添加供应商
    */
-  addTranslator(cfg: CustomTranslatorConfig): boolean {
-    const result = this.addTranslatorInternal(cfg);
-    if (result) {
+  addProvider(cfg: ProviderConfig): boolean {
+    try {
+      if (this.providers.has(cfg.id)) {
+        console.warn(`[供应商管理] 供应商 ID "${cfg.id}" 已存在`);
+        return false;
+      }
+
+      this.providers.set(cfg.id, cfg);
+      this.expandProvidersToTranslators();
       this.saveToConfig();
-    }
-    return result;
-  }
-
-  /**
-   * 更新自定义翻译器配置
-   */
-  updateTranslator(id: string, cfg: Partial<CustomTranslatorConfig>): boolean {
-    try {
-      const existingConfig = this.customConfigs.get(id);
-      if (!existingConfig) {
-        console.warn(`翻译器 ID "${id}" 不存在`);
-        return false;
-      }
-
-      // 合并配置
-      const newConfig: CustomTranslatorConfig = {
-        ...existingConfig,
-        ...cfg,
-        config: {
-          ...existingConfig.config,
-          ...(cfg.config || {}),
-        },
-      };
-
-      // 删除旧的翻译器
-      this.removeTranslator(id, false);
-
-      // 添加新的翻译器
-      const result = this.addTranslator(newConfig);
       
-      // 通知界面更新
-      if (result) {
-        this.saveToConfig();
-      }
-      
-      return result;
-    } catch (error) {
-      console.error(`更新翻译器失败:`, error);
-      return false;
-    }
-  }
-
-  /**
-   * 移除自定义翻译器
-   */
-  removeTranslator(id: string, saveToConfig: boolean = true): boolean {
-    try {
-      if (!this.customTranslators.has(id)) {
-        return false;
-      }
-
-      this.customTranslators.delete(id);
-      this.customConfigs.delete(id);
-      
-      if (saveToConfig) {
-        this.saveToConfig();
-      }
-      
-      
+      console.log(`[供应商管理] 添加供应商: ${cfg.id} (${cfg.name})`);
       return true;
     } catch (error) {
-      console.error(`移除翻译器失败:`, error);
+      console.error(`[供应商管理] 添加供应商失败:`, error);
       return false;
     }
   }
 
   /**
-   * 获取自定义翻译器实例
+   * 更新供应商配置
+   */
+  updateProvider(id: string, updates: Partial<ProviderConfig>): boolean {
+    try {
+      const existing = this.providers.get(id);
+      if (!existing) {
+        console.warn(`[供应商管理] 供应商 ID "${id}" 不存在`);
+        return false;
+      }
+
+      const updated: ProviderConfig = {
+        ...existing,
+        ...updates,
+        config: {
+          ...(existing.config || {}),
+          ...(updates.config || {}),
+        },
+        enabledModels: updates.enabledModels || existing.enabledModels,
+      };
+
+      this.providers.set(id, updated);
+      this.expandProvidersToTranslators();
+      this.saveToConfig();
+      
+      console.log(`[供应商管理] 更新供应商: ${id}`);
+      return true;
+    } catch (error) {
+      console.error(`[供应商管理] 更新供应商失败:`, error);
+      return false;
+    }
+  }
+
+  /**
+   * 移除供应商
+   */
+  removeProvider(id: string): boolean {
+    try {
+      if (!this.providers.has(id)) {
+        return false;
+      }
+
+      this.providers.delete(id);
+      this.expandProvidersToTranslators();
+      this.saveToConfig();
+      
+      console.log(`[供应商管理] 移除供应商: ${id}`);
+      return true;
+    } catch (error) {
+      console.error(`[供应商管理] 移除供应商失败:`, error);
+      return false;
+    }
+  }
+
+  /**
+   * 获取供应商配置
+   */
+  getProvider(id: string): ProviderConfig | undefined {
+    return this.providers.get(id);
+  }
+
+  /**
+   * 获取所有供应商配置
+   */
+  getAllProviders(): ProviderConfig[] {
+    return Array.from(this.providers.values());
+  }
+
+  /**
+   * 生成唯一的供应商 ID
+   */
+  generateUniqueProviderId(baseName: string): string {
+    let id = baseName;
+    let counter = 1;
+    
+    while (this.providers.has(id)) {
+      id = `${baseName}-${counter}`;
+      counter++;
+    }
+    
+    return id;
+  }
+
+  // ==================== 模型管理方法 ====================
+
+  /**
+   * 启用模型
+   */
+  enableModel(providerId: string, modelName: string): boolean {
+    const provider = this.providers.get(providerId);
+    if (!provider) {
+      console.warn(`[供应商管理] 供应商 "${providerId}" 不存在`);
+      return false;
+    }
+
+    if (!provider.enabledModels.includes(modelName)) {
+      provider.enabledModels.push(modelName);
+      this.expandProvidersToTranslators();
+      this.saveToConfig();
+      console.log(`[供应商管理] 启用模型: ${providerId} - ${modelName}`);
+      return true;
+    }
+    
+    return false;
+  }
+
+  /**
+   * 禁用模型
+   */
+  disableModel(providerId: string, modelName: string): boolean {
+    const provider = this.providers.get(providerId);
+    if (!provider) {
+      console.warn(`[供应商管理] 供应商 "${providerId}" 不存在`);
+      return false;
+    }
+
+    const index = provider.enabledModels.indexOf(modelName);
+    if (index > -1) {
+      provider.enabledModels.splice(index, 1);
+      this.expandProvidersToTranslators();
+      this.saveToConfig();
+      console.log(`[供应商管理] 禁用模型: ${providerId} - ${modelName}`);
+      return true;
+    }
+    
+    return false;
+  }
+
+  /**
+   * 切换模型启用状态
+   */
+  toggleModel(providerId: string, modelName: string): boolean {
+    const provider = this.providers.get(providerId);
+    if (!provider) return false;
+
+    if (provider.enabledModels.includes(modelName)) {
+      return this.disableModel(providerId, modelName);
+    } else {
+      return this.enableModel(providerId, modelName);
+    }
+  }
+
+  /**
+   * 获取供应商已启用的模型列表
+   */
+  getEnabledModels(providerId: string): string[] {
+    const provider = this.providers.get(providerId);
+    return provider ? [...provider.enabledModels] : [];
+  }
+
+  /**
+   * 批量设置启用的模型
+   */
+  setEnabledModels(providerId: string, models: string[]): boolean {
+    const provider = this.providers.get(providerId);
+    if (!provider) {
+      console.warn(`[供应商管理] 供应商 "${providerId}" 不存在`);
+      return false;
+    }
+
+    provider.enabledModels = [...models];
+    this.expandProvidersToTranslators();
+    this.saveToConfig();
+    console.log(`[供应商管理] 更新供应商 ${providerId} 的启用模型列表: ${models.join(', ')}`);
+    return true;
+  }
+
+  // ==================== 翻译器实例访问 ====================
+
+  /**
+   * 获取翻译器 ID（格式: providerId-modelName）
+   */
+  getTranslatorIdForModel(providerId: string, modelName: string): string {
+    return `${providerId}-${modelName}`;
+  }
+
+  /**
+   * 获取翻译器实例
    */
   getTranslator(id: string): Translator | undefined {
     const translator = this.customTranslators.get(id);
     if (!translator) {
-      console.warn(`[自定义翻译器] 未找到 ID "${id}" 的翻译器，可用的有: ${Array.from(this.customTranslators.keys()).join(', ')}`);
+      console.warn(`[供应商管理] 未找到翻译器 "${id}"，可用的有: ${Array.from(this.customTranslators.keys()).join(', ')}`);
     }
     return translator;
   }
 
   /**
-   * 获取自定义翻译器配置
-   */
-  getConfig(id: string): CustomTranslatorConfig | undefined {
-    return this.customConfigs.get(id);
-  }
-
-  /**
-   * 获取所有自定义翻译器 ID
+   * 获取所有翻译器 ID
    */
   getAllIds(): string[] {
     return Array.from(this.customTranslators.keys());
-  }
-
-  /**
-   * 获取所有自定义翻译器配置
-   */
-  getAllConfigs(): CustomTranslatorConfig[] {
-    return Array.from(this.customConfigs.values());
   }
 
   /**
@@ -220,27 +369,17 @@ export class CustomTranslatorManager {
   }
 
   /**
-   * 重新加载所有自定义翻译器
+   * 重新加载
    */
   reload() {
     this.customTranslators.clear();
     this.customConfigs.clear();
+    this.providers.clear();
     this.initialize();
   }
 
-  /**
-   * 生成唯一的翻译器 ID
-   */
-  generateUniqueId(baseName: string): string {
-    let id = baseName;
-    let counter = 1;
-    
-    while (this.customTranslators.has(id)) {
-      id = `${baseName}-${counter}`;
-      counter++;
-    }
-    
-    return id;
+  getConfig(id: string): CustomTranslatorConfig | undefined {
+    return this.customConfigs.get(id);
   }
 }
 

@@ -14,7 +14,7 @@ export const providerTemplates: ProviderTemplate[] = [
     ],
     icon: "mdi-robot",
     docUrl: "https://platform.stepfun.com/docs/zh/overview/concept",
-    description: "阶跃星辰开放平台",
+    description: "阶跃星辰开放平台 - 注意：系统已内置免费版本，此处添加需自备API密钥",
   },
   {
     type: "openai",

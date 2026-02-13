@@ -64,6 +64,9 @@ export default class EngineButton extends mixins(AppProps, Base) {
       const customConfig = customTranslatorManager.getConfig(this.engine);
       if (customConfig) {
         return customConfig.name;
+      }else{
+        // 如果没有找到自定义翻译器的配置，返回引擎标识
+        return this.engine;
       }
     }
     return this.tooltip;

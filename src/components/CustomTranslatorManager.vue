@@ -2,15 +2,24 @@
   <div class="custom-translator-manager">
     <v-card flat>
       <v-card-title class="pb-2">
-        {{ trans["providers"] || "翻译供应商" }}
+        {{ trans["aiProviders"] || "AI翻译供应商" }}
         <v-spacer></v-spacer>
         <v-btn color="primary" small @click="showAddProviderDialog = true">
           <v-icon small left>mdi-plus</v-icon>
-          {{ trans["addProvider"] || "添加供应商" }}
+          {{ trans["addAIProvider"] || "添加AI供应商" }}
         </v-btn>
       </v-card-title>
 
       <v-card-text>
+        <!-- AI翻译说明 -->
+        <v-alert
+          type="info"
+          dense
+          text
+          class="mb-4"
+        >
+          {{ trans["aiTranslatorDescription"] || "这些翻译器基于人工智能（大语言模型/LLM），可以理解上下文并提供更自然的翻译。所有在此处添加的供应商都需要您自行配置API密钥。" }}
+        </v-alert>
         <!-- 供应商列表 -->
         <v-expansion-panels v-if="providers.length > 0" multiple>
           <v-expansion-panel
@@ -22,7 +31,17 @@
               <div class="d-flex align-center flex-grow-1">
                 <v-icon class="mr-2">{{ getProviderIcon(provider.providerType) }}</v-icon>
                 <div class="flex-grow-1">
-                  <div class="font-weight-medium">{{ provider.name }}</div>
+                  <div class="font-weight-medium">
+                    {{ provider.name }}
+                    <v-chip
+                      v-if="provider.providerType === 'stepfun'"
+                      color="warning"
+                      x-small
+                      class="ml-2"
+                    >
+                      {{ trans["stepfunCustomNote"] || "需自备API密钥" }}
+                    </v-chip>
+                  </div>
                   <div class="caption grey--text">
                     {{ provider.apiBase }} | {{ provider.enabledModels.length }} {{ trans["modelsEnabled"] || "个模型已启用" }}
                   </div>
@@ -120,7 +139,7 @@
 
         <!-- 无供应商提示 -->
         <div v-else class="text-center pa-4 grey--text">
-          {{ trans["noProviders"] || "尚未添加翻译供应商" }}
+          {{ trans["noAIProviders"] || "暂无AI供应商" }}
         </div>
       </v-card-text>
     </v-card>
@@ -129,7 +148,7 @@
     <v-dialog v-model="showAddProviderDialog" max-width="600px" persistent>
       <v-card>
         <v-card-title>
-          {{ editingProvider ? (trans["editProvider"] || "编辑供应商") : (trans["addProvider"] || "添加供应商") }}
+          {{ editingProvider ? (trans["editAIProvider"] || "编辑AI供应商") : (trans["addAIProvider"] || "添加AI供应商") }}
         </v-card-title>
 
         <v-card-text>
@@ -139,7 +158,7 @@
               v-if="!editingProvider"
               v-model="selectedTemplate"
               :items="templateItems"
-              :label="trans['selectProviderTemplate'] || '选择供应商模板'"
+              :label="trans['selectProviderTemplate'] || '选择AI供应商类型'"
               @change="onTemplateChange"
               outlined
               dense
@@ -243,7 +262,7 @@
     <!-- 测试对话框 -->
     <v-dialog v-model="showTestDialog" max-width="500px">
       <v-card>
-        <v-card-title>{{ trans["testProvider"] || "测试供应商" }}</v-card-title>
+        <v-card-title>{{ trans["testAIProvider"] || "测试AI供应商" }}</v-card-title>
         <v-card-text>
           <v-select
             v-model="testModel"
@@ -364,12 +383,19 @@ export default class CustomTranslatorManagerView extends Vue {
   }
 
   get templateItems() {
-    return providerTemplates.map(t => ({
-      text: t.name,
-      value: t.type,
-      icon: t.icon || "mdi-cog",
-      description: t.description || "",
-    }));
+    return providerTemplates.map(t => {
+      const item = {
+        text: t.name,
+        value: t.type,
+        icon: t.icon || "mdi-cog",
+        description: t.description || "",
+      };
+      // 为阶跃星辰添加说明
+      if (t.type === 'stepfun') {
+        item.text = `${t.name} (${this.trans['stepfunCustomNote'] || '需自备API密钥'})`;
+      }
+      return item;
+    });
   }
 
   get rules() {

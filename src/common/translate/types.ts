@@ -129,6 +129,7 @@ export interface ProviderTemplate {
   apiBase: string; // 默认 API Base URL
   recommendedModels: string[]; // 推荐模型列表（作为获取失败时的后备）
   icon?: string; // 图标名称（mdi-icon）
+  image?: string; // 图片文件名（用于 EngineButton 显示）
   docUrl?: string; // 文档链接
   description?: string; // 供应商描述
 }

@@ -29,7 +29,7 @@
             <!-- 供应商头部 -->
             <v-expansion-panel-header>
               <div class="d-flex align-center flex-grow-1">
-                <v-icon class="mr-2">{{ getProviderIcon(provider.providerType) }}</v-icon>
+                <div :class="['provider-icon', 'mr-2', `provider-${provider.providerType}`]"></div>
                 <div class="flex-grow-1">
                   <div class="font-weight-medium">
                     {{ provider.name }}
@@ -164,7 +164,7 @@
               dense
             >
               <template v-slot:item="{ item }">
-                <v-icon class="mr-2">{{ item.icon }}</v-icon>
+                <div :class="['provider-icon', 'mr-2', `provider-${item.value}`]"></div>
                 <div>
                   <div>{{ item.text }}</div>
                   <div class="caption grey--text">{{ item.description }}</div>
@@ -383,20 +383,19 @@ export default class CustomTranslatorManagerView extends Vue {
   }
 
   get templateItems() {
-    return providerTemplates.map(t => {
-      const item = {
-        text: t.name,
-        value: t.type,
-        icon: t.icon || "mdi-cog",
-        description: t.description || "",
-      };
-      // 为阶跃星辰添加说明
-      if (t.type === 'stepfun') {
-        item.text = `${t.name} (${this.trans['stepfunCustomNote'] || '需自备API密钥'})`;
-      }
-      return item;
-    });
-  }
+   return providerTemplates.map(t => {
+     const item = {
+       text: t.name,
+       value: t.type,
+       description: t.description || "",
+     };
+     // 为阶跃星辰添加说明
+     if (t.type === 'stepfun') {
+       item.text = `${t.name} (${this.trans['stepfunCustomNote'] || '需自备API密钥'})`;
+     }
+     return item;
+   });
+ }
 
   get rules() {
     return {
@@ -424,11 +423,6 @@ export default class CustomTranslatorManagerView extends Vue {
       fetchingModels: false,
       modelFetchError: "",
     }));
-  }
-
-  getProviderIcon(providerType: string): string {
-    const template = getProviderTemplate(providerType);
-    return template?.icon || "mdi-cog";
   }
 
   onTemplateChange(templateType: string) {

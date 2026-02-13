@@ -58,8 +58,57 @@
   background-image: url("../images/stepfun.png");
 }
 
+/* AI 供应商图标 */
+.provider-stepfun {
+  background-image: url("../images/stepfun.svg");
+}
+
+.provider-openai {
+  background-image: url("../images/openai.svg");
+}
+
+.provider-azure {
+  background-image: url("../images/azure.svg");
+}
+
+.provider-deepseek {
+  background-image: url("../images/deepseek.svg");
+}
+
+.provider-moonshot {
+  background-image: url("../images/moonshot.svg");
+}
+
+.provider-zhipu {
+  background-image: url("../images/zhipu.svg");
+}
+
+.provider-dashscope {
+  background-image: url("../images/bailian.svg");
+}
+
+.provider-ollama {
+  background-image: url("../images/ollama.svg");
+}
+
+.provider-custom {
+  background-image: url("../images/robot.svg");
+}
+
+/* 后备样式 */
 .custom-translator {
-  background-image: url("../images/icon.png");
+  background-image: url("../images/robot.svg");
+}
+
+/* 供应商图标通用样式 */
+.provider-icon {
+  width: 24px;
+  height: 24px;
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+  display: inline-block;
+  vertical-align: middle;
 }
 
 .engineBtnBase {

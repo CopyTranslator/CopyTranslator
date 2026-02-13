@@ -42,6 +42,15 @@ export default class EngineButton extends mixins(AppProps, Base) {
   get engineClass() {
     // 检查是否为自定义翻译器
     if (customTranslatorManager.isCustomTranslator(this.engine)) {
+      // 从自定义翻译器配置中获取 providerType
+      const customConfig = customTranslatorManager.getConfig(this.engine);
+      if (customConfig) {
+        const provider = customTranslatorManager.getProvider(customConfig.providerId);
+        if (provider) {
+          return `provider-${provider.providerType}`;
+        }
+      }
+      // 如果无法获取 providerType，返回默认类
       return "custom-translator";
     }
     

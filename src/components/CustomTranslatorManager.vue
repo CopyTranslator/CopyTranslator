@@ -463,7 +463,7 @@ export default class CustomTranslatorManagerView extends Vue {
         provider.availableModels = models;
         console.log(`获取到 ${models.length} 个模型:`, models);
       }
-    } catch (error: any) {
+    } catch (error) {
       provider.modelFetchError = error.message || "获取模型列表失败";
       console.error("获取模型失败:", error);
       

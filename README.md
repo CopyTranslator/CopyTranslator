@@ -20,7 +20,7 @@ The v12 release introduces **Large Language Model AI Translation**! CopyTranslat
 
 **Key Highlights:**
 - 🤖 **LLM AI Translation**: Support OpenAI, DeepSeek, Moonshot, Zhipu AI, Alibaba Cloud Bailian, Ollama, and more
-- ⚡ **StepFun Free Translation**: Built-in StepFun translation engine with free `step-3.5-flash` model, ready to use out of the box
+- ⚡ **StepFun Free Translation**: Built-in StepFun translation engine with free [`step-3.5-flash`](https://static.stepfun.com/blog/step-3.5-flash/) model, ready to use out of the box
 - 🔧 **Visual Vendor Management**: Easily manage AI translation vendors and models through settings interface
 - 🎯 **Smart Model Selection**: Fetch available model list from API and freely choose which models to enable
 

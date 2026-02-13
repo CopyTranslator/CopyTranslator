@@ -39,13 +39,13 @@ export class UpdateChecker {
     return axios_.get(url, { timeout: 5000 });
   }
 
-  checkTheGiteePages() {
-    console.log("正在检查Gitee更新");
+  checkTheGithubPages() {
+    console.log("正在检查Github更新");
     console.log(constants.latest);
     this.get(constants.latest)
       .then((res) => res.data)
       .then((data) => {
-        console.log("Gitee上最新版本为", JSON.stringify(data));
+        console.log("Github上最新版本为", JSON.stringify(data));
         //这里的data.version是带了前缀v的
         if (isLower(version, data.version)) {
           this.get(getChangelogURL(data.version))
@@ -61,13 +61,13 @@ export class UpdateChecker {
               this.postUpdateInfo(updateInfo);
             })
             .catch((e) => {
-              console.error("从Gitee获取最新版本更新日志失败");
+              console.error("从Github获取最新版本更新日志失败");
             });
         } else {
-          console.log("Gitee显示当前即为最新版本");
+          console.log("Github显示当前即为最新版本");
         }
       })
-      .catch((e) => console.error("通过Gitee获取最新版本失败"));
+      .catch((e) => console.error("通过Github获取最新版本失败"));
   }
 
   showCurrentChangelog(targetVersion?: string) {
@@ -138,7 +138,7 @@ export class UpdateChecker {
   bindUpdateEvents() {
     autoUpdater.on("error", (error: Error) => {
       console.error("Github检查更新失败");
-      this.checkTheGiteePages();
+      this.checkTheGithubPages();
     });
 
     autoUpdater.on("update-available", (updateInfo) => {

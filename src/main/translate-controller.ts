@@ -693,7 +693,6 @@ class TranslateController {
         logger.log("translator-double", value);
         break;
       case "translatorProviders":
-        logger.log("translators config", value);
         customTranslatorManager.reload();
         break;
       case "listenClipboard":

@@ -100,7 +100,6 @@ export class RendererController extends RenController {
         }
         break;
       case "translatorProviders":
-        logger.log("renderer", "translators config changed");
         customTranslatorManager.reload();
         break;
       case "localeSetting":

@@ -57,19 +57,28 @@ export default class EngineButton extends mixins(AppProps, Base) {
   }
 
   get tooltipText() {
-    if (this.tooltip == undefined && this.engine == "copytranslator") {
-      return this.trans["multiSourceButton"]; //多源对比
-    } else if (this.tooltip == undefined) {
-      // 如果是自定义翻译器，显示其名称
-      const customConfig = customTranslatorManager.getConfig(this.engine);
-      if (customConfig) {
-        return customConfig.name;
-      }else{
-        // 如果没有找到自定义翻译器的配置，返回引擎标识
-        return this.engine;
-      }
+    if (this.tooltip != undefined) {
+      return this.tooltip;
     }
-    return this.tooltip;
+    
+    // 优先从 locales 中获取 tooltip
+    const tooltipKey = `<tooltip>${this.engine}`;
+    if (this.trans[tooltipKey] != undefined) {
+      return this.trans[tooltipKey];
+    }
+    
+    if (this.engine == "copytranslator") {
+      return this.trans["multiSourceButton"]; //多源对比
+    }
+    
+    // 如果是自定义翻译器，显示其名称
+    const customConfig = customTranslatorManager.getConfig(this.engine);
+    if (customConfig) {
+      return customConfig.name;
+    }
+    
+    // 如果都没有找到，返回引擎标识
+    return this.engine;
   }
 
   switchTranslator() {

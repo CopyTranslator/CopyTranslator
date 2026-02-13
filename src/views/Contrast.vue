@@ -147,11 +147,10 @@ import {
   hexToRgb,
   colorStatusMap,
 } from "../common/types";
+import { CustomTranslatorConfig } from "../common/translate/types";
 import EngineButton from "../components/EngineButton.vue";
 
 import { dictionaryTypes, DictionaryType } from "../common/dictionary/types";
-import { customTranslatorManager } from "@/common/translate/custom-translators";
-import eventBus from "@/common/event-bus";
 import "@/css/shared-styles.css";
 
 function sliceArray<T>(arr: T[], size: number) {
@@ -204,22 +203,9 @@ export default class Contrast extends Mixins(BaseView, WindowController) {
 
   mounted() {
     this.dialog = true;
-    
-    // 监听自定义翻译器变化
-    eventBus.on("customTranslatorsChanged", this.onCustomTranslatorsChanged);
   }
 
-  beforeDestroy() {
-    // 清理事件监听
-    eventBus.off("customTranslatorsChanged", this.onCustomTranslatorsChanged);
-  }
 
-  onCustomTranslatorsChanged() {
-    // 强制更新 engines 计算属性
-    this.customTranslatorsVersion++;
-    this.$forceUpdate();
-    console.log("[对比面板] 自定义翻译器列表已更新");
-  }
 
   get nButton() {
     return Math.max(
@@ -231,15 +217,17 @@ export default class Contrast extends Mixins(BaseView, WindowController) {
     );
   }
 
+  get customTranslators(): Array<GeneralTranslatorType | string> {
+    return this.config.customTranslators?.map((element: CustomTranslatorConfig) => element.id) || [];
+  }
+
   get engines(): Array<GeneralTranslatorType | DictionaryType | string> {
-    // 使用 customTranslatorsVersion 确保 Vue 检测到变化
-    const _ = this.customTranslatorsVersion;
     
     const translatorEngines: Array<GeneralTranslatorType | string> = [
       ...this.config["translator-enabled"],
       ...abstractTranslatorTypes,
       // 添加所有自定义翻译器
-      ...customTranslatorManager.getAllIds(),
+      ...this.customTranslators,
     ];
     return this.mode == "dict" ? [...dictionaryTypes] : translatorEngines;
   }

@@ -4,5 +4,5 @@ export * from "./types";
 export * from "./custom-translators";
 
 // 导出常用功能
-export { OpenAI, OpenAIConfig } from "./openai";
+export { OpenAI } from "./openai";
 export { Stepfun } from "./stepfun";

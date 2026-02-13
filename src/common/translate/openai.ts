@@ -5,16 +5,7 @@ import {
   TranslateError,
 } from "@opentranslate/translator";
 import { axios } from "./proxy";
-
-// OpenAI 兼容 API 的配置接口
-export interface OpenAIConfig {
-  apiBase: string; // API 基础地址，例如: https://api.openai.com/v1
-  apiKey: string; // API 密钥
-  model?: string; // 模型名称，默认为 gpt-3.5-turbo
-  prompt?: string; // 自定义提示词模板，使用 {from}, {to}, {text} 作为占位符
-  temperature?: number; // 温度参数，默认为 0.3
-  maxTokens?: number; // 最大生成token数，默认为 2000
-}
+import { OpenAIConfig } from "./types";
 
 // 默认提示词模板
 const DEFAULT_PROMPT = `You are a professional translator. Translate the following text to {to}. Only return the translated text without any explanation or additional information.

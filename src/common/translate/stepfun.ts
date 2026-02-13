@@ -1,4 +1,4 @@
-import { OpenAI, OpenAIConfig } from "./openai";
+import { OpenAI } from "./openai";
 
 /**
  * 阶跃星辰翻译器

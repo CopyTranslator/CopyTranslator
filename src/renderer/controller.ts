@@ -19,6 +19,7 @@ import { constants, version } from "../common/constant";
 import { RenController, MainController } from "../common/controller";
 import { createProxy } from "../proxy/renderer";
 import { ColorConfig } from "@/common/rule";
+import { customTranslatorManager } from "@/common/translate/custom-translators";
 
 export class RendererController extends RenController {
   private static _instance: RendererController;
@@ -97,6 +98,10 @@ export class RendererController extends RenController {
         if (this.app != undefined) {
           this.app.$vuetify.theme.dark = isDarkMode();
         }
+        break;
+      case "customTranslators":
+        logger.log("renderer", "customTranslators changed");
+        customTranslatorManager.reload();
         break;
       case "localeSetting":
         break;

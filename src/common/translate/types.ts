@@ -88,3 +88,24 @@ export const promiseAny = async <T>(
     (value) => Promise.resolve<T>(value)
   );
 };
+
+// OpenAI 兼容 API 的配置接口
+export interface OpenAIConfig {
+  apiBase: string; // API 基础地址，例如: https://api.openai.com/v1
+  apiKey: string; // API 密钥
+  model?: string; // 模型名称，默认为 gpt-3.5-turbo
+  prompt?: string; // 自定义提示词模板，使用 {from}, {to}, {text} 作为占位符
+  temperature?: number; // 温度参数，默认为 0.3
+  maxTokens?: number; // 最大生成token数，默认为 2000
+}
+
+/**
+ * 自定义翻译器配置接口
+ */
+export interface CustomTranslatorConfig {
+  id: string; // 唯一标识符，如 "openai-1", "openai-gpt4", "custom-deepseek" 等
+  name?: string; // 显示名称
+  type: "openai"; // 基础类型,目前仅支持 "openai"，未来可扩展为其他类型
+  config: OpenAIConfig; // 翻译器配置
+  enabled?: boolean; // 是否启用
+}

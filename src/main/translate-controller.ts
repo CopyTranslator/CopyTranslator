@@ -38,8 +38,8 @@ import isTrad from "@/common/translate/detect-trad";
 import { examToken } from "@/common/translate/token";
 import { translators } from "@/common/translate/translators";
 import { getProxyAxios } from "@/common/translate/proxy";
-import bus from "@/common/event-bus";
 import { isValidWindow } from "./focus-handler";
+import { customTranslatorManager } from "@/common/translate/custom-translators";
 
 type TranslateOption = {
   text?: string;
@@ -691,6 +691,10 @@ class TranslateController {
         break;
       case "translator-double":
         logger.log("translator-double", value);
+        break;
+      case "customTranslators":
+        logger.log("customTranslators", value);
+        customTranslatorManager.reload();
         break;
       case "listenClipboard":
         this.setWatch(value);

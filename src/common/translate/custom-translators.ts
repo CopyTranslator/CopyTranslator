@@ -1,20 +1,8 @@
 import { Translator } from "@opentranslate/translator";
-import { OpenAI, OpenAIConfig } from "./openai";
-import { Stepfun } from "./stepfun";
+import { OpenAI } from "./openai";
 import { axios } from "./proxy";
 import config from "../configuration";
-import eventBus from "../event-bus";
-
-/**
- * 自定义翻译器配置接口
- */
-export interface CustomTranslatorConfig {
-  id: string; // 唯一标识符，如 "openai-1", "openai-gpt4", "custom-deepseek" 等
-  name: string; // 显示名称
-  type: "openai" | "stepfun"; // 基础类型
-  config: OpenAIConfig; // 翻译器配置
-  enabled?: boolean; // 是否启用
-}
+import { CustomTranslatorConfig } from "./types";
 
 /**
  * 自定义翻译器管理器
@@ -23,7 +11,6 @@ export class CustomTranslatorManager {
   private static instance: CustomTranslatorManager;
   private customTranslators: Map<string, Translator> = new Map();
   private customConfigs: Map<string, CustomTranslatorConfig> = new Map();
-  private initialized: boolean = false;
 
   private constructor() {
     // 延迟加载，等待配置系统初始化
@@ -43,12 +30,9 @@ export class CustomTranslatorManager {
   /**
    * 确保已初始化（懒加载）
    */
-  private ensureInitialized() {
-    if (!this.initialized) {
-      console.log("[自定义翻译器] 开始初始化...");
-      this.loadFromConfig();
-      this.initialized = true;
-    }
+  private initialize() {
+    console.log("[自定义翻译器] 开始初始化...");
+    this.loadFromConfig();
   }
 
   /**
@@ -78,7 +62,7 @@ export class CustomTranslatorManager {
   }
 
   /**
-   * 内部添加方法（不触发 ensureInitialized）
+   * 内部添加方法
    */
   private addTranslatorInternal(cfg: CustomTranslatorConfig): boolean {
     try {
@@ -88,14 +72,11 @@ export class CustomTranslatorManager {
         return false;
       }
 
-      // 根据类型创建翻译器实例
+      // 根据类型创建翻译器实例, 如果是在render进程，其实这部分不需要，因为用户添加的翻译器只会在主进程使用，render进程只会调用主进程的翻译器实例
       let translator: Translator;
       switch (cfg.type) {
         case "openai":
           translator = new OpenAI({ axios, config: cfg.config });
-          break;
-        case "stepfun":
-          translator = new Stepfun({ axios, config: cfg.config });
           break;
         default:
           console.error(`[自定义翻译器] 未知的翻译器类型: ${cfg.type}`);
@@ -129,13 +110,9 @@ export class CustomTranslatorManager {
    * 添加自定义翻译器
    */
   addTranslator(cfg: CustomTranslatorConfig): boolean {
-    this.ensureInitialized();
     const result = this.addTranslatorInternal(cfg);
     if (result) {
       this.saveToConfig();
-      // 通知界面更新
-      eventBus.at("customTranslatorsChanged");
-      console.log("[自定义翻译器] 发送更新事件");
     }
     return result;
   }
@@ -144,7 +121,6 @@ export class CustomTranslatorManager {
    * 更新自定义翻译器配置
    */
   updateTranslator(id: string, cfg: Partial<CustomTranslatorConfig>): boolean {
-    this.ensureInitialized();
     try {
       const existingConfig = this.customConfigs.get(id);
       if (!existingConfig) {
@@ -170,8 +146,7 @@ export class CustomTranslatorManager {
       
       // 通知界面更新
       if (result) {
-        eventBus.at("customTranslatorsChanged");
-        console.log("[自定义翻译器] 发送更新事件");
+        this.saveToConfig();
       }
       
       return result;
@@ -185,7 +160,6 @@ export class CustomTranslatorManager {
    * 移除自定义翻译器
    */
   removeTranslator(id: string, saveToConfig: boolean = true): boolean {
-    this.ensureInitialized();
     try {
       if (!this.customTranslators.has(id)) {
         return false;
@@ -198,9 +172,6 @@ export class CustomTranslatorManager {
         this.saveToConfig();
       }
       
-      // 通知界面更新
-      eventBus.at("customTranslatorsChanged");
-      console.log("[自定义翻译器] 发送更新事件");
       
       return true;
     } catch (error) {
@@ -213,7 +184,6 @@ export class CustomTranslatorManager {
    * 获取自定义翻译器实例
    */
   getTranslator(id: string): Translator | undefined {
-    this.ensureInitialized();
     const translator = this.customTranslators.get(id);
     if (!translator) {
       console.warn(`[自定义翻译器] 未找到 ID "${id}" 的翻译器，可用的有: ${Array.from(this.customTranslators.keys()).join(', ')}`);
@@ -225,7 +195,6 @@ export class CustomTranslatorManager {
    * 获取自定义翻译器配置
    */
   getConfig(id: string): CustomTranslatorConfig | undefined {
-    this.ensureInitialized();
     return this.customConfigs.get(id);
   }
 
@@ -233,7 +202,6 @@ export class CustomTranslatorManager {
    * 获取所有自定义翻译器 ID
    */
   getAllIds(): string[] {
-    this.ensureInitialized();
     return Array.from(this.customTranslators.keys());
   }
 
@@ -241,7 +209,6 @@ export class CustomTranslatorManager {
    * 获取所有自定义翻译器配置
    */
   getAllConfigs(): CustomTranslatorConfig[] {
-    this.ensureInitialized();
     return Array.from(this.customConfigs.values());
   }
 
@@ -249,7 +216,6 @@ export class CustomTranslatorManager {
    * 检查 ID 是否为自定义翻译器
    */
   isCustomTranslator(id: string): boolean {
-    this.ensureInitialized();
     return this.customTranslators.has(id);
   }
 
@@ -259,15 +225,13 @@ export class CustomTranslatorManager {
   reload() {
     this.customTranslators.clear();
     this.customConfigs.clear();
-    this.initialized = false;
-    this.ensureInitialized();
+    this.initialize();
   }
 
   /**
    * 生成唯一的翻译器 ID
    */
   generateUniqueId(baseName: string): string {
-    this.ensureInitialized();
     let id = baseName;
     let counter = 1;
     

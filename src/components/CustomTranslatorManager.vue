@@ -236,11 +236,11 @@
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
 import {
-  customTranslatorManager,
-  CustomTranslatorConfig,
+  customTranslatorManager
 } from "@/common/translate/custom-translators";
 import { getTranslator } from "@/common/translate/translators";
 import { fetchModels } from "@/common/translate/model-fetcher";
+import { CustomTranslatorConfig } from "@/common/translate/types";
 
 @Component
 export default class CustomTranslatorManager extends Vue {

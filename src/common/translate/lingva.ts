@@ -151,9 +151,10 @@ const instances = [
   "translate.dr460nf1r3.org",
   "lingva.garudalinux.org",
   "translate.jae.fi",
+  "lingva.1f616emo.xyz"
 ];
 
-const TIMEOUT = 1000 * 60 * 10; //10分钟检查一次
+const TIMEOUT = 1000 * 1; //1s
 
 interface LingvaDataResult {
   translation: string;

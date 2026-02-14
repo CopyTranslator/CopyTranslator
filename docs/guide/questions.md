@@ -8,7 +8,7 @@
 
 **copytranslator在v10.2.3版本后将默认启用谷歌翻译API镜像进行翻译。因此你可能不需要任何配置**。如果翻译API镜像失效的话，可以尝试解决方案2
 
-可以在CopyTranslator的设置页面设置，默认为`https://gtranslate.cdn.haah.net`，将其置空则回退到使用原版谷歌翻译API`https://translate.googleapis.com`。
+可以在CopyTranslator的设置页面设置，默认为`https://translate.amz.wang`，将其置空则回退到使用原版谷歌翻译API`https://translate.googleapis.com`。
 
 ### 解决方案2-使用开源翻译站点提供的谷歌翻译
 v10.2.3以后可以在copytranslator设置界面将`Google翻译源`切换为`simply`,v10.2.4后还可切换为`Lingva`，则应该可以正常使用谷歌翻译，效果与原版谷歌一样。

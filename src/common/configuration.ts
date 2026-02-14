@@ -280,7 +280,7 @@ function initConfig(
   config.setRule("targetLanguage", new UnionRule<Language>("zh-CN", languages));
   config.setRule(
     "googleMirror",
-    new TypeRule<string>("https://gtranslate.cdn.haah.net")
+    new TypeRule<string>("https://translate.amz.wang", (x) => x != "https://gtranslate.cdn.haah.net"),
   );
   config.setRule(
     "googleSource",
@@ -425,7 +425,7 @@ function initConfig(
     "translatorProviders",
     new TypeRule<any[]>([])
   );
-  
+
   // 这个是动态生成的，不需要保存
   config.setRule(
     "customTranslators",

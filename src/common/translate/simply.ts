@@ -6,7 +6,7 @@ import {
 import qs from "qs";
 import { promiseAny } from "./types";
 
-const TIMEOUT = 1000 * 60 * 10; //10分钟检查一次
+const TIMEOUT = 1000; //1s
 
 const langMap: [Language, string][] = [
   ["auto", "auto"],
@@ -139,7 +139,8 @@ const instances = [
 
 interface SimplyDataResult {
   source_language: Language;
-  "translated-text": string;
+  "translated-text"?: string;
+  translated_text?: string;
 }
 
 export interface SimplyConfig {
@@ -214,7 +215,7 @@ export class Simply extends Translator<SimplyConfig> {
       throw new Error("NETWORK_ERROR");
     }
 
-    const transText = result.data["translated-text"];
+    const transText = (result.data["translated_text"]||result.data["translated-text"]) as string;
 
     return {
       text: text,

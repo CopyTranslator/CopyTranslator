@@ -1,6 +1,6 @@
 import { Locale } from "../../common/types";
 import Vue from "vue";
-import { Language } from "@opentranslate/languages";
+import { Language } from "@opentranslate2/languages";
 
 type Locales = { lang: Language; localeName: string }[];
 

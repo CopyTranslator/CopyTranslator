@@ -1,8 +1,8 @@
-import { Locale } from "@opentranslate/languages";
-import en from "@opentranslate/languages/locales/en.json";
-import zhCN from "@opentranslate/languages/locales/zh-CN.json";
-import zhTW from "@opentranslate/languages/locales/zh-TW.json";
-import { Language } from "@opentranslate/languages";
+import { Locale } from "@opentranslate2/languages";
+import en from "@opentranslate2/languages/locales/en.json";
+import zhCN from "@opentranslate2/languages/locales/zh-CN.json";
+import zhTW from "@opentranslate2/languages/locales/zh-TW.json";
+import { Language } from "@opentranslate2/languages";
 // import { getDefaultLocale } from "@/main/l10n";
 
 export const languageLocales = new Map<Language, typeof en>([
@@ -16,6 +16,6 @@ export function getLanguageLocales(lang: Language): Locale {
   // if (key === "auto") {
   //   key = getDefaultLocale();
   // }
-  return languageLocales.get(key) || en;
+  return (languageLocales.get(key) || en) as Locale;
 }
 export { Language };

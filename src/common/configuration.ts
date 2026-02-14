@@ -11,7 +11,7 @@ import {
   ColorRule,
   LayoutConfig,
 } from "./rule";
-import { languages, Language } from "@opentranslate/languages";
+import { languages, Language } from "@opentranslate2/languages";
 import {
   translatorTypes,
   TranslatorType,
@@ -336,9 +336,6 @@ function initConfig(
         "caiyun",
         "keyan",
         "stepfun",
-        "bing",
-        "deepl",
-        "tencent",
         "youdao",
         "sogou",
       ],

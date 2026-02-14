@@ -1,4 +1,4 @@
-import { TranslateResult } from "@opentranslate/translator";
+import { TranslateResult } from "./types";
 import compact from "lodash.compact";
 import sum from "lodash.sum";
 import trim from "lodash.trim";

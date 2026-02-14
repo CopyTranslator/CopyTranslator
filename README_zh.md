@@ -18,7 +18,7 @@ v12 版本重磅推出**大模型 AI 翻译**功能！CopyTranslator 现在可�
 
 **核心亮点：**
 - 🤖 **大模型 AI 翻译**：支持 OpenAI、DeepSeek、Moonshot、智谱 AI、阿里云百炼、Ollama 等多种 AI 翻译服务
-- ⚡ **阶跃星辰免费翻译**：与 StepFun 合作，内置限时免费的 `step-3.5-flash` 模型，开箱即用
+- ⚡ **阶跃星辰免费翻译**：与 StepFun 合作，内置限时免费的 [`step-3.5-flash`](https://static.stepfun.com/blog/step-3.5-flash/) 模型，开箱即用
 - 🔧 **可视化供应商管理**：通过设置界面轻松管理 AI 翻译供应商和模型
 - 🎯 **智能模型选择**：支持从 API 获取可用模型列表，自由选择启用
 

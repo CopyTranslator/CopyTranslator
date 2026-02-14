@@ -1,11 +1,12 @@
-import { Translator, Language } from "@opentranslate/translator";
+import { Translator, Language } from "./types";
 import { Baidu } from "@opentranslate/baidu";
 import { Google } from "@opentranslate/google";
-import { Youdao } from "@opentranslate/youdao";
+import { Youdao } from "@opentranslate2/youdao";
 import { Caiyun } from "@opentranslate/caiyun";
+import { Niu} from "@opentranslate2/niu";
 // import { Tencent } from "@opentranslate/tencent";
-import { Sogou } from "@opentranslate/sogou";
-import { BaiduDomain } from "@opentranslate/baidu-domain";
+import { Sogou } from "@opentranslate2/sogou";
+import { BaiduDomain } from "@opentranslate2/baidu-domain";
 import { TranslatorType, GoogleSource } from "@/common/types";
 import { defaultTokens } from "./token";
 import { axios } from "./proxy";
@@ -45,6 +46,7 @@ export const translatorMap: [TranslatorType | GoogleSource, Translator][] = [
   ],
   ["openai", new OpenAI({ axios, config: defaultTokens.get("openai") })],
   ["stepfun", new Stepfun({ axios, config: defaultTokens.get("stepfun") })],
+  ["niu", new Niu({ axios, config: defaultTokens.get("niu") })],
 ];
 
 export const translators = new Map(translatorMap);
@@ -98,4 +100,4 @@ export function getSupportLanguages(type: TranslatorType | string): Language[] {
   return getTranslator(type).getSupportLanguages();
 }
 
-export { Translator };
+export { Translator, Language };

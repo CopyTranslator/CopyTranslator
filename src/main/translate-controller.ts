@@ -1,6 +1,6 @@
 import { Compound } from "../common/translate/compound";
 import { Polymer } from "../common/dictionary/polymer";
-import { Language, Translator } from "@opentranslate/translator";
+import { Language, Translator } from "../common/translate/types";
 import {
   emptySharedResult,
   ResultBuffer,

@@ -71,6 +71,11 @@ export const defaultTokens = new Map<TranslatorType, any>([
       maxTokens: "4000",
     },
   ],
+  [
+    "niu",{
+      apikey:process.env.VUE_APP_NIU_API_KEY || "",
+    }
+  ]
 ]);
 
 export function examToken(config: KeyConfig): boolean {

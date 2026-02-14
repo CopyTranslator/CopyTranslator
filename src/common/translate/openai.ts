@@ -3,7 +3,7 @@ import {
   Translator,
   TranslateQueryResult,
   TranslateError,
-} from "@opentranslate/translator";
+} from "./types";
 import { axios } from "./proxy";
 import { OpenAIConfig } from "./types";
 

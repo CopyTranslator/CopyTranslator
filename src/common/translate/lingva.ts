@@ -2,7 +2,7 @@ import {
   Language,
   Translator,
   TranslateQueryResult,
-} from "@opentranslate/translator";
+} from "./types";
 import { promiseAny } from "./types";
 import { axios } from "./proxy";
 

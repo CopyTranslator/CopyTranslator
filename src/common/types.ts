@@ -83,7 +83,6 @@ export const constantActionTypes = [
   "translatorProviders",
 ] as const;
 
-export const interceptTranslatorTypes = ["bing", "deepl", "tencent"] as const;
 
 export const normalTranslatorTypes = [
   "baidu",
@@ -95,20 +94,18 @@ export const normalTranslatorTypes = [
   "sogou",
   "openai",
   "stepfun",
+  'niu', //小牛 
 ] as const;
 export const abstractTranslatorTypes = ["copytranslator"] as const;
 
-export type InterceptTranslatorType = typeof interceptTranslatorTypes[number];
 export type NormalTranslatorType = typeof normalTranslatorTypes[number];
 export type AbstractTranslatorType = typeof abstractTranslatorTypes[number];
-export type TranslatorType = InterceptTranslatorType | NormalTranslatorType;
+export type TranslatorType =  NormalTranslatorType;
 export type GeneralTranslatorType =
-  | InterceptTranslatorType
   | NormalTranslatorType
   | AbstractTranslatorType;
 
 export const translatorTypes = flatten([
-  interceptTranslatorTypes,
   normalTranslatorTypes,
 ]);
 

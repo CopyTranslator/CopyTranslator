@@ -3,9 +3,12 @@ import {
   Language,
   Translator,
   Languages,
-} from "@opentranslate/translator";
+  TranslateQueryResult,
+  TranslateError,
+} from "@opentranslate2/translator";
 import { ColorStatus } from "../types";
 import { TranslatorType } from "../types";
+export { TranslateResult, Language, Translator, Languages, TranslateQueryResult, TranslateError };
 
 export interface SharedResult {
   text: string;
@@ -52,7 +55,7 @@ export type ResultBuffer = {
   [key: string]: SharedResult;
 };
 
-export { TranslateResult };
+
 export interface CopyTranslator {
   translate(
     text: string,

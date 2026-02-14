@@ -1,4 +1,4 @@
-import { Translator } from "@opentranslate/translator";
+import { Translator } from "./types";
 import { OpenAI } from "./openai";
 import { axios } from "./proxy";
 import config from "../configuration";

@@ -12,7 +12,17 @@ const VuetifyLoaderPlugin = require("vuetify-loader/lib/plugin");
 const trayIconName = "tray@2x.png";
 
 module.exports = {
-  transpileDependencies: ["vuetify"],
+  transpileDependencies: [
+    "vuetify",
+    "@opentranslate/google",
+    "@opentranslate/baidu",
+    "@opentranslate/caiyun",
+    "@opentranslate2/niu",
+    "@opentranslate2/youdao",
+    "@opentranslate2/sogou",
+    "@opentranslate2/translator",
+    "@opentranslate2/baidu-domain"
+  ],
   pluginOptions: {
     electronBuilder: {
       customFileProtocol: "./",
@@ -23,6 +33,25 @@ module.exports = {
         // });
       },
       chainWebpackMainProcess: (config) => {
+        // 主进程也需要转译这些包
+        config.module
+          .rule("compile-opentranslate")
+          .test(/\.js$/)
+          .include
+            .add(/node_modules[\\/]@opentranslate/)
+            .add(/node_modules[\\/]@opentranslate2/)
+            .add(/OpenTranslate[\\/]packages/)
+            .end()
+          .use("babel-loader")
+            .loader("babel-loader")
+            .options({
+              presets: [
+                [require.resolve("@vue/cli-plugin-babel/preset"), { targets: { node: "current" } }]
+              ],
+              plugins: [
+                require.resolve("@babel/plugin-proposal-class-properties")
+              ]
+            });
         // config.when(process.env.NODE_ENV === "production", (config) => {
         //   config.plugin("analysis").use(new BundleAnalyzerPlugin());
         // });

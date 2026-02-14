@@ -3,7 +3,7 @@ import {
   Language,
   TranslateQueryResult,
   TranslateError,
-} from "@opentranslate/translator";
+} from "./types";
 import { DirectionalTranslator } from "./types";
 import md5 from "md5";
 
@@ -66,9 +66,9 @@ export class Keyan extends DirectionalTranslator<KeyanConfig> {
     var str1 = config.channel_id + config.channel_key + timestamp;
     const channel_id = config.channel_id;
     var sign = md5(str1);
-    const result = await this.request<KeyanResult>(
-      "https://www.keyanyuedu.com/api/trans",
+    const result = await this.request<KeyanResult>(  
       {
+        url:"https://www.keyanyuedu.com/api/trans",
         method: "post",
         data: {
           text: text,

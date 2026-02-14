@@ -3,7 +3,7 @@ import { join } from "path";
 import { env } from "../common/env";
 import { mapToObj, Locale } from "../common/types";
 import { en } from "../common/locales";
-import { Language } from "@opentranslate/languages";
+import { Language } from "@opentranslate2/languages";
 import { app } from "electron";
 
 type Resouces = Map<Language, Locale>;

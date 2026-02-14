@@ -2,7 +2,7 @@ import {
   Language,
   Translator,
   TranslateQueryResult,
-} from "@opentranslate/translator";
+} from "./types";
 import qs from "qs";
 import { promiseAny } from "./types";
 

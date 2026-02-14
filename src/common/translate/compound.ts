@@ -1,4 +1,4 @@
-import { getTranslator, translators, Translator } from "./translators";
+import { getTranslator, translators, Translator, Language } from "./translators";
 import {
   TranslateResult,
   DirectionalTranslator,
@@ -9,19 +9,10 @@ import {
 } from "./types";
 import { TranslatorType } from "@/common/types";
 import { AxiosRequestConfig } from "axios";
-import { Language } from "@opentranslate/translator";
 import { autoReSegment, notEnglish } from "./helper";
 import eventBus from "../event-bus";
 import { getProxyAxios } from "./proxy";
-import { axios } from "@/common/translate/proxy";
-import { interceptTranslatorTypes } from "@/common/types";
 import config from "../configuration";
-import {
-  Bing,
-  Deepl,
-  Tencent,
-  InterceptTranslator,
-} from "@/common/translate/intercepter";
 import store from "@/store";
 
 class ResultBufferManager {
@@ -125,34 +116,7 @@ export class Compound {
 
   postSetEngines() {
     this.setUpGoogleOrigin();
-    //关闭和启动intercepter引擎以节省资源
-    let debug = false;
-    debug = debug && process.env.NODE_ENV != "production";
-    const engine2Class = {
-      bing: Bing,
-      deepl: Deepl,
-      tencent: Tencent,
-    };
-    const engineObjs = [];
-    for (const engine of interceptTranslatorTypes) {
-      if (this.engines.includes(engine) && !translators.has(engine)) {
-        //没有启动
-        const engineObj = new engine2Class[engine]({
-          axios,
-          config: { debug: debug },
-        });
-        translators.set(engine, engineObj);
-        engineObjs.push(engineObj);
-      } else if (!this.engines.includes(engine) && translators.has(engine)) {
-        (<InterceptTranslator>translators.get(engine)).destory();
-        //关闭引擎
-        translators.delete(engine);
-        console.log("shutdown", engine);
-      }
-    }
-    if (engineObjs.length != 0) {
-      return Promise.allSettled(engineObjs.map((obj) => obj.restart()));
-    }
+    
     return Promise.resolve(true);
   }
 

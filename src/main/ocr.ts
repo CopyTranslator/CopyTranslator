@@ -2,7 +2,7 @@ const AipOcrClient = require("baidu-aip-sdk").ocr;
 import { examToken } from "@/common/translate/token";
 import eventBus from "@/common/event-bus";
 import conf from "@/common/configuration";
-import { Language } from "@opentranslate/languages";
+import { Language } from "@opentranslate2/languages";
 import logger from "@/common/logger";
 const ShortcutCapture = require("shortcut-capture");
 export const shortcutCapture = new ShortcutCapture();

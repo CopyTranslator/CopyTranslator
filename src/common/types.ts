@@ -211,6 +211,16 @@ export const layoutTypes = ["horizontal", "vertical", "focus"] as const;
 
 // 百度垂直领域翻译
 export const domains = ["medicine", "electronics", "mechanics"] as const;
+
+// Google翻译源选项
+export const googleSourceOptions = ["google", "simply", "lingva"] as const;
+
+// StepFun温度预设值
+export const temperatureOptions = ["0.0", "0.3", "0.5", "0.7", "1.0"] as const;
+
+// StepFun最大token预设值
+export const maxTokensOptions = ["1000", "2000", "4000", "8000"] as const;
+
 export const dragCopyModes = [
   "dragCopyGlobal",
   "dragCopyWhiteList",

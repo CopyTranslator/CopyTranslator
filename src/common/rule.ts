@@ -38,11 +38,25 @@ export type ColorConfig = {
   dark: string;
 };
 
+// 字段UI元数据
+export interface FieldMetadata {
+  uiType: "text" | "select" | "textarea" | "number";
+  options?: readonly string[];  // 下拉选项
+  label?: string;               // i18n key
+  description?: string;         // 提示文本
+}
+
+// 字段名到元数据的映射
+export type FieldMetadataMap = {
+  [fieldName: string]: FieldMetadata;
+};
+
 interface Rule {
   predefined: any;
   check?: CheckFuction; // 检查是否有效的函数
   minimalVersion?: string;
   needSave?: boolean;
+  metadata?: FieldMetadataMap;  // 字段UI元数据（仅用于UI渲染，不持久化）
 }
 
 export class ColorRule implements Rule {
@@ -173,8 +187,10 @@ class TypeRule<T> implements Rule {
 class StructRule<T extends { [key: string]: any }> implements Rule {
   predefined: T;
   check: CheckFuction;
-  constructor(predefined: T, check?: CheckFuction) {
+  metadata?: FieldMetadataMap;
+  constructor(predefined: T, check?: CheckFuction, metadata?: FieldMetadataMap) {
     this.predefined = predefined;
+    this.metadata = metadata;
     if (check) {
       this.check = check;
     } else {
@@ -201,4 +217,6 @@ export {
   ModeConfig,
   GroupRule,
   ConstantGroupRule,
+  FieldMetadata,
+  FieldMetadataMap,
 };

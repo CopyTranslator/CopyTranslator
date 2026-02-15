@@ -10,6 +10,7 @@ import {
   KeyConfig,
   ColorRule,
   LayoutConfig,
+  FieldMetadataMap,
 } from "./rule";
 import { languages, Language } from "@opentranslate2/languages";
 import {
@@ -29,6 +30,10 @@ import {
   ActionButton,
   ListenClipboardMode,
   listenClipboardModes,
+  domains,
+  googleSourceOptions,
+  temperatureOptions,
+  maxTokensOptions,
 } from "./types";
 import { DictionaryType, dictionaryTypes } from "./dictionary/types";
 import { version } from "./constant";
@@ -368,7 +373,15 @@ function initConfig(
 
   config.setRule(
     "baidu-domain",
-    new StructRule<KeyConfig>({ appid: "", key: "", domain: "" })
+    new StructRule<KeyConfig>(
+      { appid: "", key: "", domain: "" },
+      undefined,
+      {
+        appid: { uiType: "text" },
+        key: { uiType: "text" },
+        domain: { uiType: "select", options: domains },
+      }
+    )
   );
 
   // config.setRule(
@@ -380,7 +393,12 @@ function initConfig(
     "google",
     new StructRule<KeyConfig>(
       { token: "", source: "lingva", mirror: "https://translate.amz.wang" },
-      googleCheck
+      googleCheck,
+      {
+        token: { uiType: "text" },
+        source: { uiType: "select", options: googleSourceOptions },
+        mirror: { uiType: "text" },
+      }
     )
   );
 
@@ -404,11 +422,19 @@ function initConfig(
 
   config.setRule(
     "stepfun",
-    new StructRule<KeyConfig>({
-      prompt: "default",
-      temperature: "0.3",
-      maxTokens: "4000",
-    })
+    new StructRule<KeyConfig>(
+      {
+        prompt: "default",
+        temperature: "0.3",
+        maxTokens: "4000",
+      },
+      undefined,
+      {
+        prompt: { uiType: "text" },
+        temperature: { uiType: "select", options: temperatureOptions },
+        maxTokens: { uiType: "select", options: maxTokensOptions },
+      }
+    )
   );
 
   config.setRule(

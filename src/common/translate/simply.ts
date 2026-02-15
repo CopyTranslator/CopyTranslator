@@ -1,7 +1,7 @@
 import {
   Language,
-  Translator,
   TranslateQueryResult,
+  BaseTranslator
 } from "./types";
 import qs from "qs";
 import { promiseAny } from "./types";
@@ -147,7 +147,7 @@ export interface SimplyConfig {
   URL: string;
 }
 
-export class Simply extends Translator<SimplyConfig> {
+export class Simply extends BaseTranslator<SimplyConfig> {
   readonly name = "Simply";
   /** Translator lang to custom lang */
   private static readonly langMap = new Map(langMap);

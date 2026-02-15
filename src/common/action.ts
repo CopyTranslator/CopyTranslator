@@ -16,7 +16,6 @@ import {
   translatorTypes,
   translatorGroups,
   Category,
-  googleSources,
   dragCopyModes,
   listenClipboardModes,
   categories,
@@ -326,8 +325,6 @@ class ActionManager {
       listAction("fallbackTranslator", translatorTypes, "translation")
     );
     this.append(listAction("pasteDelay", delays, "translation"));
-    this.append(listAction("googleSource", googleSources, "translation"));
-    this.append(constantAction("googleMirror", "translation"));
 
     this.append(listAction("colorMode", colorModes, "appearance"));
     this.append(typeAction("color_picker", "fontColor", "appearance"));

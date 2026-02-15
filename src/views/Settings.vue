@@ -20,11 +20,10 @@
           <v-tab href="#translation">{{ trans["translate"] }}</v-tab>
           <v-tab href="#appearance">{{ trans["appearance"] }}</v-tab>
           <v-tab href="#switches">{{ trans["switches"] }}</v-tab>
-          <v-tab href="#apiConfig">{{ trans["apiConfig"] }}</v-tab>
+          <v-tab href="#translatorManager">{{
+            trans["translatorManagement"] || "翻译器管理"
+          }}</v-tab>
           <v-tab href="#customTranslators">{{ trans["customTranslators"] }}</v-tab>
-          <v-tab href="#translatorConfig">
-            {{ trans["translatorConfig"] }}
-          </v-tab>
           <v-tab href="#listenClipboardConfig">{{
             trans["listenClipboardConfig"]
           }}</v-tab>
@@ -42,14 +41,11 @@
           <v-tab-item value="switches">
             <Switches :cates="['basic', 'advance']"></Switches>
           </v-tab-item>
-          <v-tab-item value="apiConfig">
-            <Config></Config>
+          <v-tab-item value="translatorManager">
+            <TranslatorManager></TranslatorManager>
           </v-tab-item>
           <v-tab-item value="customTranslators">
             <CustomTranslatorManager></CustomTranslatorManager>
-          </v-tab-item>
-          <v-tab-item value="translatorConfig">
-            <Options optionType="translatorGroups"></Options>
           </v-tab-item>
           <v-tab-item value="listenClipboardConfig">
             <BlackWhiteConfig optionName="listenClipboard"></BlackWhiteConfig>
@@ -81,7 +77,6 @@
 <script lang="ts">
 import "@/css/shared-styles.css";
 import Options from "./Options.vue";
-import Config from "./Config.vue";
 import Switches from "./Switches.vue";
 import BlackWhiteConfig from "./BlackWhiteConfig.vue";
 import About from "./About.vue";
@@ -90,18 +85,19 @@ import CustomTranslatorManager from "@/components/CustomTranslatorManager.vue";
 import BaseView from "@/components/BaseView.vue";
 import ActionButton from "@/components/ActionButton.vue";
 import ActionButtonConfig from "@/components/ActionButtonConfig.vue";
+import TranslatorManager from "./TranslatorManager.vue";
 import bus from "@/common/event-bus";
 
 @Component({
   components: {
     Options,
-    Config,
     Switches,
     BlackWhiteConfig,
     About,
     ActionButton,
     CustomTranslatorManager,
     ActionButtonConfig,
+    TranslatorManager,
   },
 })
 export default class Settings extends Mixins(BaseView) {

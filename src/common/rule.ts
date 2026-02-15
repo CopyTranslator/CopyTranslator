@@ -154,7 +154,7 @@ export class FlexibleUnionRule<T> implements Rule {
     };
   }
 }
-
+// 类型检查规则, 必须和 predefined 类型相同
 class TypeRule<T> implements Rule {
   predefined: T;
   check?: CheckFuction;
@@ -169,23 +169,27 @@ class TypeRule<T> implements Rule {
     };
   }
 }
-
+// 结构体规则, 必须和 predefined 类型相同, 且每个字段都必须存在
 class StructRule<T extends { [key: string]: any }> implements Rule {
   predefined: T;
   check: CheckFuction;
-  constructor(predefined: T) {
+  constructor(predefined: T, check?: CheckFuction) {
     this.predefined = predefined;
-    this.check = function (value: T) {
-      for (const key of Object.keys(predefined)) {
-        if (
-          value[key] == undefined ||
-          typeof value[key] !== typeof predefined[key]
-        ) {
-          return false;
+    if (check) {
+      this.check = check;
+    } else {
+      this.check = function (value: T) {
+        for (const key of Object.keys(predefined)) {
+          if (
+            value[key] == undefined ||
+            typeof value[key] !== typeof predefined[key]
+          ) {
+            return false;
+          }
         }
-      }
-      return true;
-    };
+        return true;
+      };
+    }
   }
 }
 

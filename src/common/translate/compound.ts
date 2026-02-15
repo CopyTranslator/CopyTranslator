@@ -11,7 +11,6 @@ import { TranslatorType } from "@/common/types";
 import { AxiosRequestConfig } from "axios";
 import { autoReSegment, notEnglish } from "./helper";
 import eventBus from "../event-bus";
-import { getProxyAxios } from "./proxy";
 import config from "../configuration";
 import store from "@/store";
 
@@ -86,24 +85,6 @@ export class Compound {
     this.config = config;
   }
 
-  setUpGoogleOrigin() {
-    let googleMirror = config.get<string | undefined>("googleMirror");
-    if (googleMirror != undefined) {
-      if (googleMirror.endsWith("/")) {
-        googleMirror = googleMirror.substring(0, googleMirror.length - 1);
-      }
-      if (googleMirror.length == 0) {
-        googleMirror = undefined;
-      }
-    }
-    const oldTranslator = translators.get("google") as Translator;
-    const TranslatorClass: any = oldTranslator.constructor;
-    const newTranslator = new TranslatorClass({
-      axios: getProxyAxios(true, googleMirror),
-      config: oldTranslator.config,
-    });
-    translators.set("google", newTranslator);
-  }
 
   initialize() {
     return this.postSetEngines();
@@ -115,8 +96,6 @@ export class Compound {
   }
 
   postSetEngines() {
-    this.setUpGoogleOrigin();
-    
     return Promise.resolve(true);
   }
 

@@ -1,14 +1,14 @@
 import {
   TranslateResult,
   Language,
-  Translator,
+  Translator as BaseTranslator,
   Languages,
   TranslateQueryResult,
   TranslateError,
 } from "@opentranslate2/translator";
 import { ColorStatus } from "../types";
 import { TranslatorType } from "../types";
-export { TranslateResult, Language, Translator, Languages, TranslateQueryResult, TranslateError };
+export { TranslateResult, Language, Languages, BaseTranslator, TranslateQueryResult, TranslateError };
 
 export interface SharedResult {
   text: string;
@@ -56,11 +56,15 @@ export type ResultBuffer = {
 };
 
 
-export interface CopyTranslator {
+export interface Translator {
+  name: string; // 翻译器名称
+  config?: any; // 具体翻译器的配置项
+
   translate(
     text: string,
     from: Language,
-    to: Language
+    to: Language,
+    config?: any
   ): Promise<TranslateResult>;
   detect(text: string): Promise<Language>;
   getSupportLanguages(): Language[];
@@ -68,7 +72,7 @@ export interface CopyTranslator {
 
 export abstract class DirectionalTranslator<
   Config extends {}
-> extends Translator<Config> {
+> extends BaseTranslator<Config> {
   getSupportLanguages(): Languages {
     throw "This method should not be used for DirectionalTranslator.";
   }

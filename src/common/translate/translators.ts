@@ -1,35 +1,24 @@
 import { Translator, Language } from "./types";
 import { Baidu } from "@opentranslate/baidu";
-import { Google } from "@opentranslate/google";
+import { GoogleWrapper } from "./google-wrapper";
 import { Youdao } from "@opentranslate2/youdao";
 import { Caiyun } from "@opentranslate/caiyun";
 import { Niu} from "@opentranslate2/niu";
 // import { Tencent } from "@opentranslate/tencent";
 import { Sogou } from "@opentranslate2/sogou";
 import { BaiduDomain } from "@opentranslate2/baidu-domain";
-import { TranslatorType, GoogleSource } from "@/common/types";
+import { TranslatorType } from "@/common/types";
 import { defaultTokens } from "./token";
 import { axios } from "./proxy";
-import { Simply } from "./simply";
 import config from "../configuration";
 import { keyan } from "./keyan";
-import { lingva } from "./lingva";
-import { OpenAI } from "./openai";
 import { Stepfun } from "./stepfun";
 import { customTranslatorManager } from "./custom-translators";
 
-export const translatorMap: [TranslatorType | GoogleSource, Translator][] = [
+export const translatorMap: [TranslatorType, Translator][] = [
   ["baidu", new Baidu({ axios, config: defaultTokens.get("baidu") })],
-  ["google", new Google({ axios, config: defaultTokens.get("google") })],
-  [
-    "simply",
-    new Simply({
-      axios,
-      config: { URL: "https://simplytranslate.org" },
-    }),
-  ],
+  ["google", new GoogleWrapper({ axios, config: defaultTokens.get("google") })],
   ["keyan", keyan],
-  ["lingva", lingva],
   ["youdao", new Youdao({ axios, config: defaultTokens.get("youdao") })],
   ["sogou", new Sogou({ axios, config: defaultTokens.get("sogou") })],
   ["caiyun", new Caiyun({ axios, config: defaultTokens.get("caiyun") })],
@@ -44,7 +33,6 @@ export const translatorMap: [TranslatorType | GoogleSource, Translator][] = [
       },
     }) as any,
   ],
-  ["openai", new OpenAI({ axios, config: defaultTokens.get("openai") })],
   ["stepfun", new Stepfun({ axios, config: defaultTokens.get("stepfun") })],
   ["niu", new Niu({ axios, config: defaultTokens.get("niu") })],
 ];
@@ -55,10 +43,6 @@ export const translators = new Map(translatorMap);
  * 获取翻译器实例（支持内置翻译器和自定义翻译器）
  */
 export function getTranslator(transType: TranslatorType | string): Translator {
-  // 处理 Google 翻译的特殊情况
-  if (transType == "google") {
-    transType = config.get("googleSource");
-  }
   
   // 首先尝试从内置翻译器中获取
   const builtinTranslator = translators.get(transType as TranslatorType);

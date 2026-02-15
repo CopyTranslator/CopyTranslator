@@ -1,10 +1,9 @@
 import {
   Language,
-  Translator,
+  BaseTranslator,
   TranslateQueryResult,
   TranslateError,
 } from "./types";
-import { axios } from "./proxy";
 import { OpenAIConfig } from "./types";
 
 // 默认提示词模板
@@ -151,7 +150,7 @@ export interface OpenAIChatResponse {
   };
 }
 
-export class OpenAI extends Translator<OpenAIConfig> {
+export class OpenAI extends BaseTranslator<OpenAIConfig> {
   readonly name: string = "openai";
 
   /** Translator lang to language name */

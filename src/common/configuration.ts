@@ -23,8 +23,6 @@ import {
   colorModes,
   HideDirection,
   hideDirections,
-  GoogleSource,
-  googleSources,
   DragCopyMode,
   dragCopyModes,
   isValidActionButton,
@@ -34,6 +32,16 @@ import {
 } from "./types";
 import { DictionaryType, dictionaryTypes } from "./dictionary/types";
 import { version } from "./constant";
+
+function googleCheck(value: KeyConfig): boolean {
+  if (!value.source || typeof value.source !== "string") {
+    return false;
+  }
+  if (value.source === "google") {
+    return !!value.token && value.token.length > 0;
+  }
+  return true;
+}
 
 function initConfig(
   config: ConfigParser | undefined = undefined
@@ -278,14 +286,7 @@ function initConfig(
   );
   config.setRule("sourceLanguage", new UnionRule<Language>("en", languages));
   config.setRule("targetLanguage", new UnionRule<Language>("zh-CN", languages));
-  config.setRule(
-    "googleMirror",
-    new TypeRule<string>("https://translate.amz.wang", (x) => x != "https://gtranslate.cdn.haah.net"),
-  );
-  config.setRule(
-    "googleSource",
-    new UnionRule<GoogleSource>("lingva", googleSources, "v12.0.0")
-  );
+
   config.setRule(
     "fallbackTranslator",
     new UnionRule<TranslatorType>("baidu", translatorTypes)
@@ -377,7 +378,10 @@ function initConfig(
 
   config.setRule(
     "google",
-    new StructRule<KeyConfig>({ token: "" })
+    new StructRule<KeyConfig>(
+      { token: "", source: "lingva", mirror: "https://translate.amz.wang" },
+      googleCheck
+    )
   );
 
   config.setRule(
@@ -399,11 +403,8 @@ function initConfig(
   );
 
   config.setRule(
-    "openai",
+    "stepfun",
     new StructRule<KeyConfig>({
-      apiBase: "https://api.openai.com/v1",
-      apiKey: "",
-      model: "gpt-3.5-turbo",
       prompt: "default",
       temperature: "0.3",
       maxTokens: "4000",
@@ -411,11 +412,9 @@ function initConfig(
   );
 
   config.setRule(
-    "stepfun",
+    "niu",
     new StructRule<KeyConfig>({
-      prompt: "default",
-      temperature: "0.3",
-      maxTokens: "4000",
+      apikey: "",
     })
   );
 

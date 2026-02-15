@@ -35,6 +35,7 @@ import eventBus from "@/common/event-bus";
 import logger from "@/common/logger";
 import { getLanguageLocales } from "@/common/translate/locale";
 import isTrad from "@/common/translate/detect-trad";
+import config from "@/common/configuration";
 import { examToken } from "@/common/translate/token";
 import { translators } from "@/common/translate/translators";
 import { getProxyAxios } from "@/common/translate/proxy";
@@ -657,8 +658,14 @@ class TranslateController {
   }
 
   updateTranslatorSetting(engine: TranslatorType) {
-    const config = this.get(engine) as KeyConfig;
-    if (!examToken(config)) {
+    const key_config = this.get(engine) as KeyConfig;
+    const rule = config.getRule(engine);
+    if (rule.check && !rule.check(key_config)) {
+      logger.toast("请检查密钥配置");
+      return;
+    } else if(!rule.check && !examToken(key_config)){
+      // fallback到通用的检查方法，如果没有特殊检查方法的话
+      logger.toast("请检查密钥配置");
       return;
     }
 
@@ -666,7 +673,7 @@ class TranslateController {
     const TranslatorClass: any = oldTranslator.constructor;
     const newTranslator = new TranslatorClass({
       axios: getProxyAxios(true),
-      config: this.get(engine),
+      config: key_config,
     });
     translators.set(engine, newTranslator);
     eventBus.at("dispatch", "toast", `update  ${engine}`);
@@ -682,9 +689,6 @@ class TranslateController {
         if (value == true) {
           this.translateWithOption();
         }
-        break;
-      case "googleMirror":
-        this.translator.setUpGoogleOrigin();
         break;
       case "translator-enabled":
         this.translator.setEngines(value);

@@ -12,7 +12,9 @@ export const defaultTokens = new Map<TranslatorType, any>([
   [
     "google",
     {
-      token: process.env.VUE_APP_GOOGLE_TOKEN as string,
+      token: process.env.VUE_APP_GOOGLE_TOKEN as string || "",
+      source: "lingva", // 默认使用 Lingva 作为 Google 翻译的后端
+      mirror: "https://translate.amz.wang", // Google 镜像 URL（仅在使用 Google 官方翻译时需要）
     },
   ],
   [
@@ -47,17 +49,6 @@ export const defaultTokens = new Map<TranslatorType, any>([
     {
       pid: process.env.VUE_APP_SOGOU_PID as string,
       key: process.env.VUE_APP_SOGOU_KEY as string,
-    },
-  ],
-  [
-    "openai",
-    {
-      apiBase: process.env.VUE_APP_OPENAI_API_BASE || "https://api.openai.com/v1",
-      apiKey: process.env.VUE_APP_OPENAI_API_KEY || "",
-      model: process.env.VUE_APP_OPENAI_MODEL || "gpt-3.5-turbo",
-      prompt: "default",
-      temperature: "0.3",
-      maxTokens: "4000",
     },
   ],
   [

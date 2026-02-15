@@ -65,8 +65,6 @@ export const constantActionTypes = [
   "colorMode",
   "version",
   "pasteDelay",
-  "googleMirror",
-  "googleSource",
   "dragCopyMode",
   "listenClipboardMode",
   "activeWindows",
@@ -92,7 +90,6 @@ export const normalTranslatorTypes = [
   "baidu-domain",
   "youdao",
   "sogou",
-  "openai",
   "stepfun",
   'niu', //小牛 
 ] as const;
@@ -214,7 +211,6 @@ export const layoutTypes = ["horizontal", "vertical", "focus"] as const;
 
 // 百度垂直领域翻译
 export const domains = ["medicine", "electronics", "mechanics"] as const;
-export const googleSources = ["google", "simply", "lingva"] as const;
 export const dragCopyModes = [
   "dragCopyGlobal",
   "dragCopyWhiteList",
@@ -319,7 +315,6 @@ export type MenuActionType = typeof menuActionTypes[number];
 export type RouteActionType = typeof routeActionTypes[number];
 export type LayoutType = typeof layoutTypes[number];
 export type Domain = typeof domains[number];
-export type GoogleSource = typeof googleSources[number];
 export type DragCopyMode = typeof dragCopyModes[number];
 export type ListenClipboardMode = typeof listenClipboardModes[number];
 export type ColorMode = typeof colorModes[number];

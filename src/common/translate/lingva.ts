@@ -1,10 +1,9 @@
 import {
   Language,
-  Translator,
+  BaseTranslator,
   TranslateQueryResult,
 } from "./types";
 import { promiseAny } from "./types";
-import { axios } from "./proxy";
 
 const langMap: [Language, string][] = [
   ["auto", "auto"],
@@ -164,11 +163,11 @@ export interface LingvaConfig {
   URL: string;
 }
 
-const defaultLingvaConfig: LingvaConfig = {
+export const defaultLingvaConfig: LingvaConfig = {
   URL: instances[0],
 };
 
-export class Lingva extends Translator<LingvaConfig> {
+export class Lingva extends BaseTranslator<LingvaConfig> {
   readonly name = "Lingva";
   /** Translator lang to custom lang */
   private static readonly langMap = new Map(langMap);
@@ -273,8 +272,3 @@ export class Lingva extends Translator<LingvaConfig> {
     }
   }
 }
-
-export const lingva = new Lingva({
-  axios: axios,
-  config: defaultLingvaConfig,
-});

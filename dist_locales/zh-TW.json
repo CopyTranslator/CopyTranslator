@@ -288,5 +288,19 @@
     "selectModel": "選擇模型",
     "required": "此項必填",
     "edit": "編輯",
-    "test": "測試"
+    "test": "測試",
+    "translatorManagement": "Translator Management",
+    "enableAll": "Enable All",
+    "disableAll": "Disable All",
+    "cacheAll": "Cache All",
+    "noCacheAll": "No Cache All",
+    "selectTranslators": "Select translators to enable",
+    "selectCacheEngines": "Select engines for caching",
+    "selectCompareEngines": "Select engines for comparison",
+    "selectDoubleEngines": "Select engines for double-click",
+    "selectFallbackTranslator": "Select fallback translator",
+    "translatorUsage": "Translator Usage Scenarios",
+    "noEnabledTranslators": "Please enable translators first",
+    "configuration": "Configuration",
+    "configRequired": "請先配置翻譯器後再啟用"
 }

@@ -55,6 +55,7 @@ function initConfig(
 
   config.setRule("autoCopy", new TypeRule<boolean>(false));
   config.setRule("listenClipboard", new TypeRule<boolean>(true));
+  config.setRule("enableOCR", new TypeRule<boolean>(true)); // 启用 OCR
   config.setRule("dragCopy", new TypeRule<boolean>(false));
   config.setRule("doubleClickCopy", new TypeRule<boolean>(true));
   config.setRule("incrementalCopy", new TypeRule<boolean>(false));

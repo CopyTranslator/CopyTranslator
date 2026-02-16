@@ -361,6 +361,7 @@ class ActionManager {
     this.append(listAction("layoutType", layoutTypes, "appearance"));
 
     this.append(switchAction("listenClipboard"));
+    this.append(switchAction("enableOCR"));
     this.append(switchAction("stayTop"));
     this.append(switchAction("dragCopy"));
     this.append(switchAction("autoCopy"));

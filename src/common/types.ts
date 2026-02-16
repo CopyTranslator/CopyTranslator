@@ -131,6 +131,7 @@ export const switchActionTypes = [
   "skipTaskbar",
   "stayTop",
   "listenClipboard",
+  "enableOCR",
   "autoCopy",
   "autoPaste",
   "autoPurify",

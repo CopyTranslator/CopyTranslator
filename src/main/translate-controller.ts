@@ -638,7 +638,10 @@ class TranslateController {
         this.checkClipboard(true);
       });
       clipboard.on("image-changed", () => {
-        // OCR 相关TranslateResult
+        // OCR 相关
+        if (!this.get<boolean>("enableOCR")) {
+          return;
+        }
         if (pp_recognizer.enabled()) {
           logger.toast("PP 检测到剪贴板图片");
           pp_recognizer.recognize_clipboard();

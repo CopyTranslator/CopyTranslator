@@ -286,6 +286,8 @@ export const zh_cn = new Map<LocaleKey, string>([
   ["listenClipboardPrompt", "请选择程序"],
   ["listenClipboardTip", "仅在特定程序时监听剪贴板"],
   ["listenClipboardConfig", "监听剪贴板"],
+  ["enableOCR", "启用 OCR"],
+  ["ocrConfig", "OCR配置"],
   ["aiTranslatorDescription", "这些翻译器基于人工智能（大语言模型/LLM），可以理解上下文并提供更自然的翻译。所有在此处添加的供应商都需要您自行配置API密钥。"],
   ["stepfunCustomNote", "需自备API密钥"],
   ["stepfunBuiltinNote", "系统已内置免费版本（设置→翻译器→阶跃星辰）"],

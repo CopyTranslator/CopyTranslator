@@ -23,6 +23,7 @@
           <v-tab href="#translatorManager">{{
             trans["translatorManagement"] || "翻译器管理"
           }}</v-tab>
+          <v-tab href="#ocrConfig">{{ trans["ocrConfig"] || "OCR" }}</v-tab>
           <v-tab href="#customTranslators">{{ trans["customTranslators"] }}</v-tab>
           <v-tab href="#listenClipboardConfig">{{
             trans["listenClipboardConfig"]
@@ -43,6 +44,9 @@
           </v-tab-item>
           <v-tab-item value="translatorManager">
             <TranslatorManager></TranslatorManager>
+          </v-tab-item>
+          <v-tab-item value="ocrConfig">
+            <OcrConfig></OcrConfig>
           </v-tab-item>
           <v-tab-item value="customTranslators">
             <CustomTranslatorManager></CustomTranslatorManager>
@@ -86,6 +90,7 @@ import BaseView from "@/components/BaseView.vue";
 import ActionButton from "@/components/ActionButton.vue";
 import ActionButtonConfig from "@/components/ActionButtonConfig.vue";
 import TranslatorManager from "./TranslatorManager.vue";
+import OcrConfig from "./OcrConfig.vue";
 import bus from "@/common/event-bus";
 
 @Component({
@@ -98,6 +103,7 @@ import bus from "@/common/event-bus";
     CustomTranslatorManager,
     ActionButtonConfig,
     TranslatorManager,
+    OcrConfig,
   },
 })
 export default class Settings extends Mixins(BaseView) {

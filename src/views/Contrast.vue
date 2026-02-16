@@ -271,16 +271,12 @@ export default class Contrast extends Mixins(BaseView, WindowController) {
   }
 
   get transparentArea() {
-    return {
-      "border-width": "0px 1px 1px 1px",
-      "border-style": "solid",
-      "border-color": this.barColor,
-    };
+    return {};
   }
 
   get drawerStyle() {
     return {
-      "border-width": "1px 0px 1px 1px",
+      "border-width": "2px 0px 2px 2px",
       "border-style": "solid",
       "border-color": this.barColor,
     };
@@ -328,6 +324,9 @@ export default class Contrast extends Mixins(BaseView, WindowController) {
   get borderRadiusStyle() {
     return {
       "--border-radius": this.borderRadius,
+      "border-width": "2px",
+      "border-style": "solid",
+      "border-color": this.barColor,
     };
   }
 }

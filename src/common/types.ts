@@ -135,6 +135,7 @@ export const switchActionTypes = [
   "autoPaste",
   "autoPurify",
   "neverShow",
+  "neverShowTips",
   "smartDict",
   "autoHide",
   "autoFormat",

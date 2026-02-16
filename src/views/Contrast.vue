@@ -2,7 +2,7 @@
   <div>
     <v-app v-bind:style="[appStyle, transparency]">
       <v-dialog v-model="dialog">
-        <Tips></Tips>
+        <Tips @close="dialog = false"></Tips>
       </v-dialog>
       <v-app-bar
         app
@@ -200,7 +200,7 @@ export default class Contrast extends Mixins(BaseView, WindowController) {
   }
 
   mounted() {
-    this.dialog = true;
+    if (!this.config.neverShowTips) this.dialog = true;
   }
 
 

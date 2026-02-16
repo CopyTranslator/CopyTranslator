@@ -70,6 +70,7 @@ function initConfig(
   config.setRule("autoPurify", new TypeRule<boolean>(true));
   config.setRule("enableNotify", new TypeRule<boolean>(false));
   config.setRule("neverShow", new TypeRule<boolean>(false));
+  config.setRule("neverShowTips", new TypeRule<boolean>(false)); // 不显示提示
   config.setRule("showGoogleMessage", new TypeRule<boolean>(true));
   config.setRule("activeWindows", new TypeRule<string[]>([]));
   config.setRule(

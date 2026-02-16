@@ -380,6 +380,7 @@ class ActionManager {
     this.append(switchAction("contrastDict", "advance"));
     this.append(switchAction("focusSource", "advance"));
     this.append(switchAction("enableNotify", "advance"));
+    this.append(switchAction("neverShowTips", "advance"));
     this.append(switchAction("autoPurify", "advance"));
     this.append(switchAction("toastTip", "advance"));
     this.append(switchAction("smartTranslate", "advance"));

@@ -88,6 +88,7 @@
     "closeAsQuit": "關閉即退出",
     "dictionaryType": "字典類型",
     "neverShow": "從不顯示",
+    "neverShowTips": "不再顯示使用技巧",
     "layoutType": "佈局",
     "autoCheckUpdate": "自動檢查更新",
     "showConfigFolder": "顯示設定資料夾",

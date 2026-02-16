@@ -30,6 +30,7 @@ export const zh_cn = new Map<LocaleKey, string>([
   ["return", "返回"],
   ["retryTranslate", "重试翻译"],
   ["dragCopy", "拖拽复制"],
+  ["neverShowTips", "不再显示使用技巧"], // 不显示提示
   ["hideDirect", "隐藏方向"],
   ["translatorType", "翻译引擎"],
   ["dictionaryType", "查词引擎"],
@@ -380,6 +381,7 @@ export const en = new Map<LocaleKey, string>([
   ["evaluate", "Evaluate"],
   ["homepage", "Homepage"],
   ["neverShow", "Never Show"],
+  ["neverShowTips","Never Show Tips"],
   ["smartDict", "Smart Dictionary"],
   ["userManual", "User Manual"],
   ["checkUpdate", "Check Update"],

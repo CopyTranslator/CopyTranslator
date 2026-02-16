@@ -1,5 +1,5 @@
 <template>
-  <div style="height: 100%; width: 100%;">
+  <v-card style="height: 100%; width: 100%;">
     <v-carousel
       v-model="tipIndex"
       height="300px"
@@ -14,7 +14,14 @@
         </v-sheet>
       </v-carousel-item>
     </v-carousel>
-  </div>
+    <v-card-actions>
+      <v-spacer></v-spacer>
+      <v-btn text color="primary" @click="neverShow">{{
+        trans["neverShow"]
+      }}</v-btn>
+      <v-btn text @click="close">{{ trans["close"] }}</v-btn>
+    </v-card-actions>
+  </v-card>
 </template>
 
 <script lang="ts">
@@ -30,6 +37,15 @@ export default class Tips extends Base {
     min = Math.ceil(min);
     max = Math.floor(max);
     return Math.floor(Math.random() * (max - min) + min); // The maximum is exclusive and the minimum is inclusive
+  }
+
+  close() {
+    this.$emit("close");
+  }
+
+  neverShow() {
+    this.set("neverShowTips", true);
+    this.close();
   }
 
   mounted() {

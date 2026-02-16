@@ -1,5 +1,5 @@
 import { homedir, type as osTypeFunc } from "os";
-import { join } from "path";
+import { join, dirname } from "path";
 import { existsSync, mkdirSync } from "fs";
 import { nativeImage } from "electron";
 const osType = osTypeFunc() as "Windows_NT" | "Darwin" | "Linux";
@@ -52,13 +52,46 @@ interface DiffConfig {
 
 type EnvConfig = DiffConfig & SharedConfig;
 
+// 检测便携模式：检查可执行文件所在目录是否存在 copytranslator 文件夹
+function detectPortableMode(): boolean {
+  try {
+    const exeDir = dirname(process.execPath);
+    const portableDir = join(exeDir, "copytranslator");
+    
+    // 检查目录是否存在且是文件夹
+    if (existsSync(portableDir)) {
+      try {
+        const { statSync } = require("fs");
+        const stat = statSync(portableDir);
+        if (stat.isDirectory()) {
+          return true;
+        }
+      } catch {
+        // 无法获取 stat，假设是目录
+        return true;
+      }
+    }
+  } catch (error: any) {
+    // 出错时忽略，使用默认路径
+    console.log("Portable mode detection failed:", error.message);
+  }
+  return false;
+}
+
+const usePortable = detectPortableMode();
+
+// 根据便携模式选择基础目录
+const baseDir = usePortable
+  ? join(dirname(process.execPath), "copytranslator")
+  : join(homedir(), "copytranslator");
+
 const sharedConfig: SharedConfig = {
-  configDir: join(homedir(), "copytranslator"),
-  userLocaleDir: join(homedir(), "copytranslator", "locales"),
-  configPath: join(homedir(), "copytranslator", "copytranslator.json"),
-  style: join(homedir(), "copytranslator", "styles.css"),
-  shortcut: join(homedir(), "copytranslator", "shortcuts.json"),
-  localShortcut: join(homedir(), "copytranslator", "localShortcuts.json"),
+  configDir: baseDir,
+  userLocaleDir: join(baseDir, "locales"),
+  configPath: join(baseDir, "copytranslator.json"),
+  style: join(baseDir, "styles.css"),
+  shortcut: join(baseDir, "shortcuts.json"),
+  localShortcut: join(baseDir, "localShortcuts.json"),
 };
 
 const diffConfig: DiffConfig =

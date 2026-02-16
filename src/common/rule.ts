@@ -217,6 +217,4 @@ export {
   ModeConfig,
   GroupRule,
   ConstantGroupRule,
-  FieldMetadata,
-  FieldMetadataMap,
 };

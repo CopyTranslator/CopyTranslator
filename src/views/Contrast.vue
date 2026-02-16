@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="window-container" :style="borderRadiusStyle">
     <v-app v-bind:style="[appStyle, transparency]">
       <v-dialog v-model="dialog">
         <Tips @close="dialog = false"></Tips>
@@ -11,6 +11,7 @@
         dense
         :height="titlebarHeight"
         :flat="config.penerate"
+        :class="{ 'rounded-top-bar': !drawer, 'rounded-top-right-only': drawer }"
       >
         <ActionButton
           v-if="!config.penerate"
@@ -112,6 +113,7 @@
         hide-overlay
         :width="200"
         :style="drawerStyle"
+        class="rounded-left-drawer"
       >
         <Action
           v-for="actionId in actionKeys"
@@ -122,7 +124,7 @@
 
       <ContrastPanel
         :style="[area, transparentArea]"
-        v-bind:class="{ active: drawer }"
+        v-bind:class="{ active: drawer, 'rounded-panel': true }"
         @mouseover.native="penerate(true)"
         @mouseleave.native="penerate(false)"
       ></ContrastPanel>
@@ -317,9 +319,81 @@ export default class Contrast extends Mixins(BaseView, WindowController) {
       background: this.backgroundColor,
     };
   }
+
+  // 统一的圆角大小设置 - 修改此处即可修改所有圆角
+  get borderRadius() {
+    return "10px";
+  }
+
+  get borderRadiusStyle() {
+    return {
+      "--border-radius": this.borderRadius,
+    };
+  }
 }
 </script>
 <style>
+.window-container {
+  border-radius: var(--border-radius);
+  overflow: hidden;
+  height: 100vh;
+  width: 100vw;
+}
+
+/* v-app 圆角 */
+.window-container .v-application {
+  border-radius: var(--border-radius) !important;
+  overflow: hidden !important;
+}
+
+.window-container .v-application__wrap {
+  border-radius: var(--border-radius) !important;
+}
+
+/* 顶部栏圆角 */
+.window-container .rounded-top-bar {
+  border-radius: var(--border-radius) var(--border-radius) 0 0 !important;
+  overflow: hidden !important;
+}
+
+.window-container .rounded-top-bar .v-toolbar__content {
+  border-radius: var(--border-radius) var(--border-radius) 0 0 !important;
+}
+
+.window-container .rounded-top-bar::before,
+.window-container .rounded-top-bar::after {
+  border-radius: var(--border-radius) var(--border-radius) 0 0 !important;
+}
+
+/* 顶部栏只有右上圆角 - 当抽屉打开时 */
+.window-container .rounded-top-right-only {
+  border-radius: 0 var(--border-radius) 0 0 !important;
+  overflow: hidden !important;
+}
+
+.window-container .rounded-top-right-only .v-toolbar__content {
+  border-radius: 0 var(--border-radius) 0 0 !important;
+}
+
+.window-container .rounded-top-right-only::before,
+.window-container .rounded-top-right-only::after {
+  border-radius: 0 var(--border-radius) 0 0 !important;
+}
+
+/* 左侧抽屉圆角 */
+.window-container .rounded-left-drawer {
+  border-radius: var(--border-radius) 0 0 var(--border-radius) !important;
+}
+
+/* 主面板圆角 - 当抽屉关闭时显示左下角圆角，始终显示右侧圆角 */
+.rounded-panel {
+  border-radius: 0 0 var(--border-radius) var(--border-radius) !important;
+}
+
+.rounded-panel.active {
+  border-radius: 0 0 var(--border-radius) 0 !important;
+}
+
 .active {
   margin-left: 200px;
 }

@@ -8,6 +8,7 @@ const BundleAnalyzerPlugin = require("webpack-bundle-analyzer")
   .BundleAnalyzerPlugin;
 
 const VuetifyLoaderPlugin = require("vuetify-loader/lib/plugin");
+const path = require("path");
 
 const trayIconName = "tray@2x.png";
 
@@ -33,6 +34,10 @@ module.exports = {
         // });
       },
       chainWebpackMainProcess: (config) => {
+        config.resolve.alias.set(
+          "core-js",
+          path.resolve(__dirname, "node_modules/core-js")
+        );
         // 主进程也需要转译这些包
         config.module
           .rule("compile-opentranslate")
@@ -150,6 +155,11 @@ module.exports = {
     plugins: [new VuetifyLoaderPlugin()],
     optimization: {
       usedExports: true,
+    },
+    resolve: {
+      alias: {
+        "core-js": path.resolve(__dirname, "node_modules/core-js"),
+      },
     },
   },
 };

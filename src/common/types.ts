@@ -299,6 +299,10 @@ export const displayTexts = [
   "actionSortPrompt",
   "keyanSlogan",
   "stepfunSlogan",
+  "enableLabel",
+  "cacheLabel",
+  "cacheShortLabel",
+  "translatorNameLabel",
   // Provider management UI texts
   "providers",
   "addProvider",

@@ -303,5 +303,17 @@
     "configRequired": "Please configure the translator before enabling",
     "baiduConfigNote": "Baidu can be enabled even with empty credentials",
     "keyanConfigNote": "Keyan works without configuration",
-    "caiyunConfigNote": "Caiyun can be enabled even with empty credentials"
+    "caiyunConfigNote": "Caiyun can be enabled even with empty credentials",
+    "enableLabel": "Enable",
+    "baidu": "Baidu Translate",
+    "google": "Google Translate",
+    "caiyun": "Caiyun Translator",
+    "keyan": "Keyan Translate",
+    "baidu-domain": "Baidu Translate (Domain)",
+    "youdao": "Youdao Translate",
+    "sogou": "Sogou Translate",
+    "stepfun": "StepFun Translate",
+    "niu": "Niu Translate",
+    "translatorNameLabel": "Name",
+    "cacheShortLabel": "Cache"
 }

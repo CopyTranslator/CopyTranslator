@@ -59,52 +59,70 @@
     </v-alert>
 
     <!-- 翻译器列表 -->
+    <div class="translator-header-row">
+      <div class="translator-header-cell translator-header-enable">
+        {{ trans["enableLabel"] || "启用" }}
+      </div>
+      <div class="translator-header-cell translator-header-name">
+        {{ trans["translatorNameLabel"] || "名称" }}
+      </div>
+      <div class="translator-header-cell translator-header-cache">
+        {{ trans["cacheShortLabel"] || "缓存" }}
+      </div>
+      <div class="translator-header-cell translator-header-config">
+        {{ trans["configuration"] || "配置" }}
+      </div>
+    </div>
     <v-expansion-panels multiple flat v-model="configVisibleIndexes">
       <v-expansion-panel
         v-for="translator in translatorList"
         :key="translator.id"
       >
-        <v-expansion-panel-header>
-          <div class="d-flex align-center flex-grow-1 py-2">
-            <v-checkbox
-              v-model="translator.enabled"
-              @click.stop
-              @change="updateEnabled(translator.id, translator.enabled)"
-              :disabled="!isConfigComplete(translator.id) || (translator.id === 'google' && enabledTranslators.length <= 1)"
-              :title="getCheckboxTitle(translator.id)"
-              class="mr-3"
-              hide-details
-            ></v-checkbox>
-            <div class="flex-grow-1 subtitle-2">{{ translator.name }}</div>
-            <div class="ml-2 d-flex align-center" v-if="translator.enabled">
+        <v-expansion-panel-header class="translator-panel-header">
+          <div class="translator-row py-2">
+            <div class="translator-cell translator-enable">
+              <v-checkbox
+                v-model="translator.enabled"
+                @click.stop
+                @change="updateEnabled(translator.id, translator.enabled)"
+                :disabled="!isConfigComplete(translator.id) || (translator.id === 'google' && enabledTranslators.length <= 1)"
+                :title="getCheckboxTitle(translator.id)"
+                hide-details
+              ></v-checkbox>
+            </div>
+            <div
+              class="translator-cell translator-name subtitle-2"
+              :title="translator.name"
+            >
+              {{ translator.name }}
+            </div>
+            <div class="translator-cell translator-cache d-flex align-center">
               <v-checkbox
                 v-model="translator.cache"
                 @click.stop
                 @change="updateCache(translator.id, translator.cache)"
-                hide-details
-                class="d-inline-block mr-1"
-                style="width: 18px; height: 18px;"
-              ></v-checkbox>
-              <span
-                class="caption grey--text"
+                :disabled="!translator.enabled"
                 :title="
                   trans['<tooltip>translator-cache'] ||
                   '缓存会自动查询并加速切换翻译器'
                 "
-              >
-                {{ trans["cacheLabel"] || "缓存" }}
-              </span>
+                hide-details
+                class="d-inline-block mr-1"
+                style="width: 18px; height: 18px;"
+              ></v-checkbox>
             </div>
-            <v-btn
-              small
-              text
-              color="primary"
-              @click.stop.prevent="toggleConfig(translator.id)"
-              class="ml-2"
-              :title="trans['<tooltip>translatorConfigButton'] || '打开该翻译器的配置项'"
-            >
-              {{ trans["configuration"] || "配置" }}
-            </v-btn>
+            <div class="translator-cell translator-config">
+              <v-btn
+                small
+                text
+                color="primary"
+                @click.stop.prevent="toggleConfig(translator.id)"
+                class="config-btn"
+                :title="trans['<tooltip>translatorConfigButton'] || '打开该翻译器的配置项'"
+              >
+                {{ trans["configuration"] || "配置" }}
+              </v-btn>
+            </div>
           </div>
         </v-expansion-panel-header>
         <v-expansion-panel-content>
@@ -154,6 +172,7 @@ import { Component, Watch, Vue } from "vue-property-decorator";
 import KeyConfig from "@/components/KeyConfig.vue";
 import { translatorTypes, Identifier } from "@/common/types";
 import { getTranslator } from "@/common/translate/translators";
+import { customTranslatorManager } from "@/common/translate/custom-translators";
 import config from "@/common/configuration";
 import eventBus from "@/common/event-bus";
 
@@ -212,6 +231,14 @@ class TranslatorManager extends Vue {
   }
 
   getTranslatorName(translatorId: string): string {
+    const localized = this.trans?.[translatorId];
+    if (localized) {
+      return localized;
+    }
+    const customConfig = customTranslatorManager.getConfig(translatorId);
+    if (customConfig?.name) {
+      return customConfig.name;
+    }
     try {
       const translator = getTranslator(translatorId);
       return translator.name || translatorId;
@@ -337,4 +364,57 @@ export default TranslatorManager;
 </script>
 
 <style scoped>
+.translator-row {
+  display: grid;
+  grid-template-columns: 44px 1fr 44px 56px;
+  align-items: center;
+  column-gap: 6px;
+  width: 100%;
+}
+
+.translator-header-row {
+  display: grid;
+  grid-template-columns: 44px 1fr 44px 56px;
+  align-items: center;
+  column-gap: 6px;
+  width: 100%;
+  font-size: 12px;
+  color: #9e9e9e;
+  padding: 0 8px 4px 8px;
+}
+
+.translator-panel-header {
+  padding-left: 8px;
+  padding-right: 8px;
+}
+
+.translator-header-cell {
+  display: flex;
+  align-items: center;
+}
+
+.translator-header-enable,
+.translator-header-cache {
+  justify-content: center;
+}
+
+.translator-header-config {
+  justify-content: flex-end;
+}
+
+.translator-cell {
+  display: flex;
+  align-items: center;
+}
+
+.translator-name {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.translator-config {
+  justify-content: flex-end;
+}
 </style>

@@ -1,4 +1,4 @@
-import { Rule } from "./rule";
+import { Rule, CheckResult } from "./rule";
 import { ConfigSnapshot, ConfigSnapshots, Identifier } from "./types";
 import { compatible, isLower, version } from "./constant";
 import store, { getConfigByKey, Config } from "../store";
@@ -32,7 +32,8 @@ class ConfigParser {
       throw `duplicate rule ${key}`;
     }
     if (rule.check) {
-      if (!rule.check(rule.predefined)) {
+      const status = this.normalizeCheckResult(rule.check(rule.predefined));
+      if (!status.canSave) {
         console.log("invalid predefined", key, rule.predefined);
       }
     }
@@ -85,11 +86,43 @@ class ConfigParser {
   }
 
   checkValid(key: Identifier, value: any): boolean {
-    const check = this.getRule(key).check;
-    if (value == undefined || (check != undefined && !check(value))) {
+    if (value == undefined) {
       return false;
     }
-    return true;
+    return this.checkStatus(key, value).canSave;
+  }
+
+  checkStatus(key: Identifier, value: any): CheckResult {
+    if (value == undefined) {
+      return {
+        canSave: false,
+        canEnable: false,
+        saveReason: "配置为空",
+        enableReason: "配置为空",
+      };
+    }
+    const check = this.getRule(key).check;
+    if (!check) {
+      return { canSave: true, canEnable: true };
+    }
+    const status = this.normalizeCheckResult(check(value));
+    if (!status.canSave && !status.saveReason) {
+      status.saveReason = "配置未通过校验";
+    }
+    if (!status.canEnable && !status.enableReason) {
+      status.enableReason = "配置未通过校验";
+    }
+    return status;
+  }
+
+  private normalizeCheckResult(result: boolean | CheckResult): CheckResult {
+    if (typeof result === "boolean") {
+      if (result) {
+        return { canSave: true, canEnable: true };
+      }
+      return { canSave: false, canEnable: false };
+    }
+    return result;
   }
 
   load(): boolean {

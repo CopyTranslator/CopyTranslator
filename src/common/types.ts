@@ -271,6 +271,8 @@ export const displayTexts = [
   "about",
   "textAdjustPrompt",
   "googlePrompt",
+  "baiduConfigNote",
+  "keyanConfigNote",
   "copyButton",
   "closeButton",
   "engineButton",
@@ -332,6 +334,7 @@ export type ListenClipboardMode = typeof listenClipboardModes[number];
 export type ColorMode = typeof colorModes[number];
 export type EventType = typeof eventTypes[number];
 export type DisplayText = typeof displayTexts[number];
+export type GoogleSource = typeof googleSourceOptions[number];
 
 export type Identifier =
   | RouteActionType

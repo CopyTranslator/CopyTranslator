@@ -2,28 +2,66 @@
   <div style="text-align: left; overflow: auto; height: 100%;">
     <!-- 批量操作按钮 -->
     <div class="mb-4 d-flex align-center">
-      <v-btn small @click="toggleAllEnabled(true)" class="mr-2">
+      <v-btn
+        small
+        @click="toggleAllEnabled(true)"
+        class="mr-2"
+        :title="trans['<tooltip>enableAll'] || '启用所有已配置翻译器'"
+      >
         {{ trans["enableAll"] || "全部启用" }}
       </v-btn>
-      <v-btn small @click="toggleAllEnabled(false)" class="mr-2">
+      <v-btn
+        small
+        @click="toggleAllEnabled(false)"
+        class="mr-2"
+        :title="trans['<tooltip>disableAll'] || '禁用全部翻译器并清空缓存'"
+      >
         {{ trans["disableAll"] || "全部禁用" }}
       </v-btn>
-      <v-btn small @click="toggleAllCache(true)" class="mr-2">
+      <v-btn
+        small
+        @click="toggleAllCache(true)"
+        class="mr-2"
+        :title="trans['<tooltip>cacheAll'] || '为已启用翻译器开启缓存'"
+      >
         {{ trans["cacheAll"] || "全部缓存" }}
       </v-btn>
-      <v-btn small @click="toggleAllCache(false)" class="mr-2">
+      <v-btn
+        small
+        @click="toggleAllCache(false)"
+        class="mr-2"
+        :title="trans['<tooltip>noCacheAll'] || '清空所有缓存设置'"
+      >
         {{ trans["noCacheAll"] || "全部不缓存" }}
       </v-btn>
       <v-spacer></v-spacer>
-      <v-btn small color="error" @click="restoreDefaults">
+      <v-btn
+        small
+        color="error"
+        @click="restoreDefaults"
+        :title="trans['<tooltip>restoreMultiDefault'] || '恢复翻译器相关设置为默认值'"
+      >
         {{ trans["restoreMultiDefault"] || "恢复默认" }}
       </v-btn>
     </div>
+    <div class="caption grey--text mb-3">
+      {{ trans["enabledCount"] || "已启用" }}: {{ enabledTranslators.length }}
+      ·
+      {{ trans["cachedCount"] || "已缓存" }}: {{ cacheTranslators.length }}
+    </div>
+    <v-alert dense text type="info" class="mb-4">
+      <div class="caption" style="white-space: pre-line;">
+        {{
+          trans["translatorManagerTips"] ||
+          "提示：\n1) 先在配置中填写密钥，未配置的翻译器无法启用。\n2) 批量启用只会启用已完成配置的翻译器。\n3) 缓存会加快切换引擎速度，但会占用更多资源。"
+        }}
+      </div>
+    </v-alert>
 
     <!-- 翻译器列表 -->
     <v-expansion-panels multiple flat v-model="configVisibleIndexes">
       <v-expansion-panel
-        v-for="(translator, index) in translatorList"
+        v-for="translator in translatorList"
         :key="translator.id"
       >
         <v-expansion-panel-header>
@@ -47,7 +85,15 @@
                 class="d-inline-block mr-1"
                 style="width: 18px; height: 18px;"
               ></v-checkbox>
-              <span class="caption grey--text">缓存</span>
+              <span
+                class="caption grey--text"
+                :title="
+                  trans['<tooltip>translator-cache'] ||
+                  '缓存会自动查询并加速切换翻译器'
+                "
+              >
+                {{ trans["cacheLabel"] || "缓存" }}
+              </span>
             </div>
             <v-btn
               small
@@ -55,6 +101,7 @@
               color="primary"
               @click.stop.prevent="toggleConfig(translator.id)"
               class="ml-2"
+              :title="trans['<tooltip>translatorConfigButton'] || '打开该翻译器的配置项'"
             >
               {{ trans["configuration"] || "配置" }}
             </v-btn>
@@ -83,7 +130,20 @@
           :hint="trans['<tooltip>fallbackTranslator'] || '当前翻译器不支持目标语言时自动使用'"
           persistent-hint
           class="caption"
+          :disabled="enabledTranslators.length === 0"
         ></v-select>
+        <div class="caption grey--text mt-2">
+          {{
+            trans["fallbackTranslatorTip"] ||
+            "建议选择稳定且已配置完成的翻译器作为后备。"
+          }}
+        </div>
+        <div
+          v-if="enabledTranslators.length === 0"
+          class="caption error--text mt-1"
+        >
+          {{ trans["noEnabledTranslators"] || "请先在上方启用翻译器" }}
+        </div>
       </v-card-text>
     </v-card>
   </div>
@@ -92,8 +152,9 @@
 <script lang="ts">
 import { Component, Watch, Vue } from "vue-property-decorator";
 import KeyConfig from "@/components/KeyConfig.vue";
-import { translatorTypes } from "@/common/types";
+import { translatorTypes, Identifier } from "@/common/types";
 import { getTranslator } from "@/common/translate/translators";
+import config from "@/common/configuration";
 import eventBus from "@/common/event-bus";
 
 @Component({
@@ -101,7 +162,7 @@ import eventBus from "@/common/event-bus";
     KeyConfig,
   },
 })
-export default class TranslatorManager extends Vue {
+class TranslatorManager extends Vue {
   translatorList: Array<{id: string; name: string; enabled: boolean; cache: boolean}> = [];
   configVisibleIndexes: number[] = [];
 
@@ -160,31 +221,26 @@ export default class TranslatorManager extends Vue {
   }
 
   updateEnabled(translatorId: string, enabled: boolean) {
-    let newEnabled = [...this.enabledTranslators];
     if (enabled) {
-      if (!newEnabled.includes(translatorId)) {
-        newEnabled.push(translatorId);
-      }
+      this.applyEnabledTranslators([...this.enabledTranslators, translatorId]);
     } else {
-      newEnabled = newEnabled.filter((id) => id !== translatorId);
-      let newCache = this.cacheTranslators.filter((id) => id !== translatorId);
-      this.callback("translator-cache", newCache);
-      if (this.fallbackTranslator === translatorId && newEnabled.length > 0) {
-        this.callback("fallbackTranslator", newEnabled[0]);
-      }
+      this.applyEnabledTranslators(
+        this.enabledTranslators.filter((id) => id !== translatorId)
+      );
     }
-    this.callback("translator-enabled", newEnabled);
   }
 
   isConfigComplete(translatorId: string): boolean {
-    const config = this.$store.state.config[translatorId];
-    if (!config || typeof config !== "object") {
-      return false;
-    }
+    return this.getConfigStatus(translatorId).canEnable;
+  }
 
-    return Object.values(config).every(
-      (value) => value !== undefined && value !== ""
-    );
+  getConfigStatus(translatorId: string) {
+    const id = translatorId as Identifier;
+    if (!config.has(id)) {
+      return { canSave: true, canEnable: true };
+    }
+    const value = this.$store.state.config[translatorId];
+    return config.checkStatus(id, value);
   }
 
   getCheckboxTitle(translatorId: string): string {
@@ -192,8 +248,9 @@ export default class TranslatorManager extends Vue {
       return '至少需要启用一个翻译器';
     }
 
-    if (!this.isConfigComplete(translatorId)) {
-      return this.trans["configRequired"] || "请先配置翻译器";
+    const status = this.getConfigStatus(translatorId);
+    if (!status.canEnable) {
+      return status.enableReason || this.trans["configRequired"] || "请先配置翻译器";
     }
 
     return '';
@@ -208,7 +265,7 @@ export default class TranslatorManager extends Vue {
     } else {
       newCache = newCache.filter((id) => id !== translatorId);
     }
-    this.callback("translator-cache", newCache);
+    this.applyCacheTranslators(newCache);
   }
 
   toggleConfig(translatorId: string) {
@@ -234,16 +291,15 @@ export default class TranslatorManager extends Vue {
         return;
       }
 
-      this.callback("translator-enabled", configuredTranslators);
+      this.applyEnabledTranslators(configuredTranslators);
     } else {
-      this.callback("translator-enabled", []);
-      this.callback("translator-cache", []);
+      this.applyEnabledTranslators([]);
     }
   }
 
   toggleAllCache(cache: boolean) {
     const newCache = cache ? [...this.enabledTranslators] : [];
-    this.callback("translator-cache", newCache);
+    this.applyCacheTranslators(newCache);
   }
 
   restoreDefaults() {
@@ -252,10 +308,32 @@ export default class TranslatorManager extends Vue {
     this.configVisibleIndexes = [];
   }
 
+  applyEnabledTranslators(newEnabled: string[]) {
+    const enabled = Array.from(new Set(newEnabled)).filter((id) =>
+      this.availableTranslators.includes(id)
+    );
+    const enabledSet = new Set(enabled);
+    const cache = this.cacheTranslators.filter((id) => enabledSet.has(id));
+    this.callback("translator-enabled", enabled);
+    this.callback("translator-cache", cache);
+    if (enabled.length > 0 && !enabledSet.has(this.fallbackTranslator)) {
+      this.callback("fallbackTranslator", enabled[0]);
+    }
+  }
+
+  applyCacheTranslators(newCache: string[]) {
+    const enabledSet = new Set(this.enabledTranslators);
+    const cache = Array.from(new Set(newCache)).filter((id) =>
+      enabledSet.has(id)
+    );
+    this.callback("translator-cache", cache);
+  }
+
   callback(...args: any[]) {
     eventBus.at("dispatch", ...args);
   }
 }
+export default TranslatorManager;
 </script>
 
 <style scoped>

@@ -9,7 +9,14 @@ export const colorRules = new Map<Identifier, number>([
 export function getColorRule(key: Identifier) {
   return <number>colorRules.get(key);
 }
-type CheckFuction = (value: any) => boolean;
+export interface CheckResult {
+  canSave: boolean;
+  canEnable: boolean;
+  saveReason?: string;
+  enableReason?: string;
+}
+
+type CheckFuction = (value: any) => boolean | CheckResult;
 
 interface ModeConfig {
   x: number;
@@ -57,6 +64,7 @@ interface Rule {
   minimalVersion?: string;
   needSave?: boolean;
   metadata?: FieldMetadataMap;  // 字段UI元数据（仅用于UI渲染，不持久化）
+  notice?: string;
 }
 
 export class ColorRule implements Rule {
@@ -177,7 +185,10 @@ class TypeRule<T> implements Rule {
     this.check = function (value) {
       let result: boolean = typeof value === typeof predefined;
       if (check != undefined) {
-        result = result && check(value);
+        const checkResult = check(value);
+        const valid =
+          typeof checkResult === "boolean" ? checkResult : checkResult.canSave;
+        result = result && valid;
       }
       return result;
     };
@@ -188,9 +199,16 @@ class StructRule<T extends { [key: string]: any }> implements Rule {
   predefined: T;
   check: CheckFuction;
   metadata?: FieldMetadataMap;
-  constructor(predefined: T, check?: CheckFuction, metadata?: FieldMetadataMap) {
+  notice?: string;
+  constructor(
+    predefined: T,
+    check?: CheckFuction,
+    metadata?: FieldMetadataMap,
+    notice?: string
+  ) {
     this.predefined = predefined;
     this.metadata = metadata;
+    this.notice = notice;
     if (check) {
       this.check = check;
     } else {

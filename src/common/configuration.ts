@@ -10,7 +10,7 @@ import {
   KeyConfig,
   ColorRule,
   LayoutConfig,
-  FieldMetadataMap,
+  CheckResult,
 } from "./rule";
 import { languages, Language } from "@opentranslate2/languages";
 import {
@@ -31,6 +31,7 @@ import {
   ListenClipboardMode,
   listenClipboardModes,
   domains,
+  GoogleSource,
   googleSourceOptions,
   temperatureOptions,
   maxTokensOptions,
@@ -38,14 +39,98 @@ import {
 import { DictionaryType, dictionaryTypes } from "./dictionary/types";
 import { version } from "./constant";
 
-function googleCheck(value: KeyConfig): boolean {
-  if (!value.source || typeof value.source !== "string") {
-    return false;
+
+function is_empty_string(str: string): boolean {
+  return !str || str.length === 0;
+}
+
+function getInvalidStringKeys(value: KeyConfig): string[] {
+  const invalidKeys: string[] = [];
+  for (const key in value) {
+    if (typeof value[key] !== "string") {
+      invalidKeys.push(key);
+    }
   }
-  if (value.source === "google") {
-    return !!value.token && value.token.length > 0;
+  return invalidKeys;
+}
+
+function getEmptyKeys(value: KeyConfig): string[] {
+  const emptyKeys: string[] = [];
+  for (const key in value) {
+    if (is_empty_string(value[key])) {
+      emptyKeys.push(key);
+    }
   }
-  return true;
+  return emptyKeys;
+}
+
+function googleCheck(value: KeyConfig): CheckResult {
+  const invalidKeys = getInvalidStringKeys(value);
+  if (invalidKeys.length > 0) {
+    const reason = `字段类型无效: ${invalidKeys.join(", ")}`;
+    return { canSave: false, canEnable: false, saveReason: reason, enableReason: reason };
+  }
+  const source = value.source;
+  if (is_empty_string(source)) {
+    return {
+      canSave: false,
+      canEnable: false,
+      saveReason: "翻译源不能为空",
+      enableReason: "翻译源不能为空",
+    };
+  }
+  if (!googleSourceOptions.includes(source as GoogleSource)) {
+    return {
+      canSave: false,
+      canEnable: false,
+      saveReason: "翻译源无效",
+      enableReason: "翻译源无效",
+    };
+  }
+  return { canSave: true, canEnable: true };
+}
+
+function baiduCheck(value: KeyConfig): CheckResult {
+  const invalidKeys = getInvalidStringKeys(value);
+  if (invalidKeys.length > 0) {
+    const reason = `字段类型无效: ${invalidKeys.join(", ")}`;
+    return { canSave: false, canEnable: false, saveReason: reason, enableReason: reason };
+  }
+  const emptyKeys = getEmptyKeys(value);
+  const allEmpty = emptyKeys.length === Object.keys(value).length;
+  const allFilled = emptyKeys.length === 0;
+  if (allEmpty) { // 全空也行，就用系统默认的
+    return {
+      canSave: true,
+      canEnable: true,
+    };
+  }
+  // 全部填写也行
+  if (allFilled) {
+    return { canSave: true, canEnable: true };
+  }
+  return {
+    canSave: true,
+    canEnable: false,
+    enableReason: "appid 和 key 需要同时填写",
+  };
+}
+
+function generalCheck(value: KeyConfig): CheckResult {
+  const invalidKeys = getInvalidStringKeys(value);
+  if (invalidKeys.length > 0) {
+    const reason = `字段类型无效: ${invalidKeys.join(", ")}`;
+    return { canSave: false, canEnable: false, saveReason: reason, enableReason: reason };
+  }
+  const emptyKeys = getEmptyKeys(value);
+  if (emptyKeys.length === 0) {
+    return { canSave: true, canEnable: true };
+  }
+  return {
+    canSave: true,
+    canEnable: false,
+    enableReason: `请填写: ${emptyKeys.join(", ")}`,
+  };
 }
 
 function initConfig(
@@ -360,7 +445,7 @@ function initConfig(
   //下面是N种翻译引擎
   config.setRule(
     "baidu",
-    new StructRule<KeyConfig>({ appid: "", key: "" })
+    new StructRule<KeyConfig>({ appid: "", key: "" }, baiduCheck, undefined, "baiduConfigNote")
   );
 
   config.setRule(
@@ -377,7 +462,7 @@ function initConfig(
     "baidu-domain",
     new StructRule<KeyConfig>(
       { appid: "", key: "", domain: "" },
-      undefined,
+      generalCheck,
       {
         appid: { uiType: "text" },
         key: { uiType: "text" },
@@ -400,13 +485,14 @@ function initConfig(
         token: { uiType: "text" },
         source: { uiType: "select", options: googleSourceOptions },
         mirror: { uiType: "text" },
-      }
+      },
+      "googlePrompt"
     )
   );
 
   config.setRule(
     "sogou",
-    new StructRule<KeyConfig>({ pid: "", key: "" })
+    new StructRule<KeyConfig>({ pid: "", key: "" }, generalCheck)
   );
 
   // config.setRule(
@@ -419,7 +505,7 @@ function initConfig(
 
   config.setRule(
     "youdao",
-    new StructRule<KeyConfig>({ appKey: "", key: "" })
+    new StructRule<KeyConfig>({ appKey: "", key: "" }, generalCheck)
   );
 
   config.setRule(
@@ -435,15 +521,19 @@ function initConfig(
         prompt: { uiType: "text" },
         temperature: { uiType: "select", options: temperatureOptions },
         maxTokens: { uiType: "select", options: maxTokensOptions },
-      }
+      },
+      "stepfunBuiltinNote"
     )
   );
 
   config.setRule(
+    "keyan",
+    new StructRule<KeyConfig>({}, undefined, undefined, "keyanConfigNote")
+  );
+
+  config.setRule(
     "niu",
-    new StructRule<KeyConfig>({
-      apikey: "",
-    })
+    new StructRule<KeyConfig>({apikey: "",},generalCheck)
   );
 
 

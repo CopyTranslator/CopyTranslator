@@ -148,7 +148,7 @@ export const zh_cn = new Map<LocaleKey, string>([
   ],
   [
     "googlePrompt",
-    "v10.2.4版本后谷歌翻译默认使用谷歌翻译镜像，理论上不需要额外设置，如果依然存在问题，可以尝试切换google翻译源",
+    "v12版本后谷歌翻译默认使用lingva翻译源，理论上不需要额外设置，如果依然存在问题，可以尝试在翻译器设置中切换google翻译源",
   ],
   ["baiduConfigNote", "百度配置全置空也可以启用，优先使用内置通用方案"],
   ["keyanConfigNote", "棵岩翻译无需配置即可使用"],
@@ -623,7 +623,7 @@ export const en = new Map<LocaleKey, string>([
   ],
   [
     "googlePrompt",
-    "After v10.2.4, Google Translate uses the Google Translate API mirror by default. In theory, no additional settings are required. If there are still problems, you can try to switch to the Google translation source",
+    "After v12, Google Translate uses the Lingva source by default. In theory, no additional settings are required. If there are still problems, you can try switching the Google translation source in translator settings",
   ],
   ["contentFontFamily", "Content Font-Family"],
   ["interfaceFontFamily", "Interface Font-Family"],

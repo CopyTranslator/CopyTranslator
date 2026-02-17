@@ -166,7 +166,7 @@
     "stepfunSlogan": "阶跃星辰｜Step-3.5-Flash 旗舰模型限免支持 >>>",
     "primaryColor": "Primary Color",
     "<tooltip>primaryColor": "You can choose any color at will. The software will update in real time, and you can see the effect directly",
-    "googlePrompt": "After v10.2.3, Google Translate's domestic image is used by default for translation. In theory, no additional settings are required. If there are still problems, you can try to switch to the Google translation source",
+    "googlePrompt": "After v12, Google Translate uses the Lingva source by default. In theory, no additional settings are required. If there are still problems, you can try switching the Google translation source in translator settings",
     "contentFontFamily": "Content Font-Family",
     "interfaceFontFamily": "Interface Font-Family",
     "<tooltip>contentFontFamily": "You can set multiple fonts. Search font family to know how to set",

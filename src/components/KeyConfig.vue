@@ -123,16 +123,38 @@ class KeyConfig extends Base {
     const status = config.checkStatus(this.identifier, this.keyConfigLocal);
     if (status.canSave) {
       this.callback(this.identifier, this.keyConfigLocal);
-      if (!status.canEnable && translatorTypes.includes(this.identifier as any)) {
+      if (translatorTypes.includes(this.identifier as any)) {
         const enabled = [...(this.$store.state.config["translator-enabled"] || [])];
         const cache = [...(this.$store.state.config["translator-cache"] || [])];
-        const nextEnabled = enabled.filter((id: string) => id !== this.identifier);
-        if (nextEnabled.length !== enabled.length) {
-          this.callback("translator-enabled", nextEnabled);
-        }
-        const nextCache = cache.filter((id: string) => id !== this.identifier);
-        if (nextCache.length !== cache.length) {
-          this.callback("translator-cache", nextCache);
+        if (status.canEnable) {
+          const nextEnabled = Array.from(
+            new Set([...enabled, this.identifier])
+          ).filter((id: string) => translatorTypes.includes(id as any));
+          if (
+            nextEnabled.length !== enabled.length ||
+            !enabled.includes(this.identifier)
+          ) {
+            this.callback("translator-enabled", nextEnabled);
+          }
+          const nextCache = cache.filter((id: string) =>
+            nextEnabled.includes(id)
+          );
+          if (nextCache.length !== cache.length) {
+            this.callback("translator-cache", nextCache);
+          }
+          const fallback = this.$store.state.config["fallbackTranslator"];
+          if (nextEnabled.length > 0 && !nextEnabled.includes(fallback)) {
+            this.callback("fallbackTranslator", nextEnabled[0]);
+          }
+        } else {
+          const nextEnabled = enabled.filter((id: string) => id !== this.identifier);
+          if (nextEnabled.length !== enabled.length) {
+            this.callback("translator-enabled", nextEnabled);
+          }
+          const nextCache = cache.filter((id: string) => id !== this.identifier);
+          if (nextCache.length !== cache.length) {
+            this.callback("translator-cache", nextCache);
+          }
         }
       }
       this.saveMessage =

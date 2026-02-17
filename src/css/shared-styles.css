@@ -58,6 +58,10 @@
   background-image: url("../images/stepfun.png");
 }
 
+.niu {
+  background-image: url("../images/niu.svg");
+}
+
 /* AI 供应商图标 */
 .provider-stepfun {
   background-image: url("../images/stepfun.svg");

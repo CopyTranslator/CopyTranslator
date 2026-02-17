@@ -2,7 +2,7 @@
     "localeName": "Русский",
     "aiTranslatorDescription": "Эти переводчики основаны на искусственном интеллекте (больших языковых моделях) и могут понимать контекст для提供更自然的翻译。Все поставщики, добавляемые здесь, требуют самостоятельной настройки API ключа.",
     "stepfunCustomNote": "Требуется собственный API ключ",
-    "stepfunBuiltinNote": "Встроенная бесплатная версия (Настройки→Переводчик→Stepfun)",
+    "stepfunConfigNote": "Stepfun не требует настройки; флагманская модель step-3.5-flash бесплатна в течение ограниченного времени",
     "stayTop": "Поверх окон",
     "listenClipboard": "Прослушивать буфер обмена",
     "autoCopy": "Копировать автоматически",
@@ -302,5 +302,6 @@
     "configSaveInvalid": "Validation failed, please check required fields",
     "configRequired": "Please configure the translator before enabling",
     "baiduConfigNote": "Baidu can be enabled even with empty credentials",
-    "keyanConfigNote": "Keyan works without configuration"
+    "keyanConfigNote": "Keyan works without configuration",
+    "caiyunConfigNote": "Caiyun can be enabled even with empty credentials"
 }

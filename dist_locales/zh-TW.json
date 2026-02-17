@@ -2,7 +2,7 @@
     "localeName": "繁體中文",
     "aiTranslatorDescription": "這些翻譯器基於人工智能（大語言模型/LLM），可以理解上下文並提供更自然的翻譯。所有在此處添加的供應商都需要您自行配置API密鑰。",
     "stepfunCustomNote": "需自備API密鑰",
-    "stepfunBuiltinNote": "系統已內建免費版本（設定→翻譯器→階躍星辰）",
+    "stepfunConfigNote": "Stepfun無需填寫配置，旗艦大模型step-3.5-flash限時免費試用",
     "stayTop": "保持在最上層",
     "listenClipboard": "監聽剪貼簿",
     "autoCopy": "自動複製",
@@ -319,5 +319,6 @@
     "configSaveInvalid": "Validation failed, please check required fields",
     "configRequired": "請先配置翻譯器後再啟用",
     "baiduConfigNote": "Baidu can be enabled even with empty credentials",
-    "keyanConfigNote": "Keyan works without configuration"
+    "keyanConfigNote": "Keyan works without configuration",
+    "caiyunConfigNote": "Caiyun can be enabled even with empty credentials"
 }

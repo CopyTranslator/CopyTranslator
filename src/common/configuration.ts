@@ -90,7 +90,8 @@ function googleCheck(value: KeyConfig): CheckResult {
   return { canSave: true, canEnable: true };
 }
 
-function baiduCheck(value: KeyConfig): CheckResult {
+// 检查是否全空或全填写
+function emptyOrAllCheck(value: KeyConfig): CheckResult {
   const invalidKeys = getInvalidStringKeys(value);
   if (invalidKeys.length > 0) {
     const reason = `字段类型无效: ${invalidKeys.join(", ")}`;
@@ -110,11 +111,13 @@ function baiduCheck(value: KeyConfig): CheckResult {
     return { canSave: true, canEnable: true };
   }
   return {
-    canSave: true,
+    canSave: false,
     canEnable: false,
-    enableReason: "appid 和 key 需要同时填写",
+    saveReason: "要么全填写所有字段，要么全不填写",
+    enableReason: "要么全填写所有字段，要么全不填写",
   };
 }
+
 
 function generalCheck(value: KeyConfig): CheckResult {
   const invalidKeys = getInvalidStringKeys(value);
@@ -445,7 +448,7 @@ function initConfig(
   //下面是N种翻译引擎
   config.setRule(
     "baidu",
-    new StructRule<KeyConfig>({ appid: "", key: "" }, baiduCheck, undefined, "baiduConfigNote")
+    new StructRule<KeyConfig>({ appid: "", key: "" }, emptyOrAllCheck, undefined, "baiduConfigNote")
   );
 
   config.setRule(
@@ -471,10 +474,10 @@ function initConfig(
     )
   );
 
-  // config.setRule(
-  //   "caiyun",
-  //   new StructRule<KeyConfig>({ token: "" }, "parameters of caiyun")
-  // );
+  config.setRule(
+    "caiyun",
+    new StructRule<KeyConfig>({ token: "" }, emptyOrAllCheck, undefined, "caiyunConfigNote")
+  );
 
   config.setRule(
     "google",
@@ -522,7 +525,7 @@ function initConfig(
         temperature: { uiType: "select", options: temperatureOptions },
         maxTokens: { uiType: "select", options: maxTokensOptions },
       },
-      "stepfunBuiltinNote"
+      "stepfunConfigNote"
     )
   );
 

@@ -65,6 +65,7 @@ interface Rule {
   needSave?: boolean;
   metadata?: FieldMetadataMap;  // 字段UI元数据（仅用于UI渲染，不持久化）
   notice?: string;
+  docUrl?: string;
 }
 
 export class ColorRule implements Rule {
@@ -200,15 +201,18 @@ class StructRule<T extends { [key: string]: any }> implements Rule {
   check: CheckFuction;
   metadata?: FieldMetadataMap;
   notice?: string;
+  docUrl?: string;
   constructor(
     predefined: T,
     check?: CheckFuction,
     metadata?: FieldMetadataMap,
-    notice?: string
+    notice?: string,
+    docUrl?: string
   ) {
     this.predefined = predefined;
     this.metadata = metadata;
     this.notice = notice;
+    this.docUrl = docUrl;
     if (check) {
       this.check = check;
     } else {

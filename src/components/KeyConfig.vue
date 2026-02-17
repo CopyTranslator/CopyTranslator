@@ -1,5 +1,19 @@
 <template>
   <div>
+    <v-alert
+      v-if="noticeText || docUrl"
+      dense
+      text
+      type="info"
+      :icon="false"
+      class="mb-2"
+    >
+      <span v-if="noticeText">{{ noticeText }}</span>
+      <span v-if="noticeText && docUrl" class="mx-1">·</span>
+      <a v-if="docUrl" :href="docUrl" @click.prevent="openDocUrl" rel="noopener">
+        {{ trans["openReference"] || "配置指南" }}
+      </a>
+    </v-alert>
     <div v-for="(_, key) in keyConfigLocal" :key="key">
       <p>{{ key }}</p>
       <v-text-field
@@ -14,15 +28,6 @@
       >
       </v-select>
     </div>
-    <v-alert
-      v-if="noticeText"
-      dense
-      text
-      type="info"
-      class="mt-2 mb-0"
-    >
-      {{ noticeText }}
-    </v-alert>
     <v-btn
       small
       color="primary"
@@ -46,6 +51,7 @@
 
 <script lang="ts">
 import { Identifier, translatorTypes } from "../common/types";
+import { shell } from "electron";
 import { FieldMetadata } from "../common/rule";
 import config from "../common/configuration";
 import { Prop, Component, Watch } from "vue-property-decorator";
@@ -76,6 +82,21 @@ class KeyConfig extends Base {
       return "";
     }
     return this.trans[notice] || notice;
+  }
+
+  get docUrl() {
+    if (!config.has(this.identifier)) {
+      return "";
+    }
+    const rule = config.getRule(this.identifier);
+    return rule?.docUrl || "";
+  }
+
+  openDocUrl() {
+    if (!this.docUrl) {
+      return;
+    }
+    shell.openExternal(this.docUrl);
   }
 
   mounted() {

@@ -113,7 +113,7 @@
     "basic": "Basic",
     "advance": "Advance",
     "translateInput": "Translate",
-    "openReference": "open reference link",
+    "openReference": "Configuration Guide",
     "aiTranslatorDescription": "These translators are based on artificial intelligence (Large Language Models) and can understand context to provide more natural translations. All providers added here require you to configure your own API key.",
     "stepfunCustomNote": "Requires your own API key",
     "stepfunConfigNote": "Stepfun requires no configuration; the flagship model step-3.5-flash is free for a limited time",

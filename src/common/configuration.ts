@@ -448,17 +448,35 @@ function initConfig(
   //下面是N种翻译引擎
   config.setRule(
     "baidu",
-    new StructRule<KeyConfig>({ appid: "", key: "" }, emptyOrAllCheck, undefined, "baiduConfigNote")
+    new StructRule<KeyConfig>(
+      { appid: "", key: "" },
+      emptyOrAllCheck,
+      undefined,
+      "baiduConfigNote",
+      "https://fanyi-api.baidu.com/doc/21"
+    )
   );
 
   config.setRule(
     "baidu-ocr",
-    new StructRule<KeyConfig>({ app_id: "", api_key: "", secret_key: "" })
+    new StructRule<KeyConfig>(
+      { app_id: "", api_key: "", secret_key: "" },
+      undefined,
+      undefined,
+      undefined,
+      "https://ai.baidu.com/tech/ocr"
+    )
   );
 
   config.setRule(
     "pp-ocr",
-    new StructRule<KeyConfig>({ cwd: "", config_name: "" })
+    new StructRule<KeyConfig>(
+      { cwd: "", config_name: "" },
+      undefined,
+      undefined,
+      undefined,
+      "https://copytranslator.github.io/guide/12.0.0.html#ocr-%E9%85%8D%E7%BD%AE-%E5%85%89%E5%AD%A6%E5%AD%97%E7%AC%A6%E8%AF%86%E5%88%AB"
+    )
   );
 
   config.setRule(
@@ -470,13 +488,21 @@ function initConfig(
         appid: { uiType: "text" },
         key: { uiType: "text" },
         domain: { uiType: "select", options: domains },
-      }
+      },
+      undefined,
+      "https://fanyi-api.baidu.com/doc/24"
     )
   );
 
   config.setRule(
     "caiyun",
-    new StructRule<KeyConfig>({ token: "" }, emptyOrAllCheck, undefined, "caiyunConfigNote")
+    new StructRule<KeyConfig>(
+      { token: "" },
+      emptyOrAllCheck,
+      undefined,
+      "caiyunConfigNote",
+      "https://docs.caiyunapp.com/lingocloud-api/"
+    )
   );
 
   config.setRule(
@@ -489,13 +515,20 @@ function initConfig(
         source: { uiType: "select", options: googleSourceOptions },
         mirror: { uiType: "text" },
       },
-      "googlePrompt"
+      "googlePrompt",
+      "https://copytranslator.github.io/guide/questions.html#%E8%B0%B7%E6%AD%8C%E7%BF%BB%E8%AF%91%E9%80%80%E5%87%BA%E4%B8%AD%E5%9B%BD%E5%B8%82%E5%9C%BA%E7%9A%84%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88"
     )
   );
 
   config.setRule(
     "sogou",
-    new StructRule<KeyConfig>({ pid: "", key: "" }, generalCheck)
+    new StructRule<KeyConfig>(
+      { pid: "", key: "" },
+      generalCheck,
+      undefined,
+      undefined,
+      "https://fanyi.sogou.com/api/doc"
+    )
   );
 
   // config.setRule(
@@ -508,7 +541,13 @@ function initConfig(
 
   config.setRule(
     "youdao",
-    new StructRule<KeyConfig>({ appKey: "", key: "" }, generalCheck)
+    new StructRule<KeyConfig>(
+      { appKey: "", key: "" },
+      generalCheck,
+      undefined,
+      undefined,
+      "https://ai.youdao.com/new/product-fanyi-text.s"
+    )
   );
 
   config.setRule(
@@ -525,18 +564,31 @@ function initConfig(
         temperature: { uiType: "select", options: temperatureOptions },
         maxTokens: { uiType: "select", options: maxTokensOptions },
       },
-      "stepfunConfigNote"
+      "stepfunConfigNote",
+      "https://www.stepfun.com/"
     )
   );
 
   config.setRule(
     "keyan",
-    new StructRule<KeyConfig>({}, undefined, undefined, "keyanConfigNote")
+    new StructRule<KeyConfig>(
+      {},
+      undefined,
+      undefined,
+      "keyanConfigNote",
+      "https://www.keyanyuedu.com/"
+    )
   );
 
   config.setRule(
     "niu",
-    new StructRule<KeyConfig>({apikey: "",},generalCheck)
+    new StructRule<KeyConfig>(
+      {apikey: "",},
+      generalCheck,
+      undefined,
+      undefined,
+      "https://niutrans.com/dev-page?type=text"
+    )
   );
 
 

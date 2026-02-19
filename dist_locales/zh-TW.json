@@ -323,5 +323,15 @@
     "stepfun": "StepFun Translate",
     "niu": "Niu Translate",
     "translatorNameLabel": "Name",
-    "cacheShortLabel": "Cache"
+    "cacheShortLabel": "Cache",
+    "restoreMultiDefault": "Restore these settings to default",
+    "enableAll": "Enable All",
+    "disableAll": "Disable All",
+    "cacheAll": "Cache All",
+    "noCacheAll": "No Cache All",
+    "<tooltip>enableAll": "Enable all configured translators",
+    "<tooltip>disableAll": "Disable all translators and clear cache",
+    "<tooltip>cacheAll": "Enable cache for all enabled translators",
+    "<tooltip>noCacheAll": "Clear all cache settings",
+    "<tooltip>restoreMultiDefault": "Restore translator-related settings to default"
 }

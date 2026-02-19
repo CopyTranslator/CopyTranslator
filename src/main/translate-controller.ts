@@ -41,6 +41,7 @@ import { translators } from "@/common/translate/translators";
 import { getProxyAxios } from "@/common/translate/proxy";
 import { isValidWindow } from "./focus-handler";
 import { customTranslatorManager } from "@/common/translate/custom-translators";
+import { tracker } from "./tracker";
 
 type TranslateOption = {
   text?: string;
@@ -84,7 +85,7 @@ class TranslateController {
     this.controller = controller;
   }
 
-  onExit() {
+  async onExit() {
     pp_recognizer.onExit();
     return this.translator.onExit();
   }
@@ -561,7 +562,10 @@ class TranslateController {
     engines.sort();
     return this.translator
       .translate(this.text, language.source, language.target, engines)
-      .then((res) => this.postTranslate(res, language))
+      .then((res) => {
+        this.postTranslate(res, language);
+        tracker.track("query", "default");
+      })
       .catch((err) => {
         this.translateResult = undefined;
         this.sync();

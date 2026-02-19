@@ -31,6 +31,7 @@ import { DragCopyMode } from "@/common/types";
 import { icon } from "@/common/env";
 import { electronPrompt } from "./prompt";
 import bus from "@/common/event-bus";
+import { tracker } from "./tracker";
 
 class Controller extends MainController {
   win: WindowManager = new WindowManager(this);
@@ -193,6 +194,7 @@ class Controller extends MainController {
 
   async onExit() {
     await this.transCon.onExit();
+    await tracker.flush();
     this.config.save();
     this.shortcut.unregister();
     app.exit(); //这里必须是exit，不然就会死锁

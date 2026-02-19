@@ -4,7 +4,7 @@ let constants: { [key: string]: string } = {
   nickName: "知微",
   version: "12.0.0",
   stage: "stable",
-  changelogs: "https://copytranslator.github.io/changelogs/v10.html",
+  changelogs: "https://copytranslator.github.io/changelogs/v12.html",
   wiki: "https://copytranslator.github.io/guide",
   homepage: "https://copytranslator.github.io",
   downloadPage: "https://copytranslator.github.io/guide/download.html",
@@ -36,7 +36,7 @@ if (constants.stage != "stable") {
   terms.push(constants.stage);
 }
 export const version = terms.join(" ");
-
+export const isDebug = debug || process.env.NODE_ENV !== "production";
 
 function version2int(version: string) {
   const infos = version

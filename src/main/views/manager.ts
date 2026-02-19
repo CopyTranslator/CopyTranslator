@@ -349,7 +349,7 @@ export class WindowManager {
   }
 
   createSetting(tab?: string | null) {
-    const width = 500;
+    const width = 550;
     const height = 680;
     const {
       x: xBound,

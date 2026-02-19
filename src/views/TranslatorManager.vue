@@ -1,49 +1,5 @@
 <template>
   <div style="text-align: left; overflow: auto; height: 100%;">
-    <!-- 批量操作按钮 -->
-    <div class="mb-4 d-flex align-center">
-      <v-btn
-        small
-        @click="toggleAllEnabled(true)"
-        class="mr-2"
-        :title="trans['<tooltip>enableAll'] || '启用所有已配置翻译器'"
-      >
-        {{ trans["enableAll"] || "全部启用" }}
-      </v-btn>
-      <v-btn
-        small
-        @click="toggleAllEnabled(false)"
-        class="mr-2"
-        :title="trans['<tooltip>disableAll'] || '禁用全部翻译器并清空缓存'"
-      >
-        {{ trans["disableAll"] || "全部禁用" }}
-      </v-btn>
-      <v-btn
-        small
-        @click="toggleAllCache(true)"
-        class="mr-2"
-        :title="trans['<tooltip>cacheAll'] || '为已启用翻译器开启缓存'"
-      >
-        {{ trans["cacheAll"] || "全部缓存" }}
-      </v-btn>
-      <v-btn
-        small
-        @click="toggleAllCache(false)"
-        class="mr-2"
-        :title="trans['<tooltip>noCacheAll'] || '清空所有缓存设置'"
-      >
-        {{ trans["noCacheAll"] || "全部不缓存" }}
-      </v-btn>
-      <v-spacer></v-spacer>
-      <v-btn
-        small
-        color="error"
-        @click="restoreDefaults"
-        :title="trans['<tooltip>restoreMultiDefault'] || '恢复翻译器相关设置为默认值'"
-      >
-        {{ trans["restoreMultiDefault"] || "恢复默认" }}
-      </v-btn>
-    </div>
     <div class="caption grey--text mb-3">
       {{ trans["enabledCount"] || "已启用" }}: {{ enabledTranslators.length }}
       ·
@@ -69,61 +25,52 @@
       <div class="translator-header-cell translator-header-cache">
         {{ trans["cacheShortLabel"] || "缓存" }}
       </div>
-      <div class="translator-header-cell translator-header-config">
-        {{ trans["configuration"] || "配置" }}
+      <div class="translator-header-cell translator-header-expand">
+        {{ trans["expand"] || "展开" }}
       </div>
     </div>
-    <v-expansion-panels multiple flat v-model="configVisibleIndexes">
+    <v-expansion-panels multiple flat v-model="configVisibleIndexes" class="translator-panels">
       <v-expansion-panel
         v-for="translator in translatorList"
         :key="translator.id"
+        class="translator-panel"
       >
         <v-expansion-panel-header class="translator-panel-header">
-          <div class="translator-row py-2">
-            <div class="translator-cell translator-enable">
-              <v-checkbox
-                v-model="translator.enabled"
-                @click.stop
-                @change="updateEnabled(translator.id, translator.enabled)"
-                :disabled="!isConfigComplete(translator.id) || (translator.id === 'google' && enabledTranslators.length <= 1)"
-                :title="getCheckboxTitle(translator.id)"
-                hide-details
-              ></v-checkbox>
-            </div>
-            <div
-              class="translator-cell translator-name subtitle-2"
-              :title="translator.name"
-            >
-              {{ translator.name }}
-            </div>
-            <div class="translator-cell translator-cache d-flex align-center">
-              <v-checkbox
-                v-model="translator.cache"
-                @click.stop
-                @change="updateCache(translator.id, translator.cache)"
-                :disabled="!translator.enabled"
-                :title="
-                  trans['<tooltip>translator-cache'] ||
-                  '缓存会自动查询并加速切换翻译器'
-                "
-                hide-details
-                class="d-inline-block mr-1"
-                style="width: 18px; height: 18px;"
-              ></v-checkbox>
-            </div>
-            <div class="translator-cell translator-config">
-              <v-btn
-                small
-                text
-                color="primary"
-                @click.stop.prevent="toggleConfig(translator.id)"
-                class="config-btn"
-                :title="trans['<tooltip>translatorConfigButton'] || '打开该翻译器的配置项'"
+          <template v-slot:default>
+            <div class="translator-row" @click.stop>
+              <div class="translator-cell translator-enable">
+                <v-checkbox
+                  v-model="translator.enabled"
+                  @click.stop
+                  @change="updateEnabled(translator.id, translator.enabled)"
+                  :disabled="!isConfigComplete(translator.id) || (translator.id === 'google' && enabledTranslators.length <= 1)"
+                  :title="getCheckboxTitle(translator.id)"
+                  hide-details
+                  class="translator-checkbox"
+                ></v-checkbox>
+              </div>
+              <div
+                class="translator-cell translator-name"
+                :title="translator.name"
               >
-                {{ trans["configuration"] || "配置" }}
-              </v-btn>
+                {{ translator.name }}
+              </div>
+              <div class="translator-cell translator-cache">
+                <v-checkbox
+                  v-model="translator.cache"
+                  @click.stop
+                  @change="updateCache(translator.id, translator.cache)"
+                  :disabled="!translator.enabled"
+                  :title="
+                    trans['<tooltip>translator-cache'] ||
+                    '缓存会自动查询并加速切换翻译器'
+                  "
+                  hide-details
+                  class="translator-checkbox"
+                ></v-checkbox>
+              </div>
             </div>
-          </div>
+          </template>
         </v-expansion-panel-header>
         <v-expansion-panel-content>
           <v-card flat class="pa-3" style="background: #fafafa; border-radius: 4px;">
@@ -295,45 +242,7 @@ class TranslatorManager extends Vue {
     this.applyCacheTranslators(newCache);
   }
 
-  toggleConfig(translatorId: string) {
-    const translatorIndex = this.translatorList.findIndex(t => t.id === translatorId);
-    if (translatorIndex === -1) return;
-    
-    const visibleIndex = this.configVisibleIndexes.indexOf(translatorIndex);
-    if (visibleIndex === -1) {
-      this.configVisibleIndexes.push(translatorIndex);
-    } else {
-      this.configVisibleIndexes.splice(visibleIndex, 1);
-    }
-  }
 
-  toggleAllEnabled(enabled: boolean) {
-    if (enabled) {
-      const configuredTranslators = this.availableTranslators.filter((translatorId) =>
-        this.isConfigComplete(translatorId)
-      );
-
-      if (configuredTranslators.length === 0) {
-        eventBus.at("dispatch", "toast", this.trans["configRequired"] || "请先配置翻译器后再启用");
-        return;
-      }
-
-      this.applyEnabledTranslators(configuredTranslators);
-    } else {
-      this.applyEnabledTranslators([]);
-    }
-  }
-
-  toggleAllCache(cache: boolean) {
-    const newCache = cache ? [...this.enabledTranslators] : [];
-    this.applyCacheTranslators(newCache);
-  }
-
-  restoreDefaults() {
-    this.callback("restoreMultiDefault", "translation");
-    this.callback("restoreMultiDefault", "translatorGroups");
-    this.configVisibleIndexes = [];
-  }
 
   applyEnabledTranslators(newEnabled: string[]) {
     const enabled = Array.from(new Set(newEnabled)).filter((id) =>
@@ -366,26 +275,56 @@ export default TranslatorManager;
 <style scoped>
 .translator-row {
   display: grid;
-  grid-template-columns: 44px 1fr 44px 56px;
+  grid-template-columns: 60px minmax(150px, 1fr) 60px;
   align-items: center;
-  column-gap: 6px;
+  column-gap: 8px;
   width: 100%;
+  min-height: 48px;
 }
 
 .translator-header-row {
   display: grid;
-  grid-template-columns: 44px 1fr 44px 56px;
+  grid-template-columns: 60px minmax(150px, 1fr) 60px 48px;
   align-items: center;
-  column-gap: 6px;
+  column-gap: 8px;
   width: 100%;
-  font-size: 12px;
-  color: #9e9e9e;
-  padding: 0 8px 4px 8px;
+  font-size: 13px;
+  font-weight: 500;
+  color: #757575;
+  padding: 8px 24px 8px 24px;
+  background: #f5f5f5;
+  border-radius: 4px;
+  margin-bottom: 8px;
+}
+
+.translator-panels {
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.translator-panel {
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.translator-panel:last-child {
+  border-bottom: none;
 }
 
 .translator-panel-header {
-  padding-left: 8px;
-  padding-right: 8px;
+  padding: 0 0 0 24px !important;
+  min-height: 48px !important;
+  cursor: pointer !important;
+}
+
+.translator-panel-header:hover {
+  background-color: #f9f9f9;
+}
+
+.translator-panel-header::v-deep .v-expansion-panel-header__icon {
+  margin-left: 8px;
+  margin-right: 16px;
+  color: #757575;
 }
 
 .translator-header-cell {
@@ -398,8 +337,8 @@ export default TranslatorManager;
   justify-content: center;
 }
 
-.translator-header-config {
-  justify-content: flex-end;
+.translator-header-expand {
+  justify-content: center;
 }
 
 .translator-cell {
@@ -407,14 +346,37 @@ export default TranslatorManager;
   align-items: center;
 }
 
+.translator-enable,
+.translator-cache {
+  justify-content: center;
+}
+
 .translator-name {
   min-width: 0;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  font-size: 14px;
+  font-weight: 500;
+  color: #424242;
+  cursor: help;
+  padding: 4px 0;
 }
 
-.translator-config {
-  justify-content: flex-end;
+.translator-name:hover {
+  color: #1976d2;
+}
+
+.translator-checkbox {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.translator-checkbox::v-deep .v-input__slot {
+  margin: 0 !important;
+}
+
+.translator-checkbox::v-deep .v-input--selection-controls__input {
+  margin: 0 !important;
 }
 </style>

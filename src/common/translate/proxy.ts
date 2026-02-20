@@ -74,7 +74,7 @@ export const getProxyAxios = (info?: boolean, googleMirror?: string) => {
           });
         } else {
           // 通过配置发起请求
-          console.log(`[Proxy] Direct axios request: ${config.url}`);
+          // console.log(`[Proxy] Direct axios request: ${config.url}`);
           return axios_(config);
         }
       },

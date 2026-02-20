@@ -6,7 +6,7 @@ import {
   ResultBuffer,
   SharedResult,
 } from "../common/translate/types";
-import { colorRules, getColorRule, KeyConfig } from "../common/rule";
+import { colorRules, getColorRule, KeyConfig, NetworkProxyConfig } from "../common/rule";
 import {
   normalizeAppend,
   checkIsWord,

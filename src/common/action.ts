@@ -147,7 +147,7 @@ class ActionManager {
       };
     }
     this.append(constantAction("networkProxy"));
-    this.append(switchAction("enableNetworkProxy"));
+    this.append(switchAction("enableNetworkProxy","advance"));
 
     //切换状态的动作
     function switchAction(

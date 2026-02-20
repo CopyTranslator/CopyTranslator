@@ -93,6 +93,13 @@ export const normalTranslatorTypes = [
   "sogou",
   "stepfun",
   'niu', //小牛 
+  "aliyun",
+  "azure",
+  "deepl",
+  "tencent",
+  "tencentsmart",
+  "yandex",
+  "volc",
 ] as const;
 export const abstractTranslatorTypes = ["copytranslator"] as const;
 

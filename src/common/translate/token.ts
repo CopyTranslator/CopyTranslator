@@ -66,7 +66,50 @@ export const defaultTokens = new Map<TranslatorType, any>([
     "niu",{
       apikey:process.env.VUE_APP_NIU_API_KEY || "",
     }
-  ]
+  ],
+  [
+    "aliyun",
+    {
+      accessKeyId: process.env.VUE_APP_ALIYUN_ACCESS_KEY_ID || "",
+      accessKeySecret: process.env.VUE_APP_ALIYUN_ACCESS_KEY_SECRET || "",
+    },
+  ],
+  [
+    "azure",
+    {
+      subscriptionKey: process.env.VUE_APP_AZURE_KEY || "",
+      region: process.env.VUE_APP_AZURE_REGION || "global",
+      free: false,
+    },
+  ],
+  [
+    "deepl",
+    {
+      auth_key: process.env.VUE_APP_DEEPL_KEY || "",
+    },
+  ],
+  [
+    "tencent",
+    {
+      secretId: process.env.VUE_APP_TENCENT_SECRET_ID || "",
+      secretKey: process.env.VUE_APP_TENCENT_SECRET_KEY || "",
+    },
+  ],
+  [
+    "tencentsmart",
+    {},
+  ],
+  [
+    "yandex",
+    {},
+  ],
+  [
+    "volc",
+    {
+      accessKeyId: process.env.VUE_APP_VOLC_ACCESS_KEY_ID || "",
+      accessKeySecret: process.env.VUE_APP_VOLC_SECRET_KEY || "",
+    },
+  ],
 ]);
 
 export function examToken(config: KeyConfig): boolean {

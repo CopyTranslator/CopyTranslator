@@ -1764,12 +1764,43 @@
     axios "^0.19.0"
     franc-min "^4.1.0"
 
+"@opentranslate2/aliyun@^1.4.42":
+  version "1.4.42"
+  resolved "https://registry.npmmirror.com/@opentranslate2/aliyun/-/aliyun-1.4.42.tgz#2eaf1a744b7070746b4706264930a428954d5630"
+  integrity sha512-41m9xnt8UI7sqe6WyU4fHawn0+H8c/JlN5Ldj/mpuiVuWjuSUKboxS+IUKrbBJK/rhA4jIPnfPQMpRIZ8C4KDQ==
+  dependencies:
+    "@opentranslate2/translator" "^1.4.13"
+    "@types/md5" "^2.1.33"
+    "@types/qs" "^6.5.3"
+    md5 "^2.2.1"
+    qs "^6.8.0"
+
+"@opentranslate2/azure@^1.4.42":
+  version "1.4.42"
+  resolved "https://registry.npmmirror.com/@opentranslate2/azure/-/azure-1.4.42.tgz#2869d87a8630d1e021f7c43451596a471a5b171e"
+  integrity sha512-PYjooF+ZhQskYp2gauYaAG+sYDEopc33JWJuUjFE9EKF5KlqJ2vmDbsSMeeS6J/5/rNNDGE7B9x5S7Ql+JyR8w==
+  dependencies:
+    "@opentranslate2/translator" "^1.4.13"
+    "@types/node" "^12.11.7"
+    "@types/qs" "^6.5.3"
+    js-base64 "^3.7.8"
+    qs "^6.8.0"
+
 "@opentranslate2/baidu-domain@^1.4.8":
   version "1.4.8"
   resolved "https://registry.npmmirror.com/@opentranslate2/baidu-domain/-/baidu-domain-1.4.8.tgz#bcc61f78df73c4a170265ab495dd9eaa085e46f7"
   integrity sha512-nUNBzRmwHyioGidYokiueuB/ar5INMmqJzGREQu6+TOnahE6dTRrLR/D/Q03Lyh7KUcdm8NY0OIz5X2988ielA==
   dependencies:
     "@opentranslate2/translator" "^1.4.7"
+
+"@opentranslate2/deepl@^1.4.43":
+  version "1.4.43"
+  resolved "https://registry.npmmirror.com/@opentranslate2/deepl/-/deepl-1.4.43.tgz#1e091f78f8db4a146dcde64d41763db2d74235b3"
+  integrity sha512-AETmP+MCeNMex0LhLtmy4147G7/16LGkkCQURY8I7RkPIHajmhB957Atag9wru5W2Mkv1I2r6HkW7yhWDirA4g==
+  dependencies:
+    "@opentranslate2/translator" "^1.4.13"
+    "@types/qs" "^6.5.3"
+    qs "^6.8.0"
 
 "@opentranslate2/languages@^1.4.2":
   version "1.4.3"
@@ -1796,6 +1827,24 @@
     md5 "^2.2.1"
     qs "^6.8.0"
 
+"@opentranslate2/tencent-smart@^1.4.42":
+  version "1.4.42"
+  resolved "https://registry.npmmirror.com/@opentranslate2/tencent-smart/-/tencent-smart-1.4.42.tgz#876c1268d365c41c3dd938a31eed7852a566116a"
+  integrity sha512-sUd+OQPhNuVxM7TsulaEWeyRXPPEIEZK0R9sjF1o31SenYX9sCLCm00SNAVvPQgPsxJR6TNW34sZrmDOPf1CBQ==
+  dependencies:
+    "@opentranslate2/translator" "^1.4.13"
+    "@types/crypto-js" "^3.1.43"
+    crypto-js "^3.1.9-1"
+
+"@opentranslate2/tencent@^1.4.42":
+  version "1.4.42"
+  resolved "https://registry.npmmirror.com/@opentranslate2/tencent/-/tencent-1.4.42.tgz#0e02eace9f90b8ae1b2c2ff160b4ad00ccf90d70"
+  integrity sha512-c1w7v3dEsZMpqExciOY2hzZIvndXKdbu39nt8c0KKQDsQCibbMU0THeMIvoRUDeKYIlffzhw65GCd0PfuFzCGg==
+  dependencies:
+    "@opentranslate2/translator" "^1.4.13"
+    "@types/crypto-js" "^3.1.43"
+    crypto-js "^3.1.9-1"
+
 "@opentranslate2/translator@^1.4.13", "@opentranslate2/translator@^1.4.7":
   version "1.4.13"
   resolved "https://registry.npmmirror.com/@opentranslate2/translator/-/translator-1.4.13.tgz#4a926c75d1e1be5edcfd2e99731acabc2d6aa991"
@@ -1804,6 +1853,28 @@
     "@opentranslate2/languages" "^1.4.2"
     axios "1.7.7"
     franc-min "^4.1.0"
+
+"@opentranslate2/volc@^1.4.42":
+  version "1.4.42"
+  resolved "https://registry.npmmirror.com/@opentranslate2/volc/-/volc-1.4.42.tgz#2351bb6412e7bc270a9f4dd6beb0525238f906ce"
+  integrity sha512-yDwbqfo8ReN17nTBNYiU13rR61a4g8NWtKDUxJqLdOpuhzURwJQ9o8+QKy08goOxHlsFid8Q7ORfNJWB5BCdxw==
+  dependencies:
+    "@opentranslate2/translator" "^1.4.13"
+    "@types/md5" "^2.1.33"
+    "@types/qs" "^6.5.3"
+    md5 "^2.2.1"
+    qs "^6.8.0"
+
+"@opentranslate2/yandex@^1.4.42":
+  version "1.4.42"
+  resolved "https://registry.npmmirror.com/@opentranslate2/yandex/-/yandex-1.4.42.tgz#fd67eb8163c93f8dcc9fd727506833e96ff6224f"
+  integrity sha512-HlDzrQ+vfA64TDcCZDV3ELr+awwft8MPm1hHIY8gt7jvjo7hxKDsZWe3ixd6kPjDXTusBKQ67Pez+FMNP8FnuQ==
+  dependencies:
+    "@opentranslate2/translator" "^1.4.13"
+    "@types/md5" "^2.1.33"
+    "@types/qs" "^6.5.3"
+    md5 "^2.2.1"
+    qs "^6.8.0"
 
 "@opentranslate2/youdao@^1.4.42":
   version "1.4.42"
@@ -1881,6 +1952,11 @@
   version "1.1.1"
   resolved "https://registry.npmmirror.com/@types/color-name/download/@types/color-name-1.1.1.tgz#1c1261bbeaa10a8055bbc5d8ab84b7b2afc846a0"
   integrity sha1-HBJhu+qhCoBVu8XYq4S3sq/IRqA=
+
+"@types/crypto-js@^3.1.43":
+  version "3.1.47"
+  resolved "https://registry.npmmirror.com/@types/crypto-js/-/crypto-js-3.1.47.tgz#36e549dd3f1322742a3a738e7c113ebe48221860"
+  integrity sha512-eI6gvpcGHLk3dAuHYnRCAjX+41gMv1nz/VP55wAe5HtmAKDOoPSfr3f6vkMc08ov1S0NsjvUBxDtHHxqQY1LGA==
 
 "@types/debug@^4.1.4":
   version "4.1.5"
@@ -4744,6 +4820,11 @@ crypto-browserify@^3.11.0:
     public-encrypt "^4.0.0"
     randombytes "^2.0.0"
     randomfill "^1.0.3"
+
+crypto-js@^3.1.9-1:
+  version "3.3.0"
+  resolved "https://registry.npmmirror.com/crypto-js/-/crypto-js-3.3.0.tgz#846dd1cce2f68aacfa156c8578f926a609b7976b"
+  integrity sha512-DIT51nX0dCfKltpRiXV+/TVZq+Qq2NgF4644+K7Ttnla7zEzqc+kjJyiB96BHNyUTBxyjzRcZYpUdZa+QAqi6Q==
 
 crypto-random-string@^1.0.0:
   version "1.0.0"
@@ -8705,6 +8786,11 @@ jpeg-js@^0.4.2:
   version "0.4.4"
   resolved "https://registry.npmmirror.com/jpeg-js/-/jpeg-js-0.4.4.tgz#a9f1c6f1f9f0fa80cdb3484ed9635054d28936aa"
   integrity sha512-WZzeDOEtTOBK4Mdsar0IqEU5sMr3vSV2RqkAIzUEV2BHnUfKGyswWFPFwK5EeDo93K3FohSHbLAjj0s1Wzd+dg==
+
+js-base64@^3.7.8:
+  version "3.7.8"
+  resolved "https://registry.npmmirror.com/js-base64/-/js-base64-3.7.8.tgz#af44496bc09fa178ed9c4adf67eb2b46f5c6d2a4"
+  integrity sha512-hNngCeKxIUQiEUN3GPJOkz4wF/YvdUdbNL9hsBcMQTkKzboD7T/q3OYOuuPZLUE6dBxSGpwhk5mwuDud7JVAow==
 
 js-beautify@^1.6.12, js-beautify@^1.6.14:
   version "1.10.2"

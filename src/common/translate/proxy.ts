@@ -44,7 +44,7 @@ export const getProxyAxios = (info?: boolean, googleMirror?: string) => {
 
               response.on("end", () => {
                 // console.log(`[GoogleTranslate] Request done. Content download time: ${Date.now() - startTime}ms`);
-                const text = Buffer.concat(chunks as Uint8Array[]).toString();
+                const text = Buffer.concat(chunks as Buffer[]).toString();
                 try {
                   resolve({
                     data: JSON.parse(text),

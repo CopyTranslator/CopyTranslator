@@ -418,11 +418,10 @@ function initConfig(
         "google",
         "baidu",
         "caiyun",
-        "keyan",
         "stepfun",
       ],
       translatorTypes,
-      "v12.0.0"
+      "v12.1.0"
     )
   );
 
@@ -453,13 +452,12 @@ function initConfig(
         "google",
         "baidu",
         "caiyun",
-        "keyan",
         "stepfun",
         "youdao",
         "sogou",
       ],
       translatorTypes,
-      "v12.0.0"
+      "v12.1.0"
     )
   );
 
@@ -600,6 +598,87 @@ function initConfig(
       undefined,
       "keyanConfigNote",
       "https://www.keyanyuedu.com/"
+    )
+  );
+
+  config.setRule(
+    "aliyun",
+    new StructRule<KeyConfig>(
+      { accessKeyId: "", accessKeySecret: "" },
+      generalCheck,
+      undefined,
+      undefined,
+      "https://www.aliyun.com/product/ai/alimt"
+    )
+  );
+
+  config.setRule(
+    "azure",
+    new StructRule<any>(
+      { subscriptionKey: "", region: "", free: false },
+      undefined,
+      {
+        subscriptionKey: { uiType: "text" },
+        region: { uiType: "text" },
+        free: { uiType: "checkbox", label: "azureFree" },
+      },
+      undefined,
+      "https://azure.microsoft.com/en-us/services/cognitive-services/translator/"
+    )
+  );
+
+  config.setRule(
+    "deepl",
+    new StructRule<KeyConfig>(
+      { auth_key: "" },
+      generalCheck,
+      undefined,
+      undefined,
+      "https://www.deepl.com/pro-api"
+    )
+  );
+
+  config.setRule(
+    "tencent",
+    new StructRule<KeyConfig>(
+      { secretId: "", secretKey: "" },
+      generalCheck,
+      undefined,
+      undefined,
+      "https://cloud.tencent.com/product/tmt"
+    )
+  );
+
+  config.setRule(
+    "tencentsmart",
+    new StructRule<KeyConfig>(
+      {},
+      undefined,
+      undefined,
+      undefined,
+      "https://transmart.qq.com/index"
+    )
+  );
+
+  config.setRule(
+    "yandex",
+    new StructRule<KeyConfig>(
+      {},
+      undefined,
+      undefined,
+      undefined,
+      "https://yandex.com/dev/translate/"
+    )
+  );
+
+  config.setRule(
+    "volc",
+    new StructRule<KeyConfig>(
+      { accessKeyId: "", accessKeySecret: "" },
+      generalCheck,
+      undefined,
+      undefined,
+      "https://www.volcengine.com/product/translate"
     )
   );
 

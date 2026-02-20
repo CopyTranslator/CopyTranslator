@@ -22,7 +22,14 @@ module.exports = {
     "@opentranslate2/youdao",
     "@opentranslate2/sogou",
     "@opentranslate2/translator",
-    "@opentranslate2/baidu-domain"
+    "@opentranslate2/baidu-domain",
+    "@opentranslate2/aliyun",
+    "@opentranslate2/azure",
+    "@opentranslate2/deepl",
+    "@opentranslate2/tencent",
+    "@opentranslate2/tencent-smart",
+    "@opentranslate2/volc",
+    "@opentranslate2/yandex"
   ],
   pluginOptions: {
     electronBuilder: {

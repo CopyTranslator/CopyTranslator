@@ -333,5 +333,16 @@
     "compareGroup": "Compare Group",
     "compareGroupDesc": "Configure comparison translators and their order",
     "doubleGroup": "Double-click Group",
-    "doubleGroupDesc": "Configure double-click translators and their order"
+    "doubleGroupDesc": "Configure double-click translators and their order",
+    "aliyun": "Aliyun Translate",
+    "azure": "Azure Translate",
+    "deepl": "DeepL Translate",
+    "tencent": "Tencent Translate",
+    "yandex": "Yandex Translate",
+    "volc": "Volcengine Translate",
+    "<tooltip>aliyun": "Aliyun Translate",
+    "<tooltip>azure": "Azure Translate",
+    "<tooltip>yandex": "Yandex Translate",
+    "<tooltip>volc": "Volcengine Translate",
+    "<tooltip>tencentsmart": "Tencent Interactive Translate (Transmart)"
 }

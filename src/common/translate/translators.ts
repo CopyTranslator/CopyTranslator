@@ -4,7 +4,13 @@ import { GoogleWrapper } from "./google-wrapper";
 import { Youdao } from "@opentranslate2/youdao";
 import { Caiyun } from "@opentranslate/caiyun";
 import { Niu} from "@opentranslate2/niu";
-// import { Tencent } from "@opentranslate/tencent";
+import { Aliyun } from "@opentranslate2/aliyun";
+import { Azure } from "@opentranslate2/azure";
+import { Deepl } from "@opentranslate2/deepl";
+import { TencentSmart } from "@opentranslate2/tencent-smart";
+import { Yandex } from "@opentranslate2/yandex";
+import { VolcTranslator } from "@opentranslate2/volc";
+import { Tencent } from "@opentranslate2/tencent";
 import { Sogou } from "@opentranslate2/sogou";
 import { BaiduDomain } from "@opentranslate2/baidu-domain";
 import { TranslatorType } from "@/common/types";
@@ -25,7 +31,13 @@ export const translatorMap: [TranslatorType, Translator][] = [
   ["youdao", new Youdao({ axios, config: defaultTokens.get("youdao") })],
   ["sogou", new Sogou({ axios, config: defaultTokens.get("sogou") })],
   ["caiyun", new Caiyun({ axios, config: defaultTokens.get("caiyun") })],
-  // ["tencent", new Tencent({ axios, config: defaultTokens.get("tencent") })],
+  ["aliyun", new Aliyun({ axios, config: defaultTokens.get("aliyun") })],
+  ["azure", new Azure({ axios, config: defaultTokens.get("azure") })],
+  ["deepl", new Deepl({ axios, config: defaultTokens.get("deepl") })],
+  ["tencent", new Tencent({ axios, config: defaultTokens.get("tencent") })],
+  ["tencentsmart", new TencentSmart({ axios, config: defaultTokens.get("tencentsmart") })],
+  ["yandex", new Yandex({ axios, config: defaultTokens.get("yandex") })],
+  ["volc", new VolcTranslator({ axios, config: defaultTokens.get("volc") })],
   [
     "baidu-domain",
     new BaiduDomain({

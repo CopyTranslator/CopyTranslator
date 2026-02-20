@@ -35,7 +35,27 @@
 }
 
 .tencent {
-  background-image: url("../images/tencent.png");
+  background-image: url("../images/tencent.svg");
+}
+
+.tencentsmart {
+  background-image: url("../images/tencent-smart.png");
+}
+
+.aliyun {
+  background-image: url("../images/aliyun.svg");
+}
+
+.azure {
+  background-image: url("../images/azure.svg");
+}
+
+.yandex {
+  background-image: url("../images/yandex.svg");
+}
+
+.volc {
+  background-image: url("../images/volcengine.svg");
 }
 
 .baidu-domain-electronics {

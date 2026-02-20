@@ -44,7 +44,7 @@ export const getProxyAxios = (info?: boolean, googleMirror?: string) => {
 
               response.on("end", () => {
                 // console.log(`[GoogleTranslate] Request done. Content download time: ${Date.now() - startTime}ms`);
-                const text = Buffer.concat(chunks).toString();
+                const text = Buffer.concat(chunks as Uint8Array[]).toString();
                 try {
                   resolve({
                     data: JSON.parse(text),
@@ -60,13 +60,13 @@ export const getProxyAxios = (info?: boolean, googleMirror?: string) => {
                 }
               });
 
-              response.on("error", (error) => {
+              response.on("error", (error:Error) => {
                  console.error(`[GoogleTranslate] Response error:`, error);
                  reject(error);
               });
             });
 
-            request.on("error", (error) => {
+            request.on("error", (error: Error) => {
               console.error(`[GoogleTranslate] Request error:`, error);
               reject(error);
             });

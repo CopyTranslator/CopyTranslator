@@ -396,7 +396,7 @@ function initConfig(
   //与翻译有关的
   config.setRule(
     "translatorType",
-    new FlexibleUnionRule<TranslatorType>("google", translatorTypes)
+    new FlexibleUnionRule<TranslatorType>("baidu", translatorTypes)
   );
   config.setRule(
     "dictionaryType",

@@ -2,7 +2,7 @@ import { osSpec } from "./env";
 let constants: { [key: string]: string } = {
   appName: "CopyTranslator",
   nickName: "知微",
-  version: "12.0.0",
+  version: "12.1.0",
   stage: "stable",
   changelogs: "https://copytranslator.github.io/changelogs/v12.html",
   wiki: "https://copytranslator.github.io/guide",
@@ -57,7 +57,7 @@ export function compatible(configVersion: string): boolean {
     if (configCount > currentCount) {
       return false; //回退到旧版本要把整个配置文件重置一下，避免冲突
     }
-    const minVersion = "12.0.0";
+    const minVersion = "12.1.0";
     const minCount = version2int(minVersion);
 
     if (configCount < minCount) { // 12.0.1 之前的版本，不支持新的配置项

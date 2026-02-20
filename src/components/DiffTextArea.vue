@@ -6,7 +6,7 @@
   >
     <div>
       <div
-        v-for="(result, engine) in resultBuffer"
+        v-for="engine in sortedEngines"
         :key="engine"
         style="margin-left: 2px;"
       >
@@ -29,7 +29,7 @@
             height="22px"
             @click="callback('copyResult', engine)"
             style="margin-top: auto; margin-bottom: auto;"
-            v-if="result.status !== 'Translating'"
+            v-if="resultBuffer[engine].status !== 'Translating'"
           >
             <v-icon size="22px"> mdi-content-copy </v-icon>
           </v-btn>
@@ -38,7 +38,7 @@
             :size="20"
             :width="2"
             color="primary"
-            :indeterminate="result.status == 'Translating'"
+            :indeterminate="resultBuffer[engine].status == 'Translating'"
             style="margin-top: auto; margin-bottom: auto;"
             value="100"
           >
@@ -70,7 +70,7 @@
               >
             </div>
           </div>
-          <div v-else>{{ result.translation }}</div>
+          <div v-else>{{ resultBuffer[engine].translation }}</div>
         </div>
       </div>
     </div>
@@ -86,6 +86,19 @@ import "@/css/shared-styles.css";
 
 @Component
 export default class DiffTextArea extends Mixins(BaseView) {
+  get sortedEngines(): string[] {
+    const configOrder = this.$store.state.config['translator-compare'] || [];
+    const bufferKeys = Object.keys(this.resultBuffer);
+    
+    // Filter configOrder to only include keys present in buffer
+    const sorted = configOrder.filter((key: string) => bufferKeys.includes(key));
+    
+    // Add any keys from buffer that weren't in configOrder
+    const remaining = bufferKeys.filter((key: string) => !sorted.includes(key));
+    
+    return [...sorted, ...remaining];
+  }
+
   get compareResult(): CompareResult {
     if (Object.keys(this.validResults).length > 1) {
       return compareAll(this.resultBuffer);

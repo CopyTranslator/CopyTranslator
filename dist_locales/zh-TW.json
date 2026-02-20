@@ -342,5 +342,13 @@
     "proxyUsername": "Username",
     "proxyPassword": "Password",
     "networkProxyPrompt": "Configure HTTP/SOCKS5 proxy",
-    "enableNetworkProxy": "Enable Network Proxy"
+    "enableNetworkProxy": "Enable Network Proxy",
+    "addAIProvider": "Add AI Provider",
+    "editAIProvider": "Edit AI Provider",
+    "cacheGroup": "Cache Group",
+    "cacheGroupDesc": "Configure cached translators and their order",
+    "compareGroup": "Compare Group",
+    "compareGroupDesc": "Configure comparison translators and their order",
+    "doubleGroup": "Double-click Group",
+    "doubleGroupDesc": "Configure double-click translators and their order"
 }

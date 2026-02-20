@@ -1,8 +1,7 @@
-import { Translator } from "./types";
-import { OpenAI } from "./openai";
-import { axios } from "./proxy";
+import type { Translator, ProviderConfig, CustomTranslatorConfig } from "./types";
 import config from "../configuration";
-import { ProviderConfig, CustomTranslatorConfig } from "./types";
+
+
 
 /**
  * 自定义翻译器管理器（基于供应商）
@@ -22,7 +21,12 @@ export class CustomTranslatorManager {
   private providers: Map<string, ProviderConfig> = new Map();
 
   private constructor() {
-    // 延迟加载，等待配置系统初始化
+    // 尝试初始化，确保在渲染进程中也能获取到数据
+    try {
+      this.initialize();
+    } catch (error) {
+      console.warn("[供应商管理] 构造函数初始化失败 (可能是配置尚未准备好):", error);
+    }
   }
 
   /**
@@ -85,11 +89,16 @@ export class CustomTranslatorManager {
           const translatorConfig = this.getTranslatorConfig(provider, modelName);
           
           if (translatorConfig) {
-            const translator = this.createTranslator(translatorConfig);
             this.customConfigs.set(translatorId, translatorConfig);
-            this.customTranslators.set(translatorId, translator);
-
-            console.debug(`[供应商管理] 生成翻译器实例: ${translatorId}`);
+            
+            // 渲染进程优化：不在渲染进程创建实际的翻译器实例，避免加载重型依赖
+            if (process.type !== 'renderer') {
+                const translator = this.createTranslator(translatorConfig);
+                this.customTranslators.set(translatorId, translator);
+                console.debug(`[供应商管理] 生成翻译器实例: ${translatorId}`);
+            } else {
+                console.debug(`[供应商管理] 跳过生成翻译器实例 (渲染进程): ${translatorId}`);
+            }
           }
         } catch (error) {
           console.error(`[供应商管理] 创建翻译器失败 ${provider.id}-${modelName}:`, error);
@@ -128,6 +137,8 @@ export class CustomTranslatorManager {
    * 创建翻译器实例
    */
   private createTranslator(translatorConfig: CustomTranslatorConfig): Translator {
+    const { OpenAI } = require("./openai");
+    const { axios } = require("./proxy");
     return new OpenAI({ axios, config: translatorConfig.config });
   }
 

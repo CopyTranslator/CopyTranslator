@@ -19,7 +19,6 @@ import { constants, version } from "../common/constant";
 import { RenController, MainController } from "../common/controller";
 import { createProxy } from "../proxy/renderer";
 import { ColorConfig } from "@/common/rule";
-import { customTranslatorManager } from "@/common/translate/custom-translators";
 
 export class RendererController extends RenController {
   private static _instance: RendererController;
@@ -100,7 +99,8 @@ export class RendererController extends RenController {
         }
         break;
       case "translatorProviders":
-        customTranslatorManager.reload();
+        // customTranslatorManager.reload();
+        // 这里不需要reload，因为主进程会处理
         break;
       case "localeSetting":
         break;

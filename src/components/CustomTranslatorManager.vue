@@ -330,10 +330,10 @@
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
 import { customTranslatorManager } from "@/common/translate/custom-translators";
-import { getTranslator } from "@/common/translate/translators";
 import { fetchModels } from "@/common/translate/model-fetcher";
 import { ProviderConfig } from "@/common/translate/types";
 import { providerTemplates, getProviderTemplate } from "@/common/translate/provider-templates";
+import eventBus from "@/common/event-bus";
 
 interface ProviderWithUI extends ProviderConfig {
   availableModels?: string[];
@@ -412,6 +412,8 @@ export default class CustomTranslatorManagerView extends Vue {
   }
 
   mounted() {
+    // 确保从配置加载最新数据
+    customTranslatorManager.reload();
     this.loadProviders();
   }
 
@@ -536,6 +538,7 @@ export default class CustomTranslatorManagerView extends Vue {
     
     this.loadProviders();
     this.closeProviderDialog();
+    eventBus.at("dispatch", "reloadCustomTranslators", null);
   }
 
   closeProviderDialog() {
@@ -590,13 +593,43 @@ export default class CustomTranslatorManagerView extends Vue {
         this.testingProvider.id,
         this.testModel
       );
-      
-      const translator = getTranslator(translatorId);
-      const result = await translator.translate(
-        this.testText,
-        this.testFrom as any,
-        this.testTo as any
-      );
+
+      const requestId = Date.now().toString() + Math.random().toString();
+      const resultPromise = new Promise((resolve, reject) => {
+        const successHandler = (res: any) => {
+          if (res.id === requestId) {
+            eventBus.off("testTranslateResult", successHandler);
+            eventBus.off("testTranslateError", errorHandler);
+            resolve(res.data);
+          }
+        };
+        const errorHandler = (err: any) => {
+          if (err.id === requestId) {
+            eventBus.off("testTranslateResult", successHandler);
+            eventBus.off("testTranslateError", errorHandler);
+            reject(err.error);
+          }
+        };
+        eventBus.on("testTranslateResult", successHandler);
+        eventBus.on("testTranslateError", errorHandler);
+
+        // Set timeout
+        setTimeout(() => {
+          eventBus.off("testTranslateResult", successHandler);
+          eventBus.off("testTranslateError", errorHandler);
+          reject(new Error("Translation timeout"));
+        }, 30000);
+      });
+
+      eventBus.at("dispatch", "testTranslate", {
+        id: requestId,
+        text: this.testText,
+        engine: translatorId,
+        from: this.testFrom,
+        to: this.testTo,
+      });
+
+      const result: any = await resultPromise;
       this.testResult = result.trans.paragraphs.join("\n");
     } catch (error) {
       this.testError = String(error);

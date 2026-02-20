@@ -44,6 +44,9 @@ class Controller extends MainController {
   constructor() {
     super();
     this.config.load();
+    // Lazy load to avoid circular dependencies
+    const { customTranslatorManager } = require("@/common/translate/custom-translators");
+    customTranslatorManager.reload();
     observers.push(this);
     observers.push(this.transCon);
     this.bindLinks(actionLinks);
@@ -180,7 +183,7 @@ class Controller extends MainController {
 
   async createWindow() {
     this.l10n.install(store, this.config.get("localeSetting")); //修复无法检测系统语言的问题
-    await this.transCon.init(); //初始化翻译控制器
+    const transInitPromise = this.transCon.init(); //初始化翻译控制器
     this.restoreFromConfig(); //恢复设置
     eventListener.bind(); //绑定事件
     startService(this, authorizeKey); // 创建代理服务
@@ -190,6 +193,7 @@ class Controller extends MainController {
     if (this.get("autoCheckUpdate")) {
       bus.at("dispatch", "checkUpdate");
     }
+    await transInitPromise;
   }
 
   async onExit() {

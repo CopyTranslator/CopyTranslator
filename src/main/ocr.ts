@@ -1,11 +1,8 @@
-const AipOcrClient = require("baidu-aip-sdk").ocr;
 import { examToken } from "@/common/translate/token";
 import eventBus from "@/common/event-bus";
 import conf from "@/common/configuration";
 import { Language } from "@opentranslate2/languages";
 import logger from "@/common/logger";
-const ShortcutCapture = require("shortcut-capture");
-export const shortcutCapture = new ShortcutCapture();
 
 type LanguageType =
   | "CHN_ENG"
@@ -21,11 +18,21 @@ type LanguageType =
 
 export class Recognizer {
   client: any;
+  shortcutCapture: any;
 
   constructor() {
-    shortcutCapture.on("capture", (data: any) =>
-      this.recognize(data["dataURL"])
-    );
+    // Lazy initialization in getShortcutCapture
+  }
+
+  getShortcutCapture() {
+    if (!this.shortcutCapture) {
+      const ShortcutCapture = require("shortcut-capture");
+      this.shortcutCapture = new ShortcutCapture();
+      this.shortcutCapture.on("capture", (data: any) =>
+        this.recognize(data["dataURL"])
+      );
+    }
+    return this.shortcutCapture;
   }
 
   enabled(): boolean {
@@ -38,12 +45,13 @@ export class Recognizer {
       this.client = undefined;
     } else {
       const { app_id, api_key, secret_key } = config;
+      const AipOcrClient = require("baidu-aip-sdk").ocr;
       this.client = new AipOcrClient(app_id, api_key, secret_key);
     }
   }
 
   capture() {
-    shortcutCapture.shortcutCapture();
+    this.getShortcutCapture().shortcutCapture();
   }
 
   getLanguage(): LanguageType {

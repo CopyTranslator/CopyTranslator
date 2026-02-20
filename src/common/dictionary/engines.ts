@@ -1,13 +1,20 @@
 import { GoogleEngine, YoudaoEngine, BingEngine } from "./easy";
 import { WordEngine, DictionaryType } from "./types";
 
-const dictionaryMap: [DictionaryType, WordEngine][] = [
-  ["bing", new BingEngine()],
-  ["youdao", new YoudaoEngine()],
-  // ["google", new GoogleEngine()],
-];
+const dictionaryCreators: Record<string, () => WordEngine> = {
+  bing: () => new BingEngine(),
+  youdao: () => new YoudaoEngine(),
+  // google: () => new GoogleEngine(),
+};
 
-export const dictionaries = new Map(dictionaryMap);
+export const dictionaries = new Map<string, WordEngine>();
+
 export function getDictionary(dictType: DictionaryType): WordEngine {
+  if (!dictionaries.has(dictType)) {
+    const creator = dictionaryCreators[dictType];
+    if (creator) {
+      dictionaries.set(dictType, creator());
+    }
+  }
   return <WordEngine>dictionaries.get(dictType);
 }

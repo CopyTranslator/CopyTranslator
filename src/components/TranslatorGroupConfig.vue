@@ -68,7 +68,7 @@
 import { Component, Prop, Vue, Watch } from "vue-property-decorator";
 import draggable from "vuedraggable";
 import { translatorTypes } from "@/common/types";
-import { getTranslator } from "@/common/translate/translators";
+import { builtInTranslatorMetadata, isBuiltInTranslator } from "@/common/translate/metadata";
 import { customTranslatorManager } from "@/common/translate/custom-translators";
 import eventBus from "@/common/event-bus";
 
@@ -109,16 +109,22 @@ export default class TranslatorGroupConfig extends Vue {
     if (localized) {
       return localized;
     }
+    // 尝试查找 tooltip 作为后备名称
+    const tooltipKey = `<tooltip>${translatorId}`;
+    if (this.trans?.[tooltipKey]) {
+      return this.trans[tooltipKey];
+    }
+
     const customConfig = customTranslatorManager.getConfig(translatorId);
     if (customConfig?.name) {
       return customConfig.name;
     }
-    try {
-      const translator = getTranslator(translatorId);
-      return translator.name || translatorId;
-    } catch (e) {
-      return translatorId;
+
+    if (isBuiltInTranslator(translatorId)) {
+      return builtInTranslatorMetadata[translatorId].name;
     }
+
+    return translatorId;
   }
 
   addTranslator(id: string) {

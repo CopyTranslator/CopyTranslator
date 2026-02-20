@@ -18,7 +18,7 @@ export class Polymer {
       }
       engine
         .query(words)
-        .then((res) => {
+        .then((res: QueryDictResult) => {
           this.resultBuffer.set(res.engine, res);
         })
         .catch(() => {

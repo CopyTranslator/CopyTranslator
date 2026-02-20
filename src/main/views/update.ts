@@ -1,5 +1,4 @@
 import { dialog, BrowserWindow, ipcMain } from "electron";
-import { autoUpdater } from "electron-updater";
 import { env, icon, osType } from "@/common/env";
 import { Controller } from "@/main/controller";
 import path from "path";
@@ -11,7 +10,6 @@ import {
 } from "@/common/constant";
 import axios_ from "axios";
 
-autoUpdater.autoDownload = false;
 type UpdateInfo = {
   releaseName: string;
   releaseNotes: string;
@@ -23,14 +21,71 @@ type UpdateInfo = {
 export class UpdateChecker {
   controller: Controller;
   win?: BrowserWindow;
+  private _autoUpdater: any;
+  private bound = false;
+
   constructor(controller: Controller) {
     this.controller = controller;
-    this.bindUpdateEvents();
+  }
+
+  get autoUpdater() {
+    if (!this._autoUpdater) {
+      this._autoUpdater = require("electron-updater").autoUpdater;
+      this._autoUpdater.autoDownload = false;
+      this.bindUpdateEvents();
+    }
+    return this._autoUpdater;
+  }
+
+  bindUpdateEvents() {
+    if (this.bound) return;
+    this.bound = true;
+    const autoUpdater = this._autoUpdater;
+
+    autoUpdater.on("error", (error: Error) => {
+      console.error("Github检查更新失败");
+      this.checkTheGithubPages();
+    });
+
+    autoUpdater.on("update-available", (updateInfo: any) => {
+      updateInfo.needCompile = false;
+      updateInfo.isWin = require("os").platform == "win32";
+      updateInfo.manualLink = constants.manualDownloadLink;
+      this.postUpdateInfo(updateInfo);
+    });
+
+    autoUpdater.on("update-downloaded", () => {
+      dialog
+        .showMessageBox(BrowserWindow.getAllWindows()[0], {
+          type: "info",
+          title: "安装更新",
+          icon: icon,
+          message: "更新已下载",
+          buttons: ["现在退出并安装", "退出后自动安装", "cancel"],
+          cancelId: 2,
+        })
+        .then((res) => res.response)
+        .then((response) => {
+          if (response == 0) {
+            setImmediate(() => autoUpdater.quitAndInstall());
+          } else if (response == 1) {
+            autoUpdater.autoInstallOnAppQuit = true;
+          }
+        });
+    });
+
+    ipcMain.on("confirm-update", (event, args: any) => {
+      const win = BrowserWindow.fromWebContents(event.sender);
+      if (win) {
+        win.close();
+      }
+      autoUpdater.downloadUpdate();
+    });
   }
 
   async check() {
     console.log("正在检查Github更新");
-    autoUpdater.checkForUpdates().catch((e) => {
+    this.autoUpdater.checkForUpdates().catch((e: any) => {
       console.log("成功捕获异常好吧");
     });
   }
@@ -132,48 +187,6 @@ export class UpdateChecker {
 
     win.webContents.once("did-finish-load", () => {
       win.webContents.send("releaseNote", updateInfo);
-    });
-  }
-
-  bindUpdateEvents() {
-    autoUpdater.on("error", (error: Error) => {
-      console.error("Github检查更新失败");
-      this.checkTheGithubPages();
-    });
-
-    autoUpdater.on("update-available", (updateInfo) => {
-      updateInfo.needCompile = false;
-      updateInfo.isWin = require("os").platform == "win32";
-      updateInfo.manualLink = constants.manualDownloadLink;
-      this.postUpdateInfo(updateInfo);
-    });
-
-    autoUpdater.on("update-downloaded", () => {
-      dialog
-        .showMessageBox(BrowserWindow.getAllWindows()[0], {
-          type: "info",
-          title: "安装更新",
-          icon: icon,
-          message: "更新已下载",
-          buttons: ["现在退出并安装", "退出后自动安装", "cancel"],
-          cancelId: 2,
-        })
-        .then((res) => res.response)
-        .then((response) => {
-          if (response == 0) {
-            setImmediate(() => autoUpdater.quitAndInstall());
-          } else if (response == 1) {
-            autoUpdater.autoInstallOnAppQuit = true;
-          }
-        });
-    });
-
-    ipcMain.on("confirm-update", (event, args: any) => {
-      const win = BrowserWindow.fromWebContents(event.sender);
-      if (win) {
-        win.close();
-      }
-      autoUpdater.downloadUpdate();
     });
   }
 }

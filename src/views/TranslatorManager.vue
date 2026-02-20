@@ -158,7 +158,7 @@ import { Component, Watch, Vue } from "vue-property-decorator";
 import KeyConfig from "@/components/KeyConfig.vue";
 import TranslatorGroupConfig from "@/components/TranslatorGroupConfig.vue";
 import { translatorTypes, Identifier } from "@/common/types";
-import { getTranslator } from "@/common/translate/translators";
+import { builtInTranslatorMetadata, isBuiltInTranslator } from "@/common/translate/metadata";
 import { customTranslatorManager } from "@/common/translate/custom-translators";
 import config from "@/common/configuration";
 import eventBus from "@/common/event-bus";
@@ -224,16 +224,22 @@ class TranslatorManager extends Vue {
     if (localized) {
       return localized;
     }
+    // 尝试查找 tooltip 作为后备名称
+    const tooltipKey = `<tooltip>${translatorId}`;
+    if (this.trans?.[tooltipKey]) {
+      return this.trans[tooltipKey];
+    }
+
     const customConfig = customTranslatorManager.getConfig(translatorId);
     if (customConfig?.name) {
       return customConfig.name;
     }
-    try {
-      const translator = getTranslator(translatorId);
-      return translator.name || translatorId;
-    } catch (e) {
-      return translatorId;
+    
+    if (isBuiltInTranslator(translatorId)) {
+      return builtInTranslatorMetadata[translatorId].name;
     }
+    
+    return translatorId;
   }
 
   updateEnabled(translatorId: string, enabled: boolean) {

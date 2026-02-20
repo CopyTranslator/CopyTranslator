@@ -42,6 +42,7 @@ import { updateAxiosProxy } from "./proxy-helper";
 import { getProxyAxios } from "@/common/translate/proxy";
 import { isValidWindow } from "./focus-handler";
 import { customTranslatorManager } from "@/common/translate/custom-translators";
+import { getTranslator } from "@/common/translate/translators";
 import { tracker } from "./tracker";
 
 type TranslateOption = {
@@ -94,7 +95,13 @@ class TranslateController {
   async init() {
     return Promise.allSettled([
       this.translator.initialize(),
-      Promise.resolve(clipboard.init()),
+      new Promise<void>((resolve) => {
+        // Defer clipboard initialization to unblock main thread
+        setTimeout(() => {
+          clipboard.init();
+          resolve();
+        }, 0);
+      }),
     ]).then(() => {
       this.syncSupportLanguages();
     });
@@ -173,6 +180,25 @@ class TranslateController {
         break;
       case "selectionQuery":
         this.selectionQuary(param);
+        break;
+      case "testTranslate":
+        {
+          const { id, text, engine, from, to } = param;
+          getTranslator(engine)
+            .translate(text, from, to)
+            .then((res) => {
+              eventBus.at("dispatch", "testTranslateResult", { id, data: res });
+            })
+            .catch((err) => {
+              eventBus.at("dispatch", "testTranslateError", {
+                id,
+                error: String(err),
+              });
+            });
+        }
+        break;
+      case "reloadCustomTranslators":
+        customTranslatorManager.reload();
         break;
       default:
         return false;
@@ -279,29 +305,40 @@ class TranslateController {
     if (checkFocus) {
       isValidWindow("listenClipboard").then((valid) => {
         if (valid) {
+          logger.debug("valid window, checking clipboard");
           this.checkClipboard(false);
         } else {
-          console.log("invalid window, not check clipboard");
+          logger.debug("invalid window, not check clipboard");
         }
       });
       return;
     }
     const originalText = clipboard.readText();
+    logger.debug(`checkClipboard: text length ${originalText ? originalText.length : 0}`);
     if (typeof originalText != "string") {
       return; //内容并非文本
     }
     if (!this.checkLength(originalText)) {
-      this.setCurrentStatus(true);
+      if (originalText.length === 0) {
+        this.setCurrentStatus(false);
+      } else {
+        this.setCurrentStatus(true);
+      }
       return;
     }
     const text = this.normalizeText(originalText);
     if (this.checkValid(text)) {
+      logger.debug("Text is valid, starting translation");
       this.translateWithOption({
         text,
         updateLanguage: true,
         clearResult: true,
         dict: true,
       }); //这里的text可能不是真正被翻译的
+    } else {
+      logger.debug("Text is invalid (duplicate or ignored)");
+      // Ensure status is correct even if we don't translate
+      this.setCurrentStatus(); 
     }
   }
 
@@ -641,6 +678,9 @@ class TranslateController {
 
   setWatch(watch: boolean) {
     if (watch) {
+      // Ensure status is green (Listen) immediately
+      this.setCurrentStatus();
+      
       clipboard.on("text-changed", () => {
         this.checkClipboard(true);
       });
@@ -661,7 +701,10 @@ class TranslateController {
         }
       });
       clipboard.startWatching();
-      this.checkClipboard(true); //第一次检查剪贴板
+      // Delay initial check to avoid startup race conditions and allow network initialization
+      setTimeout(() => {
+        this.checkClipboard(true); //第一次检查剪贴板
+      }, 1000);
     } else {
       clipboard.stopWatching();
     }
@@ -680,6 +723,9 @@ class TranslateController {
     }
 
     const oldTranslator = translators.get(engine) as Translator;
+    if (!oldTranslator) {
+      return;
+    }
     const TranslatorClass: any = oldTranslator.constructor;
     const newTranslator = new TranslatorClass({
       axios: getProxyAxios(true),

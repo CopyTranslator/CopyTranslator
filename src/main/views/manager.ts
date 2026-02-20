@@ -15,9 +15,6 @@ import { LayoutConfig } from "@/common/rule";
 import bus from "@/common/event-bus";
 import os from "os";
 
-const forceFocus =
-  os.platform() == "win32" ? require("@adeperio/forcefocus") : null;
-
 import qs from "qs";
 
 class IntervalSaver {
@@ -248,10 +245,15 @@ export class WindowManager {
     }
     window.show();
     window.moveTop();
-    if (forceFocus != null) {
-      //https://github.com/electron/electron/issues/2867
-      //https://www.npmjs.com/package/@adeperio/forcefocus
-      forceFocus.focusWindow(window);
+    if (os.platform() == "win32") {
+      try {
+        //https://github.com/electron/electron/issues/2867
+        //https://www.npmjs.com/package/@adeperio/forcefocus
+        const forceFocus = require("@adeperio/forcefocus");
+        forceFocus.focusWindow(window);
+      } catch (e) {
+        console.error(e);
+      }
     }
   }
 
@@ -286,7 +288,7 @@ export class WindowManager {
     const window = new BrowserWindow(cfg);
 
     if (!cfg.show) {
-      window.webContents.once("did-finish-load", () => {
+      window.once("ready-to-show", () => {
         window.show();
       });
     }

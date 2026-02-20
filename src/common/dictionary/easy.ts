@@ -1,24 +1,28 @@
 import { WordEngine, QueryDictResult, DictionaryType } from "./types";
-const youdao = require("eazydict-youdao");
-const google = require("eazydict-google");
-const bing = require("eazydict-bing");
 
-const engine_funcs = {
-  bing: bing,
-  google: google,
-  youdao: youdao,
+const engine_modules = {
+  bing: "eazydict-bing",
+  google: "eazydict-google",
+  youdao: "eazydict-youdao",
 };
 
 export class EasyEngine extends WordEngine {
-  engine_func: Function;
+  engine_func?: Function;
   name: DictionaryType;
   constructor(engine: DictionaryType) {
     super();
-    this.engine_func = engine_funcs[engine];
     this.name = engine;
   }
 
   async query(words: string): Promise<QueryDictResult> {
+    if (!this.engine_func) {
+        const moduleName = engine_modules[this.name];
+        if (moduleName) {
+            this.engine_func = require(moduleName);
+        } else {
+            return Promise.reject({ words: words, code: -1, engine: this.name, error: "Engine not found" });
+        }
+    }
     return this.engine_func(words, {}).then(
       (res: any) => {
         return Promise.resolve({

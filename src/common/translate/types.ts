@@ -9,52 +9,11 @@ import {
 import { ColorStatus } from "../types";
 import { TranslatorType } from "../types";
 export { TranslateResult, Language, Languages, BaseTranslator, TranslateQueryResult, TranslateError };
-
-export interface SharedResult {
-  text: string;
-  translation: string;
-  from: string;
-  to: string;
-  engine: string;
-  transPara: string[];
-  textPara: string[];
-  chineseStyle: boolean;
-  status?: ColorStatus;
-}
-
-export function emptySharedResult(overrides = {}): SharedResult {
-  return {
-    text: "",
-    translation: "",
-    from: "",
-    to: "",
-    engine: "",
-    transPara: [],
-    textPara: [],
-    status: "None",
-    chineseStyle: false,
-    ...overrides,
-  };
-}
-
-export interface DiffPart {
-  value: string;
-  added: boolean;
-  removed: boolean;
-}
-export interface DiffParts {
-  parts: Array<Array<DiffPart>>;
-  engine: TranslatorType;
-}
+export * from "./result-types";
 
 export type CopyTranslateResult = TranslateResult & {
   resultString: string;
 };
-
-export type ResultBuffer = {
-  [key: string]: SharedResult;
-};
-
 
 export interface Translator {
   name: string; // 翻译器名称

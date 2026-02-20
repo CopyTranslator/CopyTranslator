@@ -45,6 +45,8 @@ export const normalActionTypes = [
   "configSnapshot", //恢复snapshot
   "newConfigSnapshot", //创建新snapshot
   "delConfigSnapshot", //删除快照
+  "testTranslate", // 测试翻译
+  "reloadCustomTranslators", // 重载自定义翻译器
 ] as const;
 
 //切换值的动作
@@ -266,6 +268,8 @@ export const eventTypes = [
   "dispatch",
   "preSet",
   "setSettingTab",
+  "testTranslateResult",
+  "testTranslateError",
 ] as const;
 
 export const displayTexts = [

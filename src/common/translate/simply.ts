@@ -164,7 +164,7 @@ export class Simply extends BaseTranslator<SimplyConfig> {
   lastCheck: number = 0;
 
   private async fetch(from: string, to: string, text: string, URL: string) {
-    return this.axios.get<SimplyDataResult>(
+    const res = await this.axios.get<SimplyDataResult>(
       `https://${URL}/api/translate/?` +
         qs.stringify({
           engine: "google",
@@ -173,6 +173,13 @@ export class Simply extends BaseTranslator<SimplyConfig> {
           text: text,
         })
     );
+    if (
+      res.data &&
+      (res.data["translated-text"] || res.data["translated_text"])
+    ) {
+      return res;
+    }
+    throw new Error("Invalid response");
   }
 
   private fetchWithMultipleURLs(
@@ -207,7 +214,12 @@ export class Simply extends BaseTranslator<SimplyConfig> {
     if (Date.now() - this.lastCheck > TIMEOUT) {
       result = await this.fetchWithMultipleURLs(from, to, text, instances);
     } else {
-      result = await this.fetch(from, to, text, config.URL);
+      try {
+        result = await this.fetch(from, to, text, config.URL);
+      } catch (e) {
+        console.warn("Cached simply URL failed, retrying with all URLs");
+        result = await this.fetchWithMultipleURLs(from, to, text, instances);
+      }
     }
 
     if (!result.data) {

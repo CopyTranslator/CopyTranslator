@@ -200,7 +200,11 @@ export class Lingva extends BaseTranslator<LingvaConfig> {
       //   console.log(queryURL);
     }
 
-    return this.axios.get<LingvaDataResult>(queryURL);
+    const res = await this.axios.get<LingvaDataResult>(queryURL);
+    if (res.data && res.data.translation) {
+      return res;
+    }
+    throw new Error("Invalid response");
   }
 
   private fetchWithMultipleURLs(
@@ -235,7 +239,12 @@ export class Lingva extends BaseTranslator<LingvaConfig> {
     if (Date.now() - this.lastCheck > TIMEOUT) {
       result = await this.fetchWithMultipleURLs(from, to, text, instances);
     } else {
-      result = await this.fetch(from, to, text, config.URL);
+      try {
+        result = await this.fetch(from, to, text, config.URL);
+      } catch (e) {
+        console.warn("Cached lingva URL failed, retrying with all URLs");
+        result = await this.fetchWithMultipleURLs(from, to, text, instances);
+      }
     }
 
     if (!result.data) {

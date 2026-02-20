@@ -14,6 +14,9 @@ import config from "../configuration";
 import { keyan } from "./keyan";
 import { Stepfun } from "./stepfun";
 import { customTranslatorManager } from "./custom-translators";
+import {detectLang} from "@opentranslate2/translator/dist/detect-lang"
+
+export {detectLang};
 
 export const translatorMap: [TranslatorType, Translator][] = [
   ["baidu", new Baidu({ axios, config: defaultTokens.get("baidu") })],

@@ -45,9 +45,17 @@ export type ColorConfig = {
   dark: string;
 };
 
+export interface NetworkProxyConfig {
+  host: string;
+  port: number;
+  username?: string;
+  password?: string;
+  protocol: "http" | "https" | "socks5";
+}
+
 // 字段UI元数据
 export interface FieldMetadata {
-  uiType: "text" | "select" | "textarea" | "number";
+  uiType: "text" | "select" | "textarea" | "number" | "checkbox";
   options?: readonly string[];  // 下拉选项
   label?: string;               // i18n key
   description?: string;         // 提示文本

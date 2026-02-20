@@ -39,11 +39,11 @@ export class CustomTranslatorManager {
    * 确保已初始化（懒加载）
    */
   private initialize() {
-    console.log("[供应商管理] 开始初始化...");
+    console.debug("[供应商管理] 开始初始化...");
     this.loadFromConfig();
     this.expandProvidersToTranslators();
     config.set("customTranslators", this.getAllIds());
-    console.log("[供应商管理] 初始化完成");
+    console.debug("[供应商管理] 初始化完成");
   }
 
   /**
@@ -57,12 +57,12 @@ export class CustomTranslatorManager {
       }
       
       const providerConfigs = config.get("translatorProviders") as ProviderConfig[] || [];
-      console.log(`[供应商管理] 从配置加载 ${providerConfigs.length} 个供应商`);
+      console.debug(`[供应商管理] 从配置加载 ${providerConfigs.length} 个供应商`);
       
       for (const cfg of providerConfigs) {
         if (cfg.enabled !== false) {
           this.providers.set(cfg.id, cfg);
-          console.log(`[供应商管理] 加载供应商: ${cfg.id} (${cfg.name}), 启用 ${cfg.enabledModels.length} 个模型`);
+          console.debug(`[供应商管理] 加载供应商: ${cfg.id} (${cfg.name}), 启用 ${cfg.enabledModels.length} 个模型`);
         }
       }
     } catch (error) {
@@ -89,7 +89,7 @@ export class CustomTranslatorManager {
             this.customConfigs.set(translatorId, translatorConfig);
             this.customTranslators.set(translatorId, translator);
 
-            console.log(`[供应商管理] 生成翻译器实例: ${translatorId}`);
+            console.debug(`[供应商管理] 生成翻译器实例: ${translatorId}`);
           }
         } catch (error) {
           console.error(`[供应商管理] 创建翻译器失败 ${provider.id}-${modelName}:`, error);
@@ -97,7 +97,7 @@ export class CustomTranslatorManager {
       }
     }
     
-    console.log(`[供应商管理] 共生成 ${this.customTranslators.size} 个翻译器实例`);
+    console.debug(`[供应商管理] 共生成 ${this.customTranslators.size} 个翻译器实例`);
   }
 
 
@@ -159,7 +159,7 @@ export class CustomTranslatorManager {
       this.expandProvidersToTranslators();
       this.saveToConfig();
       
-      console.log(`[供应商管理] 添加供应商: ${cfg.id} (${cfg.name})`);
+      console.debug(`[供应商管理] 添加供应商: ${cfg.id} (${cfg.name})`);
       return true;
     } catch (error) {
       console.error(`[供应商管理] 添加供应商失败:`, error);
@@ -192,7 +192,7 @@ export class CustomTranslatorManager {
       this.expandProvidersToTranslators();
       this.saveToConfig();
       
-      console.log(`[供应商管理] 更新供应商: ${id}`);
+      console.debug(`[供应商管理] 更新供应商: ${id}`);
       return true;
     } catch (error) {
       console.error(`[供应商管理] 更新供应商失败:`, error);
@@ -213,7 +213,7 @@ export class CustomTranslatorManager {
       this.expandProvidersToTranslators();
       this.saveToConfig();
       
-      console.log(`[供应商管理] 移除供应商: ${id}`);
+      console.debug(`[供应商管理] 移除供应商: ${id}`);
       return true;
     } catch (error) {
       console.error(`[供应商管理] 移除供应商失败:`, error);
@@ -266,7 +266,7 @@ export class CustomTranslatorManager {
       provider.enabledModels.push(modelName);
       this.expandProvidersToTranslators();
       this.saveToConfig();
-      console.log(`[供应商管理] 启用模型: ${providerId} - ${modelName}`);
+      console.debug(`[供应商管理] 启用模型: ${providerId} - ${modelName}`);
       return true;
     }
     
@@ -288,7 +288,7 @@ export class CustomTranslatorManager {
       provider.enabledModels.splice(index, 1);
       this.expandProvidersToTranslators();
       this.saveToConfig();
-      console.log(`[供应商管理] 禁用模型: ${providerId} - ${modelName}`);
+      console.debug(`[供应商管理] 禁用模型: ${providerId} - ${modelName}`);
       return true;
     }
     
@@ -330,7 +330,7 @@ export class CustomTranslatorManager {
     provider.enabledModels = [...models];
     this.expandProvidersToTranslators();
     this.saveToConfig();
-    console.log(`[供应商管理] 更新供应商 ${providerId} 的启用模型列表: ${models.join(', ')}`);
+    console.debug(`[供应商管理] 更新供应商 ${providerId} 的启用模型列表: ${models.join(', ')}`);
     return true;
   }
 

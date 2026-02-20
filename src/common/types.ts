@@ -79,6 +79,7 @@ export const constantActionTypes = [
   "actionButtons",
   "customTranslators",
   "translatorProviders",
+  "networkProxy",
 ] as const;
 
 
@@ -158,6 +159,7 @@ export const switchActionTypes = [
   "ignoreMouseEvents",
   "penerate",
   "focusSource",
+  "enableNetworkProxy",
 ] as const;
 
 //Electron 原生 角色

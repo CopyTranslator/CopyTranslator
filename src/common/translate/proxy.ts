@@ -1,7 +1,6 @@
 import axios_, { AxiosRequestConfig } from "axios";
 import { net } from "electron";
 const https = require("https");
-const EventEmitter = require("events");
 const defaultGoogleAPI = "https://translate.googleapis.com";
 
 export const getProxyAxios = (info?: boolean, googleMirror?: string) => {
@@ -26,18 +25,26 @@ export const getProxyAxios = (info?: boolean, googleMirror?: string) => {
 
           //仅在google翻译中使用网页代理
           return new Promise(function (resolve, reject) {
+            // console.log(`[GoogleTranslate] Request start: ${config.url}`);
+
             const request = net.request({
               url: config.url as string,
               method: config.method,
             });
-            const localBus = new EventEmitter();
+            
             request.on("response", (response) => {
-              let globalChunk: Buffer | undefined = undefined;
-              let chunks: string[] = [];
-              let length: number = 0;
-              let times: number = 0;
-              localBus.on("done", () => {
-                let text = chunks.join("");
+              // const startTime = Date.now();
+              // console.log(`[GoogleTranslate] Response received. Status: ${response.statusCode}`);
+              
+              let chunks: Buffer[] = [];
+              
+              response.on("data", (chunk) => {
+                chunks.push(chunk);
+              });
+
+              response.on("end", () => {
+                // console.log(`[GoogleTranslate] Request done. Content download time: ${Date.now() - startTime}ms`);
+                const text = Buffer.concat(chunks).toString();
                 try {
                   resolve({
                     data: JSON.parse(text),
@@ -53,35 +60,21 @@ export const getProxyAxios = (info?: boolean, googleMirror?: string) => {
                 }
               });
 
-              response.on("data", (mychunk) => {
-                globalChunk = mychunk;
-                //太神秘了，为什么要这样子才能接收到完整的数据
-                function func() {
-                  const currentChunk = (<Buffer>globalChunk).toString();
-                  // console.log("chunk", currentChunk);
-                  times += 1;
-                  if (
-                    chunks.length == 0 ||
-                    chunks[chunks.length - 1] !== currentChunk
-                  ) {
-                    // console.log(times, currentChunk);
-                    chunks.push(currentChunk);
-                    setTimeout(func, 50);
-                  } else {
-                    localBus.emit("done");
-                  }
-                }
-                func();
+              response.on("error", (error) => {
+                 console.error(`[GoogleTranslate] Response error:`, error);
+                 reject(error);
               });
             });
+
             request.on("error", (error) => {
-              console.log(error);
+              console.error(`[GoogleTranslate] Request error:`, error);
               reject(error);
             });
             request.end();
           });
         } else {
           // 通过配置发起请求
+          console.log(`[Proxy] Direct axios request: ${config.url}`);
           return axios_(config);
         }
       },

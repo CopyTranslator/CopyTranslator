@@ -1,4 +1,4 @@
-import { getTranslator, translators, Translator, Language } from "./translators";
+import { getTranslator, translators, Translator, Language, detectLang } from "./translators";
 import {
   TranslateResult,
   DirectionalTranslator,
@@ -210,7 +210,13 @@ export class Compound {
       });
   }
 
-  detect(text: string) {
+  async detect(text: string) {
+    // 优先使用离线检测，速度最快
+    const lang = detectLang(text);
+    if (lang) {
+      return lang;
+    }
+    // 如果离线检测失败（返回 null/undefined），再回退到在线检测
     return getTranslator(this.detectEngine).detect(text);
   }
 

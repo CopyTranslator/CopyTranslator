@@ -1,5 +1,15 @@
 <template>
   <div>
+    <div class="d-flex justify-end mb-2" v-if="topSave">
+      <v-btn
+        small
+        color="primary"
+        @click="save()"
+        :disabled="!isDirty"
+      >
+        {{ trans["saveConfig"] || "保存配置" }}
+      </v-btn>
+    </div>
     <v-alert
       v-if="noticeText || docUrl"
       dense
@@ -15,20 +25,47 @@
       </a>
     </v-alert>
     <div v-for="(_, key) in keyConfigLocal" :key="key">
-      <p>{{ key }}</p>
-      <v-text-field
+      <v-checkbox
+        v-if="getUiType(key) === 'checkbox'"
         v-model="keyConfigLocal[key]"
-        v-if="!isSelect(key)"
-      ></v-text-field>
+        :label="getLabel(key)"
+        dense
+        hide-details
+        class="mt-4"
+      ></v-checkbox>
+
       <v-select
-        v-else
+        v-else-if="getUiType(key) === 'select'"
         v-model="keyConfigLocal[key]"
         :items="getSelectOptions(key)"
-        style="margin: 0px; padding: 0px;"
-      >
-      </v-select>
+        :label="getLabel(key)"
+        dense
+        hide-details
+        class="mt-6"
+      ></v-select>
+
+      <v-text-field
+        v-else-if="getUiType(key) === 'number'"
+        v-model.number="keyConfigLocal[key]"
+        type="number"
+        :label="getLabel(key)"
+        dense
+        hide-details
+        class="mt-6"
+      ></v-text-field>
+
+      <v-text-field
+        v-else
+        v-model="keyConfigLocal[key]"
+        :type="getInputType(key)"
+        :label="getLabel(key)"
+        dense
+        hide-details
+        class="mt-6"
+      ></v-text-field>
     </div>
     <v-btn
+      v-if="!topSave"
       small
       color="primary"
       class="mt-2"
@@ -60,6 +97,7 @@ import Base from "./Base.vue";
 @Component
 class KeyConfig extends Base {
   @Prop({ default: undefined }) readonly identifier!: Identifier;
+  @Prop({ default: false }) readonly topSave!: boolean;
   keyConfigLocal: Record<string, any> = {};
   saveMessage = "";
   saveMessageType: "success" | "error" = "success";
@@ -118,7 +156,7 @@ class KeyConfig extends Base {
     try {
       const rule = config.getRule(this.identifier);
       const metadata = rule?.metadata?.[key];
-      console.log(`[KeyConfig] getFieldMetadata - identifier: ${this.identifier}, key: ${key}, metadata:`, metadata);
+      
       return metadata;
     } catch (e) {
       console.error(`[KeyConfig] getFieldMetadata error:`, e);
@@ -136,11 +174,41 @@ class KeyConfig extends Base {
   getSelectOptions(key: string | number): string[] {
     const metadata = this.getFieldMetadata(key);
     const options = metadata?.options ? [...metadata.options] : [];
-    console.log(`[KeyConfig] getSelectOptions - key: ${key}, options:`, options);
+    // console.log(`[KeyConfig] getSelectOptions - key: ${key}, options:`, options);
     return options;
   }
 
+  getUiType(key: string | number): string {
+    const metadata = this.getFieldMetadata(key);
+    return metadata?.uiType || "text";
+  }
+
+  getLabel(key: string | number): string {
+    const metadata = this.getFieldMetadata(key);
+    const labelKey = metadata?.label || key.toString();
+    return this.trans[labelKey] || labelKey;
+  }
+
+  getInputType(key: string | number): string {
+    const uiType = this.getUiType(key);
+    if (uiType === "number") return "number";
+    const k = key.toString().toLowerCase();
+    if (k.includes("password") || k.includes("secret")) return "password";
+    return "text";
+  }
+
   save() {
+    // 预处理：修复空值和类型问题
+    for (const key of Object.keys(this.keyConfigLocal)) {
+      const val = this.keyConfigLocal[key];
+      // 如果值为 null 或 undefined，且 UI 类型为文本，则转为空字符串
+      if (val == null) {
+        const uiType = this.getUiType(key);
+        if (uiType === 'text' || uiType === 'textarea' || uiType === 'select') {
+          this.keyConfigLocal[key] = "";
+        }
+      }
+    }
     const status = config.checkStatus(this.identifier, this.keyConfigLocal);
     if (status.canSave) {
       this.callback(this.identifier, this.keyConfigLocal);

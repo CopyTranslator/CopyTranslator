@@ -25,6 +25,7 @@
           }}</v-tab>
           <v-tab href="#ocrConfig">{{ trans["ocrConfig"] || "OCR" }}</v-tab>
           <v-tab href="#customTranslators">{{ trans["customTranslators"] }}</v-tab>
+          <v-tab href="#networkProxy">{{ trans["networkProxy"] || "网络代理" }}</v-tab>
           <v-tab href="#listenClipboardConfig">{{
             trans["listenClipboardConfig"]
           }}</v-tab>
@@ -50,6 +51,9 @@
           </v-tab-item>
           <v-tab-item value="customTranslators">
             <CustomTranslatorManager></CustomTranslatorManager>
+          </v-tab-item>
+          <v-tab-item value="networkProxy">
+            <NetworkProxy></NetworkProxy>
           </v-tab-item>
           <v-tab-item value="listenClipboardConfig">
             <BlackWhiteConfig optionName="listenClipboard"></BlackWhiteConfig>
@@ -91,6 +95,7 @@ import ActionButton from "@/components/ActionButton.vue";
 import ActionButtonConfig from "@/components/ActionButtonConfig.vue";
 import TranslatorManager from "./TranslatorManager.vue";
 import OcrConfig from "./OcrConfig.vue";
+import NetworkProxy from "./NetworkProxy.vue";
 import bus from "@/common/event-bus";
 
 @Component({
@@ -99,14 +104,15 @@ import bus from "@/common/event-bus";
     Switches,
     BlackWhiteConfig,
     About,
-    ActionButton,
     CustomTranslatorManager,
+    ActionButton,
     ActionButtonConfig,
     TranslatorManager,
     OcrConfig,
+    NetworkProxy
   },
 })
-export default class Settings extends Mixins(BaseView) {
+export default class Settings extends BaseView {
   set tab(val) {
     this.$router.replace({ query: { ...this.$route.query, ...{ tab: val } } });
   }

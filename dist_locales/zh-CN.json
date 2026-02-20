@@ -142,7 +142,7 @@
     "appearance": "外观",
     "other": "其他",
     "textAdjustPrompt": "任意文本框均可通过Ctrl配合滚轮（或者加号或减号）进行字体大小的缩放调节。",
-    "googlePrompt": "v12版本后谷歌翻译默认使用lingva翻译源，理论上不需要额外设置，如果依然存在问题，可以尝试在翻译器设置中切换google翻译源",
+    "googlePrompt": "Google翻译源配置说明：\n1. lingva 和 simply：选择后即可直接使用，无需额外配置。\n2. google：官方源，需要配置网络代理（设置->网络代理），并将谷歌镜像（mirror）留空。",
     "baiduConfigNote": "百度配置全置空也可以启用，优先使用内置通用方案",
     "caiyunConfigNote": "彩云配置全置空也可以启用，优先使用内置通用方案",
     "keyanConfigNote": "棵岩翻译无需配置即可使用",
@@ -303,5 +303,15 @@
     "selectModel": "选择模型",
     "required": "此项必填",
     "edit": "编辑",
-    "test": "测试"
+    "test": "测试",
+    "restoreMultiDefault": "恢复这些默认设置",
+    "networkProxy": "网络代理",
+    "enableProxy": "启用代理",
+    "enableNetworkProxy": "启用网络代理",
+    "proxyHost": "主机",
+    "proxyPort": "端口",
+    "proxyProtocol": "协议",
+    "proxyUsername": "用户名",
+    "proxyPassword": "密码",
+    "networkProxyPrompt": "设置 HTTP/SOCKS5 代理"
 }

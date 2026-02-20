@@ -316,5 +316,14 @@
     "<tooltip>disableAll": "Disable all translators and clear cache",
     "<tooltip>cacheAll": "Enable cache for all enabled translators",
     "<tooltip>noCacheAll": "Clear all cache settings",
-    "<tooltip>restoreMultiDefault": "Restore translator-related settings to default"
+    "<tooltip>restoreMultiDefault": "Restore translator-related settings to default",
+    "networkProxy": "Network Proxy",
+    "enableProxy": "Enable Proxy",
+    "proxyHost": "Host",
+    "proxyPort": "Port",
+    "proxyProtocol": "Protocol",
+    "proxyUsername": "Username",
+    "proxyPassword": "Password",
+    "networkProxyPrompt": "Configure HTTP/SOCKS5 proxy",
+    "enableNetworkProxy": "Enable Network Proxy"
 }

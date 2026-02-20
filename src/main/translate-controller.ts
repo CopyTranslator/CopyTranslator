@@ -38,6 +38,7 @@ import isTrad from "@/common/translate/detect-trad";
 import config from "@/common/configuration";
 import { examToken } from "@/common/translate/token";
 import { translators } from "@/common/translate/translators";
+import { updateAxiosProxy } from "./proxy-helper";
 import { getProxyAxios } from "@/common/translate/proxy";
 import { isValidWindow } from "./focus-handler";
 import { customTranslatorManager } from "@/common/translate/custom-translators";
@@ -394,10 +395,12 @@ class TranslateController {
       end = text.length;
     }
     const textForDetect = text.substring(0, end);
-    if (shouldSrc !== "auto") {
-      //不是自动，那么就尝试检测语言
+    if (this.translator.detect) {
       try {
+        // 使用离线检测优先，如果离线检测失败则使用在线检测
+        // compound.ts 的 detect 方法已经处理了这个逻辑
         let detectedLang = await this.translator.detect(textForDetect);
+
         if (detectedLang) {
           if (["zh-CN", "zh-TW"].includes(detectedLang)) {
             //因为繁简的检测似乎不太灵
@@ -692,6 +695,12 @@ class TranslateController {
       return true;
     }
     switch (identifier) {
+      case "networkProxy":
+        updateAxiosProxy(value, this.get<boolean>("enableNetworkProxy"));
+        break;
+      case "enableNetworkProxy":
+        updateAxiosProxy(this.get<NetworkProxyConfig>("networkProxy"), value);
+        break;
       case "multiSource":
         if (value == true) {
           this.translateWithOption();

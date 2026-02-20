@@ -11,6 +11,7 @@ import {
   ColorRule,
   LayoutConfig,
   CheckResult,
+  NetworkProxyConfig,
 } from "./rule";
 import { languages, Language } from "@opentranslate2/languages";
 import {
@@ -229,6 +230,7 @@ function initConfig(
   config.setRule("titlebarHeight", new TypeRule<number>(32));
   config.setRule("ignoreMouseEvents", new TypeRule<boolean>(false), false); //这个玩意儿不需要保存
   config.setRule("penerate", new TypeRule<boolean>(false)); //这个玩意儿需要保存
+  config.setRule("enableNetworkProxy", new TypeRule<boolean>(false));
   config.setRule("configSnapshots", { predefined: {} });
   config.setRule(
     "transparency",
@@ -284,7 +286,6 @@ function initConfig(
   );
 
   config.setRule(
-    //TODO 但是这里其实没有自动更新过参数
     "settings",
     new StructRule<ModeConfig>({
       x: 1390,
@@ -292,6 +293,28 @@ function initConfig(
       height: 787,
       width: 500,
     })
+  );
+
+  config.setRule(
+    "networkProxy",
+    new StructRule<NetworkProxyConfig>(
+      {
+        host: "127.0.0.1",
+        port: 7890,
+        protocol: "http",
+        username: "",
+        password: ""
+      },
+      undefined,
+      {
+        host: { uiType: "text", label: "proxyHost" },
+        port: { uiType: "number", label: "proxyPort" },
+        protocol: { uiType: "select", options: ["http", "socks5"], label: "proxyProtocol" },
+        username: { uiType: "text", label: "proxyUsername" },
+        password: { uiType: "text", label: "proxyPassword" }
+      },
+      "networkProxyPrompt"
+    )
   );
 
   // 以下是一些菜单
@@ -508,7 +531,7 @@ function initConfig(
   config.setRule(
     "google",
     new StructRule<KeyConfig>(
-      { token: "", source: "lingva", mirror: "https://translate.amz.wang" },
+      { token: "", source: "lingva", mirror: "" },
       googleCheck,
       {
         token: { uiType: "text" },

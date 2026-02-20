@@ -42,6 +42,9 @@ export class GoogleWrapper implements Translator {
       this.googleTranslator = new Google({
         axios: getProxyAxios(true, mirror) as any,
       });
+      // 强制使用 API (gtx) 模式，跳过 translate.google.cn/com 的 token 获取和 webapp 接口
+      // 解决因 google.cn 无法访问和 google.com 响应慢导致的 20s+ 延迟
+      this.googleTranslator.config.order = ["api"];
     }
     return this.googleTranslator;
   }

@@ -419,6 +419,7 @@ function initConfig(
         "baidu",
         "caiyun",
         "stepfun",
+        "tencentsmart",
       ],
       translatorTypes,
       "v12.1.0"
@@ -453,8 +454,7 @@ function initConfig(
         "baidu",
         "caiyun",
         "stepfun",
-        "youdao",
-        "sogou",
+        "tencentsmart"
       ],
       translatorTypes,
       "v12.1.0"
@@ -678,7 +678,7 @@ function initConfig(
       generalCheck,
       undefined,
       undefined,
-      "https://www.volcengine.com/product/translate"
+      "https://www.volcengine.com/product/machine-translation"
     )
   );
 

@@ -596,29 +596,34 @@ export default class CustomTranslatorManagerView extends Vue {
 
       const requestId = Date.now().toString() + Math.random().toString();
       const resultPromise = new Promise((resolve, reject) => {
+        let timeoutId: ReturnType<typeof setTimeout>;
         const successHandler = (res: any) => {
           if (res.id === requestId) {
-            eventBus.off("testTranslateResult", successHandler);
-            eventBus.off("testTranslateError", errorHandler);
+            cleanup();
             resolve(res.data);
           }
         };
         const errorHandler = (err: any) => {
           if (err.id === requestId) {
-            eventBus.off("testTranslateResult", successHandler);
-            eventBus.off("testTranslateError", errorHandler);
+            cleanup();
             reject(err.error);
           }
         };
-        eventBus.on("testTranslateResult", successHandler);
-        eventBus.on("testTranslateError", errorHandler);
+        const cleanup = () => {
+          eventBus.goff("testTranslateResult", successHandler);
+          eventBus.goff("testTranslateError", errorHandler);
+          if (timeoutId) {
+            clearTimeout(timeoutId);
+          }
+        };
+        eventBus.gon("testTranslateResult", successHandler);
+        eventBus.gon("testTranslateError", errorHandler);
 
         // Set timeout
-        setTimeout(() => {
-          eventBus.off("testTranslateResult", successHandler);
-          eventBus.off("testTranslateError", errorHandler);
+        timeoutId = setTimeout(() => {
+          cleanup();
           reject(new Error("Translation timeout"));
-        }, 30000);
+        }, 60000);
       });
 
       eventBus.at("dispatch", "testTranslate", {

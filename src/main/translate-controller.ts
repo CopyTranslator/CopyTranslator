@@ -42,7 +42,12 @@ import { updateAxiosProxy } from "./proxy-helper";
 import { getProxyAxios } from "@/common/translate/proxy";
 import { isValidWindow } from "./focus-handler";
 import { customTranslatorManager } from "@/common/translate/custom-translators";
-import { getTranslator } from "@/common/translate/translators";
+import {
+  getTranslator,
+  getEnabledWithCustomIds,
+  filterByActiveEngines,
+  filterExistingEngines,
+} from "@/common/translate/translators";
 import { tracker } from "./tracker";
 
 type TranslateOption = {
@@ -50,6 +55,7 @@ type TranslateOption = {
   updateLanguage?: boolean;
   clearResult?: boolean;
   dict?: boolean;
+  engines?: (TranslatorType | string)[];
 };
 
 class TranslateController {
@@ -67,6 +73,7 @@ class TranslateController {
   needDict: boolean = false;
 
   translating: boolean = false; //正在翻译
+  nextEngines?: (TranslatorType | string)[];
 
   incrementCounter: number = 0; //增量复制计数器
 
@@ -184,13 +191,18 @@ class TranslateController {
       case "testTranslate":
         {
           const { id, text, engine, from, to } = param;
+          console.debug(`[TranslateController] Handling testTranslate: ${engine}`);
           getTranslator(engine)
             .translate(text, from, to)
             .then((res) => {
-              eventBus.at("dispatch", "testTranslateResult", { id, data: res });
+              console.debug(`[TranslateController] testTranslate success:`, res);
+              // 使用 gat 发送，确保 IPC 也能收到
+              eventBus.gat("testTranslateResult", { id, data: res });
             })
             .catch((err) => {
-              eventBus.at("dispatch", "testTranslateError", {
+              console.error(`[TranslateController] testTranslate error:`, err);
+              // 使用 gat 发送
+              eventBus.gat("testTranslateError", {
                 id,
                 error: String(err),
               });
@@ -301,12 +313,15 @@ class TranslateController {
     return false;
   }
 
-  checkClipboard(checkFocus: boolean = false): void {
+  checkClipboard(
+    checkFocus: boolean = false,
+    engines?: (TranslatorType | string)[]
+  ): void {
     if (checkFocus) {
       isValidWindow("listenClipboard").then((valid) => {
         if (valid) {
           logger.debug("valid window, checking clipboard");
-          this.checkClipboard(false);
+          this.checkClipboard(false, engines);
         } else {
           logger.debug("invalid window, not check clipboard");
         }
@@ -334,6 +349,7 @@ class TranslateController {
         updateLanguage: true,
         clearResult: true,
         dict: true,
+        engines,
       }); //这里的text可能不是真正被翻译的
     } else {
       logger.debug("Text is invalid (duplicate or ignored)");
@@ -495,6 +511,7 @@ class TranslateController {
       //保证翻译时不被打断
       return;
     }
+    this.nextEngines = options.engines;
     if (options.clearResult) {
       this.clearResult(); //在这里只清理结果，因为可能需要source做增量
     }
@@ -516,7 +533,9 @@ class TranslateController {
       throw "incorrect call";
     }
 
-    let tasks = [this.translateSentence()];
+    const engines = this.nextEngines;
+    this.nextEngines = undefined;
+    let tasks = [this.translateSentence(engines)];
     if (dict && this.needDict) {
       tasks.push(this.queryDictionary());
     }
@@ -588,17 +607,34 @@ class TranslateController {
       });
   }
 
-  async translateSentence() {
+  async translateSentence(overrideEngines?: (TranslatorType | string)[]) {
     const language = this.language;
     if (language.source == language.target) {
       return;
     }
-    const activeEngines = this.get<(TranslatorType | string)[]>("translator-enabled");
-    let engines = this.get<(TranslatorType | string)[]>("translator-cache");
-    if (this.get<boolean>("multiSource")) {
-      engines = this.get<(TranslatorType | string)[]>("translator-compare");
+    let engines = overrideEngines;
+    if (!engines || engines.length === 0) {
+      const enabled = this.get<(TranslatorType | string)[]>("translator-enabled") || [];
+      const custom = this.get<string[]>("customTranslators") || [];
+      const activeSet = new Set(getEnabledWithCustomIds(enabled, custom));
+      const multiSource = this.get<boolean>("multiSource");
+      if (multiSource) {
+        engines = this.get<(TranslatorType | string)[]>("translator-compare");
+        engines = filterExistingEngines(engines).filter((engine) =>
+          activeSet.has(engine)
+        );
+      } else {
+        engines = this.get<(TranslatorType | string)[]>("translator-cache");
+        engines = filterByActiveEngines(engines, enabled, custom);
+      }
+    } else {
+      const enabled = this.get<(TranslatorType | string)[]>("translator-enabled") || [];
+      const custom = this.get<string[]>("customTranslators") || [];
+      const activeSet = new Set(getEnabledWithCustomIds(enabled, custom));
+      engines = filterExistingEngines(engines).filter((engine) =>
+        activeSet.has(engine)
+      );
     }
-    engines = engines.filter((engine) => activeEngines.includes(engine));
     engines.sort();
     return this.translator
       .translate(this.text, language.source, language.target, engines)
@@ -615,7 +651,9 @@ class TranslateController {
   }
 
   async doubleCopyTranslate() {
-    return this.checkClipboard(false);
+    const engines = this.get<(TranslatorType | string)[]>("translator-double");
+    const useEngines = engines && engines.length > 0 ? engines : undefined;
+    return this.checkClipboard(false, useEngines);
   }
 
   async switchTranslator(value: TranslatorType | string) {

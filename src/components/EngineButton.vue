@@ -20,7 +20,6 @@
 <script lang="ts">
 import Vue from "vue";
 import Component, { mixins } from "vue-class-component";
-import config from "@/common/configuration";
 import Base from "./Base.vue";
 import "@/css/shared-styles.css";
 import { TranslatorNameResolver } from "@/common/translate/translator-name-resolver";
@@ -40,25 +39,7 @@ const AppProps = Vue.extend({
 @Component
 export default class EngineButton extends mixins(AppProps, Base) {
   get engineClass() {
-    // 检查是否为自定义翻译器
-    if (TranslatorNameResolver.isCustomTranslator(this.engine)) {
-      // 从自定义翻译器配置中获取 providerType
-      const customConfig = TranslatorNameResolver.getCustomConfig(this.engine);
-      if (customConfig) {
-        const provider = TranslatorNameResolver.getCustomProvider(this.engine);
-        if (provider) {
-          return `provider-${provider.providerType}`;
-        }
-      }
-      // 如果无法获取 providerType，返回默认类
-      return "custom-translator";
-    }
-    
-    if (this.engine == "baidu-domain") {
-      return `${this.engine}-${config.get<any>("baidu-domain").domain}`;
-    } else {
-      return this.engine;
-    }
+    return TranslatorNameResolver.getEngineClass(this.engine);
   }
 
   get buttonSize() {

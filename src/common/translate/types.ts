@@ -63,6 +63,7 @@ export interface OpenAIConfig {
   prompt?: string; // 自定义提示词模板，使用 {from}, {to}, {text} 作为占位符
   temperature?: number; // 温度参数，默认为 0.3
   maxTokens?: number; // 最大生成token数，默认为 2000
+  translatorName?: string; // 翻译器名称
 }
 
 /**

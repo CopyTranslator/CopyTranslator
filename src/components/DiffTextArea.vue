@@ -1,5 +1,6 @@
 <template>
   <div
+    class="diffTextArea"
     contenteditable="true"
     :style="colorStyle"
     @contextmenu="openMenu('diffContext')"
@@ -12,7 +13,7 @@
       >
         <div style="height: 22px; display: flex;">
           <v-btn
-            v-bind:class="[engine, 'engineBtnBase']"
+            v-bind:class="[engineClass(engine), 'engineBtnBase']"
             icon
             width="22px"
             height="22px"
@@ -87,6 +88,10 @@ import "@/css/shared-styles.css";
 
 @Component
 export default class DiffTextArea extends Mixins(BaseView) {
+  engineClass(engineId: string) {
+    return TranslatorNameResolver.getEngineClass(engineId);
+  }
+
   getEngineName(engineId: string): string {
     const trans = this.$store.getters.locale;
     return TranslatorNameResolver.getDisplayName(engineId, trans);
@@ -171,5 +176,10 @@ export default class DiffTextArea extends Mixins(BaseView) {
   padding-right: 2px;
   text-align: center;
   min-width: 65px;
+}
+.diffTextArea {
+  height: 100%;
+  width: 100%;
+  overflow: auto;
 }
 </style>

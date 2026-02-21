@@ -5,6 +5,8 @@ import {
   TranslateError,
 } from "./types";
 import { OpenAIConfig } from "./types";
+import * as http from "http";
+import * as https from "https";
 
 // 默认提示词模板
 const DEFAULT_PROMPT = `You are a professional translator. Translate the following text to {to}. Only return the translated text without any explanation or additional information.
@@ -151,7 +153,7 @@ export interface OpenAIChatResponse {
 }
 
 export class OpenAI extends BaseTranslator<OpenAIConfig> {
-  readonly name: string = "openai";
+  name: string = "openai";
 
   /** Translator lang to language name */
   private static readonly langMap = new Map(langMap);
@@ -194,6 +196,9 @@ export class OpenAI extends BaseTranslator<OpenAIConfig> {
         const maxTokens = parseInt(options.config.maxTokens);
         this.config.maxTokens = isNaN(maxTokens) ? 2000 : maxTokens;
       }
+      if (options.config.translatorName) {
+        this.name = options.config.translatorName;
+      }
     }
   }
 
@@ -235,16 +240,33 @@ export class OpenAI extends BaseTranslator<OpenAIConfig> {
       stream: false,
     };
 
+    const url = new URL(apiUrl);
+    const isLocal =
+      url.hostname === "localhost" ||
+      url.hostname === "127.0.0.1" ||
+      url.hostname === "::1" ||
+      url.hostname.startsWith("192.168.") ||
+      url.hostname.startsWith("10.");
+
+    const axiosConfig: any = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${config.apiKey}`,
+      },
+      timeout: 60000, // 设置 60 秒超时，AI 模型响应较慢
+    };
+
+    if (isLocal) {
+      axiosConfig.httpAgent = new http.Agent();
+      axiosConfig.httpsAgent = new https.Agent({ rejectUnauthorized: false });
+      axiosConfig.proxy = false;
+    }
+
     try {
       const response = await this.axios.post<OpenAIChatResponse>(
         apiUrl,
         requestData,
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${config.apiKey}`,
-          },
-        }
+        axiosConfig
       );
 
       return response.data;
@@ -284,32 +306,36 @@ export class OpenAI extends BaseTranslator<OpenAIConfig> {
       },
     ];
 
-    const response = await this.callOpenAI(messages, config);
+    try {
+      const response = await this.callOpenAI(messages, config);
 
-    if (
-      !response.choices ||
-      response.choices.length === 0 ||
-      !response.choices[0].message
-    ) {
-      console.error("OpenAI API 响应格式异常:", response);
-      throw new TranslateError("API_SERVER_ERROR");
+      if (
+        !response.choices ||
+        response.choices.length === 0 ||
+        !response.choices[0].message
+      ) {
+        console.error("OpenAI API 响应格式异常:", response);
+        throw new TranslateError("API_SERVER_ERROR");
+      }
+
+      const translatedText = response.choices[0].message.content.trim();
+      
+      return {
+        text: text,
+        from: from,
+        to: to,
+        origin: {
+          paragraphs: text.split(/\n+/),
+          tts: (await this.textToSpeech(text, from)) || "",
+        },
+        trans: {
+          paragraphs: translatedText.split(/\n+/),
+          tts: (await this.textToSpeech(translatedText, to)) || "",
+        },
+      };
+    } catch (error) {
+      throw error;
     }
-
-    const translatedText = response.choices[0].message.content.trim();
-
-    return {
-      text: text,
-      from: from, // LLM 会自动识别源语言，直接使用传入的值
-      to,
-      origin: {
-        paragraphs: text.split(/\n+/),
-        tts: (await this.textToSpeech(text, from)) || "",
-      },
-      trans: {
-        paragraphs: translatedText.split(/\n+/),
-        tts: (await this.textToSpeech(translatedText, to)) || "",
-      },
-    };
   }
 
   /**

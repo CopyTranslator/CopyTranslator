@@ -159,6 +159,10 @@ import KeyConfig from "@/components/KeyConfig.vue";
 import TranslatorGroupConfig from "@/components/TranslatorGroupConfig.vue";
 import { Identifier } from "@/common/types";
 import { TranslatorNameResolver } from "@/common/translate/translator-name-resolver";
+import {
+  getAvailableTranslatorIds,
+  getEnabledWithCustomIds,
+} from "@/common/translate/translators";
 import config from "@/common/configuration";
 import eventBus from "@/common/event-bus";
 
@@ -178,7 +182,7 @@ class TranslatorManager extends Vue {
   }
 
   get availableTranslators(): string[] {
-    return TranslatorNameResolver.getAllTranslatorIds();
+    return TranslatorNameResolver.getBuiltInTranslatorIds();
   }
 
   get enabledTranslators(): string[] {
@@ -273,14 +277,24 @@ class TranslatorManager extends Vue {
 
 
   applyEnabledTranslators(newEnabled: string[]) {
+    const custom = this.$store.state.config["customTranslators"] || [];
+    const allowed = new Set(getAvailableTranslatorIds(this.availableTranslators, custom));
     const enabled = Array.from(new Set(newEnabled)).filter((id) =>
-      this.availableTranslators.includes(id)
+      allowed.has(id)
     );
-    const enabledSet = new Set(enabled);
-    const cache = this.cacheTranslators.filter((id) => enabledSet.has(id));
+    const activeSet = new Set(getEnabledWithCustomIds(enabled, custom));
+    const cache = this.cacheTranslators.filter((id) => activeSet.has(id));
+    const compare = (this.$store.state.config["translator-compare"] || []).filter(
+      (id: string) => activeSet.has(id)
+    );
+    const double = (this.$store.state.config["translator-double"] || []).filter(
+      (id: string) => activeSet.has(id)
+    );
     this.callback("translator-enabled", enabled);
     this.callback("translator-cache", cache);
-    if (enabled.length > 0 && !enabledSet.has(this.fallbackTranslator)) {
+    this.callback("translator-compare", compare);
+    this.callback("translator-double", double);
+    if (enabled.length > 0 && !enabled.includes(this.fallbackTranslator)) {
       this.callback("fallbackTranslator", enabled[0]);
     }
   }

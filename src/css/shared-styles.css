@@ -115,6 +115,14 @@
   background-image: url("../images/ollama.svg");
 }
 
+.provider-nvidia {
+  background-image: url("../images/nvidia.svg");
+}
+
+.provider-openrouter {
+  background-image: url("../images/openrouter.svg");
+}
+
 .provider-custom {
   background-image: url("../images/robot.svg");
 }

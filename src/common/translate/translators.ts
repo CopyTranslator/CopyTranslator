@@ -109,6 +109,42 @@ export function getAllTranslatorIds(): string[] {
   return [...builtinIds, ...customIds];
 }
 
+export function getCustomTranslatorIds(
+  customFromConfig: string[] = []
+): string[] {
+  const customIds = customTranslatorManager.getAllIds();
+  return [...new Set([...customFromConfig, ...customIds])];
+}
+
+export function getAvailableTranslatorIds(
+  builtInIds: string[] = [],
+  customFromConfig: string[] = []
+): string[] {
+  return [...new Set([...builtInIds, ...getCustomTranslatorIds(customFromConfig)])];
+}
+
+export function getEnabledWithCustomIds(
+  enabled: (TranslatorType | string)[] = [],
+  customFromConfig: string[] = []
+): (TranslatorType | string)[] {
+  return [...new Set([...enabled, ...getCustomTranslatorIds(customFromConfig)])];
+}
+
+export function filterExistingEngines(
+  engines: (TranslatorType | string)[] = []
+): (TranslatorType | string)[] {
+  return engines.filter((engine) => hasTranslator(String(engine)));
+}
+
+export function filterByActiveEngines(
+  engines: (TranslatorType | string)[] = [],
+  enabled: (TranslatorType | string)[] = [],
+  customFromConfig: string[] = []
+): (TranslatorType | string)[] {
+  const activeSet = new Set(getEnabledWithCustomIds(enabled, customFromConfig));
+  return engines.filter((engine) => activeSet.has(engine));
+}
+
 /**
  * 获取翻译器支持的语言列表
  */

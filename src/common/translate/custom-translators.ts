@@ -1,5 +1,6 @@
 import type { Translator, ProviderConfig, CustomTranslatorConfig } from "./types";
 import config from "../configuration";
+import eventBus from "../event-bus";
 
 
 
@@ -19,13 +20,15 @@ export class CustomTranslatorManager {
   
   // 供应商配置（持久化存储）
   private providers: Map<string, ProviderConfig> = new Map();
+  private initialized = false;
 
   private constructor() {
-    // 尝试初始化，确保在渲染进程中也能获取到数据
-    try {
-      this.initialize();
-    } catch (error) {
-      console.warn("[供应商管理] 构造函数初始化失败 (可能是配置尚未准备好):", error);
+    if (process.type === "renderer") {
+      eventBus.once("initialized", () => {
+        this.reload();
+      });
+    } else {
+      this.tryInitialize();
     }
   }
 
@@ -42,7 +45,29 @@ export class CustomTranslatorManager {
   /**
    * 确保已初始化（懒加载）
    */
+  private isConfigReady(): boolean {
+    return !!config && typeof config.get === "function" && typeof config.set === "function";
+  }
+
+  private tryInitialize() {
+    try {
+      if (!this.isConfigReady()) {
+        setTimeout(() => this.tryInitialize(), 0);
+        return;
+      }
+      this.initialize();
+    } catch (error) {
+      console.warn("[供应商管理] 构造函数初始化失败 (可能是配置尚未准备好):", error);
+    }
+  }
+
   private initialize() {
+    if (this.initialized) return;
+    if (!this.isConfigReady()) {
+      console.warn("[供应商管理] 配置系统尚未初始化，跳过初始化");
+      return;
+    }
+    this.initialized = true;
     console.debug("[供应商管理] 开始初始化...");
     this.loadFromConfig();
     this.expandProvidersToTranslators();
@@ -139,7 +164,13 @@ export class CustomTranslatorManager {
   private createTranslator(translatorConfig: CustomTranslatorConfig): Translator {
     const { OpenAI } = require("./openai");
     const { axios } = require("./proxy");
-    return new OpenAI({ axios, config: translatorConfig.config });
+    return new OpenAI({
+      axios,
+      config: {
+        ...translatorConfig.config,
+        translatorName: translatorConfig.name,
+      },
+    });
   }
 
   /**
@@ -369,14 +400,17 @@ export class CustomTranslatorManager {
    * 获取所有翻译器 ID
    */
   getAllIds(): string[] {
-    return Array.from(this.customTranslators.keys());
+    if (this.customTranslators.size > 0) {
+      return Array.from(this.customTranslators.keys());
+    }
+    return Array.from(this.customConfigs.keys());
   }
 
   /**
    * 检查 ID 是否为自定义翻译器
    */
   isCustomTranslator(id: string): boolean {
-    return this.customTranslators.has(id);
+    return this.customTranslators.has(id) || this.customConfigs.has(id);
   }
 
   /**
@@ -386,6 +420,7 @@ export class CustomTranslatorManager {
     this.customTranslators.clear();
     this.customConfigs.clear();
     this.providers.clear();
+    this.initialized = false;
     this.initialize();
   }
 

@@ -68,6 +68,10 @@
 import { Component, Prop, Vue, Watch } from "vue-property-decorator";
 import draggable from "vuedraggable";
 import { TranslatorNameResolver } from "@/common/translate/translator-name-resolver";
+import {
+  filterExistingEngines,
+  getEnabledWithCustomIds,
+} from "@/common/translate/translators";
 import eventBus from "@/common/event-bus";
 
 @Component({
@@ -88,10 +92,11 @@ export default class TranslatorGroupConfig extends Vue {
   }
 
   get remainingTranslators(): string[] {
-    // 获取所有可用翻译器（内置 + 自定义）
-    const allTranslators = TranslatorNameResolver.getAllTranslatorIds();
-    // 过滤掉已经在当前组中的
-    return allTranslators.filter((id: string) => !this.localList.includes(id));
+    const enabled = this.$store.state.config["translator-enabled"] || [];
+    const custom = this.$store.state.config["customTranslators"] || [];
+    const active = getEnabledWithCustomIds(enabled, custom);
+    const available = filterExistingEngines(active);
+    return available.filter((id: string) => !this.localList.includes(id));
   }
 
   @Watch('$store.state.config', { deep: true, immediate: true })

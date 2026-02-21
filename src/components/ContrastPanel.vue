@@ -1,6 +1,6 @@
 <template>
   <div :style="maxParent">
-    <Focus class="maxNoPad areaWarpper" v-if="layoutType === 'focus'"></Focus>
+    <Focus class="maxNoPad areaWarpper focusArea" v-if="layoutType === 'focus'"></Focus>
     <div
       v-else-if="layoutType === 'horizontal'"
       class="maxNoPad"
@@ -358,6 +358,9 @@ export default class ContrastPanel extends Mixins(BaseView) {
 .areaWarpper {
   padding: 0px;
   overflow: hidden;
+}
+.focusArea {
+  overflow: auto;
 }
 .myswitch >>> .v-messages {
   min-height: 0px;

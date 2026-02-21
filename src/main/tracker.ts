@@ -1,6 +1,5 @@
-import * as https from 'https';
-import { URL } from 'url';
 import { constants, isDebug } from "@/common/constant";
+import { axios } from "@/common/translate/proxy";
 
 // 1. 定义事件对象接口
 interface AppEvent {
@@ -84,41 +83,14 @@ export class UniversalTracker {
   }
 
   private sendRequest(payload: { events: AppEvent[] }): Promise<void> {
-    return new Promise((resolve, reject) => {
-      const data = JSON.stringify(payload);
-      const url = new URL(this.endpoint);
-
-      const options: https.RequestOptions = {
-        hostname: url.hostname,
-        port: url.port || 443,
-        path: url.pathname,
-        method: 'POST',
+    return axios
+      .post(this.endpoint, payload, {
         timeout: 5000,
         headers: {
-          'Content-Type': 'application/json',
-          'Content-Length': Buffer.byteLength(data),
+          "Content-Type": "application/json",
         },
-      };
-
-      const req = https.request(options, (res) => {
-        // 只要是 2xx 状态码都算成功
-        if (res.statusCode && res.statusCode >= 200 && res.statusCode < 300) {
-          resolve();
-        } else {
-          reject(new Error(`Server responded with ${res.statusCode}`));
-        }
-        res.resume(); // 消费响应流以释放内存
-      });
-
-      req.on('error', (err) => reject(err));
-      req.on('timeout', () => {
-        req.destroy();
-        reject(new Error('Request timeout'));
-      });
-
-      req.write(data);
-      req.end();
-    });
+      })
+      .then(() => undefined);
   }
 
   /**

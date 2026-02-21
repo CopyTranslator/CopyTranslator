@@ -121,6 +121,31 @@ class GroupRule<T> implements Rule {
   }
 }
 
+class FlexibleGroupRule<T> implements Rule {
+  predefined: Array<T>;
+  check: CheckFuction;
+  minimalVersion?: string;
+  constructor(
+    predefined: Array<T>,
+    options: readonly T[],
+    minimalVersion?: string
+  ) {
+    this.predefined = predefined;
+    this.minimalVersion = minimalVersion;
+    this.check = (value: Array<T | string>) => {
+      if (!value.map((item) => options.includes(item as T) || typeof item === "string").includes(false)) {
+        return true;
+      } else {
+        for (const item of value) {
+          if (!options.includes(item as T) && typeof item !== "string") {
+            console.log("check fail, invalid item", item);
+          }
+        }
+        return false;
+      }
+    };
+  }
+}
 // class CustomGroupRule<T> implements Rule {
 //   predefined: Array<T>;
 //   check: CheckFuction;
@@ -246,5 +271,6 @@ export {
   CheckFuction,
   ModeConfig,
   GroupRule,
+  FlexibleGroupRule,
   ConstantGroupRule,
 };

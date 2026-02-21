@@ -2,6 +2,10 @@ import { Rule, CheckResult } from "./rule";
 import { ConfigSnapshot, ConfigSnapshots, Identifier } from "./types";
 import { compatible, isLower, version } from "./constant";
 import store, { getConfigByKey, Config } from "../store";
+import {
+  hasTranslator,
+  getEnabledWithCustomIds,
+} from "./translate/translators";
 type Rules = Map<Identifier, Rule>; //类型别名
 import { readFileSync, writeFileSync } from "fs";
 import { env } from "../common/env";
@@ -166,6 +170,35 @@ class ConfigParser {
       }
       config[key] = val;
     }
+    const providerConfigs = (values["translatorProviders"] || []) as any[];
+    const customIdsFromProviders = providerConfigs.flatMap((provider) => {
+      const providerId = provider && provider.id;
+      const enabledModels =
+        (provider && provider.enabledModels) || [];
+      if (!providerId || !Array.isArray(enabledModels)) {
+        return [];
+      }
+      return enabledModels.map((model: string) => `${providerId}-${model}`);
+    });
+    const customIdsFromConfig = (values["customTranslators"] || []) as string[];
+    const customIdSet = new Set([
+      ...customIdsFromProviders,
+      ...customIdsFromConfig,
+    ]);
+    const filterExistingWithCustom = (engines: any[]) =>
+      Array.from(new Set(engines || [])).filter(
+        (id) => hasTranslator(String(id)) || customIdSet.has(String(id))
+      );
+    const enabled = filterExistingWithCustom(config["translator-enabled"] || []);
+    const activeSet = new Set(
+      getEnabledWithCustomIds(enabled, [...customIdSet])
+    );
+    const cleanGroup = (group: any[]) =>
+      filterExistingWithCustom(group || []).filter((id) => activeSet.has(id));
+    config["translator-enabled"] = enabled;
+    config["translator-cache"] = cleanGroup(config["translator-cache"]);
+    config["translator-compare"] = cleanGroup(config["translator-compare"]);
+    config["translator-double"] = cleanGroup(config["translator-double"]);
     store.dispatch("setConfig", config);
   }
 

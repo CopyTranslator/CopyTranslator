@@ -1,6 +1,7 @@
 import { ConfigParser } from "./configParser";
 import {
   GroupRule,
+  FlexibleGroupRule,
   ConstantGroupRule,
   StructRule,
   UnionRule,
@@ -413,7 +414,7 @@ function initConfig(
 
   config.setRule(
     "translator-enabled", //所有启用的引擎
-    new GroupRule<TranslatorType>(
+    new FlexibleGroupRule<TranslatorType>(
       [
         "google",
         "baidu",
@@ -428,7 +429,7 @@ function initConfig(
 
   config.setRule(
     "translator-cache", //所有会自动查询并缓存结果以加速切换的翻译引擎
-    new GroupRule<TranslatorType>(
+    new FlexibleGroupRule<TranslatorType>(
       [
         // "google",
         // "baidu",
@@ -448,7 +449,7 @@ function initConfig(
 
   config.setRule(
     "translator-compare", //多源对比时用的引擎
-    new GroupRule<TranslatorType>(
+    new FlexibleGroupRule<TranslatorType>(
       [
         "google",
         "baidu",
@@ -463,7 +464,7 @@ function initConfig(
 
   config.setRule(
     "translator-double",
-    new GroupRule<TranslatorType>([], translatorTypes)
+    new FlexibleGroupRule<TranslatorType>([], translatorTypes)
   );
 
   //下面是N种翻译引擎

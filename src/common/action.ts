@@ -28,8 +28,8 @@ import { getLanguageLocales, Language } from "./translate/locale";
 import store from "../store";
 import bus from "../common/event-bus";
 import logger from "./logger";
-import { customTranslatorManager } from "./translate/custom-translators";
 import { TranslatorNameResolver } from "./translate/translator-name-resolver";
+import { getEnabledWithCustomIds } from "./translate/translators";
 
 type Actions = Map<Identifier, ActionView>;
 type PostLocaleFunc = (x: string) => string;
@@ -80,6 +80,7 @@ class ActionManager {
 
   dispatch(...args: any[]) {
     const { identifier, param } = decompose(...args);
+
     if (alias.get(identifier) != undefined) {
       for (const id of alias.get(identifier) as string[]) {
         this.dispatch(id);
@@ -98,9 +99,10 @@ class ActionManager {
   getAction(identifier: Identifier): ActionView {
     if (!this.actions.has(identifier)) {
       logger.toast(`动作 ${identifier} 不存在`);
+      return { id: identifier, type: "normal" } as ActionView;
     }
     const action = this.actions.get(identifier) as ActionView;
-    if (action.subMenuGenerator) {
+    if (action && action.subMenuGenerator) {
       action.submenu = action.subMenuGenerator(action.id);
     }
     return action;
@@ -315,7 +317,8 @@ class ActionManager {
           case "translator-cache":
             // 只返回已启用的翻译器（配置中的ID）
             const enabled = config.get<string[]>("translator-enabled") || [];
-            return [...new Set(enabled)];
+            const custom = config.get<string[]>("customTranslators") || [];
+            return getEnabledWithCustomIds(enabled, custom);
           case "translator-enabled":
           case "translator-double":
             // 返回所有可用翻译器
@@ -450,6 +453,8 @@ class ActionManager {
     this.append(normalAction("translateInput"));
     this.append(normalAction("simpleDebug"));
     this.append(normalAction("welcome"));
+    this.append(normalAction("testTranslate"));
+    this.append(normalAction("reloadCustomTranslators"));
 
     //引擎配置
     structActionTypes.forEach((id) => {
@@ -545,6 +550,8 @@ class ActionManager {
           "welcome",
           "doubleCopyTranslate",
           "restoreMultiDefault",
+          "testTranslate",
+          "reloadCustomTranslators",
         ];
         contain = keys.filter((x) => {
           const action = this.getAction(x);

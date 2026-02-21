@@ -23,7 +23,7 @@ export class EasyEngine extends WordEngine {
             return Promise.reject({ words: words, code: -1, engine: this.name, error: "Engine not found" });
         }
     }
-    return this.engine_func(words, {}).then(
+    return this.engine_func!(words, {}).then(
       (res: any) => {
         return Promise.resolve({
           phonetics: res.phonetics,
@@ -48,11 +48,6 @@ export class BingEngine extends EasyEngine {
   }
 }
 
-export class GoogleEngine extends EasyEngine {
-  constructor() {
-    super("bing");
-  }
-}
 
 export class YoudaoEngine extends EasyEngine {
   constructor() {

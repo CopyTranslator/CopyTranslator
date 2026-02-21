@@ -157,9 +157,8 @@
 import { Component, Watch, Vue } from "vue-property-decorator";
 import KeyConfig from "@/components/KeyConfig.vue";
 import TranslatorGroupConfig from "@/components/TranslatorGroupConfig.vue";
-import { translatorTypes, Identifier } from "@/common/types";
-import { builtInTranslatorMetadata, isBuiltInTranslator } from "@/common/translate/metadata";
-import { customTranslatorManager } from "@/common/translate/custom-translators";
+import { Identifier } from "@/common/types";
+import { TranslatorNameResolver } from "@/common/translate/translator-name-resolver";
 import config from "@/common/configuration";
 import eventBus from "@/common/event-bus";
 
@@ -179,7 +178,7 @@ class TranslatorManager extends Vue {
   }
 
   get availableTranslators(): string[] {
-    return translatorTypes;
+    return TranslatorNameResolver.getAllTranslatorIds();
   }
 
   get enabledTranslators(): string[] {
@@ -220,26 +219,7 @@ class TranslatorManager extends Vue {
   }
 
   getTranslatorName(translatorId: string): string {
-    const localized = this.trans?.[translatorId];
-    if (localized) {
-      return localized;
-    }
-    // 尝试查找 tooltip 作为后备名称
-    const tooltipKey = `<tooltip>${translatorId}`;
-    if (this.trans?.[tooltipKey]) {
-      return this.trans[tooltipKey];
-    }
-
-    const customConfig = customTranslatorManager.getConfig(translatorId);
-    if (customConfig?.name) {
-      return customConfig.name;
-    }
-    
-    if (isBuiltInTranslator(translatorId)) {
-      return builtInTranslatorMetadata[translatorId].name;
-    }
-    
-    return translatorId;
+    return TranslatorNameResolver.getDisplayName(translatorId, this.trans);
   }
 
   updateEnabled(translatorId: string, enabled: boolean) {

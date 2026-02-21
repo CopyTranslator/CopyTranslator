@@ -19,7 +19,7 @@
             style="margin-top: auto; margin-bottom: auto;"
           ></v-btn>
           <span class="engineSpan">
-            {{ engine }}
+            {{ getEngineName(engine) }}
           </span>
           <v-btn
             color="primary"
@@ -55,7 +55,7 @@
             @click="toStepfun()"
             style="font-size: 15px; margin-left: 5px;"
           >
-            <span>&nbsp;&nbsp; {{ trans["stepfunSlogan"] }}</span>
+            <span>&nbsp;&nbsp; {{ trans["stepfunShortSlogan"] }}</span>
           </a>
         </div>
 
@@ -82,10 +82,16 @@ import { Mixins, Component } from "vue-property-decorator";
 import BaseView from "./BaseView.vue";
 import { ResultBuffer } from "@/common/translate/types";
 import { compareAll, CompareResult } from "@/renderer/comparator";
+import { TranslatorNameResolver } from "@/common/translate/translator-name-resolver";
 import "@/css/shared-styles.css";
 
 @Component
 export default class DiffTextArea extends Mixins(BaseView) {
+  getEngineName(engineId: string): string {
+    const trans = this.$store.getters.locale;
+    return TranslatorNameResolver.getDisplayName(engineId, trans);
+  }
+
   get sortedEngines(): string[] {
     const configOrder = this.$store.state.config['translator-compare'] || [];
     const bufferKeys = Object.keys(this.resultBuffer);

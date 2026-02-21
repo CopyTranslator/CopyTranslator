@@ -112,6 +112,7 @@ export const zh_cn = new Map<LocaleKey, string>([
   ["yandex", "Yandex翻译"],
   ["volc", "火山翻译"],
   ["tencentsmart", "腾讯交互翻译"],
+  ["bing", "Bing词典"],
   [
     "translatorManagerTips",
     "提示：\n1) 先在配置中填写密钥，未配置的翻译器无法启用。\n2) 批量启用只会启用已完成配置的翻译器。\n3) 缓存会预查询并复用结果以加速切换，但会占用更多资源。",
@@ -235,6 +236,7 @@ export const zh_cn = new Map<LocaleKey, string>([
   ["<tooltip>tencentsmart", "腾讯交互翻译(Transmart)"],
   ["keyanSlogan", "来⾃棵岩翻译 免费⼀键翻译全⽂>>>"],
   ["stepfunSlogan", "阶跃星辰｜Step-3.5-Flash旗舰模型限免支持 >>>"],
+  ["stepfunShortSlogan", "旗舰模型限免支持>>>"],
   ["contentFontFamily", "内容字体设置"],
   ["interfaceFontFamily", "界面字体设置"],
   [
@@ -513,6 +515,7 @@ export const en = new Map<LocaleKey, string>([
   ["tencent", "Tencent Translate"],
   ["yandex", "Yandex Translate"],
   ["volc", "Volcengine Translate"],
+  ["bing", "Bing Dictionary"],
   [
     "translatorManagerTips",
     "Tips:\n1) Configure keys first; unconfigured translators cannot be enabled.\n2) Enable All only enables configured translators.\n3) Cache prefetches and reuses results to speed up switching, but uses more resources.",
@@ -677,6 +680,7 @@ export const en = new Map<LocaleKey, string>([
   ["<tooltip>volc", "Volcengine Translate"],
   ["keyanSlogan", "From Keyan Translation - Free One-click Full-text Translation>>>"],
   ["stepfunSlogan", "Stepfun｜Step-3.5-Flash Flagship Model Free Translation >>>"],
+  ["stepfunShortSlogan", "Flagship model free trial >>>"],
   ["primaryColor", "Choose Primary Color"],
   ["fontColor", "Choose Font Color"],
   ["backgroundColor", "Choose Background Color"],

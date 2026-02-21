@@ -23,7 +23,7 @@ import Component, { mixins } from "vue-class-component";
 import config from "@/common/configuration";
 import Base from "./Base.vue";
 import "@/css/shared-styles.css";
-import { customTranslatorManager } from "@/common/translate/custom-translators";
+import { TranslatorNameResolver } from "@/common/translate/translator-name-resolver";
 
 const AppProps = Vue.extend({
   props: {
@@ -41,11 +41,11 @@ const AppProps = Vue.extend({
 export default class EngineButton extends mixins(AppProps, Base) {
   get engineClass() {
     // 检查是否为自定义翻译器
-    if (customTranslatorManager.isCustomTranslator(this.engine)) {
+    if (TranslatorNameResolver.isCustomTranslator(this.engine)) {
       // 从自定义翻译器配置中获取 providerType
-      const customConfig = customTranslatorManager.getConfig(this.engine);
+      const customConfig = TranslatorNameResolver.getCustomConfig(this.engine);
       if (customConfig) {
-        const provider = customTranslatorManager.getProvider(customConfig.providerId);
+        const provider = TranslatorNameResolver.getCustomProvider(this.engine);
         if (provider) {
           return `provider-${provider.providerType}`;
         }
@@ -70,24 +70,8 @@ export default class EngineButton extends mixins(AppProps, Base) {
       return this.tooltip;
     }
     
-    // 优先从 locales 中获取 tooltip
-    const tooltipKey = `<tooltip>${this.engine}`;
-    if (this.trans[tooltipKey] != undefined) {
-      return this.trans[tooltipKey];
-    }
-    
-    if (this.engine == "copytranslator") {
-      return this.trans["multiSourceButton"]; //多源对比
-    }
-    
-    // 如果是自定义翻译器，显示其名称
-    const customConfig = customTranslatorManager.getConfig(this.engine);
-    if (customConfig) {
-      return customConfig.name;
-    }
-    
-    // 如果都没有找到，返回引擎标识
-    return this.engine;
+    // 使用统一的名称解析器
+    return TranslatorNameResolver.getDisplayName(this.engine, this.trans);
   }
 
   switchTranslator() {

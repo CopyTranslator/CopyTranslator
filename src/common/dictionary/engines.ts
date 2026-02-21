@@ -1,10 +1,9 @@
-import { GoogleEngine, YoudaoEngine, BingEngine } from "./easy";
+import { YoudaoEngine, BingEngine } from "./easy";
 import { WordEngine, DictionaryType } from "./types";
 
 const dictionaryCreators: Record<string, () => WordEngine> = {
   bing: () => new BingEngine(),
   youdao: () => new YoudaoEngine(),
-  // google: () => new GoogleEngine(),
 };
 
 export const dictionaries = new Map<string, WordEngine>();

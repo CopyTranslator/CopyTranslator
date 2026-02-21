@@ -344,5 +344,7 @@
     "<tooltip>azure": "Azure Translate",
     "<tooltip>yandex": "Yandex Translate",
     "<tooltip>volc": "Volcengine Translate",
-    "<tooltip>tencentsmart": "Tencent Interactive Translate (Transmart)"
+    "<tooltip>tencentsmart": "Tencent Interactive Translate (Transmart)",
+    "stepfunShortSlogan": "Flagship model free trial",
+    "bing": "Bing Dictionary"
 }

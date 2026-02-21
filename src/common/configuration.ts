@@ -533,8 +533,8 @@ function initConfig(
       googleCheck,
       {
         token: { uiType: "text" },
-        source: { uiType: "select", options: googleSourceOptions },
-        mirror: { uiType: "text" },
+        source: { uiType: "select", options: googleSourceOptions, label: "googleSource" },
+        mirror: { uiType: "text", label: "googleMirror" },
       },
       "googlePrompt",
       "https://copytranslator.github.io/guide/questions.html#%E8%B0%B7%E6%AD%8C%E7%BF%BB%E8%AF%91%E9%80%80%E5%87%BA%E4%B8%AD%E5%9B%BD%E5%B8%82%E5%9C%BA%E7%9A%84%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88"

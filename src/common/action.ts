@@ -28,6 +28,8 @@ import { getLanguageLocales, Language } from "./translate/locale";
 import store from "../store";
 import bus from "../common/event-bus";
 import logger from "./logger";
+import { customTranslatorManager } from "./translate/custom-translators";
+import { TranslatorNameResolver } from "./translate/translator-name-resolver";
 
 type Actions = Map<Identifier, ActionView>;
 type PostLocaleFunc = (x: string) => string;
@@ -35,7 +37,7 @@ type PostLocaleFunc = (x: string) => string;
 function subMenuGenerator(
   identifier: Identifier,
   list: Array<string>,
-  needLocale: boolean = false, //是否需要把选项进行翻译
+  needLocale: boolean = false,
   postLocaleFunc?: PostLocaleFunc
 ): SubActionView[] {
   const l = store.getters.locale;
@@ -43,11 +45,8 @@ function subMenuGenerator(
     const id = compose([identifier, e]);
     let label = e;
     if (needLocale) {
-      if (l[e]) {
-        label = l[e].toString();
-      } else {
-        console.log("no locale for", e);
-      }
+      // 使用统一的名称解析器
+      label = TranslatorNameResolver.getDisplayName(e, l);
       if (postLocaleFunc != undefined) {
         label = postLocaleFunc(label);
       }
@@ -308,6 +307,25 @@ class ActionManager {
       heights.push(i);
     }
 
+    const getTranslatorTypes = (id: Identifier) => {
+      return () => {
+        const allTranslators = TranslatorNameResolver.getAllTranslatorIds();
+        switch (id) {
+          case "translator-compare":
+          case "translator-cache":
+            // 只返回已启用的翻译器（配置中的ID）
+            const enabled = config.get<string[]>("translator-enabled") || [];
+            return [...new Set(enabled)];
+          case "translator-enabled":
+          case "translator-double":
+            // 返回所有可用翻译器
+            return allTranslators;
+          default:
+            return allTranslators;
+        }
+      };
+    };
+
     const getConfigSnapshotNames: SubMenuGenerator = (id: string) => {
       const names = [
         ...Object.keys(config.get<ConfigSnapshots>("configSnapshots")),
@@ -321,10 +339,24 @@ class ActionManager {
       });
     };
 
-    this.append(listAction("translatorType", translatorTypes, "translation"));
-    this.append(listAction("dictionaryType", dictionaryTypes, "translation"));
     this.append(
-      listAction("fallbackTranslator", translatorTypes, "translation")
+      genericListAction(
+        "submenu",
+        "translatorType",
+        getTranslatorTypes("translatorType"),
+        "translation",
+        true
+      )
+    );
+    this.append(listAction("dictionaryType", dictionaryTypes, "translation", true));
+    this.append(
+      genericListAction(
+        "submenu",
+        "fallbackTranslator",
+        getTranslatorTypes("fallbackTranslator"),
+        "translation",
+        true
+      )
     );
     this.append(listAction("pasteDelay", delays, "translation"));
 
@@ -425,21 +457,6 @@ class ActionManager {
     });
 
     this.append(typeAction("config", "actionButtons"));
-
-    const getTranslatorTypes = (id: Identifier) => {
-      return () => {
-        switch (id) {
-          case "translator-compare":
-            return config.get<string[]>("translator-enabled");
-          case "translator-cache":
-            return config.get<string[]>("translator-enabled");
-          case "translator-enabled":
-            return translatorTypes;
-          default:
-            return translatorTypes;
-        }
-      };
-    };
 
     //引擎组设置
     translatorGroups.forEach((id) => {

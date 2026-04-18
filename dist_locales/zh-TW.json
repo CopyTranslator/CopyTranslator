@@ -374,5 +374,9 @@
     "contentPadding": "Content Padding",
     "<tooltip>contentPadding": "Set padding for source/result areas",
     "contentLineHeight": "Content Line Height",
-    "<tooltip>contentLineHeight": "Set line height for source/result areas"
+    "<tooltip>contentLineHeight": "Set line height for source/result areas",
+    "deeplx": "DeepLX Translate",
+    "deeplxConfigNote": "Enter the full DeepLX request URL, for example https://example.com/<token>/translate",
+    "deeplxUrl": "DeepLX URL",
+    "<tooltip>deeplx": "Use a third-party hosted or self-hosted DeepLX translation endpoint"
 }

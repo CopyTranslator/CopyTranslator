@@ -41,7 +41,6 @@ import {
 import { DictionaryType, dictionaryTypes } from "./dictionary/types";
 import { version } from "./constant";
 
-
 function is_empty_string(str: string): boolean {
   return !str || str.length === 0;
 }
@@ -70,7 +69,12 @@ function googleCheck(value: KeyConfig): CheckResult {
   const invalidKeys = getInvalidStringKeys(value);
   if (invalidKeys.length > 0) {
     const reason = `字段类型无效: ${invalidKeys.join(", ")}`;
-    return { canSave: false, canEnable: false, saveReason: reason, enableReason: reason };
+    return {
+      canSave: false,
+      canEnable: false,
+      saveReason: reason,
+      enableReason: reason,
+    };
   }
   const source = value.source;
   if (is_empty_string(source)) {
@@ -97,12 +101,18 @@ function emptyOrAllCheck(value: KeyConfig): CheckResult {
   const invalidKeys = getInvalidStringKeys(value);
   if (invalidKeys.length > 0) {
     const reason = `字段类型无效: ${invalidKeys.join(", ")}`;
-    return { canSave: false, canEnable: false, saveReason: reason, enableReason: reason };
+    return {
+      canSave: false,
+      canEnable: false,
+      saveReason: reason,
+      enableReason: reason,
+    };
   }
   const emptyKeys = getEmptyKeys(value);
   const allEmpty = emptyKeys.length === Object.keys(value).length;
   const allFilled = emptyKeys.length === 0;
-  if (allEmpty) { // 全空也行，就用系统默认的
+  if (allEmpty) {
+    // 全空也行，就用系统默认的
     return {
       canSave: true,
       canEnable: true,
@@ -120,12 +130,16 @@ function emptyOrAllCheck(value: KeyConfig): CheckResult {
   };
 }
 
-
 function generalCheck(value: KeyConfig): CheckResult {
   const invalidKeys = getInvalidStringKeys(value);
   if (invalidKeys.length > 0) {
     const reason = `字段类型无效: ${invalidKeys.join(", ")}`;
-    return { canSave: false, canEnable: false, saveReason: reason, enableReason: reason };
+    return {
+      canSave: false,
+      canEnable: false,
+      saveReason: reason,
+      enableReason: reason,
+    };
   }
   const emptyKeys = getEmptyKeys(value);
   if (emptyKeys.length === 0) {
@@ -312,15 +326,19 @@ function initConfig(
         port: 7890,
         protocol: "http",
         username: "",
-        password: ""
+        password: "",
       },
       undefined,
       {
         host: { uiType: "text", label: "proxyHost" },
         port: { uiType: "number", label: "proxyPort" },
-        protocol: { uiType: "select", options: ["http", "socks5"], label: "proxyProtocol" },
+        protocol: {
+          uiType: "select",
+          options: ["http", "socks5"],
+          label: "proxyProtocol",
+        },
         username: { uiType: "text", label: "proxyUsername" },
-        password: { uiType: "text", label: "proxyPassword" }
+        password: { uiType: "text", label: "proxyPassword" },
       },
       "networkProxyPrompt"
     )
@@ -423,13 +441,7 @@ function initConfig(
   config.setRule(
     "translator-enabled", //所有启用的引擎
     new FlexibleGroupRule<TranslatorType>(
-      [
-        "google",
-        "baidu",
-        "caiyun",
-        "stepfun",
-        "tencentsmart",
-      ],
+      ["google", "baidu", "caiyun", "stepfun", "tencentsmart"],
       translatorTypes,
       "v12.1.0"
     )
@@ -458,13 +470,7 @@ function initConfig(
   config.setRule(
     "translator-compare", //多源对比时用的引擎
     new FlexibleGroupRule<TranslatorType>(
-      [
-        "google",
-        "baidu",
-        "caiyun",
-        "stepfun",
-        "tencentsmart"
-      ],
+      ["google", "baidu", "caiyun", "stepfun", "tencentsmart"],
       translatorTypes,
       "v12.1.0"
     )
@@ -542,7 +548,11 @@ function initConfig(
       googleCheck,
       {
         token: { uiType: "text" },
-        source: { uiType: "select", options: googleSourceOptions, label: "googleSource" },
+        source: {
+          uiType: "select",
+          options: googleSourceOptions,
+          label: "googleSource",
+        },
         mirror: { uiType: "text", label: "googleMirror" },
       },
       "googlePrompt",
@@ -648,6 +658,19 @@ function initConfig(
   );
 
   config.setRule(
+    "deeplx",
+    new StructRule<KeyConfig>(
+      { url: "" },
+      generalCheck,
+      {
+        url: { uiType: "text", label: "deeplxUrl" },
+      },
+      "deeplxConfigNote",
+      "https://www.mintlify.com/OwO-Network/DeepLX"
+    )
+  );
+
+  config.setRule(
     "tencent",
     new StructRule<KeyConfig>(
       { secretId: "", secretKey: "" },
@@ -694,7 +717,7 @@ function initConfig(
   config.setRule(
     "niu",
     new StructRule<KeyConfig>(
-      {apikey: "",},
+      { apikey: "" },
       generalCheck,
       undefined,
       undefined,
@@ -702,19 +725,11 @@ function initConfig(
     )
   );
 
-
   // 翻译器供应商配置（新架构）
-  config.setRule(
-    "translatorProviders",
-    new TypeRule<any[]>([])
-  );
+  config.setRule("translatorProviders", new TypeRule<any[]>([]));
 
   // 这个是动态生成的，不需要保存
-  config.setRule(
-    "customTranslators",
-    new TypeRule<string[]>([]),
-    false
-  );
+  config.setRule("customTranslators", new TypeRule<string[]>([]), false);
 
   return config;
 }

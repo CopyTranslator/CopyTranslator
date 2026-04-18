@@ -1,4 +1,3 @@
-
 export const builtInTranslatorMetadata: Record<string, { name: string }> = {
   baidu: { name: "百度翻译" },
   google: { name: "Google Translate" },
@@ -9,6 +8,7 @@ export const builtInTranslatorMetadata: Record<string, { name: string }> = {
   aliyun: { name: "阿里云翻译" },
   azure: { name: "Azure Translator" },
   deepl: { name: "DeepL" },
+  deeplx: { name: "DeepLX" },
   tencent: { name: "腾讯翻译君" },
   tencentsmart: { name: "腾讯交互翻译" },
   yandex: { name: "Yandex" },

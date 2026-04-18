@@ -86,7 +86,6 @@ export const constantActionTypes = [
   "networkProxy",
 ] as const;
 
-
 export const normalTranslatorTypes = [
   "baidu",
   "google",
@@ -96,10 +95,11 @@ export const normalTranslatorTypes = [
   "youdao",
   "sogou",
   "stepfun",
-  'niu', //小牛 
+  "niu", //小牛
   "aliyun",
   "azure",
   "deepl",
+  "deeplx",
   "tencent",
   "tencentsmart",
   "yandex",
@@ -109,14 +109,12 @@ export const abstractTranslatorTypes = ["copytranslator"] as const;
 
 export type NormalTranslatorType = typeof normalTranslatorTypes[number];
 export type AbstractTranslatorType = typeof abstractTranslatorTypes[number];
-export type TranslatorType =  NormalTranslatorType;
+export type TranslatorType = NormalTranslatorType;
 export type GeneralTranslatorType =
   | NormalTranslatorType
   | AbstractTranslatorType;
 
-export const translatorTypes = flatten([
-  normalTranslatorTypes,
-]);
+export const translatorTypes = flatten([normalTranslatorTypes]);
 
 export const recognizerTypes = ["baidu-ocr", "pp-ocr"] as const;
 export const categories = [

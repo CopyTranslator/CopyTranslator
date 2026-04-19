@@ -1,3 +1,6 @@
+import fs from "fs";
+import path from "path";
+
 jest.mock("@/common/translate/types", () => {
   class MockBaseTranslator<TConfig> {
     axios: any;
@@ -92,5 +95,17 @@ describe("mapLanguageToDeepLX", () => {
     expect(mapLanguageToDeepLX("zh-CN")).toBe("ZH");
     expect(mapLanguageToDeepLX("zh-TW")).toBe("ZH-HANT");
     expect(mapLanguageToDeepLX("pt")).toBe("PT");
+  });
+});
+
+describe("DeepLX source compatibility", () => {
+  it("does not use optional chaining in the translator source", () => {
+    const deeplxPath = path.resolve(
+      __dirname,
+      "../../src/common/translate/deeplx.ts"
+    );
+    const source = fs.readFileSync(deeplxPath, "utf8");
+
+    expect(source).not.toContain("?.");
   });
 });

@@ -23,7 +23,6 @@
   },
   "main": "background.js",
   "dependencies": {
-    "@adeperio/forcefocus": "^1.0.3",
     "@gotoeasy/bus": "^1.0.0",
     "@mdi/font": "^7.0.96",
     "@nut-tree/nut-js": "^2.3.0",

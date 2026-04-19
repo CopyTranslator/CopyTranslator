@@ -30,7 +30,8 @@ export class DeepLX extends BaseTranslator<{ url: string }> {
 
   constructor(options: { axios: any; config: any }) {
     super(options.axios);
-    this.config.url = options.config?.url || "";
+    this.config.url =
+      options.config && options.config.url ? options.config.url : "";
   }
 
   getSupportLanguages(): Language[] {
@@ -80,7 +81,12 @@ export class DeepLX extends BaseTranslator<{ url: string }> {
       }
     );
 
-    const translatedText = response?.data?.data;
+    const responseData =
+      response && typeof response === "object" ? response.data : undefined;
+    const translatedText =
+      responseData && typeof responseData === "object"
+        ? responseData.data
+        : undefined;
     if (
       typeof translatedText !== "string" ||
       translatedText.trim().length === 0

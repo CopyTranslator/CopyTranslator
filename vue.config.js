@@ -13,6 +13,9 @@ const path = require("path");
 const trayIconName = "tray@2x.png";
 
 module.exports = {
+  // Keep lint feedback in development, but do not block release builds on
+  // pre-existing style debt in unrelated legacy files.
+  lintOnSave: process.env.NODE_ENV !== "production",
   transpileDependencies: [
     "vuetify",
     "@opentranslate/google",

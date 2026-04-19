@@ -13,7 +13,6 @@ import config from "@/common/configuration";
 import eventBus from "@/common/event-bus";
 import { LayoutConfig } from "@/common/rule";
 import bus from "@/common/event-bus";
-import os from "os";
 
 import qs from "qs";
 
@@ -245,16 +244,7 @@ export class WindowManager {
     }
     window.show();
     window.moveTop();
-    if (os.platform() == "win32") {
-      try {
-        //https://github.com/electron/electron/issues/2867
-        //https://www.npmjs.com/package/@adeperio/forcefocus
-        const forceFocus = require("@adeperio/forcefocus");
-        forceFocus.focusWindow(window);
-      } catch (e) {
-        console.error(e);
-      }
-    }
+    window.focus();
   }
 
   setStayTop(val: boolean) {

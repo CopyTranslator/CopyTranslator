@@ -6,6 +6,19 @@ const engine_modules = {
   youdao: "eazydict-youdao",
 };
 
+function loadEngine(moduleName: string): Function {
+  switch (moduleName) {
+    case "eazydict-bing":
+      return require("eazydict-bing");
+    case "eazydict-google":
+      return require("eazydict-google");
+    case "eazydict-youdao":
+      return require("eazydict-youdao");
+    default:
+      throw Error(`Unknown dictionary module: ${moduleName}`);
+  }
+}
+
 export class EasyEngine extends WordEngine {
   engine_func?: Function;
   name: DictionaryType;
@@ -18,7 +31,7 @@ export class EasyEngine extends WordEngine {
     if (!this.engine_func) {
         const moduleName = engine_modules[this.name];
         if (moduleName) {
-            this.engine_func = require(moduleName);
+            this.engine_func = loadEngine(moduleName);
         } else {
             return Promise.reject({ words: words, code: -1, engine: this.name, error: "Engine not found" });
         }
